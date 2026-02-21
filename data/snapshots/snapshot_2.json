@@ -1,0 +1,2190 @@
+{
+  "entities": {},
+  "relations": [],
+  "variables": {
+    "career_momentum": 80.0,
+    "financial_stability": 100.93573252581088,
+    "international_mobility": 92.33813058611341,
+    "job_satisfaction": 104.1663099046252,
+    "physical_wellbeing": 80.0,
+    "skill_development": 109.91930969757118
+  },
+  "global_state": {
+    "career_momentum": 80.0,
+    "financial_stability": 100.93573252581088,
+    "international_mobility": 92.33813058611341,
+    "job_satisfaction": 104.1663099046252,
+    "physical_wellbeing": 80.0,
+    "skill_development": 109.91930969757118
+  },
+  "causal_links": [
+    {
+      "from": "job_satisfaction",
+      "polarity": "positive",
+      "strength": 0.6,
+      "to": "career_momentum",
+      "weight": 0.6
+    },
+    {
+      "from": "job_satisfaction",
+      "polarity": "positive",
+      "strength": 0.4,
+      "to": "financial_stability",
+      "weight": 0.4
+    },
+    {
+      "from": "career_momentum",
+      "polarity": "positive",
+      "strength": 0.7,
+      "to": "skill_development",
+      "weight": 0.7
+    },
+    {
+      "from": "career_momentum",
+      "polarity": "positive",
+      "strength": 0.5,
+      "to": "international_mobility",
+      "weight": 0.5
+    },
+    {
+      "from": "financial_stability",
+      "polarity": "positive",
+      "strength": 0.3,
+      "to": "job_satisfaction",
+      "weight": 0.3
+    },
+    {
+      "from": "skill_development",
+      "polarity": "positive",
+      "strength": 0.5,
+      "to": "job_satisfaction",
+      "weight": 0.5
+    },
+    {
+      "from": "skill_development",
+      "polarity": "positive",
+      "strength": 0.6,
+      "to": "international_mobility",
+      "weight": 0.6
+    },
+    {
+      "from": "international_mobility",
+      "polarity": "positive",
+      "strength": 0.2,
+      "to": "job_satisfaction",
+      "weight": 0.2
+    },
+    {
+      "from": "physical_wellbeing",
+      "polarity": "positive",
+      "strength": 0.3,
+      "to": "job_satisfaction",
+      "weight": 0.3
+    },
+    {
+      "from": "physical_wellbeing",
+      "polarity": "positive",
+      "strength": 0.2,
+      "to": "financial_stability",
+      "weight": 0.2
+    }
+  ],
+  "narrative": [
+    "[v0] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+    "[v1] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+    "[v2] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+    "[v3] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+    "[v4] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s"
+  ],
+  "ontology": {},
+  "version": 5,
+  "turn": 5,
+  "events": [],
+  "agents_state": {
+    "protagonist": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "protagonist",
+              "action_type": "seek_promotion_current_company",
+              "parameters": {},
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 1.4285714285714284,
+              "financial_stability": 3.333333333333333,
+              "job_satisfaction": 2.5
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 14.681881599999999,
+              "job_satisfaction": 20.0303872,
+              "skill_development": 16.9947808,
+              "international_mobility": 20.979184
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "protagonist",
+              "action_type": "seek_promotion_current_company",
+              "parameters": {},
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 1.4285714285714284,
+              "financial_stability": 6.666666666666666,
+              "job_satisfaction": 1.4285714285714284
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 14.38144,
+              "job_satisfaction": 18.7085632,
+              "skill_development": 16.813340800000002,
+              "international_mobility": 10.7842656
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "protagonist",
+              "action_type": "seek_promotion_current_company",
+              "parameters": {},
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 0.9366784000000052,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 0.9366784000000052,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 1.4285714285714284,
+              "financial_stability": 0.6244522666666701,
+              "job_satisfaction": 1.4285714285714284
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 4.909668573577222,
+              "job_satisfaction": 16.91154579841024,
+              "skill_development": 16.5666734393344,
+              "international_mobility": 10.519274378256384
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "protagonist",
+              "action_type": "seek_promotion_current_company",
+              "parameters": {},
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.972990173577216,
+                "job_satisfaction": 4.349503801589762,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.972990173577216,
+                "job_satisfaction": 4.349503801589762,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.0,
+              "financial_stability": -1.324330057859072,
+              "job_satisfaction": 1.4498346005299205
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": -0.5668925996507718,
+              "job_satisfaction": 9.44116904393343,
+              "physical_wellbeing": 10.0,
+              "international_mobility": 15.808214313259118,
+              "skill_development": 5.50912953714767
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "protagonist",
+              "action_type": "seek_promotion_current_company",
+              "parameters": {},
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.406097573926445,
+                "job_satisfaction": -5.091665242343666,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.406097573926445,
+                "job_satisfaction": -5.091665242343666,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.5,
+              "financial_stability": -2.270731715950963,
+              "job_satisfaction": -1.2729163105859165
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": -2.470365048115566,
+              "job_satisfaction": -0.9253553377184787,
+              "physical_wellbeing": 10.0,
+              "international_mobility": 14.247192294597912,
+              "skill_development": 4.035385121089106
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "global_state": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "causal_links": [
+            {
+              "from": "job_satisfaction",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "career_momentum",
+              "weight": 0.6
+            },
+            {
+              "from": "job_satisfaction",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "financial_stability",
+              "weight": 0.4
+            },
+            {
+              "from": "career_momentum",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "skill_development",
+              "weight": 0.7
+            },
+            {
+              "from": "career_momentum",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "international_mobility",
+              "weight": 0.5
+            },
+            {
+              "from": "financial_stability",
+              "polarity": "positive",
+              "strength": 0.3,
+              "to": "job_satisfaction",
+              "weight": 0.3
+            },
+            {
+              "from": "skill_development",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "job_satisfaction",
+              "weight": 0.5
+            },
+            {
+              "from": "skill_development",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "international_mobility",
+              "weight": 0.6
+            },
+            {
+              "from": "international_mobility",
+              "polarity": "positive",
+              "strength": 0.2,
+              "to": "job_satisfaction",
+              "weight": 0.2
+            },
+            {
+              "from": "physical_wellbeing",
+              "polarity": "positive",
+              "strength": 0.3,
+              "to": "job_satisfaction",
+              "weight": 0.3
+            },
+            {
+              "from": "physical_wellbeing",
+              "polarity": "positive",
+              "strength": 0.2,
+              "to": "financial_stability",
+              "weight": 0.2
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+            "[v1] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v2] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v3] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v4] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": []
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "career_momentum": 72.57726491841511,
+            "financial_stability": 101.57451244789648,
+            "international_mobility": 81.7381787134521,
+            "job_satisfaction": 101.5522596466351,
+            "physical_wellbeing": 73.41929999999999,
+            "skill_development": 105.61329862223579
+          },
+          "confidence": {
+            "career_momentum": 0.12999999999999998,
+            "financial_stability": 0.3799999999999999,
+            "international_mobility": 0.3799999999999999,
+            "job_satisfaction": 0.3799999999999999,
+            "physical_wellbeing": 0.6500000000000001,
+            "skill_development": 0.3799999999999999
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "career_momentum": 72.57726491841511,
+          "financial_stability": 101.57451244789648,
+          "international_mobility": 81.7381787134521,
+          "job_satisfaction": 101.5522596466351,
+          "physical_wellbeing": 73.41929999999999,
+          "skill_development": 105.61329862223579
+        },
+        "confidence": {
+          "career_momentum": 0.12999999999999998,
+          "financial_stability": 0.3799999999999999,
+          "international_mobility": 0.3799999999999999,
+          "job_satisfaction": 0.3799999999999999,
+          "physical_wellbeing": 0.6500000000000001,
+          "skill_development": 0.3799999999999999
+        }
+      },
+      "long_term_goals": [
+        "career_momentum",
+        "financial_stability",
+        "job_satisfaction",
+        "skill_development"
+      ],
+      "short_term_goals": [
+        "career_momentum",
+        "financial_stability",
+        "job_satisfaction",
+        "skill_development"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "seek_promotion_current_company accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "seek_promotion_current_company accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 3,
+          "event": "seek_promotion_current_company accepted",
+          "importance": 0.9025,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 4,
+          "event": "seek_promotion_current_company accepted",
+          "importance": 0.95,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 5,
+          "event": "seek_promotion_current_company accepted",
+          "importance": 1.0,
+          "emotional_valence": 1.0
+        }
+      ],
+      "last_actions": [
+        "seek_promotion_current_company",
+        "seek_promotion_current_company"
+      ],
+      "strategy_class_weights": {
+        "stability": 1.9999999999999998
+      }
+    },
+    "previous_company": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "previous_company",
+              "action_type": "seek_promotion_current_company",
+              "parameters": {},
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 1.4285714285714284,
+              "financial_stability": 3.333333333333333,
+              "job_satisfaction": 2.5
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 14.681881599999999,
+              "job_satisfaction": 20.0303872,
+              "skill_development": 16.9947808,
+              "international_mobility": 20.979184
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "previous_company",
+              "action_type": "focus_on_skill_development",
+              "parameters": {},
+              "rationale": "Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.8571428571428568,
+              "job_satisfaction": 2.8571428571428568,
+              "skill_development": 5.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 14.38144,
+              "job_satisfaction": 18.7085632,
+              "skill_development": 16.813340800000002,
+              "international_mobility": 10.7842656
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "previous_company",
+              "action_type": "focus_on_skill_development",
+              "parameters": {},
+              "rationale": "Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 0.9366784000000052,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 0.9366784000000052,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.8571428571428568,
+              "job_satisfaction": 2.8571428571428568,
+              "skill_development": 5.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 4.909668573577222,
+              "job_satisfaction": 16.91154579841024,
+              "skill_development": 16.5666734393344,
+              "international_mobility": 10.519274378256384
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "previous_company",
+              "action_type": "prioritize_physical_wellbeing",
+              "parameters": {},
+              "rationale": "Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.972990173577216,
+                "job_satisfaction": 4.349503801589762,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.972990173577216,
+                "job_satisfaction": 4.349503801589762,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "job_satisfaction": 1.4498346005299205,
+              "physical_wellbeing": 10.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": -0.5668925996507718,
+              "job_satisfaction": 9.44116904393343,
+              "physical_wellbeing": 10.0,
+              "international_mobility": 15.808214313259118,
+              "skill_development": 5.50912953714767
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "previous_company",
+              "action_type": "prioritize_physical_wellbeing",
+              "parameters": {},
+              "rationale": "Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.406097573926445,
+                "job_satisfaction": -5.091665242343666,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.406097573926445,
+                "job_satisfaction": -5.091665242343666,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "job_satisfaction": -1.2729163105859165,
+              "physical_wellbeing": 10.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": -2.470365048115566,
+              "job_satisfaction": -0.9253553377184787,
+              "physical_wellbeing": 10.0,
+              "international_mobility": 14.247192294597912,
+              "skill_development": 4.035385121089106
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "global_state": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "causal_links": [
+            {
+              "from": "job_satisfaction",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "career_momentum",
+              "weight": 0.6
+            },
+            {
+              "from": "job_satisfaction",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "financial_stability",
+              "weight": 0.4
+            },
+            {
+              "from": "career_momentum",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "skill_development",
+              "weight": 0.7
+            },
+            {
+              "from": "career_momentum",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "international_mobility",
+              "weight": 0.5
+            },
+            {
+              "from": "financial_stability",
+              "polarity": "positive",
+              "strength": 0.3,
+              "to": "job_satisfaction",
+              "weight": 0.3
+            },
+            {
+              "from": "skill_development",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "job_satisfaction",
+              "weight": 0.5
+            },
+            {
+              "from": "skill_development",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "international_mobility",
+              "weight": 0.6
+            },
+            {
+              "from": "international_mobility",
+              "polarity": "positive",
+              "strength": 0.2,
+              "to": "job_satisfaction",
+              "weight": 0.2
+            },
+            {
+              "from": "physical_wellbeing",
+              "polarity": "positive",
+              "strength": 0.3,
+              "to": "job_satisfaction",
+              "weight": 0.3
+            },
+            {
+              "from": "physical_wellbeing",
+              "polarity": "positive",
+              "strength": 0.2,
+              "to": "financial_stability",
+              "weight": 0.2
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+            "[v1] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v2] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v3] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v4] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": []
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "career_momentum": 72.57726491841511,
+            "financial_stability": 101.57451244789648,
+            "international_mobility": 81.7381787134521,
+            "job_satisfaction": 101.5522596466351,
+            "physical_wellbeing": 73.41929999999999,
+            "skill_development": 105.61329862223579
+          },
+          "confidence": {
+            "career_momentum": 0.4899999999999999,
+            "financial_stability": 0.3799999999999999,
+            "international_mobility": 0.3799999999999999,
+            "job_satisfaction": 0.3799999999999999,
+            "physical_wellbeing": 0.3700000000000001,
+            "skill_development": 0.1
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "career_momentum": 72.57726491841511,
+          "financial_stability": 101.57451244789648,
+          "international_mobility": 81.7381787134521,
+          "job_satisfaction": 101.5522596466351,
+          "physical_wellbeing": 73.41929999999999,
+          "skill_development": 105.61329862223579
+        },
+        "confidence": {
+          "career_momentum": 0.4899999999999999,
+          "financial_stability": 0.3799999999999999,
+          "international_mobility": 0.3799999999999999,
+          "job_satisfaction": 0.3799999999999999,
+          "physical_wellbeing": 0.3700000000000001,
+          "skill_development": 0.1
+        }
+      },
+      "long_term_goals": [
+        "financial_stability",
+        "job_satisfaction",
+        "skill_development"
+      ],
+      "short_term_goals": [
+        "financial_stability",
+        "job_satisfaction",
+        "skill_development"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "seek_promotion_current_company accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "focus_on_skill_development accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 3,
+          "event": "focus_on_skill_development accepted",
+          "importance": 0.6317499999999999,
+          "emotional_valence": -0.38749999999999996
+        },
+        {
+          "turn": 5,
+          "event": "prioritize_physical_wellbeing accepted",
+          "importance": 0.05,
+          "emotional_valence": 0.0
+        }
+      ],
+      "last_actions": [
+        "prioritize_physical_wellbeing",
+        "prioritize_physical_wellbeing"
+      ],
+      "strategy_class_weights": {
+        "stability": 1.2,
+        "growth": 1.0,
+        "wellbeing": 1.0
+      }
+    },
+    "startup_accelerator": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "startup_accelerator",
+              "action_type": "focus_on_skill_development",
+              "parameters": {},
+              "rationale": "Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.8571428571428568,
+              "job_satisfaction": 5.0,
+              "skill_development": 10.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 14.681881599999999,
+              "job_satisfaction": 20.0303872,
+              "skill_development": 16.9947808,
+              "international_mobility": 20.979184
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "startup_accelerator",
+              "action_type": "explore_startup_opportunities",
+              "parameters": {},
+              "rationale": "Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.8571428571428568,
+              "financial_stability": 3.333333333333333,
+              "job_satisfaction": 2.8571428571428568
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 14.38144,
+              "job_satisfaction": 18.7085632,
+              "skill_development": 16.813340800000002,
+              "international_mobility": 10.7842656
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "startup_accelerator",
+              "action_type": "explore_startup_opportunities",
+              "parameters": {},
+              "rationale": "Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 0.9366784000000052,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 0.9366784000000052,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.8571428571428568,
+              "financial_stability": 0.31222613333333504,
+              "job_satisfaction": 2.8571428571428568
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 4.909668573577222,
+              "job_satisfaction": 16.91154579841024,
+              "skill_development": 16.5666734393344,
+              "international_mobility": 10.519274378256384
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "startup_accelerator",
+              "action_type": "seek_promotion_current_company",
+              "parameters": {},
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.972990173577216,
+                "job_satisfaction": 4.349503801589762,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.972990173577216,
+                "job_satisfaction": 4.349503801589762,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.0,
+              "financial_stability": -1.324330057859072,
+              "job_satisfaction": 1.4498346005299205
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": -0.5668925996507718,
+              "job_satisfaction": 9.44116904393343,
+              "physical_wellbeing": 10.0,
+              "international_mobility": 15.808214313259118,
+              "skill_development": 5.50912953714767
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "startup_accelerator",
+              "action_type": "explore_startup_opportunities",
+              "parameters": {},
+              "rationale": "Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.406097573926445,
+                "job_satisfaction": -5.091665242343666,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.406097573926445,
+                "job_satisfaction": -5.091665242343666,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 5.0,
+              "financial_stability": -1.1353658579754815,
+              "job_satisfaction": -2.545832621171833
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": -2.470365048115566,
+              "job_satisfaction": -0.9253553377184787,
+              "physical_wellbeing": 10.0,
+              "international_mobility": 14.247192294597912,
+              "skill_development": 4.035385121089106
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "global_state": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "causal_links": [
+            {
+              "from": "job_satisfaction",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "career_momentum",
+              "weight": 0.6
+            },
+            {
+              "from": "job_satisfaction",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "financial_stability",
+              "weight": 0.4
+            },
+            {
+              "from": "career_momentum",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "skill_development",
+              "weight": 0.7
+            },
+            {
+              "from": "career_momentum",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "international_mobility",
+              "weight": 0.5
+            },
+            {
+              "from": "financial_stability",
+              "polarity": "positive",
+              "strength": 0.3,
+              "to": "job_satisfaction",
+              "weight": 0.3
+            },
+            {
+              "from": "skill_development",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "job_satisfaction",
+              "weight": 0.5
+            },
+            {
+              "from": "skill_development",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "international_mobility",
+              "weight": 0.6
+            },
+            {
+              "from": "international_mobility",
+              "polarity": "positive",
+              "strength": 0.2,
+              "to": "job_satisfaction",
+              "weight": 0.2
+            },
+            {
+              "from": "physical_wellbeing",
+              "polarity": "positive",
+              "strength": 0.3,
+              "to": "job_satisfaction",
+              "weight": 0.3
+            },
+            {
+              "from": "physical_wellbeing",
+              "polarity": "positive",
+              "strength": 0.2,
+              "to": "financial_stability",
+              "weight": 0.2
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+            "[v1] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v2] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v3] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v4] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": []
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "career_momentum": 72.57726491841511,
+            "financial_stability": 101.57451244789648,
+            "international_mobility": 81.7381787134521,
+            "job_satisfaction": 101.5522596466351,
+            "physical_wellbeing": 73.41929999999999,
+            "skill_development": 105.61329862223579
+          },
+          "confidence": {
+            "career_momentum": 0.1,
+            "financial_stability": 0.3799999999999999,
+            "international_mobility": 0.3799999999999999,
+            "job_satisfaction": 0.3799999999999999,
+            "physical_wellbeing": 0.6500000000000001,
+            "skill_development": 0.4899999999999999
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "career_momentum": 72.57726491841511,
+          "financial_stability": 101.57451244789648,
+          "international_mobility": 81.7381787134521,
+          "job_satisfaction": 101.5522596466351,
+          "physical_wellbeing": 73.41929999999999,
+          "skill_development": 105.61329862223579
+        },
+        "confidence": {
+          "career_momentum": 0.1,
+          "financial_stability": 0.3799999999999999,
+          "international_mobility": 0.3799999999999999,
+          "job_satisfaction": 0.3799999999999999,
+          "physical_wellbeing": 0.6500000000000001,
+          "skill_development": 0.4899999999999999
+        }
+      },
+      "long_term_goals": [
+        "career_momentum",
+        "financial_stability",
+        "skill_development"
+      ],
+      "short_term_goals": [
+        "career_momentum",
+        "financial_stability",
+        "skill_development"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "focus_on_skill_development accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "explore_startup_opportunities accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 3,
+          "event": "explore_startup_opportunities accepted",
+          "importance": 0.9025,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 4,
+          "event": "seek_promotion_current_company accepted",
+          "importance": 0.95,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 5,
+          "event": "explore_startup_opportunities accepted",
+          "importance": 1.0,
+          "emotional_valence": 1.0
+        }
+      ],
+      "last_actions": [
+        "seek_promotion_current_company",
+        "explore_startup_opportunities"
+      ],
+      "strategy_class_weights": {
+        "growth": 1.2,
+        "entrepreneurial": 1.5999999999999999,
+        "stability": 1.2
+      }
+    },
+    "italian_university": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "italian_university",
+              "action_type": "accept_italian_university_offer",
+              "parameters": {},
+              "rationale": "Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 4.285714285714286,
+              "financial_stability": 3.333333333333333,
+              "international_mobility": 10.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 14.681881599999999,
+              "job_satisfaction": 20.0303872,
+              "skill_development": 16.9947808,
+              "international_mobility": 20.979184
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "italian_university",
+              "action_type": "focus_on_skill_development",
+              "parameters": {},
+              "rationale": "Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 10.0,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.8571428571428568,
+              "job_satisfaction": 2.8571428571428568,
+              "skill_development": 5.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 14.38144,
+              "job_satisfaction": 18.7085632,
+              "skill_development": 16.813340800000002,
+              "international_mobility": 10.7842656
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "italian_university",
+              "action_type": "focus_on_skill_development",
+              "parameters": {},
+              "rationale": "Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 0.9366784000000052,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": 0.9366784000000052,
+                "job_satisfaction": 10.0,
+                "skill_development": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.8571428571428568,
+              "job_satisfaction": 2.8571428571428568,
+              "skill_development": 5.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": 4.909668573577222,
+              "job_satisfaction": 16.91154579841024,
+              "skill_development": 16.5666734393344,
+              "international_mobility": 10.519274378256384
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "italian_university",
+              "action_type": "accept_italian_university_offer",
+              "parameters": {},
+              "rationale": "Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.972990173577216,
+                "job_satisfaction": 4.349503801589762,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.972990173577216,
+                "job_satisfaction": 4.349503801589762,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 6.0,
+              "financial_stability": -1.324330057859072,
+              "international_mobility": 10.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": -0.5668925996507718,
+              "job_satisfaction": 9.44116904393343,
+              "physical_wellbeing": 10.0,
+              "international_mobility": 15.808214313259118,
+              "skill_development": 5.50912953714767
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "italian_university",
+              "action_type": "network_with_overseas_contacts",
+              "parameters": {},
+              "rationale": "Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.406097573926445,
+                "job_satisfaction": -5.091665242343666,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "career_momentum": 10.0,
+                "financial_stability": -3.406097573926445,
+                "job_satisfaction": -5.091665242343666,
+                "physical_wellbeing": 10.0,
+                "international_mobility": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "career_momentum": 2.5,
+              "international_mobility": 10.0
+            },
+            "global_world_delta": {
+              "career_momentum": 10.0,
+              "financial_stability": -2.470365048115566,
+              "job_satisfaction": -0.9253553377184787,
+              "physical_wellbeing": 10.0,
+              "international_mobility": 14.247192294597912,
+              "skill_development": 4.035385121089106
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "global_state": {
+            "career_momentum": 80.0,
+            "financial_stability": 100.93573252581088,
+            "international_mobility": 92.33813058611341,
+            "job_satisfaction": 104.1663099046252,
+            "physical_wellbeing": 80.0,
+            "skill_development": 109.91930969757118
+          },
+          "causal_links": [
+            {
+              "from": "job_satisfaction",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "career_momentum",
+              "weight": 0.6
+            },
+            {
+              "from": "job_satisfaction",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "financial_stability",
+              "weight": 0.4
+            },
+            {
+              "from": "career_momentum",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "skill_development",
+              "weight": 0.7
+            },
+            {
+              "from": "career_momentum",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "international_mobility",
+              "weight": 0.5
+            },
+            {
+              "from": "financial_stability",
+              "polarity": "positive",
+              "strength": 0.3,
+              "to": "job_satisfaction",
+              "weight": 0.3
+            },
+            {
+              "from": "skill_development",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "job_satisfaction",
+              "weight": 0.5
+            },
+            {
+              "from": "skill_development",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "international_mobility",
+              "weight": 0.6
+            },
+            {
+              "from": "international_mobility",
+              "polarity": "positive",
+              "strength": 0.2,
+              "to": "job_satisfaction",
+              "weight": 0.2
+            },
+            {
+              "from": "physical_wellbeing",
+              "polarity": "positive",
+              "strength": 0.3,
+              "to": "job_satisfaction",
+              "weight": 0.3
+            },
+            {
+              "from": "physical_wellbeing",
+              "polarity": "positive",
+              "strength": 0.2,
+              "to": "financial_stability",
+              "weight": 0.2
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: seek_promotion_current_company (goals: ['financial_stability', 'job_satisfaction']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0 Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Beliefs (world summary): career_momentum=30.0, financial_stability=70.0, international_mobility=20.0, job_satisfaction=40.0, physical_wellbeing=60.0, skill_development=50.0",
+            "[v1] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v2] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: focus_on_skill_development (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: focus_on_skill_development (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v3] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: accept_italian_university_offer (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s",
+            "[v4] Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: prioritize_physical_wellbeing (goals: ['financial_stability', 'job_satisfaction']). Turn 1: did seek_promotion_current_company. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_st Goal-driven: explore_startup_opportunities (goals: ['career_momentum', 'financial_stability']). Turn 1: did focus_on_skill_development. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_stabil Goal-driven: network_with_overseas_contacts (goals: ['career_momentum', 'international_mobility']). Turn 1: did accept_italian_university_offer. Goal-driven: seek_promotion_current_company (goals: ['career_momentum', 'financial_stability']). Beliefs (world summary): career_momentum=30.0, financial_s"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": []
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "career_momentum": 72.57726491841511,
+            "financial_stability": 101.57451244789648,
+            "international_mobility": 81.7381787134521,
+            "job_satisfaction": 101.5522596466351,
+            "physical_wellbeing": 73.41929999999999,
+            "skill_development": 105.61329862223579
+          },
+          "confidence": {
+            "career_momentum": 0.23999999999999988,
+            "financial_stability": 0.3799999999999999,
+            "international_mobility": 0.2399999999999999,
+            "job_satisfaction": 0.3799999999999999,
+            "physical_wellbeing": 0.6500000000000001,
+            "skill_development": 0.2099999999999999
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "career_momentum": 72.57726491841511,
+          "financial_stability": 101.57451244789648,
+          "international_mobility": 81.7381787134521,
+          "job_satisfaction": 101.5522596466351,
+          "physical_wellbeing": 73.41929999999999,
+          "skill_development": 105.61329862223579
+        },
+        "confidence": {
+          "career_momentum": 0.23999999999999988,
+          "financial_stability": 0.3799999999999999,
+          "international_mobility": 0.2399999999999999,
+          "job_satisfaction": 0.3799999999999999,
+          "physical_wellbeing": 0.6500000000000001,
+          "skill_development": 0.2099999999999999
+        }
+      },
+      "long_term_goals": [
+        "career_momentum",
+        "international_mobility",
+        "skill_development"
+      ],
+      "short_term_goals": [
+        "career_momentum",
+        "international_mobility",
+        "skill_development"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "accept_italian_university_offer accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "focus_on_skill_development accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 3,
+          "event": "focus_on_skill_development accepted",
+          "importance": 0.9025,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 4,
+          "event": "accept_italian_university_offer accepted",
+          "importance": 0.95,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 5,
+          "event": "network_with_overseas_contacts accepted",
+          "importance": 1.0,
+          "emotional_valence": 0.90625
+        }
+      ],
+      "last_actions": [
+        "accept_italian_university_offer",
+        "network_with_overseas_contacts"
+      ],
+      "strategy_class_weights": {
+        "mobility": 1.5999999999999999,
+        "growth": 1.4
+      }
+    }
+  },
+  "governance_state": {
+    "strictness_level": 1
+  }
+}

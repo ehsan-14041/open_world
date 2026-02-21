@@ -1,0 +1,2093 @@
+{
+  "entities": {},
+  "relations": [],
+  "variables": {
+    "diplomatic_engagement_level": 100.0,
+    "economic_stability_iran": 29.55810559999999,
+    "internal_political_pressure_iran": 81.7437056,
+    "military_preparedness_level": 60.0,
+    "regional_stability": 104.8211968,
+    "trust_between_parties": 103.280192
+  },
+  "global_state": {
+    "diplomatic_engagement_level": 100.0,
+    "economic_stability_iran": 29.55810559999999,
+    "internal_political_pressure_iran": 81.7437056,
+    "military_preparedness_level": 60.0,
+    "regional_stability": 104.8211968,
+    "trust_between_parties": 103.280192
+  },
+  "causal_links": [
+    {
+      "from": "military_preparedness_level",
+      "polarity": "negative",
+      "strength": 0.6,
+      "to": "regional_stability",
+      "weight": -0.6
+    },
+    {
+      "from": "diplomatic_engagement_level",
+      "polarity": "positive",
+      "strength": 0.7,
+      "to": "regional_stability",
+      "weight": 0.7
+    },
+    {
+      "from": "internal_political_pressure_iran",
+      "polarity": "negative",
+      "strength": 0.8,
+      "to": "economic_stability_iran",
+      "weight": -0.8
+    },
+    {
+      "from": "economic_stability_iran",
+      "polarity": "positive",
+      "strength": 0.7,
+      "to": "internal_political_pressure_iran",
+      "weight": 0.7
+    },
+    {
+      "from": "military_preparedness_level",
+      "polarity": "negative",
+      "strength": 0.7,
+      "to": "trust_between_parties",
+      "weight": -0.7
+    },
+    {
+      "from": "diplomatic_engagement_level",
+      "polarity": "positive",
+      "strength": 0.8,
+      "to": "trust_between_parties",
+      "weight": 0.8
+    },
+    {
+      "from": "trust_between_parties",
+      "polarity": "positive",
+      "strength": 0.6,
+      "to": "diplomatic_engagement_level",
+      "weight": 0.6
+    },
+    {
+      "from": "economic_stability_iran",
+      "polarity": "positive",
+      "strength": 0.4,
+      "to": "regional_stability",
+      "weight": 0.4
+    }
+  ],
+  "narrative": [
+    "[v0] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+    "[v1] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+    "[v2] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+    "[v3] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+    "[v4] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0"
+  ],
+  "ontology": {},
+  "version": 5,
+  "turn": 5,
+  "events": [],
+  "agents_state": {
+    "united_states": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 3.947368421052632,
+              "regional_stability": 4.375,
+              "trust_between_parties": 3.7037037037037033
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 19.075072000000002,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": 10.3065856,
+              "internal_political_pressure_iran": -0.8419327999999998
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 5.0,
+              "regional_stability": 5.833333333333334,
+              "trust_between_parties": 4.545454545454545
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 19.075072000000002,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": 10.3065856,
+              "internal_political_pressure_iran": -0.8419327999999998
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 3.333333333333333,
+              "regional_stability": 3.0434782608695654,
+              "trust_between_parties": 3.333333333333333
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 14.8211968,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": -8.027532800000001,
+              "internal_political_pressure_iran": 6.7137856000000005
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 2.884615384615384,
+              "regional_stability": 2.916666666666667,
+              "trust_between_parties": 2.8571428571428568
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 16.6990336,
+              "trust_between_parties": 17.656038400000003
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": -4.670374400000014,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": -4.670374400000014,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 3.333333333333333,
+              "regional_stability": -1.4214182956521784,
+              "trust_between_parties": 3.333333333333333
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 0.1508223999999856,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": -8.027532800000001,
+              "internal_political_pressure_iran": 6.7137856000000005
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "global_state": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "causal_links": [
+            {
+              "from": "military_preparedness_level",
+              "polarity": "negative",
+              "strength": 0.6,
+              "to": "regional_stability",
+              "weight": -0.6
+            },
+            {
+              "from": "diplomatic_engagement_level",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "regional_stability",
+              "weight": 0.7
+            },
+            {
+              "from": "internal_political_pressure_iran",
+              "polarity": "negative",
+              "strength": 0.8,
+              "to": "economic_stability_iran",
+              "weight": -0.8
+            },
+            {
+              "from": "economic_stability_iran",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "internal_political_pressure_iran",
+              "weight": 0.7
+            },
+            {
+              "from": "military_preparedness_level",
+              "polarity": "negative",
+              "strength": 0.7,
+              "to": "trust_between_parties",
+              "weight": -0.7
+            },
+            {
+              "from": "diplomatic_engagement_level",
+              "polarity": "positive",
+              "strength": 0.8,
+              "to": "trust_between_parties",
+              "weight": 0.8
+            },
+            {
+              "from": "trust_between_parties",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "diplomatic_engagement_level",
+              "weight": 0.6
+            },
+            {
+              "from": "economic_stability_iran",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "regional_stability",
+              "weight": 0.4
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+            "[v1] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v2] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v3] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v4] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": []
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "diplomatic_engagement_level": 92.5772649184151,
+            "economic_stability_iran": 33.6806714482086,
+            "internal_political_pressure_iran": 78.08927222151333,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 100.57972670614058,
+            "trust_between_parties": 90.174582436651
+          },
+          "confidence": {
+            "diplomatic_engagement_level": 0.1,
+            "economic_stability_iran": 0.3799999999999999,
+            "internal_political_pressure_iran": 0.3799999999999999,
+            "military_preparedness_level": 0.8000000000000003,
+            "regional_stability": 0.3799999999999999,
+            "trust_between_parties": 0.23999999999999988
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "diplomatic_engagement_level": 92.5772649184151,
+          "economic_stability_iran": 33.6806714482086,
+          "internal_political_pressure_iran": 78.08927222151333,
+          "military_preparedness_level": 60.0,
+          "regional_stability": 100.57972670614058,
+          "trust_between_parties": 90.174582436651
+        },
+        "confidence": {
+          "diplomatic_engagement_level": 0.1,
+          "economic_stability_iran": 0.3799999999999999,
+          "internal_political_pressure_iran": 0.3799999999999999,
+          "military_preparedness_level": 0.8000000000000003,
+          "regional_stability": 0.3799999999999999,
+          "trust_between_parties": 0.23999999999999988
+        }
+      },
+      "long_term_goals": [
+        "diplomatic_engagement_level",
+        "military_preparedness_level",
+        "regional_stability"
+      ],
+      "short_term_goals": [
+        "diplomatic_engagement_level",
+        "military_preparedness_level",
+        "regional_stability"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "initiate_direct_talks accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "initiate_direct_talks accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 3,
+          "event": "initiate_direct_talks accepted",
+          "importance": 0.9025,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 4,
+          "event": "initiate_direct_talks accepted",
+          "importance": 0.95,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 5,
+          "event": "initiate_direct_talks accepted",
+          "importance": 1.0,
+          "emotional_valence": 1.0
+        }
+      ],
+      "last_actions": [
+        "initiate_direct_talks",
+        "initiate_direct_talks"
+      ],
+      "strategy_class_weights": {
+        "diplomatic": 1.9999999999999998
+      }
+    },
+    "iran": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "iran",
+              "action_type": "offer_economic_incentives",
+              "parameters": {},
+              "rationale": "Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 1.3157894736842104,
+              "trust_between_parties": 2.5925925925925926,
+              "economic_stability_iran": 10.0
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 19.075072000000002,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": 10.3065856,
+              "internal_political_pressure_iran": -0.8419327999999998
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "iran",
+              "action_type": "offer_economic_incentives",
+              "parameters": {},
+              "rationale": "Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 1.6666666666666665,
+              "trust_between_parties": 3.1818181818181817,
+              "economic_stability_iran": 10.0
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 19.075072000000002,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": 10.3065856,
+              "internal_political_pressure_iran": -0.8419327999999998
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "iran",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 3.333333333333333,
+              "regional_stability": 3.0434782608695654,
+              "trust_between_parties": 3.333333333333333
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 14.8211968,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": -8.027532800000001,
+              "internal_political_pressure_iran": 6.7137856000000005
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "iran",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 2.884615384615384,
+              "regional_stability": 2.916666666666667,
+              "trust_between_parties": 2.8571428571428568
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 16.6990336,
+              "trust_between_parties": 17.656038400000003
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "iran",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": -4.670374400000014,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": -4.670374400000014,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 3.333333333333333,
+              "regional_stability": -1.4214182956521784,
+              "trust_between_parties": 3.333333333333333
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 0.1508223999999856,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": -8.027532800000001,
+              "internal_political_pressure_iran": 6.7137856000000005
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "global_state": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "causal_links": [
+            {
+              "from": "military_preparedness_level",
+              "polarity": "negative",
+              "strength": 0.6,
+              "to": "regional_stability",
+              "weight": -0.6
+            },
+            {
+              "from": "diplomatic_engagement_level",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "regional_stability",
+              "weight": 0.7
+            },
+            {
+              "from": "internal_political_pressure_iran",
+              "polarity": "negative",
+              "strength": 0.8,
+              "to": "economic_stability_iran",
+              "weight": -0.8
+            },
+            {
+              "from": "economic_stability_iran",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "internal_political_pressure_iran",
+              "weight": 0.7
+            },
+            {
+              "from": "military_preparedness_level",
+              "polarity": "negative",
+              "strength": 0.7,
+              "to": "trust_between_parties",
+              "weight": -0.7
+            },
+            {
+              "from": "diplomatic_engagement_level",
+              "polarity": "positive",
+              "strength": 0.8,
+              "to": "trust_between_parties",
+              "weight": 0.8
+            },
+            {
+              "from": "trust_between_parties",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "diplomatic_engagement_level",
+              "weight": 0.6
+            },
+            {
+              "from": "economic_stability_iran",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "regional_stability",
+              "weight": 0.4
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+            "[v1] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v2] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v3] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v4] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": []
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "diplomatic_engagement_level": 92.5772649184151,
+            "economic_stability_iran": 33.6806714482086,
+            "internal_political_pressure_iran": 78.08927222151333,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 100.57972670614058,
+            "trust_between_parties": 90.174582436651
+          },
+          "confidence": {
+            "diplomatic_engagement_level": 0.23999999999999988,
+            "economic_stability_iran": 0.1,
+            "internal_political_pressure_iran": 0.3799999999999999,
+            "military_preparedness_level": 0.8000000000000003,
+            "regional_stability": 0.3799999999999999,
+            "trust_between_parties": 0.1
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "diplomatic_engagement_level": 92.5772649184151,
+          "economic_stability_iran": 33.6806714482086,
+          "internal_political_pressure_iran": 78.08927222151333,
+          "military_preparedness_level": 60.0,
+          "regional_stability": 100.57972670614058,
+          "trust_between_parties": 90.174582436651
+        },
+        "confidence": {
+          "diplomatic_engagement_level": 0.23999999999999988,
+          "economic_stability_iran": 0.1,
+          "internal_political_pressure_iran": 0.3799999999999999,
+          "military_preparedness_level": 0.8000000000000003,
+          "regional_stability": 0.3799999999999999,
+          "trust_between_parties": 0.1
+        }
+      },
+      "long_term_goals": [
+        "diplomatic_engagement_level",
+        "economic_stability_iran",
+        "internal_political_pressure_iran"
+      ],
+      "short_term_goals": [
+        "diplomatic_engagement_level",
+        "economic_stability_iran",
+        "internal_political_pressure_iran"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "offer_economic_incentives accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "offer_economic_incentives accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 4,
+          "event": "initiate_direct_talks accepted",
+          "importance": 0.95,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 5,
+          "event": "initiate_direct_talks accepted",
+          "importance": 0.05,
+          "emotional_valence": 0.0
+        }
+      ],
+      "last_actions": [
+        "initiate_direct_talks",
+        "initiate_direct_talks"
+      ],
+      "strategy_class_weights": {
+        "diplomatic": 1.5999999999999999
+      }
+    },
+    "iranian_protesters": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "release_political_prisoners",
+              "parameters": {},
+              "rationale": "Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 0.7894736842105263,
+              "regional_stability": 1.25,
+              "internal_political_pressure_iran": -5.0
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 19.075072000000002,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": 10.3065856,
+              "internal_political_pressure_iran": -0.8419327999999998
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "release_political_prisoners",
+              "parameters": {},
+              "rationale": "Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 1.0,
+              "regional_stability": 1.6666666666666665,
+              "internal_political_pressure_iran": -5.0
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 19.075072000000002,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": 10.3065856,
+              "internal_political_pressure_iran": -0.8419327999999998
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "protesters_increase_demonstrations",
+              "parameters": {},
+              "rationale": "Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "regional_stability": 0.8695652173913043,
+              "economic_stability_iran": -5.0,
+              "internal_political_pressure_iran": 10.0
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 14.8211968,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": -8.027532800000001,
+              "internal_political_pressure_iran": 6.7137856000000005
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "mediate_confidence_building_measures",
+              "parameters": {},
+              "rationale": "Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 1.346153846153846,
+              "regional_stability": 1.25,
+              "trust_between_parties": 1.4285714285714284
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 16.6990336,
+              "trust_between_parties": 17.656038400000003
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "protesters_increase_demonstrations",
+              "parameters": {},
+              "rationale": "Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": -4.670374400000014,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": -4.670374400000014,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "regional_stability": -0.4061195130434795,
+              "economic_stability_iran": -5.0,
+              "internal_political_pressure_iran": 10.0
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 0.1508223999999856,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": -8.027532800000001,
+              "internal_political_pressure_iran": 6.7137856000000005
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "global_state": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "causal_links": [
+            {
+              "from": "military_preparedness_level",
+              "polarity": "negative",
+              "strength": 0.6,
+              "to": "regional_stability",
+              "weight": -0.6
+            },
+            {
+              "from": "diplomatic_engagement_level",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "regional_stability",
+              "weight": 0.7
+            },
+            {
+              "from": "internal_political_pressure_iran",
+              "polarity": "negative",
+              "strength": 0.8,
+              "to": "economic_stability_iran",
+              "weight": -0.8
+            },
+            {
+              "from": "economic_stability_iran",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "internal_political_pressure_iran",
+              "weight": 0.7
+            },
+            {
+              "from": "military_preparedness_level",
+              "polarity": "negative",
+              "strength": 0.7,
+              "to": "trust_between_parties",
+              "weight": -0.7
+            },
+            {
+              "from": "diplomatic_engagement_level",
+              "polarity": "positive",
+              "strength": 0.8,
+              "to": "trust_between_parties",
+              "weight": 0.8
+            },
+            {
+              "from": "trust_between_parties",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "diplomatic_engagement_level",
+              "weight": 0.6
+            },
+            {
+              "from": "economic_stability_iran",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "regional_stability",
+              "weight": 0.4
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+            "[v1] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v2] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v3] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v4] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": []
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "diplomatic_engagement_level": 92.5772649184151,
+            "economic_stability_iran": 33.6806714482086,
+            "internal_political_pressure_iran": 78.08927222151333,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 100.57972670614058,
+            "trust_between_parties": 90.174582436651
+          },
+          "confidence": {
+            "diplomatic_engagement_level": 0.3799999999999999,
+            "economic_stability_iran": 0.3799999999999999,
+            "internal_political_pressure_iran": 0.21999999999999992,
+            "military_preparedness_level": 0.8000000000000003,
+            "regional_stability": 0.3799999999999999,
+            "trust_between_parties": 0.23999999999999988
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "diplomatic_engagement_level": 92.5772649184151,
+          "economic_stability_iran": 33.6806714482086,
+          "internal_political_pressure_iran": 78.08927222151333,
+          "military_preparedness_level": 60.0,
+          "regional_stability": 100.57972670614058,
+          "trust_between_parties": 90.174582436651
+        },
+        "confidence": {
+          "diplomatic_engagement_level": 0.3799999999999999,
+          "economic_stability_iran": 0.3799999999999999,
+          "internal_political_pressure_iran": 0.21999999999999992,
+          "military_preparedness_level": 0.8000000000000003,
+          "regional_stability": 0.3799999999999999,
+          "trust_between_parties": 0.23999999999999988
+        }
+      },
+      "long_term_goals": [
+        "economic_stability_iran",
+        "internal_political_pressure_iran"
+      ],
+      "short_term_goals": [
+        "economic_stability_iran",
+        "internal_political_pressure_iran"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "release_political_prisoners accepted",
+          "importance": 0.5701543749999999,
+          "emotional_valence": -1.0
+        },
+        {
+          "turn": 2,
+          "event": "release_political_prisoners accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 0.75
+        },
+        {
+          "turn": 3,
+          "event": "protesters_increase_demonstrations accepted",
+          "importance": 0.6317499999999999,
+          "emotional_valence": -1.0
+        },
+        {
+          "turn": 5,
+          "event": "protesters_increase_demonstrations accepted",
+          "importance": 0.7,
+          "emotional_valence": -1.0
+        }
+      ],
+      "last_actions": [
+        "mediate_confidence_building_measures",
+        "protesters_increase_demonstrations"
+      ],
+      "strategy_class_weights": {
+        "diplomatic": 1.0,
+        "escalatory": 0.6000000000000001
+      }
+    },
+    "international_negotiators": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "international_negotiators",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 3.947368421052632,
+              "regional_stability": 4.375,
+              "trust_between_parties": 3.7037037037037033
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 19.075072000000002,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": 10.3065856,
+              "internal_political_pressure_iran": -0.8419327999999998
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "international_negotiators",
+              "action_type": "mediate_confidence_building_measures",
+              "parameters": {},
+              "rationale": "Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": 10.0,
+                "internal_political_pressure_iran": -5.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 2.3333333333333335,
+              "regional_stability": 2.5,
+              "trust_between_parties": 2.2727272727272725
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 19.075072000000002,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": 10.3065856,
+              "internal_political_pressure_iran": -0.8419327999999998
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "international_negotiators",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 3.333333333333333,
+              "regional_stability": 3.0434782608695654,
+              "trust_between_parties": 3.333333333333333
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 14.8211968,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": -8.027532800000001,
+              "internal_political_pressure_iran": 6.7137856000000005
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "international_negotiators",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": 10.0,
+                "trust_between_parties": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 2.884615384615384,
+              "regional_stability": 2.916666666666667,
+              "trust_between_parties": 2.8571428571428568
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 16.6990336,
+              "trust_between_parties": 17.656038400000003
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "international_negotiators",
+              "action_type": "initiate_direct_talks",
+              "parameters": {},
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": -4.670374400000014,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "diplomatic_engagement_level": 10.0,
+                "regional_stability": -4.670374400000014,
+                "trust_between_parties": 10.0,
+                "economic_stability_iran": -5.0,
+                "internal_political_pressure_iran": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "diplomatic_engagement_level": 3.333333333333333,
+              "regional_stability": -1.4214182956521784,
+              "trust_between_parties": 3.333333333333333
+            },
+            "global_world_delta": {
+              "diplomatic_engagement_level": 10.0,
+              "regional_stability": 0.1508223999999856,
+              "trust_between_parties": 17.656038400000003,
+              "economic_stability_iran": -8.027532800000001,
+              "internal_political_pressure_iran": 6.7137856000000005
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "global_state": {
+            "diplomatic_engagement_level": 100.0,
+            "economic_stability_iran": 29.55810559999999,
+            "internal_political_pressure_iran": 81.7437056,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 104.8211968,
+            "trust_between_parties": 103.280192
+          },
+          "causal_links": [
+            {
+              "from": "military_preparedness_level",
+              "polarity": "negative",
+              "strength": 0.6,
+              "to": "regional_stability",
+              "weight": -0.6
+            },
+            {
+              "from": "diplomatic_engagement_level",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "regional_stability",
+              "weight": 0.7
+            },
+            {
+              "from": "internal_political_pressure_iran",
+              "polarity": "negative",
+              "strength": 0.8,
+              "to": "economic_stability_iran",
+              "weight": -0.8
+            },
+            {
+              "from": "economic_stability_iran",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "internal_political_pressure_iran",
+              "weight": 0.7
+            },
+            {
+              "from": "military_preparedness_level",
+              "polarity": "negative",
+              "strength": 0.7,
+              "to": "trust_between_parties",
+              "weight": -0.7
+            },
+            {
+              "from": "diplomatic_engagement_level",
+              "polarity": "positive",
+              "strength": 0.8,
+              "to": "trust_between_parties",
+              "weight": 0.8
+            },
+            {
+              "from": "trust_between_parties",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "diplomatic_engagement_level",
+              "weight": 0.6
+            },
+            {
+              "from": "economic_stability_iran",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "regional_stability",
+              "weight": 0.4
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Beliefs (world summary): diplomatic_engagement_level=50.0, economic_stability_iran=25.0, internal_political_pressure_iran=70.0, military_preparedness_level=60.0, regional_stability=35.0, trust_between",
+            "[v1] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: offer_economic_incentives (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: release_political_prisoners (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: mediate_confidence_building_measures (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v2] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v3] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: mediate_confidence_building_measures (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0",
+            "[v4] Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0 Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'economic_stability_iran']). Turn 1: did offer_economic_incentives. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level= Goal-driven: protesters_increase_demonstrations (goals: ['economic_stability_iran', 'internal_political_pressure_iran']). Turn 1: did release_political_prisoners. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_leve Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'regional_stability']). Turn 1: did initiate_direct_talks. Goal-driven: initiate_direct_talks (goals: ['diplomatic_engagement_level', 'military_preparedness_level']). Beliefs (world summary): diplomatic_engagement_level=50.0"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": []
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "diplomatic_engagement_level": 92.5772649184151,
+            "economic_stability_iran": 33.6806714482086,
+            "internal_political_pressure_iran": 78.08927222151333,
+            "military_preparedness_level": 60.0,
+            "regional_stability": 100.57972670614058,
+            "trust_between_parties": 90.174582436651
+          },
+          "confidence": {
+            "diplomatic_engagement_level": 0.23999999999999988,
+            "economic_stability_iran": 0.3799999999999999,
+            "internal_political_pressure_iran": 0.3799999999999999,
+            "military_preparedness_level": 0.8000000000000003,
+            "regional_stability": 0.3799999999999999,
+            "trust_between_parties": 0.1
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "diplomatic_engagement_level": 92.5772649184151,
+          "economic_stability_iran": 33.6806714482086,
+          "internal_political_pressure_iran": 78.08927222151333,
+          "military_preparedness_level": 60.0,
+          "regional_stability": 100.57972670614058,
+          "trust_between_parties": 90.174582436651
+        },
+        "confidence": {
+          "diplomatic_engagement_level": 0.23999999999999988,
+          "economic_stability_iran": 0.3799999999999999,
+          "internal_political_pressure_iran": 0.3799999999999999,
+          "military_preparedness_level": 0.8000000000000003,
+          "regional_stability": 0.3799999999999999,
+          "trust_between_parties": 0.1
+        }
+      },
+      "long_term_goals": [
+        "diplomatic_engagement_level",
+        "regional_stability",
+        "trust_between_parties"
+      ],
+      "short_term_goals": [
+        "diplomatic_engagement_level",
+        "regional_stability",
+        "trust_between_parties"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "initiate_direct_talks accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "mediate_confidence_building_measures accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 3,
+          "event": "initiate_direct_talks accepted",
+          "importance": 0.9025,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 4,
+          "event": "initiate_direct_talks accepted",
+          "importance": 0.95,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 5,
+          "event": "initiate_direct_talks accepted",
+          "importance": 1.0,
+          "emotional_valence": 1.0
+        }
+      ],
+      "last_actions": [
+        "initiate_direct_talks",
+        "initiate_direct_talks"
+      ],
+      "strategy_class_weights": {
+        "diplomatic": 1.9999999999999998
+      }
+    }
+  },
+  "governance_state": {
+    "strictness_level": 1
+  }
+}

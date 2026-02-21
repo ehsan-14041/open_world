@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>گراف علّی – موتور شبیه‌سازی جهان باز</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --border: #2d3a4d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --success: #3fb950;
+      --error: #f85149;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Vazirmatn", "Tahoma", "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 1.5rem;
+      line-height: 1.5;
+    }
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 1rem;
+      color: var(--accent);
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 6px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.9; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    button.secondary {
+      background: var(--surface);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    #graph-container {
+      width: 100%;
+      height: 70vh;
+      min-height: 500px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      position: relative;
+    }
+    #graph-svg {
+      width: 100%;
+      height: 100%;
+    }
+    .node {
+      cursor: pointer;
+    }
+    .node circle {
+      stroke: var(--border);
+      stroke-width: 2px;
+    }
+    .node text {
+      font-size: 12px;
+      fill: var(--text);
+      pointer-events: none;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .link {
+      stroke: var(--muted);
+      stroke-opacity: 0.6;
+      fill: none;
+    }
+    .link-label {
+      font-size: 10px;
+      fill: var(--muted);
+      pointer-events: none;
+    }
+    .status {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .empty-message {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem;
+    }
+    input[type="range"] {
+      width: 150px;
+      accent-color: var(--accent);
+    }
+    label {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .view-toggle {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .view-toggle button {
+      flex: 1;
+      border-radius: 0;
+      margin: 0;
+      border: none;
+      background: var(--surface);
+      color: var(--muted);
+    }
+    .view-toggle button.active {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .view-toggle button:not(.active):hover {
+      color: var(--text);
+    }
+    .top-drivers {
+      margin-bottom: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .top-drivers h3 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .top-drivers ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .top-drivers li {
+      font-size: 0.9rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      background: var(--surface);
+    }
+    .top-drivers li .delta-up { color: var(--success); }
+    .top-drivers li .delta-down { color: var(--error); }
+    #tooltip {
+      position: fixed;
+      padding: 0.5rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 1000;
+      white-space: pre-line;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .link.link-active {
+      stroke: var(--accent);
+      stroke-opacity: 1;
+    }
+    .link.link-dim {
+      stroke-opacity: 0.2;
+    }
+    .copyable-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      padding: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .copy-btn svg {
+      width: 1rem;
+      height: 1rem;
+    }
+    .breadcrumbs {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .breadcrumbs a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    .section-header {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .graph-section {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: var(--surface);
+    }
+    .graph-section.graph-area {
+      padding: 0;
+      overflow: hidden;
+    }
+    button:focus-visible, a:focus-visible, input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    button, .copy-btn { min-height: 44px; min-width: 44px; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      .controls { flex-direction: column; align-items: stretch; }
+      #graph-container { min-height: 400px; height: 50vh; }
+      input[type="range"] { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .top-drivers ul { flex-direction: column; }
+      .view-toggle { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumbs" aria-label="مسیر">
+    <a href="/">خانه</a> › گراف علّی
+  </nav>
+  <h1>گراف علّی</h1>
+  <p style="font-size:0.9rem;color:var(--muted);margin:0 0 1rem">روابط علّی بین متغیرها و تأثیر هر متغیر بر دیگری را مشاهده کنید.</p>
+  
+  <div class="panel">
+    {% if impact_data %}
+    <div class="graph-section">
+      <div class="section-header">Top Drivers</div>
+    <div class="top-drivers" id="topDriversPanel">
+      <div class="copyable-row" style="justify-content: space-between; align-items: center;">
+        <h3>سه متغیر با بیشترین تغییر</h3>
+        <button type="button" class="copy-btn copy-top-drivers-btn" title="کپی در کلیپ‌بورد" aria-label="کپی">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <ul id="topDriversList"></ul>
+    </div>
+    </div>
+    {% endif %}
+    <div class="graph-section">
+      <div class="section-header">کنترل‌ها</div>
+    <div class="controls">
+      {% if impact_data %}
+      <div class="view-toggle">
+        <button type="button" id="btnViewStructure" class="active">نمای ساختار</button>
+        <button type="button" id="btnViewImpact">نمای تأثیر</button>
+      </div>
+      {% endif %}
+      <button id="btnReset" class="secondary" title="بازنشانی نمای (R)">بازنشانی</button>
+      <button id="btnFit" class="secondary" title="تنظیم در صفحه (F)">تنظیم در صفحه</button>
+      {% if turns_data and turns_data|length > 1 %}
+      <button id="btnPlayPause" class="secondary">پخش انیمیشن</button>
+      <label for="turnSlider">راند:</label>
+      <input type="range" id="turnSlider" min="0" max="{{ (turns_data|length - 1) }}" value="{{ current_turn_index }}" step="1">
+      <span id="turnDisplay">راند {{ current_turn_index + 1 }} از {{ turns_data|length }}</span>
+      {% endif %}
+    </div>
+    </div>
+    <div class="graph-section graph-area">
+      <div class="section-header" style="padding:0.5rem 1rem 0">گراف</div>
+    <div id="graph-container">
+      <svg id="graph-svg"></svg>
+    </div>
+    <div id="tooltip"></div>
+    </div>
+    <div class="graph-section">
+    <div class="copyable-row">
+      <div class="status" id="status">
+        {% if nodes|length == 0 %}
+        متغیری یافت نشد. ابتدا شبیه‌سازی را اجرا کنید.
+        {% elif edges|length == 0 %}
+        {{ nodes|length }} متغیر یافت شد، اما هیچ رابطه علّی تعریف نشده.
+        {% else %}
+        {{ nodes|length }} متغیر، {{ edges|length }} رابطه علّی. راند {{ turn }}.
+        {% endif %}
+      </div>
+      <button type="button" class="copy-btn" id="copyStatusBtn" title="Copy to clipboard" aria-label="Copy">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    (function runGraph() {
+    const graphData = {{ graph_data|tojson }};
+    const turnsData = {{ turns_data|tojson if turns_data else 'null' }};
+    const impactData = {{ impact_data|tojson if impact_data else 'null' }};
+    
+    const container = document.getElementById('graph-container');
+    const width = container ? container.clientWidth : 800;
+    const height = container ? container.clientHeight : 600;
+    
+    const svg = d3.select('#graph-svg');
+    if (svg.empty()) return; // no graph container (e.g. wrong template context)
+    svg.attr('width', width).attr('height', height);
+    
+    const g = svg.append('g');
+    const tooltip = d3.select('#tooltip');
+    
+    // Zoom behavior
+    const zoom = d3.zoom()
+      .scaleExtent([0.1, 4])
+      .on('zoom', (event) => {
+        g.attr('transform', event.transform);
+      });
+    
+    svg.call(zoom);
+    
+    let simulation = null;
+    let isAnimating = false;
+    let animationInterval = null;
+    let currentTurnIndex = {{ current_turn_index if turns_data else 0 }};
+    let viewMode = 'structure'; // 'structure' | 'impact'
+    
+    function nodeRadius(d, isImpact) {
+      if (!isImpact || !impactData || impactData.deltas[d.id] === undefined) return 20;
+      const absDelta = Math.abs(impactData.deltas[d.id]);
+      const maxAbs = d3.max(Object.values(impactData.deltas).map(x => Math.abs(x))) || 1;
+      const t = maxAbs > 0 ? absDelta / maxAbs : 0;
+      return 12 + t * 28; // 12–40
+    }
+    
+    function updateGraph(data, useImpactView) {
+      const isImpact = useImpactView && impactData && data && data.nodes && data.nodes.length > 0;
+      
+      // Clear existing
+      g.selectAll('*').remove();
+      
+      if (!data || !data.nodes || data.nodes.length === 0) {
+        simulation = null;
+        g.append('text')
+          .attr('x', width / 2)
+          .attr('y', height / 2)
+          .attr('text-anchor', 'middle')
+          .attr('fill', 'var(--muted)')
+          .text('داده گرافی موجود نیست');
+        return;
+      }
+      
+      // Enrich nodes with impact fields when in impact view
+      if (isImpact) {
+        data.nodes.forEach(n => {
+          n.initial = impactData.initial_state[n.id] !== undefined ? impactData.initial_state[n.id] : 0;
+          n.final = impactData.final_state[n.id] !== undefined ? impactData.final_state[n.id] : 0;
+          n.delta = impactData.deltas[n.id] !== undefined ? impactData.deltas[n.id] : 0;
+        });
+        (data.edges || []).forEach(e => {
+          const fromId = typeof e.source === 'object' ? e.source.id : e.source;
+          const toId = typeof e.target === 'object' ? e.target.id : e.target;
+          e.activated = (impactData.activated_edges || []).some(
+            x => x.from === fromId && x.to === toId
+          );
+        });
+      }
+      
+      const maxMagnitude = d3.max(data.nodes, d => d.magnitude) || 1;
+      const colorScale = d3.scaleLinear()
+        .domain([0, maxMagnitude])
+        .range([d3.rgb('#58a6ff').brighter(2), d3.rgb('#58a6ff')]);
+      
+      function nodeColor(d) {
+        if (!isImpact || d.delta === undefined) return colorScale(d.magnitude);
+        if (d.delta > 0) return 'var(--success)';
+        if (d.delta < 0) return 'var(--error)';
+        return 'var(--muted)';
+      }
+      
+      // Only keep edges whose source and target exist in nodes (avoids D3 "node not found" and undefined in tick)
+      const nodeIds = new Set(data.nodes.map(n => n.id));
+      const edges = (data.edges || []).filter(e => {
+        const src = typeof e.source === 'object' ? e.source.id : e.source;
+        const tgt = typeof e.target === 'object' ? e.target.id : e.target;
+        return nodeIds.has(src) && nodeIds.has(tgt);
+      });
+      
+      const maxWeight = d3.max(edges.map(e => Math.abs(e.weight))) || 1;
+      const widthScale = d3.scaleLinear()
+        .domain([0, maxWeight])
+        .range([1, 5]);
+      
+      const link = g.append('g')
+        .attr('class', 'links')
+        .selectAll('line')
+        .data(edges)
+        .enter()
+        .append('line')
+        .attr('class', d => !isImpact ? 'link' : (d.activated ? 'link link-active' : 'link link-dim'))
+        .attr('stroke-width', d => d.activated ? 3 : (isImpact ? 1 : widthScale(Math.abs(d.weight))))
+        .attr('stroke', d => (isImpact && d.activated) ? 'var(--accent)' : 'var(--muted)')
+        .attr('stroke-opacity', d => (isImpact && d.activated) ? 1 : (isImpact ? 0.2 : 0.6));
+      
+      const linkLabels = g.append('g')
+        .attr('class', 'link-labels')
+        .selectAll('text')
+        .data(edges)
+        .enter()
+        .append('text')
+        .attr('class', 'link-label')
+        .attr('fill', d => d.activated ? 'var(--text)' : 'var(--muted)')
+        .attr('opacity', d => d.activated ? 1 : 0.5)
+        .text(d => d.weight.toFixed(2));
+      
+      const node = g.append('g')
+        .attr('class', 'nodes')
+        .selectAll('g')
+        .data(data.nodes)
+        .enter()
+        .append('g')
+        .attr('class', 'node')
+        .call(d3.drag()
+          .on('start', dragstarted)
+          .on('drag', dragged)
+          .on('end', dragended));
+      
+      node.append('circle')
+        .attr('r', d => nodeRadius(d, isImpact))
+        .attr('fill', nodeColor)
+        .attr('stroke', 'var(--border)')
+        .attr('stroke-width', 2);
+      
+      node.append('text')
+        .text(d => isImpact && d.delta !== undefined
+          ? `${d.id}\n${d.final != null ? d.final.toFixed(1) : d.value.toFixed(1)}`
+          : `${d.id}\n${d.value.toFixed(1)}`);
+      
+      node.on('mouseenter', function(event, d) {
+        const initVal = d.initial != null ? d.initial : (impactData && impactData.initial_state && impactData.initial_state[d.id] != null ? impactData.initial_state[d.id] : null);
+        const finVal = d.final != null ? d.final : d.value;
+        const deltaVal = d.delta != null ? d.delta : (impactData && impactData.deltas && impactData.deltas[d.id] != null ? impactData.deltas[d.id] : null);
+        const lines = [
+          d.id,
+          'Initial: ' + (initVal != null ? Number(initVal).toFixed(2) : '—'),
+          'Final: ' + Number(finVal).toFixed(2),
+          'Delta: ' + (deltaVal != null ? (deltaVal >= 0 ? '+' : '') + Number(deltaVal).toFixed(2) : '—')
+        ];
+        tooltip.style('opacity', 1).html(lines.join('\n'));
+      }).on('mousemove', function(event) {
+        tooltip
+          .style('left', (event.pageX + 12) + 'px')
+          .style('top', (event.pageY + 12) + 'px');
+      }).on('mouseleave', function() {
+        tooltip.style('opacity', 0);
+      });
+      
+      const maxR = d3.max(data.nodes, d => nodeRadius(d, isImpact)) || 25;
+      simulation = d3.forceSimulation(data.nodes)
+        .force('link', d3.forceLink(edges).id(d => d.id).distance(100))
+        .force('charge', d3.forceManyBody().strength(-300))
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('collision', d3.forceCollide().radius(maxR + 4));
+      
+      simulation.on('tick', () => {
+        link
+          .attr('x1', d => (d.source && d.source.x != null) ? d.source.x : 0)
+          .attr('y1', d => (d.source && d.source.y != null) ? d.source.y : 0)
+          .attr('x2', d => (d.target && d.target.x != null) ? d.target.x : 0)
+          .attr('y2', d => (d.target && d.target.y != null) ? d.target.y : 0);
+        
+        linkLabels
+          .attr('x', d => {
+            const s = d.source, t = d.target;
+            if (s && t && s.x != null && t.x != null) return (s.x + t.x) / 2;
+            return 0;
+          })
+          .attr('y', d => {
+            const s = d.source, t = d.target;
+            if (s && t && s.y != null && t.y != null) return (s.y + t.y) / 2;
+            return 0;
+          });
+        
+        node
+          .attr('transform', d => (d.x != null && d.y != null) ? `translate(${d.x},${d.y})` : 'translate(0,0)');
+      });
+    }
+    
+    function dragstarted(event) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      event.subject.fx = event.subject.x;
+      event.subject.fy = event.subject.y;
+    }
+    
+    function dragged(event) {
+      event.subject.fx = event.x;
+      event.subject.fy = event.y;
+    }
+    
+    function dragended(event) {
+      if (!event.active) simulation.alphaTarget(0);
+      event.subject.fx = null;
+      event.subject.fy = null;
+    }
+    
+    function resetView() {
+      if (!svg.node()) return;
+      svg.transition()
+        .duration(750)
+        .call(zoom.transform, d3.zoomIdentity);
+    }
+    
+    function fitToScreen() {
+      if (!simulation || !graphData.nodes || !g.node()) return;
+      
+      const bounds = g.node().getBBox();
+      const fullWidth = width;
+      const fullHeight = height;
+      const widthScale = fullWidth / bounds.width;
+      const heightScale = fullHeight / bounds.height;
+      const scale = Math.min(widthScale, heightScale) * 0.8;
+      const translate = [
+        fullWidth / 2 - scale * (bounds.x + bounds.width / 2),
+        fullHeight / 2 - scale * (bounds.y + bounds.height / 2)
+      ];
+      
+      if (svg.node()) {
+        svg.transition()
+          .duration(750)
+          .call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
+      }
+    }
+    
+    function updateTurnDisplay() {
+      document.getElementById('turnDisplay').textContent = 
+        `راند ${currentTurnIndex + 1} از ${turnsData.length}`;
+      document.getElementById('turnSlider').value = currentTurnIndex;
+    }
+    
+    function getTurnGraphData(index) {
+      if (!turnsData || index < 0 || index >= turnsData.length) return null;
+      const turnData = turnsData[index];
+      const vars = turnData.variables || turnData.global_state || {};
+      return {
+        nodes: Object.entries(vars).map(([id, value]) => ({
+          id,
+          value: typeof value === 'number' ? value : 0,
+          magnitude: Math.abs(typeof value === 'number' ? value : 0)
+        })),
+        edges: (turnData.causal_links || []).map(link => ({
+          source: link.from,
+          target: link.to,
+          weight: link.weight || 0
+        })),
+        turn: turnData.turn || index + 1
+      };
+    }
+    
+    function loadTurn(index) {
+      if (!turnsData || index < 0 || index >= turnsData.length) return;
+      
+      currentTurnIndex = index;
+      const turnGraphData = getTurnGraphData(index);
+      if (!turnGraphData) return;
+      
+      const useImpact = viewMode === 'impact' && impactData && index === turnsData.length - 1;
+      updateGraph(turnGraphData, useImpact);
+      updateTurnDisplay();
+      
+      const statusEl = document.getElementById('status');
+      statusEl.textContent = `${turnGraphData.nodes.length} متغیر، ${turnGraphData.edges.length} رابطه علّی. راند ${turnGraphData.turn}.` +
+        (useImpact ? ' (نمای تأثیر: اولیه → نهایی)' : '');
+    }
+    
+    function playPauseAnimation() {
+      if (!turnsData || turnsData.length <= 1) return;
+      
+      isAnimating = !isAnimating;
+      const btn = document.getElementById('btnPlayPause');
+      
+      if (isAnimating) {
+        btn.textContent = 'توقف انیمیشن';
+        animationInterval = setInterval(() => {
+          currentTurnIndex = (currentTurnIndex + 1) % turnsData.length;
+          loadTurn(currentTurnIndex);
+        }, 1000); // 1 second per turn
+      } else {
+        btn.textContent = 'پخش انیمیشن';
+        if (animationInterval) {
+          clearInterval(animationInterval);
+          animationInterval = null;
+        }
+      }
+    }
+    
+    function renderTopDrivers() {
+      if (!impactData || !impactData.top_drivers || !impactData.top_drivers.length) return;
+      const ul = document.getElementById('topDriversList');
+      if (!ul) return;
+      ul.innerHTML = impactData.top_drivers.map(d => {
+        const sign = d.delta >= 0 ? '+' : '';
+        const cls = d.delta > 0 ? 'delta-up' : d.delta < 0 ? 'delta-down' : '';
+        return `<li><strong>${d.var}</strong>: <span class="${cls}">${sign}${d.delta.toFixed(2)}</span></li>`;
+      }).join('');
+    }
+    
+    function setViewMode(mode) {
+      viewMode = mode;
+      const btnStruct = document.getElementById('btnViewStructure');
+      const btnImpact = document.getElementById('btnViewImpact');
+      if (btnStruct) btnStruct.classList.toggle('active', mode === 'structure');
+      if (btnImpact) btnImpact.classList.toggle('active', mode === 'impact');
+      if (mode === 'impact' && impactData) {
+        if (turnsData && turnsData.length > 0) {
+          currentTurnIndex = turnsData.length - 1;
+          if (document.getElementById('turnSlider')) {
+            document.getElementById('turnSlider').value = currentTurnIndex;
+          }
+          updateTurnDisplay();
+          const finalData = getTurnGraphData(currentTurnIndex);
+          if (finalData) updateGraph(finalData, true);
+        } else {
+          updateGraph(graphData, true);
+        }
+      } else {
+        const data = turnsData && turnsData.length > 0 ? getTurnGraphData(currentTurnIndex) : graphData;
+        updateGraph(data || graphData, false);
+      }
+    }
+    
+    // Initialize
+    if (impactData) {
+      renderTopDrivers();
+      const finalIdx = turnsData && turnsData.length > 0 ? turnsData.length - 1 : 0;
+      const initialData = turnsData && turnsData.length > 0 ? getTurnGraphData(currentTurnIndex) : graphData;
+      updateGraph(initialData || graphData, false);
+    } else {
+      updateGraph(graphData);
+    }
+    
+    // Event listeners
+    document.getElementById('btnReset').addEventListener('click', resetView);
+    document.getElementById('btnFit').addEventListener('click', fitToScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+      if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        resetView();
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        fitToScreen();
+      }
+    });
+    
+    if (impactData) {
+      const btnStruct = document.getElementById('btnViewStructure');
+      const btnImpact = document.getElementById('btnViewImpact');
+      if (btnStruct) btnStruct.addEventListener('click', () => setViewMode('structure'));
+      if (btnImpact) btnImpact.addEventListener('click', () => setViewMode('impact'));
+    }
+    
+    if (turnsData && turnsData.length > 1) {
+      document.getElementById('btnPlayPause').addEventListener('click', playPauseAnimation);
+      document.getElementById('turnSlider').addEventListener('input', (e) => {
+        if (!isAnimating) {
+          loadTurn(parseInt(e.target.value, 10));
+        }
+      });
+    }
+
+    async function copyToClipboard(text) {
+      if (!text || !text.trim()) return false;
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (e) { return false; }
+    }
+
+    const copyStatusBtn = document.getElementById('copyStatusBtn');
+    if (copyStatusBtn) {
+      copyStatusBtn.addEventListener('click', async () => {
+        const statusEl = document.getElementById('status');
+        const ok = await copyToClipboard(statusEl ? statusEl.textContent : '');
+        copyStatusBtn.setAttribute('title', ok ? 'کپی شد!' : 'خطا در کپی');
+        setTimeout(() => copyStatusBtn.setAttribute('title', 'کپی در کلیپ‌بورد'), 1500);
+      });
+    }
+
+    document.body.addEventListener('click', async (e) => {
+      if (!e.target.closest('.copy-top-drivers-btn')) return;
+      const list = document.getElementById('topDriversList');
+      const text = list ? Array.from(list.querySelectorAll('li')).map(li => li.textContent.trim()).join('\n') : '';
+      const ok = await copyToClipboard(text);
+      const btn = e.target.closest('.copy-top-drivers-btn');
+      if (btn) {
+        btn.setAttribute('title', ok ? 'کپی شد!' : 'خطا در کپی');
+        setTimeout(() => btn.setAttribute('title', 'کپی در کلیپ‌بورد'), 1500);
+      }
+    });
+    })();
+  </script>
+</body>
+</html>

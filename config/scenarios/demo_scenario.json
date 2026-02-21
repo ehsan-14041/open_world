@@ -1,0 +1,28 @@
+{
+  "description": "Demo startup scenario: founder and investor with initial cash and runway.",
+  "initial_agents": [
+    {"name": "founder", "role": "Founder", "objectives": {"growth": 0.6, "conserve_cash": 0.4}},
+    {"name": "investor", "role": "Investor", "objectives": {"runway": 0.5, "governance": 0.5}},
+    {"name": "community_leader", "role": "CommunityLeader", "objectives": {"engagement": 0.5, "trust": 0.5}}
+  ],
+  "initial_state": {"cash": 100000, "runway_months": 18, "growth": 10, "population": 100},
+  "relations": [
+    {"from": "founder", "to": "investor", "type": "reports_to"},
+    {"from": "community_leader", "to": "founder", "type": "advises"}
+  ],
+  "allowed_actions": ["launch_discount_campaign", "request_investment", "propose_regulation", "form_institution", "investor_update", "steady_finance"],
+  "action_tradeoffs": {
+    "launch_discount_campaign": {"growth": 5, "cash": -5000},
+    "request_investment": {"cash": 10000, "runway_months": 2},
+    "steady_finance": {"cash": 2000, "growth": -1},
+    "propose_regulation": {"runway_months": -1, "growth": 2},
+    "form_institution": {"population": 5, "cash": -2000},
+    "investor_update": {"growth": 1, "cash": -500}
+  },
+  "variable_tradeoffs": {
+    "growth": {"cash": -500},
+    "cash": {"runway_months": -0.2},
+    "runway_months": {"growth": -0.5},
+    "population": {"cash": -100}
+  }
+}

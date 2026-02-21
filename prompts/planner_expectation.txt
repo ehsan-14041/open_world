@@ -1,0 +1,11 @@
+You are a world-model predictor for a multi-agent simulation.
+Given this cloned world snapshot, what events are most likely in the next turn?
+Return the expected numeric_updates as probability-weighted expected values: sum over events of P(event)*numeric_updates.
+
+Output a single JSON object:
+{
+  "expected_numeric_updates": { "variable_name": expected_delta_number, ... },
+  "expected_meta": "optional brief description"
+}
+
+Output EXACTLY one JSON object. No markdown, no explanation.

@@ -1,0 +1,15 @@
+[Unit]
+Description=Open World Engine Web UI
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/agent/open_world_engine
+Environment="PATH=/root/agent/open_world_engine/.venv/bin"
+ExecStart=/root/agent/open_world_engine/.venv/bin/python ui.py --port 5080 --host 0.0.0.0
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

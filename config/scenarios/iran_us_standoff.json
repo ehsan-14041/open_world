@@ -1,0 +1,111 @@
+{
+  "description": "سناریوی روابط ایران و آمریکا: در ماه‌های اخیر، ایالات متحده حضور نظامی خود را در خاورمیانه افزایش داده تا فشار بر ایران را حفظ کند و از تشدید بحران جلوگیری کند، در حالی که گزینه‌های نظامی محدود را نیز بررسی می‌کند. ایران با اعتراضات گسترده، محدودیت‌های اینترنتی و بحران اقتصادی روبه‌رو است و از قدرت دیپلماتیک برای دفاع از منافع خود در مذاکرات غیرمستقیم استفاده می‌کند. گفتگوهای دیپلماتیک در سطوح مختلف ادامه دارد اما هر دو طرف به اختلافات عمیق بر سر برنامه هسته‌ای و قابلیت‌های موشکی پایبند هستند. تعارض میان تلاش برای کاهش تنش از طریق گفتگو و افزایش آمادگی نظامی و بی‌اعتمادی متقابل باعث شده چشم‌انداز آینده شکننده باقی بماند.",
+  "initial_agents": [
+    {
+      "name": "united_states",
+      "role": "United States",
+      "objectives": {
+        "decrease_tension": 0.35,
+        "maintain_military_deterrence": 0.4,
+        "increase_diplomatic_progress": 0.25
+      },
+      "personality": "Strategic actor seeking to maintain pressure on Iran while preventing escalation. Balances military presence with diplomatic channels. Cautious about direct confrontation."
+    },
+    {
+      "name": "iran",
+      "role": "Iran",
+      "objectives": {
+        "defend_nuclear_interests": 0.35,
+        "increase_domestic_stability": 0.3,
+        "increase_diplomatic_progress": 0.35
+      },
+      "personality": "Faces domestic protests and economic crisis. Uses diplomatic power in indirect negotiations to defend nuclear and missile capabilities. Seeks legitimacy while managing internal pressures."
+    },
+    {
+      "name": "mediator",
+      "role": "International Mediator",
+      "objectives": {
+        "increase_diplomatic_progress": 0.5,
+        "decrease_tension": 0.3,
+        "increase_stability": 0.2
+      },
+      "personality": "Facilitates indirect negotiations, seeks guiding principles for agreement. Works to bridge deep disagreements on nuclear program and missile capabilities."
+    }
+  ],
+  "initial_state": {
+    "tension": 65,
+    "military_pressure": 70,
+    "diplomatic_progress": 25,
+    "domestic_stability_iran": 45,
+    "economic_prosperity_iran": 35,
+    "trust": 20,
+    "stability": 40,
+    "nuclear_negotiation_progress": 15
+  },
+  "relations": [
+    {"from": "united_states", "to": "iran", "type": "adversarial"},
+    {"from": "iran", "to": "united_states", "type": "adversarial"},
+    {"from": "united_states", "to": "mediator", "type": "engages"},
+    {"from": "iran", "to": "mediator", "type": "engages"}
+  ],
+  "causal_links": [
+    {"from": "tension", "to": "stability", "weight": -0.35},
+    {"from": "military_pressure", "to": "tension", "weight": 0.25},
+    {"from": "diplomatic_progress", "to": "tension", "weight": -0.2},
+    {"from": "diplomatic_progress", "to": "trust", "weight": 0.15},
+    {"from": "trust", "to": "diplomatic_progress", "weight": 0.2},
+    {"from": "domestic_stability_iran", "to": "diplomatic_progress", "weight": 0.1},
+    {"from": "economic_prosperity_iran", "to": "domestic_stability_iran", "weight": 0.3},
+    {"from": "nuclear_negotiation_progress", "to": "tension", "weight": -0.15},
+    {"from": "military_pressure", "to": "domestic_stability_iran", "weight": -0.1}
+  ],
+  "allowed_actions": [
+    "increase_military_presence",
+    "deescalate_military",
+    "propose_nuclear_framework",
+    "demand_nuclear_restrictions",
+    "indirect_negotiation",
+    "domestic_crackdown",
+    "economic_sanctions_relief",
+    "minor_diplomatic_concession",
+    "hold_position",
+    "activate_hotline",
+    "propose_missile_talks",
+    "reject_missile_talks"
+  ],
+  "action_tradeoffs": {
+    "increase_military_presence": {"military_pressure": 8, "tension": 5, "trust": -3},
+    "deescalate_military": {"military_pressure": -6, "tension": -4, "stability": 2},
+    "propose_nuclear_framework": {"nuclear_negotiation_progress": 10, "diplomatic_progress": 5, "tension": -3},
+    "demand_nuclear_restrictions": {"tension": 4, "nuclear_negotiation_progress": -2},
+    "indirect_negotiation": {"diplomatic_progress": 8, "trust": 2, "tension": -2},
+    "domestic_crackdown": {"domestic_stability_iran": 5, "trust": -4, "economic_prosperity_iran": -2},
+    "economic_sanctions_relief": {"economic_prosperity_iran": 10, "domestic_stability_iran": 5, "diplomatic_progress": 5},
+    "minor_diplomatic_concession": {"diplomatic_progress": 6, "tension": -4, "trust": 3},
+    "hold_position": {"stability": 1},
+    "activate_hotline": {"trust": 4, "tension": -5},
+    "propose_missile_talks": {"nuclear_negotiation_progress": 3, "diplomatic_progress": 4},
+    "reject_missile_talks": {"tension": 3, "diplomatic_progress": -2}
+  },
+  "variable_tradeoffs": {
+    "tension": {"stability": -0.25, "trust": -0.15},
+    "military_pressure": {"tension": 0.2, "domestic_stability_iran": -0.1},
+    "diplomatic_progress": {"tension": -0.15, "trust": 0.1},
+    "domestic_stability_iran": {"diplomatic_progress": 0.08},
+    "trust": {"diplomatic_progress": 0.12}
+  },
+  "variable_specs": {
+    "tension": {"min": 0, "max": 100, "clip": true, "soft_max": 85, "softness": 0.3, "rate_limit": 12},
+    "military_pressure": {"min": 0, "max": 100, "clip": true, "rate_limit": 10},
+    "diplomatic_progress": {"min": 0, "max": 100, "clip": true, "rate_limit": 15},
+    "domestic_stability_iran": {"min": 0, "max": 100, "clip": true, "rate_limit": 8},
+    "economic_prosperity_iran": {"min": 0, "max": 100, "clip": true, "rate_limit": 10},
+    "trust": {"min": 0, "max": 100, "clip": true, "rate_limit": 6},
+    "stability": {"min": 0, "max": 100, "clip": true, "soft_max": 90, "softness": 0.2, "rate_limit": 8},
+    "nuclear_negotiation_progress": {"min": 0, "max": 100, "clip": true, "rate_limit": 12}
+  },
+  "rules": [],
+  "events": [],
+  "enable_meta_actions": false,
+  "agent_response_format": "strategic"
+}

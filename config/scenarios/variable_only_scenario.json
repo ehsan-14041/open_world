@@ -1,0 +1,6 @@
+{
+  "description": "Two factions compete over tensions and stability in a region.",
+  "initial_state": {"tensions": 50, "stability": 60, "resources": 100},
+  "relations": [],
+  "allowed_actions": []
+}

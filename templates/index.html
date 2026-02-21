@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موتور شبیه‌سازی جهان باز</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+  <style>
+    .lang-switcher {
+      display: flex;
+      gap: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    .lang-switcher button {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .lang-switcher button:hover { color: var(--text); }
+    .lang-switcher button.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+    [dir="ltr"] body { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; }
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-elevated: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --success: #3fb950;
+      --error: #f85149;
+      --warning: #d29922;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.25);
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Vazirmatn", "Tahoma", "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 1.5rem;
+      line-height: 1.7;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      color: var(--text);
+    }
+    .hero-subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .step-card {
+      position: relative;
+      padding-inline-start: 3rem;
+      border-inline-start: 4px solid var(--accent);
+    }
+    .step-number {
+      position: absolute;
+      inset-inline-start: -0.5rem;
+      top: 1rem;
+      width: 2rem;
+      height: 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .step-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .step-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font: inherit;
+      resize: vertical;
+    }
+    textarea::placeholder { color: var(--muted); }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-top: 0.75rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radius-sm);
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    button:hover { opacity: 0.9; transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    button.secondary {
+      background: var(--surface);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    a.btn-link {
+      padding: 0.5rem 1rem;
+      background: var(--surface);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+    }
+    a.btn-link:hover { opacity: 0.9; }
+    .checkbox-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .checkbox-wrap input { accent-color: var(--accent); }
+    input[type="number"] {
+      width: 4rem;
+      padding: 0.35rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font: inherit;
+    }
+    #output, #outputSummary {
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 0.8rem;
+      max-height: 60vh;
+      overflow: auto;
+      padding: 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-top: 0;
+    }
+    #output.empty, #outputSummary.empty { color: var(--muted); }
+    #output.error, #outputSummary.error { color: var(--error); }
+    #output.success, #outputSummary.success { color: var(--success); }
+    .status { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 0.25rem 0;
+      border-bottom: 2px solid var(--border);
+    }
+    .tabs button {
+      padding: 0.6rem 1.2rem;
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 6px 6px 0 0;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .tabs button:hover { color: var(--text); background: var(--bg); }
+    .tabs button.active {
+      color: var(--accent);
+      background: var(--bg);
+      border-bottom-color: var(--bg);
+      margin-bottom: -2px;
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .llm-log-entry {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.8rem;
+    }
+    .llm-log-entry h4 {
+      margin: 0 0 0.5rem;
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+    .llm-log-entry .field {
+      margin-top: 0.5rem;
+    }
+    .llm-log-entry .field-label {
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+    .llm-log-entry pre {
+      margin: 0;
+      padding: 0.5rem;
+      background: #0a0e12;
+      border-radius: 4px;
+      overflow-x: auto;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .llm-log-entry summary {
+      cursor: pointer;
+      color: var(--muted);
+    }
+    #llmLogsContainer { max-height: 70vh; overflow-y: auto; }
+    .output-header, .field-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .field-label { margin-bottom: 0.25rem; }
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      padding: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .copy-btn svg {
+      width: 1rem;
+      height: 1rem;
+    }
+    .copyable-wrap {
+      position: relative;
+    }
+    .copyable-wrap .copy-btn {
+      position: absolute;
+      top: 0.25rem;
+      right: 0.25rem;
+      z-index: 1;
+    }
+    .copyable-wrap details,
+    .copyable-wrap pre {
+      padding-right: 2.25rem;
+    }
+    /* Breadcrumbs */
+    .breadcrumbs {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .breadcrumbs a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    /* Section separation */
+    .section-scenario {
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+    .section-controls {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0.75rem 0;
+    }
+    .control-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .control-group-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+      width: 100%;
+    }
+    /* Toast notifications */
+    .toast-container {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 360px;
+    }
+    .toast {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      animation: toastSlide 0.3s ease;
+    }
+    .toast.success { background: var(--success); color: var(--bg); }
+    .toast.error { background: var(--error); color: var(--bg); }
+    .toast.info { background: var(--accent); color: var(--bg); }
+    @keyframes toastSlide {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    [dir="rtl"] .toast { animation: toastSlideRtl 0.3s ease; }
+    @keyframes toastSlideRtl {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    /* Progress bar */
+    .progress-container {
+      display: none;
+      margin-bottom: 1rem;
+    }
+    .progress-container.visible { display: block; }
+    .run-progress-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .run-progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .run-progress-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .run-progress-badge {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(88,166,255,0.15);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+    }
+    .run-progress-badge.done {
+      color: var(--success);
+      background: rgba(63,185,80,0.15);
+    }
+    .progress-bar-wrap {
+      height: 10px;
+      background: var(--bg);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--success));
+      border-radius: 5px;
+      transition: width 0.4s ease;
+    }
+    .progress-bar-fill.indeterminate {
+      width: 30% !important;
+      animation: progressIndeterminate 1.5s ease-in-out infinite;
+    }
+    @keyframes progressIndeterminate {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(400%); }
+    }
+    .progress-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    /* Round timeline - vertical list */
+    .round-timeline {
+      max-height: 280px;
+      overflow-y: auto;
+      padding-inline-start: 0.5rem;
+      border-inline-start: 2px solid var(--border);
+    }
+    .round-item {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      min-height: 44px;
+      align-items: flex-start;
+    }
+    .round-item:last-child { border-bottom: none; }
+    .round-item.current {
+      background: rgba(88,166,255,0.08);
+      margin-inline-start: -0.5rem;
+      padding-inline-start: 0.5rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+    .round-item.pending {
+      opacity: 0.6;
+    }
+    .round-num {
+      flex-shrink: 0;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .round-item.complete .round-num {
+      background: var(--success);
+      color: var(--bg);
+    }
+    .round-item.current .round-num {
+      background: var(--accent);
+      color: var(--bg);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .round-item.pending .round-num {
+      background: var(--border);
+      color: var(--muted);
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    .round-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .round-status {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .round-changes {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .round-changes .var-up { color: var(--success); }
+    .round-changes .var-down { color: var(--error); }
+    .round-changes .var-name { font-weight: 600; color: var(--text); }
+    .round-download-link {
+      display: inline-block;
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .round-download-link:hover { text-decoration: underline; }
+    /* Mini timeline for streaming (fallback) */
+    .stream-timeline {
+      display: flex;
+      gap: 0.25rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .stream-timeline-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.2s;
+    }
+    .stream-timeline-dot.complete { background: var(--success); }
+    .stream-timeline-dot.current { background: var(--accent); }
+    /* Focus and accessibility */
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+    /* Touch targets */
+    button, a.btn-link {
+      min-height: 44px;
+      min-width: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Output tabs */
+    .output-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .output-tabs button {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .output-tabs button.active {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .output-tab-panel { display: none; }
+    .output-tab-panel.active { display: block; }
+    .shortcut-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border);
+    }
+    .shortcut-hint kbd {
+      background: var(--bg);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      .round-timeline { max-height: 200px; }
+      .control-group { flex-direction: column; align-items: stretch; }
+      .control-group > *:not(.control-group-label) { width: 100%; }
+      button, a.btn-link { width: 100%; justify-content: center; }
+      .row { flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .tabs { flex-wrap: wrap; }
+      .toast-container { max-width: calc(100vw - 2rem); right: 1rem; left: 1rem; }
+    }
+    /* Output with icons */
+    #output.success::before, #outputSummary.success::before { content: "✓ "; }
+    #output.error::before, #outputSummary.error::before { content: "⚠ "; }
+  </style>
+</head>
+<body>
+  <div class="lang-switcher" role="group" aria-label="Language">
+    <button type="button" id="langEn" data-lang="en">English</button>
+    <button type="button" id="langFa" data-lang="fa" class="active">فارسی</button>
+  </div>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/" data-i18n="home">خانه</a> <span data-i18n="breadcrumbSep">›</span> <span data-i18n="simulator">شبیه‌ساز</span>
+  </nav>
+  <h1 data-i18n="title">موتور شبیه‌سازی جهان باز</h1>
+  <p class="hero-subtitle" data-i18n="heroSubtitle">سناریوی خود را به زبان ساده بنویسید، ثبت کنید و شبیه‌سازی را اجرا کنید. نتایج را به صورت خروجی خام، خلاصه روایی یا گراف علّی مشاهده کنید.</p>
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+  <div class="tabs">
+    <button type="button" class="tab-btn active" data-tab="main" data-i18n="tabMain">صفحه اصلی</button>
+    <button type="button" class="tab-btn" data-tab="llm-logs" data-i18n="tabLlmLogs">لاگ LLM</button>
+  </div>
+
+  <div id="tab-main" class="tab-panel active">
+
+  <section class="panel step-card" aria-labelledby="scenario-heading">
+    <span class="step-number" aria-hidden="true">۱</span>
+    <h2 id="scenario-heading" class="step-title" data-i18n="step1Title">سناریو را بنویسید</h2>
+    <p class="step-desc" data-i18n="step1Desc">وضعیت اولیه، بازیگران و اهداف را به زبان آزاد توصیف کنید. مثال: «یک استارتاپ با بنیانگذار و سرمایه‌گذار؛ پول نقد اولیه ۱۰۰ هزار، runway ۱۸ ماه. بنیانگذار روی رشد و حفظ نقدینگی تمرکز دارد؛ سرمایه‌گذار به runway و حاکمیت اهمیت می‌دهد.»</p>
+    <label for="scenario" data-i18n="scenarioLabel">توضیحات سناریو</label>
+    <textarea id="scenario" data-i18n-ph="scenarioPlaceholder" placeholder="سناریوی خود را اینجا بنویسید..."></textarea>
+    <div class="control-group section-controls">
+      <div class="control-group-label" data-i18n="submitLabel">ثبت سناریو</div>
+      <button type="button" id="btnSubmit" data-i18n="btnSubmit" data-i18n-title="btnSubmitTitle">ثبت سناریو</button>
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="useLlm" checked>
+        <label for="useLlm" style="margin:0" data-i18n="useLlmLabel">تبدیل خودکار به JSON با LLM</label>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel step-card" aria-labelledby="simulation-heading">
+    <span class="step-number" aria-hidden="true">۲</span>
+    <h2 id="simulation-heading" class="step-title" data-i18n="step2Title">شبیه‌سازی را اجرا کنید</h2>
+    <p class="step-desc" data-i18n="step2Desc">تعداد راندها را مشخص کنید و شبیه‌سازی را شروع کنید.</p>
+    <div class="control-group">
+      <button type="button" id="btnRun" data-i18n="btnRun" data-i18n-title="btnRunTitle">▶ اجرای شبیه‌سازی</button>
+      <label for="steps" style="margin:0" data-i18n="stepsLabel">تعداد راند:</label>
+      <input type="number" id="steps" value="5" min="1" max="50" data-i18n-aria="stepsAria">
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="dryRun">
+        <label for="dryRun" style="margin:0" data-i18n="dryRunLabel">حالت خشک (بدون LLM)</label>
+      </div>
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="streamTurns" checked>
+        <label for="streamTurns" style="margin:0" data-i18n="streamTurnsLabel">نمایش تدریجی هر راند</label>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="control-group-label" data-i18n="viewResultsLabel">مشاهده نتایج</div>
+    <div class="control-group">
+      <button type="button" id="btnSnapshot" class="secondary" data-i18n="btnSnapshot">اسنپ‌شات فعلی</button>
+      <a href="/graph" target="_blank" rel="noopener" class="btn-link secondary" data-i18n="btnGraph">گراف علّی</a>
+      <a href="/viewer" target="_blank" rel="noopener" class="btn-link secondary" data-i18n="btnViewer">نمایشگر اجرا</a>
+      <button type="button" id="btnSummary" class="secondary" data-i18n="btnSummary">خلاصه روایی</button>
+      <button type="button" id="btnDownloadFinal" class="secondary" disabled data-i18n="btnDownloadFinal">دانلود JSON نهایی</button>
+      <button type="button" id="btnShowLogs" class="secondary" data-i18n="btnShowLogs">لاگ LLM</button>
+    </div>
+  </section>
+
+  <section class="panel step-card" aria-labelledby="result-heading">
+    <span class="step-number" aria-hidden="true">۳</span>
+    <h2 id="result-heading" class="step-title" data-i18n="step3Title">خروجی و نتایج</h2>
+    <p class="step-desc" data-i18n="step3Desc">خروجی خام JSON یا خلاصه روایی شبیه‌سازی را اینجا می‌بینید.</p>
+    <div id="progressContainer" class="progress-container" aria-live="polite">
+      <div class="run-progress-panel">
+        <div class="run-progress-header">
+          <span class="run-progress-title" data-i18n="progressTitle">پیشرفت شبیه‌سازی</span>
+          <span id="runProgressBadge" class="run-progress-badge">راند ۰ از ۰</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div id="progressBarFill" class="progress-bar-fill" style="width:0%"></div>
+        </div>
+        <div id="progressLabel" class="progress-label">در انتظار شروع...</div>
+        <div id="roundTimeline" class="round-timeline" data-i18n-aria="roundTimelineAria"></div>
+      </div>
+    </div>
+    <div class="output-header">
+      <label for="output" data-i18n="outputLabel">خروجی</label>
+      <div class="output-tabs">
+        <button type="button" class="output-tab-btn active" data-output-tab="raw" data-i18n="outputTabRaw">خروجی خام</button>
+        <button type="button" class="output-tab-btn" data-output-tab="summary" data-i18n="outputTabSummary">خلاصه</button>
+      </div>
+      <button type="button" class="copy-btn" data-copy-target="output" title="Copy to clipboard" aria-label="Copy">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
+    </div>
+    <div id="outputRawPanel" class="output-tab-panel active">
+      <pre id="output" class="empty" data-i18n="outputEmpty">سناریو را ثبت کنید یا شبیه‌سازی را اجرا کنید تا خروجی اینجا نمایش داده شود.</pre>
+    </div>
+    <div id="outputSummaryPanel" class="output-tab-panel">
+      <pre id="outputSummary" class="empty" data-i18n="outputSummaryEmpty">دکمه «خلاصه روایی» را بزنید یا به این تب بروید تا خلاصه روایی بارگذاری شود.</pre>
+    </div>
+  </section>
+
+  <p class="shortcut-hint" data-i18n-html="shortcutHint">میانبرها: <kbd>Ctrl+Enter</kbd> ثبت سناریو · <kbd>Ctrl+R</kbd> اجرای شبیه‌سازی · <kbd>Esc</kbd> بستن اعلان‌ها</p>
+  </div>
+
+  <div id="tab-llm-logs" class="tab-panel">
+    <div class="panel">
+      <div class="row">
+        <button type="button" id="btnRefreshLogs" data-i18n="btnRefreshLogs">بروزرسانی لاگ‌ها</button>
+        <button type="button" id="btnClearLogs" class="secondary" data-i18n="btnClearLogs">پاک کردن</button>
+      </div>
+      <p class="status" style="margin-top: 0.5rem;" data-i18n="llmLogsDesc">هر درخواست و پاسخ ارسالی به LLM اینجا نمایش داده می‌شود. بعد از Submit Scenario یا Run Simulation، دکمه بروزرسانی را بزنید.</p>
+      <div id="llmLogsContainer"></div>
+    </div>
+  </div>
+
+  <script>
+    const LANG_KEY = 'open_world_lang';
+    const i18n = {
+      fa: {
+        home: 'خانه', breadcrumbSep: '›', simulator: 'شبیه‌ساز',
+        title: 'موتور شبیه‌سازی جهان باز',
+        heroSubtitle: 'سناریوی خود را به زبان ساده بنویسید، ثبت کنید و شبیه‌سازی را اجرا کنید. نتایج را به صورت خروجی خام، خلاصه روایی یا گراف علّی مشاهده کنید.',
+        tabMain: 'صفحه اصلی', tabLlmLogs: 'لاگ LLM',
+        step1Title: 'سناریو را بنویسید', step1Desc: 'وضعیت اولیه، بازیگران و اهداف را به زبان آزاد توصیف کنید. مثال: «یک استارتاپ با بنیانگذار و سرمایه‌گذار؛ پول نقد اولیه ۱۰۰ هزار، runway ۱۸ ماه. بنیانگذار روی رشد و حفظ نقدینگی تمرکز دارد؛ سرمایه‌گذار به runway و حاکمیت اهمیت می‌دهد.»',
+        scenarioLabel: 'توضیحات سناریو', scenarioPlaceholder: 'سناریوی خود را اینجا بنویسید...',
+        submitLabel: 'ثبت سناریو', btnSubmit: 'ثبت سناریو', btnSubmitTitle: 'ثبت سناریو (Ctrl+Enter)',
+        useLlmLabel: 'تبدیل خودکار به JSON با LLM',
+        step2Title: 'شبیه‌سازی را اجرا کنید', step2Desc: 'تعداد راندها را مشخص کنید و شبیه‌سازی را شروع کنید.',
+        btnRun: '▶ اجرای شبیه‌سازی', btnRunTitle: 'اجرای شبیه‌سازی (Ctrl+R)',
+        stepsLabel: 'تعداد راند:', stepsAria: 'تعداد راند',
+        dryRunLabel: 'حالت خشک (بدون LLM)', streamTurnsLabel: 'نمایش تدریجی هر راند',
+        viewResultsLabel: 'مشاهده نتایج',
+        btnSnapshot: 'اسنپ‌شات فعلی', btnGraph: 'گراف علّی', btnViewer: 'نمایشگر اجرا', btnSummary: 'خلاصه روایی', btnDownloadFinal: 'دانلود JSON نهایی', btnShowLogs: 'لاگ LLM',
+        downloadRoundJson: 'دانلود JSON این راند', downloadFinalJson: 'دانلود JSON نهایی',
+        step3Title: 'خروجی و نتایج', step3Desc: 'خروجی خام JSON یا خلاصه روایی شبیه‌سازی را اینجا می‌بینید.',
+        progressTitle: 'پیشرفت شبیه‌سازی', outputLabel: 'خروجی', outputTabRaw: 'خروجی خام', outputTabSummary: 'خلاصه',
+        outputEmpty: 'سناریو را ثبت کنید یا شبیه‌سازی را اجرا کنید تا خروجی اینجا نمایش داده شود.',
+        outputSummaryEmpty: 'دکمه «خلاصه روایی» را بزنید یا به این تب بروید تا خلاصه روایی بارگذاری شود.',
+        shortcutHint: 'میانبرها: <kbd>Ctrl+Enter</kbd> ثبت سناریو · <kbd>Ctrl+R</kbd> اجرای شبیه‌سازی · <kbd>Esc</kbd> بستن اعلان‌ها',
+        btnRefreshLogs: 'بروزرسانی لاگ‌ها', btnClearLogs: 'پاک کردن',
+        llmLogsDesc: 'هر درخواست و پاسخ ارسالی به LLM اینجا نمایش داده می‌شود. بعد از Submit Scenario یا Run Simulation، دکمه بروزرسانی را بزنید.',
+        llmLogsEmpty: 'هنوز لاگی ثبت نشده. Submit Scenario یا Run Simulation انجام دهید (بدون Dry run).',
+        roundTimelineAria: 'راندهای شبیه‌سازی',
+        progressWaiting: 'در انتظار شروع...', progressRunningRound1: 'در حال اجرای راند ۱...', progressRunning: 'در حال اجرای شبیه‌سازی...',
+        progressComplete: 'تکمیل شد ✓', progressSimComplete: 'شبیه‌سازی تکمیل شد ✓', progressRoundOf: 'راند {0} از {1}',
+        progressProcessing: 'راند {0} از {1} در حال پردازش...', roundComplete: '✓ انجام شد', roundRunning: '⏳ در حال اجرا...', roundPending: 'در انتظار',
+        statusUpdated: 'وضعیت به‌روز شد',
+        errEnterScenario: 'لطفاً ابتدا توضیحات سناریو را وارد کنید.', msgProcessing: 'در حال پردازش سناریو...',
+        msgScenarioSubmitted: 'سناریو با موفقیت ثبت شد', msgTryAgain: 'مشکلی پیش آمد. دوباره تلاش کنید.',
+        msgRequestFailed: 'درخواست ناموفق. اتصال را بررسی کنید.', msgStreamFailed: 'استریم ناموفق. دوباره تلاش کنید.',
+        msgSimComplete: 'شبیه‌سازی با موفقیت انجام شد!', msgNoData: 'داده‌ای دریافت نشد. دوباره تلاش کنید.',
+        msgEnterOrSubmit: 'سناریو را وارد کنید (و در صورت تمایل ابتدا ثبت کنید) یا با متن مستقیم اجرا کنید.',
+        msgStartingSim: 'در حال شروع شبیه‌سازی...', msgRunningSim: 'در حال اجرای شبیه‌سازی... (با LLM ممکن است ۱–۲ دقیقه طول بکشد)',
+        msgLoadingSnapshot: 'در حال بارگذاری اسنپ‌شات...', msgNoSnapshot: 'اسنپ‌شاتی موجود نیست.',
+        msgLoadingSummary: 'در حال بارگذاری خلاصه...', msgNoSummary: 'خلاصه‌ای موجود نیست. ابتدا شبیه‌سازی را اجرا کنید.',
+        msgServiceUnavailable: 'سرویس موقتاً در دسترس نیست. راندهای کمتری امتحان کنید.',
+        msgInactivityTimeout: 'در صورت عدم دریافت داده برای چند دقیقه، درخواست قطع شد.',
+        msgTimeout: 'درخواست تایم‌اوت شد. راندهای کمتری امتحان کنید.',
+        streamHeader: 'شبیه‌سازی ({0} راند)...', streamTurnHeader: '--- راند {0} از {1} ---'
+      },
+      en: {
+        home: 'Home', breadcrumbSep: '›', simulator: 'Simulator',
+        title: 'Open World Engine',
+        heroSubtitle: 'Write your scenario in plain language, submit it, and run the simulation. View results as raw output, narrative summary, or causal graph.',
+        tabMain: 'Main', tabLlmLogs: 'LLM Logs',
+        step1Title: 'Write your scenario', step1Desc: 'Describe the initial state, actors, and goals in free text. Example: "A startup with a founder and investor; initial cash 100k, runway 18 months. The founder focuses on growth and conserving cash; the investor cares about runway and governance."',
+        scenarioLabel: 'Scenario description', scenarioPlaceholder: 'Write your scenario here...',
+        submitLabel: 'Submit scenario', btnSubmit: 'Submit Scenario', btnSubmitTitle: 'Submit scenario (Ctrl+Enter)',
+        useLlmLabel: 'Use LLM to convert to JSON',
+        step2Title: 'Run the simulation', step2Desc: 'Set the number of rounds and start the simulation.',
+        btnRun: '▶ Run Simulation', btnRunTitle: 'Run simulation (Ctrl+R)',
+        stepsLabel: 'Rounds:', stepsAria: 'Number of rounds',
+        dryRunLabel: 'Dry run (no LLM)', streamTurnsLabel: 'Stream each round',
+        viewResultsLabel: 'View results',
+        btnSnapshot: 'View Snapshot', btnGraph: 'Causal Graph', btnViewer: 'Run Viewer', btnSummary: 'Narrative Summary', btnDownloadFinal: 'Download final JSON', btnShowLogs: 'LLM Logs',
+        downloadRoundJson: 'Download this round JSON', downloadFinalJson: 'Download final JSON',
+        step3Title: 'Output & Results', step3Desc: 'View raw JSON output or narrative summary of the simulation here.',
+        progressTitle: 'Simulation Progress', outputLabel: 'Output', outputTabRaw: 'Raw Output', outputTabSummary: 'Summary',
+        outputEmpty: 'Submit a scenario or run a simulation to see output here.',
+        outputSummaryEmpty: 'Click "Narrative Summary" or switch to this tab to load the summary.',
+        shortcutHint: 'Shortcuts: <kbd>Ctrl+Enter</kbd> submit · <kbd>Ctrl+R</kbd> run · <kbd>Esc</kbd> dismiss',
+        btnRefreshLogs: 'Refresh logs', btnClearLogs: 'Clear',
+        llmLogsDesc: 'Every request and response sent to the LLM is shown here. After Submit Scenario or Run Simulation, click Refresh.',
+        llmLogsEmpty: 'No logs yet. Submit Scenario or Run Simulation (without Dry run).',
+        roundTimelineAria: 'Simulation rounds',
+        progressWaiting: 'Waiting to start...', progressRunningRound1: 'Running round 1...', progressRunning: 'Running simulation...',
+        progressComplete: 'Complete ✓', progressSimComplete: 'Simulation complete ✓', progressRoundOf: 'Round {0} of {1}',
+        progressProcessing: 'Round {0} of {1} processing...', roundComplete: '✓ Done', roundRunning: '⏳ Running...', roundPending: 'Pending',
+        statusUpdated: 'State updated',
+        errEnterScenario: 'Please enter a scenario description first.', msgProcessing: 'Processing scenario...',
+        msgScenarioSubmitted: 'Scenario submitted successfully', msgTryAgain: 'Something went wrong. Try again.',
+        msgRequestFailed: 'Request failed. Check connection.', msgStreamFailed: 'Stream failed. Try again.',
+        msgSimComplete: 'Simulation complete!', msgNoData: 'No data received. Try again.',
+        msgEnterOrSubmit: 'Enter a scenario (and optionally Submit first) or run with text to parse on the fly.',
+        msgStartingSim: 'Starting simulation...', msgRunningSim: 'Running simulation... (may take 1–2 min with LLM)',
+        msgLoadingSnapshot: 'Loading snapshot...', msgNoSnapshot: 'No snapshot available.',
+        msgLoadingSummary: 'Loading summary...', msgNoSummary: 'No summary available. Run a simulation first.',
+        msgServiceUnavailable: 'Service unavailable. Try fewer rounds.',
+        msgTimeout: 'Request timed out. Try fewer rounds.',
+        msgInactivityTimeout: 'Request aborted due to inactivity.',
+        streamHeader: 'Simulation ({0} rounds)...', streamTurnHeader: '--- Round {0} of {1} ---'
+      }
+    };
+
+    let currentLang = (typeof localStorage !== 'undefined' && localStorage.getItem(LANG_KEY)) || 'fa';
+
+    function t(key) {
+      const dict = i18n[currentLang] || i18n.fa;
+      let s = dict[key];
+      if (s === undefined) s = i18n.fa[key] || key;
+      for (let i = 1; i < arguments.length; i++) s = s.replace('{' + (i - 1) + '}', arguments[i]);
+      return s;
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+      document.documentElement.lang = lang === 'fa' ? 'fa' : 'en';
+      document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+      document.title = t('title');
+
+      document.querySelectorAll('.lang-switcher button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (key) el.textContent = t(key);
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (key) el.innerHTML = t(key);
+      });
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (key) el.placeholder = t(key);
+      });
+      document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        if (key) el.title = t(key);
+      });
+      document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const key = el.getAttribute('data-i18n-aria');
+        if (key) el.setAttribute('aria-label', t(key));
+      });
+    }
+
+    document.getElementById('langEn').addEventListener('click', () => applyLanguage('en'));
+    document.getElementById('langFa').addEventListener('click', () => applyLanguage('fa'));
+    applyLanguage(currentLang);
+
+    const scenarioEl = document.getElementById('scenario');
+    const useLlmEl = document.getElementById('useLlm');
+    const stepsEl = document.getElementById('steps');
+    const dryRunEl = document.getElementById('dryRun');
+    const streamTurnsEl = document.getElementById('streamTurns');
+    const outputEl = document.getElementById('output');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const btnRun = document.getElementById('btnRun');
+    const btnSnapshot = document.getElementById('btnSnapshot');
+    const btnSummary = document.getElementById('btnSummary');
+
+    let lastScenario = null;
+    /** Last run result for "Download final JSON": { final, turns, provenance } */
+    let lastRunResult = null;
+
+    function showToast(message, type) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.setAttribute('role', 'alert');
+      const icon = type === 'success' ? '✓' : type === 'error' ? '⚠' : 'ℹ';
+      toast.innerHTML = '<span aria-hidden="true">' + icon + '</span> ' + escapeHtml(message);
+      container.appendChild(toast);
+      setTimeout(function() {
+        toast.remove();
+      }, 4000);
+    }
+
+    function getTurnState(turn) {
+      if (!turn || typeof turn !== 'object') return {};
+      const v = turn.variables || turn.global_state;
+      if (v && typeof v === 'object') return v;
+      return turn;
+    }
+
+    function isNumeric(x) {
+      return typeof x === 'number' && x === x;
+    }
+
+    function inferTurnDeltas(turn, prevState) {
+      const out = [];
+      const vc = turn && turn.variable_changes;
+      if (Array.isArray(vc)) {
+        vc.forEach(function(c) {
+          if (c && c.var != null && isNumeric(parseFloat(c.delta))) {
+            out.push({ var: c.var, delta: parseFloat(c.delta), before: c.before, after: c.after });
+          }
+        });
+      }
+      const tr = turn && turn.turn_record;
+      if (tr && tr.delta_applied && typeof tr.delta_applied === 'object') {
+        for (const k in tr.delta_applied) {
+          const d = parseFloat(tr.delta_applied[k]);
+          if (isNumeric(d)) out.push({ var: k, delta: d, before: null, after: null });
+        }
+      }
+      const nu = (turn && turn.delta && turn.delta.numeric_updates) || turn && turn.numeric_updates || turn && turn.updates || turn && turn.global_world_delta || turn && turn.variable_updates;
+      if (nu && typeof nu === 'object') {
+        for (const k in nu) {
+          const d = parseFloat(nu[k]);
+          if (isNumeric(d)) out.push({ var: k, delta: d, before: null, after: null });
+        }
+      }
+      if (prevState && out.length === 0) {
+        const nextState = getTurnState(turn);
+        const allKeys = {};
+        for (const p in prevState) allKeys[p] = true;
+        for (const n in nextState) allKeys[n] = true;
+        for (const k in allKeys) {
+          const pv = prevState[k], nv = nextState[k];
+          if (isNumeric(pv) || isNumeric(nv)) {
+            const d = (isNumeric(nv) ? nv : 0) - (isNumeric(pv) ? pv : 0);
+            if (d !== 0) out.push({ var: k, delta: d, before: pv, after: nv });
+          }
+        }
+      }
+      out.sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
+      return out.slice(0, 5);
+    }
+
+    function formatDeltaText(deltas) {
+      if (!deltas || deltas.length === 0) return '—';
+      return deltas.map(d => {
+        const sign = d.delta >= 0 ? '+' : '';
+        const cls = d.delta > 0 ? 'var-up' : 'var-down';
+        let txt = '<span class="var-name">' + escapeHtml(d.var) + '</span>: <span class="' + cls + '">' + sign + Number(d.delta).toFixed(2) + '</span>';
+        if (d.before != null && d.after != null) txt += ' (' + d.before + '→' + d.after + ')';
+        return txt;
+      }).join(' · ');
+    }
+
+    let roundTimelineData = [];
+
+    function showProgress(visible, turnIndex, stepsTotal, isIndeterminate, turnData, prevTurnData) {
+      const container = document.getElementById('progressContainer');
+      const fill = document.getElementById('progressBarFill');
+      const label = document.getElementById('progressLabel');
+      const timeline = document.getElementById('roundTimeline');
+      const badge = document.getElementById('runProgressBadge');
+      if (!visible) {
+        container.classList.remove('visible');
+        roundTimelineData = [];
+        return;
+      }
+      container.classList.add('visible');
+      container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (badge) {
+        if (isIndeterminate) {
+          badge.textContent = t('progressRunningRound1');
+          badge.classList.remove('done');
+        } else if (turnIndex >= stepsTotal && stepsTotal > 0) {
+          badge.textContent = t('progressComplete');
+          badge.classList.add('done');
+        } else {
+          badge.textContent = t('progressRoundOf', turnIndex, stepsTotal);
+          badge.classList.remove('done');
+        }
+      }
+      if (isIndeterminate) {
+        fill.classList.add('indeterminate');
+        fill.style.width = '30%';
+        label.textContent = t('progressRunning');
+        if (timeline) {
+          timeline.innerHTML = '';
+          for (let i = 0; i < stepsTotal; i++) {
+            const isComplete = i < turnIndex;
+            const isCurrent = i === turnIndex;
+            const item = document.createElement('div');
+            item.className = 'round-item' + (isComplete ? ' complete' : isCurrent ? ' current' : ' pending');
+            item.setAttribute('aria-label', t('progressRoundOf', i + 1, stepsTotal) + (isComplete ? ' ' + t('roundComplete') : isCurrent ? ' ' + t('roundRunning') : ' ' + t('roundPending')));
+            const statusText = isComplete ? t('roundComplete') : isCurrent ? t('roundRunning') : t('roundPending');
+            item.innerHTML = '<span class="round-num">' + (i + 1) + '</span><div class="round-content"><span class="round-status">' + statusText + '</span></div>';
+            timeline.appendChild(item);
+          }
+        }
+      } else {
+        fill.classList.remove('indeterminate');
+        const pct = stepsTotal > 0 ? Math.min(100, (turnIndex / stepsTotal) * 100) : 0;
+        fill.style.width = pct + '%';
+        label.textContent = turnIndex >= stepsTotal ? t('progressSimComplete') : (turnIndex === 0 ? t('progressWaiting') : t('progressProcessing', turnIndex, stepsTotal));
+
+        if (turnData && prevTurnData !== undefined) {
+          const deltas = inferTurnDeltas(turnData, prevTurnData);
+          roundTimelineData[turnIndex - 1] = { deltas, status: 'complete', turn: turnData };
+        }
+        if (turnIndex > 0 && !roundTimelineData[turnIndex - 1]) {
+          roundTimelineData[turnIndex - 1] = { deltas: [], status: 'complete' };
+        }
+
+        if (timeline) {
+          timeline.innerHTML = '';
+          for (let i = 0; i < stepsTotal; i++) {
+            const data = roundTimelineData[i];
+            const isComplete = i < turnIndex;
+            const isCurrent = i === turnIndex;
+            const item = document.createElement('div');
+            item.className = 'round-item' + (isComplete ? ' complete' : isCurrent ? ' current' : ' pending');
+            item.setAttribute('aria-label', t('progressRoundOf', i + 1, stepsTotal) + (isComplete ? ' ' + t('roundComplete') : isCurrent ? ' ' + t('roundRunning') : ' ' + t('roundPending')));
+
+            let statusText = isComplete ? t('roundComplete') : isCurrent ? t('roundRunning') : t('roundPending');
+            let changesHtml = '';
+            if (data && data.deltas && data.deltas.length > 0) {
+              changesHtml = '<div class="round-changes">' + formatDeltaText(data.deltas) + '</div>';
+            } else if (isComplete) {
+              changesHtml = '<div class="round-changes">' + t('statusUpdated') + '</div>';
+            }
+            let downloadHtml = '';
+            if (isComplete && data && data.turn) {
+              downloadHtml = '<a href="#" class="round-download-link" data-round-index="' + i + '" role="button">' + t('downloadRoundJson') + '</a>';
+            }
+
+            item.innerHTML = '<span class="round-num">' + (i + 1) + '</span><div class="round-content"><span class="round-status">' + statusText + '</span>' + changesHtml + downloadHtml + '</div>';
+            timeline.appendChild(item);
+          }
+          const currentEl = timeline.querySelector('.round-item.current');
+          if (currentEl) currentEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    }
+
+    function setOutput(text, kind) {
+      outputEl.textContent = text;
+      outputEl.classList.remove('empty', 'error', 'success');
+      if (kind) outputEl.classList.add(kind);
+    }
+
+    function downloadJson(obj, filename) {
+      const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function downloadRoundJson(roundIndex) {
+      const data = roundTimelineData[roundIndex];
+      if (!data || !data.turn) return;
+      downloadJson(data.turn, 'round_' + (roundIndex + 1) + '.json');
+    }
+
+    function downloadFinalJson() {
+      if (!lastRunResult) {
+        showToast(t('msgNoSnapshot'), 'error');
+        return;
+      }
+      downloadJson(lastRunResult, 'run_final.json');
+    }
+
+    function setLoading(button, on) {
+      button.disabled = on;
+    }
+
+    async function submitScenario() {
+      const text = scenarioEl.value.trim();
+      if (!text) {
+        setOutput(t('errEnterScenario'), 'error');
+        showToast(t('errEnterScenario'), 'error');
+        return;
+      }
+      setLoading(btnSubmit, true);
+      setOutput(t('msgProcessing'), '');
+      try {
+        const res = await fetch('/api/submit_scenario', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, use_llm: useLlmEl.checked })
+        });
+        const data = await parseJsonResponse(res);
+        if (data.ok && data.scenario) {
+          lastScenario = data.scenario;
+          setOutput(JSON.stringify(data.scenario, null, 2), 'success');
+          showToast(t('msgScenarioSubmitted'), 'success');
+        } else {
+          const errMsg = data.error || 'Submit failed.';
+          if (res.status >= 500) console.warn('submit_scenario 500:', errMsg);
+          else if (res.status === 400) console.warn('submit_scenario 400:', errMsg);
+          setOutput(errMsg, 'error');
+          showToast(t('msgTryAgain'), 'error');
+        }
+      } catch (e) {
+        setOutput(t('msgRequestFailed') + ': ' + e.message, 'error');
+        showToast(t('msgRequestFailed'), 'error');
+      } finally {
+        setLoading(btnSubmit, false);
+      }
+    }
+
+    function parseJsonResponse(res) {
+      return res.text().then(function (text) {
+        if (!text || !text.trim()) {
+          throw new Error('Empty response from server (status ' + res.status + '). Server may have crashed or timed out.');
+        }
+        try {
+          return JSON.parse(text);
+        } catch (e) {
+          throw new Error('Invalid JSON from server (status ' + res.status + '): ' + text.slice(0, 200));
+        }
+      });
+    }
+
+    const SIMULATION_TIMEOUT_MS = 300000; // 5 min for non-streaming run
+    const STREAM_INACTIVITY_MS = 180000;  // 3 min without any data → timeout (resets on every chunk)
+
+    async function runSimulationStream(body, controller) {
+      const res = await fetch('/api/run_simulation_stream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+        signal: controller.signal
+      });
+      if (res.status === 503) {
+        showToast(t('msgServiceUnavailable'), 'error');
+        setOutput(t('msgServiceUnavailable') + ' (503)', 'error');
+        return;
+      }
+      if (!res.ok || !res.body) {
+        showToast(t('msgStreamFailed'), 'error');
+        setOutput('استریم ناموفق: ' + res.status, 'error');
+        return;
+      }
+      const steps = parseInt(body.steps, 10) || 5;
+      let out = t('streamHeader', steps) + '\n\n';
+      setOutput(out, '');
+      roundTimelineData = [];
+      showProgress(true, 0, steps, false);
+      const reader = res.body.getReader();
+      let prevTurn = null;
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let finalData = null;
+      const turnsAccumulated = [];
+      let inactivityTimeoutId = setTimeout(() => controller.abort(), STREAM_INACTIVITY_MS);
+      function resetInactivityTimer() {
+        clearTimeout(inactivityTimeoutId);
+        inactivityTimeoutId = setTimeout(() => controller.abort(), STREAM_INACTIVITY_MS);
+      }
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          resetInactivityTimer();
+          buffer += decoder.decode(value, { stream: true });
+          const parts = buffer.split('\n\n');
+          buffer = parts.pop() || '';
+          for (const part of parts) {
+            const line = part.trim();
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                if (data.type === 'ping') continue;
+                if (data.type === 'turn') {
+                  if (data.turn) {
+                    turnsAccumulated.push(data.turn);
+                    showProgress(true, data.turn_index, data.steps_total || steps, false, data.turn, prevTurn);
+                    prevTurn = data.turn;
+                  } else {
+                    showProgress(true, data.turn_index, data.steps_total || steps, false);
+                  }
+                  out += t('streamTurnHeader', data.turn_index, data.steps_total) + '\n';
+                  out += JSON.stringify(data.turn, null, 2) + '\n\n';
+                  setOutput(out, '');
+                } else if (data.type === 'done') {
+                  finalData = data;
+                  lastRunResult = { final: data.final, turns: turnsAccumulated, provenance: data.provenance || [] };
+                  const btnFinal = document.getElementById('btnDownloadFinal');
+                  if (btnFinal) btnFinal.disabled = false;
+                  showProgress(true, steps, steps, false);
+                  showToast(t('msgSimComplete'), 'success');
+                  try {
+                    sessionStorage.setItem('run_viewer_last_run', JSON.stringify({ final: data.final, turns: turnsAccumulated }));
+                  } catch (e) {}
+                  out += '--- Final ---\n' + JSON.stringify(data.final, null, 2);
+                  setOutput(out, 'success');
+                } else if (data.type === 'error') {
+                  showProgress(false);
+                  showToast(t('msgTryAgain'), 'error');
+                  setOutput(out + '\nخطا: ' + (data.error || 'Unknown'), 'error');
+                  return;
+                }
+              } catch (e) { /* skip malformed */ }
+            }
+          }
+        }
+        if (buffer.trim()) {
+          const line = buffer.trim();
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+              if (data.type === 'done') {
+                lastRunResult = { final: data.final, turns: turnsAccumulated, provenance: data.provenance || [] };
+                const btnFinal = document.getElementById('btnDownloadFinal');
+                if (btnFinal) btnFinal.disabled = false;
+                showProgress(true, steps, steps, false);
+                showToast(t('msgSimComplete'), 'success');
+                try {
+                  sessionStorage.setItem('run_viewer_last_run', JSON.stringify({ final: data.final, turns: turnsAccumulated }));
+                } catch (e) {}
+                out += '--- Final ---\n' + JSON.stringify(data.final, null, 2);
+                setOutput(out, 'success');
+              } else if (data.type === 'error') {
+                showProgress(false);
+                showToast(t('msgTryAgain'), 'error');
+                setOutput(out + '\nخطا: ' + (data.error || 'Unknown'), 'error');
+              }
+            } catch (e) { /* skip */ }
+          }
+        }
+        if (!finalData && out.indexOf('--- Final ---') < 0) {
+          showToast(t('msgNoData'), 'error');
+          setOutput(out || 'No data received.', 'error');
+        }
+        setTimeout(function() { showProgress(false); }, 1500);
+      } catch (err) {
+        showProgress(false);
+        throw err;
+      } finally {
+        clearTimeout(inactivityTimeoutId);
+        reader.releaseLock();
+      }
+    }
+
+    async function runSimulation() {
+      const text = scenarioEl.value.trim();
+      if (!lastScenario && !text) {
+        setOutput(t('msgEnterOrSubmit'), 'error');
+        return;
+      }
+      setLoading(btnRun, true);
+      const body = {
+        steps: parseInt(stepsEl.value, 10) || 5,
+        dry_run: dryRunEl.checked,
+        use_llm: useLlmEl.checked,
+        delay_between_rounds: 0
+      };
+      if (lastScenario) body.scenario = lastScenario;
+      else body.text = text;
+
+      if (streamTurnsEl.checked) {
+        setOutput(t('msgStartingSim'), '');
+        try {
+          const controller = new AbortController();
+          await runSimulationStream(body, controller);
+        } catch (e) {
+          showProgress(false);
+          if (e.name !== 'AbortError') {
+            showToast(t('msgRequestFailed'), 'error');
+            setOutput(t('msgRequestFailed') + ': ' + e.message, 'error');
+          } else {
+            showToast(t('msgRequestFailed'), 'error');
+            setOutput(t('msgInactivityTimeout'), 'error');
+          }
+        } finally {
+          setLoading(btnRun, false);
+        }
+        return;
+      }
+
+      const stepsCount = parseInt(stepsEl.value, 10) || 5;
+      setOutput(t('msgRunningSim'), '');
+      showProgress(true, 0, stepsCount, true);
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), SIMULATION_TIMEOUT_MS);
+        let res;
+        try {
+          res = await fetch('/api/run_simulation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+            signal: controller.signal
+          });
+        } catch (fetchErr) {
+          clearTimeout(timeoutId);
+          showProgress(false);
+          if (fetchErr.name === 'AbortError') {
+            showToast(t('msgTimeout'), 'error');
+            setOutput(t('msgTimeout') + ' (' + (SIMULATION_TIMEOUT_MS/60000) + ' min)', 'error');
+          } else {
+            showToast(t('msgRequestFailed'), 'error');
+            setOutput(t('msgRequestFailed') + ': ' + (fetchErr.message || 'network error'), 'error');
+          }
+          return;
+        }
+        clearTimeout(timeoutId);
+        if (res.status === 503) {
+          showProgress(false);
+          showToast(t('msgServiceUnavailable'), 'error');
+          setOutput(t('msgServiceUnavailable') + ' (503)', 'error');
+          return;
+        }
+        const data = await parseJsonResponse(res);
+        if (data.ok) {
+          lastRunResult = { final: data.final, turns: data.turns || [], provenance: [] };
+          const btnFinal = document.getElementById('btnDownloadFinal');
+          if (btnFinal) btnFinal.disabled = false;
+          showProgress(false);
+          showToast(t('msgSimComplete'), 'success');
+          try {
+            sessionStorage.setItem('run_viewer_last_run', JSON.stringify({ final: data.final, turns: data.turns || [] }));
+          } catch (e) {}
+          let out = t('msgSimComplete') + ' (rounds=' + data.steps + ', dry_run=' + data.dry_run + ')\n\n';
+          if (data.turns && data.turns.length) {
+            data.turns.forEach((t, i) => {
+              out += `--- Turn ${i + 1} ---\n`;
+              out += JSON.stringify(t, null, 2) + '\n\n';
+            });
+          }
+          out += '--- Final ---\n' + JSON.stringify(data.final, null, 2);
+          setOutput(out, 'success');
+        } else {
+          showProgress(false);
+          showToast(t('msgTryAgain'), 'error');
+          setOutput(data.error || 'Run failed.', 'error');
+        }
+      } catch (e) {
+        showProgress(false);
+        showToast(t('msgRequestFailed'), 'error');
+        setOutput('درخواست ناموفق: ' + e.message, 'error');
+      } finally {
+        setLoading(btnRun, false);
+      }
+    }
+
+    async function viewSnapshot() {
+      setOutput(t('msgLoadingSnapshot'), '');
+      try {
+        const res = await fetch('/api/snapshot');
+        const data = await parseJsonResponse(res);
+        if (data.ok && data.snapshot) {
+          setOutput(JSON.stringify(data.snapshot, null, 2), 'success');
+        } else {
+          setOutput(data.error || t('msgNoSnapshot'), 'error');
+        }
+      } catch (e) {
+        setOutput('درخواست ناموفق: ' + e.message, 'error');
+      }
+    }
+
+    const NARRATIVE_TIMEOUT_MS = 120000; // 2 min for narrative (can be heavy for large traces)
+
+    async function viewSummary() {
+      const summaryEl = document.getElementById('outputSummary');
+      summaryEl.textContent = t('msgLoadingSummary');
+      summaryEl.classList.remove('empty', 'success', 'error');
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), NARRATIVE_TIMEOUT_MS);
+      try {
+        const res = await fetch('/api/narrative', { signal: controller.signal });
+        clearTimeout(timeoutId);
+        const text = await res.text();
+        if (!text || !text.trim()) {
+          if (res.status === 503) {
+            summaryEl.textContent = 'سرویس خلاصه‌سازی موقتاً در دسترس نیست (۵۰۳). احتمالاً پروکسی یا سرور تایم‌اوت شده. اگر پشت Nginx هستید: proxy_read_timeout 300s; یا trace خیلی بزرگ است — شبیه‌سازی با راندهای کمتر اجرا کنید.';
+          } else {
+            summaryEl.textContent = 'پاسخ خالی از سرور (وضعیت ' + res.status + '). ممکن است سرور کرش کرده یا تایم‌اوت شده باشد.';
+          }
+          summaryEl.classList.remove('empty');
+          summaryEl.classList.add('error');
+          return;
+        }
+        const data = JSON.parse(text);
+        if (data.ok && data.narrative) {
+          const out = typeof data.narrative === 'string' ? data.narrative : JSON.stringify(data.narrative, null, 2);
+          summaryEl.textContent = out;
+          summaryEl.classList.remove('empty');
+          summaryEl.classList.add('success');
+        } else {
+          summaryEl.textContent = data.error || t('msgNoSummary');
+          summaryEl.classList.remove('empty');
+          summaryEl.classList.add('error');
+        }
+      } catch (e) {
+        clearTimeout(timeoutId);
+        let msg = e.message || String(e);
+        if (e.name === 'AbortError') {
+          msg = 'درخواست خلاصه تایم‌اوت شد (' + (NARRATIVE_TIMEOUT_MS / 60000) + ' دقیقه). trace خیلی بزرگ است یا سرور کند است.';
+        } else if (msg.includes('503')) {
+          msg = 'سرویس خلاصه‌سازی موقتاً در دسترس نیست (۵۰۳). احتمالاً پروکسی یا سرور تایم‌اوت شده. در Nginx: proxy_read_timeout 300s;';
+        }
+        summaryEl.textContent = 'خطا: ' + msg;
+        summaryEl.classList.remove('empty');
+        summaryEl.classList.add('error');
+      }
+    }
+
+    btnSubmit.addEventListener('click', submitScenario);
+    btnRun.addEventListener('click', runSimulation);
+    btnSnapshot.addEventListener('click', viewSnapshot);
+    document.getElementById('btnDownloadFinal').addEventListener('click', downloadFinalJson);
+    document.getElementById('progressContainer').addEventListener('click', function(e) {
+      const link = e.target.closest('.round-download-link');
+      if (!link) return;
+      e.preventDefault();
+      const idx = parseInt(link.getAttribute('data-round-index'), 10);
+      if (!isNaN(idx)) downloadRoundJson(idx);
+    });
+    btnSummary.addEventListener('click', function() {
+      document.querySelectorAll('.output-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.output-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelector('[data-output-tab="summary"]').classList.add('active');
+      document.getElementById('outputSummaryPanel').classList.add('active');
+      viewSummary();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('toastContainer').innerHTML = '';
+        return;
+      }
+      const mod = e.ctrlKey || e.metaKey;
+      if (mod && e.key === 'Enter') {
+        e.preventDefault();
+        if (document.activeElement === scenarioEl || document.activeElement === document.body) {
+          submitScenario();
+        }
+        return;
+      }
+      if (mod && e.key === 'r') {
+        e.preventDefault();
+        if (!document.activeElement || document.activeElement.tagName === 'BODY' || document.activeElement === scenarioEl) {
+          runSimulation();
+        }
+        return;
+      }
+    });
+
+    // دکمه لاگ LLM در صفحه اصلی
+    document.getElementById('btnShowLogs').addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector('[data-tab="llm-logs"]').classList.add('active');
+      document.getElementById('tab-llm-logs').classList.add('active');
+      refreshLlmLogs();
+    });
+
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.dataset.tab;
+        document.getElementById('tab-' + tab).classList.add('active');
+        if (tab === 'llm-logs') refreshLlmLogs();
+      });
+    });
+
+    // LLM Logs
+    const llmLogsContainer = document.getElementById('llmLogsContainer');
+    const btnRefreshLogs = document.getElementById('btnRefreshLogs');
+    const btnClearLogs = document.getElementById('btnClearLogs');
+
+    function renderLlmLogs(logs) {
+      if (!logs || logs.length === 0) {
+        llmLogsContainer.innerHTML = '<p class="status">' + t('llmLogsEmpty') + '</p>';
+        return;
+      }
+      const reversed = logs.slice().reverse();
+      llmLogsContainer.innerHTML = reversed.map((entry, i) => {
+        const ts = entry.ts ? new Date(entry.ts * 1000).toLocaleTimeString() : '';
+        const jsonBadge = entry.as_json ? '<span style="color:var(--success);font-size:0.7rem">JSON</span>' : '';
+        const copySvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+        return `
+          <div class="llm-log-entry">
+            <h4>#${i + 1} ${ts} ${jsonBadge}</h4>
+            ${entry.system ? `
+            <div class="field">
+              <div class="field-label">System prompt</div>
+              <div class="copyable-wrap">
+                <button type="button" class="copy-btn" title="کپی در کلیپ‌بورد" aria-label="کپی">${copySvg}</button>
+                <details><summary>مشاهده</summary><pre>${escapeHtml(entry.system)}</pre></details>
+              </div>
+            </div>
+            ` : ''}
+            <div class="field">
+              <div class="field-label">User prompt</div>
+              <div class="copyable-wrap">
+                <button type="button" class="copy-btn" title="کپی در کلیپ‌بورد" aria-label="کپی">${copySvg}</button>
+                <details open><summary>مشاهده</summary><pre>${escapeHtml(entry.prompt)}</pre></details>
+              </div>
+            </div>
+            <div class="field">
+              <div class="field-label">Response</div>
+              <div class="copyable-wrap">
+                <button type="button" class="copy-btn" title="کپی در کلیپ‌بورد" aria-label="کپی">${copySvg}</button>
+                <pre>${escapeHtml(entry.response)}</pre>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function escapeHtml(s) {
+      if (typeof s !== 'string') s = JSON.stringify(s);
+      const div = document.createElement('div');
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    async function refreshLlmLogs() {
+      try {
+        const res = await fetch('/api/llm_logs');
+        const data = await parseJsonResponse(res);
+        if (data.ok) renderLlmLogs(data.logs);
+        else llmLogsContainer.innerHTML = '<p class="status" style="color:var(--error)">خطا: ' + (data.error || 'نشد دریافت شود') + '</p>';
+      } catch (e) {
+        llmLogsContainer.innerHTML = '<p class="status" style="color:var(--error)">خطا: ' + escapeHtml(e.message) + '</p>';
+      }
+    }
+
+    async function clearLlmLogs() {
+      try {
+        await fetch('/api/llm_logs/clear', { method: 'POST' });
+        refreshLlmLogs();
+      } catch (e) {
+        llmLogsContainer.innerHTML = '<p class="status" style="color:var(--error)">خطا: ' + escapeHtml(e.message) + '</p>';
+      }
+    }
+
+    btnRefreshLogs.addEventListener('click', refreshLlmLogs);
+    btnClearLogs.addEventListener('click', clearLlmLogs);
+
+    document.querySelectorAll('.output-tab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const tab = this.dataset.outputTab;
+        document.querySelectorAll('.output-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.output-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+        this.classList.add('active');
+        document.getElementById(tab === 'raw' ? 'outputRawPanel' : 'outputSummaryPanel').classList.add('active');
+        if (tab === 'summary') {
+          viewSummary();
+        }
+      });
+    });
+
+
+    // کپی به کلیپ‌بورد برای هر دکمه کپی
+    document.body.addEventListener('click', async function (e) {
+      const btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      let text = '';
+      let targetId = btn.getAttribute('data-copy-target');
+      if (targetId === 'output') {
+        const activePanel = document.querySelector('.output-tab-panel.active');
+        targetId = activePanel && activePanel.id === 'outputSummaryPanel' ? 'outputSummary' : 'output';
+      }
+      if (targetId) {
+        const el = document.getElementById(targetId);
+        text = el ? (el.textContent || '').trim() : '';
+      } else {
+        const wrap = btn.closest('.copyable-wrap');
+        const pre = wrap ? wrap.querySelector('pre') : null;
+        text = pre ? (pre.textContent || '').trim() : '';
+      }
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+        const origTitle = btn.getAttribute('title');
+        btn.setAttribute('title', 'کپی شد!');
+        setTimeout(function () { btn.setAttribute('title', origTitle || 'کپی در کلیپ‌بورد'); }, 1500);
+      } catch (err) {
+        btn.setAttribute('title', 'خطا در کپی');
+      }
+    });
+  </script>
+</body>
+</html>

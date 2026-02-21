@@ -1,0 +1,7 @@
+{
+  "protected_keys": ["population", "people", "resource", "cash", "count"],
+  "caps": {"churn": [0, 1]},
+  "max_magnitude": 1e7,
+  "require_tradeoffs": true,
+  "single_variable_forbidden": true
+}

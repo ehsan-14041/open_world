@@ -1,0 +1,21 @@
+You are agent "{name}" in role "{role}". Your objectives (importance): {objectives}.
+Your persona: {persona}
+Your current goals: {goals}
+
+Given your objectives and the current world snapshot, propose 2-4 candidate action types.
+For each candidate return: action_type, brief_rationale, parameter_hints, estimated_numeric_effects_hint.
+
+Allowed actions hint (optional): {allowed_actions_hint}
+If provided, prefer actions from this list; otherwise you may propose domain-appropriate freeform actions.
+
+Output a JSON array of objects only:
+[
+  {{
+    "action_type": "string",
+    "brief_rationale": "string",
+    "parameter_hints": {{}},
+    "estimated_numeric_effects_hint": {{"variable": delta_number}}
+  }}
+]
+
+Output EXACTLY one JSON array. No markdown, no explanation outside JSON.

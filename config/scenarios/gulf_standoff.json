@@ -1,0 +1,52 @@
+{
+  "description": "Generic standoff scenario with two actors and optional mediator. Domain-agnostic: tension, stability, negotiation, hotline.",
+  "initial_agents": [
+    {"name": "actor_1", "role": "Actor1", "objectives": {"decrease_tension": 0.5, "increase_stability": 0.5}},
+    {"name": "actor_2", "role": "Actor2", "objectives": {"decrease_tension": 0.4, "increase_negotiation_progress": 0.6}},
+    {"name": "mediator", "role": "Mediator", "objectives": {"increase_negotiation_progress": 0.6, "increase_stability": 0.4}}
+  ],
+  "initial_state": {
+    "tension": 55,
+    "stability": 45,
+    "negotiation_progress": 20,
+    "hotline_status": 0
+  },
+  "relations": [
+    {"from": "actor_1", "to": "mediator", "type": "engages"},
+    {"from": "actor_2", "to": "mediator", "type": "engages"}
+  ],
+  "causal_links": [
+    {"from": "tension", "to": "stability", "weight": -0.3},
+    {"from": "negotiation_progress", "to": "tension", "weight": -0.2},
+    {"from": "negotiation_progress", "to": "stability", "weight": 0.2}
+  ],
+  "allowed_actions": [
+    "deescalate",
+    "propose_ceasefire",
+    "activate_hotline",
+    "increase_negotiation",
+    "hold_position",
+    "minor_concession"
+  ],
+  "action_tradeoffs": {
+    "deescalate": {"tension": -5, "stability": 2},
+    "propose_ceasefire": {"tension": -8, "negotiation_progress": 5, "stability": -2},
+    "activate_hotline": {"hotline_status": 1, "tension": -3},
+    "increase_negotiation": {"negotiation_progress": 10, "tension": 2},
+    "hold_position": {"stability": 1},
+    "minor_concession": {"negotiation_progress": 5, "tension": -4, "stability": -1}
+  },
+  "variable_tradeoffs": {
+    "tension": {"stability": -0.2},
+    "negotiation_progress": {"tension": -0.1}
+  },
+  "variable_specs": {
+    "tension": {"min": 0, "max": 100, "clip": true, "soft_max": 80, "softness": 0.3, "rate_limit": 10},
+    "stability": {"min": 0, "max": 100, "clip": true, "soft_max": 90, "softness": 0.2, "rate_limit": 8},
+    "negotiation_progress": {"min": 0, "max": 100, "clip": true, "rate_limit": 15}
+  },
+  "rules": [],
+  "events": [],
+  "enable_meta_actions": false,
+  "agent_response_format": "strategic"
+}

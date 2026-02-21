@@ -1,0 +1,46 @@
+{
+  "description": "Goal-driven scenario with persistent goals, delayed effects (campaign_with_followup), and governance rule.",
+  "initial_agents": [
+    {
+      "name": "founder",
+      "role": "Founder",
+      "objectives": {"growth": 0.6, "conserve_cash": 0.4},
+      "long_term_goals": ["increase_growth", "conserve_cash"]
+    },
+    {
+      "name": "investor",
+      "role": "Investor",
+      "objectives": {"runway": 0.5, "governance": 0.5},
+      "long_term_goals": ["maintain_runway", "improve_governance"]
+    },
+    {
+      "name": "community_leader",
+      "role": "CommunityLeader",
+      "objectives": {"engagement": 0.5, "trust": 0.5},
+      "long_term_goals": ["increase_engagement", "build_trust"]
+    }
+  ],
+  "initial_state": {
+    "cash": 100000,
+    "runway_months": 18,
+    "growth": 10,
+    "population": 100
+  },
+  "relations": [
+    {"from": "founder", "to": "investor", "type": "reports_to"},
+    {"from": "community_leader", "to": "founder", "type": "advises"}
+  ],
+  "allowed_actions": [
+    "launch_discount_campaign",
+    "campaign_with_followup",
+    "request_investment",
+    "propose_regulation",
+    "form_institution",
+    "investor_update",
+    "steady_finance"
+  ],
+  "governance": {
+    "strictness_level": 1,
+    "policy_rules": ["no_negative_resources", "entity_refs"]
+  }
+}
