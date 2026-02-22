@@ -44,13 +44,16 @@ from schemas.scenario_schema import validate_scenario, normalize_scenario
 from simulation.loop import SimulationLoop
 from core.narrative_builder import build_narrative, trace_from_snapshot
 from core.llm_client import get_llm_logs, clear_llm_logs, call_llm
-from core.scenario_analysis_output import build_scenario_analysis_output
+from core.scenario_analysis_output import build_scenario_analysis_output, build_strategic_analysis
 from summarization.facts import build_narrative_facts
 from core.agent_generator import generate_agents_from_scenario  # LLM Integration: scenario-to-simulation pipeline
 from visualization.graph_viewer import prepare_graph_data
 from visualization.impact_data import prepare_impact_data
+from ui.dashboard import register_routes as register_dashboard_routes
+from ui.dashboard import build_dashboard_payload, on_turn_complete as dashboard_on_turn_complete
 
 app = Flask(__name__, template_folder=str(_PROJECT_ROOT / "templates"), static_folder=str(_PROJECT_ROOT / "static"))
+register_dashboard_routes(app)
 
 
 @app.errorhandler(500)
@@ -227,6 +230,34 @@ def api_run_simulation():
         if my_run_id == _current_run_id:
             _last_run_result = result
             _last_snapshot_path = snapshot_path
+        try:
+            provenance_list = result.get("provenance") or []
+            turns_list = result.get("turns") or []
+            agents_for_dashboard = [
+                {"name": getattr(a, "name", ""), "role": getattr(a, "role", ""), "objectives": getattr(a, "objectives", {})}
+                for a in loop.agents
+            ] if getattr(loop, "agents", None) else [
+                {"name": a.get("name"), "role": a.get("role"), "objectives": a.get("objectives") or a.get("goals") or {}}
+                for a in (scenario.get("initial_agents") or []) if isinstance(a, dict) and a.get("name")
+            ]
+            for i, pe in enumerate(provenance_list):
+                snap = turns_list[i] if i < len(turns_list) else (pe.get("turn_record") or {}).get("post_state") or {}
+                payload = build_dashboard_payload(snap, pe, scenario, agents_for_dashboard, provenance_history=provenance_list[: i + 1])
+                dashboard_on_turn_complete(payload)
+        except Exception:
+            pass
+        agents_for_analysis = [
+            {"name": getattr(a, "name", ""), "role": getattr(a, "role", ""), "objectives": getattr(a, "objectives", {})}
+            for a in loop.agents
+        ] if getattr(loop, "agents", None) else list(scenario.get("initial_agents") or [])
+        action_defs = getattr(loop, "_action_definitions", None)
+        strategic = build_strategic_analysis(
+            result,
+            scenario=scenario,
+            agents=agents_for_analysis,
+            action_definitions=action_defs,
+            allow_numbers=False,
+        )
         payload = {
             "ok": True,
             "error": None,
@@ -234,6 +265,7 @@ def api_run_simulation():
             "turns": _make_json_safe(result["turns"]),
             "steps": steps,
             "dry_run": dry_run,
+            "strategic_analysis": _make_json_safe(strategic),
         }
         return jsonify(payload)
     except Exception as e:
@@ -311,6 +343,12 @@ def api_run_simulation_stream():
         t.start()
 
         turns_accumulated: list = []
+        provenance_accumulated: list = []
+        agents_list = [
+            {"name": a.get("name"), "role": a.get("role"), "objectives": a.get("objectives") or a.get("goals") or {}}
+            for a in (scenario.get("initial_agents") or [])
+            if isinstance(a, dict) and a.get("name")
+        ]
         while True:
             try:
                 chunk = chunk_queue.get(timeout=_heartbeat_interval)
@@ -325,6 +363,20 @@ def api_run_simulation_stream():
                 parsed = json.loads(data_line)
                 if parsed.get("type") == "turn":
                     turns_accumulated.append(parsed.get("turn"))
+                    pe = parsed.get("provenance_entry")
+                    if pe is not None:
+                        provenance_accumulated.append(pe)
+                    try:
+                        payload = build_dashboard_payload(
+                            parsed.get("turn") or {},
+                            pe,
+                            scenario,
+                            agents_list,
+                            provenance_history=provenance_accumulated,
+                        )
+                        dashboard_on_turn_complete(payload)
+                    except Exception:
+                        pass
                 elif parsed.get("type") == "done":
                     if my_run_id == _current_run_id:
                         _last_run_result = {
@@ -441,17 +493,38 @@ def api_narrative():
                     facts=narrative_facts,
                     allow_numbers=False,
                 )
+                strategic = build_strategic_analysis(
+                    result,
+                    scenario=scenario,
+                    agents=agents,
+                    action_definitions=None,
+                    facts=narrative_facts,
+                    allow_numbers=False,
+                )
                 return jsonify({
                     "ok": True,
                     "narrative": narrative,
                     "logic_core": _make_json_safe(analysis["logic_core"]),
                     "executive_summary": analysis["executive_summary"],
+                    "strategic_analysis": _make_json_safe(strategic),
                 })
 
         return jsonify({"ok": False, "error": "No run available. Run a simulation first.", "narrative": None}), 200
     except Exception as e:
         logging.exception("api_narrative failed")
         return jsonify({"ok": False, "error": str(e), "narrative": None}), 500
+
+
+@app.route("/api/last_run_for_viewer", methods=["GET"])
+def api_last_run_for_viewer():
+    """Return last run result for the Run Viewer (final + turns). Used when viewer opens in a new tab and sessionStorage is empty."""
+    if not _last_run_result or not isinstance(_last_run_result, dict) or "final" not in _last_run_result:
+        return jsonify({"ok": False, "run": None}), 200
+    run = {
+        "final": _make_json_safe(_last_run_result["final"]),
+        "turns": _make_json_safe(_last_run_result.get("turns") or []),
+    }
+    return jsonify({"ok": True, "run": run}), 200
 
 
 @app.route("/viewer", methods=["GET"])

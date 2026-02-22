@@ -11,22 +11,15 @@ from typing import Any, Callable
 
 from agents.utility import utility_function
 from core.world_state import WorldState
+from world.world_state import clone_world_state as _clone_world_state
 
 # Type for mapping action_type -> strategy class name
 StrategyClassFn = Callable[[str], str]
 
 
-def clone_world_state(snapshot: dict[str, Any]) -> dict[str, Any]:
-    """Return a deep copy of world state (global_state, entities, relations) for simulation only."""
-    return {
-        "entities": copy.deepcopy(snapshot.get("entities") or {}),
-        "relations": copy.deepcopy(snapshot.get("relations") or []),
-        "global_state": copy.deepcopy(snapshot.get("global_state") or {}),
-        "narrative": list(snapshot.get("narrative") or []),
-        "ontology": dict(snapshot.get("ontology") or {}),
-        "version": int(snapshot.get("version", 0)),
-        "turn": int(snapshot.get("turn", 0)),
-    }
+def clone_world_state(snapshot: dict[str, Any], *, include_causal_links: bool = False) -> dict[str, Any]:
+    """Canonical clone: delegates to world.world_state.clone_world_state. Planning uses include_causal_links=False."""
+    return _clone_world_state(snapshot, include_causal_links=include_causal_links)
 
 
 def apply_delta_to_state(state: dict[str, Any], delta: dict[str, Any]) -> None:

@@ -1397,17 +1397,34 @@
 
   setupJsonExplorerButtons();
 
-  try {
-    var lastRun = sessionStorage.getItem(RUN_VIEWER_LAST_RUN);
-    if (lastRun) {
-      sessionStorage.removeItem(RUN_VIEWER_LAST_RUN);
-      loadRunJson(lastRun);
-    } else {
-      showEmpty();
-    }
-  } catch (e) {
-    showEmpty();
+  function tryLoadLastRun() {
+    try {
+      var lastRun = sessionStorage.getItem(RUN_VIEWER_LAST_RUN);
+      if (lastRun) {
+        sessionStorage.removeItem(RUN_VIEWER_LAST_RUN);
+        loadRunJson(lastRun);
+        return;
+      }
+    } catch (e) {}
+    fetch('/api/last_run_for_viewer')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && data.ok && data.run) {
+          var jsonStr = typeof data.run === 'string' ? data.run : JSON.stringify(data.run);
+          var ta = document.getElementById('jsonInput');
+          if (ta) ta.value = jsonStr;
+          loadRunJson(jsonStr);
+          showToast('آخرین اجرا از سرور بارگذاری شد', 'success');
+        } else {
+          showEmpty();
+        }
+      })
+      .catch(function () {
+        showEmpty();
+      });
   }
+
+  tryLoadLastRun();
 })();
   </script>
 </body>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategic Decision Intelligence Platform</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a1f26;
+      --border: #2d3640;
+      --text: #e7e9ea;
+      --muted: #8b98a5;
+      --accent: #1d9bf0;
+      --success: #00ba7c;
+      --warning: #ffad1f;
+      --danger: #f4212e;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--accent);
+    }
+    .view-toggle {
+      display: flex;
+      gap: 0.25rem;
+    }
+    .view-toggle button {
+      padding: 0.5rem 1rem;
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font: inherit;
+      cursor: pointer;
+    }
+    .view-toggle button.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+    .view-toggle button:hover:not(.active) {
+      background: var(--border);
+      color: var(--text);
+    }
+    .main {
+      padding: 1rem 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1rem;
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .panel-title {
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .panel-body {
+      padding: 1rem;
+      font-size: 0.875rem;
+    }
+    .panel-body.empty { color: var(--muted); }
+    .risk-score {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .risk-score.low { color: var(--success); }
+    .risk-score.medium { color: var(--warning); }
+    .risk-score.high { color: var(--danger); }
+    .risk-breakdown {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0.75rem 0;
+    }
+    .risk-breakdown li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .risk-breakdown li:last-child { border-bottom: none; }
+    .tail-risk {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th, td {
+      padding: 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th { color: var(--muted); font-weight: 500; }
+    tr.selected { background: rgba(29, 155, 240, 0.15); }
+    tr:hover:not(.selected) { background: var(--border); }
+    .chart-wrap { position: relative; height: 200px; }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge.green { background: var(--success); color: var(--bg); }
+    .badge.yellow { background: var(--warning); color: var(--bg); }
+    .badge.red { background: var(--danger); color: #fff; }
+    .trend { font-weight: 600; }
+    .trend.up { color: var(--danger); }
+    .trend.down { color: var(--success); }
+    .trend.flat { color: var(--muted); }
+    .narrative { color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+    .scientific-only { display: none; }
+    .view-scientific .scientific-only { display: block; }
+    .view-scientific .executive-only { display: none; }
+    .executive-only { display: block; }
+    .view-executive .scientific-only { display: none; }
+    .view-executive .executive-only { display: block; }
+    .status-bar {
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Strategic Decision Intelligence Platform</h1>
+    <div class="view-toggle">
+      <button type="button" class="active" data-view="executive">Executive</button>
+      <button type="button" data-view="scientific">Scientific</button>
+    </div>
+  </header>
+  <main class="main">
+    <div id="empty-state" class="panel" style="display: none;">
+      <div class="panel-title">No data yet</div>
+      <div class="panel-body empty">
+        Run a simulation (streaming or single run) to see live decision intelligence. Open this dashboard in another tab and start a run from the main UI.
+      </div>
+    </div>
+    <div id="dashboard-grid" class="grid">
+      <div class="panel executive-only">
+        <div class="panel-title">State</div>
+        <div class="panel-body">
+          <div id="state-current"></div>
+          <div class="chart-wrap"><canvas id="chart-state"></canvas></div>
+        </div>
+      </div>
+      <div class="panel executive-only">
+        <div class="panel-title">Risk</div>
+        <div class="panel-body">
+          <div id="risk-score" class="risk-score">—</div>
+          <ul id="risk-breakdown" class="risk-breakdown"></ul>
+          <div id="tail-risk" class="tail-risk"></div>
+        </div>
+      </div>
+      <div class="panel executive-only">
+        <div class="panel-title">Top drivers & summary</div>
+        <div class="panel-body">
+          <ul id="top-drivers"></ul>
+          <div id="narrative-summary" class="narrative"></div>
+        </div>
+      </div>
+      <div class="panel executive-only">
+        <div class="panel-title">Action selection</div>
+        <div class="panel-body">
+          <table>
+            <thead><tr><th>Action</th><th>Agent</th><th>Prob</th></tr></thead>
+            <tbody id="action-rows"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel scientific-only">
+        <div class="panel-title">Calibration</div>
+        <div class="panel-body">
+          <div id="calibration-health"></div>
+          <div class="chart-wrap"><canvas id="chart-rmse"></canvas></div>
+          <div id="overconfidence-flags"></div>
+        </div>
+      </div>
+      <div class="panel scientific-only">
+        <div class="panel-title">Assumption ledger</div>
+        <div class="panel-body">
+          <table>
+            <thead><tr><th>Assumption</th><th>Confidence</th><th>Risk if wrong</th><th>Affected</th></tr></thead>
+            <tbody id="assumption-rows"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel scientific-only">
+        <div class="panel-title">Model snapshot</div>
+        <div class="panel-body">
+          <pre id="model-snapshot" style="margin:0; font-size:0.75rem; overflow:auto; max-height:180px;"></pre>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Explainability snapshot</div>
+        <div class="panel-body">
+          <div id="primary-effect"></div>
+          <div id="confidence-level"></div>
+          <div id="explain-narrative" class="narrative"></div>
+        </div>
+      </div>
+    </div>
+    <div class="status-bar">
+      <span id="status">Polling for data…</span>
+    </div>
+  </main>
+  <script>
+(function () {
+  const POLL_INTERVAL_MS = 3000;
+  let chartState = null;
+  let chartRmse = null;
+  let lastHistoryLength = 0;
+
+  function byId(id) { return document.getElementById(id); }
+  function setView(view) {
+    document.body.classList.remove('view-executive', 'view-scientific');
+    document.body.classList.add('view-' + view);
+    document.querySelectorAll('.view-toggle button').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-view') === view);
+    });
+  }
+  document.querySelectorAll('.view-toggle button').forEach(function (btn) {
+    btn.addEventListener('click', function () { setView(btn.getAttribute('data-view')); });
+  });
+  setView('executive');
+
+  function riskClass(score) {
+    if (score == null) return '';
+    if (score < 33) return 'low';
+    if (score < 66) return 'medium';
+    return 'high';
+  }
+
+  function trendArrow(series) {
+    if (!Array.isArray(series) || series.length < 2) return { text: '→', cls: 'flat' };
+    const a = series[series.length - 2], b = series[series.length - 1];
+    if (b > a) return { text: '↑', cls: 'up' };
+    if (b < a) return { text: '↓', cls: 'down' };
+    return { text: '→', cls: 'flat' };
+  }
+
+  function render(payload) {
+    if (!payload) return;
+    const state = payload.state_snapshot || {};
+    const risk = payload.risk_report || {};
+    const cal = payload.calibration_metrics || {};
+    const action = payload.selected_action || {};
+    const explanation = payload.explanation || {};
+    const assumptions = payload.assumption_summary || [];
+
+    const vars = state.variables || {};
+    const turn = state.turn != null ? state.turn : '—';
+
+    const stateCurrent = byId('state-current');
+    const varNames = Object.keys(vars).filter(function (k) { return typeof vars[k] === 'number'; });
+    if (varNames.length === 0) {
+      stateCurrent.innerHTML = '<span class="empty">Turn ' + turn + ' — No numeric variables</span>';
+    } else {
+      stateCurrent.innerHTML = 'Turn ' + turn + '<br>' + varNames.slice(0, 6).map(function (k) {
+        return k + ': ' + Number(vars[k]).toFixed(2);
+      }).join(' &nbsp; ');
+    }
+
+    const riskScoreEl = byId('risk-score');
+    const s = risk.score;
+    riskScoreEl.textContent = s != null ? s.toFixed(1) : '—';
+    riskScoreEl.className = 'risk-score ' + riskClass(s);
+
+    const breakdown = risk.breakdown || {};
+    const breakdownEl = byId('risk-breakdown');
+    breakdownEl.innerHTML = ['uncertainty', 'constraint', 'assumption'].map(function (key) {
+      const v = breakdown[key];
+      return '<li><span>' + key + '</span><span>' + (v != null ? Number(v).toFixed(1) : '—') + '</span></li>';
+    }).join('');
+    byId('tail-risk').textContent = risk.tail_risk_summary || '';
+
+    const drivers = explanation.top_drivers || [];
+    byId('top-drivers').innerHTML = drivers.length ? drivers.map(function (d) { return '<li>' + d + '</li>'; }).join('') : '<li class="empty">—</li>';
+    byId('narrative-summary').textContent = explanation.narrative_summary || '';
+
+    const candidates = action.candidates || [];
+    const probs = action.probabilities || [];
+    const selectedType = action.action_type || '';
+    const rows = byId('action-rows');
+    rows.innerHTML = candidates.map(function (c, i) {
+      const prob = probs[i] != null ? (Number(probs[i]) * 100).toFixed(0) + '%' : '—';
+      const selected = c === selectedType ? ' class="selected"' : '';
+      return '<tr' + selected + '><td>' + c + '</td><td>' + (action.agent || '—') + '</td><td>' + prob + '</td></tr>';
+    }).join('') || '<tr><td colspan="3">No actions this turn</td></tr>';
+
+    byId('primary-effect').textContent = explanation.primary_effect || '—';
+    byId('confidence-level').textContent = 'Confidence: ' + (explanation.confidence_level || '—');
+    byId('explain-narrative').textContent = explanation.narrative_summary || '';
+
+    const health = cal.health;
+    byId('calibration-health').innerHTML = health ? '<span class="badge ' + health + '">' + health.toUpperCase() + '</span>' : '—';
+    const flags = cal.overconfidence_flags || [];
+    byId('overconfidence-flags').innerHTML = flags.length
+      ? '<small>Overconfidence: ' + flags.length + ' flag(s)</small>'
+      : '';
+
+    byId('assumption-rows').innerHTML = assumptions.map(function (a) {
+      return '<tr><td>' + (a.assumption || '') + '</td><td>' + (a.confidence != null ? a.confidence : '—') + '</td><td>' + (a.risk_if_wrong || '') + '</td><td>' + (Array.isArray(a.affected_variables) ? a.affected_variables.join(', ') : '') + '</td></tr>';
+    }).join('') || '<tr><td colspan="4">—</td></tr>';
+
+    var derived = state.derived || {};
+    var modelSnap = { turn: state.turn, variables: vars, derived: derived };
+    byId('model-snapshot').textContent = JSON.stringify(modelSnap, null, 2);
+
+    if (chartRmse && cal.rmse_over_time && cal.rmse_over_time.length) {
+      chartRmse.data.labels = cal.rmse_over_time.map(function (_, i) { return 'T' + (i + 1); });
+      chartRmse.data.datasets[0].data = cal.rmse_over_time;
+      chartRmse.update('none');
+    }
+  }
+
+  function updateCharts(history) {
+    if (!history || history.length === 0) return;
+    const varNames = [];
+    history.forEach(function (p) {
+      const v = (p.state_snapshot || {}).variables || {};
+      Object.keys(v).forEach(function (k) {
+        if (typeof v[k] === 'number' && varNames.indexOf(k) === -1) varNames.push(k);
+      });
+    });
+    varNames.splice(6);
+    const labels = history.map(function (p) { return 'T' + ((p.state_snapshot || {}).turn ?? 0); });
+    const datasets = varNames.map(function (name, i) {
+      const colors = ['#1d9bf0', '#00ba7c', '#ffad1f', '#f4212e', '#8b98a5', '#7856ff'];
+      return {
+        label: name,
+        data: history.map(function (p) {
+          const v = (p.state_snapshot || {}).variables || {};
+          return v[name] != null ? v[name] : null;
+        }),
+        borderColor: colors[i % colors.length],
+        backgroundColor: colors[i % colors.length] + '20',
+        fill: false,
+        tension: 0.2
+      };
+    });
+    const ctx = document.getElementById('chart-state');
+    if (!ctx) return;
+    if (chartState) chartState.destroy();
+    chartState = new Chart(ctx.getContext('2d'), {
+      type: 'line',
+      data: { labels: labels, datasets: datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom' } },
+        scales: { y: { beginAtZero: false }, x: { maxTicksLimit: 15 } }
+      }
+    });
+  }
+
+  function ensureRmseChart() {
+    if (chartRmse) return;
+    const ctx = document.getElementById('chart-rmse');
+    if (!ctx) return;
+    chartRmse = new Chart(ctx.getContext('2d'), {
+      type: 'line',
+      data: { labels: [], datasets: [{ label: 'RMSE', data: [], borderColor: '#ffad1f', tension: 0.2 }] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true }, x: { maxTicksLimit: 15 } }
+      }
+    });
+  }
+
+  function poll() {
+    fetch('/api/dashboard/history')
+      .then(function (r) { return r.json(); })
+      .then(function (history) {
+        if (!Array.isArray(history)) history = [];
+        byId('status').textContent = history.length + ' turn(s) in buffer.';
+        if (history.length === 0) {
+          byId('empty-state').style.display = 'block';
+          byId('dashboard-grid').style.display = 'none';
+        } else {
+          byId('empty-state').style.display = 'none';
+          byId('dashboard-grid').style.display = 'grid';
+          const latest = history[history.length - 1];
+          render(latest);
+          if (history.length !== lastHistoryLength) {
+            lastHistoryLength = history.length;
+            updateCharts(history);
+          }
+          ensureRmseChart();
+          if (latest.calibration_metrics && latest.calibration_metrics.rmse_over_time && latest.calibration_metrics.rmse_over_time.length) {
+            chartRmse.data.labels = latest.calibration_metrics.rmse_over_time.map(function (_, i) { return 'T' + (i + 1); });
+            chartRmse.data.datasets[0].data = latest.calibration_metrics.rmse_over_time;
+            chartRmse.update('none');
+          }
+        }
+      })
+      .catch(function () {
+        byId('status').textContent = 'Unable to load dashboard data.';
+      });
+  }
+
+  poll();
+  setInterval(poll, POLL_INTERVAL_MS);
+})();
+  </script>
+</body>
+</html>

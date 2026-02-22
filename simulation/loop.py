@@ -51,6 +51,21 @@ from agents.environment_agent import EnvironmentAgent
 MAX_ACTION_JSON_ATTEMPTS = 2
 
 
+def _make_json_safe(obj: object) -> object:
+    """Replace float('nan')/inf with None so saved JSON is valid (no NaN/Infinity literals)."""
+    if obj is None:
+        return None
+    if isinstance(obj, float):
+        if obj != obj or obj == float("inf") or obj == float("-inf"):
+            return None
+        return obj
+    if isinstance(obj, dict):
+        return {k: _make_json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_make_json_safe(v) for v in obj]
+    return obj
+
+
 def load_scenario(path: str | Path) -> dict[str, Any]:
     """Load scenario JSON from path."""
     p = Path(path)
@@ -749,6 +764,19 @@ class SimulationLoop:
                 "strategy_class": strategy_classes.get(aid, "general"),
             })
 
+        # Planned/predicted Deltas from depth-2 planning (for strategic analysis)
+        predicted_deltas: list[dict[str, Any]] = []
+        agents_by_name = {getattr(a, "name", None): a for a in self.agents if getattr(a, "name", None)}
+        for p, _, _ in proposal_results:
+            aname = getattr(p, "agent_name", None) or (p.to_dict() if hasattr(p, "to_dict") else {}).get("agent_name", "")
+            aid = getattr(p, "action_type", None) or (p.to_dict() if hasattr(p, "to_dict") else {}).get("action_type", "")
+            agent = agents_by_name.get(aname)
+            planned = getattr(agent, "_last_planning_delta", None) if agent else None
+            if planned is not None and isinstance(planned, dict):
+                predicted_deltas.append({"agent": aname, "action_type": aid, "delta": planned})
+            elif planned is not None and hasattr(planned, "to_dict"):
+                predicted_deltas.append({"agent": aname, "action_type": aid, "delta": planned.to_dict()})
+
         # Build provenance with TurnRecord (delta lifecycle, attribution, action trace)
         proposals_for_provenance = [p for p, _, _ in proposal_results]
         provenance_entry = {
@@ -767,6 +795,7 @@ class SimulationLoop:
             "world_entropy": current_entropy,
             "entropy_history": list(self._entropy_history),
             "derived": {"instability_mode": instability_mode, "system_stability": stability, "dissatisfaction": dissatisfaction},
+            "predicted_deltas": predicted_deltas,
             "turn_record": {
                 "turn": self.world.turn,
                 "pre_state": previous_state,
@@ -927,6 +956,22 @@ class SimulationLoop:
                 if action_type and isinstance(action_type, str):
                     agent.last_actions = (agent.last_actions + [action_type])[-2:]
 
+        # [RL] Update per-agent RL weight from observed reward.
+        try:
+            from config.settings import MC_RL_BETA
+            for i, agent in enumerate(self.agents):
+                if i >= len(proposal_results):
+                    continue
+                proposal, delta, was_accepted = proposal_results[i]
+                action_type = getattr(proposal, "action_type", None) or (proposal.to_dict() if hasattr(proposal, "to_dict") else {}).get("action_type")
+                if not action_type or not hasattr(agent, "update_rl_weight"):
+                    continue
+                state_delta = dict(actual_delta) if actual_delta else {}
+                observed_reward = agent._calculate_valence(proposal, delta, was_accepted, state_delta, agent.objectives)
+                agent.update_rl_weight(action_type, observed_reward, baseline=agent._rl_baseline, beta=MC_RL_BETA)
+        except (ImportError, AttributeError):
+            pass
+
     def run(
         self,
         steps: int = 5,
@@ -987,7 +1032,7 @@ class SimulationLoop:
             final["governance_state"] = self.governance.snapshot_state()
         if out_path:
             with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(final, f, indent=2)
+                json.dump(_make_json_safe(final), f, indent=2)
             if not silent:
                 print(f"Snapshot saved to {out_path}")
         if return_turns or return_provenance:
@@ -1015,7 +1060,8 @@ class SimulationLoop:
             snap_copy = dict(snap)
             if self.agents and hasattr(self.agents[0], "state_to_dict"):
                 snap_copy["agents_state"] = {a.name: a.state_to_dict() for a in self.agents}
-            yield {"type": "turn", "turn_index": i + 1, "steps_total": steps, "turn": snap_copy}
+            provenance_entry = self._provenance[-1] if self._provenance else None
+            yield {"type": "turn", "turn_index": i + 1, "steps_total": steps, "turn": snap_copy, "provenance_entry": provenance_entry}
             if i < steps - 1:
                 time.sleep(delay_between_rounds)
         final = self.world.snapshot()
@@ -1025,5 +1071,5 @@ class SimulationLoop:
             final["governance_state"] = self.governance.snapshot_state()
         if out_path:
             with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(final, f, indent=2)
+                json.dump(_make_json_safe(final), f, indent=2)
         yield {"type": "done", "final": final, "provenance": list(self._provenance)}

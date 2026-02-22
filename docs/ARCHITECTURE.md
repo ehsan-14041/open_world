@@ -10,9 +10,15 @@ This document describes the core architecture of the **open_world_engine2** proj
 
 Propagation is implemented in `core/propagation.py` and invoked from `WorldModel.apply_delta()` after applying direct numeric updates. The V2 generalized engine provides `dynamics/propagation.py` with edge_model adapters for optional use.
 
+**Canonical cloning:** All world-state cloning uses `world/world_state.py`: `clone_world_state(snapshot, include_causal_links=False|True)` for planning (no causal_links) or full snapshot; `clone_snapshot(snapshot)` for a full copy. The planner delegates to this module; no other deep copies of world state.
+
 ## Agent belief state
 
 - Each agent has **beliefs**: `{ "variables": dict[str, float], "confidence": dict[str, float] }`. Agents observe the real world through a **noisy filter** (`core/observation.py`: `observed_value = real_value + small_noise`). Beliefs are updated over time (e.g. exponential moving average). **Decisions use beliefs, not real world state**: in `propose()`, a belief snapshot (same shape as world snapshot but with variables from `agent.beliefs["variables"]`) is passed to goal evaluation, candidate generation, and planning.
+
+## Action evaluation (MC + RL)
+
+- When **MC_RL_ENABLED** is true, agents choose actions via a hybrid path in `agents/action_evaluation.py`: **planner scores** (one apply + utility per candidate), **Monte Carlo evaluation** (average utility over `n_sims` shallow sims per action), and **RL weights** per action are combined with softmax selection (configurable temperature). This preserves exploration; when disabled, the engine falls back to argmax planning (`plan_depth2` or `plan_depth2_with_callback`). All evaluation uses the canonical `world/world_state.clone_world_state()` and `planner.apply_delta_to_state()`; no propagation in planning.
 
 ## Generic rule engine
 
@@ -76,7 +82,7 @@ When scenario text is provided, the **pipeline** (`pipeline/orchestrator.py`) ru
 
 ### Scenario analysis output
 
-After a run, `core/scenario_analysis_output.py` produces Logic Core (JSON) and Executive Summary using `attribution_layer`, `delta_aggregation`, and `convergence_analysis`.
+After a run, `core/scenario_analysis_output.py` produces Logic Core (JSON), Executive Summary, and Strategic Analysis envelope (`build_strategic_analysis()`) using `attribution_layer`, `delta_aggregation`, and `convergence_analysis`. Provenance includes `predicted_deltas` (from agents' planning) for strategic analysis.
 
 ### Extension points
 

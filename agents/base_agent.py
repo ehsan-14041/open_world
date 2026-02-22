@@ -19,7 +19,7 @@ from typing import Any
 from schemas.proposal_schema import Proposal
 
 from agents.memory import AgentMemory
-from agents.planner import plan_depth2, plan_depth2_with_callback
+from agents.planner import plan_depth2, plan_depth2_with_callback, delta_from_rule_based
 from agents.utility import evaluate_short_term_goals, goals_from_objectives, DEFAULT_NORM_RANGES
 
 # Default magnitude for variable-driven actions (increase_X / decrease_X)
@@ -81,6 +81,27 @@ class BaseAgent:
         self.strategy_class_weights: dict[str, float] = {}
         self.personality_modifiers = dict(personality_modifiers or {})
         self._last_planning_delta: dict[str, Any] | None = None
+        # [RL] Lightweight RL weight table (action_type -> weight) and baseline for update.
+        self._rl_weights: dict[str, float] = {}
+        self._rl_baseline: float = 0.0
+
+    def get_rl_weight(self, action_type: str) -> float:
+        """Return RL weight for action_type (default 0.0 for unseen)."""
+        return self._rl_weights.get(action_type, 0.0)
+
+    def update_rl_weight(
+        self,
+        action_type: str,
+        observed_reward: float,
+        baseline: float | None = None,
+        *,
+        beta: float = 0.1,
+        alpha_baseline: float = 0.05,
+    ) -> None:
+        """Update RL weight: weight += beta * (observed_reward - baseline); then update baseline EMA."""
+        b = baseline if baseline is not None else self._rl_baseline
+        self._rl_weights[action_type] = self._rl_weights.get(action_type, 0.0) + beta * (observed_reward - b)
+        self._rl_baseline = (1 - alpha_baseline) * self._rl_baseline + alpha_baseline * observed_reward
 
     @property
     def beliefs(self) -> dict[str, Any]:
@@ -129,36 +150,63 @@ class BaseAgent:
         get_delta = belief_snapshot.get("get_delta")
         if get_delta is not None and not callable(get_delta):
             get_delta = None
+        rule_deltas = rule_based_deltas_for_snapshot(belief_snapshot) if get_delta is None else None
+
+        # [MC + RL] Evaluate candidates and select probabilistically (planner score + MC value + RL weight, softmax).
+        try:
+            from config.settings import MC_RL_ENABLED, MC_N_SIMS, MC_RL_TEMPERATURE
+            from agents.action_evaluation import run_mc_evaluation, get_planner_scores, softmax_select
+            if MC_RL_ENABLED:
+                llm_scores = get_planner_scores(
+                    belief_snapshot, candidates, get_delta, rule_deltas,
+                    self.objectives, self.memory.semantic_memory,
+                )
+                mc_values = run_mc_evaluation(
+                    belief_snapshot, candidates, get_delta, rule_deltas,
+                    self.objectives, self.memory.semantic_memory,
+                    n_sims=MC_N_SIMS,
+                )
+                rl_weights = {a: self.get_rl_weight(a) for a in candidates}
+                best_action = softmax_select(
+                    candidates, llm_scores, mc_values, rl_weights,
+                    temperature=MC_RL_TEMPERATURE,
+                )
+            else:
+                raise ImportError("MC_RL disabled")
+        except (ImportError, AttributeError):
+            # Fallback: original planner argmax (no MC/RL).
+            if get_delta is not None:
+                best_action = plan_depth2_with_callback(
+                    belief_snapshot,
+                    candidates,
+                    self.objectives,
+                    get_delta,
+                    beliefs=self.memory.semantic_memory,
+                )
+            else:
+                derived = (belief_snapshot.get("derived") or {}) if isinstance(belief_snapshot.get("derived"), dict) else {}
+                instability_mode = bool(derived.get("instability_mode", False))
+                best_action = plan_depth2(
+                    belief_snapshot,
+                    candidates,
+                    self.objectives,
+                    rule_deltas,
+                    beliefs=self.memory.semantic_memory,
+                    long_term_memory=self.long_term_memory,
+                    current_turn=world_snapshot.get("turn", 0),
+                    last_actions=self.last_actions,
+                    strategy_class_weights=self.strategy_class_weights,
+                    get_strategy_class=self._get_strategy_class,
+                    instability_mode=instability_mode,
+                )
+
         if get_delta is not None:
-            best_action = plan_depth2_with_callback(
-                belief_snapshot,
-                candidates,
-                self.objectives,
-                get_delta,
-                beliefs=self.memory.semantic_memory,
-            )
             delta_result = get_delta(best_action)
             self._last_planning_delta = (
                 delta_result.to_dict() if hasattr(delta_result, "to_dict") else (delta_result if isinstance(delta_result, dict) else None)
             )
         else:
-            self._last_planning_delta = None
-            rule_deltas = rule_based_deltas_for_snapshot(belief_snapshot)
-            derived = (belief_snapshot.get("derived") or {}) if isinstance(belief_snapshot.get("derived"), dict) else {}
-            instability_mode = bool(derived.get("instability_mode", False))
-            best_action = plan_depth2(
-                belief_snapshot,
-                candidates,
-                self.objectives,
-                rule_deltas,
-                beliefs=self.memory.semantic_memory,
-                long_term_memory=self.long_term_memory,
-                current_turn=world_snapshot.get("turn", 0),
-                last_actions=self.last_actions,
-                strategy_class_weights=self.strategy_class_weights,
-                get_strategy_class=self._get_strategy_class,
-                instability_mode=instability_mode,
-            )
+            self._last_planning_delta = delta_from_rule_based(best_action, rule_deltas)
         context = self.memory.get_relevant_context(limit=5)
         rationale = f"Goal-driven: {best_action} (goals: {self.short_term_goals[:2]})"
         if context:
@@ -358,7 +406,7 @@ class BaseAgent:
         })
 
     def state_to_dict(self) -> dict[str, Any]:
-        """For snapshot: memory (includes beliefs), goals, long_term_memory, last_actions."""
+        """For snapshot: memory (includes beliefs), goals, long_term_memory, last_actions, [RL] weights."""
         return {
             "memory": self.memory.to_dict(),
             "beliefs": self.memory.beliefs,
@@ -367,6 +415,8 @@ class BaseAgent:
             "long_term_memory": list(self.long_term_memory),
             "last_actions": list(self.last_actions),
             "strategy_class_weights": dict(self.strategy_class_weights),
+            "rl_weights": dict(self._rl_weights),
+            "rl_baseline": self._rl_baseline,
         }
 
     @classmethod
@@ -390,3 +440,7 @@ class BaseAgent:
             agent.last_actions = list(d["last_actions"])[-2:]
         if d.get("strategy_class_weights") and isinstance(d["strategy_class_weights"], dict):
             agent.strategy_class_weights = dict(d["strategy_class_weights"])
+        if d.get("rl_weights") and isinstance(d["rl_weights"], dict):
+            agent._rl_weights = dict(d["rl_weights"])
+        if d.get("rl_baseline") is not None and isinstance(d["rl_baseline"], (int, float)):
+            agent._rl_baseline = float(d["rl_baseline"])

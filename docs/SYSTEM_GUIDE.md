@@ -75,6 +75,7 @@ The utility function scores world states using these objectives. Planning and ac
 - **Feedback loops:** The causal graph can contain cycles; propagation iterates to compute cascading effects.
 - **Interactions:** Agents' actions affect shared variables; propagation and tradeoffs create indirect effects.
 - **Strategic incentives:** Different objectives and capabilities lead to different action choices and outcomes.
+- **MC + RL action selection (optional):** When `mc_rl_enabled` is true, each agent combines planner scores (one-step utility), Monte Carlo values (average utility over several shallow sims), and learned per-action weights via softmax. This adds exploration and can lead to more diverse trajectories than pure argmax planning.
 
 ---
 
@@ -156,6 +157,8 @@ score(a) = dot(objectives_signed, delta_vector(a))
 
 All of `delta_raw_per_agent`, `delta_after_merge`, `delta_applied`, and `self_effect_per_agent` are stored in the TurnRecord.
 
+**Delta path (canonical):** All world state changes are expressed as **Delta** objects and applied **only** through `WorldModel.apply_delta()`. Legacy formats (JSON action block, Strategic response, action_spec) are converted internally to Delta by `LLMActionGuard`, `WorldModelAgent.normalize_proposal()`, or `action_interpreter`; rule effects and delayed events are also applied as Delta via `WorldModel.apply_delta()`. Do not mutate world state outside this path.
+
 ---
 
 ## 11. Stable Propagation (Cycle-Safe)
@@ -206,19 +209,39 @@ Propagation uses only structural `causal_links` (`from`, `to`, `weight`). Action
 **Config flags (config/settings.py, env OWE_*):**
 - **allow_numbers** (default false): Narrative qualitative by default (no digits); if true, LLM outputs only placeholders `{{PRE:var}}`, `{{POST:var}}`, `{{DELTA:var}}`, `{{EVENT:id}}` and engine substitutes from snapshot/turn_record.
 - **enable_shocks** (default false): When false, no shock sampling; runs deterministic given seed.
+- **enable_uncertainty** (default false): When false, no observation noise or action variance; when true, optional noise/variance can be applied (see Deterministic mode below).
 - **lang** (default "auto"): Resolved from scenario for narrative (presentation only); fa → opening "در آغاز", en → "At the beginning".
 - **random_seed**: Plumbed for propagation, observation, shocks, learning when set.
 - **proposal_throttle_turns** (default 3): Max creative proposals per agent every N turns.
 - **propagation_max_iter** (default 5), **propagation_epsilon** (default 1e-6), **propagation_damping** (default 0.6): Cycle-safe propagation.
 - **phase_top_k_turns** (default 3): Top-k turns per phase for narrative facts.
+- **mc_rl_enabled** (default true): When true, action selection uses MC + RL path: planner scores, Monte Carlo evaluation (`mc_n_sims` shallow sims per action), and per-action RL weights combined via softmax; when false, argmax planning only.
+- **mc_n_sims** (default 4): Number of shallow simulations per candidate in Monte Carlo evaluation.
+- **mc_rl_temperature** (default 0.5): Softmax temperature for action selection (higher = more exploration).
+- **mc_rl_alpha** (default 0.05), **mc_rl_beta** (default 0.08): Learning rates for RL weight updates (small to avoid overfitting).
 
 **Action trace:** Separate from causal_links. Each run accumulates `action_trace[]`: turn, agent_id, action {op, args}, delta_raw, delta_applied, optional expected_utility/realized_utility. Returned with `return_provenance=True` as `result["action_trace"]`. Never merged into causal_links.
 
 ---
 
-## 15. Scenario Analysis Output (Logic Core & Executive Summary)
+## 15. Deterministic Mode
 
-After a run, `core/scenario_analysis_output.py` produces two-part output:
+When **ENABLE_SHOCKS=False** and **ENABLE_UNCERTAINTY=False**, the engine is deterministic for a given **RANDOM_SEED**: the same scenario and number of steps produce the same trajectory (same variable values, same turn records). Set `RANDOM_SEED` in config or env for reproducible runs.
+
+**Sources of nondeterminism (gated by config):**
+- **LLM calls:** Agent proposals, scenario compilation, option selection, narrative weaving — nondeterministic unless temperature=0 and no sampling variance.
+- **MC+RL softmax selection:** `agents/action_evaluation.softmax_select()` — when `mc_rl_enabled=true`, action is sampled by probability; for full determinism use `mc_rl_enabled=false` (argmax only).
+- **Shocks:** `shocks/shock_engine.apply_shocks_if_enabled` — disabled when `enable_shocks=false`.
+- **Observation noise:** `core/observation.observe()` — noise scale is 0 when `ENABLE_UNCERTAINTY=false` or `OBS_NOISE_SCALE=0`.
+- **Action variance / success probability:** `core/action_interpreter` and `core/world_model._apply_final_noise` — only active when `ENABLE_UNCERTAINTY=true`.
+
+When stochastic factors are present, the **strategic analysis** output should highlight confidence intervals or possible divergence (e.g. in convergence analysis or per-variable uncertainty) so that consumers can interpret non-deterministic outcomes.
+
+---
+
+## 16. Scenario Analysis Output (Logic Core, Executive Summary & Strategic Analysis)
+
+After a run, `core/scenario_analysis_output.py` produces:
 
 **Logic Core (JSON):** Technical summary built from:
 - `core/delta_aggregation`: `global_delta`, `action_impact_summary`
@@ -226,3 +249,10 @@ After a run, `core/scenario_analysis_output.py` produces two-part output:
 - `core/convergence_analysis`: system convergence label (stable/oscillating/diverging), per-variable analysis
 
 **Executive Summary:** Three paragraphs: what happened, why (causal), critical risk next turn.
+
+**Strategic Analysis (envelope):** `build_strategic_analysis()` returns a single object with:
+- `agents`, `variables`, `causal_links` (structural only), `predicted_changes` (global_delta + per_turn_predicted_deltas from provenance)
+- `agent_actions`, `causal_explanations`, `confidence_scores`, `strategic_decisions`
+- `logic_core` and `executive_summary` (reused)
+
+Provenance entries include **predicted_deltas**: for each agent, the loop records `_last_planning_delta` (in the rule-based path this is built via `delta_from_rule_based(best_action, rule_deltas)`). These feed `predicted_changes.per_turn_predicted_deltas` and support strategic decisions. The main CLI prints a "Strategic Decisions" section when `strategic_decisions` is non-empty.

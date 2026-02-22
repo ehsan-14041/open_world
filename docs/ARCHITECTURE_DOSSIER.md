@@ -1,6 +1,6 @@
 # Open World Engine — Architecture Dossier
 
-**Document Version:** 1.4  
+**Document Version:** 1.6  
 **Scope:** Full repository traversal, structural analysis, no code modifications.  
 **Base Path:** `/root/agent/open_world_engine2`
 
@@ -20,7 +20,7 @@ SimulationLoop.run(steps)
     → world.snapshot()
     → [optional] EnvironmentAgent.propose() → append events to world.events
     → world_summarize(snapshot)
-    → for each agent: agent.propose(agent_input) → extract/validate/sanitize → Delta
+    → for each agent: agent.propose(agent_input) [optional MC+RL: get_planner_scores, run_mc_evaluation, softmax_select] → extract/validate/sanitize → Delta
     → merge deltas → apply_all_constraints → world.apply_delta(combined_delta)
     → process_delayed_events, run_rules
     → agent.memory.add_event, update_beliefs, reflect
@@ -52,13 +52,14 @@ SimulationLoop.run(steps)
 
 | File | Responsibility | Depends On | Used By | Key Classes | Key Functions |
 |------|----------------|------------|---------|-------------|---------------|
-| `agents/base_agent.py` | Memory, goals, utility, planning flow | schemas.proposal_schema, agents.memory, agents.planner, agents.utility | agents.agents | `BaseAgent` | `propose()`, `reflect()`, `rule_based_deltas_for_snapshot()` |
+| `agents/base_agent.py` | Memory, goals, utility, planning flow | schemas.proposal_schema, agents.memory, agents.planner, agents.utility | agents.agents | `BaseAgent` | `propose()`, `reflect()`, `rule_based_deltas_for_snapshot()`; sets `_last_planning_delta` (rule-based path via `delta_from_rule_based`) for provenance |
 | `agents/agents.py` | RoleAgent, agent construction from scenario | proposal_schema, base_agent, memory, agent_constructor, llm_service | simulation.loop | `RoleAgent` | `propose()`, `generate_candidate_actions()`, `get_agents_from_scenario()` |
-| `agents/planner.py` | Depth-2 planning, clone/apply for simulation | agents.utility, core.world_state | base_agent | — | `plan_depth2()`, `plan_depth2_with_callback()`, `clone_world_state()`, `apply_delta_to_state()` |
+| `agents/planner.py` | Depth-2 planning, clone/apply for simulation | agents.utility, core.world_state, world.world_state | base_agent | — | `plan_depth2()`, `plan_depth2_with_callback()`, `clone_world_state()`, `apply_delta_to_state()`, `delta_from_rule_based()` |
 | `agents/world_model_agent.py` | Proposal → Delta via LLM | core.llm_service, schemas | simulation.loop (get_delta callback) | `WorldModelAgent` | `normalize_proposal()` |
 | `agents/environment_agent.py` | Propose 0–2 events per turn | core.llm_service, schemas.meta_schema | simulation.loop | `EnvironmentAgent` | `propose()` |
 | `agents/memory.py` | Episodic memory, beliefs, beliefs update | core.observation | base_agent, agents | `AgentMemory` | `add_event()`, `update_beliefs()`, `get_relevant_context()` |
 | `agents/utility.py` | Utility scoring, goals from objectives | — | planner, base_agent | — | `utility_function()`, `evaluate_short_term_goals()`, `goals_from_objectives()` |
+| `agents/action_evaluation.py` | Monte Carlo evaluation, planner scores, softmax action selection (LLM + MC + RL) | agents.utility, agents.planner, world.world_state | base_agent | — | `run_mc_evaluation()`, `get_planner_scores()`, `softmax_select()` |
 
 ## 2.4 Core
 
@@ -92,7 +93,7 @@ SimulationLoop.run(steps)
 | `core/attribution_layer.py` | Human-readable attribution sentences (action → variable change) | — | scenario_analysis_output | — | `build_attribution_sentences()` |
 | `core/delta_aggregation.py` | Aggregate per-turn deltas, action impact summary | — | scenario_analysis_output | — | `compute_global_delta()`, `compute_action_impact_summary()`, `summarize_action_impact_by_action_id()` |
 | `core/convergence_analysis.py` | Convergence/oscillation analysis from provenance | — | scenario_analysis_output | — | `analyze_convergence()` |
-| `core/scenario_analysis_output.py` | Logic Core (JSON) and Executive Summary | attribution_layer, delta_aggregation, convergence_analysis | main | — | `build_scenario_analysis_output()`, `build_logic_core()` |
+| `core/scenario_analysis_output.py` | Logic Core, Executive Summary, Strategic Analysis envelope | attribution_layer, delta_aggregation, convergence_analysis | main, ui | — | `build_scenario_analysis_output()`, `build_logic_core()`, `build_executive_summary()`, `build_strategic_analysis()` |
 | `core/proposal_normalizer.py` | Qualitative proposal → numeric delta (magnitude/direction) | — | world_model_agent, simulation | — | Normalize creative proposals |
 | `core/creative_proposal_validator.py` | Validate proposed new actions/events (no unknown vars, qualitative only) | — | simulation.loop, governance | — | Validate meta/creative proposals |
 | `core/narrative_firewall.py` | Two-layer narrative: facts only → narrator | summarization | core.narrative_builder | — | Firewall between trace and prose |
@@ -103,7 +104,7 @@ SimulationLoop.run(steps)
 
 | File | Responsibility | Depends On | Used By | Key Classes | Key Functions |
 |------|----------------|------------|---------|-------------|---------------|
-| `world/world_state.py` | `clone_snapshot()` helper | — | — | — | `clone_snapshot()` |
+| `world/world_state.py` | Canonical clone and snapshot helper (single source of truth for cloning) | — | agents.planner, world, simulation.loop (via world) | — | `clone_world_state(snapshot, include_causal_links=...)`, `clone_snapshot()` |
 | `world/delayed_events.py` | Delayed effects at trigger_turn | schemas.delta_schema | world_model | `DelayedEvent` | `apply_delayed_events_for_turn()` |
 
 ## 2.6 Schemas
@@ -161,7 +162,7 @@ SimulationLoop.run(steps)
 
 | File | Responsibility | Used By |
 |------|----------------|---------|
-| `config/settings.py` | OWE_* env, SCENARIO_PATH, DRY_RUN, MAX_DELTA, LANG, ALLOW_NUMBERS, ENABLE_SHOCKS, RANDOM_SEED, MAX_LLM_CALLS_PER_TURN, ENABLE_ENVIRONMENT_AGENT, ENABLE_META_ACTIONS, etc. | simulation, core, agents, main, ui |
+| `config/settings.py` | OWE_* env, SCENARIO_PATH, DRY_RUN, MAX_DELTA, LANG, ALLOW_NUMBERS, ENABLE_SHOCKS, RANDOM_SEED, MAX_LLM_CALLS_PER_TURN, ENABLE_ENVIRONMENT_AGENT, ENABLE_META_ACTIONS, MC_RL_ENABLED, MC_N_SIMS, MC_RL_TEMPERATURE, MC_RL_ALPHA, MC_RL_BETA, PROPOSAL_THROTTLE_TURNS, PROPAGATION_*, PHASE_TOP_K_TURNS, etc. | simulation, core, agents, main, ui |
 | `utils/id_generator.py` | Unique ID generation | core, schemas |
 | `utils/logging.py` | Logging setup | — |
 
@@ -198,7 +199,10 @@ SimulationLoop.run(steps)
          ├─► 8b. agent_output = agent.propose(agent_input)
          │       │
          │       ├─ strategic: LLM → raw string
-         │       ├─ dict (snapshot): BaseAgent.propose → plan_depth2 or plan_depth2_with_callback → Proposal → formatted string
+         │       ├─ dict (snapshot): BaseAgent.propose →
+         │       │     [if MC_RL_ENABLED] get_planner_scores(), run_mc_evaluation(), softmax_select() → best_action
+         │       │     [else] plan_depth2 or plan_depth2_with_callback → best_action
+         │       │     → Proposal (formatted string)
          │       └─ str (summary): LLM → raw string
          │
          ├─► 8c. raw_json = guard.extract_json(agent_output)
@@ -242,11 +246,13 @@ SimulationLoop.run(steps)
    │
    ├─► 16. rule_activations = run_rules(snap, world, rules)
    │
-   ├─► 17. _provenance.append(...)
+   ├─► 17. predicted_deltas = [each agent's _last_planning_delta] (for strategic analysis)
    │
-   ├─► 18. FOR EACH agent: memory.add_event(), update_beliefs(), update_long_term_memory()
+   ├─► 18. _provenance.append(..., predicted_deltas=...)
    │
-   └─► 19. agent.reflect(provenance[-1:], snap_after)
+   ├─► 19. FOR EACH agent: memory.add_event(), update_beliefs(), update_long_term_memory()
+   │
+   └─► 20. agent.reflect(provenance[-1:], snap_after)
 ```
 
 ## Arrow Diagram (Text)
@@ -274,7 +280,7 @@ main.py / ui.py
                           ├── agent.propose()
                           │     ├── BaseAgent.propose
                           │     │     ├── generate_candidate_actions() [LLM or rule]
-                          │     │     ├── plan_depth2() | plan_depth2_with_callback()
+                          │     │     ├── [MC_RL] get_planner_scores(), run_mc_evaluation(), softmax_select() | plan_depth2() | plan_depth2_with_callback()
                           │     │     │     ├── clone_world_state()
                           │     │     │     ├── apply_delta_to_state()
                           │     │     │     ├── get_delta() [WorldModelAgent]
@@ -348,11 +354,13 @@ main.py / ui.py
 - `semantic_memory`: {global_state_summary, last_turn, last_version}
 - `last_action_outcomes`: last 3
 
-## Cloning
+## Cloning (canonical)
 
-- **planning:** `agents/planner.clone_world_state()` — deep copy of entities, relations, global_state, narrative, ontology, version, turn. No causal_links.
-- **world/world_state.clone_snapshot():** includes causal_links.
-- **core/world_state.WorldState:** `clone()` returns new WorldState with deep-copied fields.
+- **Single canonical API:** `world/world_state.clone_world_state(snapshot, *, include_causal_links: bool = False)`. Use this for all world-state cloning; avoid other deep copies of world state.
+- **Planning:** Call with `include_causal_links=False` — deep copy of entities, relations, global_state/variables, narrative, ontology, version, turn; **no** causal_links.
+- **Execution / full state:** Call with `include_causal_links=True` (or use `world/world_state.clone_snapshot(snapshot)`, which is a thin wrapper).
+- **Planner:** `agents/planner.clone_world_state(snapshot, include_causal_links=False)` delegates to `world.world_state.clone_world_state()`; planning never includes causal_links.
+- **core/world_state.WorldState:** `clone()` returns new WorldState with deep-copied fields (for planning adapter).
 
 ## Delta Application
 
@@ -398,6 +406,8 @@ main.py / ui.py
 
 - `WorldModel.apply_delta()` — primary effect, propagation, noise, entity/relation updates.
 
+**Delta path (canonical):** All world state changes are expressed as **Delta** and applied **only** through `WorldModel.apply_delta()`. Legacy formats (JSON action block, Strategic response, action_spec) are converted internally to Delta; rule effects and delayed events also apply via `WorldModel.apply_delta()`.
+
 ## Planning vs Execution
 
 | Aspect | Planning | Execution |
@@ -408,7 +418,7 @@ main.py / ui.py
 | **Governance** | None | `Governance.validate_delta()` |
 | **Soft constraints** | None | `apply_all_constraints()` |
 
-**Planning and execution use different logic.** Planning uses a simple additive delta on a cloned state; execution uses primary/secondary propagation, noise, and governance.
+**Planning and execution use different logic.** Planning uses a simple additive delta on a cloned state (no propagation, no noise, no delayed events); execution uses primary/secondary propagation, noise, and governance. Same delta application formula (additive numeric_updates); execution adds propagation and optional stochastic effects.
 
 ---
 
@@ -431,6 +441,14 @@ main.py / ui.py
 | `core/ontology_manager.py` | `suggest_attribute_from_text()` | Ontology suggestion | text | str | No | — |
 | `core/narrative_builder.py` | `build_narrative()` | Narrative prose | trace, final, agents | str | No | — |
 | `core/option_selector.py` | `_select_via_llm()` | Option selection | options, snapshot | SelectedAction | No | select_option_rule_based |
+
+## Input processing
+
+- **Scenario input:** Accepted as (1) natural language via `parse_scenario_text()` → pipeline → scenario JSON, or (2) structured JSON (scenario dict) directly. Pipeline extracts agents, variables, causal links; model is generic (no hardcoded industries/countries).
+
+## Strategic analysis output
+
+- **Envelope:** `build_strategic_analysis()` (in `core/scenario_analysis_output.py`) returns: `agents`, `variables`, `causal_links` (structural only), `predicted_changes` (global_delta + per_turn_predicted_deltas from provenance), `agent_actions`, `causal_explanations`, `confidence_scores`, `strategic_decisions`, plus `logic_core` and `executive_summary`. Provenance entries include `predicted_deltas` (from each agent's `_last_planning_delta`, populated in rule-based path via `delta_from_rule_based()`). Main CLI prints Strategic Decisions when present.
 
 ## Input/Output Schemas (Selected)
 
@@ -515,11 +533,9 @@ main.py / ui.py
 - Execution: `WorldModel.apply_delta()` — primary/secondary propagation, noise.
 - **Impact:** Planner scores may not match execution outcomes.
 
-## 2. Duplicate Cloning Logic
+## 2. Cloning (resolved)
 
-- `agents/planner.clone_world_state()` — no causal_links.
-- `world/world_state.clone_snapshot()` — includes causal_links.
-- Planner does not use `world/world_state.clone_snapshot()`.
+- **Canonical:** `world/world_state.clone_world_state(snapshot, include_causal_links=False|True)`. Planning uses `False`; full clone (e.g. for propagation) uses `True`. `clone_snapshot(snapshot)` is a thin wrapper with `include_causal_links=True`. Planner delegates to the canonical function.
 
 ## 3. Competing Delta Sources
 
@@ -555,7 +571,7 @@ main.py / ui.py
 
 **Stochastic:**
 
-- LLM outputs, `random.gauss()` in noise, `random.random()` in event probability, instability mode (20% random action).
+- LLM outputs, `random.gauss()` in noise, `random.random()` in event probability, instability mode (20% random action), MC+RL softmax action selection (`softmax_select` in `action_evaluation.py`).
 
 **LLM-Assisted:**
 
@@ -600,7 +616,7 @@ main.py
   ├── schemas.scenario_schema
   ├── simulation.loop
   ├── core.narrative_builder
-  ├── core.scenario_analysis_output
+  ├── core.scenario_analysis_output (build_scenario_analysis_output, build_strategic_analysis)
   ├── core.narrative_firewall
   ├── core.phase_detector
   ├── core.registry_validator
@@ -636,7 +652,8 @@ agents/base_agent.py
   ├── schemas.proposal_schema
   ├── agents.memory
   ├── agents.planner
-  └── agents.utility
+  ├── agents.utility
+  └── agents.action_evaluation (lazy: run_mc_evaluation, get_planner_scores, softmax_select)
 
 agents/agents.py
   ├── schemas.proposal_schema
@@ -649,7 +666,8 @@ agents/agents.py
 
 agents/planner.py
   ├── agents.utility
-  └── core.world_state
+  ├── core.world_state
+  └── world.world_state
 
 core/world_model.py
   ├── schemas.delta_schema
@@ -696,6 +714,7 @@ main() → SimulationLoop() → loop.run()
   loop.step() → world.apply_delta()
   loop.step() → world.process_delayed_events()
   loop.step() → run_rules()
+  loop.step() → collect predicted_deltas from agents (_last_planning_delta)
   loop.step() → agent.memory.add_event()
   loop.step() → agent.memory.update_beliefs()
   loop.step() → agent.reflect()
@@ -704,8 +723,12 @@ main() → SimulationLoop() → loop.run()
   BaseAgent.propose() → memory.update_beliefs()
   BaseAgent.propose() → evaluate_short_term_goals()
   BaseAgent.propose() → generate_candidate_actions()
-  BaseAgent.propose() → plan_depth2() | plan_depth2_with_callback()
+  BaseAgent.propose() → [MC_RL] get_planner_scores(), run_mc_evaluation(), softmax_select() | plan_depth2() | plan_depth2_with_callback()
   BaseAgent.propose() → get_delta() [WorldModelAgent.normalize_proposal]
+
+  action_evaluation: run_mc_evaluation() → clone_world_state(), apply_delta_to_state(), utility_function() [n_sims]
+  action_evaluation: get_planner_scores() → clone_world_state(), apply_delta_to_state(), utility_function()
+  action_evaluation: softmax_select() → weighted sample from llm_scores + mc_values + rl_weights
 
   plan_depth2() → clone_world_state()
   plan_depth2() → delta_from_rule_based()

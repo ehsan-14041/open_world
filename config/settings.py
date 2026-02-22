@@ -109,7 +109,7 @@ MULTI_STAGE_COMPILER: bool = (
     else bool(_cfg.get("multi_stage_compiler", False))
 )
 
-# --- Enable uncertainty
+# --- Enable uncertainty (when False, with ENABLE_SHOCKS=False and fixed RANDOM_SEED, runs are deterministic)
 _uncertainty_env = _from_env("ENABLE_UNCERTAINTY")
 ENABLE_UNCERTAINTY: bool = (
     _uncertainty_env.lower() in ("true", "1", "yes") if _uncertainty_env is not None
@@ -152,6 +152,13 @@ elif _from_env("OBS_NOISE_SCALE"):
     except (ValueError, TypeError):
         pass
 
+# --- Monte Carlo + lightweight RL (action evaluation and selection; small alpha/beta to avoid overfitting)
+MC_RL_ENABLED: bool = bool(_cfg.get("mc_rl_enabled", True))
+MC_RL_BETA: float = float(_cfg.get("mc_rl_beta", 0.08))
+MC_RL_ALPHA: float = float(_cfg.get("mc_rl_alpha", 0.05))
+MC_N_SIMS: int = int(_cfg.get("mc_n_sims", 4))
+MC_RL_TEMPERATURE: float = float(_cfg.get("mc_rl_temperature", 0.5))
+
 # --- Hardening: proposal throttle, propagation, phase detection
 _proposal_throttle = _cfg.get("proposal_throttle_turns")
 PROPOSAL_THROTTLE_TURNS: int = int(_proposal_throttle or 3)
@@ -164,7 +171,16 @@ PROPAGATION_DAMPING: float = float(_prop_damping or 0.6)
 _phase_top_k = _cfg.get("phase_top_k_turns")
 PHASE_TOP_K_TURNS: int = int(_phase_top_k or 3)
 
-# --- v2 narrative and shocks
+# --- Live Enterprise Dashboard
+_dash_history = _cfg.get("dashboard_history_size")
+DASHBOARD_HISTORY_SIZE: int = int(_from_env("DASHBOARD_HISTORY_SIZE") or _dash_history or 50)
+_dash_enabled = _from_env("DASHBOARD_ENABLED")
+DASHBOARD_ENABLED: bool = (
+    _dash_enabled.lower() in ("true", "1", "yes") if _dash_enabled is not None
+    else bool(_cfg.get("dashboard_enabled", True))
+)
+
+# --- v2 narrative and shocks (when enable_shocks=False, no shock sampling; deterministic given seed with ENABLE_UNCERTAINTY=False)
 ALLOW_NUMBERS: bool = bool(_cfg.get("allow_numbers", False))
 ENABLE_SHOCKS: bool = bool(_cfg.get("enable_shocks", False))
 LANG: str = str(_cfg.get("lang", "auto")).strip().lower() or "auto"
@@ -262,4 +278,6 @@ def get_settings() -> dict[str, Any]:
         "allow_numbers": ALLOW_NUMBERS,
         "enable_shocks": ENABLE_SHOCKS,
         "lang": LANG,
+        "dashboard_history_size": DASHBOARD_HISTORY_SIZE,
+        "dashboard_enabled": DASHBOARD_ENABLED,
     }

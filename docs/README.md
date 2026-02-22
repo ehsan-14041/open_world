@@ -14,6 +14,8 @@
 
 - **ورودی:** `main.py` (CLI)، `ui.py` (وب)
 - **شبیه‌سازی:** `simulation/loop.py`
+- **ارزیابی اقدام (MC + RL):** `agents/action_evaluation.py` — امتیاز planner، ارزیابی مونت‌کارلو، انتخاب softmax
 - **Pipeline سناریو:** `pipeline/orchestrator.py` (مراحل: entity_extractor → variable_discovery → causal_graph_builder → incentive_modeler → objective_validator → action_discovery → model_serializer)
-- **تحلیل خروجی:** `core/scenario_analysis_output.py`
+- **تحلیل خروجی:** `core/scenario_analysis_output.py` (Logic Core، Executive Summary، Strategic Analysis با `build_strategic_analysis()`؛ provenance شامل `predicted_deltas`)
+- **کلون وضعیت جهان (canonical):** `world/world_state.py` — `clone_world_state()`, `clone_snapshot()`
 - **خطاهای Pipeline:** `pipeline/errors.py`

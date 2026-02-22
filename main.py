@@ -27,7 +27,7 @@ from core.phase_detector import detect_phases, build_phase_summary_facts
 from core.registry_validator import validate_registry_health
 from core.narrative_firewall import replace_placeholders
 from core.llm_client import call_llm
-from core.scenario_analysis_output import build_scenario_analysis_output
+from core.scenario_analysis_output import build_scenario_analysis_output, build_strategic_analysis
 from summarization.facts import build_narrative_facts
 
 
@@ -168,6 +168,14 @@ def main() -> int:
             facts=narrative_facts,
             allow_numbers=False,
         )
+        strategic = build_strategic_analysis(
+            result,
+            scenario=scenario,
+            agents=agents,
+            action_definitions=action_definitions,
+            facts=narrative_facts,
+            allow_numbers=False,
+        )
         print("")
         print("=== Logic Core (JSON) ===")
         print(json.dumps(analysis["logic_core"], indent=2))
@@ -177,6 +185,11 @@ def main() -> int:
             title = key.replace("_", " ").title()
             print(f"--- {title} ---")
             print(analysis["executive_summary"].get(key, ""))
+            print("")
+        if strategic.get("strategic_decisions"):
+            print("=== Strategic Decisions ===")
+            for s in strategic["strategic_decisions"]:
+                print("-", s)
             print("")
     else:
         final = result.get("final", result) if isinstance(result, dict) else result
