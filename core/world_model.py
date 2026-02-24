@@ -31,6 +31,22 @@ except ImportError:
     process_events_for_turn = None  # type: ignore[misc, assignment]
 
 
+def _get_prop_decay() -> float:
+    try:
+        from config.settings import PROPAGATION_DECAY_FACTOR
+        return PROPAGATION_DECAY_FACTOR
+    except ImportError:
+        return 1.0
+
+
+def _get_prop_sig() -> float:
+    try:
+        from config.settings import PROPAGATION_SIGNIFICANCE_THRESHOLD
+        return PROPAGATION_SIGNIFICANCE_THRESHOLD
+    except ImportError:
+        return 1e-6
+
+
 def _ensure_float_dict(d: dict[str, Any] | None) -> dict[str, float]:
     """Coerce values to float for variables; non-numeric keys skipped."""
     out: dict[str, float] = {}
@@ -178,6 +194,16 @@ class WorldModel:
         for key, value in (delta.numeric_updates or {}).items():
             if isinstance(value, (int, float)):
                 direct_changes[key] = float(value)
+
+        # Optional granularity cap: keep only top-K variables by magnitude to reduce compute
+        try:
+            from config.settings import DELTA_APPLY_GRANULARITY
+            cap = DELTA_APPLY_GRANULARITY
+        except ImportError:
+            cap = None
+        if cap is not None and isinstance(cap, int) and cap > 0 and len(direct_changes) > cap:
+            top_keys = sorted(direct_changes.keys(), key=lambda k: abs(direct_changes[k]), reverse=True)[:cap]
+            direct_changes = {k: direct_changes[k] for k in top_keys}
         
         # Identify primary variable
         primary_variable = _identify_primary_variable(
@@ -216,6 +242,8 @@ class WorldModel:
                 direct_changes,
                 primary_variable=primary_variable,
                 variable_specs=variable_specs,
+                decay_factor=_get_prop_decay(),
+                significance_threshold=_get_prop_sig(),
             )
             
             # Apply secondary effects from propagation
@@ -283,33 +311,52 @@ class WorldModel:
                     "source": "noise",
                 })
 
-        # Entity updates (patch existing)
-        for eid, attrs in (delta.entity_updates or {}).items():
-            if eid in self.entities:
-                self.entities[eid].update(attrs)
-            else:
-                self.entities[eid] = dict(attrs)
+        # Entity updates (patch existing) and new entities - gated by DELTA_APPLY_ENTITIES
+        try:
+            from config.settings import DELTA_APPLY_ENTITIES
+            apply_entities = DELTA_APPLY_ENTITIES
+        except ImportError:
+            apply_entities = True
+        if apply_entities:
+            for eid, attrs in (delta.entity_updates or {}).items():
+                if eid in self.entities:
+                    self.entities[eid].update(attrs)
+                else:
+                    self.entities[eid] = dict(attrs)
+            for eid, entity in (delta.new_entities or {}).items():
+                self.entities[eid] = dict(entity)
 
-        # New entities
-        for eid, entity in (delta.new_entities or {}).items():
-            self.entities[eid] = dict(entity)
-
-        # Relation updates: append (no dedupe for simplicity)
-        for rel in (delta.relation_updates or []):
-            self.relations.append(dict(rel))
+        # Relation updates - gated by DELTA_APPLY_RELATIONS
+        try:
+            from config.settings import DELTA_APPLY_RELATIONS
+            apply_relations = DELTA_APPLY_RELATIONS
+        except ImportError:
+            apply_relations = True
+        if apply_relations:
+            for rel in (delta.relation_updates or []):
+                self.relations.append(dict(rel))
 
         if delta.rationale:
             self.narrative.append(f"[v{self.version}] {delta.rationale}")
         self.version += 1
-        
-        # Return structured outcome
-        return {
+
+        outcome = {
             "primary_effect": primary_effect,
             "secondary_effects": secondary_effects,
             "noise_component": noise_component,
-            "variable_changes": variable_changes,  # backward compat
+            "variable_changes": variable_changes,
             "propagation_trace": propagation_trace,
         }
+        try:
+            from core.propagation import primary_propagation_check
+            ok, msg = primary_propagation_check(self, outcome, primary_variable=primary_variable)
+            if not ok:
+                outcome["propagation_check"] = {"ok": False, "message": msg}
+            else:
+                outcome["propagation_check"] = {"ok": True}
+        except ImportError:
+            outcome["propagation_check"] = {"ok": True}
+        return outcome
 
     def process_delayed_events(self) -> list[dict[str, Any]]:
         """Apply delayed events and generic event_queue for current turn. Returns list of triggered event records for trace."""

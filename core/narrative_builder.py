@@ -17,6 +17,7 @@ from core.narrative_synthesizer import (
     infer_agent_display_names,
     transform_agents_state_with_display_names,
 )
+from core.narrative_templates import template
 
 from summarization.facts import build_narrative_facts
 from summarization.lang import detect_narrative_language_from_scenario, opening_phrase
@@ -549,43 +550,31 @@ def _build_paragraph_dry_run(
             strategic_actions.append(f"{display} pursued {acts[0]}")
     agent_sentence = " " + ", ".join(strategic_actions[:3]) + "." if strategic_actions else f" Agents ({', '.join(role_names[:3])}) took action." if role_names else " Multiple agents pursued distinct strategies."
 
-    # 3. Conflict or tradeoff: "X improved, but Y deteriorated" with causal connector
+    # 3. Conflict or tradeoff: directional abstract templates (relational shifts)
     if primary_conflict:
         v1, d1 = primary_conflict[0]
         v2, d2 = primary_conflict[1]
-        up_var = v1 if d1 > 0 else v2
-        down_var = v2 if d1 > 0 else v1
-        tradeoff = f" As a result, {_humanize_var(up_var)} rose while {_humanize_var(down_var)} fell, which triggered competing pressures."
+        up_var = _humanize_var(v1 if d1 > 0 else v2)
+        down_var = _humanize_var(v2 if d1 > 0 else v1)
+        tradeoff = " " + template("relational_opposite_causal", A=up_var, B=down_var)
     else:
-        # Describe one tradeoff from variable_shifts (one up, one down)
         up_down = [(s["var"], s["total_delta"]) for s in shifts if abs(s.get("total_delta", 0)) > 0.01]
         ups = [v for v, d in up_down if d > 0]
         downs = [v for v, d in up_down if d < 0]
         if ups and downs:
-            tradeoff = f" Because {_humanize_var(ups[0])} increased while {_humanize_var(downs[0])} decreased, the system experienced a clear tradeoff."
+            tradeoff = " " + template("relational_opposite_because", A=_humanize_var(ups[0]), B=_humanize_var(downs[0]))
         else:
             tradeoff = " Variable movements produced interdependent effects across the run."
 
-    # 4. Turning point: turn with largest delta or instability shift, why it changed trajectory
+    # 4. Turning point: state transition template
     turn_label = turning_turn + 1 if trace else 0
-    turning = f" Turn {turn_label} marked the turning point ({turning_reason}), leading to a new trajectory."
+    turning = " " + template("turning_point", t=turn_label, description=turning_reason)
 
     # 5. System trajectory classification (one of six)
-    trajectory_sentence = f" The outcome fits a {trajectory_class} pattern."
+    trajectory_sentence = " " + template("trajectory_pattern", trajectory_class=trajectory_class)
 
-    # 6. Consequence framing: interpretive conclusion about structural health (no generic blocklist)
-    if trajectory_class == "Escalation":
-        consequence = " Structural stress increased and the system became more brittle."
-    elif trajectory_class == "Stabilization":
-        consequence = " The system settled into a more coherent configuration."
-    elif trajectory_class == "Adaptation":
-        consequence = " Agents and variables moved toward a more sustainable configuration."
-    elif trajectory_class == "Fragmentation":
-        consequence = " Divergent variable movements left the system structurally fragmented."
-    elif trajectory_class == "Illusory improvement":
-        consequence = " Surface gains in one dimension masked deterioration elsewhere."
-    else:
-        consequence = " No clear resolution emerged; the system remained in tension."
+    # 6. Consequence framing: directional template by trajectory class
+    consequence = " " + template("trajectory_consequence", trajectory_class=trajectory_class)
 
     para = beginning + agent_sentence + tradeoff + turning + trajectory_sentence + consequence
     words = para.split()

@@ -10,6 +10,7 @@ from typing import Any, Literal
 
 # --- Types ---
 ValueSpecType = Literal["numeric", "ordinal", "categorical", "text"]
+BehaviorType = Literal["STOCK", "FLOW"]
 
 # Ordinal intensity levels (domain-agnostic)
 ORDINAL_LEVELS = ["very_low", "low", "medium", "high", "very_high"]
@@ -65,6 +66,9 @@ class ValueSpec:
         "rate_limit",
         "soft_max",
         "softness",
+        "behavior_type",
+        "damping_factor",
+        "decay_rate",
     )
 
     def __init__(
@@ -79,6 +83,9 @@ class ValueSpec:
         rate_limit: float | None = None,
         soft_max: float | None = None,
         softness: float | None = None,
+        behavior_type: BehaviorType = "STOCK",
+        damping_factor: float | None = None,
+        decay_rate: float | None = None,
     ) -> None:
         self.type = type
         self.scale = scale or {}
@@ -89,6 +96,9 @@ class ValueSpec:
         self.rate_limit = rate_limit
         self.soft_max = soft_max
         self.softness = softness
+        self.behavior_type = behavior_type if behavior_type in ("STOCK", "FLOW") else "STOCK"
+        self.damping_factor = damping_factor
+        self.decay_rate = decay_rate
 
     def to_dict(self) -> dict[str, Any]:
         out: dict[str, Any] = {"type": self.type}
@@ -108,6 +118,12 @@ class ValueSpec:
             out["soft_max"] = self.soft_max
         if self.softness is not None:
             out["softness"] = self.softness
+        if self.behavior_type != "STOCK":
+            out["behavior_type"] = self.behavior_type
+        if self.damping_factor is not None:
+            out["damping_factor"] = self.damping_factor
+        if self.decay_rate is not None:
+            out["decay_rate"] = self.decay_rate
         return out
 
     @classmethod
@@ -124,6 +140,9 @@ class ValueSpec:
             rate_limit=d.get("rate_limit") if isinstance(d.get("rate_limit"), (int, float)) else None,
             soft_max=d.get("soft_max") if isinstance(d.get("soft_max"), (int, float)) else None,
             softness=d.get("softness") if isinstance(d.get("softness"), (int, float)) else None,
+            behavior_type=(d.get("behavior_type") or "STOCK") if str(d.get("behavior_type", "STOCK")).upper() in ("STOCK", "FLOW") else "STOCK",
+            damping_factor=d.get("damping_factor") if isinstance(d.get("damping_factor"), (int, float)) else None,
+            decay_rate=d.get("decay_rate") if isinstance(d.get("decay_rate"), (int, float)) else None,
         )
 
 
@@ -139,6 +158,8 @@ def value_spec_from_legacy(legacy: dict[str, Any] | None) -> ValueSpec:
         scale["min"] = float(legacy["min"])
     if legacy.get("max") is not None and isinstance(legacy["max"], (int, float)):
         scale["max"] = float(legacy["max"])
+    behavior_type = "FLOW" if str(legacy.get("behavior_type", "STOCK")).upper() == "FLOW" else "STOCK"
+    damping_factor = legacy.get("damping_factor") if isinstance(legacy.get("damping_factor"), (int, float)) else None
     return ValueSpec(
         type="numeric",
         scale=scale or None,
@@ -146,6 +167,9 @@ def value_spec_from_legacy(legacy: dict[str, Any] | None) -> ValueSpec:
         rate_limit=legacy.get("rate_limit") if isinstance(legacy.get("rate_limit"), (int, float)) else None,
         soft_max=legacy.get("soft_max") if isinstance(legacy.get("soft_max"), (int, float)) else None,
         softness=legacy.get("softness") if isinstance(legacy.get("softness"), (int, float)) else None,
+        behavior_type=behavior_type,
+        damping_factor=damping_factor,
+        decay_rate=legacy.get("decay_rate") if isinstance(legacy.get("decay_rate"), (int, float)) else None,
     )
 
 
@@ -284,3 +308,4 @@ def parse_belief_value(value: Any, spec: ValueSpec | dict[str, Any] | None) -> A
     if vs.type == "text" and "value" in value:
         return {"value": value.get("value"), "confidence": value.get("confidence", 0.5)}
     return value
+ue

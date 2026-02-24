@@ -265,10 +265,31 @@ class Governance:
         self.auto_approve_max_agents = auto_approve_max_agents
         self.require_tradeoffs = require_tradeoffs
         self.strictness_level = strictness_level
+        self._disabled_rules = set()
         # Create policy rules with reference to self so modify functions can access current strictness_level
         self.policy_rules = list(
             policy_rules or default_policy_rules(require_tradeoffs=require_tradeoffs, governance_ref=self)
         )
+
+    def add_policy_rule(self, rule: PolicyRule) -> None:
+        """Add a policy rule at runtime."""
+        self.policy_rules.append(rule)
+
+    def disable_rule(self, name: str) -> None:
+        """Disable a rule by name; it will be skipped in validate_delta."""
+        self._disabled_rules.add(name)
+
+    def enable_rule(self, name: str) -> None:
+        """Re-enable a rule by name."""
+        self._disabled_rules.discard(name)
+
+    def set_strictness_level(self, level: int) -> None:
+        """Set strictness level at runtime."""
+        self.strictness_level = int(level)
+
+    def update_policy_rules(self, rules: list[PolicyRule]) -> None:
+        """Replace policy rules with a new list."""
+        self.policy_rules = list(rules)
 
     def validate_delta(self, delta: Delta, world: Any) -> tuple[bool, list[str], Delta | None]:
         """
@@ -281,9 +302,11 @@ class Governance:
         repairs_made = False
         
         for rule in self.policy_rules:
+            if rule.name in self._disabled_rules:
+                continue
             if not self.require_tradeoffs and rule.name == "require_tradeoffs":
                 continue
-            
+
             # Scale rule application based on strictness_level
             # Higher strictness = more intense repairs, but never skip completely
             ok, reason, modified = rule.run(current, world)
@@ -344,6 +367,18 @@ class Governance:
         if "policy_rules" in change and isinstance(change["policy_rules"], list):
             pass  # Could replace or extend policy_rules by name
 
+    def intervene_for_stability(self, world_snapshot: Any, ssi: float) -> None:
+        """
+        Called when System Stability Index (SSI) is below threshold.
+        Applies stricter governance: increase strictness_level and optionally
+        tighter hard_clips for the next delta validation.
+        """
+        self.set_strictness_level(min(5, self.strictness_level + 1))
+
     def snapshot_state(self) -> dict[str, Any]:
         """Return governance state for snapshot."""
-        return {"strictness_level": self.strictness_level}
+        return {
+            "strictness_level": self.strictness_level,
+            "rule_names": [r.name for r in self.policy_rules],
+            "disabled_rules": list(self._disabled_rules),
+        }

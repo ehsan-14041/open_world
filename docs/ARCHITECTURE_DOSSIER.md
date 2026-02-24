@@ -1,6 +1,6 @@
 # Open World Engine — Architecture Dossier
 
-**Document Version:** 1.6  
+**Document Version:** 2.0  
 **Scope:** Full repository traversal, structural analysis, no code modifications.  
 **Base Path:** `/root/agent/open_world_engine2`
 
@@ -60,6 +60,7 @@ SimulationLoop.run(steps)
 | `agents/memory.py` | Episodic memory, beliefs, beliefs update | core.observation | base_agent, agents | `AgentMemory` | `add_event()`, `update_beliefs()`, `get_relevant_context()` |
 | `agents/utility.py` | Utility scoring, goals from objectives | — | planner, base_agent | — | `utility_function()`, `evaluate_short_term_goals()`, `goals_from_objectives()` |
 | `agents/action_evaluation.py` | Monte Carlo evaluation, planner scores, softmax action selection (LLM + MC + RL) | agents.utility, agents.planner, world.world_state | base_agent | — | `run_mc_evaluation()`, `get_planner_scores()`, `softmax_select()` |
+| `agents/belief_model.py` | BeliefState, belief update, belief_alignment, belief_entropy_aggregate (optional layer) | — | base_agent (when ENABLE_BELIEF_LAYER), dashboard_payload | `BeliefState` | `belief_state_from_memory_beliefs()`, `update_belief_state()`, `belief_alignment()`, `belief_entropy_aggregate()`, `dominant_belief()` |
 
 ## 2.4 Core
 
@@ -99,6 +100,18 @@ SimulationLoop.run(steps)
 | `core/narrative_firewall.py` | Two-layer narrative: facts only → narrator | summarization | core.narrative_builder | — | Firewall between trace and prose |
 | `core/registry_validator.py` | Validate condition/effect keys against rule engine registry | core.rule_engine | scenario_parser, scenario_compiler | — | Registry validation for rules |
 | `core/observation.py` | Noisy observation | — | agents.memory | — | `observe()` |
+| `core/dashboard_payload.py` | Build dashboard JSON (state_snapshot, risk_report, calibration_metrics, selected_action, explanation, assumption_summary, edition, belief_alignment, shock, oracle_analysis) | core.attribution_layer (optional), enterprise.positioning (optional), agents.belief_model (optional), core.risk_assessment | ui.dashboard, simulation.loop | — | `build_dashboard_payload()`, `compute_calibration_from_provenance()` |
+| `core/calibration.py` | Recalibration trigger (periodic/drift), apply_recalibration_action, calibration_event for provenance | core.dashboard_payload (compute_calibration_from_provenance) | simulation.loop | — | `check_recalibration_trigger()`, `apply_recalibration_action()`, `set_last_recalibration_turn()`, `get_recalibration_state()` |
+| `core/risk_assessment.py` | Agent behavior summary, next_turn_risk_score, optional tail_risk_from_mc | — | core.dashboard_payload | — | `agent_behavior_summary()`, `next_turn_risk_score()`, `tail_risk_from_mc()` |
+| `core/rule_learner.py` | Offline suggest governance strictness/rule updates from (delta, outcome) history | — | External / human review | — | `suggest_rule_updates()` |
+| `core/simulation_mode.py` | Runtime state: simulation_mode, enable_shocks, enable_uncertainty; get/set without restart | config.settings (lazy) | simulation.loop, API consumers | — | `get_simulation_mode()`, `set_simulation_mode()`, `get_enable_shocks()`, `set_enable_shocks()`, `get_enable_uncertainty()`, `set_enable_uncertainty()`, `get_mode_state()` |
+| `core/oracle.py` | LLM Advisor: advisory-only analysis of proposed action (Confidence, Risk Factors, Alternative Scenarios); no state change | core.llm_service, core.world_summarizer | simulation.loop (when ENABLE_ORACLE), dashboard_payload | — | `summarize_history_for_oracle()`, `analyze_action()` |
+| `core/narrative_templates.py` | Domain-agnostic narrative templates (relational, state_transition, trajectory) | — | core.narrative_builder | — | `template()` |
+| `core/mental_simulation.py` | Light mental simulation for planner: apply_delta with propagation (bounded hops, decay), no noise | core.propagation | agents.planner | — | `apply_delta_light()`, `run_mental_simulation()` |
+| `core/surprise_analysis.py` | Compare predicted_delta_light vs actual outcome; deviation beyond threshold | — | simulation.loop | — | `run_surprise_analysis()` |
+| `core/synthesizer.py` | Action diversity (min options by score), expected_utility | — | agents.base_agent | — | `ensure_action_diversity()`, `expected_utility()` |
+| `core/causal_learning.py` | Suggest causal link from trace patterns; apply_belief_drift for edge confidence | — | core.oracle (optional) | — | `suggest_causal_link_from_trace()`, `apply_belief_drift()` |
+| `core/trace_compression.py` | Compress provenance to Causal Event Chain for long-trace analysis; optional SLM | — | External / optional | — | `compress_trace_to_causal_chain()` |
 
 ## 2.5 World
 
@@ -106,6 +119,26 @@ SimulationLoop.run(steps)
 |------|----------------|------------|---------|-------------|---------------|
 | `world/world_state.py` | Canonical clone and snapshot helper (single source of truth for cloning) | — | agents.planner, world, simulation.loop (via world) | — | `clone_world_state(snapshot, include_causal_links=...)`, `clone_snapshot()` |
 | `world/delayed_events.py` | Delayed effects at trigger_turn | schemas.delta_schema | world_model | `DelayedEvent` | `apply_delayed_events_for_turn()` |
+
+## 2.5a Simulation (shock engine, checkpoints)
+
+| File | Responsibility | Depends On | Used By | Key Classes | Key Functions |
+|------|----------------|------------|---------|-------------|---------------|
+| `simulation/shock_engine.py` | Macro shocks (supply_chain, financial, political, information_warfare); apply impact_delta when SIMULATION_MODE=shock_global | — | simulation.loop | — | `step_shock_engine()` |
+| `simulation/checkpoints.py` | Bounded checkpoints (turn, snapshot, provenance_slice, action_trace_slice); rollback to turn or last step | — | simulation.loop | `CheckpointStore` | `push()`, `get_for_turn()`, `rollback_to_turn()`, `rollback_last_step()` |
+
+## 2.5b UI (dashboard)
+
+| File | Responsibility | Depends On | Used By | Key Classes | Key Functions |
+|------|----------------|------------|---------|-------------|---------------|
+| `ui/dashboard.py` | Live dashboard buffer, SSE, routes /dashboard, /api/dashboard/*, research_draft export | config.settings, core.dashboard_payload | ui (Flask app) | — | `on_turn_complete()`, `get_latest_payload()`, `get_history_payloads()`, `register_routes()` |
+
+## 2.5c Enterprise & Research
+
+| File | Responsibility | Depends On | Used By | Key exports |
+|------|----------------|------------|---------|-------------|
+| `enterprise/positioning.py` | Tier labels and profiles (Research, Enterprise Core/Pro, Government); feature_flags, dashboard_modules_enabled | config.settings (ENTERPRISE_TIER) | dashboard_payload, ui.dashboard | `get_current_tier()`, `get_enterprise_profile()` |
+| `research/paper_draft.py` | Research draft markdown from provenance | — | ui.dashboard (api_dashboard_research_draft) | `generate_research_draft()` |
 
 ## 2.6 Schemas
 
@@ -162,7 +195,7 @@ SimulationLoop.run(steps)
 
 | File | Responsibility | Used By |
 |------|----------------|---------|
-| `config/settings.py` | OWE_* env, SCENARIO_PATH, DRY_RUN, MAX_DELTA, LANG, ALLOW_NUMBERS, ENABLE_SHOCKS, RANDOM_SEED, MAX_LLM_CALLS_PER_TURN, ENABLE_ENVIRONMENT_AGENT, ENABLE_META_ACTIONS, MC_RL_ENABLED, MC_N_SIMS, MC_RL_TEMPERATURE, MC_RL_ALPHA, MC_RL_BETA, PROPOSAL_THROTTLE_TURNS, PROPAGATION_*, PHASE_TOP_K_TURNS, etc. | simulation, core, agents, main, ui |
+| `config/settings.py` | OWE_* env, SCENARIO_PATH, DRY_RUN, MAX_DELTA, LANG, ALLOW_NUMBERS, ENABLE_SHOCKS, RANDOM_SEED, MAX_LLM_CALLS_PER_TURN, ENABLE_ENVIRONMENT_AGENT, ENABLE_META_ACTIONS, MC_RL_*, PROPOSAL_THROTTLE_TURNS, PROPAGATION_*, PHASE_TOP_K_TURNS, DASHBOARD_ENABLED, DASHBOARD_HISTORY_SIZE, ENTERPRISE_TIER, SIMULATION_MODE, SHOCK_*, ENABLE_BELIEF_LAYER, BELIEF_WEIGHT, ENABLE_RESEARCH_EXPORT, CHECKPOINT_*, CALIBRATION_*, ASSUMPTION_HIGH_IMPACT_THRESHOLD, ENABLE_ORACLE, ORACLE_HISTORY_TURNS, ORACLE_MAX_TOKENS, etc. | simulation, core, agents, ui, enterprise, main |
 | `utils/id_generator.py` | Unique ID generation | core, schemas |
 | `utils/logging.py` | Logging setup | — |
 
@@ -244,13 +277,23 @@ SimulationLoop.run(steps)
    ├─► 15. events_triggered = world.process_delayed_events()
    │       │ apply_delayed_events_for_turn() + process_events_for_turn()
    │
+   ├─► 15a. [if CHECKPOINT_ENABLED] checkpoint_store.push(turn_before, snapshot, provenance_slice, action_trace_slice)  [optional, before apply]
+   │
+   ├─► 15b. [if SIMULATION_MODE=shock_global] step_shock_engine(world, turn) → shock_result; apply impact_delta to world; provenance["shock"] = shock_result
+   │
+   ├─► 15c. [recalibration] check_recalibration_trigger(provenance_history); if true → apply_recalibration_action(), set_last_recalibration_turn(), provenance_entry["turn_record"]["calibration_event"] = {reason}
+   │
    ├─► 16. rule_activations = run_rules(snap, world, rules)
    │
    ├─► 17. predicted_deltas = [each agent's _last_planning_delta] (for strategic analysis)
    │
-   ├─► 18. _provenance.append(..., predicted_deltas=...)
+   ├─► 18. _provenance.append(..., predicted_deltas=..., shock=..., oracle_analysis=...)
    │
-   ├─► 19. FOR EACH agent: memory.add_event(), update_beliefs(), update_long_term_memory()
+   ├─► 18a. [if ENABLE_ORACLE] summarize_history_for_oracle(provenance_history), analyze_action(...) → oracle_analysis; store in provenance_entry
+   │
+   ├─► 18b. [if DASHBOARD_ENABLED] build_dashboard_payload(snapshot, provenance_entry, ...) → on_turn_complete(payload)
+   │
+   ├─► 19. FOR EACH agent: memory.add_event(), update_beliefs(); [if ENABLE_BELIEF_LAYER] belief_model.update_belief_state(..., shock_active=...)
    │
    └─► 20. agent.reflect(provenance[-1:], snap_after)
 ```
@@ -628,10 +671,12 @@ ui.py
   ├── schemas
   ├── simulation
   ├── core
+  ├── ui.dashboard (register_routes, on_turn_complete)
   └── visualization
 
 simulation/loop.py
   ├── config.settings
+  ├── core.simulation_mode (get_simulation_mode, get_enable_shocks)
   ├── core.llm_client
   ├── core.world_model
   ├── core.ontology_manager
@@ -643,6 +688,13 @@ simulation/loop.py
   ├── core.soft_constraints
   ├── core.action_definitions_store
   ├── core.delta_attribution
+  ├── core.dashboard_payload (build_dashboard_payload when DASHBOARD_ENABLED)
+  ├── core.calibration (check_recalibration_trigger, apply_recalibration_action, set_last_recalibration_turn when recalibrate)
+  ├── core.oracle (summarize_history_for_oracle, analyze_action when ENABLE_ORACLE)
+  ├── ui.dashboard (on_turn_complete when DASHBOARD_ENABLED)
+  ├── simulation.shock_engine (step_shock_engine when SIMULATION_MODE=shock_global)
+  ├── simulation.checkpoints (CheckpointStore when CHECKPOINT_ENABLED; rollback_to_turn, rollback_last_step)
+  ├── agents.belief_model (update_belief_state when ENABLE_BELIEF_LAYER)
   ├── schemas.delta_schema, proposal_schema, scenario_schema
   ├── agents.agents
   ├── agents.world_model_agent
@@ -707,76 +759,4 @@ main() → SimulationLoop() → loop.run()
   loop.step() → world_summarize()
   loop.step() → agent.propose() [per agent]
   loop.step() → guard.extract_json()
-  loop.step() → guard.validate()
-  loop.step() → guard.sanitize()
-  loop.step() → governance.validate_delta()
-  loop.step() → apply_all_constraints()
-  loop.step() → world.apply_delta()
-  loop.step() → world.process_delayed_events()
-  loop.step() → run_rules()
-  loop.step() → collect predicted_deltas from agents (_last_planning_delta)
-  loop.step() → agent.memory.add_event()
-  loop.step() → agent.memory.update_beliefs()
-  loop.step() → agent.reflect()
-
-  agent.propose() → BaseAgent.propose()
-  BaseAgent.propose() → memory.update_beliefs()
-  BaseAgent.propose() → evaluate_short_term_goals()
-  BaseAgent.propose() → generate_candidate_actions()
-  BaseAgent.propose() → [MC_RL] get_planner_scores(), run_mc_evaluation(), softmax_select() | plan_depth2() | plan_depth2_with_callback()
-  BaseAgent.propose() → get_delta() [WorldModelAgent.normalize_proposal]
-
-  action_evaluation: run_mc_evaluation() → clone_world_state(), apply_delta_to_state(), utility_function() [n_sims]
-  action_evaluation: get_planner_scores() → clone_world_state(), apply_delta_to_state(), utility_function()
-  action_evaluation: softmax_select() → weighted sample from llm_scores + mc_values + rl_weights
-
-  plan_depth2() → clone_world_state()
-  plan_depth2() → delta_from_rule_based()
-  plan_depth2() → apply_delta_to_state()
-  plan_depth2() → utility_function()
-
-  world.apply_delta() → propagate_variable_changes()
-  world.apply_delta() → _apply_final_noise()
-  world.process_delayed_events() → apply_delayed_events_for_turn()
-  world.process_delayed_events() → process_events_for_turn()
-```
-
-## C. Data Flow Diagram (Text)
-
-```
-[Scenario JSON]
-  → normalize_scenario()
-  → WorldModel(initial_state, causal_links, relations, events)
-  → get_agents_from_scenario() → [RoleAgent]
-
-[Snapshot]
-  → world_summarize() → summary_text
-  → agent.propose(summary | snapshot | {strategic: ...})
-  → agent_output (raw string)
-
-[agent_output]
-  → extract_json() → raw_json
-  → validate() → validated_json
-  → sanitize() → sanitized
-  → Delta(numeric_updates, ...)
-
-[Delta]
-  → governance.validate_delta() → modified_delta
-  → merge (sum numeric_updates)
-  → apply_all_constraints()
-  → combined_delta
-
-[combined_delta]
-  → world.apply_delta()
-  → primary effect + propagation + noise
-  → entity/relation updates
-  → world.variables
-
-[world.variables]
-  → snapshot()
-  → next step
-```
-
----
-
-*End of Architecture Dossier*
+  loop.step() → guard.validate()

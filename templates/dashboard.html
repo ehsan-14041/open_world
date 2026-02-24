@@ -160,14 +160,25 @@
       font-size: 0.8rem;
       color: var(--muted);
     }
+    .shock-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: 0.25rem 0; }
+    .shock-bar-fill { height: 100%; background: var(--danger); transition: width 0.2s; }
+    .shock-badge { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: var(--danger); color: #fff; }
   </style>
 </head>
 <body>
   <header class="header">
     <h1>Strategic Decision Intelligence Platform</h1>
-    <div class="view-toggle">
-      <button type="button" class="active" data-view="executive">Executive</button>
-      <button type="button" data-view="scientific">Scientific</button>
+    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <span id="edition-label" class="edition-badge" style="font-size: 0.85rem; color: var(--muted);">Edition: —</span>
+      <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--muted); cursor: pointer;">
+        <input type="checkbox" id="oracle-toggle" style="cursor: pointer;">
+        <span>Oracle Advisory</span>
+      </label>
+      <button type="button" id="btn-research-draft" style="padding: 0.5rem 1rem; background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; cursor: pointer;">Generate Research Draft</button>
+      <div class="view-toggle">
+        <button type="button" class="active" data-view="executive">Executive</button>
+        <button type="button" data-view="scientific">Scientific</button>
+      </div>
     </div>
   </header>
   <main class="main">
@@ -209,6 +220,40 @@
           </table>
         </div>
       </div>
+      <div id="panel-belief-alignment" class="panel executive-only" style="display: none;">
+        <div class="panel-title">Belief Alignment</div>
+        <div class="panel-body">
+          <div id="belief-entropy"></div>
+          <div id="dominant-belief"></div>
+          <div id="divergence-index"></div>
+          <div id="confidence-trend"></div>
+        </div>
+      </div>
+      <div id="panel-shock" class="panel executive-only">
+        <div class="panel-title">Shock status</div>
+        <div class="panel-body">
+          <div id="shock-indicator"></div>
+          <div id="shock-intensity-label" style="font-size: 0.85rem; margin-top: 0.25rem;"></div>
+          <div class="shock-bar"><div id="shock-intensity-bar" class="shock-bar-fill" style="width: 0%;"></div></div>
+          <div id="shock-impact-delta" style="font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem;"></div>
+        </div>
+      </div>
+      <div id="panel-oracle" class="panel executive-only" style="display: none; border-left: 3px solid var(--accent);">
+        <div class="panel-title">Oracle Advisory (Epistemic Layer)</div>
+        <div class="panel-body">
+          <p style="font-size: 0.75rem; color: var(--muted); margin: 0 0 0.5rem 0;">Advisory only — does not affect simulation.</p>
+          <div id="oracle-action" style="font-weight: 600; margin-bottom: 0.5rem;"></div>
+          <div id="oracle-confidence-wrap" style="margin-bottom: 0.75rem;">
+            <span style="font-size: 0.85rem; color: var(--muted);">Confidence</span>
+            <div class="shock-bar" style="margin-top: 0.25rem;"><div id="oracle-confidence-bar" class="shock-bar-fill" style="width: 0%; background: var(--accent);"></div></div>
+            <span id="oracle-confidence-value" style="font-size: 0.85rem;"></span>
+          </div>
+          <div id="oracle-risks"><span style="font-size: 0.85rem; color: var(--muted);">Risk factors</span><ul id="oracle-risk-list" class="risk-breakdown" style="margin-top: 0.25rem;"></ul></div>
+          <div id="oracle-tail-risk" style="margin-top: 0.5rem;"><span style="font-size: 0.85rem; color: var(--muted);">Tail risk</span><div id="oracle-tail-risk-text" style="font-size: 0.85rem; margin-top: 0.25rem;"></div></div>
+          <div id="oracle-scenarios"><span style="font-size: 0.85rem; color: var(--muted);">Outlook (next turn)</span><ul id="oracle-scenario-list" style="list-style: none; padding: 0; margin: 0.25rem 0 0 0; font-size: 0.85rem;"></ul></div>
+          <div id="oracle-hidden-wrap" style="display: none;"><span style="font-size: 0.85rem; color: var(--muted);">Suspected hidden factors</span><ul id="oracle-hidden-list" style="margin-top: 0.25rem; font-size: 0.85rem;"></ul></div>
+        </div>
+      </div>
       <div class="panel scientific-only">
         <div class="panel-title">Calibration</div>
         <div class="panel-body">
@@ -227,9 +272,9 @@
         </div>
       </div>
       <div class="panel scientific-only">
-        <div class="panel-title">Model snapshot</div>
+        <div class="panel-title">State detail</div>
         <div class="panel-body">
-          <pre id="model-snapshot" style="margin:0; font-size:0.75rem; overflow:auto; max-height:180px;"></pre>
+          <pre id="state-detail" style="margin:0; font-size:0.75rem; overflow:auto; max-height:180px;"></pre>
         </div>
       </div>
       <div class="panel">
@@ -265,6 +310,38 @@
   });
   setView('executive');
 
+  fetch('/api/dashboard/config').then(function (r) { return r.json(); }).then(function (c) {
+    var el = byId('edition-label');
+    if (el && c && c.edition) el.textContent = 'Edition: ' + c.edition;
+    var btn = byId('btn-research-draft');
+    if (btn) btn.style.display = (c && c.research_export !== false) ? '' : 'none';
+    var oracleToggle = byId('oracle-toggle');
+    if (oracleToggle && c && 'enable_oracle' in c) oracleToggle.checked = !!c.enable_oracle;
+  }).catch(function () {});
+
+  byId('oracle-toggle').addEventListener('change', function () {
+    var enabled = byId('oracle-toggle').checked;
+    fetch('/api/dashboard/config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enable_oracle: enabled })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d && d.error) alert(d.error);
+    }).catch(function () {});
+  });
+
+  byId('btn-research-draft').addEventListener('click', function () {
+    fetch('/api/dashboard/research_draft').then(function (r) {
+      if (!r.ok) return r.json().then(function (d) { alert(d.error || 'Failed to generate draft'); });
+      return r.text().then(function (md) {
+        var a = document.createElement('a');
+        a.href = 'data:text/markdown;charset=utf-8,' + encodeURIComponent(md);
+        a.download = 'research_draft.md';
+        a.click();
+      });
+    }).catch(function () { alert('Unable to generate research draft'); });
+  });
+
   function riskClass(score) {
     if (score == null) return '';
     if (score < 33) return 'low';
@@ -280,8 +357,12 @@
     return { text: '→', cls: 'flat' };
   }
 
-  function render(payload) {
+  function render(payload, history) {
     if (!payload) return;
+    history = history || [];
+    const editionEl = byId('edition-label');
+    if (editionEl) editionEl.textContent = 'Edition: ' + (payload.edition || '—');
+
     const state = payload.state_snapshot || {};
     const risk = payload.risk_report || {};
     const cal = payload.calibration_metrics || {};
@@ -297,8 +378,13 @@
     if (varNames.length === 0) {
       stateCurrent.innerHTML = '<span class="empty">Turn ' + turn + ' — No numeric variables</span>';
     } else {
-      stateCurrent.innerHTML = 'Turn ' + turn + '<br>' + varNames.slice(0, 6).map(function (k) {
-        return k + ': ' + Number(vars[k]).toFixed(2);
+      stateCurrent.innerHTML = 'Turn ' + turn + '<br>' + varNames.slice(0, 8).map(function (k) {
+        var series = history.map(function (p) {
+          var v = (p.state_snapshot || {}).variables || {};
+          return v[k];
+        }).filter(function (x) { return typeof x === 'number'; });
+        var t = trendArrow(series);
+        return '<span class="trend ' + t.cls + '">' + k + ': ' + Number(vars[k]).toFixed(2) + ' ' + t.text + '</span>';
       }).join(' &nbsp; ');
     }
 
@@ -333,6 +419,95 @@
     byId('confidence-level').textContent = 'Confidence: ' + (explanation.confidence_level || '—');
     byId('explain-narrative').textContent = explanation.narrative_summary || '';
 
+    const shock = payload.shock || {};
+    const shockActive = shock.shock_active === true;
+    const shockIntensity = shock.shock_intensity != null ? Number(shock.shock_intensity) : 0;
+    const shockEl = byId('shock-indicator');
+    if (shockEl) shockEl.innerHTML = shockActive ? '<span class="shock-badge">Shock Active</span>' : '<span style="color: var(--muted);">No shock this turn</span>';
+    const intensityLabel = byId('shock-intensity-label');
+    if (intensityLabel) intensityLabel.textContent = 'Intensity: ' + (shockIntensity * 100).toFixed(0) + '%';
+    const intensityBar = byId('shock-intensity-bar');
+    if (intensityBar) intensityBar.style.width = (shockIntensity * 100).toFixed(0) + '%';
+    const impactDeltaEl = byId('shock-impact-delta');
+    if (impactDeltaEl) {
+      var impactVsBaseline = shock.impact_delta_vs_baseline || {};
+      var impactStr = Object.keys(impactVsBaseline).map(function (v) {
+        var o = impactVsBaseline[v];
+        return v + ': ' + (o.delta != null ? o.delta.toFixed(2) : '—') + ' vs baseline ' + (o.baseline != null ? o.baseline : '—');
+      }).join('; ');
+      impactDeltaEl.textContent = impactStr || (shockActive && shock.shock_impact_delta ? Object.keys(shock.shock_impact_delta).map(function (v) { return v + ': ' + shock.shock_impact_delta[v].toFixed(2); }).join('; ') : '—');
+    }
+
+    const beliefAlign = payload.belief_alignment || {};
+    const panelBelief = byId('panel-belief-alignment');
+    if (panelBelief) {
+      if (beliefAlign.belief_entropy != null || beliefAlign.divergence_index != null) {
+        panelBelief.style.display = 'block';
+        byId('belief-entropy').textContent = 'Belief entropy: ' + (beliefAlign.belief_entropy != null ? Number(beliefAlign.belief_entropy).toFixed(3) : '—');
+        var dom = beliefAlign.dominant_belief;
+        byId('dominant-belief').textContent = 'Dominant belief: ' + (Array.isArray(dom) ? (dom[1] + ' = ' + Number(dom[2]).toFixed(2) + (dom[0] ? ' (' + dom[0] + ')' : '')) : '—');
+        byId('divergence-index').textContent = 'Divergence index: ' + (beliefAlign.divergence_index != null ? Number(beliefAlign.divergence_index).toFixed(3) : '—');
+        byId('confidence-trend').textContent = 'Confidence trend: ' + (beliefAlign.confidence_trend != null ? Number(beliefAlign.confidence_trend).toFixed(3) : '—');
+      } else {
+        panelBelief.style.display = 'none';
+      }
+    }
+
+    const oracle = payload.oracle_analysis;
+    const panelOracle = byId('panel-oracle');
+    if (panelOracle) {
+      var hasNewSchema = oracle && typeof oracle === 'object' && (oracle.action_reviewed != null || oracle.confidence_score != null);
+      var hasLegacySchema = oracle && typeof oracle === 'object' && (oracle.Action != null || oracle.Confidence != null);
+      if (hasNewSchema || hasLegacySchema) {
+        panelOracle.style.display = 'block';
+        var actionText = hasNewSchema ? (oracle.action_reviewed || '—') : (oracle.Action || '—');
+        byId('oracle-action').textContent = actionText;
+        var conf = hasNewSchema ? oracle.confidence_score : oracle.Confidence;
+        if (conf != null) {
+          conf = Math.max(0, Math.min(100, Number(conf)));
+          byId('oracle-confidence-bar').style.width = conf + '%';
+          byId('oracle-confidence-value').textContent = conf.toFixed(0) + '%';
+        } else {
+          byId('oracle-confidence-bar').style.width = '0%';
+          byId('oracle-confidence-value').textContent = '—';
+        }
+        var risks = hasNewSchema ? oracle.risk_factors : oracle['Risk Factors'];
+        byId('oracle-risk-list').innerHTML = Array.isArray(risks) && risks.length
+          ? risks.map(function (r) { return '<li>' + String(r) + '</li>'; }).join('')
+          : '<li class="empty">—</li>';
+        var tailEl = byId('oracle-tail-risk-text');
+        if (tailEl) tailEl.textContent = hasNewSchema && oracle.tail_risk_assessment ? String(oracle.tail_risk_assessment) : '—';
+        var scenarios = hasNewSchema ? oracle.alternative_outlook_next_turn : oracle['Alternative Scenarios'];
+        if (scenarios && typeof scenarios === 'object') {
+          var parts = [];
+          if (hasNewSchema) {
+            if (scenarios.optimistic) parts.push('<li><strong>Optimistic:</strong> ' + scenarios.optimistic + '</li>');
+            if (scenarios.pessimistic) parts.push('<li><strong>Pessimistic:</strong> ' + scenarios.pessimistic + '</li>');
+            if (scenarios.most_likely) parts.push('<li><strong>Most likely:</strong> ' + scenarios.most_likely + '</li>');
+          } else {
+            if (scenarios.Optimistic) parts.push('<li><strong>Optimistic:</strong> ' + scenarios.Optimistic + '</li>');
+            if (scenarios.Pessimistic) parts.push('<li><strong>Pessimistic:</strong> ' + scenarios.Pessimistic + '</li>');
+            if (scenarios['Most Likely']) parts.push('<li><strong>Most Likely:</strong> ' + scenarios['Most Likely'] + '</li>');
+          }
+          byId('oracle-scenario-list').innerHTML = parts.length ? parts.join('') : '<li>—</li>';
+        } else {
+          byId('oracle-scenario-list').innerHTML = '<li>—</li>';
+        }
+        var hidden = hasNewSchema ? oracle.suspected_hidden_factors : oracle['Hidden Variables (optional)'];
+        var hiddenWrap = byId('oracle-hidden-wrap');
+        if (hiddenWrap) {
+          if (Array.isArray(hidden) && hidden.length) {
+            hiddenWrap.style.display = 'block';
+            byId('oracle-hidden-list').innerHTML = hidden.map(function (h) { return '<li>' + String(h) + '</li>'; }).join('');
+          } else {
+            hiddenWrap.style.display = 'none';
+          }
+        }
+      } else {
+        panelOracle.style.display = 'none';
+      }
+    }
+
     const health = cal.health;
     byId('calibration-health').innerHTML = health ? '<span class="badge ' + health + '">' + health.toUpperCase() + '</span>' : '—';
     const flags = cal.overconfidence_flags || [];
@@ -345,8 +520,9 @@
     }).join('') || '<tr><td colspan="4">—</td></tr>';
 
     var derived = state.derived || {};
-    var modelSnap = { turn: state.turn, variables: vars, derived: derived };
-    byId('model-snapshot').textContent = JSON.stringify(modelSnap, null, 2);
+    var stateDetail = { turn: state.turn, variables: vars, derived: derived };
+    var stateDetailEl = byId('state-detail');
+    if (stateDetailEl) stateDetailEl.textContent = JSON.stringify(stateDetail, null, 2);
 
     if (chartRmse && cal.rmse_over_time && cal.rmse_over_time.length) {
       chartRmse.data.labels = cal.rmse_over_time.map(function (_, i) { return 'T' + (i + 1); });
@@ -423,7 +599,51 @@
           byId('empty-state').style.display = 'none';
           byId('dashboard-grid').style.display = 'grid';
           const latest = history[history.length - 1];
-          render(latest);
+          render(latest, history);
+          if (history.length !== lastHistoryLength) {
+            lastHistoryLength = history.length;
+            updateCharts(history);
+          }
+          ensureRmseChart();
+          if (latest.calibration_metrics && latest.calibration_metrics.rmse_over_time && latest.calibration_metrics.rmse_over_time.length) {
+            chartRmse.data.labels = latest.calibration_metrics.rmse_over_time.map(function (_, i) { return 'T' + (i + 1); });
+            chartRmse.data.datasets[0].data = latest.calibration_metrics.rmse_over_time;
+            chartRmse.update('none');
+          }
+        }
+      })
+      .catch(function () {
+        byId('status').textContent = 'Unable to load dashboard data.';
+      });
+  }
+
+  poll();
+  setInterval(poll, POLL_INTERVAL_MS);
+})();
+  </script>
+</body>
+</html>
+ve: true,
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true }, x: { maxTicksLimit: 15 } }
+      }
+    });
+  }
+
+  function poll() {
+    fetch('/api/dashboard/history')
+      .then(function (r) { return r.json(); })
+      .then(function (history) {
+        if (!Array.isArray(history)) history = [];
+        byId('status').textContent = history.length + ' turn(s) in buffer.';
+        if (history.length === 0) {
+          byId('empty-state').style.display = 'block';
+          byId('dashboard-grid').style.display = 'none';
+        } else {
+          byId('empty-state').style.display = 'none';
+          byId('dashboard-grid').style.display = 'grid';
+          const latest = history[history.length - 1];
+          render(latest, history);
           if (history.length !== lastHistoryLength) {
             lastHistoryLength = history.length;
             updateCharts(history);

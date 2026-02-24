@@ -169,6 +169,88 @@ def build_executive_summary(
     }
 
 
+def compute_projected_trajectory(
+    provenance: list[dict[str, Any]],
+    final_variables: dict[str, Any],
+    causal_links: list[dict[str, Any]],
+    horizon: int = 5,
+) -> dict[str, list[float]]:
+    """
+    Project key variables forward for next horizon steps using average delta per turn.
+    Returns { var: [v0, v1, ..., vH] } (current value then H projected).
+    """
+    var_names = [k for k, v in final_variables.items() if isinstance(v, (int, float))]
+    if not var_names or not provenance:
+        return {v: [float(final_variables.get(v, 0))] for v in var_names}
+
+    delta_sum: dict[str, float] = {v: 0.0 for v in var_names}
+    for p in provenance:
+        applied = (p.get("turn_record") or {}).get("delta_applied") or {}
+        if isinstance(applied, dict):
+            for v in var_names:
+                if v in applied and isinstance(applied[v], (int, float)):
+                    delta_sum[v] += applied[v]
+    n_turns = len(provenance)
+    avg_delta = {v: delta_sum[v] / n_turns if n_turns else 0.0 for v in var_names}
+
+    trajectories: dict[str, list[float]] = {}
+    for v in var_names:
+        current = float(final_variables.get(v, 0))
+        traj = [current]
+        for _ in range(horizon):
+            current = current + avg_delta.get(v, 0)
+            traj.append(round(current, 3))
+        trajectories[v] = traj
+    return trajectories
+
+
+def compute_causal_impact_summary(
+    provenance: list[dict[str, Any]],
+    causal_links: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """
+    Summarize variable movement over run and causal contributions: top causes per variable,
+    and variables caused by each variable.
+    """
+    global_delta: dict[str, float] = {}
+    for p in provenance:
+        applied = (p.get("turn_record") or {}).get("delta_applied") or {}
+        if isinstance(applied, dict):
+            for var, d in applied.items():
+                if isinstance(d, (int, float)):
+                    global_delta[var] = global_delta.get(var, 0) + d
+
+    affected_by: dict[str, list[str]] = {}
+    causes: dict[str, list[str]] = {}
+    for link in causal_links or []:
+        if not isinstance(link, dict):
+            continue
+        from_var = link.get("from")
+        to_var = link.get("to")
+        if from_var and to_var:
+            if to_var not in affected_by:
+                affected_by[to_var] = []
+            if from_var not in affected_by[to_var]:
+                affected_by[to_var].append(from_var)
+            if from_var not in causes:
+                causes[from_var] = []
+            if to_var not in causes[from_var]:
+                causes[from_var].append(to_var)
+
+    variable_movement = [
+        {"variable": var, "total_delta": round(d, 3), "top_causes": affected_by.get(var, [var])[:5]}
+        for var, d in global_delta.items()
+    ]
+    variable_caused = [
+        {"variable": var, "caused_changes_in": causes.get(var, [])}
+        for var in set(global_delta.keys()) | set(causes.keys())
+    ]
+    return {
+        "variable_movement": variable_movement,
+        "variable_caused": variable_caused,
+    }
+
+
 def build_strategic_analysis(
     result: dict[str, Any],
     scenario: dict[str, Any] | None = None,
@@ -288,6 +370,11 @@ def build_strategic_analysis(
     elif convergence.get("system_label") == "diverging":
         strategic_decisions.append("Consider stabilizing or rebalancing key variables.")
 
+    projected_trajectory = compute_projected_trajectory(
+        provenance, variables, causal_links, horizon=5
+    )
+    causal_impact_summary = compute_causal_impact_summary(provenance, causal_links)
+
     return {
         "agents": agents_list,
         "variables": variables_out,
@@ -299,6 +386,8 @@ def build_strategic_analysis(
         "strategic_decisions": strategic_decisions,
         "logic_core": logic_core,
         "executive_summary": executive_summary,
+        "projected_trajectory": projected_trajectory,
+        "causal_impact_summary": causal_impact_summary,
     }
 
 

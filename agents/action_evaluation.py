@@ -80,8 +80,15 @@ def softmax_select(
     w_llm: float = 0.4,
     w_mc: float = 0.4,
     temperature: float = 0.5,
+    belief_scores: dict[str, float] | None = None,
+    belief_weight: float = 0.0,
 ) -> str:
-    """Combine LLM, MC, RL with softmax; sample to preserve creativity."""
+    """Combine LLM, MC, RL, and optional belief alignment with softmax; sample to preserve creativity."""
+    try:
+        from config.settings import MC_RL_TEMPERATURE_MIN
+        temperature = max(float(temperature), MC_RL_TEMPERATURE_MIN)
+    except ImportError:
+        temperature = max(float(temperature), 0.1)
     def _norm(d: dict[str, float]) -> dict[str, float]:
         if not d:
             return d
@@ -91,9 +98,14 @@ def softmax_select(
 
     n_llm = _norm(llm_scores)
     n_mc = _norm(mc_values)
+    n_belief: dict[str, float] = {}
+    if belief_scores and belief_weight > 0:
+        n_belief = _norm(belief_scores)
     combined = []
     for a in candidates:
         s = w_llm * n_llm.get(a, 0) + w_mc * n_mc.get(a, 0) + rl_weights.get(a, 0.0)
+        if n_belief is not None and belief_weight > 0:
+            s += belief_weight * n_belief.get(a, 0.5)
         combined.append((a, s))
     logits = [s / max(temperature, 1e-6) for _, s in combined]
     m = max(logits)

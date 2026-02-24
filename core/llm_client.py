@@ -252,22 +252,25 @@ def call_llm(
         raise
     except json.JSONDecodeError as je:
         if as_json:
-            retry_prompt = prompt + "\n\nOutput must be valid JSON only. Reply with a single JSON object."
+            # First try fallback client (e.g. config/settings.json) in case primary returned empty/invalid
             try:
-                out = _call_llm_sim_app(
-                    retry_prompt, system, as_json=False,
-                    temperature=temperature, max_tokens=max_tokens,
-                )
-                raw = _strip_markdown_json(str(out))
-                return log_and_return(json.loads(raw), retry_prompt, system)
+                out = do_call(use_fallback=True, p=prompt, s=system, aj=as_json)
+                return log_and_return(out, prompt, system)
             except Exception:
+                pass
+            retry_prompt = prompt + "\n\nOutput must be valid JSON only. Reply with a single JSON object."
+            for _use_fallback in (False, True):
                 try:
-                    out = _call_llm_fallback(
-                        retry_prompt, system, as_json=False,
-                        temperature=temperature, max_tokens=max_tokens,
+                    out = (
+                        _call_llm_fallback(retry_prompt, system, as_json=False, temperature=temperature, max_tokens=max_tokens)
+                        if _use_fallback
+                        else _call_llm_sim_app(retry_prompt, system, as_json=False, temperature=temperature, max_tokens=max_tokens)
                     )
-                    raw = _strip_markdown_json(str(out))
+                    raw = _strip_markdown_json(str(out or ""))
+                    if not raw:
+                        return log_and_return({}, retry_prompt, system)
                     return log_and_return(json.loads(raw), retry_prompt, system)
                 except Exception:
-                    return log_and_return({}, retry_prompt, system)
+                    continue
+            return log_and_return({}, retry_prompt, system)
         raise je

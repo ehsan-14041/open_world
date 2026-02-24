@@ -2,7 +2,7 @@
 """
 Open World Engine – Web UI.
 Serves a simple interface to submit free-text scenarios, run simulations, and view snapshots.
-Run: python ui.py [--port 5000]
+Run: python ui.py [--port 5081]
 """
 
 from __future__ import annotations
@@ -15,6 +15,7 @@ import sys
 import threading
 import traceback
 from pathlib import Path
+from typing import Any
 
 _PROJECT_ROOT = Path(__file__).resolve().parent
 if str(_PROJECT_ROOT) not in sys.path:
@@ -50,7 +51,16 @@ from core.agent_generator import generate_agents_from_scenario  # LLM Integratio
 from visualization.graph_viewer import prepare_graph_data
 from visualization.impact_data import prepare_impact_data
 from ui.dashboard import register_routes as register_dashboard_routes
-from ui.dashboard import build_dashboard_payload, on_turn_complete as dashboard_on_turn_complete
+from ui.dashboard import build_dashboard_payload, on_turn_complete as dashboard_on_turn_complete, set_last_provenance, set_last_scenario
+from core.simulation_mode import (
+    get_simulation_mode,
+    set_simulation_mode,
+    get_enable_shocks,
+    set_enable_shocks,
+    get_enable_uncertainty,
+    set_enable_uncertainty,
+    get_mode_state,
+)
 
 app = Flask(__name__, template_folder=str(_PROJECT_ROOT / "templates"), static_folder=str(_PROJECT_ROOT / "static"))
 register_dashboard_routes(app)
@@ -67,6 +77,8 @@ _last_run_result: dict | None = None  # {"final": ..., "turns": [...], "provenan
 _last_snapshot_path: str | None = None
 # Run ID: only the most recent run's result is shown (avoids scenario 1 overwriting scenario 2 when runs finish out of order)
 _current_run_id: int = 0
+# Active loop during streaming (for control API rollback)
+_active_loop: Any = None
 
 
 def _get_snapshot_dir() -> Path:
@@ -93,9 +105,11 @@ def api_submit_scenario():
     try:
         data = request.get_json(force=True, silent=True)
         if data is None or not isinstance(data, dict):
+            err = "Request body must be a JSON object with a 'text' field (e.g. {\"text\": \"your scenario\"})."
+            logging.warning("api_submit_scenario 400: %s (Content-Type=%s, has_data=%s)", err, request.content_type, bool(request.get_data()))
             return jsonify({
                 "ok": False,
-                "error": "Request body must be a JSON object with a 'text' field (e.g. {\"text\": \"your scenario\"}).",
+                "error": err,
                 "scenario": None,
             }), 400
         text = (data.get("text") or "").strip()
@@ -103,16 +117,21 @@ def api_submit_scenario():
         use_llm_for_agents = data.get("use_llm_for_agents", False)
 
         if not text:
-            return jsonify({"ok": False, "error": "Scenario text is required. Provide a non-empty 'text' field.", "scenario": None}), 400
+            err = "Scenario text is required. Provide a non-empty 'text' field."
+            logging.warning("api_submit_scenario 400: %s", err)
+            return jsonify({"ok": False, "error": err, "scenario": None}), 400
 
         try:
             scenario = parse_scenario_text(text, use_llm=use_llm)
         except ValueError as e:
+            logging.warning("api_submit_scenario 400 (parse): %s", e)
             return jsonify({"ok": False, "error": str(e), "scenario": None}), 400
 
         errors = validate_scenario(scenario)
         if errors:
-            return jsonify({"ok": False, "error": "; ".join(errors), "scenario": None}), 400
+            err = "; ".join(errors)
+            logging.warning("api_submit_scenario 400 (validation): %s", err)
+            return jsonify({"ok": False, "error": err, "scenario": None}), 400
 
         scenario = normalize_scenario(scenario)
         # LLM Integration: optionally generate agent definitions (personality, initial_variables) from scenario
@@ -145,6 +164,7 @@ def _stream_simulation(
     snapshot_path: str | None = None,
 ):
     """Generator for SSE stream of simulation turns. If snapshot_path is None, uses default last_snapshot.json."""
+    global _active_loop
     if snapshot_path is None:
         snapshot_path = str(_get_snapshot_dir() / "last_snapshot.json")
     try:
@@ -153,6 +173,7 @@ def _stream_simulation(
             dry_run=dry_run,
             snapshot_path=snapshot_path,
         )
+        _active_loop = loop
         for chunk in loop.run_streaming(
             steps=steps,
             snapshot_out_path=snapshot_path,
@@ -162,6 +183,8 @@ def _stream_simulation(
     except Exception as e:
         logging.exception("run_simulation_stream failed: %s", e)
         yield f"data: {json.dumps({'type': 'error', 'error': str(e)})}\n\n"
+    finally:
+        _active_loop = None
 
 
 @app.route("/api/run_simulation", methods=["POST"])
@@ -233,9 +256,14 @@ def api_run_simulation():
         try:
             provenance_list = result.get("provenance") or []
             turns_list = result.get("turns") or []
+            def _agent_dict(a: Any) -> dict:
+                d: dict = {"name": getattr(a, "name", ""), "role": getattr(a, "role", ""), "objectives": getattr(a, "objectives", {})}
+                bs = getattr(a, "_belief_state", None)
+                if bs is not None and hasattr(bs, "beliefs"):
+                    d["belief_state"] = {"beliefs": getattr(bs, "beliefs", {}), "uncertainty": getattr(bs, "uncertainty", {}), "confidence": getattr(bs, "confidence", 0.5)}
+                return d
             agents_for_dashboard = [
-                {"name": getattr(a, "name", ""), "role": getattr(a, "role", ""), "objectives": getattr(a, "objectives", {})}
-                for a in loop.agents
+                _agent_dict(a) for a in loop.agents
             ] if getattr(loop, "agents", None) else [
                 {"name": a.get("name"), "role": a.get("role"), "objectives": a.get("objectives") or a.get("goals") or {}}
                 for a in (scenario.get("initial_agents") or []) if isinstance(a, dict) and a.get("name")
@@ -244,6 +272,8 @@ def api_run_simulation():
                 snap = turns_list[i] if i < len(turns_list) else (pe.get("turn_record") or {}).get("post_state") or {}
                 payload = build_dashboard_payload(snap, pe, scenario, agents_for_dashboard, provenance_history=provenance_list[: i + 1])
                 dashboard_on_turn_complete(payload)
+            set_last_provenance(provenance_list)
+            set_last_scenario(scenario)
         except Exception:
             pass
         agents_for_analysis = [
@@ -379,10 +409,13 @@ def api_run_simulation_stream():
                         pass
                 elif parsed.get("type") == "done":
                     if my_run_id == _current_run_id:
+                        prov = parsed.get("provenance", [])
+                        set_last_provenance(prov)
+                        set_last_scenario(scenario)
                         _last_run_result = {
                             "final": parsed.get("final"),
                             "turns": turns_accumulated,
-                            "provenance": parsed.get("provenance", []),
+                            "provenance": prov,
                             "initial_state": scenario.get("initial_state") or {},
                         }
                         _last_snapshot_path = snapshot_path
@@ -395,6 +428,71 @@ def api_run_simulation_stream():
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
     return resp
+
+
+@app.route("/api/control/mode", methods=["GET"])
+def api_control_mode_get():
+    """Return current simulation mode state (simulation_mode, enable_shocks, enable_uncertainty)."""
+    return jsonify(get_mode_state())
+
+
+@app.route("/api/control/mode", methods=["POST"])
+def api_control_mode_post():
+    """Set simulation mode at runtime. Body: { simulation_mode?, enable_shocks?, enable_uncertainty? }."""
+    data = request.get_json(force=True, silent=True) or {}
+    if "simulation_mode" in data:
+        set_simulation_mode(str(data["simulation_mode"]))
+    if "enable_shocks" in data:
+        set_enable_shocks(bool(data["enable_shocks"]))
+    if "enable_uncertainty" in data:
+        set_enable_uncertainty(bool(data["enable_uncertainty"]))
+    return jsonify(get_mode_state())
+
+
+@app.route("/api/control/rollback", methods=["POST"])
+def api_control_rollback():
+    """Rollback active streaming simulation by one step or to a given turn. Body: { steps?: 1 } or { turn?: n }."""
+    global _active_loop
+    data = request.get_json(force=True, silent=True) or {}
+    if _active_loop is None:
+        return jsonify({"ok": False, "error": "No active streaming simulation"}), 400
+    turn = data.get("turn")
+    steps = data.get("steps")
+    if turn is not None:
+        ok = _active_loop.rollback_to_turn(int(turn))
+    elif steps is not None and int(steps) == 1:
+        ok = _active_loop.rollback_last_step()
+    else:
+        ok = _active_loop.rollback_last_step()
+    if not ok:
+        return jsonify({"ok": False, "error": "Rollback failed (no checkpoint for target turn)"}), 400
+    return jsonify({"ok": True, "turn": _active_loop.world.turn})
+
+
+@app.route("/api/control/governance", methods=["GET"])
+def api_control_governance_get():
+    """Return current governance state (rule names, strictness_level, disabled_rules). Requires active streaming run."""
+    if _active_loop is None or not hasattr(_active_loop, "governance"):
+        return jsonify({"ok": False, "error": "No active streaming simulation"}), 400
+    state = _active_loop.governance.snapshot_state()
+    return jsonify({"ok": True, "governance": state})
+
+
+@app.route("/api/control/governance", methods=["POST"])
+def api_control_governance_post():
+    """Update governance at runtime. Body: { strictness_level?, disable_rule?, enable_rule? }."""
+    global _active_loop
+    if _active_loop is None or not hasattr(_active_loop, "governance"):
+        return jsonify({"ok": False, "error": "No active streaming simulation"}), 400
+    data = request.get_json(force=True, silent=True) or {}
+    gov = _active_loop.governance
+    if "strictness_level" in data:
+        gov.set_strictness_level(int(data["strictness_level"]))
+    if data.get("disable_rule"):
+        gov.disable_rule(str(data["disable_rule"]))
+    if data.get("enable_rule"):
+        gov.enable_rule(str(data["enable_rule"]))
+    return jsonify({"ok": True, "governance": gov.snapshot_state()})
 
 
 @app.route("/api/snapshot", methods=["GET"])
@@ -663,7 +761,7 @@ def api_graph_data():
 def main() -> int:
     import argparse
     ap = argparse.ArgumentParser(description="Open World Engine – Web UI")
-    ap.add_argument("--port", type=int, default=5000, help="Port (default: 5000)")
+    ap.add_argument("--port", type=int, default=5081, help="Port (default: 5081)")
     ap.add_argument("--host", type=str, default="0.0.0.0", help="Host (default: 0.0.0.0 = all interfaces; use 127.0.0.1 for local only)")
     ap.add_argument("--debug", action="store_true", help="Enable Flask debug mode")
     args = ap.parse_args()

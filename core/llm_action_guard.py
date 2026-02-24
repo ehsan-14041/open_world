@@ -325,3 +325,30 @@ class LLMActionGuard:
             out["justification"] = json_action.get("justification") or ""
             out["causal_chain"] = json_action.get("causal_chain") or ""
         return out
+
+    def check_internal_consistency(self, extracted: dict[str, Any]) -> tuple[bool, list[str]]:
+        """
+        Check for conflicting or inconsistent LLM output (e.g. action_type vs primary_variable, deltas in bounds).
+        Returns (ok, list of issue descriptions).
+        """
+        issues: list[str] = []
+        action = (extracted.get("action") or extracted.get("action_type") or "").strip()
+        primary = (extracted.get("primary_variable") or "").strip()
+        deltas = extracted.get("deltas") or []
+        delta_vars = {d.get("variable") for d in deltas if isinstance(d, dict) and d.get("variable")}
+        if action.startswith("increase_") or action.startswith("decrease_"):
+            inferred_var = action.replace("increase_", "").replace("decrease_", "").strip()
+            if inferred_var and primary and inferred_var != primary:
+                issues.append(f"action_type '{action}' implies primary_variable '{inferred_var}' but got '{primary}'")
+            if inferred_var and delta_vars and inferred_var not in delta_vars:
+                issues.append(f"action_type '{action}' implies variable '{inferred_var}' but deltas have {delta_vars}")
+        if primary and delta_vars and primary not in delta_vars:
+            issues.append(f"primary_variable '{primary}' not in deltas {delta_vars}")
+        for d in deltas:
+            if not isinstance(d, dict):
+                continue
+            ch = d.get("change")
+            if ch is not None and isinstance(ch, (int, float)):
+                if ch < SAFE_NUMERIC_MIN or ch > SAFE_NUMERIC_MAX:
+                    issues.append(f"delta change {ch} out of safe range [{SAFE_NUMERIC_MIN}, {SAFE_NUMERIC_MAX}]")
+        return (len(issues) == 0, issues)

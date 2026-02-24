@@ -24,6 +24,35 @@ def register_effect(key: str, fn: Callable[[Any, dict[str, Any]], None | dict[st
     _effect_registry[key] = fn
 
 
+# Runtime: disabled rule ids (skipped when running)
+_disabled_rule_ids: set[str] = set()
+
+
+def add_rule(rules_list: list[dict[str, Any]], rule_dict: dict[str, Any]) -> None:
+    """Append a rule to the given rules list (e.g. scenario rules)."""
+    if isinstance(rule_dict, dict) and rule_dict.get("condition_key") and rule_dict.get("effect_key"):
+        rules_list.append(dict(rule_dict))
+
+
+def remove_rule(rules_list: list[dict[str, Any]], rule_id: str) -> bool:
+    """Remove first rule with given id from the list. Returns True if removed."""
+    for i, r in enumerate(rules_list):
+        if isinstance(r, dict) and r.get("id") == rule_id:
+            rules_list.pop(i)
+            return True
+    return False
+
+
+def disable_rule(rule_id: str) -> None:
+    """Disable a rule by id; it will be skipped in run_rules."""
+    _disabled_rule_ids.add(rule_id)
+
+
+def enable_rule(rule_id: str) -> None:
+    """Re-enable a rule by id."""
+    _disabled_rule_ids.discard(rule_id)
+
+
 def get_registry_counts() -> tuple[int, int]:
     """Return (condition_registry_count, effect_registry_count) for health check."""
     return len(_condition_registry), len(_effect_registry)
@@ -45,6 +74,8 @@ def run_rules(
         if not isinstance(rule, dict):
             continue
         rule_id = rule.get("id", "")
+        if rule_id in _disabled_rule_ids:
+            continue
         cond_key = rule.get("condition_key")
         effect_key = rule.get("effect_key")
         params = rule.get("params") or {}

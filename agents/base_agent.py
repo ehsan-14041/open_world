@@ -84,6 +84,8 @@ class BaseAgent:
         # [RL] Lightweight RL weight table (action_type -> weight) and baseline for update.
         self._rl_weights: dict[str, float] = {}
         self._rl_baseline: float = 0.0
+        # [Belief] Optional structured belief state (when ENABLE_BELIEF_LAYER).
+        self._belief_state: Any = None
 
     def get_rl_weight(self, action_type: str) -> float:
         """Return RL weight for action_type (default 0.0 for unseen)."""
@@ -98,8 +100,18 @@ class BaseAgent:
         beta: float = 0.1,
         alpha_baseline: float = 0.05,
     ) -> None:
-        """Update RL weight: weight += beta * (observed_reward - baseline); then update baseline EMA."""
+        """Update RL weight: weight += beta * (observed_reward - baseline); then update baseline EMA. RL table capped to RL_TABLE_MAX_ENTRIES."""
+        try:
+            from config.settings import RL_TABLE_MAX_ENTRIES
+            max_entries = RL_TABLE_MAX_ENTRIES
+        except ImportError:
+            max_entries = 50
         b = baseline if baseline is not None else self._rl_baseline
+        if action_type not in self._rl_weights and len(self._rl_weights) >= max_entries:
+            # Evict entry with lowest absolute weight (or oldest if tie)
+            by_abs = sorted(self._rl_weights.items(), key=lambda x: (abs(x[1]), list(self._rl_weights.keys()).index(x[0])))
+            if by_abs:
+                self._rl_weights.pop(by_abs[0][0], None)
         self._rl_weights[action_type] = self._rl_weights.get(action_type, 0.0) + beta * (observed_reward - b)
         self._rl_baseline = (1 - alpha_baseline) * self._rl_baseline + alpha_baseline * observed_reward
 
@@ -152,10 +164,11 @@ class BaseAgent:
             get_delta = None
         rule_deltas = rule_based_deltas_for_snapshot(belief_snapshot) if get_delta is None else None
 
-        # [MC + RL] Evaluate candidates and select probabilistically (planner score + MC value + RL weight, softmax).
+        # [MC + RL] Evaluate candidates and select probabilistically (planner score + MC value + RL weight + optional belief, softmax).
         try:
-            from config.settings import MC_RL_ENABLED, MC_N_SIMS, MC_RL_TEMPERATURE
+            from config.settings import MC_RL_ENABLED, MC_N_SIMS, MC_RL_TEMPERATURE, ENABLE_BELIEF_LAYER, BELIEF_WEIGHT
             from agents.action_evaluation import run_mc_evaluation, get_planner_scores, softmax_select
+            from core.synthesizer import ensure_action_diversity
             if MC_RL_ENABLED:
                 llm_scores = get_planner_scores(
                     belief_snapshot, candidates, get_delta, rule_deltas,
@@ -167,14 +180,32 @@ class BaseAgent:
                     n_sims=MC_N_SIMS,
                 )
                 rl_weights = {a: self.get_rl_weight(a) for a in candidates}
+                belief_scores = None
+                belief_weight = 0.0
+                if ENABLE_BELIEF_LAYER and BELIEF_WEIGHT > 0:
+                    from agents.belief_model import belief_state_from_memory_beliefs, belief_alignment
+                    bs = self._belief_state
+                    if bs is None:
+                        bs = belief_state_from_memory_beliefs(self.memory.beliefs)
+                        self._belief_state = bs
+                    belief_scores = {
+                        a: belief_alignment(a, bs, rule_based_deltas=rule_deltas, get_delta=get_delta)
+                        for a in candidates
+                    }
+                    belief_weight = BELIEF_WEIGHT
+                diverse_candidates = ensure_action_diversity(candidates, llm_scores, min_size=2)
                 best_action = softmax_select(
-                    candidates, llm_scores, mc_values, rl_weights,
+                    diverse_candidates, llm_scores, mc_values, rl_weights,
                     temperature=MC_RL_TEMPERATURE,
+                    belief_scores=belief_scores,
+                    belief_weight=belief_weight,
                 )
             else:
                 raise ImportError("MC_RL disabled")
         except (ImportError, AttributeError):
             # Fallback: original planner argmax (no MC/RL).
+            causal_links = belief_snapshot.get("causal_links")
+            variable_specs = belief_snapshot.get("variable_specs")
             if get_delta is not None:
                 best_action = plan_depth2_with_callback(
                     belief_snapshot,
@@ -182,6 +213,8 @@ class BaseAgent:
                     self.objectives,
                     get_delta,
                     beliefs=self.memory.semantic_memory,
+                    causal_links=causal_links,
+                    variable_specs=variable_specs,
                 )
             else:
                 derived = (belief_snapshot.get("derived") or {}) if isinstance(belief_snapshot.get("derived"), dict) else {}
@@ -198,6 +231,8 @@ class BaseAgent:
                     strategy_class_weights=self.strategy_class_weights,
                     get_strategy_class=self._get_strategy_class,
                     instability_mode=instability_mode,
+                    causal_links=causal_links,
+                    variable_specs=variable_specs,
                 )
 
         if get_delta is not None:
@@ -407,7 +442,7 @@ class BaseAgent:
 
     def state_to_dict(self) -> dict[str, Any]:
         """For snapshot: memory (includes beliefs), goals, long_term_memory, last_actions, [RL] weights."""
-        return {
+        out: dict[str, Any] = {
             "memory": self.memory.to_dict(),
             "beliefs": self.memory.beliefs,
             "long_term_goals": list(self.long_term_goals),
@@ -418,6 +453,13 @@ class BaseAgent:
             "rl_weights": dict(self._rl_weights),
             "rl_baseline": self._rl_baseline,
         }
+        if self._belief_state is not None and hasattr(self._belief_state, "beliefs"):
+            out["belief_state"] = {
+                "beliefs": dict(self._belief_state.beliefs),
+                "uncertainty": dict(self._belief_state.uncertainty),
+                "confidence": self._belief_state.confidence,
+            }
+        return out
 
     @classmethod
     def restore_state(cls, agent: "BaseAgent", d: dict[str, Any]) -> None:
@@ -434,6 +476,14 @@ class BaseAgent:
             agent.memory.beliefs = dict(d["beliefs"])
             agent.memory.beliefs.setdefault("variables", {})
             agent.memory.beliefs.setdefault("confidence", {})
+        if d.get("belief_state") and isinstance(d["belief_state"], dict):
+            from agents.belief_model import BeliefState
+            bs = d["belief_state"]
+            agent._belief_state = BeliefState(
+                beliefs=dict(bs.get("beliefs") or {}),
+                uncertainty=dict(bs.get("uncertainty") or {}),
+                confidence=float(bs.get("confidence", 0.5)),
+            )
         if d.get("long_term_memory") and isinstance(d["long_term_memory"], list):
             agent.long_term_memory = list(d["long_term_memory"])
         if d.get("last_actions") and isinstance(d["last_actions"], list):

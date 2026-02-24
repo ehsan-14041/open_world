@@ -123,7 +123,19 @@ class IncentiveModeler:
                 validator,
             )
         except ValueError as e:
-            raise PipelineError("Incentive Modeling", str(e)) from e
+            # LLM returned empty/invalid JSON or validation failed: use minimal default incentives
+            var_list = list(variable_names)
+            first_var = var_list[0] if var_list else "outcome"
+            result = {}
+            for name in actor_names:
+                result[name] = {
+                    "objectives": {f"increase_{first_var}": 0.5} if first_var else {"stability": 0.5},
+                    "trade_offs": [],
+                    "capabilities": ["general"],
+                    "risk_tolerance": 0.5,
+                    "aggressiveness": 0.5,
+                    "strategic_constraints": [],
+                }
 
         incentives: dict[str, dict[str, Any]] = {}
         for name in actor_names:
