@@ -131,6 +131,13 @@ def _call_llm_fallback(
         raise ImportError("openai package required. pip install openai>=1.0.0") from None
 
     from config.settings import (
+        LLM_PROVIDER,
+        GROQ_API_KEY,
+        GROQ_BASE_URL,
+        GROQ_MODEL,
+        GROQ_TEMPERATURE,
+        GROQ_MAX_TOKENS,
+        GROQ_TIMEOUT,
         AVALAI_API_KEY,
         AVALAI_BASE_URL,
         AVALAI_MODEL,
@@ -142,24 +149,50 @@ def _call_llm_fallback(
         OPENAI_MODEL,
     )
 
-    if (AVALAI_API_KEY or "").strip():
-        api_key = AVALAI_API_KEY.strip()
-        base_url = (AVALAI_BASE_URL or "https://api.avalai.ir/v1").strip()
-        model = (AVALAI_MODEL or "gpt-4o-mini").strip()
-        _temp = AVALAI_TEMPERATURE
-        _tokens = AVALAI_MAX_TOKENS
-        timeout = AVALAI_TIMEOUT
-    elif (OPENAI_API_KEY or "").strip():
-        api_key = OPENAI_API_KEY.strip()
-        base_url = (OPENAI_BASE_URL or "https://api.openai.com/v1").strip()
-        model = (OPENAI_MODEL or "gpt-4o-mini").strip()
-        _temp = 0.2
-        _tokens = 512
-        timeout = 15
-    else:
+    # Candidate provider configs; honor LLM_PROVIDER first, then fall back to
+    # whichever provider has a key configured.
+    _candidates = {
+        "groq": {
+            "api_key": (GROQ_API_KEY or "").strip(),
+            "base_url": (GROQ_BASE_URL or "https://api.groq.com/openai/v1").strip(),
+            "model": (GROQ_MODEL or "llama-3.3-70b-versatile").strip(),
+            "temperature": GROQ_TEMPERATURE,
+            "max_tokens": GROQ_MAX_TOKENS,
+            "timeout": GROQ_TIMEOUT,
+        },
+        "avalai": {
+            "api_key": (AVALAI_API_KEY or "").strip(),
+            "base_url": (AVALAI_BASE_URL or "https://api.avalai.ir/v1").strip(),
+            "model": (AVALAI_MODEL or "gpt-4o-mini").strip(),
+            "temperature": AVALAI_TEMPERATURE,
+            "max_tokens": AVALAI_MAX_TOKENS,
+            "timeout": AVALAI_TIMEOUT,
+        },
+        "openai": {
+            "api_key": (OPENAI_API_KEY or "").strip(),
+            "base_url": (OPENAI_BASE_URL or "https://api.openai.com/v1").strip(),
+            "model": (OPENAI_MODEL or "gpt-4o-mini").strip(),
+            "temperature": 0.2,
+            "max_tokens": 512,
+            "timeout": 15,
+        },
+    }
+    _preferred = (LLM_PROVIDER or "").strip().lower()
+    _order = ([_preferred] if _preferred in _candidates else []) + [
+        p for p in ("groq", "avalai", "openai") if p != _preferred
+    ]
+    _chosen = next((_candidates[p] for p in _order if _candidates[p]["api_key"]), None)
+    if _chosen is None:
         raise ValueError(
-            "LLM API key not set. Set AVALAI_API_KEY or OPENAI_API_KEY in config/settings.json or env. See README."
+            "LLM API key not set. Set GROQ_API_KEY, AVALAI_API_KEY or OPENAI_API_KEY "
+            "in config/settings.json or env. See README."
         )
+    api_key = _chosen["api_key"]
+    base_url = _chosen["base_url"]
+    model = _chosen["model"]
+    _temp = _chosen["temperature"]
+    _tokens = _chosen["max_tokens"]
+    timeout = _chosen["timeout"]
 
     client = OpenAI(api_key=api_key, base_url=base_url, timeout=timeout)
     messages = [{"role": "user", "content": prompt}]
@@ -252,22 +285,25 @@ def call_llm(
         raise
     except json.JSONDecodeError as je:
         if as_json:
-            retry_prompt = prompt + "\n\nOutput must be valid JSON only. Reply with a single JSON object."
+            # First try fallback client (e.g. config/settings.json) in case primary returned empty/invalid
             try:
-                out = _call_llm_sim_app(
-                    retry_prompt, system, as_json=False,
-                    temperature=temperature, max_tokens=max_tokens,
-                )
-                raw = _strip_markdown_json(str(out))
-                return log_and_return(json.loads(raw), retry_prompt, system)
+                out = do_call(use_fallback=True, p=prompt, s=system, aj=as_json)
+                return log_and_return(out, prompt, system)
             except Exception:
+                pass
+            retry_prompt = prompt + "\n\nOutput must be valid JSON only. Reply with a single JSON object."
+            for _use_fallback in (False, True):
                 try:
-                    out = _call_llm_fallback(
-                        retry_prompt, system, as_json=False,
-                        temperature=temperature, max_tokens=max_tokens,
+                    out = (
+                        _call_llm_fallback(retry_prompt, system, as_json=False, temperature=temperature, max_tokens=max_tokens)
+                        if _use_fallback
+                        else _call_llm_sim_app(retry_prompt, system, as_json=False, temperature=temperature, max_tokens=max_tokens)
                     )
-                    raw = _strip_markdown_json(str(out))
+                    raw = _strip_markdown_json(str(out or ""))
+                    if not raw:
+                        return log_and_return({}, retry_prompt, system)
                     return log_and_return(json.loads(raw), retry_prompt, system)
                 except Exception:
-                    return log_and_return({}, retry_prompt, system)
+                    continue
+            return log_and_return({}, retry_prompt, system)
         raise je

@@ -11,22 +11,58 @@ from typing import Any, Callable
 
 from agents.utility import utility_function
 from core.world_state import WorldState
+from core.legacy_semantics import legacy_steady_action_name
+from core.transition_kernel import TransitionOptions, transition_planning
+from world.world_state import clone_world_state as _clone_world_state
+
+try:
+    from config.settings import LIGHT_PROP_HOPS, PLANNER_DECAY_FACTOR, PROPAGATION_DECAY_FACTOR
+except ImportError:
+    LIGHT_PROP_HOPS = 1
+    PLANNER_DECAY_FACTOR = None
+    PROPAGATION_DECAY_FACTOR = 1.0
 
 # Type for mapping action_type -> strategy class name
 StrategyClassFn = Callable[[str], str]
 
 
-def clone_world_state(snapshot: dict[str, Any]) -> dict[str, Any]:
-    """Return a deep copy of world state (global_state, entities, relations) for simulation only."""
-    return {
-        "entities": copy.deepcopy(snapshot.get("entities") or {}),
-        "relations": copy.deepcopy(snapshot.get("relations") or []),
-        "global_state": copy.deepcopy(snapshot.get("global_state") or {}),
-        "narrative": list(snapshot.get("narrative") or []),
-        "ontology": dict(snapshot.get("ontology") or {}),
-        "version": int(snapshot.get("version", 0)),
-        "turn": int(snapshot.get("turn", 0)),
-    }
+def _apply_delta_for_planning(
+    clone: dict[str, Any],
+    delta: dict[str, Any],
+    causal_links: list[dict[str, Any]] | None,
+    variable_specs: dict[str, dict[str, Any]] | None,
+    max_hops: int,
+    decay_factor: float | None,
+) -> None:
+    """
+    Apply delta to clone using shared deterministic physics (numeric_updates + propagation only).
+
+    Phase 2: route through core.transition_kernel.transition_planning so that
+    planning and execution share the same deterministic transition semantics.
+    """
+    links = causal_links if causal_links else []
+    options = TransitionOptions(
+        mode="planning",
+        enable_governance=False,
+        enable_constraints=False,
+        enable_noise=False,
+        max_prop_hops=max_hops,
+        decay_factor=decay_factor if decay_factor is not None else (PLANNER_DECAY_FACTOR or PROPAGATION_DECAY_FACTOR),
+    )
+    new_snapshot, _prov = transition_planning(
+        clone,
+        delta,
+        links,
+        variable_specs or clone.get("variable_specs") or {},
+        options,
+    )
+    clone.clear()
+    clone.update(new_snapshot)
+
+
+def clone_world_state(snapshot: dict[str, Any], *, include_causal_links: bool = False) -> dict[str, Any]:
+    """Canonical clone: delegates to world.world_state.clone_world_state. Planning uses include_causal_links=False."""
+    return _clone_world_state(snapshot, include_causal_links=include_causal_links)
 
 
 def apply_delta_to_state(state: dict[str, Any], delta: dict[str, Any]) -> None:
@@ -74,8 +110,8 @@ def delta_from_rule_based(action_type: str, rule_based_deltas: dict[str, dict[st
     }
 
 
-# Default second-step action for depth-2 (steady state)
-STEADY_ACTION = "steady_finance"
+# Default second-step action for depth-2 (steady state); from legacy_semantics
+STEADY_ACTION = legacy_steady_action_name()
 
 
 def plan_depth2(
@@ -92,6 +128,10 @@ def plan_depth2(
     strategy_class_weights: dict[str, float] | None = None,
     get_strategy_class: StrategyClassFn | None = None,
     instability_mode: bool = False,
+    causal_links: list[dict[str, Any]] | None = None,
+    variable_specs: dict[str, dict[str, Any]] | None = None,
+    max_hops: int = LIGHT_PROP_HOPS,
+    decay_factor: float | None = PLANNER_DECAY_FACTOR,
 ) -> str:
     """
     For each candidate action: clone world, apply action delta, optionally apply second step,
@@ -128,13 +168,14 @@ def plan_depth2(
     best_action = candidate_actions[0]
     best_score = float("-inf")
 
+    links = causal_links if causal_links is not None else (snapshot.get("causal_links") or [])
     for action_type in candidate_actions:
-        clone = clone_world_state(snapshot)
+        clone = clone_world_state(snapshot, include_causal_links=bool(links))
         delta1 = delta_from_rule_based(action_type, rule_based_deltas)
-        apply_delta_to_state(clone, delta1)
+        _apply_delta_for_planning(clone, delta1, links, variable_specs, max_hops, decay_factor)
         if second_step_action and second_step_action in rule_based_deltas:
             delta2 = delta_from_rule_based(second_step_action, rule_based_deltas)
-            apply_delta_to_state(clone, delta2)
+            _apply_delta_for_planning(clone, delta2, links, variable_specs, max_hops, decay_factor)
         score = utility_function(clone, beliefs, objectives)
 
         # Instability mode: risk-seeking bias (favor higher-magnitude deltas)
@@ -172,6 +213,10 @@ def plan_depth2_with_callback(
     *,
     beliefs: dict[str, Any] | None = None,
     second_step_action: str | None = STEADY_ACTION,
+    causal_links: list[dict[str, Any]] | None = None,
+    variable_specs: dict[str, dict[str, Any]] | None = None,
+    max_hops: int = LIGHT_PROP_HOPS,
+    decay_factor: float | None = PLANNER_DECAY_FACTOR,
 ) -> str:
     """
     Same as plan_depth2 but use get_delta(action_type) instead of rule_based_deltas dict.
@@ -180,6 +225,7 @@ def plan_depth2_with_callback(
     if not candidate_actions:
         return STEADY_ACTION
     beliefs = beliefs or {}
+    links = causal_links if causal_links is not None else (snapshot.get("causal_links") or [])
     best_action = candidate_actions[0]
     best_score = float("-inf")
 
@@ -189,14 +235,14 @@ def plan_depth2_with_callback(
             continue
         if not isinstance(delta1, dict):
             delta1 = delta1.to_dict() if hasattr(delta1, "to_dict") else {}
-        clone = clone_world_state(snapshot)
-        apply_delta_to_state(clone, delta1)
+        clone = clone_world_state(snapshot, include_causal_links=bool(links))
+        _apply_delta_for_planning(clone, delta1, links, variable_specs, max_hops, decay_factor)
         if second_step_action:
             delta2 = get_delta(second_step_action)
             if delta2 is not None:
                 if not isinstance(delta2, dict):
                     delta2 = delta2.to_dict() if hasattr(delta2, "to_dict") else {}
-                apply_delta_to_state(clone, delta2)
+                _apply_delta_for_planning(clone, delta2, links, variable_specs, max_hops, decay_factor)
         score = utility_function(clone, beliefs, objectives)
         if score > best_score:
             best_score = score
@@ -213,14 +259,19 @@ def plan_depth2_llm_aware(
     *,
     beliefs: dict[str, Any] | None = None,
     get_expected_events: Callable[[dict[str, Any]], dict[str, float]] | None = None,
+    causal_links: list[dict[str, Any]] | None = None,
+    variable_specs: dict[str, dict[str, Any]] | None = None,
+    max_hops: int = LIGHT_PROP_HOPS,
+    decay_factor: float | None = PLANNER_DECAY_FACTOR,
 ) -> str:
     """
     Depth-2 planning with get_delta callback. Optionally apply expected environment events
-    (probability-weighted) to clone before scoring. Uses WorldState for clone/apply.
+    (probability-weighted) to clone before scoring. Uses mental sim when causal_links given.
     """
     if not candidate_actions:
         return STEADY_ACTION
     beliefs = beliefs or {}
+    links = causal_links if causal_links is not None else (snapshot.get("causal_links") or [])
     best_action = candidate_actions[0]
     best_score = float("-inf")
 
@@ -230,17 +281,28 @@ def plan_depth2_llm_aware(
             continue
         if not isinstance(delta1, dict):
             delta1 = delta1.to_dict() if hasattr(delta1, "to_dict") else {}
-        try:
-            ws = WorldState.from_snapshot(snapshot)
-            ws.apply_delta(delta1, enforce_policy=True)
+        if links:
+            clone = clone_world_state(snapshot, include_causal_links=True)
+            _apply_delta_for_planning(clone, delta1, links, variable_specs, max_hops, decay_factor)
             if get_expected_events:
-                expected = get_expected_events(ws.to_snapshot())
+                expected = get_expected_events(clone)
                 if isinstance(expected, dict) and expected:
-                    ws.apply_delta({"numeric_updates": expected, "rationale": "expected_events"}, enforce_policy=False)
-            clone = ws.to_snapshot()
-        except Exception:
-            clone = clone_world_state(snapshot)
-            apply_delta_to_state(clone, delta1)
+                    _apply_delta_for_planning(
+                        clone, {"numeric_updates": expected, "rationale": "expected_events"},
+                        links, variable_specs, max_hops, decay_factor,
+                    )
+        else:
+            try:
+                ws = WorldState.from_snapshot(snapshot)
+                ws.apply_delta(delta1, enforce_policy=True)
+                if get_expected_events:
+                    expected = get_expected_events(ws.to_snapshot())
+                    if isinstance(expected, dict) and expected:
+                        ws.apply_delta({"numeric_updates": expected, "rationale": "expected_events"}, enforce_policy=False)
+                clone = ws.to_snapshot()
+            except Exception:
+                clone = clone_world_state(snapshot)
+                apply_delta_to_state(clone, delta1)
         score = utility_function(clone, beliefs, objectives)
         if score > best_score:
             best_score = score

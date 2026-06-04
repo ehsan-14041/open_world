@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from core.llm_client import call_llm
+from core.llm_service import call_llm as llm_service_call
 from pipeline.orchestrator import run_pipeline
 from pipeline.errors import PipelineError
 from schemas.scenario_schema import normalize_scenario, validate_scenario
@@ -34,7 +34,31 @@ def parse_scenario_text(text: str, *, use_llm: bool = True) -> dict[str, Any]:
         return _default_scenario(text)
 
     def llm_client(prompt: str, system: str | None = None, *, as_json: bool = False) -> Any:
-        return call_llm(prompt, system=system, as_json=as_json)
+        """
+        Pipeline-wide LLM entrypoint.
+
+        - When as_json=True, we request JSON via llm_service with a permissive schema so
+          that parsing/repair is centralized while allowing each stage to own structure.
+        - When as_json=False, we use llm_service in text mode.
+        """
+        if as_json:
+            return llm_service_call(
+                prompt,
+                system=system or "",
+                schema={"required": [], "types": {}},
+                temperature=None,
+                max_tokens=None,
+                usage_tier="scenario_pipeline",
+            ) or {}
+        out = llm_service_call(
+            prompt,
+            system=system or "",
+            schema=None,
+            temperature=None,
+            max_tokens=None,
+            usage_tier="scenario_pipeline",
+        )
+        return out or ""
 
     config = {"debug_llm": DEBUG_LLM}
     try:

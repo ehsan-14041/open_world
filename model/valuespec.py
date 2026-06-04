@@ -6,10 +6,18 @@ Domain-agnostic; backward compatible with legacy variable_specs (min, max, clip,
 
 from __future__ import annotations
 
+from enum import Enum
 from typing import Any, Literal
 
 # --- Types ---
 ValueSpecType = Literal["numeric", "ordinal", "categorical", "text"]
+BehaviorType = Literal["STOCK", "FLOW"]
+
+
+class VariableType(Enum):
+    """Variable dynamics: STOCK (accumulates with decay/inertia) or FLOW (direct change)."""
+    STOCK = "stock"
+    FLOW = "flow"
 
 # Ordinal intensity levels (domain-agnostic)
 ORDINAL_LEVELS = ["very_low", "low", "medium", "high", "very_high"]
@@ -65,6 +73,11 @@ class ValueSpec:
         "rate_limit",
         "soft_max",
         "softness",
+        "behavior_type",
+        "damping_factor",
+        "decay_rate",
+        "inertia",
+        "decay",
     )
 
     def __init__(
@@ -79,6 +92,11 @@ class ValueSpec:
         rate_limit: float | None = None,
         soft_max: float | None = None,
         softness: float | None = None,
+        behavior_type: BehaviorType = "STOCK",
+        damping_factor: float | None = None,
+        decay_rate: float | None = None,
+        inertia: float = 0.2,
+        decay: float = 0.01,
     ) -> None:
         self.type = type
         self.scale = scale or {}
@@ -89,6 +107,11 @@ class ValueSpec:
         self.rate_limit = rate_limit
         self.soft_max = soft_max
         self.softness = softness
+        self.behavior_type = behavior_type if behavior_type in ("STOCK", "FLOW") else "STOCK"
+        self.damping_factor = damping_factor
+        self.decay_rate = decay_rate
+        self.inertia = max(0.0, min(1.0, float(inertia))) if isinstance(inertia, (int, float)) else 0.2
+        self.decay = max(0.0, min(1.0, float(decay))) if isinstance(decay, (int, float)) else 0.01
 
     def to_dict(self) -> dict[str, Any]:
         out: dict[str, Any] = {"type": self.type}
@@ -108,12 +131,24 @@ class ValueSpec:
             out["soft_max"] = self.soft_max
         if self.softness is not None:
             out["softness"] = self.softness
+        if self.behavior_type != "STOCK":
+            out["behavior_type"] = self.behavior_type
+        if self.damping_factor is not None:
+            out["damping_factor"] = self.damping_factor
+        if self.decay_rate is not None:
+            out["decay_rate"] = self.decay_rate
+        if self.inertia != 0.2:
+            out["inertia"] = self.inertia
+        if self.decay != 0.01:
+            out["decay"] = self.decay
         return out
 
     @classmethod
     def from_dict(cls, d: dict[str, Any]) -> ValueSpec:
         if d is None:
             return cls()
+        inertia_val = d.get("inertia")
+        decay_val = d.get("decay")
         return cls(
             type=(d.get("type") or "numeric") if isinstance(d.get("type"), str) else "numeric",
             scale=d.get("scale") if isinstance(d.get("scale"), dict) else None,
@@ -124,6 +159,11 @@ class ValueSpec:
             rate_limit=d.get("rate_limit") if isinstance(d.get("rate_limit"), (int, float)) else None,
             soft_max=d.get("soft_max") if isinstance(d.get("soft_max"), (int, float)) else None,
             softness=d.get("softness") if isinstance(d.get("softness"), (int, float)) else None,
+            behavior_type=(d.get("behavior_type") or "STOCK") if str(d.get("behavior_type", "STOCK")).upper() in ("STOCK", "FLOW") else "STOCK",
+            damping_factor=d.get("damping_factor") if isinstance(d.get("damping_factor"), (int, float)) else None,
+            decay_rate=d.get("decay_rate") if isinstance(d.get("decay_rate"), (int, float)) else None,
+            inertia=float(inertia_val) if isinstance(inertia_val, (int, float)) else 0.2,
+            decay=float(decay_val) if isinstance(decay_val, (int, float)) else 0.01,
         )
 
 
@@ -139,6 +179,10 @@ def value_spec_from_legacy(legacy: dict[str, Any] | None) -> ValueSpec:
         scale["min"] = float(legacy["min"])
     if legacy.get("max") is not None and isinstance(legacy["max"], (int, float)):
         scale["max"] = float(legacy["max"])
+    behavior_type = "FLOW" if str(legacy.get("behavior_type", "STOCK")).upper() == "FLOW" else "STOCK"
+    damping_factor = legacy.get("damping_factor") if isinstance(legacy.get("damping_factor"), (int, float)) else None
+    inertia = legacy.get("inertia") if isinstance(legacy.get("inertia"), (int, float)) else 0.2
+    decay = legacy.get("decay") if isinstance(legacy.get("decay"), (int, float)) else 0.01
     return ValueSpec(
         type="numeric",
         scale=scale or None,
@@ -146,7 +190,68 @@ def value_spec_from_legacy(legacy: dict[str, Any] | None) -> ValueSpec:
         rate_limit=legacy.get("rate_limit") if isinstance(legacy.get("rate_limit"), (int, float)) else None,
         soft_max=legacy.get("soft_max") if isinstance(legacy.get("soft_max"), (int, float)) else None,
         softness=legacy.get("softness") if isinstance(legacy.get("softness"), (int, float)) else None,
+        behavior_type=behavior_type,
+        damping_factor=damping_factor,
+        decay_rate=legacy.get("decay_rate") if isinstance(legacy.get("decay_rate"), (int, float)) else None,
+        inertia=float(inertia) if isinstance(inertia, (int, float)) else 0.2,
+        decay=float(decay) if isinstance(decay, (int, float)) else 0.01,
     )
+
+
+def _spec_min_max(spec: ValueSpec | dict[str, Any] | None) -> tuple[float | None, float | None]:
+    """
+    Return (min, max) for a variable spec. Supports legacy (min/max at top level)
+    and ValueSpec-style (scale.min, scale.max). Returns (None, None) if no bounds.
+    """
+    if spec is None:
+        return None, None
+    if isinstance(spec, ValueSpec):
+        lo = spec.scale.get("min") if spec.scale else None
+        hi = spec.scale.get("max") if spec.scale else None
+        return (float(lo) if lo is not None and isinstance(lo, (int, float)) else None,
+                float(hi) if hi is not None and isinstance(hi, (int, float)) else None)
+    if isinstance(spec, dict):
+        lo = spec.get("min")
+        hi = spec.get("max")
+        if lo is not None or hi is not None:
+            return (float(lo) if isinstance(lo, (int, float)) else None,
+                    float(hi) if isinstance(hi, (int, float)) else None)
+        scale = spec.get("scale")
+        if isinstance(scale, dict):
+            lo = scale.get("min")
+            hi = scale.get("max")
+            return (float(lo) if isinstance(lo, (int, float)) else None,
+                    float(hi) if isinstance(hi, (int, float)) else None)
+    return None, None
+
+
+def clamp_state_to_specs(
+    state: dict[str, Any],
+    specs: dict[str, dict[str, Any] | ValueSpec] | None,
+) -> dict[str, Any]:
+    """
+    Mandatory post-propagation clamp: for every variable in state that has a spec
+    with min/max, clamp the value to [spec_min, spec_max]. Supports legacy
+    variable_specs (min/max at top level) and ValueSpec-style (scale.min, scale.max).
+    Returns a new state dict; does not mutate input.
+    """
+    if not specs or not state:
+        return dict(state)
+    out: dict[str, Any] = dict(state)
+    for var_id, value in list(out.items()):
+        if not isinstance(value, (int, float)):
+            continue
+        spec = specs.get(var_id)
+        lo, hi = _spec_min_max(spec)
+        if lo is None and hi is None:
+            continue
+        v = float(value)
+        if lo is not None and v < lo:
+            v = lo
+        if hi is not None and v > hi:
+            v = hi
+        out[var_id] = v
+    return out
 
 
 def clamp_value(
@@ -164,13 +269,16 @@ def clamp_value(
     if spec is None:
         return value
     vs = spec if isinstance(spec, ValueSpec) else ValueSpec.from_dict(spec) if isinstance(spec, dict) else ValueSpec()
+    lo, hi = _spec_min_max(spec)  # supports legacy min/max
 
     if value is None:
-        if vs.type == "numeric" and vs.scale:
-            lo = vs.scale.get("min")
-            hi = vs.scale.get("max")
+        if vs.type == "numeric" and (lo is not None or hi is not None):
             if lo is not None and hi is not None:
                 return (float(lo) + float(hi)) / 2
+            if lo is not None:
+                return float(lo)
+            if hi is not None:
+                return float(hi)
         return value
 
     if vs.type == "numeric":
@@ -181,8 +289,6 @@ def clamp_value(
         if is_delta and vs.rate_limit is not None:
             v = max(-float(vs.rate_limit), min(float(vs.rate_limit), v))
         if not is_delta:
-            lo = vs.scale.get("min")
-            hi = vs.scale.get("max")
             if lo is not None and v < float(lo):
                 v = float(lo)
             if hi is not None and v > float(hi):

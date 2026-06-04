@@ -14,26 +14,19 @@ from typing import Any
 from schemas.llm_action_schema import DeltaEntry, LLMActionBlock
 from schemas.strategic_action_schema import StrategicActionResponse
 
+from core.legacy_semantics import legacy_is_non_negative_variable
+
+from schemas.contracts import constraint_spec_from_variable_spec
+
 try:
     from config.settings import DELTA_MAGNITUDE_CAP, MAX_DELTA
 except ImportError:
     DELTA_MAGNITUDE_CAP = 1000.0
     MAX_DELTA = 10.0
 
-# Variables that must not go negative (keyword match)
-NON_NEGATIVE_KEYWORDS = {
-    "population", "count", "resource", "cash", "money", "fund", "stock",
-    "inventory", "supply", "runway",
-}
-
 # Safe numeric range: reject or clamp values outside [-1e12, 1e12]
 SAFE_NUMERIC_MIN = -1e12
 SAFE_NUMERIC_MAX = 1e12
-
-
-def _is_non_negative_variable(var_name: str) -> bool:
-    v = (var_name or "").lower()
-    return any(kw in v for kw in NON_NEGATIVE_KEYWORDS)
 
 
 def _extract_json_block(text: str) -> str | None:
@@ -281,6 +274,7 @@ class LLMActionGuard:
         cap = self.max_delta if use_max_delta else (self.delta_magnitude_cap or 1000.0)
 
         sanitized_deltas: list[dict[str, Any]] = []
+        variable_specs = world_state.get("variable_specs") or {}
         for d in deltas_in:
             var = d.get("variable") if isinstance(d, dict) else None
             change = d.get("change") if isinstance(d, dict) else None
@@ -305,9 +299,16 @@ class LLMActionGuard:
             if abs(val) > cap:
                 val = cap if val > 0 else -cap
 
-            # Non-negative: clamp so current + change >= 0
+            # Non-negative: prefer variable_specs non_negative flag; else legacy inference
+            is_non_negative = False
+            if variable_specs and isinstance(variable_specs, dict):
+                spec = constraint_spec_from_variable_spec(variable_specs.get(var))
+                if spec.non_negative:
+                    is_non_negative = True
+            if not is_non_negative:
+                is_non_negative = legacy_is_non_negative_variable(var)
             current = variables.get(var)
-            if _is_non_negative_variable(var) and isinstance(current, (int, float)):
+            if is_non_negative and isinstance(current, (int, float)):
                 if current + val < 0:
                     val = -float(current)
 
@@ -325,3 +326,30 @@ class LLMActionGuard:
             out["justification"] = json_action.get("justification") or ""
             out["causal_chain"] = json_action.get("causal_chain") or ""
         return out
+
+    def check_internal_consistency(self, extracted: dict[str, Any]) -> tuple[bool, list[str]]:
+        """
+        Check for conflicting or inconsistent LLM output (e.g. action_type vs primary_variable, deltas in bounds).
+        Returns (ok, list of issue descriptions).
+        """
+        issues: list[str] = []
+        action = (extracted.get("action") or extracted.get("action_type") or "").strip()
+        primary = (extracted.get("primary_variable") or "").strip()
+        deltas = extracted.get("deltas") or []
+        delta_vars = {d.get("variable") for d in deltas if isinstance(d, dict) and d.get("variable")}
+        if action.startswith("increase_") or action.startswith("decrease_"):
+            inferred_var = action.replace("increase_", "").replace("decrease_", "").strip()
+            if inferred_var and primary and inferred_var != primary:
+                issues.append(f"action_type '{action}' implies primary_variable '{inferred_var}' but got '{primary}'")
+            if inferred_var and delta_vars and inferred_var not in delta_vars:
+                issues.append(f"action_type '{action}' implies variable '{inferred_var}' but deltas have {delta_vars}")
+        if primary and delta_vars and primary not in delta_vars:
+            issues.append(f"primary_variable '{primary}' not in deltas {delta_vars}")
+        for d in deltas:
+            if not isinstance(d, dict):
+                continue
+            ch = d.get("change")
+            if ch is not None and isinstance(ch, (int, float)):
+                if ch < SAFE_NUMERIC_MIN or ch > SAFE_NUMERIC_MAX:
+                    issues.append(f"delta change {ch} out of safe range [{SAFE_NUMERIC_MIN}, {SAFE_NUMERIC_MAX}]")
+        return (len(issues) == 0, issues)

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تحلیل تصمیم استراتژیک</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
+      --text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--accent2:#79c0ff;
+      --ok:#3fb950;--warn:#d29922;--err:#f85149;--radius:14px;--radius-sm:9px;
+      --shadow:0 6px 28px rgba(0,0,0,.28);
+    }
+    *{box-sizing:border-box}
+    body{font-family:"Vazirmatn","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);
+      margin:0;padding:1.5rem;line-height:1.8;max-width:880px;margin-inline:auto}
+    [dir=ltr] body{font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:1.2rem}
+    .lang button{padding:.3rem .7rem;font:inherit;font-size:.8rem;font-weight:600;background:var(--surface);
+      color:var(--muted);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer}
+    .lang button.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+    h1{font-size:1.55rem;font-weight:700;margin:0 0 .35rem}
+    .sub{color:var(--muted);font-size:.95rem;margin:0 0 1.4rem}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.25rem 1.35rem;margin-bottom:1.15rem;box-shadow:var(--shadow)}
+    label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:.4rem}
+    textarea{width:100%;min-height:130px;padding:.85rem;background:var(--bg);border:1px solid var(--border);
+      border-radius:var(--radius-sm);color:var(--text);font:inherit;resize:vertical}
+    .opt{width:100%;padding:.6rem .8rem;background:var(--bg);border:1px solid var(--border);
+      border-radius:var(--radius-sm);color:var(--text);font:inherit;margin-bottom:.5rem}
+    .opts-wrap{margin-top:1rem}
+    .hint{font-size:.78rem;color:var(--muted);margin:.2rem 0 .6rem}
+    button.primary{margin-top:1rem;padding:.7rem 1.5rem;background:var(--accent);color:var(--bg);border:none;
+      border-radius:var(--radius-sm);font:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:.15s}
+    button.primary:hover{background:var(--accent2)}
+    button.primary:disabled{opacity:.55;cursor:not-allowed}
+    .brief-section{margin-bottom:1.1rem}
+    .brief-section h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);
+      margin:0 0 .4rem;font-weight:700}
+    .brief-section p{margin:0}
+    ul.clean{margin:.2rem 0 0;padding-inline-start:1.2rem}
+    ul.clean li{margin-bottom:.35rem}
+    .badge{display:inline-block;padding:.3rem .8rem;border-radius:999px;font-weight:700;font-size:.85rem}
+    .badge.NORMAL{background:rgba(63,185,80,.15);color:var(--ok);border:1px solid rgba(63,185,80,.4)}
+    .badge.FRAGILE{background:rgba(210,153,34,.15);color:var(--warn);border:1px solid rgba(210,153,34,.4)}
+    .badge.CRISIS{background:rgba(248,81,73,.15);color:var(--err);border:1px solid rgba(248,81,73,.4)}
+    .conf{display:inline-block;padding:.25rem .7rem;border-radius:var(--radius-sm);font-weight:600;font-size:.85rem;
+      background:var(--surface2);border:1px solid var(--border)}
+    .conf.low{color:var(--err)}.conf.moderate{color:var(--warn)}.conf.high{color:var(--ok)}
+    .muted-note{color:var(--muted);font-size:.85rem;margin-top:.35rem}
+    table{width:100%;border-collapse:collapse;margin-top:.5rem;font-size:.88rem}
+    th,td{text-align:start;padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}
+    th{color:var(--muted);font-weight:700}
+    .spinner{display:inline-block;width:1.1rem;height:1.1rem;border:2px solid var(--border);
+      border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .hidden{display:none}
+    .error{color:var(--err)}
+    .feedback{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-top:.6rem}
+    .feedback button{padding:.4rem .9rem;background:var(--surface2);border:1px solid var(--border);
+      border-radius:var(--radius-sm);color:var(--text);font:inherit;cursor:pointer}
+    .feedback button:hover{border-color:var(--accent)}
+    .feedback input{flex:1;min-width:160px;padding:.45rem .7rem;background:var(--bg);border:1px solid var(--border);
+      border-radius:var(--radius-sm);color:var(--text);font:inherit}
+    .adv{text-align:center;margin-top:1.5rem}
+    .adv a{color:var(--muted);font-size:.82rem;text-decoration:none}
+    .adv a:hover{color:var(--accent)}
+    .disclaimer{font-size:.76rem;color:var(--muted);text-align:center;margin-top:.5rem;opacity:.8}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="fa" class="active">فارسی</button>
+      <button type="button" data-lang="en">English</button>
+    </div>
+  </div>
+
+  <h1 data-i18n="title">تحلیل تصمیم استراتژیک</h1>
+  <p class="sub" data-i18n="sub">موقعیت تصمیم را به زبان ساده بنویسید. به‌جای پیش‌بینیِ یک عدد، گزینه‌ها و پیامدهای زنجیره‌ای‌شان را به‌صورت ساختاریافته کاوش می‌کنیم.</p>
+
+  <section class="card">
+    <label for="situation" data-i18n="sitLabel">موقعیت تصمیم شما</label>
+    <textarea id="situation" data-i18n-ph="sitPh"></textarea>
+
+    <div class="opts-wrap">
+      <label data-i18n="optsLabel">گزینه‌هایی که در نظر دارید (اختیاری، تا ۳ مورد)</label>
+      <p class="hint" data-i18n="optsHint">اگر چند گزینه بنویسید، هرکدام جداگانه شبیه‌سازی و کنار هم مقایسه می‌شوند.</p>
+      <input type="text" class="opt" id="opt1" data-i18n-ph="optPh1">
+      <input type="text" class="opt" id="opt2" data-i18n-ph="optPh2">
+      <input type="text" class="opt" id="opt3" data-i18n-ph="optPh3">
+    </div>
+
+    <button type="button" class="primary" id="btnAnalyze" data-i18n="analyze">تحلیل کن</button>
+    <div id="status" class="muted-note hidden"></div>
+  </section>
+
+  <section class="card hidden" id="briefCard">
+    <div class="brief-section">
+      <h3 data-i18n="hSituation">موقعیت</h3>
+      <p id="bSituation"></p>
+    </div>
+    <div class="brief-section">
+      <h3 data-i18n="hWhat">چه اتفاقی محتمل است</h3>
+      <p id="bWhat"></p>
+      <p id="bOutcome" class="muted-note"></p>
+    </div>
+    <div class="brief-section" id="driversSection">
+      <h3 data-i18n="hDrivers">محرک‌های کلیدی</h3>
+      <ul class="clean" id="bDrivers"></ul>
+    </div>
+    <div class="brief-section" id="risksSection">
+      <h3 data-i18n="hRisks">ریسک‌های پنهان</h3>
+      <ul class="clean" id="bRisks"></ul>
+    </div>
+    <div class="brief-section">
+      <h3 data-i18n="hRegime">وضعیت رژیم</h3>
+      <span id="bRegime" class="badge NORMAL">NORMAL</span>
+      <p id="bRegimeNote" class="muted-note"></p>
+    </div>
+    <div class="brief-section">
+      <h3 data-i18n="hConfidence">سطح اطمینان</h3>
+      <span id="bConfidence" class="conf moderate"></span>
+      <p id="bConfidenceNote" class="muted-note"></p>
+    </div>
+    <div class="brief-section hidden" id="trajectorySection">
+      <h3 data-i18n="hTrajectory">روند تا اینجا</h3>
+      <p id="bTrajectory"></p>
+    </div>
+
+    <div class="feedback">
+      <span data-i18n="fbAsk">این تحلیل به تصمیمت کمک کرد؟</span>
+      <button type="button" id="fbUp">👍</button>
+      <button type="button" id="fbDown">👎</button>
+      <input type="text" id="fbWhy" data-i18n-ph="fbWhyPh">
+    </div>
+  </section>
+
+  <section class="card hidden" id="compareCard">
+    <h3 data-i18n="hCompare">مقایسه‌ی گزینه‌ها</h3>
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="cOption">گزینه</th>
+          <th data-i18n="cOutcome">نتیجه</th>
+          <th data-i18n="cRisk">مهم‌ترین ریسک</th>
+          <th data-i18n="cRegime">رژیم</th>
+        </tr>
+      </thead>
+      <tbody id="compareBody"></tbody>
+    </table>
+  </section>
+
+  <div class="adv"><a href="/advanced" data-i18n="advanced">حالت پیشرفته (ابزار مهندسی) →</a></div>
+  <p class="disclaimer" data-i18n="disclaimer">این ابزار برای کاوش گزینه‌ها و پیامدهاست، نه پیش‌بینیِ قطعیِ آینده.</p>
+
+  <script>
+    const I18N = {
+      fa: {
+        title:"تحلیل تصمیم استراتژیک",
+        sub:"موقعیت تصمیم را به زبان ساده بنویسید. به‌جای پیش‌بینیِ یک عدد، گزینه‌ها و پیامدهای زنجیره‌ای‌شان را به‌صورت ساختاریافته کاوش می‌کنیم.",
+        sitLabel:"موقعیت تصمیم شما",
+        sitPh:"مثال: شرکت ما در حال بررسی کاهش ۱۵٪ قیمت برای مقابله با یک رقیب تازه‌وارد است. ۱۸ ماه نقدینگی داریم؛ تیم فروش نگران حاشیه سود است و سرمایه‌گذار به رشد سهم بازار اهمیت می‌دهد.",
+        optsLabel:"گزینه‌هایی که در نظر دارید (اختیاری، تا ۳ مورد)",
+        optsHint:"اگر چند گزینه بنویسید، هرکدام جداگانه شبیه‌سازی و کنار هم مقایسه می‌شوند.",
+        optPh1:"گزینه ۱ — مثلاً: کاهش ۱۵٪ قیمت",
+        optPh2:"گزینه ۲ — مثلاً: حفظ قیمت و افزایش بازاریابی",
+        optPh3:"گزینه ۳ — مثلاً: عرضه نسخه ارزان‌تر",
+        analyze:"تحلیل کن", analyzing:"در حال تحلیل…",
+        hSituation:"موقعیت", hWhat:"چه اتفاقی محتمل است", hDrivers:"محرک‌های کلیدی",
+        hRisks:"ریسک‌های پنهان", hRegime:"وضعیت رژیم", hConfidence:"سطح اطمینان",
+        hTrajectory:"روند تا اینجا", hCompare:"مقایسه‌ی گزینه‌ها",
+        cOption:"گزینه", cOutcome:"نتیجه", cRisk:"مهم‌ترین ریسک", cRegime:"رژیم",
+        confLow:"پایین", confModerate:"متوسط", confHigh:"بالا",
+        fbAsk:"این تحلیل به تصمیمت کمک کرد؟", fbWhyPh:"چرا؟ (اختیاری)", fbThanks:"ممنون از بازخوردت!",
+        advanced:"حالت پیشرفته (ابزار مهندسی) →",
+        disclaimer:"این ابزار برای کاوش گزینه‌ها و پیامدهاست، نه پیش‌بینیِ قطعیِ آینده.",
+        errEmpty:"لطفاً ابتدا موقعیت تصمیم را بنویسید.",
+        errGeneric:"مشکلی پیش آمد. دوباره تلاش کنید.",
+        running:"در حال شبیه‌سازی… (ممکن است چند ثانیه طول بکشد)"
+      },
+      en: {
+        title:"Strategic Decision Analysis",
+        sub:"Describe your decision in plain language. Instead of predicting a single number, we structurally explore the options and their chained consequences.",
+        sitLabel:"Your decision situation",
+        sitPh:"Example: Our company is weighing a 15% price cut to counter a new competitor. We have 18 months of runway; sales worries about margin and the investor cares about market-share growth.",
+        optsLabel:"Options you're considering (optional, up to 3)",
+        optsHint:"If you list options, each is simulated separately and compared side by side.",
+        optPh1:"Option 1 — e.g. cut price 15%",
+        optPh2:"Option 2 — e.g. hold price, boost marketing",
+        optPh3:"Option 3 — e.g. launch a cheaper tier",
+        analyze:"Analyze", analyzing:"Analyzing…",
+        hSituation:"Situation", hWhat:"What likely happens", hDrivers:"Key drivers",
+        hRisks:"Hidden risks", hRegime:"Regime", hConfidence:"Confidence",
+        hTrajectory:"Story so far", hCompare:"Compare options",
+        cOption:"Option", cOutcome:"Outcome", cRisk:"Top hidden risk", cRegime:"Regime",
+        confLow:"low", confModerate:"moderate", confHigh:"high",
+        fbAsk:"Did this help your decision?", fbWhyPh:"Why? (optional)", fbThanks:"Thanks for the feedback!",
+        advanced:"Advanced (engineering tool) →",
+        disclaimer:"This tool explores options and consequences — it is not a certain prediction of the future.",
+        errEmpty:"Please describe your decision situation first.",
+        errGeneric:"Something went wrong. Please try again.",
+        running:"Running simulation… (may take a few seconds)"
+      }
+    };
+    let lang = (localStorage.getItem('owe_brief_lang')) || 'fa';
+    function t(k){ return (I18N[lang]||I18N.fa)[k] ?? (I18N.fa[k]||k); }
+    function applyLang(l){
+      lang=l; localStorage.setItem('owe_brief_lang',l);
+      document.documentElement.lang = l==='fa'?'fa':'en';
+      document.documentElement.dir = l==='fa'?'rtl':'ltr';
+      document.title=t('title');
+      document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
+      document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=t(e.getAttribute('data-i18n')));
+      document.querySelectorAll('[data-i18n-ph]').forEach(e=>e.placeholder=t(e.getAttribute('data-i18n-ph')));
+    }
+    document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+
+    const $=id=>document.getElementById(id);
+    let lastScenarioDesc="";
+
+    function setList(ul,items){
+      ul.innerHTML="";
+      (items||[]).forEach(it=>{ const li=document.createElement('li'); li.textContent=it; ul.appendChild(li); });
+    }
+    function regimeBadge(el,level){
+      const lv=(level||'NORMAL').toUpperCase();
+      el.className='badge '+(['NORMAL','FRAGILE','CRISIS'].includes(lv)?lv:'NORMAL');
+      el.textContent=lv;
+    }
+    function confChip(el,level){
+      const lv=(level||'moderate').toLowerCase();
+      el.className='conf '+(['low','moderate','high'].includes(lv)?lv:'moderate');
+      el.textContent = lv==='low'?t('confLow'):lv==='high'?t('confHigh'):t('confModerate');
+    }
+
+    function renderBrief(b){
+      $('briefCard').classList.remove('hidden');
+      $('bSituation').textContent=b.situation||'—';
+      $('bWhat').textContent=b.what_likely_happens||'—';
+      $('bOutcome').textContent=b.outcome?('▸ '+b.outcome):'';
+      setList($('bDrivers'),b.key_drivers);
+      $('driversSection').classList.toggle('hidden',!(b.key_drivers&&b.key_drivers.length));
+      setList($('bRisks'),b.hidden_risks);
+      $('risksSection').classList.toggle('hidden',!(b.hidden_risks&&b.hidden_risks.length));
+      regimeBadge($('bRegime'),(b.regime||{}).level);
+      $('bRegimeNote').textContent=(b.regime||{}).commentary||'';
+      confChip($('bConfidence'),(b.confidence||{}).level);
+      $('bConfidenceNote').textContent=(b.confidence||{}).note||'';
+      const traj=(b.trajectory||'').trim();
+      $('trajectorySection').classList.toggle('hidden',!traj);
+      $('bTrajectory').textContent=traj;
+    }
+    function renderCompare(rows){
+      if(!rows||!rows.length){ $('compareCard').classList.add('hidden'); return; }
+      $('compareCard').classList.remove('hidden');
+      const tb=$('compareBody'); tb.innerHTML="";
+      rows.forEach(r=>{
+        const tr=document.createElement('tr');
+        const lv=((r.regime||{}).level||'NORMAL').toUpperCase();
+        tr.innerHTML=`<td><strong>${escapeHtml(r.option||'')}</strong></td>`+
+          `<td>${escapeHtml(r.outcome||r.what_likely_happens||'—')}</td>`+
+          `<td>${escapeHtml(r.top_hidden_risk||'—')}</td>`+
+          `<td><span class="badge ${['NORMAL','FRAGILE','CRISIS'].includes(lv)?lv:'NORMAL'}">${lv}</span></td>`;
+        tb.appendChild(tr);
+      });
+    }
+    function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML; }
+
+    async function analyze(){
+      const text=$('situation').value.trim();
+      const status=$('status');
+      if(!text){ status.classList.remove('hidden'); status.classList.add('error'); status.textContent=t('errEmpty'); return; }
+      const options=['opt1','opt2','opt3'].map(id=>$(id).value.trim()).filter(Boolean);
+      lastScenarioDesc=text;
+      $('btnAnalyze').disabled=true;
+      status.classList.remove('hidden','error');
+      status.innerHTML='<span class="spinner"></span> '+t('running');
+      try{
+        const res=await fetch('/api/brief',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({text,options})});
+        const data=await res.json();
+        if(data.ok&&data.brief){
+          renderBrief(data.brief);
+          renderCompare(data.comparison);
+          status.classList.add('hidden');
+          $('briefCard').scrollIntoView({behavior:'smooth',block:'start'});
+        }else{
+          status.classList.add('error'); status.textContent=data.error||t('errGeneric');
+        }
+      }catch(e){
+        status.classList.add('error'); status.textContent=t('errGeneric')+' '+e.message;
+      }finally{
+        $('btnAnalyze').disabled=false;
+      }
+    }
+    $('btnAnalyze').addEventListener('click',analyze);
+    $('situation').addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='Enter') analyze(); });
+
+    async function sendFeedback(verdict){
+      try{
+        await fetch('/api/brief/feedback',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({verdict,why:$('fbWhy').value.trim(),scenario:lastScenarioDesc})});
+      }catch(e){}
+      const fb=document.querySelector('.feedback');
+      fb.innerHTML='<span>'+t('fbThanks')+'</span>';
+    }
+    $('fbUp').addEventListener('click',()=>sendFeedback('up'));
+    $('fbDown').addEventListener('click',()=>sendFeedback('down'));
+
+    applyLang(lang);
+  </script>
+</body>
+</html>

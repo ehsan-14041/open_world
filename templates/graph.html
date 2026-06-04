@@ -352,7 +352,8 @@
     const height = container ? container.clientHeight : 600;
     
     const svg = d3.select('#graph-svg');
-    if (svg.empty()) return; // no graph container (e.g. wrong template context)
+    if (svg.empty()) { /* no graph container (e.g. wrong template context) */ }
+    else {
     svg.attr('width', width).attr('height', height);
     
     const g = svg.append('g');
@@ -746,6 +747,7 @@
         setTimeout(() => btn.setAttribute('title', 'کپی در کلیپ‌بورد'), 1500);
       }
     });
+    }
     })();
   </script>
 </body>

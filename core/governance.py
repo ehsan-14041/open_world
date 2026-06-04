@@ -22,10 +22,11 @@ from typing import Any, Callable
 
 from schemas.delta_schema import Delta
 
+from core.legacy_semantics import legacy_infer_non_negative_variables
+from schemas.contracts import constraint_spec_from_variable_spec
 
-# Domain-agnostic: non-negative keys are determined dynamically from scenario/world state
-# Variables that typically should not go negative (e.g., population, resources) can be specified
-# in scenario governance config, or inferred from variable names containing keywords like "population", "resource", "count"
+
+# Domain-agnostic: non-negative keys from scenario variable_specs or legacy_infer_non_negative_variables
 
 
 class PolicyRule:
@@ -54,27 +55,28 @@ class PolicyRule:
 
 
 def _default_non_negative_check(delta: Delta, world: Any) -> tuple[bool, str]:
-    """Default: no negative values for variables that should remain non-negative (domain-agnostic)."""
+    """Default: no negative values for variables that should remain non-negative (prefer variable_specs non_negative, else legacy inference)."""
     world_snapshot = world.snapshot() if hasattr(world, "snapshot") else {}
     global_state = world_snapshot.get("global_state", {}) or world_snapshot.get("variables", {}) or getattr(world, "global_state", {}) or getattr(world, "variables", {})
-    
-    # Domain-agnostic: infer non-negative keys from variable names
-    # Variables containing these keywords are assumed to be non-negative
-    non_negative_keywords = {"population", "count", "resource", "cash", "money", "fund", "stock", "inventory", "supply"}
-    
+    variable_specs = getattr(world, "variable_specs", None) or world_snapshot.get("variable_specs") or {}
+    variable_names = list(global_state.keys()) if isinstance(global_state, dict) else []
+    non_negative_vars = set(legacy_infer_non_negative_variables(variable_names))
+    if variable_specs and isinstance(variable_specs, dict):
+        for var_name in variable_names:
+            spec = constraint_spec_from_variable_spec(variable_specs.get(var_name))
+            if spec.non_negative:
+                non_negative_vars.add(var_name)
+
     for key, value in (delta.numeric_updates or {}).items():
-        # Check if variable name suggests it should be non-negative
-        key_lower = key.lower()
-        should_be_non_negative = any(keyword in key_lower for keyword in non_negative_keywords)
-        
-        if should_be_non_negative:
-            current = global_state.get(key, 0)
-            try:
-                new_val = current + value if isinstance(value, (int, float)) else value
-                if isinstance(new_val, (int, float)) and new_val < 0:
-                    return False, f"{key} would become negative ({new_val})"
-            except TypeError:
-                return False, f"{key} has invalid update type"
+        if key not in non_negative_vars:
+            continue
+        current = global_state.get(key, 0)
+        try:
+            new_val = current + value if isinstance(value, (int, float)) else value
+            if isinstance(new_val, (int, float)) and new_val < 0:
+                return False, f"{key} would become negative ({new_val})"
+        except TypeError:
+            return False, f"{key} has invalid update type"
     return True, ""
 
 
@@ -265,10 +267,31 @@ class Governance:
         self.auto_approve_max_agents = auto_approve_max_agents
         self.require_tradeoffs = require_tradeoffs
         self.strictness_level = strictness_level
+        self._disabled_rules = set()
         # Create policy rules with reference to self so modify functions can access current strictness_level
         self.policy_rules = list(
             policy_rules or default_policy_rules(require_tradeoffs=require_tradeoffs, governance_ref=self)
         )
+
+    def add_policy_rule(self, rule: PolicyRule) -> None:
+        """Add a policy rule at runtime."""
+        self.policy_rules.append(rule)
+
+    def disable_rule(self, name: str) -> None:
+        """Disable a rule by name; it will be skipped in validate_delta."""
+        self._disabled_rules.add(name)
+
+    def enable_rule(self, name: str) -> None:
+        """Re-enable a rule by name."""
+        self._disabled_rules.discard(name)
+
+    def set_strictness_level(self, level: int) -> None:
+        """Set strictness level at runtime."""
+        self.strictness_level = int(level)
+
+    def update_policy_rules(self, rules: list[PolicyRule]) -> None:
+        """Replace policy rules with a new list."""
+        self.policy_rules = list(rules)
 
     def validate_delta(self, delta: Delta, world: Any) -> tuple[bool, list[str], Delta | None]:
         """
@@ -281,9 +304,11 @@ class Governance:
         repairs_made = False
         
         for rule in self.policy_rules:
+            if rule.name in self._disabled_rules:
+                continue
             if not self.require_tradeoffs and rule.name == "require_tradeoffs":
                 continue
-            
+
             # Scale rule application based on strictness_level
             # Higher strictness = more intense repairs, but never skip completely
             ok, reason, modified = rule.run(current, world)
@@ -344,6 +369,18 @@ class Governance:
         if "policy_rules" in change and isinstance(change["policy_rules"], list):
             pass  # Could replace or extend policy_rules by name
 
+    def intervene_for_stability(self, world_snapshot: Any, ssi: float) -> None:
+        """
+        Called when System Stability Index (SSI) is below threshold.
+        Applies stricter governance: increase strictness_level and optionally
+        tighter hard_clips for the next delta validation.
+        """
+        self.set_strictness_level(min(5, self.strictness_level + 1))
+
     def snapshot_state(self) -> dict[str, Any]:
         """Return governance state for snapshot."""
-        return {"strictness_level": self.strictness_level}
+        return {
+            "strictness_level": self.strictness_level,
+            "rule_names": [r.name for r in self.policy_rules],
+            "disabled_rules": list(self._disabled_rules),
+        }

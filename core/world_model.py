@@ -17,9 +17,9 @@ except ImportError:
     ENABLE_UNCERTAINTY = False
 
 try:
-    from core.propagation import propagate_variable_changes
+    from core.physics_core import apply_delta_deterministic
 except ImportError:
-    propagate_variable_changes = None  # type: ignore[misc, assignment]
+    apply_delta_deterministic = None  # type: ignore[misc, assignment]
 try:
     from world.delayed_events import DelayedEvent, apply_delayed_events_for_turn
 except ImportError:
@@ -29,6 +29,26 @@ try:
     from core.event_queue import process_events_for_turn
 except ImportError:
     process_events_for_turn = None  # type: ignore[misc, assignment]
+try:
+    from model.valuespec import clamp_state_to_specs
+except ImportError:
+    clamp_state_to_specs = None  # type: ignore[misc, assignment]
+
+
+def _get_prop_decay() -> float:
+    try:
+        from config.settings import PROPAGATION_DECAY_FACTOR
+        return PROPAGATION_DECAY_FACTOR
+    except ImportError:
+        return 1.0
+
+
+def _get_prop_sig() -> float:
+    try:
+        from config.settings import PROPAGATION_SIGNIFICANCE_THRESHOLD
+        return PROPAGATION_SIGNIFICANCE_THRESHOLD
+    except ImportError:
+        return 1e-6
 
 
 def _ensure_float_dict(d: dict[str, Any] | None) -> dict[str, float]:
@@ -157,6 +177,7 @@ class WorldModel:
         action_type: str | None = None,
         *,
         variable_specs: dict[str, dict[str, Any]] | None = None,
+        propagation_params: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """
         Apply a validated Delta with structured causal mapping:
@@ -178,138 +199,146 @@ class WorldModel:
         for key, value in (delta.numeric_updates or {}).items():
             if isinstance(value, (int, float)):
                 direct_changes[key] = float(value)
-        
-        # Identify primary variable
+
+        # Optional granularity cap: keep only top-K variables by magnitude to reduce compute
+        try:
+            from config.settings import DELTA_APPLY_GRANULARITY
+            cap = DELTA_APPLY_GRANULARITY
+        except ImportError:
+            cap = None
+        if cap is not None and isinstance(cap, int) and cap > 0 and len(direct_changes) > cap:
+            top_keys = sorted(direct_changes.keys(), key=lambda k: abs(direct_changes[k]), reverse=True)[:cap]
+            direct_changes = {k: direct_changes[k] for k in top_keys}
+
         primary_variable = _identify_primary_variable(
             action_type or delta.action_type,
             delta,
             direct_changes,
         )
-        
-        # Track all changes for structured logging
+
         primary_effect: dict[str, Any] | None = None
         secondary_effects: list[dict[str, Any]] = []
         noise_component: dict[str, float] = {}
         variable_changes: list[dict[str, Any]] = []
-        
-        # Step 1: Apply primary effect FIRST (before any propagation)
-        if primary_variable and primary_variable in direct_changes:
-            primary_delta = direct_changes[primary_variable]
-            current = self.variables.get(primary_variable, 0)
-            if isinstance(current, (int, float)):
-                self.variables[primary_variable] = current + primary_delta
-            else:
-                self.variables[primary_variable] = primary_delta
-            
-            primary_effect = {
-                "var": primary_variable,
-                "delta": float(primary_delta),
-                "source": "direct",
-            }
-            variable_changes.append(primary_effect)
-        
-        # Step 2: Apply deterministic propagation (structural links only, damping, epsilon)
         propagation_trace: list[dict[str, Any]] = []
-        if direct_changes and propagate_variable_changes is not None:
-            primary_effects_dict, secondary_effects_dict, propagation_trace = propagate_variable_changes(
-                self,
-                direct_changes,
-                primary_variable=primary_variable,
+
+        # Step 1: Deterministic physics via unified core (pre-update snapshot, no noise)
+        if direct_changes and apply_delta_deterministic is not None:
+            snapshot = {
+                "variables": dict(self.variables),
+                "global_state": dict(self.variables),
+            }
+            result = apply_delta_deterministic(
+                snapshot,
+                delta,
+                list(self.causal_links),
                 variable_specs=variable_specs,
+                action_type=action_type or delta.action_type,
+                propagation_params=propagation_params,
             )
-            
-            # Apply secondary effects from propagation
-            for var, delta_val in secondary_effects_dict.items():
+            new_vars = result.get("variables") or result.get("global_state") or {}
+            propagation_trace = result.get("propagation_trace") or []
+            prev_vars = snapshot["variables"]
+            self.variables.update(new_vars)
+
+            for var, new_val in new_vars.items():
+                if not isinstance(new_val, (int, float)):
+                    continue
+                prev_val = prev_vars.get(var, 0)
+                if not isinstance(prev_val, (int, float)):
+                    prev_val = 0.0
+                delta_val = float(new_val) - float(prev_val)
+                if abs(delta_val) < 1e-12:
+                    continue
+                entry = {"var": var, "delta": delta_val, "source": "propagation" if var != primary_variable else "direct"}
+                variable_changes.append(entry)
                 if var == primary_variable:
-                    continue  # Already applied as primary
-                current = self.variables.get(var, 0)
-                if isinstance(current, (int, float)):
-                    self.variables[var] = current + delta_val
+                    primary_effect = {"var": var, "delta": delta_val, "source": "direct"}
                 else:
-                    self.variables[var] = delta_val
-                
-                secondary_effects.append({
-                    "var": var,
-                    "delta": float(delta_val),
-                    "source": "propagation",
-                })
-                variable_changes.append({
-                    "var": var,
-                    "delta": float(delta_val),
-                    "source": "propagation",
-                })
+                    secondary_effects.append({"var": var, "delta": delta_val, "source": "propagation"})
+            if primary_variable and not primary_effect and primary_variable in new_vars:
+                pv = new_vars[primary_variable]
+                pprev = prev_vars.get(primary_variable, 0)
+                primary_effect = {"var": primary_variable, "delta": float(pv) - float(pprev), "source": "direct"}
         elif direct_changes:
-            # Fallback: apply all non-primary changes as secondary
+            # Fallback when physics_core not available
+            primary_variable = primary_variable or (max(direct_changes.items(), key=lambda x: abs(x[1]))[0] if direct_changes else None)
             for key, val in direct_changes.items():
-                if key == primary_variable:
-                    continue  # Already applied as primary
                 current = self.variables.get(key, 0)
                 if isinstance(current, (int, float)):
                     self.variables[key] = current + val
                 else:
                     self.variables[key] = val
-                secondary_effects.append({
-                    "var": key,
-                    "delta": float(val),
-                    "source": "direct",
-                })
-                variable_changes.append({
-                    "var": key,
-                    "delta": float(val),
-                    "source": "direct",
-                })
-        
-        # Step 3: Apply noise at final stage (after deterministic + propagation)
-        # Collect all variables that changed (primary + secondary)
-        all_changed_vars: dict[str, float] = {}
-        if primary_effect:
-            all_changed_vars[primary_effect["var"]] = primary_effect["delta"]
-        for sec_effect in secondary_effects:
-            all_changed_vars[sec_effect["var"]] = sec_effect["delta"]
-        
-        if primary_variable and primary_effect:
+                src = "direct" if key == primary_variable else "direct"
+                variable_changes.append({"var": key, "delta": float(val), "source": src})
+                if key == primary_variable:
+                    primary_effect = {"var": key, "delta": float(val), "source": "direct"}
+                else:
+                    secondary_effects.append({"var": key, "delta": float(val), "source": src})
+
+        # Step 2: Apply noise at final stage (after deterministic physics)
+        all_changed_vars = {e["var"]: e["delta"] for e in variable_changes}
+        if primary_variable and primary_effect and ENABLE_UNCERTAINTY:
             primary_delta_val = primary_effect["delta"]
             noise_component = self._apply_final_noise(
                 primary_variable,
                 primary_delta_val,
                 all_changed_vars,
             )
-            
-            # Add noise to variable_changes
             for var, noise_val in noise_component.items():
-                variable_changes.append({
-                    "var": var,
-                    "delta": float(noise_val),
-                    "source": "noise",
-                })
+                self.variables[var] = self.variables.get(var, 0.0) + noise_val
+                variable_changes.append({"var": var, "delta": float(noise_val), "source": "noise"})
 
-        # Entity updates (patch existing)
-        for eid, attrs in (delta.entity_updates or {}).items():
-            if eid in self.entities:
-                self.entities[eid].update(attrs)
-            else:
-                self.entities[eid] = dict(attrs)
+        # Mandatory post-propagation/drift clamp: no variable may violate bounds
+        if variable_specs and clamp_state_to_specs is not None:
+            self.variables = clamp_state_to_specs(dict(self.variables), variable_specs)
 
-        # New entities
-        for eid, entity in (delta.new_entities or {}).items():
-            self.entities[eid] = dict(entity)
+        # Entity updates (patch existing) and new entities - gated by DELTA_APPLY_ENTITIES
+        try:
+            from config.settings import DELTA_APPLY_ENTITIES
+            apply_entities = DELTA_APPLY_ENTITIES
+        except ImportError:
+            apply_entities = True
+        if apply_entities:
+            for eid, attrs in (delta.entity_updates or {}).items():
+                if eid in self.entities:
+                    self.entities[eid].update(attrs)
+                else:
+                    self.entities[eid] = dict(attrs)
+            for eid, entity in (delta.new_entities or {}).items():
+                self.entities[eid] = dict(entity)
 
-        # Relation updates: append (no dedupe for simplicity)
-        for rel in (delta.relation_updates or []):
-            self.relations.append(dict(rel))
+        # Relation updates - gated by DELTA_APPLY_RELATIONS
+        try:
+            from config.settings import DELTA_APPLY_RELATIONS
+            apply_relations = DELTA_APPLY_RELATIONS
+        except ImportError:
+            apply_relations = True
+        if apply_relations:
+            for rel in (delta.relation_updates or []):
+                self.relations.append(dict(rel))
 
         if delta.rationale:
             self.narrative.append(f"[v{self.version}] {delta.rationale}")
         self.version += 1
-        
-        # Return structured outcome
-        return {
+
+        outcome = {
             "primary_effect": primary_effect,
             "secondary_effects": secondary_effects,
             "noise_component": noise_component,
-            "variable_changes": variable_changes,  # backward compat
+            "variable_changes": variable_changes,
             "propagation_trace": propagation_trace,
         }
+        try:
+            from core.propagation import primary_propagation_check
+            ok, msg = primary_propagation_check(self, outcome, primary_variable=primary_variable)
+            if not ok:
+                outcome["propagation_check"] = {"ok": False, "message": msg}
+            else:
+                outcome["propagation_check"] = {"ok": True}
+        except ImportError:
+            outcome["propagation_check"] = {"ok": True}
+        return outcome
 
     def process_delayed_events(self) -> list[dict[str, Any]]:
         """Apply delayed events and generic event_queue for current turn. Returns list of triggered event records for trace."""

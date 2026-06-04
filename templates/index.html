@@ -1089,7 +1089,7 @@
         } else {
           const errMsg = data.error || 'Submit failed.';
           if (res.status >= 500) console.warn('submit_scenario 500:', errMsg);
-          else if (res.status === 400) console.warn('submit_scenario 400:', errMsg);
+          else if (res.status === 400) console.warn('submit_scenario 400:', errMsg, '(response:', data, ')');
           setOutput(errMsg, 'error');
           showToast(t('msgTryAgain'), 'error');
         }

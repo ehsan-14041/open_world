@@ -10,12 +10,19 @@ import json
 import logging
 import re
 import time
-from functools import lru_cache
 from typing import Any, Callable
 
 from core.llm_client import call_llm as _call_llm
 
 _logger = logging.getLogger(__name__)
+
+try:
+    # Optional import: when config is unavailable (e.g. very early in bootstrap),
+    # LLM_USAGE_Tiers falls back to an empty mapping and call sites can still
+    # pass explicit temperature/max_tokens.
+    from config.settings import LLM_USAGE_TIERS as _LLM_USAGE_TIERS  # type: ignore[attr-defined]
+except Exception:  # noqa: BLE001
+    _LLM_USAGE_TIERS: dict[str, dict[str, Any]] = {}
 
 # In-memory LRU cache for repeated predictions (e.g., planner simulations)
 _CACHE: dict[str, tuple[Any, float]] = {}
@@ -60,6 +67,18 @@ def _validate_schema(obj: dict[str, Any], schema: dict[str, Any]) -> tuple[bool,
     return True, ""
 
 
+class CachePolicy:
+    """
+    Lightweight cache policy hints for call sites.
+    Callers can use these with helper functions (e.g. make_cache_key) to
+    decide when to enable caching without changing the core call_llm API.
+    """
+
+    NO_CACHE = "no_cache"
+    TURN_CACHE = "turn_cache"
+    RUN_CACHE = "run_cache"
+
+
 def call_llm(
     prompt: str,
     system: str,
@@ -70,6 +89,8 @@ def call_llm(
     retry: int = 1,
     cache_key: str | None = None,
     client_fn: Callable[..., Any] | None = None,
+    usage_tier: str | None = None,
+    budget_key: str | None = None,
 ) -> dict | str | None:
     """
     Call LLM with optional schema validation and caching.
@@ -91,6 +112,16 @@ def call_llm(
         On parse/validation failure after retries: None.
     """
     client = client_fn or _default_client
+
+    # Map usage_tier/budget_key to default temperature/max_tokens when callers
+    # explicitly opt into tiering by passing None for those fields.
+    tier = usage_tier or budget_key
+    if tier and tier in _LLM_USAGE_TIERS:
+        tier_conf = _LLM_USAGE_TIERS.get(tier) or {}
+        if temperature is None and isinstance(tier_conf.get("temperature"), (int, float)):
+            temperature = float(tier_conf["temperature"])
+        if max_tokens is None and isinstance(tier_conf.get("max_tokens"), (int, float)):
+            max_tokens = int(tier_conf["max_tokens"])
 
     if cache_key:
         if cache_key in _CACHE:
@@ -200,9 +231,23 @@ def _default_client(
 
 
 def make_cache_key(action: str, snapshot_hash: str) -> str:
-    """Build cache key for planner simulations."""
-    raw = f"plan:{action}:{snapshot_hash}"
-    return hashlib.sha256(raw.encode()).hexdigest()
+    """
+    Build cache key for planner simulations.
+
+    This helper is intentionally simple and deterministic so it can be reused
+    across hot-path call sites (e.g., WorldModelAgent.normalize_proposal)
+    without leaking domain-specific details into prompts.
+    """
+    raw = json.dumps(
+        {
+            "kind": "plan",
+            "action": action,
+            "snapshot": snapshot_hash,
+        },
+        sort_keys=True,
+        ensure_ascii=False,
+    )
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
 def clear_cache() -> None:

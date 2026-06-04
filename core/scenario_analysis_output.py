@@ -53,7 +53,7 @@ def build_logic_core(
     variable_updates: dict[str, Any] = {}
     for var, val in variables.items():
         if isinstance(val, (int, float)):
-            spec = variable_specs.get(var) if isinstance(variable_specs, dict) else {}
+            spec = (variable_specs.get(var) or {}) if isinstance(variable_specs, dict) else {}
             variable_updates[var] = {
                 "value": float(val),
                 "min": spec.get("min"),
@@ -166,6 +166,228 @@ def build_executive_summary(
         "paragraph_1_what_happened": paragraph_1,
         "paragraph_2_why_causal": paragraph_2,
         "paragraph_3_critical_risk_next_turn": paragraph_3,
+    }
+
+
+def compute_projected_trajectory(
+    provenance: list[dict[str, Any]],
+    final_variables: dict[str, Any],
+    causal_links: list[dict[str, Any]],
+    horizon: int = 5,
+) -> dict[str, list[float]]:
+    """
+    Project key variables forward for next horizon steps using average delta per turn.
+    Returns { var: [v0, v1, ..., vH] } (current value then H projected).
+    """
+    var_names = [k for k, v in final_variables.items() if isinstance(v, (int, float))]
+    if not var_names or not provenance:
+        return {v: [float(final_variables.get(v, 0))] for v in var_names}
+
+    delta_sum: dict[str, float] = {v: 0.0 for v in var_names}
+    for p in provenance:
+        applied = (p.get("turn_record") or {}).get("delta_applied") or {}
+        if isinstance(applied, dict):
+            for v in var_names:
+                if v in applied and isinstance(applied[v], (int, float)):
+                    delta_sum[v] += applied[v]
+    n_turns = len(provenance)
+    avg_delta = {v: delta_sum[v] / n_turns if n_turns else 0.0 for v in var_names}
+
+    trajectories: dict[str, list[float]] = {}
+    for v in var_names:
+        current = float(final_variables.get(v, 0))
+        traj = [current]
+        for _ in range(horizon):
+            current = current + avg_delta.get(v, 0)
+            traj.append(round(current, 3))
+        trajectories[v] = traj
+    return trajectories
+
+
+def compute_causal_impact_summary(
+    provenance: list[dict[str, Any]],
+    causal_links: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """
+    Summarize variable movement over run and causal contributions: top causes per variable,
+    and variables caused by each variable.
+    """
+    global_delta: dict[str, float] = {}
+    for p in provenance:
+        applied = (p.get("turn_record") or {}).get("delta_applied") or {}
+        if isinstance(applied, dict):
+            for var, d in applied.items():
+                if isinstance(d, (int, float)):
+                    global_delta[var] = global_delta.get(var, 0) + d
+
+    affected_by: dict[str, list[str]] = {}
+    causes: dict[str, list[str]] = {}
+    for link in causal_links or []:
+        if not isinstance(link, dict):
+            continue
+        from_var = link.get("from")
+        to_var = link.get("to")
+        if from_var and to_var:
+            if to_var not in affected_by:
+                affected_by[to_var] = []
+            if from_var not in affected_by[to_var]:
+                affected_by[to_var].append(from_var)
+            if from_var not in causes:
+                causes[from_var] = []
+            if to_var not in causes[from_var]:
+                causes[from_var].append(to_var)
+
+    variable_movement = [
+        {"variable": var, "total_delta": round(d, 3), "top_causes": affected_by.get(var, [var])[:5]}
+        for var, d in global_delta.items()
+    ]
+    variable_caused = [
+        {"variable": var, "caused_changes_in": causes.get(var, [])}
+        for var in set(global_delta.keys()) | set(causes.keys())
+    ]
+    return {
+        "variable_movement": variable_movement,
+        "variable_caused": variable_caused,
+    }
+
+
+def build_strategic_analysis(
+    result: dict[str, Any],
+    scenario: dict[str, Any] | None = None,
+    agents: list[dict[str, Any]] | None = None,
+    action_definitions: dict[str, Any] | None = None,
+    facts: Any = None,
+    *,
+    lang: str = "en",
+    allow_numbers: bool = False,
+) -> dict[str, Any]:
+    """
+    Build the strategic analysis envelope (agents, variables, causal_links, predicted_changes,
+    agent_actions, causal_explanations, confidence_scores, strategic_decisions).
+    Reuses logic_core and executive_summary; adds structured fields for the Cursor spec.
+    """
+    scenario = scenario or {}
+    result = result or {}
+    provenance = result.get("provenance") or []
+    final = result.get("final") or result
+    if not isinstance(final, dict):
+        final = {}
+    variables = final.get("variables") or final.get("global_state") or {}
+    if not isinstance(variables, dict):
+        variables = {}
+
+    logic_core = build_logic_core(
+        result,
+        scenario=scenario,
+        agents=agents,
+        action_definitions=action_definitions,
+        allow_numbers=allow_numbers,
+    )
+    executive_summary = build_executive_summary(
+        result,
+        scenario=scenario,
+        agents=agents,
+        facts=facts,
+        logic_core=logic_core,
+        lang=lang,
+        allow_numbers=allow_numbers,
+    )
+
+    # Agents: list with role and optional belief/confidence summary
+    agents_list: list[dict[str, Any]] = []
+    agent_configs = {a.get("name"): a for a in (agents or []) if isinstance(a, dict) and a.get("name")}
+    for cfg in scenario.get("initial_agents") or []:
+        if isinstance(cfg, dict) and cfg.get("name"):
+            agent_configs[cfg["name"]] = cfg
+    for name, cfg in agent_configs.items():
+        entry = {"name": name, "role": cfg.get("role", ""), "objectives": cfg.get("objectives") or cfg.get("goals") or {}}
+        if isinstance(cfg.get("beliefs"), dict):
+            entry["beliefs_summary"] = {"variables": cfg["beliefs"].get("variables"), "confidence": cfg["beliefs"].get("confidence")}
+        agents_list.append(entry)
+
+    # Variables: key variables and current/final values with optional bounds
+    variable_specs = scenario.get("variable_specs") or {}
+    variables_out: dict[str, Any] = {}
+    for var, val in variables.items():
+        if isinstance(val, (int, float)):
+            spec = (variable_specs.get(var) or {}) if isinstance(variable_specs, dict) else {}
+            variables_out[var] = {"value": float(val), "min": spec.get("min"), "max": spec.get("max")}
+
+    # Causal links: structural only (from, to, weight); no action provenance
+    raw_links = final.get("causal_links") or scenario.get("causal_links") or []
+    causal_links = []
+    for link in raw_links:
+        if not isinstance(link, dict) or link.get("from_action") or link.get("agent"):
+            continue
+        from_var = link.get("from")
+        to_var = link.get("to")
+        if from_var and to_var:
+            causal_links.append({
+                "from": from_var,
+                "to": to_var,
+                "weight": link.get("weight") or link.get("strength"),
+                "polarity": link.get("polarity"),
+            })
+
+    # Predicted changes: global_delta + per-turn predicted_deltas from provenance
+    predicted_changes: dict[str, Any] = {
+        "global_delta": logic_core.get("global_delta", {}),
+    }
+    all_predicted: list[dict[str, Any]] = []
+    for p in provenance:
+        for pd in p.get("predicted_deltas") or []:
+            all_predicted.append({"turn": p.get("turn"), **pd})
+    predicted_changes["per_turn_predicted_deltas"] = all_predicted
+
+    # Agent actions: from provenance (chosen_actions / actions)
+    agent_actions: list[dict[str, Any]] = []
+    for p in provenance:
+        turn = p.get("turn")
+        for action in p.get("turn_record", {}).get("chosen_actions") or p.get("actions") or []:
+            if isinstance(action, dict):
+                agent_actions.append({"turn": turn, "agent": action.get("agent"), "action_id": action.get("action_id")})
+            else:
+                agent_actions.append({"turn": turn, "action": action})
+
+    # Causal explanations: from logic_core attribution
+    causal_explanations = logic_core.get("attribution", [])
+
+    # Confidence scores: from convergence and optional per-variable; agent beliefs not in result so use convergence
+    convergence = logic_core.get("convergence") or {}
+    confidence_scores: dict[str, Any] = {
+        "system_convergence": convergence.get("system_label"),
+        "system_reason": convergence.get("system_reason"),
+        "per_variable": convergence.get("per_variable", {}),
+    }
+
+    # Strategic decisions: risks and suggested next steps (from executive_summary and convergence)
+    strategic_decisions: list[str] = []
+    p3 = executive_summary.get("paragraph_3_critical_risk_next_turn", "")
+    if p3:
+        strategic_decisions.append(p3)
+    if convergence.get("system_label") == "oscillating":
+        strategic_decisions.append("Consider shifting strategy to break oscillation.")
+    elif convergence.get("system_label") == "diverging":
+        strategic_decisions.append("Consider stabilizing or rebalancing key variables.")
+
+    projected_trajectory = compute_projected_trajectory(
+        provenance, variables, causal_links, horizon=5
+    )
+    causal_impact_summary = compute_causal_impact_summary(provenance, causal_links)
+
+    return {
+        "agents": agents_list,
+        "variables": variables_out,
+        "causal_links": causal_links,
+        "predicted_changes": predicted_changes,
+        "agent_actions": agent_actions,
+        "causal_explanations": causal_explanations,
+        "confidence_scores": confidence_scores,
+        "strategic_decisions": strategic_decisions,
+        "logic_core": logic_core,
+        "executive_summary": executive_summary,
+        "projected_trajectory": projected_trajectory,
+        "causal_impact_summary": causal_impact_summary,
     }
 
 

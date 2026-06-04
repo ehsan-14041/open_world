@@ -7,8 +7,13 @@ Architecture: causal variable graph, agent beliefs, rule engine, event queue, ac
 
 from __future__ import annotations
 
+import copy
+import hashlib
 import json
+import logging
+import math
 import random
+import statistics
 import time
 from pathlib import Path
 from typing import Any
@@ -17,6 +22,7 @@ from config.settings import (
     SCENARIO_PATH,
     DRY_RUN,
     MAX_LLM_CALLS_PER_TURN,
+    MAX_LLM_CALLS_PER_AGENT_PER_TURN,
     SNAPSHOT_PATH,
     META_PROPOSAL_AUTO_APPROVE_MAX_AGENTS,
     MAX_DELTA,
@@ -25,11 +31,33 @@ from config.settings import (
     CHANGE_BUDGET,
     get_settings,
     ALLOW_NUMBERS,
-    ENABLE_SHOCKS,
     LANG,
     RANDOM_SEED,
+    CHECKPOINT_ENABLED,
+    CHECKPOINT_MAX_COUNT,
+    COMPUTE_BUDGET_PER_TURN,
+    SSI_EPSILON,
+    SSI_INTERVENTION_THRESHOLD,
+    SSI_HISTORY_SIZE,
+    SSI_ALPHA,
+    REGIME_ENTROPY_GROWTH_THRESHOLD,
+    PROPAGATION_DECAY_FACTOR,
+    BELIEF_UPDATE_RATE,
+    EPISTEMIC_GAP_THRESHOLD,
+    CONFLICT_EVENT_STRICT,
+    get_enable_oracle,
+    ORACLE_HISTORY_TURNS,
+    ORACLE_MAX_TOKENS,
+    ORACLE_SIGNIFICANCE_THRESHOLD,
+    ORACLE_SSI_THRESHOLD,
+    ORACLE_TIERING_MODE,
+    ORACLE_TOP_K_ACTIONS,
+    DEVIATION_THRESHOLD,
+    DEBUG_PERF,
 )
+from core.simulation_mode import get_simulation_mode, get_enable_shocks
 from core.llm_client import call_llm
+from core.llm_service import call_llm as llm_service_call
 from core.world_model import WorldModel
 from core.ontology_manager import OntologyManager
 from core.rule_engine import run_rules
@@ -40,6 +68,8 @@ from core.llm_action_guard import LLMActionGuard
 from core.soft_constraints import apply_all_constraints
 from core.action_definitions_store import build_action_definitions_from_scenario, get_delta_vector
 from core.delta_attribution import compute_self_effect_per_agent, merge_delta_raw
+from core.regime_detector import detect_regime
+from core.transition_kernel import transition_execution
 from schemas.delta_schema import Delta
 from schemas.proposal_schema import Proposal
 from schemas.scenario_schema import normalize_scenario
@@ -49,6 +79,83 @@ from agents.environment_agent import EnvironmentAgent
 
 # Max attempts per agent when extraction/validation fails (retry with correction prompt once)
 MAX_ACTION_JSON_ATTEMPTS = 2
+
+
+def _make_json_safe(obj: object) -> object:
+    """Replace float('nan')/inf with None so saved JSON is valid (no NaN/Infinity literals)."""
+    if obj is None:
+        return None
+    if isinstance(obj, float):
+        if obj != obj or obj == float("inf") or obj == float("-inf"):
+            return None
+        return obj
+    if isinstance(obj, dict):
+        return {k: _make_json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_make_json_safe(v) for v in obj]
+    return obj
+
+
+ORACLE_HISTORY_MAX_CHARS = 600
+
+
+def summarize_history_for_oracle(provenance: list[dict[str, Any]], max_turns: int) -> str:
+    """
+    Build a short text summary of the last max_turns entries from provenance for the oracle.
+    Uses trace compression (causal event chain) when available to reduce token cost.
+    Read-only: major variable changes, key actions taken, notable risk spikes.
+    """
+    if not provenance or max_turns <= 0:
+        return "No prior history."
+    try:
+        from core.trace_compression import compress_trace_to_causal_chain
+        raw_logs = [
+            {**entry, "delta_applied": (entry.get("turn_record") or {}).get("delta_applied") or {}}
+            for entry in provenance[-max_turns:]
+        ]
+        chain = compress_trace_to_causal_chain(raw_logs, slm_callback=None, max_events=30)
+        if chain:
+            parts = [f"T{e.get('turn', 0)}: {e.get('cause_var', '')}->{e.get('effect_var', '')} {e.get('direction', '')} mag={e.get('magnitude', 0):.1f}" for e in chain[-15:]]
+            text = " ".join(parts)
+            if len(text) > ORACLE_HISTORY_MAX_CHARS:
+                text = text[: ORACLE_HISTORY_MAX_CHARS - 3] + "..."
+            return text or "No prior history."
+    except ImportError:
+        pass
+    recent = provenance[-max_turns:]
+    parts = []
+    for i, entry in enumerate(recent):
+        turn = entry.get("turn", i + 1)
+        chosen = (entry.get("turn_record") or {}).get("chosen_actions") or []
+        action_ids = []
+        for c in chosen:
+            if isinstance(c, dict):
+                action_ids.append(c.get("action_id") or c.get("action", ""))
+            else:
+                action_ids.append(getattr(c, "action_id", "") or getattr(c, "action", ""))
+        actions_str = ", ".join(a for a in action_ids if a) or "-"
+        delta_applied = (entry.get("turn_record") or {}).get("delta_applied") or {}
+        if not isinstance(delta_applied, dict):
+            delta_applied = {}
+        var_changes = entry.get("variable_changes") or []
+        delta_str_parts = []
+        if isinstance(delta_applied, dict) and delta_applied:
+            for var, val in list(delta_applied.items())[:5]:
+                if isinstance(val, (int, float)):
+                    delta_str_parts.append(f"{var}:{val:+.1f}")
+        for ch in var_changes[:5]:
+            if isinstance(ch, dict):
+                v = ch.get("var") or ch.get("variable")
+                d = ch.get("delta") or ch.get("change")
+                if v and isinstance(d, (int, float)):
+                    delta_str_parts.append(f"{v}:{d:+.1f}")
+        delta_str = " ".join(delta_str_parts) if delta_str_parts else "-"
+        inst = "risk" if entry.get("instability_mode") else "stable"
+        parts.append(f"T{turn}: actions=[{actions_str}] deltas=[{delta_str}] {inst}")
+    text = " ".join(parts)
+    if len(text) > ORACLE_HISTORY_MAX_CHARS:
+        text = text[: ORACLE_HISTORY_MAX_CHARS - 3] + "..."
+    return text or "No prior history."
 
 
 def load_scenario(path: str | Path) -> dict[str, Any]:
@@ -136,6 +243,7 @@ class SimulationLoop:
         snapshot_path: str | None = None,
         meta_auto_approve_agents: int = 1,
         enable_environment_agent: bool | None = None,
+        build_turn_payload: Any = None,
     ) -> None:
         self.scenario_path = scenario_path or SCENARIO_PATH
         self.scenario_data = scenario_data
@@ -177,11 +285,38 @@ class SimulationLoop:
         )
 
         def llm_wrapper(prompt: str, system: str | None = None, *, as_json: bool = False) -> Any:
+            """
+            Central LLM entry for agents and scenario-level flows.
+
+            - Dry-run: never hits the model.
+            - JSON callers: go through core.llm_service with an empty schema, so we
+              still get robust JSON parsing/correction without imposing structure.
+            - Text callers: go through core.llm_service with no schema.
+            """
             if self.dry_run:
                 if as_json:
                     return {}
                 return ""
-            return call_llm(prompt, system=system, as_json=as_json)
+            if as_json:
+                # Empty schema -> no field-level validation but enables JSON parsing/repair.
+                return llm_service_call(
+                    prompt,
+                    system=system or "",
+                    schema={"required": [], "types": {}},
+                    temperature=None,
+                    max_tokens=None,
+                    usage_tier="agent_reasoning",
+                ) or {}
+            # Text path: let callers handle formatting; we just centralize usage/budgeting.
+            out = llm_service_call(
+                prompt,
+                system=system or "",
+                schema=None,
+                temperature=None,
+                max_tokens=None,
+                usage_tier="agent_reasoning",
+            )
+            return out or ""
 
         self.agents = get_agents_from_scenario(scenario, llm_wrapper, dry_run=self.dry_run)
         self.world_model_agent = WorldModelAgent(llm_wrapper)
@@ -227,6 +362,49 @@ class SimulationLoop:
         self._agent_action_history: dict[str, list[str]] = {}
         # Track world entropy history (last 2 turns) for instability detection
         self._entropy_history: list[float] = []
+        self._ssi_history: list[float] = []
+        # Checkpoint store for rollback (optional)
+        self._checkpoint_store = None
+        if CHECKPOINT_ENABLED:
+            try:
+                from simulation.checkpoints import CheckpointStore
+                self._checkpoint_store = CheckpointStore(max_count=CHECKPOINT_MAX_COUNT)
+            except ImportError:
+                pass
+        self._oracle: Any = None
+        if get_enable_oracle():
+            def _oracle_llm(prompt: str, system: str | None = None, **kwargs: Any) -> Any:
+                # Oracle always expects structured JSON; route through llm_service with
+                # a permissive schema and an explicit usage tier so it shares budgeting.
+                out = llm_service_call(
+                    prompt,
+                    system=system or "",
+                    schema={"required": [], "types": {}},
+                    temperature=None,
+                    max_tokens=None,
+                    usage_tier="oracle_full",
+                )
+                return out or {}
+            try:
+                from core.oracle import OracleAdvisor
+                self._oracle = OracleAdvisor(_oracle_llm)
+            except Exception:
+                self._oracle = None
+        self._build_turn_payload_cb = build_turn_payload  # Optional: UI layer provides build_dashboard_payload
+
+    def set_rules(self, rules: list[dict[str, Any]]) -> None:
+        """Replace scenario rules at runtime (e.g. from rule learner or dashboard)."""
+        self._scenario_rules = list(rules) if rules else []
+
+    def add_rule(self, rule_dict: dict[str, Any]) -> None:
+        """Append a rule at runtime. Rule must have condition_key and effect_key."""
+        from core.rule_engine import add_rule as _add_rule
+        _add_rule(self._scenario_rules, rule_dict)
+
+    def remove_rule(self, rule_id: str) -> bool:
+        """Remove a rule by id. Returns True if removed."""
+        from core.rule_engine import remove_rule as _remove_rule
+        return _remove_rule(self._scenario_rules, rule_id)
 
     def _consume_llm_capacity(self) -> bool:
         """Return True if we can make another LLM call (rate limit)."""
@@ -251,6 +429,29 @@ class SimulationLoop:
         mean = sum(values) / len(values)
         variance = sum((x - mean) ** 2 for x in values) / len(values)
         return variance
+
+    def _calculate_stability_index(
+        self,
+        outcome: dict[str, Any],
+        entropy: float | None = None,
+        num_variables: int | None = None,
+        epsilon: float | None = None,
+    ) -> float:
+        """
+        System Stability Index (entropy-based): SSI = exp(-alpha * normalized_entropy).
+        Collapses realistically near crisis. Falls back to 1/(sum_abs_secondary + eps) if entropy/num_variables not provided.
+        """
+        if entropy is not None and num_variables is not None and num_variables >= 1:
+            try:
+                alpha = SSI_ALPHA
+            except NameError:
+                alpha = 0.1
+            normalized_entropy = entropy / max(1, num_variables)
+            return math.exp(-alpha * normalized_entropy)
+        eps = epsilon if epsilon is not None else SSI_EPSILON
+        secondary_effects = outcome.get("secondary_effects", []) if isinstance(outcome, dict) else []
+        sum_abs_secondary = sum(abs(float(se.get("delta", 0))) for se in secondary_effects if isinstance(se, dict))
+        return 1.0 / (sum_abs_secondary + eps)
     
     def _ensure_minimum_delta(self, merged_numeric: dict[str, float]) -> dict[str, float]:
         """
@@ -343,25 +544,12 @@ class SimulationLoop:
                     )
                     break
 
-    def step(self) -> None:
-        """One step: collect proposals -> normalize -> validate -> apply -> meta approval -> reflect."""
-        self._llm_calls_this_turn = 0
-        
-        # Decay memory for all agents at start of step
-        for agent in self.agents:
-            if hasattr(agent, "decay_memory"):
-                agent.decay_memory()
-
+    def _observe(self) -> dict[str, Any]:
+        """
+        OBSERVE: snapshot world + derived instability and governance fields.
+        Returns the enriched snapshot that is passed into later stages.
+        """
         snapshot = self.world.snapshot()
-        # Environment agent runs BEFORE role agents (events can influence same turn)
-        env_events_this_turn: list[dict[str, Any]] = []
-        if self._environment_agent:
-            proposed = self._environment_agent.propose(snapshot)
-            for ev in proposed:
-                ev["trigger_turn"] = self.world.turn + 1
-                self.world.events.append(ev)
-                env_events_this_turn.append(ev)
-        # Instability and threshold dynamics: compute and expose to agents
         stability, dissatisfaction = _compute_stability_and_dissatisfaction(snapshot, self._scenario)
         dissatisfaction_rose_two_turns = (
             len(self._dissatisfaction_history) >= 2
@@ -376,9 +564,63 @@ class SimulationLoop:
         snapshot["derived"]["instability_mode"] = instability_mode
         snapshot["derived"]["system_stability"] = stability
         snapshot["derived"]["dissatisfaction"] = dissatisfaction
-        # Merge action_tradeoffs for rule-based planning (agents.base_agent.rule_based_deltas_for_snapshot)
         if action_tradeoffs := self._scenario.get("action_tradeoffs"):
             snapshot["action_tradeoffs"] = action_tradeoffs
+        snapshot["causal_links"] = getattr(self.world, "causal_links", None) or []
+        if self._variable_specs:
+            snapshot["variable_specs"] = dict(self._variable_specs)
+        return snapshot
+
+    def step(self) -> None:
+        """One step: orchestrate observe -> propose -> interpret -> validate -> apply -> reflect."""
+        self._llm_calls_this_turn = 0
+        self._llm_calls_per_agent_this_turn = getattr(self, "_llm_calls_per_agent_this_turn", {}) or {}
+        for a in self.agents:
+            n = getattr(a, "name", None)
+            if n:
+                self._llm_calls_per_agent_this_turn[n] = 0
+        self._compute_cost_this_turn = 0
+
+        # Decay memory for all agents at start of step
+        for agent in self.agents:
+            if hasattr(agent, "decay_memory"):
+                agent.decay_memory()
+
+        snapshot = self.world.snapshot()
+        # Optional checkpoint before applying this step (for rollback)
+        if self._checkpoint_store is not None:
+            self._checkpoint_store.push(
+                self.world.turn,
+                snapshot,
+                list(self._provenance),
+                list(self._action_trace),
+            )
+        # Environment agent runs BEFORE role agents (events can influence same turn)
+        env_events_this_turn: list[dict[str, Any]] = []
+        if self._environment_agent:
+            proposed = self._environment_agent.propose(snapshot)
+            for ev in proposed:
+                ev["trigger_turn"] = self.world.turn + 1
+                self.world.events.append(ev)
+                env_events_this_turn.append(ev)
+        # OBSERVE stage: enrich snapshot with derived instability / governance context.
+        snapshot = self._observe()
+        instability_mode = bool(snapshot.get("derived", {}).get("instability_mode", False))
+        stability = float(snapshot.get("derived", {}).get("system_stability", 0.0))
+        dissatisfaction = float(snapshot.get("derived", {}).get("dissatisfaction", 0.0))
+
+        # Cheap fingerprint for snapshot used in planner caching (LLM normalization path).
+        # Only variables and current turn are included to keep it stable and domain-agnostic.
+        snapshot_for_hash = {
+            "turn": self.world.turn,
+            "variables": snapshot.get("variables") or snapshot.get("global_state") or {},
+        }
+        try:
+            snapshot_fingerprint = hashlib.sha256(
+                json.dumps(snapshot_for_hash, sort_keys=True, default=str).encode("utf-8")
+            ).hexdigest()
+        except Exception:
+            snapshot_fingerprint = ""
 
         # Text-first: agents receive summary (or snapshot in dry-run) and return reasoning + ACTION_JSON string
         # Dry-run: rule-based path (snapshot). Strategic: LLM with strategic prompt. Else: planning with get_delta.
@@ -415,6 +657,8 @@ class SimulationLoop:
         proposal_results: list[tuple[Proposal, Any, bool]] = []  # (proposal, delta, was_accepted)
         turn_log_entries: list[dict[str, Any]] = []  # reasoning, raw_json, validated_json, applied_delta per agent
         delta_raw_per_agent: dict[str, dict[str, float]] = {}  # agent -> var -> delta (for attribution)
+        # Governance-only corrections per agent (numeric diff introduced by governance rules, before constraints).
+        governance_delta_per_agent: dict[str, dict[str, float]] = {}
 
         action_tradeoffs = self._scenario.get("action_tradeoffs") if isinstance(self._scenario.get("action_tradeoffs"), dict) else None
         variable_tradeoffs = self._scenario.get("variable_tradeoffs") if isinstance(self._scenario.get("variable_tradeoffs"), dict) else None
@@ -422,20 +666,40 @@ class SimulationLoop:
         action_provenance_this_step: list[dict[str, Any]] = []  # action trace (NOT appended to causal_links)
         self._turn_degraded = False
         guard = self._guard
+        _perf: dict[str, float] = {}
+        if DEBUG_PERF:
+            _perf["_t0_proposals"] = time.perf_counter()
 
         for idx, agent in enumerate(self.agents):
             # تاخیر کوچک بین درخواست‌های agent ها برای جلوگیری از rate limit
             if idx > 0 and not self.dry_run:
                 time.sleep(0.5)  # 0.5 ثانیه تاخیر بین agent ها
             # Build agent_input: add get_delta for LLM planning path (non-dry-run, non-strategic)
+            # Respect per-agent LLM cap and compute budget (deterministic fallback when over)
+            over_agent_cap = (
+                (self._llm_calls_per_agent_this_turn.get(agent.name, 0) >= MAX_LLM_CALLS_PER_AGENT_PER_TURN)
+                if hasattr(agent, "name") else False
+            )
+            over_budget = (
+                COMPUTE_BUDGET_PER_TURN is not None
+                and self._compute_cost_this_turn >= COMPUTE_BUDGET_PER_TURN
+            )
             if (
                 isinstance(base_agent_input, dict)
                 and not self.dry_run
                 and self.world_model_agent
+                and not over_agent_cap
+                and not over_budget
             ):
                 agent_input = dict(base_agent_input)
+                per_agent = self._llm_calls_per_agent_this_turn
+
                 def _make_get_delta(a: Any) -> Any:
                     def get_delta(action: str) -> Any:
+                        if per_agent.get(a.name, 0) >= MAX_LLM_CALLS_PER_AGENT_PER_TURN:
+                            return None
+                        per_agent[a.name] = per_agent.get(a.name, 0) + 1
+                        self._compute_cost_this_turn += 1
                         p = Proposal(
                             agent_name=a.name,
                             action_type=action,
@@ -443,14 +707,30 @@ class SimulationLoop:
                             rationale="",
                             confidence=0.7,
                         )
-                        return self.world_model_agent.normalize_proposal(p, snapshot, temperature=0.1)
+                        cache_key = None
+                        if snapshot_fingerprint:
+                            try:
+                                from core.llm_service import make_cache_key
+
+                                cache_key = make_cache_key(action, snapshot_fingerprint)
+                            except Exception:
+                                cache_key = None
+                        return self.world_model_agent.normalize_proposal(
+                            p,
+                            snapshot,
+                            temperature=0.1,
+                            cache_key=cache_key,
+                        )
                     return get_delta
                 agent_input["get_delta"] = _make_get_delta(agent)
             else:
-                agent_input = base_agent_input
+                agent_input = dict(base_agent_input) if isinstance(base_agent_input, dict) else base_agent_input
             # LLM Integration: agent output (text reasoning + ### ACTION_JSON) is connected to the
-            # engine's JSON-based simulation loop here: propose() → parse reasoning → extract/validate/sanitize → Delta/Proposal.
+            # engine's JSON-based simulation loop here: propose() -> parse reasoning -> extract/validate/sanitize -> Delta/Proposal.
             agent_output = agent.propose(agent_input)
+            if not self.dry_run and hasattr(agent, "name"):
+                self._llm_calls_per_agent_this_turn[agent.name] = self._llm_calls_per_agent_this_turn.get(agent.name, 0) + 1
+                self._compute_cost_this_turn += 1
             reasoning = _parse_reasoning_from_output(agent_output)
             raw_json: dict[str, Any] | None = None
             validated_json: dict[str, Any] | None = None
@@ -488,6 +768,24 @@ class SimulationLoop:
                         continue
                     break
                 sanitized = guard.sanitize(validated_json, snapshot, agent_name=agent.name)
+                try:
+                    from config.settings import ENABLE_LLM_REDUNDANCY_CHECK, LLM_AUTO_CORRECT_CONSISTENCY
+                    if ENABLE_LLM_REDUNDANCY_CHECK and sanitized:
+                        ok_consist, consistency_issues = guard.check_internal_consistency(sanitized)
+                        if not ok_consist:
+                            import logging
+                            logging.getLogger(__name__).warning(
+                                "LLM consistency check failed for agent %s: %s",
+                                getattr(agent, "name", "?"), "; ".join(consistency_issues),
+                            )
+                            if LLM_AUTO_CORRECT_CONSISTENCY:
+                                action_s = (sanitized.get("action") or "").strip()
+                                if (action_s.startswith("increase_") or action_s.startswith("decrease_")) and not sanitized.get("primary_variable"):
+                                    inferred = action_s.replace("increase_", "").replace("decrease_", "").strip()
+                                    if inferred:
+                                        sanitized["primary_variable"] = inferred
+                except ImportError:
+                    pass
                 numeric_updates = {d["variable"]: d["change"] for d in sanitized.get("deltas", [])}
                 rationale_str = (sanitized.get("justification") or reasoning) if sanitized.get("justification") else reasoning
                 confidence_val = sanitized.get("probability") if sanitized.get("probability") is not None else 0.7
@@ -555,16 +853,38 @@ class SimulationLoop:
                     pass
                 proposal_results.append((proposal, delta, False))  # Delayed events not "accepted" yet
                 continue
-            # Governance validates and auto-repairs deltas (never rejects completely)
+            # Governance validates and auto-repairs deltas (never rejects completely).
+            # Attach variable_specs to world so governance can prefer declarative non_negative.
+            setattr(self.world, "variable_specs", self._variable_specs)
+            # Track governance-only numeric corrections by comparing pre/post validate_delta.
+            original_numeric = dict(delta.numeric_updates or {})
             ok, warnings, modified_delta = self.governance.validate_delta(delta, self.world)
             was_accepted = ok  # Should always be True now
             was_repaired = modified_delta is not None and modified_delta != delta
-            original_delta_dict = delta.to_dict() if hasattr(delta, "to_dict") else {}
             injected_cost = {}
             if was_repaired and modified_delta:
                 original_numeric = delta.numeric_updates or {}
                 repaired_numeric = modified_delta.numeric_updates or {}
                 injected_cost = {k: v for k, v in repaired_numeric.items() if k not in original_numeric}
+                # Governance-only numeric correction = repaired - original (per variable).
+                governance_diff: dict[str, float] = {}
+                for var, new_val in repaired_numeric.items():
+                    if not isinstance(new_val, (int, float)):
+                        continue
+                    old_val = original_numeric.get(var, 0.0)
+                    if not isinstance(old_val, (int, float)):
+                        old_val = 0.0
+                    diff_val = float(new_val) - float(old_val)
+                    if abs(diff_val) < 1e-12:
+                        continue
+                    governance_diff[var] = governance_diff.get(var, 0.0) + diff_val
+                if governance_diff:
+                    agent_key = agent_name or ""
+                    if agent_key:
+                        current_gov = governance_delta_per_agent.get(agent_key) or {}
+                        for var, diff_val in governance_diff.items():
+                            current_gov[var] = current_gov.get(var, 0.0) + diff_val
+                        governance_delta_per_agent[agent_key] = current_gov
             proposal_results.append((proposal, modified_delta if modified_delta else delta, was_accepted))
             to_apply = modified_delta if modified_delta is not None else delta
             numeric_updates = to_apply.numeric_updates or {}
@@ -608,10 +928,22 @@ class SimulationLoop:
             if turn_log_entries:
                 turn_log_entries[-1]["applied_delta"] = to_apply.to_dict() if hasattr(to_apply, "to_dict") else None
 
-        # Delta lifecycle: delta_after_merge, apply constraints -> delta_applied, attribution
-        delta_after_merge = merge_delta_raw(delta_raw_per_agent) if delta_raw_per_agent else dict(merged_numeric)
+        if DEBUG_PERF:
+            _perf["proposals"] = time.perf_counter() - _perf["_t0_proposals"]
+            _perf["_t0_merge"] = time.perf_counter()
+
+        # Delta lifecycle: delta_after_merge, governance-only merged corrections, apply constraints -> delta_applied, attribution
+        snapshot_for_merge = self.world.snapshot()
+        delta_after_merge = merge_delta_raw(delta_raw_per_agent, snapshot_for_merge) if delta_raw_per_agent else dict(merged_numeric)
         if not delta_after_merge and merged_numeric:
             delta_after_merge = dict(merged_numeric)
+        if delta_raw_per_agent and delta_after_merge:
+            merged_numeric = dict(delta_after_merge)
+
+        # Merge governance-only corrections across agents into a per-turn delta (metadata only; no extra apply).
+        governance_modified_delta: dict[str, float] = {}
+        if governance_delta_per_agent:
+            governance_modified_delta = merge_delta_raw(governance_delta_per_agent, snapshot_for_merge) or {}
 
         # Ensure minimum delta guarantee: at least one variable must change
         merged_numeric = self._ensure_minimum_delta(merged_numeric)
@@ -630,6 +962,20 @@ class SimulationLoop:
         self_effect_per_agent = compute_self_effect_per_agent(
             delta_raw_per_agent, delta_after_merge, delta_applied
         ) if delta_raw_per_agent else {}
+
+        # Prediction calibration: update per-agent rolling MSE/bias/weight from predicted vs actual
+        try:
+            from core.prediction_calibration import update as calibration_update
+            for agent_name, raw in delta_raw_per_agent.items():
+                if agent_name and isinstance(raw, dict):
+                    actual = self_effect_per_agent.get(agent_name, {})
+                    if isinstance(actual, dict):
+                        calibration_update(agent_name, raw, actual)
+        except ImportError:
+            pass
+
+        if DEBUG_PERF:
+            _perf["merge"] = time.perf_counter() - _perf["_t0_merge"]
 
         # If we injected drift, add to action provenance (NOT to causal_links)
         if merged_numeric and not action_provenance_this_step:
@@ -670,23 +1016,243 @@ class SimulationLoop:
                 first_proposal.to_dict() if hasattr(first_proposal, "to_dict") else {}
             ).get("action_type")
 
-        # Apply delta and get structured outcome (pass variable_specs for propagation hardening)
+        # Oracle (LLM Advisor): tiered — light heuristic below threshold; full only when significance/SSI/goal and tiering allows
+        oracle_analysis: dict[str, Any] | None = None
+        oracle_tier_used: str = "Off"
+        impact_score: float = 0.0
+        if get_enable_oracle():
+            predicted_delta = dict(delta_applied) if delta_applied else None
+            impact_score = sum(abs(float(v)) for v in (predicted_delta or {}).values() if isinstance(v, (int, float)))
+            derived = snapshot.get("derived") or {}
+            current_stability = float(derived.get("system_stability", 100.0)) if isinstance(derived.get("system_stability"), (int, float)) else 100.0
+            ssi_impact_significant = current_stability <= ORACLE_SSI_THRESHOLD
+            significance_ok = impact_score >= ORACLE_SIGNIFICANCE_THRESHOLD
+            goal_impact_ok = bool(self._scenario and self._scenario.get("governance", {}).get("goal_impact_significant"))
+            tiering = (ORACLE_TIERING_MODE or "auto").strip().lower()
+            if tiering == "off":
+                run_full_oracle = False
+                oracle_tier_used = "Off"
+            elif not significance_ok and not ssi_impact_significant and not goal_impact_ok:
+                run_full_oracle = False
+                oracle_tier_used = "Light"
+                oracle_analysis = {
+                    "advisory_only": True,
+                    "action_id": "merged",
+                    "confidence": 50,
+                    "expected_utility": 0.0,
+                    "tail_risk": 0.5,
+                    "mitigation_variant": {},
+                    "causal_learning_suggestion": None,
+                    "shadow_simulation_summary": None,
+                    "oracle_tier": "Light",
+                    "message": "Impact below threshold; light heuristic advisory only.",
+                }
+            else:
+                run_full_oracle = tiering == "full" or (tiering == "auto" and (significance_ok or ssi_impact_significant or goal_impact_ok))
+                if run_full_oracle and self._oracle is not None:
+                    oracle_tier_used = "Full"
+            if run_full_oracle and self._oracle is not None:
+                history_summary = summarize_history_for_oracle(
+                    self._provenance,
+                    ORACLE_HISTORY_TURNS,
+                )
+                if proposal_results:
+                    first_p = proposal_results[0][0]
+                    chosen_action = (
+                        first_p.to_dict()
+                        if hasattr(first_p, "to_dict")
+                        else {
+                            "action_type": getattr(first_p, "action_type", "") or "",
+                            "agent_name": getattr(first_p, "agent_name", "") or "",
+                        }
+                    )
+                else:
+                    chosen_action = {
+                        "action_type": str(combined_action_type or "merge"),
+                        "agent_name": "",
+                    }
+                try:
+                    oracle_analysis = self._oracle.evaluate(
+                        snapshot=dict(snapshot),
+                        chosen_action=dict(chosen_action),
+                        history_summary=history_summary,
+                        predicted_delta=predicted_delta,
+                    )
+                except Exception as e:
+                    import logging
+                    logging.getLogger(__name__).warning("Oracle analysis failed: %s", e)
+                    oracle_analysis = None
+
+        # Regime-aware physics: compute regime from previous entropies and current state
+        regime_result_pre: dict[str, Any] = {"regime": "NORMAL", "percent_high": 0.0, "entropy_growth": 0.0, "calibration_avg": 0.5}
+        propagation_params: dict[str, Any] = {}
+        variable_specs_to_use = self._variable_specs
+        try:
+            entropy_prev = self._entropy_history[-1] if self._entropy_history else 0.0
+            entropy_prev_prev = self._entropy_history[-2] if len(self._entropy_history) >= 2 else entropy_prev
+            agent_names = [getattr(a, "name", "") for a in self.agents if getattr(a, "name", None)]
+            agent_cal_scores: list[float] = []
+            try:
+                from core.prediction_calibration import get_calibration_score
+                for name in agent_names:
+                    if name:
+                        agent_cal_scores.append(get_calibration_score(name))
+            except ImportError:
+                pass
+            regime_result_pre = detect_regime(
+                dict(self.world.variables),
+                self._variable_specs,
+                entropy_prev,
+                entropy_prev_prev,
+                agent_cal_scores if agent_cal_scores else None,
+                entropy_growth_threshold=REGIME_ENTROPY_GROWTH_THRESHOLD,
+            )
+            if regime_result_pre.get("regime") == "CRISIS":
+                propagation_params["decay_factor"] = PROPAGATION_DECAY_FACTOR * 0.7
+                if self._variable_specs:
+                    variable_specs_to_use = copy.deepcopy(self._variable_specs)
+                    for var, spec in list(variable_specs_to_use.items()):
+                        if not isinstance(spec, dict):
+                            continue
+                        bt = str(spec.get("behavior_type", "STOCK")).upper()
+                        if bt == "STOCK":
+                            decay = spec.get("decay", 0.01)
+                            inertia = spec.get("inertia", 0.2)
+                            variable_specs_to_use[var] = dict(spec)
+                            if isinstance(decay, (int, float)):
+                                variable_specs_to_use[var]["decay"] = min(1.0, float(decay) * 1.5)
+                            if isinstance(inertia, (int, float)):
+                                variable_specs_to_use[var]["inertia"] = min(0.8, float(inertia) + 0.2)
+        except Exception:  # noqa: BLE001
+            pass
+
+        # Apply delta and get structured outcome (pass variable_specs and propagation_params for regime hardening)
         outcome = self.world.apply_delta(
             combined_delta,
             action_type=combined_action_type,
-            variable_specs=self._variable_specs,
+            variable_specs=variable_specs_to_use,
+            propagation_params=propagation_params if propagation_params else None,
         )
         # Handle both old format (list) and new format (dict)
         if isinstance(outcome, dict):
             variable_changes = outcome.get("variable_changes", [])
         else:
             variable_changes = outcome
+        _surprise = None
+        try:
+            from core.surprise_analysis import run_surprise_analysis
+            _surprise = run_surprise_analysis(
+                dict(delta_applied) if delta_applied else None,
+                {"variable_changes": variable_changes},
+                DEVIATION_THRESHOLD,
+            )
+            if _surprise and _surprise.get("triggered"):
+                import logging
+                logging.getLogger(__name__).warning("SurpriseAnalysis: %s", _surprise.get("message", ""))
+            # Surprise-driven adaptive calibration: update_with_surprise when triggered
+            try:
+                from core.prediction_calibration import update_with_surprise as calibration_update_surprise
+                actual_delta_from_changes: dict[str, float] = {}
+                for ch in variable_changes:
+                    if isinstance(ch, dict):
+                        var = ch.get("var") or ch.get("variable")
+                        delta = ch.get("delta") or ch.get("change")
+                        if var and isinstance(delta, (int, float)):
+                            actual_delta_from_changes[str(var)] = actual_delta_from_changes.get(str(var), 0.0) + float(delta)
+                for agent_name, raw in (delta_raw_per_agent or {}).items():
+                    if agent_name and isinstance(raw, dict) and _surprise:
+                        calibration_update_surprise(
+                            agent_name,
+                            raw,
+                            actual_delta_from_changes,
+                            _surprise.get("relative_error", 0.0),
+                            _surprise.get("triggered", False),
+                        )
+                        if _surprise.get("triggered"):
+                            import logging
+                            logging.getLogger(__name__).info(
+                                "Calibration event: agent=%s relative_error=%.4f",
+                                agent_name, _surprise.get("relative_error", 0),
+                            )
+            except ImportError:
+                pass
+        except ImportError:
+            pass
         self.world.turn += 1
-        
-        # Compute and track world entropy
+
+        # Compute world entropy then SSI (entropy-based)
         current_entropy = self._compute_world_entropy()
         self._entropy_history.append(current_entropy)
         self._entropy_history = self._entropy_history[-2:]  # Keep last 2 turns
+        num_vars = max(1, len(self.world.variables))
+        current_ssi = self._calculate_stability_index(outcome, entropy=current_entropy, num_variables=num_vars)
+        self._ssi_history.append(current_ssi)
+        self._ssi_history = self._ssi_history[-SSI_HISTORY_SIZE:]
+
+        # Regime for this step (post-apply) for provenance and humility
+        regime_result_post = regime_result_pre
+        try:
+            entropy_prev = self._entropy_history[-2] if len(self._entropy_history) >= 2 else current_entropy
+            agent_cal_scores_post: list[float] = []
+            try:
+                from core.prediction_calibration import get_calibration_score
+                for a in self.agents:
+                    name = getattr(a, "name", None)
+                    if name:
+                        agent_cal_scores_post.append(get_calibration_score(name))
+            except ImportError:
+                pass
+            regime_result_post = detect_regime(
+                dict(self.world.variables),
+                self._variable_specs,
+                current_entropy,
+                entropy_prev,
+                agent_cal_scores_post if agent_cal_scores_post else None,
+                entropy_growth_threshold=REGIME_ENTROPY_GROWTH_THRESHOLD,
+            )
+            try:
+                from core.prediction_calibration import apply_humility_mode
+                agent_ids = [getattr(a, "name", "") for a in self.agents if getattr(a, "name", None)]
+                apply_humility_mode(agent_ids, regime_result_post.get("regime", "NORMAL"))
+            except ImportError:
+                pass
+        except Exception:  # noqa: BLE001
+            pass
+
+        # Volatility decomposition: delta_std + abs(entropy_growth) + percent_high * 0.5
+        entropy_growth = current_entropy - (self._entropy_history[-2] if len(self._entropy_history) >= 2 else current_entropy)
+        delta_values = [float(ch.get("delta", 0)) for ch in variable_changes if isinstance(ch, dict) and isinstance(ch.get("delta"), (int, float))]
+        delta_std = float(statistics.stdev(delta_values)) if len(delta_values) >= 2 else (abs(delta_values[0]) if len(delta_values) == 1 else 0.0)
+        percent_high = float(regime_result_post.get("percent_high", 0.0))
+        volatility_value = delta_std + abs(entropy_growth) + percent_high * 0.5
+        if instability_mode and volatility_value == 0.0:
+            volatility_value = 1e-6
+        volatility_decomposition = {
+            "delta_std": delta_std,
+            "entropy_component": abs(entropy_growth),
+            "saturation_component": percent_high * 0.5,
+            "shock_component": 0.0,
+            "volatility": volatility_value,
+        }
+
+        governance_intervention: dict[str, Any] = {}
+        scenario_goal = (self._scenario or {}).get("governance") or {}
+        if isinstance(scenario_goal, dict):
+            goal_type = str(scenario_goal.get("goal_type", "stability")).strip().lower()
+        else:
+            goal_type = "stability"
+        goal_requires_stability = goal_type != "disruption"
+        if goal_requires_stability and current_ssi < SSI_INTERVENTION_THRESHOLD:
+            snap_for_ssi = self.world.snapshot()
+            self.governance.intervene_for_stability(snap_for_ssi, current_ssi)
+            governance_intervention = {"reason": "ssi_low", "ssi": current_ssi}
+            import logging
+            logging.getLogger(__name__).info(
+                "SSI below threshold (%.6f < %.6f); governance intervention (stricter hard_clips)",
+                current_ssi, SSI_INTERVENTION_THRESHOLD,
+            )
+        elif not goal_requires_stability and current_ssi < SSI_INTERVENTION_THRESHOLD:
+            governance_intervention = {"reason": "ssi_low_goal_disruption", "ssi": current_ssi, "suppressed": True}
         
         # Check for static world (entropy == 0 for 2 consecutive turns)
         if len(self._entropy_history) >= 2 and all(e == 0.0 for e in self._entropy_history):
@@ -736,7 +1302,27 @@ class SimulationLoop:
             logging.getLogger(__name__).warning(
                 f"Governance strictness escalated to {self.governance.strictness_level} due to {self._rule_based_fallback_count} rule-based fallbacks"
             )
-        
+
+        # [Shock global] Probabilistically apply macro shocks (optional, gated by runtime mode)
+        shock_result: dict[str, Any] = {"active": False, "shocks": [], "impact_delta": {}}
+        try:
+            from config.settings import SHOCK_INTENSITY, SHOCK_FREQUENCY
+            sim_mode = get_simulation_mode()
+            if sim_mode == "shock_global" and get_enable_shocks():
+                from simulation.shock_engine import step_shock_engine
+                rng = getattr(self, "_rng", None) or random.Random(RANDOM_SEED if RANDOM_SEED is not None else None)
+                shock_result = step_shock_engine(
+                    self.world,
+                    self.world.turn,
+                    rng=rng,
+                    intensity=SHOCK_INTENSITY,
+                    frequency=SHOCK_FREQUENCY,
+                    mode=sim_mode,
+                )
+                shock_result["intensity"] = SHOCK_INTENSITY
+        except (ImportError, AttributeError, TypeError):
+            pass
+
         # Build action_trace: [{agent, action_id, strategy_class}, ...]
         strategy_classes = self._scenario.get("strategy_classes") or {}
         action_trace: list[dict[str, Any]] = []
@@ -748,6 +1334,19 @@ class SimulationLoop:
                 "action_id": aid,
                 "strategy_class": strategy_classes.get(aid, "general"),
             })
+
+        # Planned/predicted Deltas from depth-2 planning (for strategic analysis)
+        predicted_deltas: list[dict[str, Any]] = []
+        agents_by_name = {getattr(a, "name", None): a for a in self.agents if getattr(a, "name", None)}
+        for p, _, _ in proposal_results:
+            aname = getattr(p, "agent_name", None) or (p.to_dict() if hasattr(p, "to_dict") else {}).get("agent_name", "")
+            aid = getattr(p, "action_type", None) or (p.to_dict() if hasattr(p, "to_dict") else {}).get("action_type", "")
+            agent = agents_by_name.get(aname)
+            planned = getattr(agent, "_last_planning_delta", None) if agent else None
+            if planned is not None and isinstance(planned, dict):
+                predicted_deltas.append({"agent": aname, "action_type": aid, "delta": planned})
+            elif planned is not None and hasattr(planned, "to_dict"):
+                predicted_deltas.append({"agent": aname, "action_type": aid, "delta": planned.to_dict()})
 
         # Build provenance with TurnRecord (delta lifecycle, attribution, action trace)
         proposals_for_provenance = [p for p, _, _ in proposal_results]
@@ -766,7 +1365,18 @@ class SimulationLoop:
             "turn_degraded": self._turn_degraded,
             "world_entropy": current_entropy,
             "entropy_history": list(self._entropy_history),
+            "ssi": current_ssi,
+            "ssi_history": list(self._ssi_history),
+            "regime": regime_result_post.get("regime", "NORMAL"),
+            "regime_detail": regime_result_post,
+            "volatility_decomposition": volatility_decomposition,
             "derived": {"instability_mode": instability_mode, "system_stability": stability, "dissatisfaction": dissatisfaction},
+            "predicted_deltas": predicted_deltas,
+            "shock": shock_result,
+            "oracle_analysis": oracle_analysis,
+            "oracle_tier_used": oracle_tier_used,
+            "impact_score": impact_score,
+            "surprise_analysis": _surprise,
             "turn_record": {
                 "turn": self.world.turn,
                 "pre_state": previous_state,
@@ -781,16 +1391,44 @@ class SimulationLoop:
                 "rules_fired": rule_activations,
                 "threshold_crossings": [],
                 "post_state": None,
+                "uncertainty_metrics": {},
+                "governance_modified_delta": governance_modified_delta,
             },
         }
+        if governance_intervention:
+            provenance_entry["governance_intervention"] = governance_intervention
         if isinstance(outcome, dict):
             provenance_entry["outcome"] = {
                 "primary_effect": outcome.get("primary_effect"),
                 "secondary_effects": outcome.get("secondary_effects", []),
                 "noise_component": outcome.get("noise_component", {}),
                 "propagation_trace": outcome.get("propagation_trace", []),
+                # Surface the full variable diff (direct + propagated) so downstream
+                # consumers (calibration, surprise analysis, planning/execution
+                # alignment checks) can read outcome.variable_changes directly.
+                "variable_changes": variable_changes,
             }
         self._provenance.append(provenance_entry)
+
+        try:
+            from config.settings import CALIBRATION_RECALIBRATE_TURNS, CALIBRATION_DRIFT_THRESHOLD_PCT, CALIBRATION_RMSE_RED_THRESHOLD
+            from config.settings import CALIBRATION_MIN_INTERVAL_TURNS, CALIBRATION_MAX_INTERVAL_TURNS
+            from core.calibration import check_recalibration_trigger, apply_recalibration_action, set_last_recalibration_turn
+            should_recal, reason = check_recalibration_trigger(
+                list(self._provenance),
+                recalibrate_turns=CALIBRATION_RECALIBRATE_TURNS,
+                drift_threshold_pct=CALIBRATION_DRIFT_THRESHOLD_PCT,
+                rmse_red_threshold=CALIBRATION_RMSE_RED_THRESHOLD,
+                min_interval_turns=CALIBRATION_MIN_INTERVAL_TURNS,
+                max_interval_turns=CALIBRATION_MAX_INTERVAL_TURNS,
+            )
+            if should_recal and reason:
+                apply_recalibration_action()
+                set_last_recalibration_turn(self.world.turn)
+                if provenance_entry.get("turn_record"):
+                    provenance_entry["turn_record"]["calibration_event"] = {"reason": reason}
+        except ImportError:
+            pass
 
         try:
             from trace_log.action_trace import append_action_trace_entry
@@ -819,6 +1457,93 @@ class SimulationLoop:
         snap_after = self.world.snapshot()
         if self._provenance and self._provenance[-1].get("turn_record") is not None:
             self._provenance[-1]["turn_record"]["post_state"] = snap_after
+
+        # Build typed TransitionProvenance for this step (Phase 2/3)
+        self._attach_transition_provenance(
+            previous_state=previous_state,
+            post_state=snap_after,
+            delta_after_merge=delta_after_merge,
+            delta_applied=delta_applied,
+            governance_modified_delta=governance_modified_delta,
+            outcome=outcome,
+            events_triggered=events_triggered,
+            rule_activations=rule_activations,
+            shock_result=shock_result,
+        )
+
+        try:
+            from core.narrative_engine import generate_turn_narrative
+            from core.narrative_memory import append_narrative
+            prov = self._provenance[-1]
+            tr = prov.get("turn_record") or {}
+            previous_state = tr.get("pre_state") or {}
+            current_state = tr.get("post_state") or snap_after
+            delta_applied = tr.get("delta_applied") or {}
+            propagation_trace = tr.get("propagation_trace") or []
+            causal_edges = prov.get("causal_edges") or []
+            causal_trace = list(propagation_trace) + [e for e in causal_edges if isinstance(e, dict) and (e.get("from") or e.get("to") or e.get("variable"))]
+            regime = str(prov.get("regime", "NORMAL"))
+            chosen_actions = tr.get("chosen_actions") or []
+            goals_per_agent: dict[str, dict[str, Any]] = {}
+            for a in self.agents:
+                name = getattr(a, "name", None)
+                if name:
+                    goals_per_agent[str(name)] = {
+                        "objectives": getattr(a, "objectives", None) or {},
+                        "long_term_goals": getattr(a, "long_term_goals", None) or [],
+                    }
+            initial_agents = (self._scenario or {}).get("initial_agents") or []
+            for ia in initial_agents:
+                if isinstance(ia, dict) and ia.get("name") and ia["name"] not in goals_per_agent:
+                    goals_per_agent[str(ia["name"])] = {
+                        "objectives": ia.get("objectives") or {},
+                        "long_term_goals": ia.get("long_term_goals") or [],
+                    }
+            calibration_data: dict[str, Any] = {"per_agent_calibration": {}}
+            try:
+                from core.prediction_calibration import get_metrics as get_prediction_calibration_metrics, get_calibration_score
+                for a in self.agents:
+                    name = getattr(a, "name", None)
+                    if name:
+                        m = get_prediction_calibration_metrics(name)
+                        calibration_data["per_agent_calibration"][str(name)] = {
+                            "rolling_mse": m.get("rolling_mse"),
+                            "bias": m.get("bias"),
+                            "calibration_weight": m.get("calibration_weight"),
+                            "calibration_score": get_calibration_score(name),
+                        }
+                scores = [get_calibration_score(getattr(a, "name", "")) for a in self.agents if getattr(a, "name", None)]
+                calibration_data["calibration_score_agg"] = (sum(scores) / len(scores)) if scores else 0.5
+            except ImportError:
+                calibration_data["calibration_score_agg"] = 0.5
+            narrative = generate_turn_narrative(
+                previous_state,
+                current_state,
+                delta_applied,
+                causal_trace,
+                regime,
+                calibration_data,
+                chosen_actions,
+                goals_per_agent,
+                self._scenario or {},
+                self_effect_per_agent=tr.get("self_effect_per_agent") or {},
+                propagation_trace=propagation_trace,
+                delta_applied=delta_applied,
+            )
+            prov["narrative"] = narrative
+            append_narrative(narrative, self.world.turn)
+        except Exception:
+            pass
+
+        if DEBUG_PERF:
+            _t0_dash = time.perf_counter()
+            if self._build_turn_payload_cb:
+                try:
+                    _agents_list = [{"name": getattr(a, "name", ""), "belief_state": getattr(getattr(a, "memory", None), "beliefs", None) or {}} for a in self.agents]
+                    self._build_turn_payload_cb(snap_after, self._provenance[-1], self._scenario, _agents_list, provenance_history=list(self._provenance))
+                except Exception:
+                    pass
+            _perf["dashboard_build"] = time.perf_counter() - _t0_dash
 
         # Extract structured outcome components
         primary_effect = outcome.get("primary_effect") if isinstance(outcome, dict) else None
@@ -903,7 +1628,71 @@ class SimulationLoop:
                     actual_delta=actual_delta,
                     primary_variable=agent_primary_variable,
                 )
-            
+            # [Belief layer] Update structured belief state and decay uncertainty (optional)
+            try:
+                from config.settings import ENABLE_BELIEF_LAYER
+                if ENABLE_BELIEF_LAYER and hasattr(agent, "_belief_state"):
+                    from agents.belief_model import (
+                        belief_state_from_memory_beliefs,
+                        update_belief_state,
+                        uncertainty_decay,
+                    )
+                    if agent._belief_state is None:
+                        agent._belief_state = belief_state_from_memory_beliefs(agent.memory.beliefs)
+                    obs = (snap_after.get("variables") or snap_after.get("global_state")) or {}
+                    if isinstance(obs, dict):
+                        obs = {k: float(v) for k, v in obs.items() if isinstance(v, (int, float))}
+                    shock_active = False
+                    shock_intensity = 0.0
+                    if provenance_entry.get("shock") and provenance_entry["shock"].get("active"):
+                        shock_active = True
+                        shock_intensity = float(provenance_entry["shock"].get("intensity", 0))
+                    update_belief_state(
+                        agent._belief_state,
+                        obs,
+                        actual_delta=actual_delta,
+                        instability_mode=instability_mode,
+                        shock_active=shock_active,
+                        world_entropy=current_entropy,
+                        belief_update_rate=BELIEF_UPDATE_RATE,
+                    )
+                    uncertainty_decay(agent._belief_state, decay_rate=0.95)
+            except (ImportError, AttributeError, TypeError):
+                pass
+
+            # Epistemic gap: emit ConflictEvent when |reality - belief| > threshold
+            try:
+                from config.settings import ENABLE_BELIEF_LAYER as _BELIEF_LAYER
+                if _BELIEF_LAYER and hasattr(agent, "_belief_state") and agent._belief_state is not None:
+                    reality_vars = (snap_after.get("variables") or snap_after.get("global_state")) or {}
+                    if isinstance(reality_vars, dict):
+                        reality_vars = {k: float(v) for k, v in reality_vars.items() if isinstance(v, (int, float))}
+                    gaps: list[tuple[str, float, float, float]] = []
+                    for var, reality_val in reality_vars.items():
+                        belief_val = agent._belief_state.beliefs.get(var)
+                        if belief_val is not None and isinstance(belief_val, (int, float)):
+                            gap = abs(float(reality_val) - float(belief_val))
+                            if gap > EPISTEMIC_GAP_THRESHOLD:
+                                gaps.append((var, float(reality_val), float(belief_val), gap))
+                    if gaps:
+                        if CONFLICT_EVENT_STRICT:
+                            gaps = [max(gaps, key=lambda x: x[3])]
+                        for var, reality_val, belief_val, gap in gaps:
+                            self.world.events.append({
+                                "event_type": "conflict",
+                                "trigger_turn": self.world.turn,
+                                "params": {
+                                    "agent": getattr(agent, "name", "unknown"),
+                                    "variable": var,
+                                    "reality": reality_val,
+                                    "belief": belief_val,
+                                    "gap": gap,
+                                },
+                                "origin": "epistemic_gap",
+                            })
+            except (AttributeError, TypeError):
+                pass
+
             # Update long-term memory for each agent
             if hasattr(agent, "update_long_term_memory") and i < len(proposal_results):
                 proposal, delta, was_accepted = proposal_results[i]
@@ -927,6 +1716,83 @@ class SimulationLoop:
                 if action_type and isinstance(action_type, str):
                     agent.last_actions = (agent.last_actions + [action_type])[-2:]
 
+        # [RL] Update per-agent RL weight from observed reward.
+        try:
+            from config.settings import MC_RL_BETA
+            for i, agent in enumerate(self.agents):
+                if i >= len(proposal_results):
+                    continue
+                proposal, delta, was_accepted = proposal_results[i]
+                action_type = getattr(proposal, "action_type", None) or (proposal.to_dict() if hasattr(proposal, "to_dict") else {}).get("action_type")
+                if not action_type or not hasattr(agent, "update_rl_weight"):
+                    continue
+                state_delta = dict(actual_delta) if actual_delta else {}
+                observed_reward = agent._calculate_valence(proposal, delta, was_accepted, state_delta, agent.objectives)
+                agent.update_rl_weight(action_type, observed_reward, baseline=agent._rl_baseline, beta=MC_RL_BETA)
+        except (ImportError, AttributeError):
+            pass
+
+        if DEBUG_PERF and _perf:
+            turn = self.world.turn
+            parts = [f"proposals={_perf.get('proposals', 0):.3f}s", f"merge={_perf.get('merge', 0):.3f}s", f"dashboard_build={_perf.get('dashboard_build', 0):.3f}s"]
+            logging.getLogger(__name__).debug("DEBUG_PERF turn %s: %s", turn, " ".join(parts))
+
+    def rollback_to_turn(self, turn: int) -> bool:
+        """Restore world and provenance to the given turn using checkpoint. Returns True if applied."""
+        if self._checkpoint_store is None:
+            return False
+        return self._checkpoint_store.rollback_to_turn(
+            self.world, self._provenance, self._action_trace, turn
+        )
+
+    def rollback_last_step(self) -> bool:
+        """Restore to the previous turn (last checkpoint). Returns True if applied."""
+        if self._checkpoint_store is None:
+            return False
+        return self._checkpoint_store.rollback_last_step(
+            self.world, self._provenance, self._action_trace
+        )
+
+    def _attach_transition_provenance(
+        self,
+        *,
+        previous_state: dict[str, Any],
+        post_state: dict[str, Any],
+        delta_after_merge: dict[str, float] | None,
+        delta_applied: dict[str, float] | None,
+        governance_modified_delta: dict[str, float] | None,
+        outcome: dict[str, Any] | list[dict[str, Any]] | None,
+        events_triggered: list[dict[str, Any]],
+        rule_activations: list[dict[str, Any]],
+        shock_result: dict[str, Any] | None,
+    ) -> None:
+        """
+        Build and attach a typed TransitionProvenance record for the latest step.
+
+        This helper keeps SimulationLoop.step focused on orchestration while the
+        transition kernel owns the structured provenance model.
+        """
+        if not self._provenance:
+            return
+        prov = self._provenance[-1]
+        turn_record = prov.get("turn_record") or {}
+        try:
+            transition_prov = transition_execution(
+                pre_state=turn_record.get("pre_state") or previous_state,
+                post_state=post_state,
+                proposed_delta=turn_record.get("delta_after_merge") or delta_after_merge or {},
+                constrained_delta=turn_record.get("delta_applied") or delta_applied or {},
+                governance_modified_delta=turn_record.get("governance_modified_delta") or governance_modified_delta or None,
+                outcome=prov.get("outcome") or outcome,
+                events_triggered=prov.get("events_triggered") or events_triggered,
+                rule_activations=prov.get("rule_activations") or rule_activations,
+                shock_result=prov.get("shock") or shock_result,
+            )
+            prov["transition_provenance"] = transition_prov.to_dict()
+        except Exception:
+            # Provenance building must never break the main loop
+            return
+
     def run(
         self,
         steps: int = 5,
@@ -944,6 +1810,11 @@ class SimulationLoop:
         Args:
             delay_between_rounds: Delay in seconds between simulation rounds to avoid rate limits (default: 2.0).
         """
+        try:
+            from core.narrative_memory import clear_narrative_history
+            clear_narrative_history()
+        except Exception:
+            pass
         out_path = snapshot_out_path or self.snapshot_path
         turns: list[dict[str, Any]] = []
         for i in range(steps):
@@ -987,11 +1858,12 @@ class SimulationLoop:
             final["governance_state"] = self.governance.snapshot_state()
         if out_path:
             with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(final, f, indent=2)
+                json.dump(_make_json_safe(final), f, indent=2)
             if not silent:
                 print(f"Snapshot saved to {out_path}")
         if return_turns or return_provenance:
-            result: dict[str, Any] = {"final": final}
+            from core.versioning import version_summary
+            result: dict[str, Any] = {"final": final, "versions": version_summary()}
             if return_turns:
                 result["turns"] = turns
             if return_provenance:
@@ -1015,7 +1887,8 @@ class SimulationLoop:
             snap_copy = dict(snap)
             if self.agents and hasattr(self.agents[0], "state_to_dict"):
                 snap_copy["agents_state"] = {a.name: a.state_to_dict() for a in self.agents}
-            yield {"type": "turn", "turn_index": i + 1, "steps_total": steps, "turn": snap_copy}
+            provenance_entry = self._provenance[-1] if self._provenance else None
+            yield {"type": "turn", "turn_index": i + 1, "steps_total": steps, "turn": snap_copy, "provenance_entry": provenance_entry}
             if i < steps - 1:
                 time.sleep(delay_between_rounds)
         final = self.world.snapshot()
@@ -1025,5 +1898,11 @@ class SimulationLoop:
             final["governance_state"] = self.governance.snapshot_state()
         if out_path:
             with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(final, f, indent=2)
-        yield {"type": "done", "final": final, "provenance": list(self._provenance)}
+                json.dump(_make_json_safe(final), f, indent=2)
+        from core.versioning import version_summary
+        yield {
+            "type": "done",
+            "final": final,
+            "provenance": list(self._provenance),
+            "versions": version_summary(),
+        }

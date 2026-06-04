@@ -1,0 +1,2286 @@
+{
+  "entities": {},
+  "relations": [],
+  "variables": {
+    "iran_russia_cooperation": 100.0,
+    "iran_us_tension": 74.8938656,
+    "iranian_government_stability": 100.0,
+    "miscalculation_risk": 35.61273760000001,
+    "nuclear_negotiation_progress": 98.01756160000001,
+    "us_military_presence": 27.68463359999999
+  },
+  "global_state": {
+    "iran_russia_cooperation": 100.0,
+    "iran_us_tension": 74.8938656,
+    "iranian_government_stability": 100.0,
+    "miscalculation_risk": 35.61273760000001,
+    "nuclear_negotiation_progress": 98.01756160000001,
+    "us_military_presence": 27.68463359999999
+  },
+  "causal_links": [
+    {
+      "from": "iran_us_tension",
+      "polarity": "negative",
+      "strength": 0.8,
+      "to": "nuclear_negotiation_progress",
+      "weight": -0.8
+    },
+    {
+      "from": "iran_us_tension",
+      "polarity": "positive",
+      "strength": 0.7,
+      "to": "us_military_presence",
+      "weight": 0.7
+    },
+    {
+      "from": "iran_us_tension",
+      "polarity": "positive",
+      "strength": 0.9,
+      "to": "miscalculation_risk",
+      "weight": 0.9
+    },
+    {
+      "from": "nuclear_negotiation_progress",
+      "polarity": "negative",
+      "strength": 0.6,
+      "to": "iran_us_tension",
+      "weight": -0.6
+    },
+    {
+      "from": "iranian_government_stability",
+      "polarity": "negative",
+      "strength": 0.4,
+      "to": "iran_us_tension",
+      "weight": -0.4
+    },
+    {
+      "from": "us_military_presence",
+      "polarity": "positive",
+      "strength": 0.6,
+      "to": "iran_us_tension",
+      "weight": 0.6
+    },
+    {
+      "from": "us_military_presence",
+      "polarity": "positive",
+      "strength": 0.7,
+      "to": "miscalculation_risk",
+      "weight": 0.7
+    },
+    {
+      "from": "miscalculation_risk",
+      "polarity": "positive",
+      "strength": 0.8,
+      "to": "iran_us_tension",
+      "weight": 0.8
+    },
+    {
+      "from": "iran_russia_cooperation",
+      "polarity": "positive",
+      "strength": 0.5,
+      "to": "iran_us_tension",
+      "weight": 0.5
+    },
+    {
+      "from": "iran_russia_cooperation",
+      "polarity": "positive",
+      "strength": 0.4,
+      "to": "us_military_presence",
+      "weight": 0.4
+    }
+  ],
+  "narrative": [
+    "[v0] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+    "[v1] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+    "[v2] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+    "[v3] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+    "[v4] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper"
+  ],
+  "ontology": {},
+  "version": 5,
+  "turn": 5,
+  "events": [
+    {
+      "condition_key": "iran_us_tension_above_80",
+      "effect_key": "apply_crisis_effect",
+      "event_type": "crisis_if_high",
+      "params": {
+        "threshold": 80,
+        "variable": "iran_us_tension"
+      }
+    }
+  ],
+  "agents_state": {
+    "iranian_government": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "iranian_government",
+              "action_type": "accept_enrichment_reduction",
+              "parameters": {},
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -3.6363636363636367,
+              "iranian_government_stability": 4.0,
+              "nuclear_negotiation_progress": 10.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": 23.34208,
+              "miscalculation_risk": -22.3620576,
+              "us_military_presence": -19.27432,
+              "iran_russia_cooperation": 10.0
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "iranian_government",
+              "action_type": "accept_enrichment_reduction",
+              "parameters": {},
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": 5.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": 5.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": 2.2222222222222223,
+              "iranian_government_stability": 2.5,
+              "nuclear_negotiation_progress": 10.0
+            },
+            "global_world_delta": {
+              "iranian_government_stability": 10.0,
+              "iran_us_tension": 14.893865600000002,
+              "nuclear_negotiation_progress": 3.9822591999999997,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 19.6442704,
+              "us_military_presence": 7.6655232
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "iranian_government",
+              "action_type": "accept_enrichment_reduction",
+              "parameters": {},
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": 10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": 10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": 4.0,
+              "iranian_government_stability": 2.8571428571428568,
+              "nuclear_negotiation_progress": 8.571428571428571
+            },
+            "global_world_delta": {
+              "iran_us_tension": 10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": -0.02063359999999914,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 25.5439072,
+              "us_military_presence": 11.168054399999999
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "iranian_government",
+              "action_type": "accept_enrichment_reduction",
+              "parameters": {},
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -3.6363636363636367,
+              "iranian_government_stability": 4.0,
+              "nuclear_negotiation_progress": 10.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": 26.268851200000004,
+              "miscalculation_risk": -27.3442848,
+              "us_military_presence": -24.2352448,
+              "iran_russia_cooperation": 0.0
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "iranian_government",
+              "action_type": "accept_enrichment_reduction",
+              "parameters": {},
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 0.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 0.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -3.6363636363636367,
+              "iranian_government_stability": 0.0,
+              "nuclear_negotiation_progress": 10.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 0.0,
+              "nuclear_negotiation_progress": 24.445004800000003,
+              "miscalculation_risk": -24.869097599999996,
+              "us_military_presence": -22.6393792,
+              "iran_russia_cooperation": 0.0
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "global_state": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "causal_links": [
+            {
+              "from": "iran_us_tension",
+              "polarity": "negative",
+              "strength": 0.8,
+              "to": "nuclear_negotiation_progress",
+              "weight": -0.8
+            },
+            {
+              "from": "iran_us_tension",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "us_military_presence",
+              "weight": 0.7
+            },
+            {
+              "from": "iran_us_tension",
+              "polarity": "positive",
+              "strength": 0.9,
+              "to": "miscalculation_risk",
+              "weight": 0.9
+            },
+            {
+              "from": "nuclear_negotiation_progress",
+              "polarity": "negative",
+              "strength": 0.6,
+              "to": "iran_us_tension",
+              "weight": -0.6
+            },
+            {
+              "from": "iranian_government_stability",
+              "polarity": "negative",
+              "strength": 0.4,
+              "to": "iran_us_tension",
+              "weight": -0.4
+            },
+            {
+              "from": "us_military_presence",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "iran_us_tension",
+              "weight": 0.6
+            },
+            {
+              "from": "us_military_presence",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "miscalculation_risk",
+              "weight": 0.7
+            },
+            {
+              "from": "miscalculation_risk",
+              "polarity": "positive",
+              "strength": 0.8,
+              "to": "iran_us_tension",
+              "weight": 0.8
+            },
+            {
+              "from": "iran_russia_cooperation",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "iran_us_tension",
+              "weight": 0.5
+            },
+            {
+              "from": "iran_russia_cooperation",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "us_military_presence",
+              "weight": 0.4
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+            "[v1] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v2] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v3] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v4] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": [
+            {
+              "condition_key": "iran_us_tension_above_80",
+              "effect_key": "apply_crisis_effect",
+              "event_type": "crisis_if_high",
+              "params": {
+                "threshold": 80,
+                "variable": "iran_us_tension"
+              }
+            }
+          ]
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "iran_russia_cooperation": 99.15796491841509,
+            "iran_us_tension": 80.67140741970961,
+            "iranian_government_stability": 97.47726491841509,
+            "miscalculation_risk": 50.68502717475188,
+            "nuclear_negotiation_progress": 81.38863926441509,
+            "us_military_presence": 42.186481334954536
+          },
+          "confidence": {
+            "iran_russia_cooperation": 0.3799999999999999,
+            "iran_us_tension": 0.3799999999999999,
+            "iranian_government_stability": 0.3799999999999999,
+            "miscalculation_risk": 0.3799999999999999,
+            "nuclear_negotiation_progress": 0.1,
+            "us_military_presence": 0.3799999999999999
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "iran_russia_cooperation": 99.15796491841509,
+          "iran_us_tension": 80.67140741970961,
+          "iranian_government_stability": 97.47726491841509,
+          "miscalculation_risk": 50.68502717475188,
+          "nuclear_negotiation_progress": 81.38863926441509,
+          "us_military_presence": 42.186481334954536
+        },
+        "confidence": {
+          "iran_russia_cooperation": 0.3799999999999999,
+          "iran_us_tension": 0.3799999999999999,
+          "iranian_government_stability": 0.3799999999999999,
+          "miscalculation_risk": 0.3799999999999999,
+          "nuclear_negotiation_progress": 0.1,
+          "us_military_presence": 0.3799999999999999
+        }
+      },
+      "long_term_goals": [
+        "decrease_iran_us_tension",
+        "increase_iran_russia_cooperation",
+        "increase_iranian_government_stability",
+        "increase_nuclear_negotiation_progress"
+      ],
+      "short_term_goals": [
+        "decrease_iran_us_tension",
+        "increase_iran_russia_cooperation",
+        "increase_iranian_government_stability",
+        "increase_nuclear_negotiation_progress"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "accept_enrichment_reduction accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "accept_enrichment_reduction accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 3,
+          "event": "accept_enrichment_reduction accepted",
+          "importance": 0.9025,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 4,
+          "event": "accept_enrichment_reduction accepted",
+          "importance": 0.95,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 5,
+          "event": "accept_enrichment_reduction accepted",
+          "importance": 1.0,
+          "emotional_valence": 1.0
+        }
+      ],
+      "last_actions": [
+        "accept_enrichment_reduction",
+        "accept_enrichment_reduction"
+      ],
+      "strategy_class_weights": {
+        "diplomatic": 1.9999999999999998
+      }
+    },
+    "united_states": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "us_deescalate_military_presence",
+              "parameters": {},
+              "rationale": "Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -2.727272727272727,
+              "miscalculation_risk": 0.0,
+              "us_military_presence": -10.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": 23.34208,
+              "miscalculation_risk": -22.3620576,
+              "us_military_presence": -19.27432,
+              "iran_russia_cooperation": 10.0
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "expand_domestic_crackdown",
+              "parameters": {},
+              "rationale": "Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": 5.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": 5.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": 0.5555555555555556,
+              "iranian_government_stability": 3.75
+            },
+            "global_world_delta": {
+              "iranian_government_stability": 10.0,
+              "iran_us_tension": 14.893865600000002,
+              "nuclear_negotiation_progress": 3.9822591999999997,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 19.6442704,
+              "us_military_presence": 7.6655232
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "us_impose_stricter_sanctions",
+              "parameters": {},
+              "rationale": "Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": 10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": 10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": 2.0,
+              "iranian_government_stability": 2.8571428571428568,
+              "nuclear_negotiation_progress": 1.4285714285714284
+            },
+            "global_world_delta": {
+              "iran_us_tension": 10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": -0.02063359999999914,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 25.5439072,
+              "us_military_presence": 11.168054399999999
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "us_deescalate_military_presence",
+              "parameters": {},
+              "rationale": "Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -2.727272727272727,
+              "miscalculation_risk": 0.0,
+              "us_military_presence": -10.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": 26.268851200000004,
+              "miscalculation_risk": -27.3442848,
+              "us_military_presence": -24.2352448,
+              "iran_russia_cooperation": 0.0
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "united_states",
+              "action_type": "us_deescalate_military_presence",
+              "parameters": {},
+              "rationale": "Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 0.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 0.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -2.727272727272727,
+              "miscalculation_risk": 0.0,
+              "us_military_presence": -10.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 0.0,
+              "nuclear_negotiation_progress": 24.445004800000003,
+              "miscalculation_risk": -24.869097599999996,
+              "us_military_presence": -22.6393792,
+              "iran_russia_cooperation": 0.0
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "global_state": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "causal_links": [
+            {
+              "from": "iran_us_tension",
+              "polarity": "negative",
+              "strength": 0.8,
+              "to": "nuclear_negotiation_progress",
+              "weight": -0.8
+            },
+            {
+              "from": "iran_us_tension",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "us_military_presence",
+              "weight": 0.7
+            },
+            {
+              "from": "iran_us_tension",
+              "polarity": "positive",
+              "strength": 0.9,
+              "to": "miscalculation_risk",
+              "weight": 0.9
+            },
+            {
+              "from": "nuclear_negotiation_progress",
+              "polarity": "negative",
+              "strength": 0.6,
+              "to": "iran_us_tension",
+              "weight": -0.6
+            },
+            {
+              "from": "iranian_government_stability",
+              "polarity": "negative",
+              "strength": 0.4,
+              "to": "iran_us_tension",
+              "weight": -0.4
+            },
+            {
+              "from": "us_military_presence",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "iran_us_tension",
+              "weight": 0.6
+            },
+            {
+              "from": "us_military_presence",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "miscalculation_risk",
+              "weight": 0.7
+            },
+            {
+              "from": "miscalculation_risk",
+              "polarity": "positive",
+              "strength": 0.8,
+              "to": "iran_us_tension",
+              "weight": 0.8
+            },
+            {
+              "from": "iran_russia_cooperation",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "iran_us_tension",
+              "weight": 0.5
+            },
+            {
+              "from": "iran_russia_cooperation",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "us_military_presence",
+              "weight": 0.4
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+            "[v1] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v2] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v3] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v4] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": [
+            {
+              "condition_key": "iran_us_tension_above_80",
+              "effect_key": "apply_crisis_effect",
+              "event_type": "crisis_if_high",
+              "params": {
+                "threshold": 80,
+                "variable": "iran_us_tension"
+              }
+            }
+          ]
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "iran_russia_cooperation": 99.15796491841509,
+            "iran_us_tension": 80.67140741970961,
+            "iranian_government_stability": 97.47726491841509,
+            "miscalculation_risk": 50.68502717475188,
+            "nuclear_negotiation_progress": 81.38863926441509,
+            "us_military_presence": 42.186481334954536
+          },
+          "confidence": {
+            "iran_russia_cooperation": 0.3799999999999999,
+            "iran_us_tension": 0.43999999999999995,
+            "iranian_government_stability": 0.23999999999999988,
+            "miscalculation_risk": 0.3799999999999999,
+            "nuclear_negotiation_progress": 0.3799999999999999,
+            "us_military_presence": 0.1
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "iran_russia_cooperation": 99.15796491841509,
+          "iran_us_tension": 80.67140741970961,
+          "iranian_government_stability": 97.47726491841509,
+          "miscalculation_risk": 50.68502717475188,
+          "nuclear_negotiation_progress": 81.38863926441509,
+          "us_military_presence": 42.186481334954536
+        },
+        "confidence": {
+          "iran_russia_cooperation": 0.3799999999999999,
+          "iran_us_tension": 0.43999999999999995,
+          "iranian_government_stability": 0.23999999999999988,
+          "miscalculation_risk": 0.3799999999999999,
+          "nuclear_negotiation_progress": 0.3799999999999999,
+          "us_military_presence": 0.1
+        }
+      },
+      "long_term_goals": [
+        "decrease_iran_us_tension",
+        "decrease_miscalculation_risk",
+        "decrease_nuclear_negotiation_progress"
+      ],
+      "short_term_goals": [
+        "decrease_iran_us_tension",
+        "decrease_miscalculation_risk",
+        "decrease_nuclear_negotiation_progress"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "us_deescalate_military_presence accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "expand_domestic_crackdown accepted",
+          "importance": 0.6001624999999999,
+          "emotional_valence": -0.9999999999999998
+        },
+        {
+          "turn": 3,
+          "event": "us_impose_stricter_sanctions accepted",
+          "importance": 0.6317499999999999,
+          "emotional_valence": -0.6111111111111109
+        },
+        {
+          "turn": 4,
+          "event": "us_deescalate_military_presence accepted",
+          "importance": 0.95,
+          "emotional_valence": 0.9444444444444444
+        },
+        {
+          "turn": 5,
+          "event": "us_deescalate_military_presence accepted",
+          "importance": 1.0,
+          "emotional_valence": 1.0
+        }
+      ],
+      "last_actions": [
+        "us_deescalate_military_presence",
+        "us_deescalate_military_presence"
+      ],
+      "strategy_class_weights": {
+        "de-escalatory": 1.5999999999999999,
+        "repressive": 0.8,
+        "coercive": 0.8
+      }
+    },
+    "iranian_protesters": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "expand_domestic_crackdown",
+              "parameters": {},
+              "rationale": "Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -0.9090909090909092,
+              "iranian_government_stability": 6.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": 23.34208,
+              "miscalculation_risk": -22.3620576,
+              "us_military_presence": -19.27432,
+              "iran_russia_cooperation": 10.0
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "expand_domestic_crackdown",
+              "parameters": {},
+              "rationale": "Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": 5.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": 5.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": 0.5555555555555556,
+              "iranian_government_stability": 3.75
+            },
+            "global_world_delta": {
+              "iranian_government_stability": 10.0,
+              "iran_us_tension": 14.893865600000002,
+              "nuclear_negotiation_progress": 3.9822591999999997,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 19.6442704,
+              "us_military_presence": 7.6655232
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "expand_domestic_crackdown",
+              "parameters": {},
+              "rationale": "Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": 10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": 10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": 1.0,
+              "iranian_government_stability": 4.285714285714286
+            },
+            "global_world_delta": {
+              "iran_us_tension": 10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": -0.02063359999999914,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 25.5439072,
+              "us_military_presence": 11.168054399999999
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "expand_domestic_crackdown",
+              "parameters": {},
+              "rationale": "Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -0.9090909090909092,
+              "iranian_government_stability": 6.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": 26.268851200000004,
+              "miscalculation_risk": -27.3442848,
+              "us_military_presence": -24.2352448,
+              "iran_russia_cooperation": 0.0
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "iranian_protesters",
+              "action_type": "expand_domestic_crackdown",
+              "parameters": {},
+              "rationale": "Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 0.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 0.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -0.9090909090909092,
+              "iranian_government_stability": 0.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 0.0,
+              "nuclear_negotiation_progress": 24.445004800000003,
+              "miscalculation_risk": -24.869097599999996,
+              "us_military_presence": -22.6393792,
+              "iran_russia_cooperation": 0.0
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "global_state": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "causal_links": [
+            {
+              "from": "iran_us_tension",
+              "polarity": "negative",
+              "strength": 0.8,
+              "to": "nuclear_negotiation_progress",
+              "weight": -0.8
+            },
+            {
+              "from": "iran_us_tension",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "us_military_presence",
+              "weight": 0.7
+            },
+            {
+              "from": "iran_us_tension",
+              "polarity": "positive",
+              "strength": 0.9,
+              "to": "miscalculation_risk",
+              "weight": 0.9
+            },
+            {
+              "from": "nuclear_negotiation_progress",
+              "polarity": "negative",
+              "strength": 0.6,
+              "to": "iran_us_tension",
+              "weight": -0.6
+            },
+            {
+              "from": "iranian_government_stability",
+              "polarity": "negative",
+              "strength": 0.4,
+              "to": "iran_us_tension",
+              "weight": -0.4
+            },
+            {
+              "from": "us_military_presence",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "iran_us_tension",
+              "weight": 0.6
+            },
+            {
+              "from": "us_military_presence",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "miscalculation_risk",
+              "weight": 0.7
+            },
+            {
+              "from": "miscalculation_risk",
+              "polarity": "positive",
+              "strength": 0.8,
+              "to": "iran_us_tension",
+              "weight": 0.8
+            },
+            {
+              "from": "iran_russia_cooperation",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "iran_us_tension",
+              "weight": 0.5
+            },
+            {
+              "from": "iran_russia_cooperation",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "us_military_presence",
+              "weight": 0.4
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+            "[v1] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v2] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v3] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v4] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": [
+            {
+              "condition_key": "iran_us_tension_above_80",
+              "effect_key": "apply_crisis_effect",
+              "event_type": "crisis_if_high",
+              "params": {
+                "threshold": 80,
+                "variable": "iran_us_tension"
+              }
+            }
+          ]
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "iran_russia_cooperation": 99.15796491841509,
+            "iran_us_tension": 80.67140741970961,
+            "iranian_government_stability": 97.47726491841509,
+            "miscalculation_risk": 50.68502717475188,
+            "nuclear_negotiation_progress": 81.38863926441509,
+            "us_military_presence": 42.186481334954536
+          },
+          "confidence": {
+            "iran_russia_cooperation": 0.3799999999999999,
+            "iran_us_tension": 0.3799999999999999,
+            "iranian_government_stability": 0.1,
+            "miscalculation_risk": 0.3799999999999999,
+            "nuclear_negotiation_progress": 0.3799999999999999,
+            "us_military_presence": 0.3799999999999999
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "iran_russia_cooperation": 99.15796491841509,
+          "iran_us_tension": 80.67140741970961,
+          "iranian_government_stability": 97.47726491841509,
+          "miscalculation_risk": 50.68502717475188,
+          "nuclear_negotiation_progress": 81.38863926441509,
+          "us_military_presence": 42.186481334954536
+        },
+        "confidence": {
+          "iran_russia_cooperation": 0.3799999999999999,
+          "iran_us_tension": 0.3799999999999999,
+          "iranian_government_stability": 0.1,
+          "miscalculation_risk": 0.3799999999999999,
+          "nuclear_negotiation_progress": 0.3799999999999999,
+          "us_military_presence": 0.3799999999999999
+        }
+      },
+      "long_term_goals": [
+        "decrease_iranian_government_stability"
+      ],
+      "short_term_goals": [
+        "decrease_iranian_government_stability"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "expand_domestic_crackdown accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "expand_domestic_crackdown accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 3,
+          "event": "expand_domestic_crackdown accepted",
+          "importance": 0.9025,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 4,
+          "event": "expand_domestic_crackdown accepted",
+          "importance": 0.95,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 5,
+          "event": "expand_domestic_crackdown accepted",
+          "importance": 1.0,
+          "emotional_valence": 1.0
+        }
+      ],
+      "last_actions": [
+        "expand_domestic_crackdown",
+        "expand_domestic_crackdown"
+      ],
+      "strategy_class_weights": {
+        "repressive": 1.9999999999999998
+      }
+    },
+    "russian_federation": {
+      "memory": {
+        "episodic_memory": [
+          {
+            "turn": 1,
+            "action": {
+              "agent_name": "russian_federation",
+              "action_type": "increase_military_exercises",
+              "parameters": {},
+              "rationale": "Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -2.727272727272727,
+              "miscalculation_risk": 0.0,
+              "iran_russia_cooperation": 10.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": 23.34208,
+              "miscalculation_risk": -22.3620576,
+              "us_military_presence": -19.27432,
+              "iran_russia_cooperation": 10.0
+            }
+          },
+          {
+            "turn": 2,
+            "action": {
+              "agent_name": "russian_federation",
+              "action_type": "increase_military_exercises",
+              "parameters": {},
+              "rationale": "Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": 5.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": 5.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": 1.6666666666666665,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 10.0
+            },
+            "global_world_delta": {
+              "iranian_government_stability": 10.0,
+              "iran_us_tension": 14.893865600000002,
+              "nuclear_negotiation_progress": 3.9822591999999997,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 19.6442704,
+              "us_military_presence": 7.6655232
+            }
+          },
+          {
+            "turn": 3,
+            "action": {
+              "agent_name": "russian_federation",
+              "action_type": "increase_military_exercises",
+              "parameters": {},
+              "rationale": "Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": 10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": 10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "iran_russia_cooperation": 10.0,
+                "miscalculation_risk": 10.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": 3.0,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 10.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": 10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": -0.02063359999999914,
+              "iran_russia_cooperation": 10.0,
+              "miscalculation_risk": 25.5439072,
+              "us_military_presence": 11.168054399999999
+            }
+          },
+          {
+            "turn": 4,
+            "action": {
+              "agent_name": "russian_federation",
+              "action_type": "increase_military_exercises",
+              "parameters": {},
+              "rationale": "Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 10.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -2.727272727272727,
+              "miscalculation_risk": 0.0,
+              "iran_russia_cooperation": 0.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 10.0,
+              "nuclear_negotiation_progress": 26.268851200000004,
+              "miscalculation_risk": -27.3442848,
+              "us_military_presence": -24.2352448,
+              "iran_russia_cooperation": 0.0
+            }
+          },
+          {
+            "turn": 5,
+            "action": {
+              "agent_name": "russian_federation",
+              "action_type": "increase_military_exercises",
+              "parameters": {},
+              "rationale": "Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "confidence": 0.7,
+              "action_spec": null
+            },
+            "outcome": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 0.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "world_delta": {
+              "numeric_updates": {
+                "iran_us_tension": -10.0,
+                "iranian_government_stability": 0.0,
+                "nuclear_negotiation_progress": 10.0,
+                "miscalculation_risk": 0.0,
+                "us_military_presence": -10.0,
+                "iran_russia_cooperation": 0.0
+              },
+              "entity_updates": {},
+              "new_entities": {},
+              "relation_updates": [],
+              "meta_proposals": [],
+              "rationale": "Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+              "effects_duration": null,
+              "mitigation": null,
+              "delay_turns": null,
+              "probability": null,
+              "primary_variable": null,
+              "action_type": null
+            },
+            "self_effect": {
+              "iran_us_tension": -2.727272727272727,
+              "miscalculation_risk": 0.0,
+              "iran_russia_cooperation": 0.0
+            },
+            "global_world_delta": {
+              "iran_us_tension": -10.0,
+              "iranian_government_stability": 0.0,
+              "nuclear_negotiation_progress": 24.445004800000003,
+              "miscalculation_risk": -24.869097599999996,
+              "us_military_presence": -22.6393792,
+              "iran_russia_cooperation": 0.0
+            }
+          }
+        ],
+        "semantic_memory": {
+          "global_state_summary": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "last_turn": 5,
+          "last_version": 5
+        },
+        "last_observation": {
+          "entities": {},
+          "relations": [],
+          "variables": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "global_state": {
+            "iran_russia_cooperation": 100.0,
+            "iran_us_tension": 74.8938656,
+            "iranian_government_stability": 100.0,
+            "miscalculation_risk": 35.61273760000001,
+            "nuclear_negotiation_progress": 98.01756160000001,
+            "us_military_presence": 27.68463359999999
+          },
+          "causal_links": [
+            {
+              "from": "iran_us_tension",
+              "polarity": "negative",
+              "strength": 0.8,
+              "to": "nuclear_negotiation_progress",
+              "weight": -0.8
+            },
+            {
+              "from": "iran_us_tension",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "us_military_presence",
+              "weight": 0.7
+            },
+            {
+              "from": "iran_us_tension",
+              "polarity": "positive",
+              "strength": 0.9,
+              "to": "miscalculation_risk",
+              "weight": 0.9
+            },
+            {
+              "from": "nuclear_negotiation_progress",
+              "polarity": "negative",
+              "strength": 0.6,
+              "to": "iran_us_tension",
+              "weight": -0.6
+            },
+            {
+              "from": "iranian_government_stability",
+              "polarity": "negative",
+              "strength": 0.4,
+              "to": "iran_us_tension",
+              "weight": -0.4
+            },
+            {
+              "from": "us_military_presence",
+              "polarity": "positive",
+              "strength": 0.6,
+              "to": "iran_us_tension",
+              "weight": 0.6
+            },
+            {
+              "from": "us_military_presence",
+              "polarity": "positive",
+              "strength": 0.7,
+              "to": "miscalculation_risk",
+              "weight": 0.7
+            },
+            {
+              "from": "miscalculation_risk",
+              "polarity": "positive",
+              "strength": 0.8,
+              "to": "iran_us_tension",
+              "weight": 0.8
+            },
+            {
+              "from": "iran_russia_cooperation",
+              "polarity": "positive",
+              "strength": 0.5,
+              "to": "iran_us_tension",
+              "weight": 0.5
+            },
+            {
+              "from": "iran_russia_cooperation",
+              "polarity": "positive",
+              "strength": 0.4,
+              "to": "us_military_presence",
+              "weight": 0.4
+            }
+          ],
+          "narrative": [
+            "[v0] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0 Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Beliefs (world summary): iran_russia_cooperation=70.0, iran_us_tension=80.0, iranian_government_stability=60.0, miscalculation_risk=65.0, nuclear_negotiation_progress=20.0, us_military_presence=75.0",
+            "[v1] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: expand_domestic_crackdown (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v2] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_impose_stricter_sanctions (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v3] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper",
+            "[v4] Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Turn 1: did accept_enrichment_reduction. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper Goal-driven: us_deescalate_military_presence (goals: ['decrease_iran_us_tension', 'decrease_miscalculation_risk']). Turn 1: did us_deescalate_military_presence. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_co Goal-driven: expand_domestic_crackdown (goals: ['decrease_iranian_government_stability']). Turn 1: did expand_domestic_crackdown. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooperat Goal-driven: increase_military_exercises (goals: ['increase_iran_russia_cooperation', 'increase_iran_us_tension']). Turn 1: did increase_military_exercises. Goal-driven: accept_enrichment_reduction (goals: ['decrease_iran_us_tension', 'increase_iran_russia_cooperation']). Beliefs (world summary): iran_russia_cooper"
+          ],
+          "ontology": {},
+          "version": 5,
+          "turn": 5,
+          "events": [
+            {
+              "condition_key": "iran_us_tension_above_80",
+              "effect_key": "apply_crisis_effect",
+              "event_type": "crisis_if_high",
+              "params": {
+                "threshold": 80,
+                "variable": "iran_us_tension"
+              }
+            }
+          ]
+        },
+        "episodic_cap": 50,
+        "beliefs": {
+          "variables": {
+            "iran_russia_cooperation": 99.15796491841509,
+            "iran_us_tension": 80.67140741970961,
+            "iranian_government_stability": 97.47726491841509,
+            "miscalculation_risk": 50.68502717475188,
+            "nuclear_negotiation_progress": 81.38863926441509,
+            "us_military_presence": 42.186481334954536
+          },
+          "confidence": {
+            "iran_russia_cooperation": 0.1,
+            "iran_us_tension": 0.3799999999999999,
+            "iranian_government_stability": 0.3799999999999999,
+            "miscalculation_risk": 0.3799999999999999,
+            "nuclear_negotiation_progress": 0.3799999999999999,
+            "us_military_presence": 0.3799999999999999
+          }
+        },
+        "observation_noise_scale": 0.0
+      },
+      "beliefs": {
+        "variables": {
+          "iran_russia_cooperation": 99.15796491841509,
+          "iran_us_tension": 80.67140741970961,
+          "iranian_government_stability": 97.47726491841509,
+          "miscalculation_risk": 50.68502717475188,
+          "nuclear_negotiation_progress": 81.38863926441509,
+          "us_military_presence": 42.186481334954536
+        },
+        "confidence": {
+          "iran_russia_cooperation": 0.1,
+          "iran_us_tension": 0.3799999999999999,
+          "iranian_government_stability": 0.3799999999999999,
+          "miscalculation_risk": 0.3799999999999999,
+          "nuclear_negotiation_progress": 0.3799999999999999,
+          "us_military_presence": 0.3799999999999999
+        }
+      },
+      "long_term_goals": [
+        "increase_iran_russia_cooperation",
+        "increase_iran_us_tension"
+      ],
+      "short_term_goals": [
+        "increase_iran_russia_cooperation",
+        "increase_iran_us_tension"
+      ],
+      "long_term_memory": [
+        {
+          "turn": 1,
+          "event": "increase_military_exercises accepted",
+          "importance": 0.8145062499999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 2,
+          "event": "increase_military_exercises accepted",
+          "importance": 0.8573749999999999,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 3,
+          "event": "increase_military_exercises accepted",
+          "importance": 0.9025,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 4,
+          "event": "increase_military_exercises accepted",
+          "importance": 0.95,
+          "emotional_valence": 1.0
+        },
+        {
+          "turn": 5,
+          "event": "increase_military_exercises accepted",
+          "importance": 1.0,
+          "emotional_valence": 1.0
+        }
+      ],
+      "last_actions": [
+        "increase_military_exercises",
+        "increase_military_exercises"
+      ],
+      "strategy_class_weights": {
+        "escalatory": 1.9999999999999998
+      }
+    }
+  },
+  "governance_state": {
+    "strictness_level": 1
+  }
+}
