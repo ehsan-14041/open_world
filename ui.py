@@ -44,7 +44,8 @@ def _make_json_safe(obj: object) -> object:
 from schemas.scenario_schema import validate_scenario, normalize_scenario
 from simulation.loop import SimulationLoop
 from core.narrative_builder import build_narrative, trace_from_snapshot
-from core.llm_client import get_llm_logs, clear_llm_logs, call_llm
+from core.llm_client import get_llm_logs, clear_llm_logs
+from core.llm_service import call_llm as llm_service_call
 from core.scenario_analysis_output import build_scenario_analysis_output, build_strategic_analysis
 from summarization.facts import build_narrative_facts
 from core.agent_generator import generate_agents_from_scenario  # LLM Integration: scenario-to-simulation pipeline
@@ -52,6 +53,7 @@ from visualization.graph_viewer import prepare_graph_data
 from visualization.impact_data import prepare_impact_data
 from ui.dashboard import register_routes as register_dashboard_routes
 from ui.dashboard import build_dashboard_payload, on_turn_complete as dashboard_on_turn_complete, set_last_provenance, set_last_scenario
+from ui.decision_brief import build_decision_brief
 from core.simulation_mode import (
     get_simulation_mode,
     set_simulation_mode,
@@ -88,7 +90,14 @@ def _get_snapshot_dir() -> Path:
 
 
 @app.route("/")
-def index():
+def home():
+    """Focused product home: the Decision Brief experience."""
+    return render_template("brief.html")
+
+
+@app.route("/advanced")
+def advanced():
+    """Advanced/engineering tool home (raw JSON, LLM logs, graph, run viewer)."""
     return render_template("index.html")
 
 
@@ -138,7 +147,24 @@ def api_submit_scenario():
         if use_llm_for_agents and use_llm:
             try:
                 def llm_wrapper(prompt: str, system: str | None = None, *, as_json: bool = False):
-                    return call_llm(prompt, system=system, as_json=as_json)
+                    if as_json:
+                        return llm_service_call(
+                            prompt,
+                            system=system or "",
+                            schema={"required": [], "types": {}},
+                            temperature=None,
+                            max_tokens=None,
+                            usage_tier="scenario_pipeline",
+                        ) or {}
+                    out = llm_service_call(
+                        prompt,
+                        system=system or "",
+                        schema=None,
+                        temperature=None,
+                        max_tokens=None,
+                        usage_tier="scenario_pipeline",
+                    )
+                    return out or ""
                 scenario["initial_agents"] = generate_agents_from_scenario(scenario, llm_wrapper)
                 errors = validate_scenario(scenario)
                 if not errors:
@@ -172,6 +198,7 @@ def _stream_simulation(
             scenario_data=scenario,
             dry_run=dry_run,
             snapshot_path=snapshot_path,
+            build_turn_payload=build_dashboard_payload,
         )
         _active_loop = loop
         for chunk in loop.run_streaming(
@@ -221,7 +248,24 @@ def api_run_simulation():
     if use_llm_for_agents and not dry_run:
         try:
             def llm_wrapper(prompt: str, system: str | None = None, *, as_json: bool = False):
-                return call_llm(prompt, system=system, as_json=as_json)
+                if as_json:
+                    return llm_service_call(
+                        prompt,
+                        system=system or "",
+                        schema={"required": [], "types": {}},
+                        temperature=None,
+                        max_tokens=None,
+                        usage_tier="scenario_pipeline",
+                    ) or {}
+                out = llm_service_call(
+                    prompt,
+                    system=system or "",
+                    schema=None,
+                    temperature=None,
+                    max_tokens=None,
+                    usage_tier="scenario_pipeline",
+                )
+                return out or ""
             scenario["initial_agents"] = generate_agents_from_scenario(scenario, llm_wrapper)
             scenario = normalize_scenario(scenario)
         except Exception:
@@ -238,6 +282,7 @@ def api_run_simulation():
             scenario_data=scenario,
             dry_run=dry_run,
             snapshot_path=snapshot_path,
+            build_turn_payload=build_dashboard_payload,
         )
         # تاخیر بین راندها برای جلوگیری از rate limit (پیش‌فرض: 0.5 ثانیه؛ کلاینت می‌تواند 0 بفرستد)
         delay_between_rounds = float(data.get("delay_between_rounds", 0.5))
@@ -311,6 +356,119 @@ def api_run_simulation():
             }), 500
         except Exception:
             return jsonify({"ok": False, "error": "Internal error", "final": None, "turns": None}), 500
+
+
+@app.route("/api/brief", methods=["POST"])
+def api_brief():
+    """Product endpoint: free text -> run simulation -> Decision Brief.
+
+    Body: { "text": str, "options"?: [str], "steps"?: int, "dry_run"?: bool, "use_llm"?: bool }.
+    Returns { ok, brief, comparison, scenario }.
+    """
+    global _last_scenario, _last_run_result, _current_run_id
+    data = request.get_json(force=True, silent=True) or {}
+    text = (data.get("text") or "").strip()
+    options = data.get("options") if isinstance(data.get("options"), list) else []
+    options = [str(o).strip() for o in options if str(o).strip()][:3]
+    steps = max(1, min(int(data.get("steps", 8)), 30))
+    dry_run = bool(data.get("dry_run", False))
+    use_llm = bool(data.get("use_llm", True))
+
+    if not text and not isinstance(data.get("scenario"), dict):
+        return jsonify({"ok": False, "error": "Please describe your decision situation."}), 400
+
+    # Parse scenario (reuse existing pipeline; fall back to rule-based on failure).
+    try:
+        if isinstance(data.get("scenario"), dict):
+            scenario = normalize_scenario(data["scenario"])
+        else:
+            scenario = normalize_scenario(parse_scenario_text(text, use_llm=use_llm))
+    except Exception as e:
+        try:
+            scenario = normalize_scenario(parse_scenario_text(text, use_llm=False))
+        except Exception:
+            return jsonify({"ok": False, "error": f"Could not parse scenario: {e}"}), 400
+
+    errors = validate_scenario(scenario)
+    if errors:
+        return jsonify({"ok": False, "error": "; ".join(errors)}), 400
+    _last_scenario = scenario
+
+    def _run_and_brief(sc: dict) -> tuple[dict, dict]:
+        loop = SimulationLoop(scenario_data=sc, dry_run=dry_run, build_turn_payload=build_dashboard_payload)
+        res = loop.run(
+            steps=steps,
+            return_turns=True,
+            return_provenance=True,
+            silent=True,
+            delay_between_rounds=float(data.get("delay_between_rounds", 0.0)),
+        )
+        agents = [
+            {"name": getattr(a, "name", ""), "role": getattr(a, "role", ""), "objectives": getattr(a, "objectives", {})}
+            for a in (getattr(loop, "agents", None) or [])
+        ]
+        if not agents:
+            agents = [a for a in (sc.get("initial_agents") or []) if isinstance(a, dict)]
+        brief = build_decision_brief(res.get("final") or {}, res.get("provenance") or [], sc, agents)
+        return res, brief
+
+    try:
+        result, brief = _run_and_brief(scenario)
+        _current_run_id += 1
+        _last_run_result = result
+        # Option comparison: run a derived scenario per option, build a mini-brief each.
+        comparison: list[dict] = []
+        for opt in options:
+            try:
+                derived = normalize_scenario({
+                    **scenario,
+                    "description": (scenario.get("description") or "") + f"\n\nDecision option under consideration: {opt}",
+                })
+                _r, b = _run_and_brief(derived)
+                comparison.append({
+                    "option": opt,
+                    "what_likely_happens": b.get("what_likely_happens", ""),
+                    "outcome": b.get("outcome", ""),
+                    "top_hidden_risk": (b.get("hidden_risks") or [""])[0] if b.get("hidden_risks") else "",
+                    "regime": b.get("regime", {}),
+                    "confidence": b.get("confidence", {}),
+                })
+            except Exception:
+                continue
+        return jsonify({
+            "ok": True,
+            "brief": _make_json_safe(brief),
+            "comparison": _make_json_safe(comparison),
+            "scenario": _make_json_safe(scenario),
+        })
+    except Exception as e:
+        logging.exception("api_brief failed: %s", e)
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/api/brief/feedback", methods=["POST"])
+def api_brief_feedback():
+    """Append lightweight 👍/👎 feedback to data/feedback/feedback.jsonl (no DB)."""
+    import time as _time
+    data = request.get_json(force=True, silent=True) or {}
+    verdict = str(data.get("verdict") or "").strip().lower()
+    if verdict not in ("up", "down"):
+        return jsonify({"ok": False, "error": "verdict must be 'up' or 'down'"}), 400
+    entry = {
+        "ts": _time.time(),
+        "verdict": verdict,
+        "why": str(data.get("why") or "").strip()[:1000],
+        "scenario": str(data.get("scenario") or "")[:2000],
+    }
+    try:
+        d = _PROJECT_ROOT / "data" / "feedback"
+        d.mkdir(parents=True, exist_ok=True)
+        with open(d / "feedback.jsonl", "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    except Exception as e:
+        logging.warning("feedback write failed: %s", e)
+        return jsonify({"ok": False, "error": "could not save feedback"}), 500
+    return jsonify({"ok": True})
 
 
 @app.route("/api/run_simulation_stream", methods=["POST"])

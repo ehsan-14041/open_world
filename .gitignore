@@ -1,5 +1,6 @@
 # Virtual env
 .venv/
+.venv-win/
 venv/
 env/
 
@@ -17,3 +18,10 @@ htmlcov/
 .DS_Store
 *.log
 .env
+
+# Stray / build artifacts
+owe.zip
+=*
+# Runtime outputs
+data/feedback/
+data/snapshots/last_snapshot.json

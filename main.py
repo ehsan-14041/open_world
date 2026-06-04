@@ -26,7 +26,7 @@ from core.narrative_builder import (
 from core.phase_detector import detect_phases, build_phase_summary_facts
 from core.registry_validator import validate_registry_health
 from core.narrative_firewall import replace_placeholders
-from core.llm_client import call_llm
+from core.llm_service import call_llm as llm_service_call
 from core.scenario_analysis_output import build_scenario_analysis_output, build_strategic_analysis
 from summarization.facts import build_narrative_facts
 
@@ -61,7 +61,24 @@ def main() -> int:
             scenario_data = normalize_scenario(scenario_data)
             if args.use_llm_for_agents and not dry_run:
                 def llm_wrapper(prompt: str, system: str | None = None, *, as_json: bool = False):
-                    return call_llm(prompt, system=system, as_json=as_json)
+                    if as_json:
+                        return llm_service_call(
+                            prompt,
+                            system=system or "",
+                            schema={"required": [], "types": {}},
+                            temperature=None,
+                            max_tokens=None,
+                            usage_tier="scenario_pipeline",
+                        ) or {}
+                    out = llm_service_call(
+                        prompt,
+                        system=system or "",
+                        schema=None,
+                        temperature=None,
+                        max_tokens=None,
+                        usage_tier="scenario_pipeline",
+                    )
+                    return out or ""
                 scenario_data["initial_agents"] = generate_agents_from_scenario(scenario_data, llm_wrapper)
                 scenario_data = normalize_scenario(scenario_data)
         except ValueError as e:
@@ -100,7 +117,14 @@ def main() -> int:
                 final_state,
                 agents,
                 use_llm=not dry_run,
-                llm_callback=lambda prompt, system: call_llm(prompt, system=system),
+                llm_callback=lambda prompt, system: llm_service_call(
+                    prompt,
+                    system=system or "",
+                    schema=None,
+                    temperature=None,
+                    max_tokens=None,
+                    usage_tier="narrative_longform",
+                ) or "",
                 scenario=scenario,
             )
             print(paragraph)
@@ -152,7 +176,14 @@ def main() -> int:
             trace,
             final,
             use_llm=not dry_run,
-            llm_callback=lambda prompt, system: call_llm(prompt, system=system),
+            llm_callback=lambda prompt, system: llm_service_call(
+                prompt,
+                system=system or "",
+                schema=None,
+                temperature=None,
+                max_tokens=None,
+                usage_tier="narrative_longform",
+            ) or "",
             agents=agents,
             scenario=scenario,
         )

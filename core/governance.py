@@ -22,10 +22,11 @@ from typing import Any, Callable
 
 from schemas.delta_schema import Delta
 
+from core.legacy_semantics import legacy_infer_non_negative_variables
+from schemas.contracts import constraint_spec_from_variable_spec
 
-# Domain-agnostic: non-negative keys are determined dynamically from scenario/world state
-# Variables that typically should not go negative (e.g., population, resources) can be specified
-# in scenario governance config, or inferred from variable names containing keywords like "population", "resource", "count"
+
+# Domain-agnostic: non-negative keys from scenario variable_specs or legacy_infer_non_negative_variables
 
 
 class PolicyRule:
@@ -54,27 +55,28 @@ class PolicyRule:
 
 
 def _default_non_negative_check(delta: Delta, world: Any) -> tuple[bool, str]:
-    """Default: no negative values for variables that should remain non-negative (domain-agnostic)."""
+    """Default: no negative values for variables that should remain non-negative (prefer variable_specs non_negative, else legacy inference)."""
     world_snapshot = world.snapshot() if hasattr(world, "snapshot") else {}
     global_state = world_snapshot.get("global_state", {}) or world_snapshot.get("variables", {}) or getattr(world, "global_state", {}) or getattr(world, "variables", {})
-    
-    # Domain-agnostic: infer non-negative keys from variable names
-    # Variables containing these keywords are assumed to be non-negative
-    non_negative_keywords = {"population", "count", "resource", "cash", "money", "fund", "stock", "inventory", "supply"}
-    
+    variable_specs = getattr(world, "variable_specs", None) or world_snapshot.get("variable_specs") or {}
+    variable_names = list(global_state.keys()) if isinstance(global_state, dict) else []
+    non_negative_vars = set(legacy_infer_non_negative_variables(variable_names))
+    if variable_specs and isinstance(variable_specs, dict):
+        for var_name in variable_names:
+            spec = constraint_spec_from_variable_spec(variable_specs.get(var_name))
+            if spec.non_negative:
+                non_negative_vars.add(var_name)
+
     for key, value in (delta.numeric_updates or {}).items():
-        # Check if variable name suggests it should be non-negative
-        key_lower = key.lower()
-        should_be_non_negative = any(keyword in key_lower for keyword in non_negative_keywords)
-        
-        if should_be_non_negative:
-            current = global_state.get(key, 0)
-            try:
-                new_val = current + value if isinstance(value, (int, float)) else value
-                if isinstance(new_val, (int, float)) and new_val < 0:
-                    return False, f"{key} would become negative ({new_val})"
-            except TypeError:
-                return False, f"{key} has invalid update type"
+        if key not in non_negative_vars:
+            continue
+        current = global_state.get(key, 0)
+        try:
+            new_val = current + value if isinstance(value, (int, float)) else value
+            if isinstance(new_val, (int, float)) and new_val < 0:
+                return False, f"{key} would become negative ({new_val})"
+        except TypeError:
+            return False, f"{key} has invalid update type"
     return True, ""
 
 

@@ -24,7 +24,7 @@ Stochastic behavior is controlled by explicit flags so that runs can be determin
 
 ## Dashboard Data Independence
 
-Dashboard payload is produced in **`core/dashboard_payload`** from `(snapshot, provenance_entry, scenario, agents_list, provenance_history)`. This module has **no UI dependency**; it performs only lightweight arithmetic and dict building. The payload is JSON-serializable and suitable for API or external consumers. The UI layer (`ui/dashboard`) and simulation loop call `build_dashboard_payload(...)` and pass the result to the front-end; external systems can call the same function with the same inputs.
+Dashboard payload is produced in **`core/dashboard_payload`** from `(snapshot, provenance_entry, scenario, agents_list, provenance_history)`. This module has **no UI dependency**; it performs only lightweight arithmetic and dict building. The payload is JSON-serializable and suitable for API or external consumers. It includes core metrics (state_snapshot, risk_report, calibration_metrics, selected_action, etc.) and, when narrative is enabled, **narrative payload** (narrative, turn_intelligence, actor_ranking, causal_story, hidden_costs, longitudinal_story) from `core/narrative_engine` and `core/narrative_memory`. The UI layer (`ui/dashboard`) and simulation loop call `build_dashboard_payload(...)` and pass the result to the front-end; external systems can call the same function with the same inputs.
 
 ## Feature Toggles
 
@@ -37,6 +37,12 @@ Dashboard payload is produced in **`core/dashboard_payload`** from `(snapshot, p
 | `ENABLE_STOCHASTIC_EVENTS` | follows uncertainty | When true, event probability sampling for delayed/env events. |
 | `CHECKPOINT_ENABLED` | False | When true, push checkpoints each step and allow rollback_to_turn / rollback_last_step. |
 | `ENABLE_ORACLE` | False | When true, each turn an LLM advisory (Oracle) analyzes the selected action and produces Confidence, Risk Factors, Alternative Scenarios; output is for dashboard and human review only—no state change. See `core/oracle.py`. |
+
+## Deterministic Physics and Calibration
+
+- **Deterministic physics core (`core/physics_core.py`):** MC evaluation (`run_mc_evaluation`)، امتیازدهی planner (`get_planner_scores`) و depth‑2 planning همگی از `apply_delta_deterministic()` روی snapshotهای کپی‌شده استفاده می‌کنند. این مسیر فقط `numeric_updates` و propagation را اعمال می‌کند (بدون نویز و governance) و باعث می‌شود وقتی `ENABLE_UNCERTAINTY=False` است، مدار عددی که در planning/MC دیده می‌شود با اجرای واقعی سازگار بماند.
+- **کالیبراسیون پیش‌بینی (`core/prediction_calibration.py`):** برای هر عامل، MSE و bias تجمعی بین `delta_raw_per_agent` و `self_effect_per_agent` را نگه می‌دارد و از آن یک `calibration_weight` محدودشده می‌سازد. این وزن در MC+RL برای نرم‌کردن/تقویت امتیازهای LLM/MC استفاده می‌شود و در داشبورد به‌صورت `per_agent_calibration` نمایش داده می‌شود.
+- **هم‌ترازسازی Hybrid Engine:** با ترکیب physics قطعی، MC+RL، belief layer اختیاری و کالیبراسیون پیش‌بینی، سیستم هم‌زمان (۱) خلاقیت LLM، (۲) رفتار قابل توضیح و (۳) پایداری عددی را حفظ می‌کند.
 
 ## Performance and Resource Limits
 

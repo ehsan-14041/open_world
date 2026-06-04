@@ -97,7 +97,7 @@ def generate_research_draft(
     lines.append("## Calibration & Risk Evaluation")
     lines.append("")
     try:
-        from core.dashboard_payload import compute_calibration_from_provenance
+        from core.calibration_metrics import compute_calibration_from_provenance
         cal = compute_calibration_from_provenance(simulation_history)
         mean_rmse = sum(cal.get("rmse_over_time") or [0]) / max(1, len(cal.get("rmse_over_time") or []))
         health = cal.get("health", "N/A")

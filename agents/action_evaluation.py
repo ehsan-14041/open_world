@@ -10,7 +10,7 @@ import random
 from typing import Any, Callable
 
 from agents.utility import utility_function
-from agents.planner import apply_delta_to_state
+from core.physics_core import apply_delta_deterministic
 from world.world_state import clone_world_state
 
 
@@ -28,6 +28,8 @@ def run_mc_evaluation(
     MC value per action: average reward over n_sims shallow sims (key state only).
     Each sim: clone snapshot, apply action delta, compute utility; average.
     """
+    causal_links = snapshot.get("causal_links") or []
+    variable_specs = snapshot.get("variable_specs")
     mc_values: dict[str, float] = {}
     for action_type in candidates:
         rewards: list[float] = []
@@ -40,7 +42,9 @@ def run_mc_evaluation(
                 delta = d.to_dict() if hasattr(d, "to_dict") else d
             else:
                 delta = {"numeric_updates": (rule_based_deltas or {}).get(action_type, {})}
-            apply_delta_to_state(clone, delta)
+            clone = apply_delta_deterministic(
+                clone, delta, causal_links, variable_specs=variable_specs
+            )
             r = utility_function(clone, beliefs, objectives)
             rewards.append(r)
         mc_values[action_type] = sum(rewards) / len(rewards) if rewards else 0.0
@@ -54,8 +58,12 @@ def get_planner_scores(
     rule_based_deltas: dict[str, dict[str, float]] | None,
     objectives: dict[str, float],
     beliefs: dict[str, Any],
+    *,
+    calibration_weight: float = 1.0,
 ) -> dict[str, float]:
-    """Planner/LLM score per candidate (one apply + utility)."""
+    """Planner/LLM score per candidate (one apply + utility). Scores multiplied by calibration_weight."""
+    causal_links = snapshot.get("causal_links") or []
+    variable_specs = snapshot.get("variable_specs")
     scores: dict[str, float] = {}
     for action_type in candidates:
         clone = clone_world_state(snapshot)
@@ -66,8 +74,11 @@ def get_planner_scores(
             delta = d.to_dict() if hasattr(d, "to_dict") else d
         else:
             delta = {"numeric_updates": (rule_based_deltas or {}).get(action_type, {})}
-        apply_delta_to_state(clone, delta)
-        scores[action_type] = utility_function(clone, beliefs, objectives)
+        clone = apply_delta_deterministic(
+            clone, delta, causal_links, variable_specs=variable_specs
+        )
+        raw = utility_function(clone, beliefs, objectives)
+        scores[action_type] = raw * calibration_weight
     return scores
 
 
@@ -82,6 +93,7 @@ def softmax_select(
     temperature: float = 0.5,
     belief_scores: dict[str, float] | None = None,
     belief_weight: float = 0.0,
+    calibration_weight: float = 1.0,
 ) -> str:
     """Combine LLM, MC, RL, and optional belief alignment with softmax; sample to preserve creativity."""
     try:
@@ -106,6 +118,7 @@ def softmax_select(
         s = w_llm * n_llm.get(a, 0) + w_mc * n_mc.get(a, 0) + rl_weights.get(a, 0.0)
         if n_belief is not None and belief_weight > 0:
             s += belief_weight * n_belief.get(a, 0.5)
+        s *= calibration_weight
         combined.append((a, s))
     logits = [s / max(temperature, 1e-6) for _, s in combined]
     m = max(logits)

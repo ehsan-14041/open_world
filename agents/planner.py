@@ -11,6 +11,8 @@ from typing import Any, Callable
 
 from agents.utility import utility_function
 from core.world_state import WorldState
+from core.legacy_semantics import legacy_steady_action_name
+from core.transition_kernel import TransitionOptions, transition_planning
 from world.world_state import clone_world_state as _clone_world_state
 
 try:
@@ -32,18 +34,30 @@ def _apply_delta_for_planning(
     max_hops: int,
     decay_factor: float | None,
 ) -> None:
-    """Apply delta to clone: use run_mental_simulation when causal_links given, else apply_delta_to_state."""
-    if causal_links and len(causal_links) > 0:
-        from core.mental_simulation import run_mental_simulation
-        decay = decay_factor if decay_factor is not None else PROPAGATION_DECAY_FACTOR
-        result = run_mental_simulation(
-            clone, delta, causal_links, variable_specs or {},
-            max_hops=max_hops, decay_factor=decay,
-        )
-        clone["variables"] = result.get("variables", result.get("global_state", {}))
-        clone["global_state"] = clone["variables"]
-    else:
-        apply_delta_to_state(clone, delta)
+    """
+    Apply delta to clone using shared deterministic physics (numeric_updates + propagation only).
+
+    Phase 2: route through core.transition_kernel.transition_planning so that
+    planning and execution share the same deterministic transition semantics.
+    """
+    links = causal_links if causal_links else []
+    options = TransitionOptions(
+        mode="planning",
+        enable_governance=False,
+        enable_constraints=False,
+        enable_noise=False,
+        max_prop_hops=max_hops,
+        decay_factor=decay_factor if decay_factor is not None else (PLANNER_DECAY_FACTOR or PROPAGATION_DECAY_FACTOR),
+    )
+    new_snapshot, _prov = transition_planning(
+        clone,
+        delta,
+        links,
+        variable_specs or clone.get("variable_specs") or {},
+        options,
+    )
+    clone.clear()
+    clone.update(new_snapshot)
 
 
 def clone_world_state(snapshot: dict[str, Any], *, include_causal_links: bool = False) -> dict[str, Any]:
@@ -96,8 +110,8 @@ def delta_from_rule_based(action_type: str, rule_based_deltas: dict[str, dict[st
     }
 
 
-# Default second-step action for depth-2 (steady state)
-STEADY_ACTION = "steady_finance"
+# Default second-step action for depth-2 (steady state); from legacy_semantics
+STEADY_ACTION = legacy_steady_action_name()
 
 
 def plan_depth2(

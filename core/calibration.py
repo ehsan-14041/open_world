@@ -29,7 +29,7 @@ def check_recalibration_trigger(
     max_interval_turns: force a check when turn - last_recalibration_turn >= this (avoid drift).
     """
     try:
-        from core.dashboard_payload import compute_calibration_from_provenance
+        from core.calibration_metrics import compute_calibration_from_provenance
     except ImportError:
         return False, ""
 

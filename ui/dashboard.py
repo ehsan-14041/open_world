@@ -12,7 +12,7 @@ import threading
 from typing import Any
 
 from config.settings import DASHBOARD_HISTORY_SIZE, DASHBOARD_ENABLED
-from core.dashboard_payload import build_dashboard_payload as _build_dashboard_payload
+from ui.dashboard_payload import build_dashboard_payload as _build_dashboard_payload
 
 # Re-export for ui.py and callers
 build_dashboard_payload = _build_dashboard_payload

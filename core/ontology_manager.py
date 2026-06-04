@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from core.llm_service import call_llm as llm_service_call
+
 # Prompt template for ontology suggestion (in code per plan)
 # Ontology suggestion prompt: to propose new attribute names/specs when relevant.
 ONTOLOGY_SUGGESTION_SYSTEM = """You propose new world-model attributes when given context.
@@ -30,12 +32,14 @@ class OntologyManager:
 
     def suggest_attribute_from_text(self, text_or_context: str) -> dict[str, Any]:
         """Use LLM to propose new attribute name/spec from context. Returns parsed dict or empty."""
-        from core.llm_client import call_llm
         try:
-            out = call_llm(
+            out = llm_service_call(
                 f"Context: {text_or_context[:1000]}\nPropose a new attribute if relevant, else empty name.",
                 system=ONTOLOGY_SUGGESTION_SYSTEM,
-                as_json=True,
+                schema={"required": [], "types": {}},
+                temperature=None,
+                max_tokens=None,
+                usage_tier="ontology_suggestion",
             )
             if isinstance(out, dict) and out.get("name"):
                 return out

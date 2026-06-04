@@ -1,0 +1,70 @@
+SIMULATION CORE EVALUATION — STRUCTURED JSON
+{
+  "deterministic": {
+    "max_diff": 0.0,
+    "deterministic": true
+  },
+  "nonlinearity": {
+    "curvature_score": 1.6245,
+    "ratios": {
+      "impact_ratio_20_vs_10": 2.2173913043478293,
+      "impact_ratio_40_vs_20": 1.7320261437908475,
+      "impact_ratio_80_vs_40": 1.0
+    },
+    "linear": false,
+    "impacts": [
+      1.379999999999999,
+      3.0600000000000023,
+      5.299999999999997,
+      5.299999999999997
+    ]
+  },
+  "regime_effect": {
+    "regime_effect_ratio": 0.6138,
+    "regime_normal": "NORMAL",
+    "regime_crisis": "CRISIS",
+    "impact_normal": 2.3200000000000003,
+    "impact_crisis": 1.4240000000000066
+  },
+  "calibration": {
+    "rmse_delta": 6.399297,
+    "confidence_delta": -0.8,
+    "adaptive_confidence": true
+  },
+  "generality": {
+    "generically_operable": true
+  },
+  "attribution": {
+    "ranking_consistent": true,
+    "impact_gap": 19.0
+  },
+  "scores": {
+    "determinism": 5.0,
+    "nonlinearity": 1.6245,
+    "regime_effect": 1.5345,
+    "calibration": 5.0,
+    "generality": 5.0,
+    "attribution_stability": 5.0
+  },
+  "overall_score": 3.8598,
+  "classification": "Research-grade"
+}
+
+============================================================
+SIMULATION CORE EVALUATION — HUMAN-READABLE REPORT
+============================================================
+
+• Nonlinearity: Impact ratios {'impact_ratio_20_vs_10': 2.2173913043478293, 'impact_ratio_40_vs_20': 1.7320261437908475, 'impact_ratio_80_vs_40': 1.0}. Curvature score: 1.6245. Some nonlinearity detected.
+
+• Regime effect: Ratio = 0.6138. Regime differentiation is meaningful.
+
+• Calibration: ADAPTIVE — confidence/weight decreased after wrong predictions.
+
+• Generality: Core is DOMAIN-AGNOSTIC (synthetic var_a/var_b/var_c ran successfully).
+
+• Overall score: 3.8598 — Research-grade.
+
+• What to improve before platformization:
+  - Strengthen regime sensitivity (physics or bounds in CRISIS).
+============================================================
+

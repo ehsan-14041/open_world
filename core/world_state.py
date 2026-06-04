@@ -11,6 +11,12 @@ from typing import Any
 
 from schemas.delta_schema import Delta
 
+from core.legacy_semantics import legacy_default_policy
+
+
+# Default policy: from config/policy_default.json via legacy_semantics
+DEFAULT_POLICY: dict[str, Any] = legacy_default_policy()
+
 
 class DeltaValidationError(Exception):
     """Raised when a delta violates policy. Caller must handle; no auto-repair."""
@@ -18,13 +24,6 @@ class DeltaValidationError(Exception):
     def __init__(self, message: str, delta: dict[str, Any] | None = None) -> None:
         super().__init__(message)
         self.delta = delta
-
-
-DEFAULT_POLICY: dict[str, Any] = {
-    "protected_keys": ["population", "people"],
-    "caps": {"churn": [0, 1]},
-    "max_magnitude": 1e7,
-}
 
 
 def load_policy_from_config(path: str | None = None) -> dict[str, Any]:

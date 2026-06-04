@@ -14,13 +14,15 @@ Class diagram:
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from schemas.proposal_schema import Proposal
 
 from agents.memory import AgentMemory
 from agents.planner import plan_depth2, plan_depth2_with_callback, delta_from_rule_based
-from agents.utility import evaluate_short_term_goals, goals_from_objectives, DEFAULT_NORM_RANGES
+from agents.utility import evaluate_short_term_goals, goals_from_objectives, utility_function, DEFAULT_NORM_RANGES
+from core.legacy_semantics import legacy_strategy_class_from_action_type, legacy_fallback_action_for_variables
 
 # Default magnitude for variable-driven actions (increase_X / decrease_X)
 DEFAULT_VARIABLE_ACTION_MAGNITUDE = 5.0
@@ -46,6 +48,81 @@ def rule_based_deltas_for_snapshot(snapshot: dict[str, Any], magnitude: float = 
             if isinstance(tradeoff, dict):
                 out[action_name] = {k: float(v) for k, v in tradeoff.items() if isinstance(v, (int, float))}
     return out
+
+
+def prune_candidate_actions(
+    actions: list[str],
+    snapshot: dict[str, Any],
+    max_actions: int = 5,
+    *,
+    get_delta: Any = None,
+    rule_based_deltas: dict[str, dict[str, float]] | None = None,
+    objectives: dict[str, float] | None = None,
+    beliefs: dict[str, Any] | None = None,
+) -> list[str]:
+    """
+    Lightweight pruning before heavy evaluation: score each action with direct delta only
+    (no propagation, no noise), return top max_actions. Deterministic; no LLM calls.
+    Fallback to original list if pruning fails or would remove all actions.
+    Applies ONLY numeric_updates directly to snapshot copy; no physics_core/propagation.
+
+    Safety: Does not mutate input `actions` or `snapshot`; always returns a new list.
+    Always returns at least one action (fallback to list(actions) if pruning would yield empty).
+    Complexity: O(N log N) — single pass over actions, one sort.
+    """
+    if not actions or max_actions <= 0:
+        return list(actions)
+    if len(actions) <= max_actions:
+        return list(actions)
+    try:
+        from world.world_state import clone_world_state
+    except ImportError:
+        return list(actions)
+
+    try:
+        objectives = objectives or {}
+        beliefs = beliefs or {}
+        scored: list[tuple[str, float]] = []
+        for action_type in actions:
+            try:
+                clone = clone_world_state(snapshot)
+                if get_delta and callable(get_delta):
+                    d = get_delta(action_type)
+                    if d is None:
+                        scored.append((action_type, float("-inf")))
+                        continue
+                    delta = d.to_dict() if hasattr(d, "to_dict") else d
+                else:
+                    delta = {"numeric_updates": (rule_based_deltas or {}).get(action_type, {})}
+                numeric_updates = delta.get("numeric_updates") if isinstance(delta, dict) else {}
+                if not isinstance(numeric_updates, dict):
+                    numeric_updates = {}
+                # Apply ONLY numeric_updates directly (no propagation, no physics_core)
+                vars_dict = clone.get("variables") or clone.get("global_state") or {}
+                if isinstance(vars_dict, dict):
+                    vars_dict = dict(vars_dict)
+                else:
+                    vars_dict = {}
+                for var, delta_val in numeric_updates.items():
+                    if isinstance(delta_val, (int, float)):
+                        vars_dict[var] = vars_dict.get(var, 0) + float(delta_val)
+                clone["variables"] = vars_dict
+                clone["global_state"] = vars_dict
+                score = utility_function(clone, beliefs, objectives)
+                scored.append((action_type, score))
+            except Exception:
+                scored.append((action_type, float("-inf")))
+        scored.sort(key=lambda x: x[1], reverse=True)
+        top = [a for a, _ in scored[:max_actions]]
+        if not top:
+            return list(actions)
+        return top
+    except Exception:
+        logging.getLogger(__name__).warning(
+            "prune_candidate_actions: utility_function or pruning failed, falling back to original action list",
+            exc_info=True,
+        )
+        return list(actions)
 
 
 def _belief_snapshot_from_world(world_snapshot: dict[str, Any], belief_variables: dict[str, float]) -> dict[str, Any]:
@@ -121,21 +198,12 @@ class BaseAgent:
         return self.memory.beliefs
 
     def _get_strategy_class(self, action_type: str) -> str:
-        """Map action_type to strategy class from scenario or infer from name."""
+        """Map action_type to strategy class from scenario or legacy inference from name."""
         if not action_type or not isinstance(action_type, str):
             return "default"
         if action_type in self.strategy_classes:
             return self.strategy_classes[action_type]
-        at = action_type.lower()
-        if at.startswith("launch_") or at.startswith("increase_") and "growth" in at or "growth" in at:
-            return "growth"
-        if at.startswith("steady_") or "conserve" in at or "finance" in at:
-            return "conservation"
-        if at.startswith("propose_") or at.startswith("form_") or "regulation" in at or "governance" in at:
-            return "governance"
-        if at.startswith("request_") or "investment" in at:
-            return "investment"
-        return "default"
+        return legacy_strategy_class_from_action_type(action_type)
 
     def propose(self, world_snapshot: dict[str, Any]) -> Proposal:
         """Observe real world -> update_beliefs; then evaluate_goals, plan, select using belief snapshot (not real state)."""
@@ -145,13 +213,9 @@ class BaseAgent:
         self.short_term_goals = evaluate_short_term_goals(self.long_term_goals, belief_snapshot)
         candidates = self.generate_candidate_actions(belief_snapshot)
         if not candidates:
-            # Fallback: use first available variable-driven action if variables exist
+            # Fallback: use legacy_fallback_action_for_variables (increase_first_var or adjust_variable)
             variables = belief_snapshot.get("variables") or belief_snapshot.get("global_state") or {}
-            if isinstance(variables, dict) and variables:
-                first_var = list(variables.keys())[0]
-                fallback_action = f"increase_{first_var}"
-            else:
-                fallback_action = "adjust_variable"
+            fallback_action = legacy_fallback_action_for_variables(variables if isinstance(variables, dict) else {})
             return Proposal(
                 agent_name=self.name,
                 action_type=fallback_action,
@@ -164,15 +228,37 @@ class BaseAgent:
             get_delta = None
         rule_deltas = rule_based_deltas_for_snapshot(belief_snapshot) if get_delta is None else None
 
+        # Prune candidates before heavy evaluation (top K by direct-delta utility).
+        try:
+            from config.settings import MAX_ACTIONS_PRUNE
+            max_prune = MAX_ACTIONS_PRUNE
+        except ImportError:
+            max_prune = 5
+        candidates = prune_candidate_actions(
+            candidates,
+            belief_snapshot,
+            max_prune,
+            get_delta=get_delta,
+            rule_based_deltas=rule_deltas,
+            objectives=self.objectives,
+            beliefs=self.memory.semantic_memory,
+        )
+
         # [MC + RL] Evaluate candidates and select probabilistically (planner score + MC value + RL weight + optional belief, softmax).
         try:
             from config.settings import MC_RL_ENABLED, MC_N_SIMS, MC_RL_TEMPERATURE, ENABLE_BELIEF_LAYER, BELIEF_WEIGHT
             from agents.action_evaluation import run_mc_evaluation, get_planner_scores, softmax_select
             from core.synthesizer import ensure_action_diversity
             if MC_RL_ENABLED:
+                try:
+                    from core.prediction_calibration import get_calibration_weight
+                    calibration_weight = get_calibration_weight(self.name)
+                except ImportError:
+                    calibration_weight = 1.0
                 llm_scores = get_planner_scores(
                     belief_snapshot, candidates, get_delta, rule_deltas,
                     self.objectives, self.memory.semantic_memory,
+                    calibration_weight=calibration_weight,
                 )
                 mc_values = run_mc_evaluation(
                     belief_snapshot, candidates, get_delta, rule_deltas,
@@ -199,6 +285,7 @@ class BaseAgent:
                     temperature=MC_RL_TEMPERATURE,
                     belief_scores=belief_scores,
                     belief_weight=belief_weight,
+                    calibration_weight=calibration_weight,
                 )
             else:
                 raise ImportError("MC_RL disabled")

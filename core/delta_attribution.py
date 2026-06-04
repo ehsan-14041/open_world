@@ -5,6 +5,7 @@ Handles sign conflicts and proportional allocation.
 
 from __future__ import annotations
 
+import math
 from typing import Any
 
 EPS = 1e-12
@@ -72,11 +73,51 @@ def compute_self_effect_per_agent(
 
 def merge_delta_raw(
     delta_raw_per_agent: dict[str, dict[str, float]],
+    snapshot: dict[str, Any] | None = None,
 ) -> dict[str, float]:
-    """Merge per-agent raw deltas: delta_after_merge[var] = sum of delta_raw[*][var]."""
-    merged: dict[str, float] = {}
-    for agent, raw in delta_raw_per_agent.items():
-        for var, val in raw.items():
-            if isinstance(val, (int, float)):
-                merged[var] = merged.get(var, 0.0) + float(val)
+    """
+    Merge per-agent raw deltas. If snapshot provides entities[agent_id].power,
+    use power-weighted average per variable: sum(delta_i * power_i) / sum(power_i).
+    Otherwise equal weighting (sum of delta_raw[*][var]).
+    """
+    if not delta_raw_per_agent:
+        return {}
+    entities = (snapshot or {}).get("entities") or {}
+    use_power = isinstance(entities, dict) and any(
+        isinstance(entities.get(aid), dict) and "power" in (entities.get(aid) or {})
+        for aid in delta_raw_per_agent
+    )
+    if not use_power:
+        merged: dict[str, float] = {}
+        for agent, raw in delta_raw_per_agent.items():
+            for var, val in raw.items():
+                if isinstance(val, (int, float)):
+                    merged[var] = merged.get(var, 0.0) + float(val)
+        assert not any(math.isnan(v) for v in merged.values()), "merge_delta_raw: merged_numeric must not contain NaN"
+        return merged
+    merged = {}
+    all_vars = set()
+    for raw in delta_raw_per_agent.values():
+        all_vars.update(k for k, v in raw.items() if isinstance(v, (int, float)))
+    for var in all_vars:
+        weighted_sum = 0.0
+        power_sum = 0.0
+        vals_for_mean: list[float] = []
+        for agent, raw in delta_raw_per_agent.items():
+            val = raw.get(var)
+            if not isinstance(val, (int, float)):
+                continue
+            val = float(val)
+            vals_for_mean.append(val)
+            ent = entities.get(agent) if isinstance(entities.get(agent), dict) else {}
+            power = float(ent.get("power", 1.0)) if isinstance(ent.get("power"), (int, float)) else 1.0
+            weighted_sum += val * power
+            power_sum += power
+        if power_sum >= 1e-12:
+            merged[var] = weighted_sum / power_sum
+        elif vals_for_mean:
+            # power_sum < 1e-12: fallback to simple mean of collected values
+            merged[var] = sum(vals_for_mean) / len(vals_for_mean)
+        # If no values exist for this var: skip variable (do not inject zero)
+    assert not any(math.isnan(v) for v in merged.values()), "merge_delta_raw: merged_numeric must not contain NaN"
     return merged

@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from core.legacy_semantics import legacy_goal_to_var_direction
+
 # Default normalization range for any variable not in map
 DEFAULT_RANGE = (0, 100)
 
@@ -95,20 +97,8 @@ def evaluate_short_term_goals(
 
 
 def _objective_to_state_and_direction(obj_key: str) -> tuple[str, int] | None:
-    """Map objective key to (state_variable, direction). direction: +1 = higher is better, -1 = lower is better."""
-    if not obj_key or not isinstance(obj_key, str):
-        return None
-    o = obj_key.lower()
-    if o.startswith("increase_") or o.startswith("maximize_"):
-        var = o.replace("increase_", "").replace("maximize_", "").strip()
-        return (var, 1) if var else None
-    if o.startswith("decrease_") or o.startswith("reduce_") or o.startswith("minimize_"):
-        var = o.replace("decrease_", "").replace("reduce_", "").replace("minimize_", "").strip()
-        return (var, -1) if var else None
-    # Legacy / plain variable name: higher is better
-    # Domain-agnostic: if objective key matches a variable name directly, use it
-    # Otherwise, return the objective key as-is (assume it's a variable name)
-    return (obj_key, 1)
+    """Map objective key to (state_variable, direction). Uses legacy_goal_to_var_direction."""
+    return legacy_goal_to_var_direction(obj_key)
 
 
 def utility_function(

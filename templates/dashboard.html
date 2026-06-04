@@ -142,6 +142,8 @@
     .badge.green { background: var(--success); color: var(--bg); }
     .badge.yellow { background: var(--warning); color: var(--bg); }
     .badge.red { background: var(--danger); color: #fff; }
+    tr.actor-stabilizer { background: rgba(0, 186, 124, 0.15); }
+    tr.actor-escalator { background: rgba(244, 33, 46, 0.15); }
     .trend { font-weight: 600; }
     .trend.up { color: var(--danger); }
     .trend.down { color: var(--success); }
@@ -163,12 +165,47 @@
     .shock-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: 0.25rem 0; }
     .shock-bar-fill { height: 100%; background: var(--danger); transition: width 0.2s; }
     .shock-badge { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: var(--danger); color: #fff; }
+    .regime-normal { background: var(--success); color: var(--bg); }
+    .regime-fragile { background: var(--warning); color: var(--bg); }
+    .regime-crisis { background: var(--danger); color: #fff; }
+    .bound-violation-alert { animation: flash 0.8s ease-in-out 3; background: var(--danger); color: #fff; padding: 0.5rem 1rem; border-radius: var(--radius); font-weight: 600; margin-bottom: 0.5rem; }
+    @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    .exec-summary-headline {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .exec-summary-tags {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .exec-summary-columns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+    }
+    .exec-summary-column-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .exec-summary-column-body {
+      color: var(--muted);
+    }
+    @media (max-width: 768px) {
+      .exec-summary-columns {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
   <header class="header">
     <h1>Strategic Decision Intelligence Platform</h1>
     <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <span id="regime-badge" class="badge" style="font-size: 0.8rem;">—</span>
       <span id="edition-label" class="edition-badge" style="font-size: 0.85rem; color: var(--muted);">Edition: —</span>
       <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--muted); cursor: pointer;">
         <input type="checkbox" id="oracle-toggle" style="cursor: pointer;">
@@ -189,30 +226,120 @@
       </div>
     </div>
     <div id="dashboard-grid" class="grid">
+      <div id="panel-exec-summary" class="panel executive-only" style="grid-column: 1 / -1;">
+        <div class="panel-title">Executive snapshot</div>
+        <div class="panel-body">
+          <div id="exec-summary-headline" class="exec-summary-headline"></div>
+          <div id="exec-summary-tags" class="exec-summary-tags"></div>
+          <div class="exec-summary-columns">
+            <div>
+              <div class="exec-summary-column-title">What changed</div>
+              <div id="exec-summary-what" class="exec-summary-column-body"></div>
+            </div>
+            <div>
+              <div class="exec-summary-column-title">Why it matters</div>
+              <div id="exec-summary-why" class="exec-summary-column-body"></div>
+            </div>
+            <div>
+              <div class="exec-summary-column-title">What to watch</div>
+              <div id="exec-summary-watch" class="exec-summary-column-body"></div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="panel executive-only">
-        <div class="panel-title">State</div>
+        <div class="panel-title">Current system state</div>
         <div class="panel-body">
           <div id="state-current"></div>
           <div class="chart-wrap"><canvas id="chart-state"></canvas></div>
         </div>
       </div>
+      <div id="panel-bound-violations" class="panel executive-only" style="display: none;">
+        <div class="panel-title">Bound violations</div>
+        <div class="panel-body"><div id="bound-violations-content" class="bound-violation-alert"></div></div>
+      </div>
       <div class="panel executive-only">
-        <div class="panel-title">Risk</div>
+        <div class="panel-title">Risk &amp; regime</div>
         <div class="panel-body">
           <div id="risk-score" class="risk-score">—</div>
+          <div id="risk-ssi" style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem;">SSI: —</div>
+          <div id="risk-volatility" style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem;">Volatility: —</div>
+          <div class="shock-bar" style="margin: 0.25rem 0;"><span style="font-size: 0.75rem; color: var(--muted);">Tail risk</span><div id="tail-risk-bar" class="shock-bar-fill" style="width: 0%; background: var(--warning);"></div></div>
+          <div id="uncertainty-band" style="font-size: 0.75rem; color: var(--muted);"></div>
           <ul id="risk-breakdown" class="risk-breakdown"></ul>
           <div id="tail-risk" class="tail-risk"></div>
         </div>
       </div>
+      <div id="panel-oracle-badge" class="panel executive-only">
+        <div class="panel-title">Oracle advisory tier</div>
+        <div class="panel-body">
+          <div id="oracle-tier-badge" style="font-weight: 600; margin-bottom: 0.25rem;">—</div>
+          <div id="oracle-confidence-pct" style="font-size: 0.85rem;"></div>
+          <div id="oracle-confidence-effective" style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.25rem;"></div>
+          <div id="oracle-tail-risk-pct" style="font-size: 0.85rem;"></div>
+          <div id="oracle-impact-score" style="font-size: 0.85rem;"></div>
+        </div>
+      </div>
+      <div id="panel-volatility-decomp" class="panel executive-only">
+        <div class="panel-title">Volatility &amp; noise</div>
+        <div class="panel-body"><div id="volatility-decomp-content" style="font-size: 0.85rem;"></div></div>
+      </div>
+      <div id="panel-belief-vs-reality" class="panel executive-only" style="display: none;">
+        <div class="panel-title">Belief vs Reality</div>
+        <div class="panel-body">
+          <div id="belief-vs-reality-list"></div>
+        </div>
+      </div>
+      <div id="panel-delta-lifecycle" class="panel executive-only">
+        <div class="panel-title">How changes flowed through the model</div>
+        <div class="panel-body">
+          <div id="delta-lifecycle-pipeline" style="font-size: 0.8rem; display: flex; flex-wrap: wrap; gap: 0.25rem;"></div>
+        </div>
+      </div>
       <div class="panel executive-only">
-        <div class="panel-title">Top drivers & summary</div>
+        <div class="panel-title">Key drivers &amp; narrative</div>
         <div class="panel-body">
           <ul id="top-drivers"></ul>
           <div id="narrative-summary" class="narrative"></div>
         </div>
       </div>
+      <div id="panel-turn-intelligence" class="panel executive-only">
+        <div class="panel-title">This turn at a glance</div>
+        <div class="panel-body">
+          <div id="turn-summary" class="narrative" style="margin-bottom: 0.75rem;"></div>
+          <div id="outcome-classification" style="margin-bottom: 0.5rem;"></div>
+          <div id="regime-commentary" style="font-size: 0.85rem; color: var(--muted);"></div>
+        </div>
+      </div>
+      <div id="panel-actor-ranking" class="panel executive-only">
+        <div class="panel-title">Actors &amp; cooperation</div>
+        <div class="panel-body">
+          <table>
+            <thead><tr><th>Rank</th><th>Actor</th><th>Role</th><th>Net Impact</th><th>Alignment</th><th>Escalation</th></tr></thead>
+            <tbody id="actor-ranking-rows"></tbody>
+          </table>
+        </div>
+      </div>
+      <div id="panel-causal-story" class="panel executive-only">
+        <div class="panel-title">Causal story</div>
+        <div class="panel-body">
+          <div id="causal-story-content"></div>
+        </div>
+      </div>
+      <div id="panel-hidden-costs" class="panel executive-only">
+        <div class="panel-title">Hidden costs &amp; side-effects</div>
+        <div class="panel-body">
+          <ul id="hidden-costs-list"></ul>
+        </div>
+      </div>
+      <div id="panel-longitudinal-story" class="panel executive-only">
+        <div class="panel-title">Story so far</div>
+        <div class="panel-body">
+          <div id="longitudinal-story" class="narrative" style="font-size: 0.9rem;"></div>
+        </div>
+      </div>
       <div class="panel executive-only">
-        <div class="panel-title">Action selection</div>
+        <div class="panel-title">Action decisions this turn</div>
         <div class="panel-body">
           <table>
             <thead><tr><th>Action</th><th>Agent</th><th>Prob</th></tr></thead>
@@ -230,7 +357,7 @@
         </div>
       </div>
       <div id="panel-shock" class="panel executive-only">
-        <div class="panel-title">Shock status</div>
+        <div class="panel-title">Shocks &amp; stress events</div>
         <div class="panel-body">
           <div id="shock-indicator"></div>
           <div id="shock-intensity-label" style="font-size: 0.85rem; margin-top: 0.25rem;"></div>
@@ -239,7 +366,7 @@
         </div>
       </div>
       <div id="panel-oracle" class="panel executive-only" style="display: none; border-left: 3px solid var(--accent);">
-        <div class="panel-title">Oracle Advisory (Epistemic Layer)</div>
+        <div class="panel-title">Oracle advisory (optional)</div>
         <div class="panel-body">
           <p style="font-size: 0.75rem; color: var(--muted); margin: 0 0 0.5rem 0;">Advisory only — does not affect simulation.</p>
           <div id="oracle-action" style="font-weight: 600; margin-bottom: 0.5rem;"></div>
@@ -278,7 +405,7 @@
         </div>
       </div>
       <div class="panel">
-        <div class="panel-title">Explainability snapshot</div>
+        <div class="panel-title">Explainability &amp; provenance snapshot</div>
         <div class="panel-body">
           <div id="primary-effect"></div>
           <div id="confidence-level"></div>
@@ -298,6 +425,12 @@
   let lastHistoryLength = 0;
 
   function byId(id) { return document.getElementById(id); }
+  function prettyLabel(key) {
+    if (!key || typeof key !== 'string') return key || '';
+    var s = key.replace(/[_\-]+/g, ' ');
+    s = s.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
+    return s.replace(/\s+/g, ' ').trim().replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
   function setView(view) {
     document.body.classList.remove('view-executive', 'view-scientific');
     document.body.classList.add('view-' + view);
@@ -362,6 +495,12 @@
     history = history || [];
     const editionEl = byId('edition-label');
     if (editionEl) editionEl.textContent = 'Edition: ' + (payload.edition || '—');
+    const regime = (payload.regime || 'NORMAL').toUpperCase();
+    const regimeEl = byId('regime-badge');
+    if (regimeEl) {
+      regimeEl.textContent = 'Regime: ' + regime;
+      regimeEl.className = 'badge ' + (regime === 'CRISIS' ? 'regime-crisis' : regime === 'FRAGILE' ? 'regime-fragile' : 'regime-normal');
+    }
 
     const state = payload.state_snapshot || {};
     const risk = payload.risk_report || {};
@@ -374,6 +513,9 @@
     const turn = state.turn != null ? state.turn : '—';
 
     const stateCurrent = byId('state-current');
+    const dynamics = payload.variable_dynamics || [];
+    const dynMap = {};
+    dynamics.forEach(function (d) { if (d && d.var) dynMap[d.var] = d; });
     const varNames = Object.keys(vars).filter(function (k) { return typeof vars[k] === 'number'; });
     if (varNames.length === 0) {
       stateCurrent.innerHTML = '<span class="empty">Turn ' + turn + ' — No numeric variables</span>';
@@ -384,7 +526,11 @@
           return v[k];
         }).filter(function (x) { return typeof x === 'number'; });
         var t = trendArrow(series);
-        return '<span class="trend ' + t.cls + '">' + k + ': ' + Number(vars[k]).toFixed(2) + ' ' + t.text + '</span>';
+        var d = dynMap[k];
+        var typeLabel = (d && d.v_type === 'FLOW') ? ' [F]' : (d && d.v_type === 'STOCK' ? ' [S]' : '');
+        var sat = (d && d.saturation_pct != null) ? ', sat=' + Number(d.saturation_pct).toFixed(0) + '%' : '';
+        var label = prettyLabel(k);
+        return '<span class="trend ' + t.cls + '" title="' + (d ? (d.v_type + ', decay=' + (d.decay || 0) + ', inertia=' + (d.inertia || 0) + sat) : '') + '">' + label + ': ' + Number(vars[k]).toFixed(2) + (d && d.saturation_pct != null ? ' <small>(' + Number(d.saturation_pct).toFixed(0) + '%)</small>' : '') + ' ' + t.text + typeLabel + '</span>';
       }).join(' &nbsp; ');
     }
 
@@ -392,18 +538,138 @@
     const s = risk.score;
     riskScoreEl.textContent = s != null ? s.toFixed(1) : '—';
     riskScoreEl.className = 'risk-score ' + riskClass(s);
+    const ssiEl = byId('risk-ssi');
+    if (ssiEl) ssiEl.textContent = 'SSI: ' + (risk.stability_index != null ? risk.stability_index.toFixed(2) : '—');
+    const volEl = byId('risk-volatility');
+    if (volEl) volEl.textContent = 'Volatility: ' + (risk.volatility_meter != null ? risk.volatility_meter.toFixed(2) : '—');
+    const tailBar = byId('tail-risk-bar');
+    if (tailBar) tailBar.style.width = (risk.tail_risk_gauge != null ? Math.min(100, risk.tail_risk_gauge * 100) : 0) + '%';
+    const uBand = byId('uncertainty-band');
+    if (uBand && risk.uncertainty_band) uBand.textContent = 'Uncertainty band: ' + (risk.uncertainty_band.low != null ? risk.uncertainty_band.low : '—') + '–' + (risk.uncertainty_band.high != null ? risk.uncertainty_band.high : '—');
+
+    const badge = payload.oracle_tier_badge || {};
+    const tierEl = byId('oracle-tier-badge');
+    if (tierEl) tierEl.textContent = 'Oracle: ' + (badge.oracle_tier || 'Off');
+    const confPct = byId('oracle-confidence-pct');
+    if (confPct) confPct.textContent = 'Confidence: ' + (badge.confidence_pct != null ? badge.confidence_pct + '%' : '—');
+    const tailPct = byId('oracle-tail-risk-pct');
+    if (tailPct) tailPct.textContent = 'Tail risk: ' + (badge.tail_risk_pct != null ? badge.tail_risk_pct + '%' : '—');
+    const impactEl = byId('oracle-impact-score');
+    if (impactEl) impactEl.textContent = 'Impact score: ' + (badge.impact_score != null ? badge.impact_score : '—');
+    const effConfEl = byId('oracle-confidence-effective');
+    if (effConfEl) {
+      var raw = badge.raw_confidence, calScore = badge.calibration_score, eff = badge.effective_confidence;
+      effConfEl.textContent = (raw != null && calScore != null && eff != null) ? ('Raw ' + raw + '% × Calibration ' + Number(calScore).toFixed(2) + ' = Effective ' + eff + '%') : '';
+    }
+
+    const volDecomp = payload.volatility_decomposition || {};
+    const volDecompEl = byId('volatility-decomp-content');
+    if (volDecompEl) {
+      var vd = ['Drift (δ std): ' + (volDecomp.delta_std != null ? Number(volDecomp.delta_std).toFixed(3) : '—'),
+        'Entropy: ' + (volDecomp.entropy_component != null ? Number(volDecomp.entropy_component).toFixed(3) : '—'),
+        'Saturation: ' + (volDecomp.saturation_component != null ? Number(volDecomp.saturation_component).toFixed(3) : '—'),
+        'Shock: ' + (volDecomp.shock_component != null ? Number(volDecomp.shock_component).toFixed(3) : '—')];
+      volDecompEl.innerHTML = vd.join(' &nbsp;|&nbsp; ') + (volDecomp.volatility != null ? '<br><strong>Volatility: ' + Number(volDecomp.volatility).toFixed(3) + '</strong>' : '');
+    }
+
+    const boundViolations = payload.bound_violations || [];
+    const panelBound = byId('panel-bound-violations');
+    const boundContent = byId('bound-violations-content');
+    if (panelBound && boundContent) {
+      if (boundViolations.length > 0) {
+        panelBound.style.display = 'block';
+        boundContent.innerHTML = 'Bound violation(s) detected: ' + boundViolations.map(function (b) {
+          return b.var + '=' + (b.value != null ? Number(b.value).toFixed(2) : '?') + ' (min=' + (b.min != null ? b.min : '?') + ', max=' + (b.max != null ? b.max : '?') + ')';
+        }).join('; ');
+      } else {
+        panelBound.style.display = 'none';
+      }
+    }
+
+    const bvr = payload.belief_vs_reality || [];
+    const bvrPanel = byId('panel-belief-vs-reality');
+    const bvrList = byId('belief-vs-reality-list');
+    if (bvrPanel && bvrList) {
+      if (bvr.length === 0) {
+        bvrPanel.style.display = 'none';
+      } else {
+        bvrPanel.style.display = '';
+        bvrList.innerHTML = bvr.map(function (row) {
+          var healthCls = row.health === 'green' ? 'green' : (row.health === 'red' ? 'red' : 'yellow');
+          return '<div style="margin-bottom: 0.5rem;"><span class="badge ' + healthCls + '">' + (row.agent || '') + '</span> Calibration: ' + (row.rolling_calibration_score != null ? (row.rolling_calibration_score * 100).toFixed(0) + '%' : '—') + '</div>';
+        }).join('');
+      }
+    }
+
+    const lifecycle = payload.delta_lifecycle || {};
+    const stages = lifecycle.stages || [];
+    const modified = lifecycle.stages_modified || [];
+    const pipeEl = byId('delta-lifecycle-pipeline');
+    if (pipeEl) pipeEl.innerHTML = stages.map(function (st) {
+      var active = modified.indexOf(st) !== -1;
+      return '<span style="padding: 0.2rem 0.4rem; border-radius: 4px; ' + (active ? 'background: var(--accent); color: var(--bg);' : 'background: var(--border); color: var(--muted);') + '">' + st + '</span>';
+    }).join('');
 
     const breakdown = risk.breakdown || {};
     const breakdownEl = byId('risk-breakdown');
+    var riskLabels = {
+      uncertainty: 'Model uncertainty',
+      constraint: 'Constraints & bounds',
+      assumption: 'Assumptions'
+    };
     breakdownEl.innerHTML = ['uncertainty', 'constraint', 'assumption'].map(function (key) {
       const v = breakdown[key];
-      return '<li><span>' + key + '</span><span>' + (v != null ? Number(v).toFixed(1) : '—') + '</span></li>';
+      var label = riskLabels[key] || prettyLabel(key);
+      return '<li><span>' + label + '</span><span>' + (v != null ? Number(v).toFixed(1) : '—') + '</span></li>';
     }).join('');
     byId('tail-risk').textContent = risk.tail_risk_summary || '';
 
     const drivers = explanation.top_drivers || [];
     byId('top-drivers').innerHTML = drivers.length ? drivers.map(function (d) { return '<li>' + d + '</li>'; }).join('') : '<li class="empty">—</li>';
     byId('narrative-summary').textContent = explanation.narrative_summary || '';
+
+    var turnIntel = payload.turn_intelligence || {};
+    byId('turn-summary').textContent = turnIntel.turn_summary || '—';
+    var oa = turnIntel.outcome_assessment;
+    var outcomeEl = byId('outcome-classification');
+    if (outcomeEl) {
+      if (oa && oa.outcome) {
+        var outcomeCls = (oa.outcome === 'Strategic Success' || oa.outcome === 'Tactical Gain') ? 'green' : (oa.outcome === 'Strategic Deterioration' || oa.outcome === 'Crisis Escalation' ? 'red' : 'yellow');
+        outcomeEl.innerHTML = '<span class="badge ' + outcomeCls + '">' + oa.outcome + '</span>' + (oa.explanation ? ' <span style="font-size: 0.85rem; color: var(--muted);">' + oa.explanation + '</span>' : '');
+      } else {
+        outcomeEl.textContent = '—';
+      }
+    }
+    byId('regime-commentary').textContent = turnIntel.regime_commentary || '—';
+
+    var actorRanking = payload.actor_ranking || [];
+    var rankingRows = byId('actor-ranking-rows');
+    if (rankingRows) {
+      var stabilizerRank = -1, escalatorRank = -1;
+      actorRanking.forEach(function (a, i) { if (a.role === 'Stabilizer' && stabilizerRank === -1) stabilizerRank = i + 1; if (a.role === 'Escalator' && escalatorRank === -1) escalatorRank = i + 1; });
+      rankingRows.innerHTML = actorRanking.map(function (a, i) {
+        var rank = i + 1;
+        var rowCls = (rank === stabilizerRank ? ' class="actor-stabilizer"' : (rank === escalatorRank ? ' class="actor-escalator"' : ''));
+        return '<tr' + rowCls + '><td>' + rank + '</td><td>' + (a.actor ? prettyLabel(a.actor) : '—') + '</td><td>' + (a.role ? prettyLabel(a.role) : '—') + '</td><td>' + (a.net_system_impact != null ? Number(a.net_system_impact).toFixed(2) : '—') + '</td><td>' + (a.goal_alignment_score != null ? Number(a.goal_alignment_score).toFixed(2) : '—') + '</td><td>' + (a.escalation_score != null ? Number(a.escalation_score).toFixed(2) : '—') + '</td></tr>';
+      }).join('') || '<tr><td colspan="6">No actor data</td></tr>';
+    }
+
+    var causalStory = payload.causal_story || [];
+    var causalEl = byId('causal-story-content');
+    if (causalEl) {
+      causalEl.innerHTML = causalStory.length ? causalStory.map(function (item, idx) {
+        var chain = item.chain || [];
+        var chainStr = chain.map(function (p) { return (p[0] ? prettyLabel(p[0]) : '') + ' ' + (p[1] != null ? (p[1] >= 0 ? '+' : '') + Number(p[1]).toFixed(1) : ''); }).join(' → ');
+        return '<details style="margin-bottom: 0.5rem;"><summary style="cursor: pointer;">' + (item.actor || '') + ': ' + (item.action || '') + '</summary><div style="font-size: 0.85rem; margin-top: 0.25rem; color: var(--muted);">' + (chainStr || '—') + '</div></details>';
+      }).join('') : '<span class="empty">—</span>';
+    }
+
+    var hiddenCosts = payload.hidden_costs || [];
+    byId('hidden-costs-list').innerHTML = hiddenCosts.length ? hiddenCosts.map(function (c) { return '<li>' + c + '</li>'; }).join('') : '<li class="empty">No unintended consequences identified</li>';
+
+    var longStory = payload.longitudinal_story || '';
+    var longEl = byId('longitudinal-story');
+    if (longEl) longEl.textContent = longStory || '—';
 
     const candidates = action.candidates || [];
     const probs = action.probabilities || [];
@@ -412,12 +678,41 @@
     rows.innerHTML = candidates.map(function (c, i) {
       const prob = probs[i] != null ? (Number(probs[i]) * 100).toFixed(0) + '%' : '—';
       const selected = c === selectedType ? ' class="selected"' : '';
-      return '<tr' + selected + '><td>' + c + '</td><td>' + (action.agent || '—') + '</td><td>' + prob + '</td></tr>';
+      return '<tr' + selected + '><td>' + prettyLabel(c) + '</td><td>' + (action.agent ? prettyLabel(action.agent) : '—') + '</td><td>' + prob + '</td></tr>';
     }).join('') || '<tr><td colspan="3">No actions this turn</td></tr>';
 
     byId('primary-effect').textContent = explanation.primary_effect || '—';
     byId('confidence-level').textContent = 'Confidence: ' + (explanation.confidence_level || '—');
     byId('explain-narrative').textContent = explanation.narrative_summary || '';
+
+    const execHeadlineEl = byId('exec-summary-headline');
+    const execTagsEl = byId('exec-summary-tags');
+    const execWhatEl = byId('exec-summary-what');
+    const execWhyEl = byId('exec-summary-why');
+    const execWatchEl = byId('exec-summary-watch');
+    if (execHeadlineEl && execWhatEl && execWhyEl && execWatchEl) {
+      var regimeLabel = regime === 'CRISIS' ? 'Crisis regime' : (regime === 'FRAGILE' ? 'Fragile regime' : 'Normal regime');
+      execHeadlineEl.textContent = 'Turn ' + turn + ' – ' + regimeLabel + ', risk score ' + (s != null ? s.toFixed(1) : '—');
+      if (execTagsEl) {
+        var tags = [];
+        if (risk.volatility_meter != null) tags.push('Volatility ' + risk.volatility_meter.toFixed(2));
+        if (risk.stability_index != null) tags.push('Stability index ' + risk.stability_index.toFixed(2));
+        if (risk.tail_risk_summary) tags.push(risk.tail_risk_summary);
+        execTagsEl.textContent = tags.join(' · ');
+      }
+      var mainDriver = (drivers && drivers[0]) || explanation.primary_effect || '';
+      execWhatEl.textContent = mainDriver || 'No major change highlighted this turn.';
+      var why = turnIntel.outcome_assessment && turnIntel.outcome_assessment.explanation
+        ? turnIntel.outcome_assessment.explanation
+        : (turnIntel.regime_commentary || explanation.narrative_summary || '');
+      execWhyEl.textContent = why || 'Model considers the system broadly stable this turn.';
+      var watchItems = [];
+      if (boundViolations && boundViolations.length) watchItems.push('One or more variables left their expected bounds.');
+      if (risk.tail_risk_gauge != null && risk.tail_risk_gauge > 0.6) watchItems.push('Tail risk is elevated; monitor downside scenarios.');
+      if (risk.volatility_meter != null && risk.volatility_meter > 1.0) watchItems.push('Volatility is high; small shocks may move the system a lot.');
+      if (!watchItems.length) watchItems.push('No urgent watchpoints flagged; continue monitoring trend and regime.');
+      execWatchEl.textContent = watchItems.join(' ');
+    }
 
     const shock = payload.shock || {};
     const shockActive = shock.shock_active === true;
@@ -623,47 +918,6 @@
   </script>
 </body>
 </html>
-ve: true,
-        maintainAspectRatio: false,
-        scales: { y: { beginAtZero: true }, x: { maxTicksLimit: 15 } }
-      }
-    });
-  }
-
-  function poll() {
-    fetch('/api/dashboard/history')
-      .then(function (r) { return r.json(); })
-      .then(function (history) {
-        if (!Array.isArray(history)) history = [];
-        byId('status').textContent = history.length + ' turn(s) in buffer.';
-        if (history.length === 0) {
-          byId('empty-state').style.display = 'block';
-          byId('dashboard-grid').style.display = 'none';
-        } else {
-          byId('empty-state').style.display = 'none';
-          byId('dashboard-grid').style.display = 'grid';
-          const latest = history[history.length - 1];
-          render(latest, history);
-          if (history.length !== lastHistoryLength) {
-            lastHistoryLength = history.length;
-            updateCharts(history);
-          }
-          ensureRmseChart();
-          if (latest.calibration_metrics && latest.calibration_metrics.rmse_over_time && latest.calibration_metrics.rmse_over_time.length) {
-            chartRmse.data.labels = latest.calibration_metrics.rmse_over_time.map(function (_, i) { return 'T' + (i + 1); });
-            chartRmse.data.datasets[0].data = latest.calibration_metrics.rmse_over_time;
-            chartRmse.update('none');
-          }
-        }
-      })
-      .catch(function () {
-        byId('status').textContent = 'Unable to load dashboard data.';
-      });
-  }
-
-  poll();
-  setInterval(poll, POLL_INTERVAL_MS);
-})();
-  </script>
+t>
 </body>
 </html>

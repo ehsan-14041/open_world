@@ -99,8 +99,15 @@ class WorldModelAgent:
         """
         Return Delta from proposal. LLM first; repair-once; validation guard.
         If invalid after validation: log CRITICAL, return None. No rule-based fallback.
+
+        Hot-path budgeting notes:
+        - The state description passed to the LLM is deliberately truncated to
+          keep prompts short in tight simulation loops.
+        - Callers are encouraged to pass a cache_key (via llm_service.make_cache_key)
+          when the same (snapshot, action, agent) triplet is queried repeatedly.
         """
-        state_spec = json.dumps(world_snapshot.get("global_state", {}) or {})
+        # Compact representation of global_state for token budget friendliness
+        state_spec = json.dumps(world_snapshot.get("global_state", {}) or {})[:800]
         proposal_json = (
             proposal.to_dict()
             if hasattr(proposal, "to_dict")

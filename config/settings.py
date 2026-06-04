@@ -110,6 +110,13 @@ DEBUG_LLM: bool = (
     else bool(_cfg.get("debug_llm", False))
 )
 
+# --- Debug performance (lightweight per-turn timing in simulation loop; no external profiler)
+_debug_perf_env = _from_env("DEBUG_PERF", "OWE_DEBUG_PERF")
+DEBUG_PERF: bool = (
+    _debug_perf_env.lower() in ("true", "1", "yes") if _debug_perf_env is not None
+    else bool(_cfg.get("debug_perf", False))
+)
+
 # --- Multi-stage scenario compiler
 _multi_stage_env = _from_env("MULTI_STAGE_COMPILER")
 MULTI_STAGE_COMPILER: bool = (
@@ -143,6 +150,11 @@ if _from_env("COMPUTE_BUDGET_PER_TURN"):
 
 # --- RL table max entries per agent
 RL_TABLE_MAX_ENTRIES: int = int(_cfg.get("rl_table_max_entries", 50))
+
+# --- Unified physics and stock/flow (v2.1)
+UNIFIED_PHYSICS: bool = bool(_cfg.get("unified_physics", True))
+ENABLE_STOCK_FLOW: bool = bool(_cfg.get("enable_stock_flow", True))
+ENABLE_CAUSAL_LEARNING: bool = bool(_cfg.get("enable_causal_learning", False))
 
 # --- Delta apply level flags (default True: apply variables, entities, relations)
 DELTA_APPLY_VARIABLES: bool = bool(_cfg.get("delta_apply_variables", True))
@@ -260,12 +272,42 @@ _oracle_sig = _cfg.get("oracle_significance_threshold")
 ORACLE_SIGNIFICANCE_THRESHOLD: float = float(_oracle_sig if _oracle_sig is not None else 0.0)
 _oracle_ssi = _cfg.get("oracle_ssi_threshold")
 ORACLE_SSI_THRESHOLD: float = float(_oracle_ssi if _oracle_ssi is not None else 100.0)
+_oracle_tiering = _cfg.get("oracle_tiering_mode")
+ORACLE_TIERING_MODE: str = str(_oracle_tiering or "auto").strip().lower()
+_oracle_top_k = _cfg.get("oracle_top_k_actions")
+ORACLE_TOP_K_ACTIONS: int = int(_oracle_top_k if _oracle_top_k is not None else 2)
+ORACLE_ENABLED: bool = ENABLE_ORACLE
 _dev_thresh = _cfg.get("deviation_threshold")
 DEVIATION_THRESHOLD: float = float(_dev_thresh if _dev_thresh is not None else 2.0)
+_surprise_thresh = _cfg.get("surprise_threshold")
+SURPRISE_THRESHOLD: float = float(_surprise_thresh if _surprise_thresh is not None else 0.2)
 _planner_decay_adj = _cfg.get("planner_decay_adjustment")
 PLANNER_DECAY_ADJUSTMENT: float = float(_planner_decay_adj if _planner_decay_adj is not None else 0.05)
 _belief_drift = _cfg.get("belief_drift_rate")
 BELIEF_DRIFT_RATE: float = float(_belief_drift if _belief_drift is not None else 0.1)
+
+# --- LLM usage tiers (budget/quality presets for centralized llm_service)
+_llm_usage_cfg = _cfg.get("llm_usage_tiers") or {}
+_DEFAULT_LLM_USAGE_TIERS: dict[str, dict[str, Any]] = {
+    "agent_reasoning": {"temperature": 0.2, "max_tokens": 1024},
+    "delta_normalization": {"temperature": 0.1, "max_tokens": 512},
+    "oracle_full": {"temperature": 0.1, "max_tokens": ORACLE_MAX_TOKENS},
+    "scenario_pipeline": {"temperature": 0.2, "max_tokens": 1536},
+    "narrative_longform": {"temperature": 0.4, "max_tokens": 2048},
+    "ontology_suggestion": {"temperature": 0.2, "max_tokens": 512},
+}
+# Shallow-merge config overrides on top of defaults
+LLM_USAGE_TIERS: dict[str, dict[str, Any]] = {**_DEFAULT_LLM_USAGE_TIERS}
+if isinstance(_llm_usage_cfg, dict):
+    for _tier, _conf in _llm_usage_cfg.items():
+        if not isinstance(_conf, dict):
+            continue
+        base = LLM_USAGE_TIERS.get(_tier, {}).copy()
+        for k in ("temperature", "max_tokens"):
+            if k in _conf and _conf[k] is not None:
+                base[k] = _conf[k]
+        if base:
+            LLM_USAGE_TIERS[_tier] = base
 
 # --- Hardening: proposal throttle, propagation, phase detection
 _proposal_throttle = _cfg.get("proposal_throttle_turns")
@@ -293,6 +335,10 @@ _ssi_thresh = _cfg.get("ssi_intervention_threshold")
 SSI_INTERVENTION_THRESHOLD: float = float(_ssi_thresh if _ssi_thresh is not None else 0.01)
 _ssi_history = _cfg.get("ssi_history_size")
 SSI_HISTORY_SIZE: int = int(_ssi_history if _ssi_history is not None else 20)
+_ssi_alpha = _cfg.get("ssi_alpha")
+SSI_ALPHA: float = float(_ssi_alpha if _ssi_alpha is not None else 0.1)
+_regime_entropy = _cfg.get("regime_entropy_growth_threshold")
+REGIME_ENTROPY_GROWTH_THRESHOLD: float = float(_regime_entropy if _regime_entropy is not None else 0.5)
 _phase_top_k = _cfg.get("phase_top_k_turns")
 PHASE_TOP_K_TURNS: int = int(_phase_top_k or 3)
 
@@ -397,6 +443,7 @@ def get_settings() -> dict[str, Any]:
         "enable_meta_actions": ENABLE_META_ACTIONS,
         "change_budget": CHANGE_BUDGET,
         "debug_llm": DEBUG_LLM,
+        "debug_perf": DEBUG_PERF,
         "multi_stage_compiler": MULTI_STAGE_COMPILER,
         "enable_uncertainty": ENABLE_UNCERTAINTY,
         "random_seed": RANDOM_SEED,
@@ -447,8 +494,15 @@ def get_settings() -> dict[str, Any]:
         "ssi_epsilon": SSI_EPSILON,
         "ssi_intervention_threshold": SSI_INTERVENTION_THRESHOLD,
         "ssi_history_size": SSI_HISTORY_SIZE,
+        "ssi_alpha": SSI_ALPHA,
+        "regime_entropy_growth_threshold": REGIME_ENTROPY_GROWTH_THRESHOLD,
         "enable_llm_redundancy_check": ENABLE_LLM_REDUNDANCY_CHECK,
         "enable_oracle": ENABLE_ORACLE,
         "oracle_history_turns": ORACLE_HISTORY_TURNS,
         "oracle_max_tokens": ORACLE_MAX_TOKENS,
+        "surprise_threshold": SURPRISE_THRESHOLD,
+        "unified_physics": UNIFIED_PHYSICS,
+        "enable_stock_flow": ENABLE_STOCK_FLOW,
+        "enable_causal_learning": ENABLE_CAUSAL_LEARNING,
+        "llm_usage_tiers": LLM_USAGE_TIERS,
     }

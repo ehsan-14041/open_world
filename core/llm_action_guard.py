@@ -14,26 +14,19 @@ from typing import Any
 from schemas.llm_action_schema import DeltaEntry, LLMActionBlock
 from schemas.strategic_action_schema import StrategicActionResponse
 
+from core.legacy_semantics import legacy_is_non_negative_variable
+
+from schemas.contracts import constraint_spec_from_variable_spec
+
 try:
     from config.settings import DELTA_MAGNITUDE_CAP, MAX_DELTA
 except ImportError:
     DELTA_MAGNITUDE_CAP = 1000.0
     MAX_DELTA = 10.0
 
-# Variables that must not go negative (keyword match)
-NON_NEGATIVE_KEYWORDS = {
-    "population", "count", "resource", "cash", "money", "fund", "stock",
-    "inventory", "supply", "runway",
-}
-
 # Safe numeric range: reject or clamp values outside [-1e12, 1e12]
 SAFE_NUMERIC_MIN = -1e12
 SAFE_NUMERIC_MAX = 1e12
-
-
-def _is_non_negative_variable(var_name: str) -> bool:
-    v = (var_name or "").lower()
-    return any(kw in v for kw in NON_NEGATIVE_KEYWORDS)
 
 
 def _extract_json_block(text: str) -> str | None:
@@ -281,6 +274,7 @@ class LLMActionGuard:
         cap = self.max_delta if use_max_delta else (self.delta_magnitude_cap or 1000.0)
 
         sanitized_deltas: list[dict[str, Any]] = []
+        variable_specs = world_state.get("variable_specs") or {}
         for d in deltas_in:
             var = d.get("variable") if isinstance(d, dict) else None
             change = d.get("change") if isinstance(d, dict) else None
@@ -305,9 +299,16 @@ class LLMActionGuard:
             if abs(val) > cap:
                 val = cap if val > 0 else -cap
 
-            # Non-negative: clamp so current + change >= 0
+            # Non-negative: prefer variable_specs non_negative flag; else legacy inference
+            is_non_negative = False
+            if variable_specs and isinstance(variable_specs, dict):
+                spec = constraint_spec_from_variable_spec(variable_specs.get(var))
+                if spec.non_negative:
+                    is_non_negative = True
+            if not is_non_negative:
+                is_non_negative = legacy_is_non_negative_variable(var)
             current = variables.get(var)
-            if _is_non_negative_variable(var) and isinstance(current, (int, float)):
+            if is_non_negative and isinstance(current, (int, float)):
                 if current + val < 0:
                     val = -float(current)
 
