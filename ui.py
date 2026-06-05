@@ -54,6 +54,9 @@ from visualization.impact_data import prepare_impact_data
 from ui.dashboard import register_routes as register_dashboard_routes
 from ui.dashboard import build_dashboard_payload, on_turn_complete as dashboard_on_turn_complete, set_last_provenance, set_last_scenario
 from ui.decision_brief import build_decision_brief
+from schemas.decision_schema import validate_decision_input, decision_to_scenario_text, normalize_decision_input
+from core.decision_journal import save_decision, get_decision, list_decisions, annotate_outcome
+from config.settings import ENABLE_DECISION_JOURNAL
 from core.simulation_mode import (
     get_simulation_mode,
     set_simulation_mode,
@@ -360,22 +363,39 @@ def api_run_simulation():
 
 @app.route("/api/brief", methods=["POST"])
 def api_brief():
-    """Product endpoint: free text -> run simulation -> Decision Brief.
+    """Product endpoint: free text or structured decision -> run simulation -> Decision Brief.
 
-    Body: { "text": str, "options"?: [str], "steps"?: int, "dry_run"?: bool, "use_llm"?: bool }.
-    Returns { ok, brief, comparison, scenario }.
+    Body (new structured path):
+        { "decision_input": {move, actors?, constraints?, horizon_months?, context?},
+          "options"?: [str], "steps"?: int, "dry_run"?: bool, "use_llm"?: bool }
+
+    Body (legacy free-text path):
+        { "text": str, "options"?: [str], "steps"?: int, "dry_run"?: bool, "use_llm"?: bool }
+
+    Returns { ok, brief, comparison, scenario, decision_id? }.
     """
     global _last_scenario, _last_run_result, _current_run_id
     data = request.get_json(force=True, silent=True) or {}
     text = (data.get("text") or "").strip()
     options = data.get("options") if isinstance(data.get("options"), list) else []
     options = [str(o).strip() for o in options if str(o).strip()][:3]
-    steps = max(1, min(int(data.get("steps", 8)), 30))
+    steps = max(1, min(int(data.get("steps", 5)), 30))
     dry_run = bool(data.get("dry_run", False))
     use_llm = bool(data.get("use_llm", True))
+    save_to_journal = bool(data.get("save_to_journal", ENABLE_DECISION_JOURNAL)) and ENABLE_DECISION_JOURNAL
+
+    # Structured decision input path
+    decision_input: dict | None = None
+    raw_decision = data.get("decision_input")
+    if isinstance(raw_decision, dict):
+        di_errors = validate_decision_input(raw_decision)
+        if di_errors:
+            return jsonify({"ok": False, "error": "; ".join(di_errors)}), 400
+        decision_input = normalize_decision_input(raw_decision)
+        text = decision_to_scenario_text(decision_input)
 
     if not text and not isinstance(data.get("scenario"), dict):
-        return jsonify({"ok": False, "error": "Please describe your decision situation."}), 400
+        return jsonify({"ok": False, "error": "Please describe your decision situation or provide a decision_input object."}), 400
 
     # Parse scenario (reuse existing pipeline; fall back to rule-based on failure).
     try:
@@ -388,6 +408,10 @@ def api_brief():
             scenario = normalize_scenario(parse_scenario_text(text, use_llm=False))
         except Exception:
             return jsonify({"ok": False, "error": f"Could not parse scenario: {e}"}), 400
+
+    # Stash structured decision input on the scenario so the engine can use it
+    if decision_input:
+        scenario["decision_input"] = decision_input
 
     errors = validate_scenario(scenario)
     if errors:
@@ -416,6 +440,19 @@ def api_brief():
         result, brief = _run_and_brief(scenario)
         _current_run_id += 1
         _last_run_result = result
+
+        # Persist to decision journal when structured input was used
+        decision_id: str | None = None
+        if decision_input and save_to_journal:
+            try:
+                snapshot_summary = {
+                    k: v for k, v in ((result.get("final") or {}).get("derived") or {}).items()
+                    if isinstance(v, (int, float))
+                }
+                decision_id = save_decision(decision_input, brief, snapshot_summary)
+            except Exception:
+                pass
+
         # Option comparison: run a derived scenario per option, build a mini-brief each.
         comparison: list[dict] = []
         for opt in options:
@@ -435,12 +472,15 @@ def api_brief():
                 })
             except Exception:
                 continue
-        return jsonify({
+        resp = {
             "ok": True,
             "brief": _make_json_safe(brief),
             "comparison": _make_json_safe(comparison),
             "scenario": _make_json_safe(scenario),
-        })
+        }
+        if decision_id:
+            resp["decision_id"] = decision_id
+        return jsonify(resp)
     except Exception as e:
         logging.exception("api_brief failed: %s", e)
         return jsonify({"ok": False, "error": str(e)}), 500
@@ -468,6 +508,63 @@ def api_brief_feedback():
     except Exception as e:
         logging.warning("feedback write failed: %s", e)
         return jsonify({"ok": False, "error": "could not save feedback"}), 500
+    return jsonify({"ok": True})
+
+
+@app.route("/api/decision_presets", methods=["GET"])
+def api_decision_presets():
+    """Return starter templates for common business decisions (pricing, hiring, etc.)."""
+    path = _PROJECT_ROOT / "config" / "decision_presets.json"
+    try:
+        presets = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(presets, list):
+            presets = []
+    except Exception:
+        presets = []
+    return jsonify({"ok": True, "presets": _make_json_safe(presets)})
+
+
+@app.route("/journal")
+def journal_page():
+    """Decision Journal — list of past analyzed decisions."""
+    return render_template("journal.html")
+
+
+@app.route("/api/journal", methods=["GET"])
+def api_journal_list():
+    """Return a list of past decisions (summary). Query param: limit (default 50)."""
+    try:
+        limit = max(1, min(int(request.args.get("limit", 50)), 200))
+        return jsonify({"ok": True, "decisions": _make_json_safe(list_decisions(limit=limit))})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/api/journal/<decision_id>", methods=["GET"])
+def api_journal_get(decision_id: str):
+    """Return a single decision record by ID."""
+    record = get_decision(decision_id)
+    if record is None:
+        return jsonify({"ok": False, "error": "Decision not found"}), 404
+    return jsonify({"ok": True, "decision": _make_json_safe(record)})
+
+
+@app.route("/api/journal/<decision_id>/annotate", methods=["POST"])
+def api_journal_annotate(decision_id: str):
+    """Annotate a past decision with what actually happened.
+
+    Body: { "what_actually_happened": str, "driver_accuracy"?: "accurate"|"partial"|"wrong" }
+    """
+    data = request.get_json(force=True, silent=True) or {}
+    what = str(data.get("what_actually_happened") or "").strip()
+    if not what:
+        return jsonify({"ok": False, "error": "'what_actually_happened' is required"}), 400
+    accuracy = str(data.get("driver_accuracy") or "").strip() or None
+    if accuracy and accuracy not in ("accurate", "partial", "wrong"):
+        return jsonify({"ok": False, "error": "driver_accuracy must be 'accurate', 'partial', or 'wrong'"}), 400
+    ok = annotate_outcome(decision_id, what, accuracy)
+    if not ok:
+        return jsonify({"ok": False, "error": "Decision not found"}), 404
     return jsonify({"ok": True})
 
 

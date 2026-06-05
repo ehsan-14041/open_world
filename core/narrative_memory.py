@@ -56,14 +56,31 @@ def get_turn_inputs_history() -> list[TurnNarrativeInputs]:
     return list(_inputs_history)
 
 
-def generate_longitudinal_story(last_n_turns: int = 5) -> str:
+def _direction_from_entry(entry: dict) -> str:
+    """Read canonical direction from the stored narrative tags (language-agnostic)."""
+    for tag in entry.get("tags") or []:
+        if isinstance(tag, dict) and tag.get("kind") == "direction":
+            v = str(tag.get("value") or "").strip().lower()
+            if v.startswith("stabil"):
+                return "stabilizing"
+            if v.startswith("escal"):
+                return "escalatory"
+            return "mixed"
+    return "mixed"
+
+
+def generate_longitudinal_story(last_n_turns: int = 5, lang: str = "en") -> str:
     """
     Synthesize 2–4 sentences from the last N turns' turn_summary and outcome_assessment.
     Variable-agnostic; reflects direction (stabilizing/escalatory) and regime transitions.
+    Localized to Persian when lang='fa'.
     """
+    from core.narrative_engine import outcome_label_display
+
+    fa = str(lang or "").strip().lower().startswith("fa")
     history = get_narrative_history()
     if not history or last_n_turns <= 0:
-        return "No narrative history available."
+        return "تاریخچه‌ی روایت موجود نیست." if fa else "No narrative history available."
     slice_ = history[-last_n_turns:]
     outcomes: list[str] = []
     regimes: list[str] = []
@@ -72,38 +89,38 @@ def generate_longitudinal_story(last_n_turns: int = 5) -> str:
         if isinstance(entry, dict):
             oa = entry.get("outcome_assessment") or {}
             if isinstance(oa, dict):
-                outcomes.append(oa.get("outcome") or "Mixed Outcome")
+                outcomes.append(outcome_label_display(oa.get("outcome") or "Mixed Outcome", lang))
             regimes.append(entry.get("regime_commentary") or "")
-            summary = entry.get("turn_summary") or ""
-            if "Stabilizing" in summary:
-                directions.append("stabilizing")
-            elif "Escalatory" in summary:
-                directions.append("escalatory")
-            else:
-                directions.append("mixed")
+            directions.append(_direction_from_entry(entry))
     num = len(slice_)
     if num == 0:
-        return "No narrative history for the requested turns."
+        return "تاریخچه‌ای برای نوبت‌های خواسته‌شده نیست." if fa else "No narrative history for the requested turns."
     stabil = sum(1 for d in directions if d == "stabilizing")
     escal = sum(1 for d in directions if d == "escalatory")
     if stabil > escal and stabil >= num // 2:
-        trend = "stabilizing"
+        trend = "تثبیت‌کننده" if fa else "stabilizing"
     elif escal > stabil and escal >= num // 2:
-        trend = "escalatory"
+        trend = "تشدیدکننده" if fa else "escalatory"
     else:
-        trend = "mixed"
+        trend = "مختلط" if fa else "mixed"
     outcome_set = list(dict.fromkeys(outcomes))
-    outcome_str = ", ".join(outcome_set[:3])
+    outcome_str = "، ".join(outcome_set[:3]) if fa else ", ".join(outcome_set[:3])
     regime_set = list(dict.fromkeys(r for r in regimes if r))
     regime_note = ""
     if len(regime_set) == 1 and regime_set[0]:
         regime_note = f" {regime_set[0]}"
     elif len(regime_set) > 1:
-        regime_note = " Regime conditions varied over the period."
-    sentences = [
-        f"Over the last {num} turn(s), dynamics were predominantly {trend}.",
-        f"Outcomes included: {outcome_str}.",
-    ]
+        regime_note = " شرایطِ رژیم در این دوره متغیر بود." if fa else " Regime conditions varied over the period."
+    if fa:
+        sentences = [
+            f"در {num} نوبتِ اخیر، دینامیک عمدتاً {trend} بود.",
+            f"نتایج شامل: {outcome_str}.",
+        ]
+    else:
+        sentences = [
+            f"Over the last {num} turn(s), dynamics were predominantly {trend}.",
+            f"Outcomes included: {outcome_str}.",
+        ]
     if regime_note:
         sentences.append(regime_note.strip())
     return " ".join(sentences)

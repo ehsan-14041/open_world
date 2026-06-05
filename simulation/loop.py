@@ -1529,6 +1529,8 @@ class SimulationLoop:
                 self_effect_per_agent=tr.get("self_effect_per_agent") or {},
                 propagation_trace=propagation_trace,
                 delta_applied=delta_applied,
+                lang=("fa" if detect_language(str((self._scenario or {}).get("description") or "")) == "fa" else "en"),
+                decision_input=(self._scenario or {}).get("decision_input") or None,
             )
             prov["narrative"] = narrative
             append_narrative(narrative, self.world.turn)

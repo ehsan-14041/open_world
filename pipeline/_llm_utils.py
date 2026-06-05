@@ -84,6 +84,20 @@ def run_llm_stage(
     """Run one LLM stage with optional retry."""
     debug = config.get("debug_llm", False)
     last_error: Exception | None = None
+    # Universal directive applied to every pipeline stage: keep the JSON
+    # structure/enums/keys in English, but write human-readable names, labels,
+    # and descriptions in the SAME language as the scenario text, and use
+    # realistic, differentiated magnitudes (avoid making every effect identical).
+    _lang_directive = (
+        "\n\nIMPORTANT: Keep all JSON keys, enum values (e.g. polarity, type), "
+        "and numeric/boolean fields exactly as specified in English. However, write "
+        "every human-readable name, label, and description (entity names, variable "
+        "names, action names, rationale text) in the SAME LANGUAGE as the scenario "
+        "text above. If the scenario is in Persian, use natural Persian for those. "
+        "Use realistic, varied magnitudes that reflect each item's true relative "
+        "weight — do NOT assign the same value to every effect."
+    )
+    system_prompt = (system_prompt or "") + _lang_directive
     prompt = user_prompt
     for attempt in range(2):
         try:

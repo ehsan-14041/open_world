@@ -20,6 +20,34 @@ OUTCOME_NEAR_ZERO_BAND = 0.3
 CRISIS_ESCALATION_NET_THRESHOLD = -3.0
 
 
+def _norm_lang(lang: str | None) -> str:
+    """Normalize to 'fa' or 'en' (default en)."""
+    return "fa" if str(lang or "").strip().lower().startswith("fa") else "en"
+
+
+def _L(lang: str, en: str, fa: str) -> str:
+    """Pick a localized string. Default behavior (lang='en') preserves prior output."""
+    return fa if _norm_lang(lang) == "fa" else en
+
+
+# Canonical (English) outcome labels are kept stable for tags/logic; this maps
+# them to a Persian display label when rendering for a Persian audience.
+_OUTCOME_FA = {
+    "Crisis Escalation": "تشدید بحران",
+    "Strategic Success": "موفقیت راهبردی",
+    "Tactical Gain": "دستاورد تاکتیکی",
+    "Mixed Outcome": "نتیجه‌ی مختلط",
+    "Strategic Deterioration": "وخامت راهبردی",
+}
+
+
+def outcome_label_display(outcome: str, lang: str = "en") -> str:
+    """Localized display label for a canonical outcome string."""
+    if _norm_lang(lang) == "fa":
+        return _OUTCOME_FA.get(str(outcome), str(outcome))
+    return str(outcome)
+
+
 def _humanize_var(var: str) -> str:
     """Variable-agnostic label from id."""
     return (var or "").replace("_", " ").strip() or "variable"
@@ -65,21 +93,30 @@ def _get_risk_variables(scenario: dict[str, Any]) -> set[str]:
     return risk
 
 
-def get_regime_commentary(regime: str) -> str:
+def get_regime_commentary(regime: str, lang: str = "en") -> str:
     """Regime-driven single string; no variable or domain names."""
     r = (regime or "").strip().upper()
     if r == "CRISIS":
-        return (
+        return _L(
+            lang,
             "The system is operating under high saturation pressure. "
-            "Marginal interventions may have reduced impact and higher unintended consequences."
+            "Marginal interventions may have reduced impact and higher unintended consequences.",
+            "سامانه زیر فشار اشباعِ بالا کار می‌کند. مداخله‌های جزئی ممکن است اثر کمتر و "
+            "پیامدهای ناخواسته‌ی بیشتری داشته باشند.",
         )
     if r == "FRAGILE":
-        return "The system shows early structural strain."
-    return "System dynamics remain elastic."
+        return _L(lang, "The system shows early structural strain.", "سامانه نشانه‌های اولیه‌ی فشار ساختاری را نشان می‌دهد.")
+    return _L(lang, "System dynamics remain elastic.", "دینامیکِ سامانه همچنان کشسان است.")
 
 
-def get_confidence_adjustment_note(calibration_data: dict[str, Any] | None) -> str:
+def get_confidence_adjustment_note(calibration_data: dict[str, Any] | None, lang: str = "en") -> str:
     """Confidence–calibration narrative note from calibration_data."""
+    _low = _L(
+        lang,
+        "Predictive reliability remains low, suggesting model assumptions may require recalibration.",
+        "اعتمادپذیریِ پیش‌بینی پایین است؛ احتمالاً مفروضاتِ مدل به بازکالیبراسیون نیاز دارند.",
+    )
+    _strong = _L(lang, "Predictive alignment is strengthening.", "هم‌ترازیِ پیش‌بینی در حال تقویت است.")
     if not calibration_data or not isinstance(calibration_data, dict):
         return ""
     health = calibration_data.get("health")
@@ -92,18 +129,44 @@ def get_confidence_adjustment_note(calibration_data: dict[str, Any] | None) -> s
         scores = [s for s in scores if isinstance(s, (int, float))]
         agg = sum(scores) / len(scores) if scores else 0.5
     if isinstance(agg, (int, float)) and float(agg) < 0.2:
-        return (
-            "Predictive reliability remains low, suggesting model assumptions may require recalibration."
-        )
+        return _low
     if health == "red" and (agg is None or (isinstance(agg, (int, float)) and float(agg) < 0.4)):
-        return (
-            "Predictive reliability remains low, suggesting model assumptions may require recalibration."
-        )
+        return _low
     rmse_over_time = calibration_data.get("rmse_over_time") or []
     if len(rmse_over_time) >= 2 and isinstance(rmse_over_time[-1], (int, float)) and isinstance(rmse_over_time[-2], (int, float)):
         if float(rmse_over_time[-1]) < float(rmse_over_time[-2]):
-            return "Predictive alignment is strengthening."
+            return _strong
     return ""
+
+
+def _build_decision_framing(decision_input: dict[str, Any] | None, lang: str = "en") -> str:
+    """Build a short framing block when analyzing a structured decision."""
+    if not decision_input or not isinstance(decision_input, dict):
+        return ""
+    move = (decision_input.get("move") or "").strip()
+    if not move:
+        return ""
+    actors = [str(a).strip() for a in (decision_input.get("actors") or []) if str(a).strip()]
+    horizon = decision_input.get("horizon_months")
+    if lang == "fa":
+        parts = [f"تصمیم مورد تحلیل: {move}."]
+        if actors:
+            parts.append(f"بازیگران: {', '.join(actors)}.")
+        if isinstance(horizon, int) and horizon > 0:
+            parts.append(f"افق: {horizon} ماه.")
+        parts.append(
+            "در شناسایی محرک‌ها و هزینه‌های پنهان، موارد با بیشترین ارتباط علّی با این تصمیم اولویت دارند."
+        )
+    else:
+        parts = [f"The user is analyzing this decision: {move}."]
+        if actors:
+            parts.append(f"Actors of interest: {', '.join(actors)}.")
+        if isinstance(horizon, int) and horizon > 0:
+            parts.append(f"Horizon: {horizon} months.")
+        parts.append(
+            "When listing drivers and hidden costs, prioritize those most causally connected to this move."
+        )
+    return " ".join(parts)
 
 
 def _build_turn_summary(
@@ -116,11 +179,12 @@ def _build_turn_summary(
     self_effect_per_agent: dict[str, dict[str, float]],
     risk_vars: set[str],
     direction_label: str,
+    lang: str = "en",
 ) -> str:
     """Algorithmically build 5–7 sentence turn summary."""
     sentences: list[str] = []
     if not delta:
-        sentences.append("No variable changes this turn.")
+        sentences.append(_L(lang, "No variable changes this turn.", "در این نوبت تغییری در متغیرها رخ نداد."))
     else:
         top3 = sorted(
             [(v, d) for v, d in delta.items() if isinstance(d, (int, float)) and abs(float(d)) > 1e-9],
@@ -129,23 +193,28 @@ def _build_turn_summary(
         )[:3]
         if top3:
             parts = [f"{_humanize_var(v)} ({d:+.1f})" for v, d in top3]
-            sentences.append(f"Largest changes: {', '.join(parts)}.")
+            sentences.append(_L(lang, "Largest changes: ", "بزرگ‌ترین تغییرها: ") + ", ".join(parts) + ".")
         primary_actors = [a.get("actor") for a in (actor_analysis or [])[:3] if a.get("actor")]
         if primary_actors:
-            sentences.append(f"Primary contributing actors: {', '.join(primary_actors)}.")
-        sentences.append(f"Overall direction: {direction_label}.")
-    sentences.append(get_regime_commentary(regime))
+            sentences.append(_L(lang, "Primary contributing actors: ", "بازیگرانِ اصلیِ مؤثر: ") + ", ".join(primary_actors) + ".")
+        dir_disp = {
+            "Stabilizing": _L(lang, "Stabilizing", "تثبیت‌کننده"),
+            "Escalatory": _L(lang, "Escalatory", "تشدیدکننده"),
+            "Mixed": _L(lang, "Mixed", "مختلط"),
+        }.get(direction_label, direction_label)
+        sentences.append(_L(lang, "Overall direction: ", "جهتِ کلی: ") + dir_disp + ".")
+    sentences.append(get_regime_commentary(regime, lang))
     risk_delta_sum = sum(
         float(delta.get(v, 0)) for v in risk_vars if isinstance(delta.get(v), (int, float))
     )
     if risk_vars and abs(risk_delta_sum) > 1e-6:
         if risk_delta_sum > 0:
-            sentences.append("Risk-related variables increased, raising systemic risk.")
+            sentences.append(_L(lang, "Risk-related variables increased, raising systemic risk.", "متغیرهای مرتبط با ریسک افزایش یافتند و ریسکِ سامانه‌ای را بالا بردند."))
         else:
-            sentences.append("Risk-related variables decreased, reducing systemic pressure.")
+            sentences.append(_L(lang, "Risk-related variables decreased, reducing systemic pressure.", "متغیرهای مرتبط با ریسک کاهش یافتند و فشارِ سامانه‌ای را کم کردند."))
     outcome_label = (outcome_assessment or {}).get("outcome") or "Mixed Outcome"
-    sentences.append(f"Outcome classification: {outcome_label}.")
-    note = get_confidence_adjustment_note(calibration_data)
+    sentences.append(_L(lang, "Outcome classification: ", "طبقه‌بندیِ نتیجه: ") + outcome_label_display(outcome_label, lang) + ".")
+    note = get_confidence_adjustment_note(calibration_data, lang)
     if note:
         sentences.append(note)
     return " ".join(sentences)
@@ -292,10 +361,14 @@ def classify_outcome(
     goals_aggregate: list[tuple[str, int]],
     scenario: dict[str, Any],
     regime: str,
+    lang: str = "en",
 ) -> dict[str, Any]:
     """
     net_progress = weighted(goal_improvements) - weighted(risk_increase).
     Returns outcome label, explanation, hidden_tradeoffs.
+
+    The canonical `outcome` label stays English (used by tags/logic); narrative
+    text and hidden_tradeoffs are localized via `lang`.
     """
     risk_vars = _get_risk_variables(scenario or {})
     goal_improvement = 0.0
@@ -313,11 +386,11 @@ def classify_outcome(
     for v in risk_vars:
         d = delta.get(v)
         if isinstance(d, (int, float)) and float(d) > 0:
-            hidden_tradeoffs.append(f"{_humanize_var(v)} increased")
+            hidden_tradeoffs.append(_humanize_var(v) + _L(lang, " increased", " افزایش یافت"))
     for var, direction in goals_aggregate or []:
         d = delta.get(var)
         if isinstance(d, (int, float)) and float(d) * direction < 0:
-            hidden_tradeoffs.append(f"{_humanize_var(var)} moved against goals")
+            hidden_tradeoffs.append(_humanize_var(var) + _L(lang, " moved against goals", " خلافِ اهداف حرکت کرد"))
 
     r = (regime or "").strip().upper()
     if r == "CRISIS" and net_progress < CRISIS_ESCALATION_NET_THRESHOLD:
@@ -358,6 +431,8 @@ def generate_turn_narrative(
     self_effect_per_agent: dict[str, dict[str, float]] | None = None,
     propagation_trace: list[dict[str, Any]] | None = None,
     delta_applied: dict[str, float] | None = None,
+    lang: str = "en",
+    decision_input: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """
     Main entry: produce structured narrative from turn data.
@@ -386,7 +461,7 @@ def generate_turn_narrative(
             seen.add((v, d))
             unique_goals.append((v, d))
 
-    outcome_assessment = classify_outcome(delta_use, unique_goals, scenario, regime)
+    outcome_assessment = classify_outcome(delta_use, unique_goals, scenario, regime, lang)
     actor_analysis = compute_actor_performance(
         delta_use,
         self_effect,
@@ -421,7 +496,12 @@ def generate_turn_narrative(
         self_effect,
         risk_vars,
         direction_label,
+        lang,
     )
+
+    decision_framing = _build_decision_framing(decision_input, lang)
+    if decision_framing:
+        turn_summary = decision_framing + " " + turn_summary
 
     causal_chain = build_causal_chain_story(
         agent_actions or [],
@@ -429,16 +509,31 @@ def generate_turn_narrative(
         prop_trace,
     )
 
+    # Build key_drivers ranked by |delta|, boosted for variables related to the decision move.
+    _move_keywords: set[str] = set()
+    if decision_input and isinstance(decision_input, dict):
+        move_text = (decision_input.get("move") or "").lower()
+        _move_keywords = {w for w in move_text.split() if len(w) > 3}
+        for actor in (decision_input.get("actors") or []):
+            _move_keywords.update(w for w in str(actor).lower().split() if len(w) > 3)
+
+    def _driver_score(var: str, d_val: float) -> float:
+        base = abs(float(d_val))
+        if _move_keywords:
+            v_lower = var.lower()
+            base += sum(0.5 for kw in _move_keywords if kw in v_lower)
+        return base
+
     key_drivers: list[str] = []
     for var, d in sorted(
         [(v, delta_use.get(v)) for v in delta_use if isinstance(delta_use.get(v), (int, float)) and abs(float(delta_use.get(v))) > 1e-9],
-        key=lambda x: -abs(float(x[1])),
+        key=lambda x: -_driver_score(x[0], x[1]),
     )[:5]:
         key_drivers.append(f"{_humanize_var(var)}: {float(d):+.1f}")
 
     hidden_costs = outcome_assessment.get("hidden_tradeoffs") or []
 
-    confidence_note = get_confidence_adjustment_note(calibration_data)
+    confidence_note = get_confidence_adjustment_note(calibration_data, lang)
 
     # Facts: compact, structured statements derived from the above quantities.
     facts: list[NarrativeFact] = []
@@ -457,7 +552,7 @@ def generate_turn_narrative(
     facts.append(
         NarrativeFact(
             kind="regime",
-            data={"regime": regime, "commentary": get_regime_commentary(regime)},
+            data={"regime": regime, "commentary": get_regime_commentary(regime, lang)},
         )
     )
     if self_effect:
@@ -519,6 +614,7 @@ def generate_turn_narrative(
         metadata={
             "has_delta": bool(delta_use),
             "has_causal_trace": bool(prop_trace),
+            "decision_framing": decision_framing or None,
         },
     )
 
@@ -527,10 +623,11 @@ def generate_turn_narrative(
         "actor_analysis": actor_analysis,
         "causal_chain": causal_chain,
         "outcome_assessment": outcome_assessment,
-        "regime_commentary": get_regime_commentary(regime),
+        "regime_commentary": get_regime_commentary(regime, lang),
         "key_drivers": key_drivers,
         "hidden_costs": hidden_costs,
         "confidence_adjustment_note": confidence_note,
+        "decision_framing": decision_framing or None,
         "facts": [f.to_dict() for f in facts],
         "tags": [t.to_dict() for t in tags],
         "inputs": inputs.to_dict(),

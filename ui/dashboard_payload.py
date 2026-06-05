@@ -84,6 +84,14 @@ def build_dashboard_payload(
     if provenance_entry and provenance_entry not in provenance_history:
         provenance_history = list(provenance_history) + [provenance_entry]
 
+    # Presentation language (Persian when the scenario description is Persian).
+    try:
+        from core.world_summarizer import detect_language as _detect_lang
+        _dp_fa = _detect_lang(str((scenario or {}).get("description") or "")) == "fa"
+    except Exception:
+        _dp_fa = False
+    _dp_lang = "fa" if _dp_fa else "en"
+
     variables = snapshot.get("variables") or snapshot.get("global_state") or {}
     if not isinstance(variables, dict):
         variables = {}
@@ -313,7 +321,7 @@ def build_dashboard_payload(
         assumption_summary.append({
             "assumption": f"{var} in [{spec.get('min', '?')}, {spec.get('max', '?')}]",
             "confidence": 0.8,
-            "risk_if_wrong": "Bounds violation or clipping",
+            "risk_if_wrong": ("نقضِ کران‌ها یا برش (clipping)" if _dp_fa else "Bounds violation or clipping"),
             "affected_variables": aff,
             "impact_score": round(impact_score, 2),
             "high_impact": high_impact,
@@ -327,7 +335,7 @@ def build_dashboard_payload(
                 assumption_summary.append({
                     "assumption": f"{var} is numeric",
                     "confidence": 0.7,
-                    "risk_if_wrong": "Model drift",
+                    "risk_if_wrong": ("روند‌رفتگیِ مدل (model drift)" if _dp_fa else "Model drift"),
                     "affected_variables": aff,
                     "impact_score": round(impact_score, 2),
                     "high_impact": impact_score >= high_impact_threshold,
@@ -668,7 +676,7 @@ def build_dashboard_payload(
             narrative_payload = {}
     try:
         from core.narrative_memory import generate_longitudinal_story
-        narrative_payload["longitudinal_story"] = generate_longitudinal_story(5)
+        narrative_payload["longitudinal_story"] = generate_longitudinal_story(5, lang=_dp_lang)
     except Exception:
         narrative_payload["longitudinal_story"] = ""
 

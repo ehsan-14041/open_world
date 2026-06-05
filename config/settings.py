@@ -351,6 +351,13 @@ DASHBOARD_ENABLED: bool = (
     else bool(_cfg.get("dashboard_enabled", True))
 )
 
+# --- Decision journal (file-backed persistence for analyzed decisions)
+_journal_env = _from_env("ENABLE_DECISION_JOURNAL")
+ENABLE_DECISION_JOURNAL: bool = (
+    _journal_env.lower() in ("true", "1", "yes") if _journal_env is not None
+    else bool(_cfg.get("enable_decision_journal", True))
+)
+
 # --- Enterprise positioning (tier label only; no billing)
 _enterprise_tier = _from_env("ENTERPRISE_TIER") or _cfg.get("enterprise_tier")
 ENTERPRISE_TIER: str = str(_enterprise_tier or "Research Edition").strip()
@@ -464,6 +471,7 @@ def get_settings() -> dict[str, Any]:
         "lang": LANG,
         "dashboard_history_size": DASHBOARD_HISTORY_SIZE,
         "dashboard_enabled": DASHBOARD_ENABLED,
+        "enable_decision_journal": ENABLE_DECISION_JOURNAL,
         "enterprise_tier": ENTERPRISE_TIER,
         "simulation_mode": SIMULATION_MODE,
         "shock_intensity": SHOCK_INTENSITY,

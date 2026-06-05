@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>موتور شبیه‌سازی جهان باز</title>
+  <title>Open World Engine — Engineering Tools</title>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
   <style>
     .lang-switcher {
@@ -603,6 +603,17 @@
     /* Output with icons */
     #output.success::before, #outputSummary.success::before { content: "✓ "; }
     #output.error::before, #outputSummary.error::before { content: "⚠ "; }
+    .product-banner {
+      background: rgba(88, 166, 255, 0.08);
+      border: 1px solid rgba(88, 166, 255, 0.25);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .product-banner a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .product-banner a:hover { color: var(--accent-hover); text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -611,10 +622,13 @@
     <button type="button" id="langFa" data-lang="fa" class="active">فارسی</button>
   </div>
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/" data-i18n="home">خانه</a> <span data-i18n="breadcrumbSep">›</span> <span data-i18n="simulator">شبیه‌ساز</span>
+    <a href="/" data-i18n="home">تحلیل تصمیم</a> <span data-i18n="breadcrumbSep">›</span> <span data-i18n="simulator">ابزار مهندسی</span>
   </nav>
-  <h1 data-i18n="title">موتور شبیه‌سازی جهان باز</h1>
-  <p class="hero-subtitle" data-i18n="heroSubtitle">سناریوی خود را به زبان ساده بنویسید، ثبت کنید و شبیه‌سازی را اجرا کنید. نتایج را به صورت خروجی خام، خلاصه روایی یا گراف علّی مشاهده کنید.</p>
+  <div class="product-banner" data-i18n-html="productBanner">
+    به‌دنبال <strong>نقشه‌برداری تصمیم</strong> هستید؟ از <a href="/">صفحه اصلی</a> یک تصمیم (قیمت‌گذاری، استخدام، ورود به بازار…) را تحلیل کنید. این صفحه برای دسترسی خام به موتور شبیه‌سازی، JSON و گراف علّی است.
+  </div>
+  <h1 data-i18n="title">Open World Engine — ابزار مهندسی</h1>
+  <p class="hero-subtitle" data-i18n="heroSubtitle">دسترسی سطح پایین به موتور علّی: سناریو را parse کنید، شبیه‌سازی را اجرا کنید، JSON و گراف را ببینید. برای تحلیل تصمیم ساختاریافته به صفحه اصلی بروید.</p>
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
   <div class="tabs">
     <button type="button" class="tab-btn active" data-tab="main" data-i18n="tabMain">صفحه اصلی</button>
@@ -721,12 +735,13 @@
     const LANG_KEY = 'open_world_lang';
     const i18n = {
       fa: {
-        home: 'خانه', breadcrumbSep: '›', simulator: 'شبیه‌ساز',
-        title: 'موتور شبیه‌سازی جهان باز',
-        heroSubtitle: 'سناریوی خود را به زبان ساده بنویسید، ثبت کنید و شبیه‌سازی را اجرا کنید. نتایج را به صورت خروجی خام، خلاصه روایی یا گراف علّی مشاهده کنید.',
+        home: 'تحلیل تصمیم', breadcrumbSep: '›', simulator: 'ابزار مهندسی',
+        productBanner: 'به‌دنبال <strong>نقشه‌برداری تصمیم</strong> هستید؟ از <a href="/">صفحه اصلی</a> یک تصمیم (قیمت‌گذاری، استخدام، ورود به بازار…) را تحلیل کنید. این صفحه برای دسترسی خام به موتور شبیه‌سازی، JSON و گراف علّی است.',
+        title: 'Open World Engine — ابزار مهندسی',
+        heroSubtitle: 'دسترسی سطح پایین به موتور علّی: سناریو را parse کنید، شبیه‌سازی را اجرا کنید، JSON و گراف را ببینید. برای تحلیل تصمیم ساختاریافته به صفحه اصلی بروید.',
         tabMain: 'صفحه اصلی', tabLlmLogs: 'لاگ LLM',
-        step1Title: 'سناریو را بنویسید', step1Desc: 'وضعیت اولیه، بازیگران و اهداف را به زبان آزاد توصیف کنید. مثال: «یک استارتاپ با بنیانگذار و سرمایه‌گذار؛ پول نقد اولیه ۱۰۰ هزار، runway ۱۸ ماه. بنیانگذار روی رشد و حفظ نقدینگی تمرکز دارد؛ سرمایه‌گذار به runway و حاکمیت اهمیت می‌دهد.»',
-        scenarioLabel: 'توضیحات سناریو', scenarioPlaceholder: 'سناریوی خود را اینجا بنویسید...',
+        step1Title: 'سناریوی علّی را بنویسید', step1Desc: 'وضعیت، بازیگران و متغیرها (revenue، burn، retention، capacity…) را به زبان آزاد توصیف کنید. مثال: «استارتاپ SaaS با runway ۱۰ ماه؛ در حال بررسی افزایش قیمت ۲۵٪.»',
+        scenarioLabel: 'توضیحات سناریو / تصمیم', scenarioPlaceholder: 'سناریو یا زمینه تصمیم را اینجا بنویسید…',
         submitLabel: 'ثبت سناریو', btnSubmit: 'ثبت سناریو', btnSubmitTitle: 'ثبت سناریو (Ctrl+Enter)',
         useLlmLabel: 'تبدیل خودکار به JSON با LLM',
         step2Title: 'شبیه‌سازی را اجرا کنید', step2Desc: 'تعداد راندها را مشخص کنید و شبیه‌سازی را شروع کنید.',
@@ -763,12 +778,13 @@
         streamHeader: 'شبیه‌سازی ({0} راند)...', streamTurnHeader: '--- راند {0} از {1} ---'
       },
       en: {
-        home: 'Home', breadcrumbSep: '›', simulator: 'Simulator',
-        title: 'Open World Engine',
-        heroSubtitle: 'Write your scenario in plain language, submit it, and run the simulation. View results as raw output, narrative summary, or causal graph.',
+        home: 'Decision analysis', breadcrumbSep: '›', simulator: 'Engineering tools',
+        productBanner: 'Looking for <strong>decision mapping</strong>? Analyze a business decision (pricing, hiring, market entry…) on the <a href="/">home page</a>. This page is raw engine access: JSON, causal graph, and simulation controls.',
+        title: 'Open World Engine — Engineering Tools',
+        heroSubtitle: 'Low-level access to the causal engine: parse scenarios, run simulations, inspect JSON and graphs. For structured decision briefs, use the home page.',
         tabMain: 'Main', tabLlmLogs: 'LLM Logs',
-        step1Title: 'Write your scenario', step1Desc: 'Describe the initial state, actors, and goals in free text. Example: "A startup with a founder and investor; initial cash 100k, runway 18 months. The founder focuses on growth and conserving cash; the investor cares about runway and governance."',
-        scenarioLabel: 'Scenario description', scenarioPlaceholder: 'Write your scenario here...',
+        step1Title: 'Write the causal scenario', step1Desc: 'Describe state, actors, and variables (revenue, burn, retention, capacity…) in plain language. Example: "SaaS startup, 10 months runway, weighing a 25% price increase."',
+        scenarioLabel: 'Scenario / decision context', scenarioPlaceholder: 'Write your scenario or decision context here…',
         submitLabel: 'Submit scenario', btnSubmit: 'Submit Scenario', btnSubmitTitle: 'Submit scenario (Ctrl+Enter)',
         useLlmLabel: 'Use LLM to convert to JSON',
         step2Title: 'Run the simulation', step2Desc: 'Set the number of rounds and start the simulation.',

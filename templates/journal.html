@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دفتر تصمیمات — Open World Engine</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
+      --text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--accent2:#79c0ff;
+      --ok:#3fb950;--warn:#d29922;--err:#f85149;--radius:14px;--radius-sm:9px;
+      --shadow:0 6px 28px rgba(0,0,0,.28);
+    }
+    *{box-sizing:border-box}
+    body{font-family:"Vazirmatn","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);
+      margin:0;padding:1.5rem;line-height:1.8;max-width:900px;margin-inline:auto}
+    .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
+    .top a{color:var(--muted);font-size:.85rem;text-decoration:none}
+    .top a:hover{color:var(--accent)}
+    .lang button{padding:.3rem .7rem;font:inherit;font-size:.8rem;font-weight:600;background:var(--surface);
+      color:var(--muted);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer}
+    .lang button.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+    h1{font-size:1.4rem;font-weight:700;margin:0 0 .3rem}
+    .sub{color:var(--muted);font-size:.9rem;margin:0 0 1.4rem}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.2rem 1.3rem;margin-bottom:1rem;box-shadow:var(--shadow);cursor:pointer;transition:.15s}
+    .card:hover{border-color:var(--accent);transform:translateY(-1px)}
+    .card.open{cursor:default;transform:none;border-color:var(--accent2)}
+    .decision-move{font-weight:700;font-size:1.05rem;margin-bottom:.3rem}
+    .decision-meta{font-size:.82rem;color:var(--muted);display:flex;gap:.8rem;flex-wrap:wrap}
+    .badge{display:inline-block;padding:.2rem .6rem;border-radius:999px;font-size:.78rem;font-weight:700}
+    .badge.annotated{background:rgba(63,185,80,.15);color:var(--ok);border:1px solid rgba(63,185,80,.35)}
+    .badge.pending{background:rgba(139,148,158,.1);color:var(--muted);border:1px solid var(--border)}
+    .conf.low{color:var(--err)}.conf.moderate{color:var(--warn)}.conf.high{color:var(--ok)}
+    .detail{margin-top:1rem;display:none}
+    .card.open .detail{display:block}
+    .section{margin-bottom:.9rem}
+    .section h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0 0 .35rem;font-weight:700}
+    .section p{margin:0;font-size:.92rem}
+    ul.clean{margin:.2rem 0 0;padding-inline-start:1.2rem;font-size:.9rem}
+    ul.clean li{margin-bottom:.3rem}
+    .driver-row{margin-bottom:.3rem;font-size:.9rem}
+    .driver-name{font-weight:600}
+    .driver-why{color:var(--muted);font-size:.82rem}
+    .effect-row{padding:.4rem .6rem;background:var(--surface2);border-radius:var(--radius-sm);
+      border:1px solid var(--border);margin-bottom:.4rem;font-size:.88rem}
+    .kill-row{padding:.4rem .6rem;background:rgba(248,81,73,.06);border:1px solid rgba(248,81,73,.2);
+      border-radius:var(--radius-sm);margin-bottom:.4rem;font-size:.88rem}
+    .kill-var{font-weight:700;color:var(--err)}
+    .kill-thresh{font-family:monospace;font-size:.82rem}
+    .kill-why{color:var(--muted);font-size:.8rem}
+    .annotate-panel{margin-top:1rem;padding:.9rem 1rem;background:var(--surface2);
+      border-radius:var(--radius-sm);border:1px solid var(--border)}
+    .annotate-panel h4{margin:0 0 .6rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+    .annotate-panel textarea{width:100%;min-height:70px;padding:.6rem;background:var(--bg);
+      border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font:inherit;resize:vertical;margin-bottom:.5rem}
+    .annotate-panel select{padding:.5rem .7rem;background:var(--bg);border:1px solid var(--border);
+      border-radius:var(--radius-sm);color:var(--text);font:inherit;margin-bottom:.6rem}
+    .annotate-panel button{padding:.5rem 1.1rem;background:var(--accent);color:var(--bg);border:none;
+      border-radius:var(--radius-sm);font:inherit;font-weight:700;cursor:pointer}
+    .annotate-panel button:hover{background:var(--accent2)}
+    .annotation-display{margin-top:.5rem;padding:.6rem .8rem;background:rgba(63,185,80,.07);
+      border-radius:var(--radius-sm);border:1px solid rgba(63,185,80,.25);font-size:.88rem}
+    .empty{text-align:center;color:var(--muted);padding:3rem 1rem}
+    .spinner{display:inline-block;width:1.1rem;height:1.1rem;border:2px solid var(--border);
+      border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .hidden{display:none}
+    .error{color:var(--err)}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="lang" role="group">
+      <button type="button" data-lang="fa" class="active">فارسی</button>
+      <button type="button" data-lang="en">English</button>
+    </div>
+    <a href="/" data-i18n="backToAnalysis">← برگشت به تحلیل</a>
+  </div>
+
+  <h1 data-i18n="title">دفتر تصمیمات</h1>
+  <p class="sub" data-i18n="sub">تاریخچه تصمیم‌های تحلیل‌شده. نتیجه واقعی را ثبت کنید تا ببینید کدام محرک‌ها و فرضیات درست بودند — حلقه یادگیری برای قضاوت بهتر.</p>
+
+  <div id="loading"><span class="spinner"></span></div>
+  <div id="empty" class="empty hidden" data-i18n="empty">هنوز هیچ تصمیمی ثبت نشده. از صفحه اصلی یک تصمیم تحلیل کنید.</div>
+  <div id="list"></div>
+
+  <script>
+    const I18N = {
+      fa:{
+        title:"دفتر تصمیمات",
+        sub:"تاریخچه تصمیم‌های تحلیل‌شده. نتیجه واقعی را ثبت کنید تا ببینید کدام محرک‌ها و فرضیات درست بودند — حلقه یادگیری برای قضاوت بهتر.",
+        backToAnalysis:"← برگشت به تحلیل تصمیم",
+        empty:"هنوز هیچ تصمیمی ثبت نشده. از صفحه اصلی یک تصمیم تحلیل کنید.",
+        hWhat:"نقشه پیامدها (آنچه محتمل بود)",
+        hDrivers:"محرک‌های کلیدی",
+        hSecondOrder:"اثرات درجه دوم",
+        hAssumptions:"فرضیات پنهان",
+        hKill:"معیارهای توقف",
+        hAnnotate:"ثبت نتیجه واقعی",
+        whatHappenedPh:"چه اتفاقی افتاد؟ آیا تصمیم اجرا شد؟ نتیجه چه بود؟",
+        accuracyLabel:"محرک‌های شناسایی‌شده چقدر درست بودند؟",
+        accChoose:"انتخاب کنید…",
+        accAccurate:"دقیق بود",
+        accPartial:"تا حدی درست بود",
+        accWrong:"اشتباه بود",
+        saveAnnotation:"ذخیره",
+        annotationSaved:"نتیجه ذخیره شد.",
+        horizon:"افق",
+        months:"ماه",
+        actors:"بازیگران",
+        outcome:"نتیجه پیش‌بینی‌شده",
+        confidence:"اطمینان",
+        annotated:"ثبت‌شده",
+        pending:"در انتظار بازخورد",
+        effect:"اثر", trigger:"محرک",
+        watchVar:"متغیر", threshold:"آستانه",
+      },
+      en:{
+        title:"Decision Journal",
+        sub:"History of analyzed decisions. Record actual outcomes to see which drivers and assumptions held — a learning loop for better judgment.",
+        backToAnalysis:"← Back to decision analysis",
+        empty:"No decisions recorded yet. Analyze a decision from the home page.",
+        hWhat:"Consequence map (what was likely)",
+        hDrivers:"Top drivers",
+        hSecondOrder:"Second-order effects",
+        hAssumptions:"Hidden assumptions",
+        hKill:"Kill criteria",
+        hAnnotate:"Record what actually happened",
+        whatHappenedPh:"What happened? Did you take the decision? What was the result?",
+        accuracyLabel:"How accurate were the identified drivers?",
+        accChoose:"Choose…",
+        accAccurate:"Accurate",
+        accPartial:"Partially correct",
+        accWrong:"Wrong",
+        saveAnnotation:"Save",
+        annotationSaved:"Outcome saved.",
+        horizon:"Horizon",
+        months:"months",
+        actors:"Actors",
+        outcome:"Mapped outcome",
+        confidence:"Confidence",
+        annotated:"Annotated",
+        pending:"Awaiting feedback",
+        effect:"Effect", trigger:"Trigger",
+        watchVar:"Variable", threshold:"Threshold",
+      }
+    };
+    let lang = localStorage.getItem('owe_brief_lang') || 'fa';
+    function t(k){ return (I18N[lang]||I18N.fa)[k] ?? (I18N.fa[k]||k); }
+    function applyLang(l){
+      lang=l; localStorage.setItem('owe_brief_lang',l);
+      document.documentElement.lang=l==='fa'?'fa':'en';
+      document.documentElement.dir=l==='fa'?'rtl':'ltr';
+      document.title=t('title')+' — Open World Engine';
+      document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
+      document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=t(e.getAttribute('data-i18n')));
+    }
+    document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{applyLang(b.dataset.lang);loadList();}));
+
+    function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML; }
+    function fmtDate(ts){ if(!ts) return ''; const d=new Date(ts*1000); return d.toLocaleDateString(lang==='fa'?'fa-IR':'en-GB',{year:'numeric',month:'short',day:'numeric'}); }
+
+    function buildDetail(rec){
+      const b=rec.brief||{};
+      const di=rec.decision_input||{};
+      let html='<div class="detail">';
+
+      // Predicted outcome
+      html+=`<div class="section"><h4>${t('hWhat')}</h4><p>${escapeHtml(b.what_likely_happens||'—')}</p>`;
+      if(b.outcome) html+=`<p style="color:var(--muted);font-size:.85rem">▸ ${escapeHtml(b.outcome)}</p>`;
+      html+='</div>';
+
+      // Top drivers
+      const drivers=b.top_drivers&&b.top_drivers.length?b.top_drivers:(b.key_drivers||[]).map(s=>({name:s}));
+      if(drivers.length){
+        html+=`<div class="section"><h4>${t('hDrivers')}</h4>`;
+        drivers.forEach(d=>{
+          const name=typeof d==='string'?d:(d.name||'');
+          const why=typeof d==='string'?'':(d.why_it_matters||'');
+          html+=`<div class="driver-row"><span class="driver-name">${escapeHtml(name)}</span>`+
+            (why?` <span class="driver-why">— ${escapeHtml(why)}</span>`:'')+`</div>`;
+        });
+        html+='</div>';
+      }
+
+      // Second-order effects
+      if(b.second_order_effects&&b.second_order_effects.length){
+        html+=`<div class="section"><h4>${t('hSecondOrder')}</h4>`;
+        b.second_order_effects.forEach(e=>{
+          html+=`<div class="effect-row"><strong>${escapeHtml(e.effect||'')}</strong>`;
+          if(e.trigger) html+=` <span style="color:var(--muted);font-size:.82rem">${t('trigger')}: ${escapeHtml(e.trigger)}</span>`;
+          html+='</div>';
+        });
+        html+='</div>';
+      }
+
+      // Hidden assumptions
+      const assump=b.hidden_assumptions&&b.hidden_assumptions.length
+        ?b.hidden_assumptions.map(a=>typeof a==='string'?a:(a.assumption||''))
+        :(b.hidden_risks||[]);
+      if(assump.filter(Boolean).length){
+        html+=`<div class="section"><h4>${t('hAssumptions')}</h4><ul class="clean">`;
+        assump.filter(Boolean).forEach(a=>{ html+=`<li>${escapeHtml(a)}</li>`; });
+        html+='</ul></div>';
+      }
+
+      // Kill criteria
+      if(b.kill_criteria&&b.kill_criteria.length){
+        html+=`<div class="section"><h4>${t('hKill')}</h4>`;
+        b.kill_criteria.forEach(c=>{
+          html+=`<div class="kill-row"><div class="kill-var">${escapeHtml(c.watch_variable||'')}</div>`+
+            `<div class="kill-thresh">${escapeHtml(c.threshold||'')}</div>`+
+            (c.why?`<div class="kill-why">${escapeHtml(c.why)}</div>`:'')+`</div>`;
+        });
+        html+='</div>';
+      }
+
+      // Annotation display or form
+      if(rec.annotation){
+        html+=`<div class="annotation-display">`;
+        html+=`<strong>${escapeHtml(rec.annotation.what_actually_happened||'')}</strong>`;
+        if(rec.annotation.driver_accuracy) html+=` <em style="color:var(--muted);font-size:.85rem">(${escapeHtml(rec.annotation.driver_accuracy)})</em>`;
+        html+='</div>';
+      } else {
+        html+=`<div class="annotate-panel">
+          <h4>${t('hAnnotate')}</h4>
+          <textarea id="ann_${rec.id}" placeholder="${escapeHtml(t('whatHappenedPh'))}"></textarea>
+          <div>
+            <select id="acc_${rec.id}">
+              <option value="">${t('accChoose')}</option>
+              <option value="accurate">${t('accAccurate')}</option>
+              <option value="partial">${t('accPartial')}</option>
+              <option value="wrong">${t('accWrong')}</option>
+            </select>
+          </div>
+          <button type="button" onclick="saveAnnotation('${rec.id}')">${t('saveAnnotation')}</button>
+          <span id="annsaved_${rec.id}" class="hidden" style="color:var(--ok);margin-inline-start:.6rem;font-size:.88rem">${t('annotationSaved')}</span>
+        </div>`;
+      }
+
+      html+='</div>';
+      return html;
+    }
+
+    function buildCard(rec){
+      const b=rec.brief||{};
+      const di=rec.decision_input||{};
+      const hasAnnotation=!!rec.annotation;
+      const conf=((b.confidence||{}).level||'').toLowerCase();
+
+      let html=`<div class="card" data-id="${rec.id}">`;
+      html+=`<div class="decision-move">${escapeHtml(di.move||b.situation||'—')}</div>`;
+      html+=`<div class="decision-meta">`;
+      if(di.horizon_months) html+=`<span>${t('horizon')}: ${di.horizon_months} ${t('months')}</span>`;
+      if(di.actors&&di.actors.length) html+=`<span>${t('actors')}: ${escapeHtml(di.actors.slice(0,3).join(', '))}</span>`;
+      html+=`<span>${fmtDate(rec.created_at)}</span>`;
+      if(conf) html+=`<span class="conf ${conf}">${conf}</span>`;
+      html+=`<span class="badge ${hasAnnotation?'annotated':'pending'}">${t(hasAnnotation?'annotated':'pending')}</span>`;
+      html+='</div>';
+      html+=buildDetail(rec);
+      html+='</div>';
+      return html;
+    }
+
+    async function saveAnnotation(id){
+      const what=document.getElementById('ann_'+id).value.trim();
+      const acc=document.getElementById('acc_'+id).value;
+      if(!what) return;
+      try{
+        const res=await fetch(`/api/journal/${id}/annotate`,{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({what_actually_happened:what,driver_accuracy:acc||null})});
+        const data=await res.json();
+        if(data.ok){
+          document.getElementById('annsaved_'+id).classList.remove('hidden');
+          setTimeout(()=>loadList(),1200);
+        }
+      }catch(e){}
+    }
+    window.saveAnnotation=saveAnnotation;
+
+    function wireCards(){
+      document.querySelectorAll('.card').forEach(card=>{
+        card.addEventListener('click',e=>{
+          if(e.target.closest('button,textarea,select')) return;
+          card.classList.toggle('open');
+        });
+      });
+    }
+
+    async function loadList(){
+      const loading=document.getElementById('loading');
+      const empty=document.getElementById('empty');
+      const list=document.getElementById('list');
+      loading.classList.remove('hidden'); list.innerHTML='';
+      try{
+        const res=await fetch('/api/journal');
+        const data=await res.json();
+        loading.classList.add('hidden');
+        if(!data.ok||!data.decisions||!data.decisions.length){
+          empty.classList.remove('hidden'); return;
+        }
+        empty.classList.add('hidden');
+        list.innerHTML=data.decisions.map(buildCard).join('');
+        wireCards();
+      }catch(e){
+        loading.classList.add('hidden');
+        list.innerHTML=`<p class="error">${escapeHtml(e.message)}</p>`;
+      }
+    }
+
+    applyLang(lang);
+    loadList();
+  </script>
+</body>
+</html>

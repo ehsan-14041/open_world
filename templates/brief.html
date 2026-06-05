@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تحلیل تصمیم استراتژیک</title>
+  <title>هوش تصمیم استراتژیک — Open World Engine</title>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
   <style>
     :root{
@@ -64,9 +64,63 @@
     .feedback input{flex:1;min-width:160px;padding:.45rem .7rem;background:var(--bg);border:1px solid var(--border);
       border-radius:var(--radius-sm);color:var(--text);font:inherit}
     .adv{text-align:center;margin-top:1.5rem}
-    .adv a{color:var(--muted);font-size:.82rem;text-decoration:none}
+    .adv a{color:var(--muted);font-size:.82rem;text-decoration:none;margin:0 .5rem}
     .adv a:hover{color:var(--accent)}
+    .mode-toggle{display:flex;gap:.5rem;margin-bottom:1rem}
+    .mode-toggle button{padding:.35rem .8rem;font:inherit;font-size:.82rem;background:var(--surface2);
+      color:var(--muted);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer}
+    .mode-toggle button.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+    .struct-field{margin-bottom:.9rem}
+    .struct-field label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:.35rem}
+    .struct-field input,.struct-field select{width:100%;padding:.6rem .8rem;background:var(--bg);
+      border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font:inherit}
+    .struct-field textarea{width:100%;min-height:80px;padding:.7rem;background:var(--bg);
+      border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font:inherit;resize:vertical}
+    .chips-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem}
+    .chip{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;background:var(--surface2);
+      border:1px solid var(--border);border-radius:999px;font-size:.82rem}
+    .chip button{background:none;border:none;color:var(--muted);cursor:pointer;padding:0;font-size:.9rem;line-height:1}
+    .chip button:hover{color:var(--err)}
+    .driver-row{display:flex;align-items:baseline;gap:.5rem;margin-bottom:.4rem}
+    .driver-name{font-weight:600}
+    .driver-dir{font-size:.82rem;color:var(--muted)}
+    .driver-why{font-size:.88rem;color:var(--text);opacity:.85}
+    .effect-row{margin-bottom:.5rem;padding:.5rem .7rem;background:var(--surface2);
+      border-radius:var(--radius-sm);border:1px solid var(--border)}
+    .effect-badge{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.75rem;font-weight:700;margin-inline-end:.4rem}
+    .effect-badge.high{background:rgba(248,81,73,.2);color:var(--err)}
+    .effect-badge.medium{background:rgba(210,153,34,.2);color:var(--warn)}
+    .effect-badge.low{background:rgba(88,166,255,.15);color:var(--accent)}
+    .kill-row{margin-bottom:.5rem;padding:.5rem .7rem;background:rgba(248,81,73,.06);
+      border-radius:var(--radius-sm);border:1px solid rgba(248,81,73,.2)}
+    .kill-var{font-weight:700;color:var(--err)}
+    .kill-thresh{font-size:.85rem;font-family:monospace;margin:.1rem 0}
+    .kill-why{font-size:.83rem;color:var(--muted)}
     .disclaimer{font-size:.76rem;color:var(--muted);text-align:center;margin-top:.5rem;opacity:.8}
+    .accordion{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:.9rem}
+    .accordion summary{padding:.65rem .85rem;background:var(--surface2);cursor:pointer;font-size:.85rem;
+      color:var(--muted);font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
+    .accordion summary::-webkit-details-marker{display:none}
+    .accordion summary::after{content:'+';font-size:1rem;color:var(--accent)}
+    .accordion[open] summary::after{content:'−'}
+    .accordion-body{padding:.75rem .85rem;background:var(--bg)}
+    .constraint-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+    @media(max-width:560px){.constraint-grid{grid-template-columns:1fr}}
+    .constraint-grid label{font-size:.78rem;margin-bottom:.25rem}
+    .constraint-grid input{width:100%;padding:.5rem .65rem;background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius-sm);color:var(--text);font:inherit;font-size:.88rem}
+    .top-nav{display:flex;gap:1rem;align-items:center}
+    .top-nav a{color:var(--muted);font-size:.82rem;text-decoration:none}
+    .top-nav a:hover{color:var(--accent)}
+    .presets{margin-bottom:1rem}
+    .presets-label{font-size:.78rem;color:var(--muted);margin-bottom:.45rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+    .preset-row{display:flex;flex-wrap:wrap;gap:.45rem}
+    .preset-btn{padding:.35rem .75rem;font:inherit;font-size:.82rem;background:var(--surface2);
+      color:var(--text);border:1px solid var(--border);border-radius:999px;cursor:pointer;transition:.15s}
+    .preset-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .preset-btn.active{background:rgba(88,166,255,.15);border-color:var(--accent);color:var(--accent2)}
+    .value-prop{font-size:.88rem;color:var(--muted);margin:-.5rem 0 1rem;padding:.65rem .85rem;
+      background:rgba(88,166,255,.06);border:1px solid rgba(88,166,255,.15);border-radius:var(--radius-sm)}
   </style>
 </head>
 <body>
@@ -75,14 +129,84 @@
       <button type="button" data-lang="fa" class="active">فارسی</button>
       <button type="button" data-lang="en">English</button>
     </div>
+    <nav class="top-nav">
+      <a href="/journal" data-i18n="journal">دفتر تصمیمات</a>
+      <a href="/advanced" data-i18n="advanced">ابزار مهندسی</a>
+    </nav>
   </div>
 
-  <h1 data-i18n="title">تحلیل تصمیم استراتژیک</h1>
-  <p class="sub" data-i18n="sub">موقعیت تصمیم را به زبان ساده بنویسید. به‌جای پیش‌بینیِ یک عدد، گزینه‌ها و پیامدهای زنجیره‌ای‌شان را به‌صورت ساختاریافته کاوش می‌کنیم.</p>
+  <h1 data-i18n="title">هوش تصمیم استراتژیک</h1>
+  <p class="sub" data-i18n="sub">پیامدهای یک تصمیم را به‌صورت نقشه‌ی علّی ببینید — نه پیش‌بینی قطعی آینده.</p>
+  <p class="value-prop" data-i18n="valueProp">برای بنیان‌گذاران، مدیران محصول و تیم‌های استراتژی: محرک‌های کلیدی، اثرات درجه دوم، فرضیات پنهان و معیارهای توقف.</p>
 
   <section class="card">
-    <label for="situation" data-i18n="sitLabel">موقعیت تصمیم شما</label>
-    <textarea id="situation" data-i18n-ph="sitPh"></textarea>
+    <div class="presets" id="presetsWrap">
+      <div class="presets-label" data-i18n="presetsLabel">الگوهای رایج</div>
+      <div class="preset-row" id="presetRow"></div>
+    </div>
+    <!-- Mode toggle -->
+    <div class="mode-toggle">
+      <button type="button" id="modeStructured" class="active" data-i18n="modeStructured">ورودی ساختاریافته</button>
+      <button type="button" id="modeFreetext" data-i18n="modeFreetext">متن آزاد</button>
+    </div>
+
+    <!-- Structured input -->
+    <div id="structuredForm">
+      <div class="struct-field">
+        <label data-i18n="moveLabel">تصمیم اصلی (The Move)</label>
+        <input type="text" id="moveInput" data-i18n-ph="movePh">
+      </div>
+      <div class="struct-field">
+        <label data-i18n="actorsLabel">بازیگران کلیدی (Actors)</label>
+        <input type="text" id="actorInput" data-i18n-ph="actorPh">
+        <div class="chips-row" id="actorsChips"></div>
+      </div>
+      <div class="struct-field">
+        <label data-i18n="contextLabel">زمینه (اختیاری)</label>
+        <textarea id="contextInput" rows="2" data-i18n-ph="contextPh"></textarea>
+      </div>
+      <details class="accordion" id="constraintsAccordion">
+        <summary data-i18n="constraintsLabel">محدودیت‌ها (Constraints)</summary>
+        <div class="accordion-body">
+          <div class="constraint-grid">
+            <div>
+              <label data-i18n="budgetLabel">بودجه</label>
+              <input type="text" id="constraintBudget" data-i18n-ph="budgetPh">
+            </div>
+            <div>
+              <label data-i18n="teamSizeLabel">اندازه تیم</label>
+              <input type="number" id="constraintTeamSize" min="1" data-i18n-ph="teamSizePh">
+            </div>
+            <div>
+              <label data-i18n="runwayLabel">runway (ماه)</label>
+              <input type="number" id="constraintRunway" min="1" data-i18n-ph="runwayPh">
+            </div>
+            <div>
+              <label data-i18n="regulatoryLabel">مقررات</label>
+              <input type="text" id="constraintRegulatory" data-i18n-ph="regulatoryPh">
+            </div>
+          </div>
+          <div class="struct-field" style="margin-top:.65rem;margin-bottom:0">
+            <label data-i18n="otherConstraintLabel">سایر محدودیت‌ها</label>
+            <input type="text" id="constraintOther" data-i18n-ph="otherConstraintPh">
+          </div>
+        </div>
+      </details>
+      <div class="struct-field">
+        <label data-i18n="horizonLabel">افق زمانی</label>
+        <select id="horizonInput">
+          <option value="3">۳ ماه</option>
+          <option value="6" selected>۶ ماه</option>
+          <option value="12">۱۲ ماه</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Free-text fallback -->
+    <div id="freetextForm" class="hidden">
+      <label for="situation" data-i18n="sitLabel">موقعیت تصمیم شما</label>
+      <textarea id="situation" data-i18n-ph="sitPh"></textarea>
+    </div>
 
     <div class="opts-wrap">
       <label data-i18n="optsLabel">گزینه‌هایی که در نظر دارید (اختیاری، تا ۳ مورد)</label>
@@ -97,9 +221,13 @@
   </section>
 
   <section class="card hidden" id="briefCard">
-    <div class="brief-section">
-      <h3 data-i18n="hSituation">موقعیت</h3>
-      <p id="bSituation"></p>
+    <!-- Decision context banner (only when structured input used) -->
+    <div class="brief-section hidden" id="decisionBanner">
+      <h3 data-i18n="hDecision">تصمیم مورد بررسی</h3>
+      <p id="bMove" style="font-weight:700;font-size:1.05rem"></p>
+      <p id="bActors" class="muted-note"></p>
+      <p id="bConstraints" class="muted-note"></p>
+      <p id="bHorizon" class="muted-note"></p>
     </div>
     <div class="brief-section">
       <h3 data-i18n="hWhat">چه اتفاقی محتمل است</h3>
@@ -108,11 +236,19 @@
     </div>
     <div class="brief-section" id="driversSection">
       <h3 data-i18n="hDrivers">محرک‌های کلیدی</h3>
-      <ul class="clean" id="bDrivers"></ul>
+      <div id="bDrivers"></div>
     </div>
-    <div class="brief-section" id="risksSection">
-      <h3 data-i18n="hRisks">ریسک‌های پنهان</h3>
-      <ul class="clean" id="bRisks"></ul>
+    <div class="brief-section hidden" id="secondOrderSection">
+      <h3 data-i18n="hSecondOrder">اثرات درجه دوم</h3>
+      <div id="bSecondOrder"></div>
+    </div>
+    <div class="brief-section" id="assumptionsSection">
+      <h3 data-i18n="hAssumptions">فرضیات پنهان</h3>
+      <ul class="clean" id="bAssumptions"></ul>
+    </div>
+    <div class="brief-section hidden" id="killSection">
+      <h3 data-i18n="hKill">معیارهای توقف (Kill Criteria)</h3>
+      <div id="bKill"></div>
     </div>
     <div class="brief-section">
       <h3 data-i18n="hRegime">وضعیت رژیم</h3>
@@ -152,56 +288,97 @@
     </table>
   </section>
 
-  <div class="adv"><a href="/advanced" data-i18n="advanced">حالت پیشرفته (ابزار مهندسی) →</a></div>
-  <p class="disclaimer" data-i18n="disclaimer">این ابزار برای کاوش گزینه‌ها و پیامدهاست، نه پیش‌بینیِ قطعیِ آینده.</p>
+  <div class="adv">
+    <a href="/journal" data-i18n="journalLink">دفتر تصمیمات →</a>
+    <a href="/advanced" data-i18n="advancedLink">ابزار مهندسی (JSON، گراف) →</a>
+  </div>
+  <p class="disclaimer" data-i18n="disclaimer">این ابزار یک سیستم نقشه‌برداری تصمیم است — برای بهبود قضاوت در موقعیت‌های مبهم و پرریسک، نه پیش‌بینی جادویی.</p>
 
   <script>
     const I18N = {
       fa: {
-        title:"تحلیل تصمیم استراتژیک",
-        sub:"موقعیت تصمیم را به زبان ساده بنویسید. به‌جای پیش‌بینیِ یک عدد، گزینه‌ها و پیامدهای زنجیره‌ای‌شان را به‌صورت ساختاریافته کاوش می‌کنیم.",
+        title:"هوش تصمیم استراتژیک",
+        sub:"پیامدهای یک تصمیم را به‌صورت نقشه‌ی علّی ببینید — نه پیش‌بینی قطعی آینده.",
+        valueProp:"برای بنیان‌گذاران، مدیران محصول و تیم‌های استراتژی: محرک‌های کلیدی، اثرات درجه دوم، فرضیات پنهان و معیارهای توقف.",
+        presetsLabel:"الگوهای رایج",
+        journal:"دفتر تصمیمات", advanced:"ابزار مهندسی",
+        journalLink:"دفتر تصمیمات →", advancedLink:"ابزار مهندسی (JSON، گراف) →",
+        modeStructured:"ورودی ساختاریافته", modeFreetext:"متن آزاد",
+        moveLabel:"تصمیم اصلی (The Move)", movePh:"مثال: افزایش قیمت ۳۰٪",
+        actorsLabel:"بازیگران کلیدی (Enter بزنید تا اضافه شود)", actorPh:"مثال: مشتریان فعلی، تیم فروش…",
+        contextLabel:"زمینه (اختیاری)", contextPh:"هر اطلاعات پس‌زمینه‌ای که مفید باشد…",
+        constraintsLabel:"محدودیت‌ها (Constraints)",
+        budgetLabel:"بودجه", budgetPh:"مثال: ۵۰۰K USD",
+        teamSizeLabel:"اندازه تیم", teamSizePh:"مثال: ۱۲",
+        runwayLabel:"runway (ماه)", runwayPh:"مثال: ۹",
+        regulatoryLabel:"مقررات", regulatoryPh:"مثال: GDPR، مجوز صادرات…",
+        otherConstraintLabel:"سایر محدودیت‌ها", otherConstraintPh:"هر محدودیت دیگری…",
+        horizonLabel:"افق زمانی",
         sitLabel:"موقعیت تصمیم شما",
-        sitPh:"مثال: شرکت ما در حال بررسی کاهش ۱۵٪ قیمت برای مقابله با یک رقیب تازه‌وارد است. ۱۸ ماه نقدینگی داریم؛ تیم فروش نگران حاشیه سود است و سرمایه‌گذار به رشد سهم بازار اهمیت می‌دهد.",
+        sitPh:"مثال: شرکت ما در حال بررسی کاهش ۱۵٪ قیمت برای مقابله با یک رقیب تازه‌وارد است.",
         optsLabel:"گزینه‌هایی که در نظر دارید (اختیاری، تا ۳ مورد)",
         optsHint:"اگر چند گزینه بنویسید، هرکدام جداگانه شبیه‌سازی و کنار هم مقایسه می‌شوند.",
-        optPh1:"گزینه ۱ — مثلاً: کاهش ۱۵٪ قیمت",
-        optPh2:"گزینه ۲ — مثلاً: حفظ قیمت و افزایش بازاریابی",
-        optPh3:"گزینه ۳ — مثلاً: عرضه نسخه ارزان‌تر",
+        optPh1:"گزینه ۱", optPh2:"گزینه ۲", optPh3:"گزینه ۳",
         analyze:"تحلیل کن", analyzing:"در حال تحلیل…",
-        hSituation:"موقعیت", hWhat:"چه اتفاقی محتمل است", hDrivers:"محرک‌های کلیدی",
-        hRisks:"ریسک‌های پنهان", hRegime:"وضعیت رژیم", hConfidence:"سطح اطمینان",
+        hDecision:"تصمیم مورد بررسی",
+        hWhat:"چه اتفاقی محتمل است", hDrivers:"محرک‌های کلیدی",
+        hSecondOrder:"اثرات درجه دوم (ناخواسته)",
+        hAssumptions:"فرضیات پنهان",
+        hKill:"معیارهای توقف",
+        hRegime:"وضعیت رژیم", hConfidence:"سطح اطمینان",
         hTrajectory:"روند تا اینجا", hCompare:"مقایسه‌ی گزینه‌ها",
         cOption:"گزینه", cOutcome:"نتیجه", cRisk:"مهم‌ترین ریسک", cRegime:"رژیم",
         confLow:"پایین", confModerate:"متوسط", confHigh:"بالا",
         fbAsk:"این تحلیل به تصمیمت کمک کرد؟", fbWhyPh:"چرا؟ (اختیاری)", fbThanks:"ممنون از بازخوردت!",
-        advanced:"حالت پیشرفته (ابزار مهندسی) →",
-        disclaimer:"این ابزار برای کاوش گزینه‌ها و پیامدهاست، نه پیش‌بینیِ قطعیِ آینده.",
+        disclaimer:"این ابزار یک سیستم نقشه‌برداری تصمیم است — برای بهبود قضاوت در موقعیت‌های مبهم و پرریسک، نه پیش‌بینی جادویی.",
+        errMove:"لطفاً تصمیم اصلی را بنویسید.",
         errEmpty:"لطفاً ابتدا موقعیت تصمیم را بنویسید.",
         errGeneric:"مشکلی پیش آمد. دوباره تلاش کنید.",
-        running:"در حال شبیه‌سازی… (ممکن است چند ثانیه طول بکشد)"
+        running:"در حال شبیه‌سازی… (ممکن است چند ثانیه طول بکشد)",
+        hops:"گام", magnitude:"شدت", trigger:"محرک", effect:"اثر",
+        watchVar:"متغیر", threshold:"آستانه", signal:"نشانه", why:"چرا"
       },
       en: {
-        title:"Strategic Decision Analysis",
-        sub:"Describe your decision in plain language. Instead of predicting a single number, we structurally explore the options and their chained consequences.",
+        title:"Strategic Decision Intelligence",
+        sub:"Map the consequences of a decision over time — not a magic prediction of the future.",
+        valueProp:"For founders, product leaders, and strategy teams: top drivers, second-order effects, hidden assumptions, and kill criteria.",
+        presetsLabel:"Common decisions",
+        journal:"Decision Journal", advanced:"Engineering tools",
+        journalLink:"Decision Journal →", advancedLink:"Engineering tools (JSON, graph) →",
+        modeStructured:"Structured input", modeFreetext:"Free text",
+        moveLabel:"The Move (core decision)", movePh:"e.g. Raise prices 30%",
+        actorsLabel:"Key actors (press Enter to add)", actorPh:"e.g. existing customers, sales team…",
+        contextLabel:"Context (optional)", contextPh:"Any background information…",
+        constraintsLabel:"Constraints (optional)",
+        budgetLabel:"Budget", budgetPh:"e.g. $500K",
+        teamSizeLabel:"Team size", teamSizePh:"e.g. 12",
+        runwayLabel:"Runway (months)", runwayPh:"e.g. 9",
+        regulatoryLabel:"Regulatory", regulatoryPh:"e.g. GDPR, export license…",
+        otherConstraintLabel:"Other constraints", otherConstraintPh:"Any other limits…",
+        horizonLabel:"Time horizon",
         sitLabel:"Your decision situation",
-        sitPh:"Example: Our company is weighing a 15% price cut to counter a new competitor. We have 18 months of runway; sales worries about margin and the investor cares about market-share growth.",
+        sitPh:"Example: We're weighing a 15% price cut to counter a new competitor. 18 months runway.",
         optsLabel:"Options you're considering (optional, up to 3)",
-        optsHint:"If you list options, each is simulated separately and compared side by side.",
-        optPh1:"Option 1 — e.g. cut price 15%",
-        optPh2:"Option 2 — e.g. hold price, boost marketing",
-        optPh3:"Option 3 — e.g. launch a cheaper tier",
+        optsHint:"Each option is simulated separately and compared side by side.",
+        optPh1:"Option 1", optPh2:"Option 2", optPh3:"Option 3",
         analyze:"Analyze", analyzing:"Analyzing…",
-        hSituation:"Situation", hWhat:"What likely happens", hDrivers:"Key drivers",
-        hRisks:"Hidden risks", hRegime:"Regime", hConfidence:"Confidence",
+        hDecision:"Decision under analysis",
+        hWhat:"What likely happens", hDrivers:"Top drivers",
+        hSecondOrder:"Second-order effects",
+        hAssumptions:"Hidden assumptions",
+        hKill:"Kill criteria",
+        hRegime:"Regime", hConfidence:"Confidence",
         hTrajectory:"Story so far", hCompare:"Compare options",
         cOption:"Option", cOutcome:"Outcome", cRisk:"Top hidden risk", cRegime:"Regime",
         confLow:"low", confModerate:"moderate", confHigh:"high",
         fbAsk:"Did this help your decision?", fbWhyPh:"Why? (optional)", fbThanks:"Thanks for the feedback!",
-        advanced:"Advanced (engineering tool) →",
-        disclaimer:"This tool explores options and consequences — it is not a certain prediction of the future.",
+        disclaimer:"A decision mapping system to improve judgment in high-stakes, ambiguous situations — not a black-box predictor.",
+        errMove:"Please describe the core decision (The Move).",
         errEmpty:"Please describe your decision situation first.",
         errGeneric:"Something went wrong. Please try again.",
-        running:"Running simulation… (may take a few seconds)"
+        running:"Running simulation… (may take a few seconds)",
+        hops:"hops", magnitude:"magnitude", trigger:"trigger", effect:"effect",
+        watchVar:"variable", threshold:"threshold", signal:"signal", why:"why"
       }
     };
     let lang = (localStorage.getItem('owe_brief_lang')) || 'fa';
@@ -210,20 +387,113 @@
       lang=l; localStorage.setItem('owe_brief_lang',l);
       document.documentElement.lang = l==='fa'?'fa':'en';
       document.documentElement.dir = l==='fa'?'rtl':'ltr';
-      document.title=t('title');
+      document.title=t('title')+' — Open World Engine';
       document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
       document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=t(e.getAttribute('data-i18n')));
       document.querySelectorAll('[data-i18n-ph]').forEach(e=>e.placeholder=t(e.getAttribute('data-i18n-ph')));
+      // Update horizon options labels
+      const hor=$('horizonInput');
+      if(hor){
+        const labels = l==='fa'?['۳ ماه','۶ ماه','۱۲ ماه']:['3 months','6 months','12 months'];
+        Array.from(hor.options).forEach((o,i)=>{ o.text=labels[i]||o.text; });
+      }
+      renderPresets();
     }
     document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
 
     const $=id=>document.getElementById(id);
     let lastScenarioDesc="";
+    let actors=[];
+    let presets=[];
+    let activePresetId=null;
 
-    function setList(ul,items){
-      ul.innerHTML="";
-      (items||[]).forEach(it=>{ const li=document.createElement('li'); li.textContent=it; ul.appendChild(li); });
+    function applyPreset(p){
+      if(!p) return;
+      structuredMode=true;
+      $('structuredForm').classList.remove('hidden');
+      $('freetextForm').classList.add('hidden');
+      $('modeStructured').classList.add('active');
+      $('modeFreetext').classList.remove('active');
+      const isFa=lang==='fa';
+      $('moveInput').value=isFa?(p.move_fa||p.move_en||''):(p.move_en||p.move_fa||'');
+      actors=[...(isFa?(p.actors_fa||p.actors_en||[]):(p.actors_en||p.actors_fa||[]))];
+      renderChips();
+      $('contextInput').value=isFa?(p.context_fa||p.context_en||''):(p.context_en||p.context_fa||'');
+      const c=p.constraints||{};
+      $('constraintBudget').value=c.budget||'';
+      $('constraintTeamSize').value=c.team_size||'';
+      $('constraintRunway').value=c.runway_months||'';
+      $('constraintRegulatory').value=c.regulatory||'';
+      $('constraintOther').value=c.other||'';
+      if(p.horizon_months) $('horizonInput').value=String(p.horizon_months);
+      activePresetId=p.id||null;
+      renderPresets();
     }
+
+    function renderPresets(){
+      const row=$('presetRow');
+      if(!row||!presets.length) return;
+      row.innerHTML='';
+      const isFa=lang==='fa';
+      presets.forEach(p=>{
+        const btn=document.createElement('button');
+        btn.type='button';
+        btn.className='preset-btn'+(activePresetId===p.id?' active':'');
+        btn.textContent=isFa?(p.label_fa||p.label_en||p.id):(p.label_en||p.label_fa||p.id);
+        btn.addEventListener('click',()=>applyPreset(p));
+        row.appendChild(btn);
+      });
+    }
+
+    async function loadPresets(){
+      try{
+        const res=await fetch('/api/decision_presets');
+        const data=await res.json();
+        if(data.ok&&Array.isArray(data.presets)){
+          presets=data.presets;
+          renderPresets();
+        }
+      }catch(e){}
+    }
+
+    // --- Mode toggle ---
+    let structuredMode=true;
+    $('modeStructured').addEventListener('click',()=>{
+      structuredMode=true;
+      $('structuredForm').classList.remove('hidden');
+      $('freetextForm').classList.add('hidden');
+      $('modeStructured').classList.add('active');
+      $('modeFreetext').classList.remove('active');
+    });
+    $('modeFreetext').addEventListener('click',()=>{
+      structuredMode=false;
+      $('freetextForm').classList.remove('hidden');
+      $('structuredForm').classList.add('hidden');
+      $('modeFreetext').classList.add('active');
+      $('modeStructured').classList.remove('active');
+    });
+
+    // --- Actor chips ---
+    function renderChips(){
+      const row=$('actorsChips'); row.innerHTML='';
+      actors.forEach((a,i)=>{
+        const chip=document.createElement('span'); chip.className='chip';
+        chip.innerHTML=`${escapeHtml(a)} <button type="button" aria-label="remove">×</button>`;
+        chip.querySelector('button').addEventListener('click',()=>{ actors.splice(i,1); renderChips(); });
+        row.appendChild(chip);
+      });
+    }
+    $('actorInput').addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===','){
+        e.preventDefault();
+        const v=e.target.value.trim();
+        if(v&&actors.length<8){ actors.push(v); e.target.value=''; renderChips(); }
+      }
+    });
+
+    function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML; }
+
+    // --- Renderers ---
     function regimeBadge(el,level){
       const lv=(level||'NORMAL').toUpperCase();
       el.className='badge '+(['NORMAL','FRAGILE','CRISIS'].includes(lv)?lv:'NORMAL');
@@ -234,16 +504,111 @@
       el.className='conf '+(['low','moderate','high'].includes(lv)?lv:'moderate');
       el.textContent = lv==='low'?t('confLow'):lv==='high'?t('confHigh'):t('confModerate');
     }
+    function renderDrivers(container, drivers){
+      container.innerHTML='';
+      if(!drivers||!drivers.length) return;
+      drivers.forEach(d=>{
+        const name = typeof d==='string' ? d : (d.name||'');
+        const dir  = typeof d==='string' ? '' : (d.direction||'');
+        const why  = typeof d==='string' ? '' : (d.why_it_matters||'');
+        const row=document.createElement('div'); row.className='driver-row';
+        row.innerHTML=`<span class="driver-name">${escapeHtml(name)}</span>`+
+          (dir?`<span class="driver-dir">${escapeHtml(dir)}</span>`:'')+
+          (why?`<span class="driver-why">— ${escapeHtml(why)}</span>`:'');
+        container.appendChild(row);
+      });
+    }
+    function renderSecondOrder(container, effects){
+      container.innerHTML='';
+      if(!effects||!effects.length) return;
+      effects.forEach(e=>{
+        const mag=(e.magnitude_label||'low').toLowerCase();
+        const row=document.createElement('div'); row.className='effect-row';
+        row.innerHTML=`<span class="effect-badge ${mag}">${escapeHtml(mag)}</span>`+
+          `<strong>${escapeHtml(e.effect||'')}</strong>`+
+          (e.trigger?` <span class="muted-note">${t('trigger')}: ${escapeHtml(e.trigger)}</span>`:'');
+        container.appendChild(row);
+      });
+    }
+    function renderKill(container, criteria){
+      container.innerHTML='';
+      if(!criteria||!criteria.length) return;
+      criteria.forEach(c=>{
+        const row=document.createElement('div'); row.className='kill-row';
+        row.innerHTML=`<div class="kill-var">${escapeHtml(c.watch_variable||'')}</div>`+
+          `<div class="kill-thresh">${escapeHtml(c.threshold||'')}</div>`+
+          (c.signal?`<div style="font-size:.85rem">${escapeHtml(c.signal)}</div>`:'')+
+          (c.why?`<div class="kill-why">${escapeHtml(c.why)}</div>`:'');
+        container.appendChild(row);
+      });
+    }
+
+    function collectConstraints(){
+      const c={};
+      const budget=$('constraintBudget').value.trim();
+      const team=$('constraintTeamSize').value.trim();
+      const runway=$('constraintRunway').value.trim();
+      const reg=$('constraintRegulatory').value.trim();
+      const other=$('constraintOther').value.trim();
+      if(budget) c.budget=budget;
+      if(team){ const n=parseInt(team,10); if(n>0) c.team_size=n; }
+      if(runway){ const n=parseInt(runway,10); if(n>0) c.runway_months=n; }
+      if(reg) c.regulatory=reg;
+      if(other) c.other=other;
+      return Object.keys(c).length?c:undefined;
+    }
+
+    function formatConstraints(c){
+      if(!c||!Object.keys(c).length) return '';
+      const parts=[];
+      if(c.budget) parts.push((lang==='fa'?'بودجه: ':'Budget: ')+c.budget);
+      if(c.team_size) parts.push((lang==='fa'?'تیم: ':'Team: ')+c.team_size);
+      if(c.runway_months) parts.push((lang==='fa'?'runway: ':'Runway: ')+c.runway_months+(lang==='fa'?' ماه':' mo'));
+      if(c.regulatory) parts.push((lang==='fa'?'مقررات: ':'Regulatory: ')+c.regulatory);
+      if(c.other) parts.push(c.other);
+      return parts.join(lang==='fa'?' · ':' · ');
+    }
 
     function renderBrief(b){
       $('briefCard').classList.remove('hidden');
-      $('bSituation').textContent=b.situation||'—';
+
+      // Decision banner
+      const dec=b.decision||{};
+      const hasDecision=!!(dec.move);
+      $('decisionBanner').classList.toggle('hidden',!hasDecision);
+      if(hasDecision){
+        $('bMove').textContent=dec.move||'';
+        $('bActors').textContent=dec.actors&&dec.actors.length?dec.actors.join('، '):'';
+        const cText=formatConstraints(dec.constraints||{});
+        $('bConstraints').textContent=cText;
+        $('bConstraints').classList.toggle('hidden',!cText);
+        $('bHorizon').textContent=dec.horizon_months?(dec.horizon_months+(lang==='fa'?' ماه':' months')):'';
+      }
+
       $('bWhat').textContent=b.what_likely_happens||'—';
       $('bOutcome').textContent=b.outcome?('▸ '+b.outcome):'';
-      setList($('bDrivers'),b.key_drivers);
-      $('driversSection').classList.toggle('hidden',!(b.key_drivers&&b.key_drivers.length));
-      setList($('bRisks'),b.hidden_risks);
-      $('risksSection').classList.toggle('hidden',!(b.hidden_risks&&b.hidden_risks.length));
+
+      // Top drivers (structured objects or compat strings)
+      const drivers = b.top_drivers && b.top_drivers.length ? b.top_drivers : (b.key_drivers||[]).map(s=>({name:s}));
+      renderDrivers($('bDrivers'), drivers);
+      $('driversSection').classList.toggle('hidden', !drivers.length);
+
+      // Second-order effects
+      renderSecondOrder($('bSecondOrder'), b.second_order_effects);
+      $('secondOrderSection').classList.toggle('hidden', !(b.second_order_effects&&b.second_order_effects.length));
+
+      // Hidden assumptions (structured or compat strings)
+      const assumptions = b.hidden_assumptions && b.hidden_assumptions.length
+        ? b.hidden_assumptions.map(a=>typeof a==='string'?a:(a.assumption||a.risk_if_wrong||''))
+        : (b.hidden_risks||[]);
+      const ul=$('bAssumptions'); ul.innerHTML='';
+      assumptions.filter(Boolean).forEach(s=>{ const li=document.createElement('li'); li.textContent=s; ul.appendChild(li); });
+      $('assumptionsSection').classList.toggle('hidden',!assumptions.filter(Boolean).length);
+
+      // Kill criteria
+      renderKill($('bKill'), b.kill_criteria);
+      $('killSection').classList.toggle('hidden', !(b.kill_criteria&&b.kill_criteria.length));
+
       regimeBadge($('bRegime'),(b.regime||{}).level);
       $('bRegimeNote').textContent=(b.regime||{}).commentary||'';
       confChip($('bConfidence'),(b.confidence||{}).level);
@@ -252,6 +617,7 @@
       $('trajectorySection').classList.toggle('hidden',!traj);
       $('bTrajectory').textContent=traj;
     }
+
     function renderCompare(rows){
       if(!rows||!rows.length){ $('compareCard').classList.add('hidden'); return; }
       $('compareCard').classList.remove('hidden');
@@ -266,20 +632,39 @@
         tb.appendChild(tr);
       });
     }
-    function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML; }
 
     async function analyze(){
-      const text=$('situation').value.trim();
       const status=$('status');
-      if(!text){ status.classList.remove('hidden'); status.classList.add('error'); status.textContent=t('errEmpty'); return; }
+      let body={};
+
+      if(structuredMode){
+        const move=$('moveInput').value.trim();
+        if(!move){ status.classList.remove('hidden'); status.classList.add('error'); status.textContent=t('errMove'); return; }
+        // flush any pending actor text
+        const pending=$('actorInput').value.trim();
+        if(pending&&actors.length<8){ actors.push(pending); $('actorInput').value=''; renderChips(); }
+        const horizon=parseInt($('horizonInput').value,10)||6;
+        const context=$('contextInput').value.trim();
+        const constraints=collectConstraints();
+        const di={move,actors:[...actors],horizon_months:horizon,context};
+        if(constraints) di.constraints=constraints;
+        body={decision_input:di};
+        lastScenarioDesc=move+(context?' — '+context:'');
+      } else {
+        const text=$('situation').value.trim();
+        if(!text){ status.classList.remove('hidden'); status.classList.add('error'); status.textContent=t('errEmpty'); return; }
+        body={text};
+        lastScenarioDesc=text;
+      }
+
       const options=['opt1','opt2','opt3'].map(id=>$(id).value.trim()).filter(Boolean);
-      lastScenarioDesc=text;
+      if(options.length) body.options=options;
+
       $('btnAnalyze').disabled=true;
       status.classList.remove('hidden','error');
       status.innerHTML='<span class="spinner"></span> '+t('running');
       try{
-        const res=await fetch('/api/brief',{method:'POST',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({text,options})});
+        const res=await fetch('/api/brief',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
         const data=await res.json();
         if(data.ok&&data.brief){
           renderBrief(data.brief);
@@ -296,6 +681,7 @@
       }
     }
     $('btnAnalyze').addEventListener('click',analyze);
+    $('moveInput').addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='Enter') analyze(); });
     $('situation').addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='Enter') analyze(); });
 
     async function sendFeedback(verdict){
@@ -303,13 +689,13 @@
         await fetch('/api/brief/feedback',{method:'POST',headers:{'Content-Type':'application/json'},
           body:JSON.stringify({verdict,why:$('fbWhy').value.trim(),scenario:lastScenarioDesc})});
       }catch(e){}
-      const fb=document.querySelector('.feedback');
-      fb.innerHTML='<span>'+t('fbThanks')+'</span>';
+      document.querySelector('.feedback').innerHTML='<span>'+t('fbThanks')+'</span>';
     }
     $('fbUp').addEventListener('click',()=>sendFeedback('up'));
     $('fbDown').addEventListener('click',()=>sendFeedback('down'));
 
     applyLang(lang);
+    loadPresets();
   </script>
 </body>
 </html>
