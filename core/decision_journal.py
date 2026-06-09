@@ -28,11 +28,17 @@ def _decision_path(decision_id: str) -> Path:
     return _journal_dir() / f"{decision_id}.json"
 
 
+CHECK_IN_DAYS = 30
+
+
 def save_decision(
     decision_input: dict[str, Any],
     brief: dict[str, Any],
     snapshot_summary: dict[str, Any] | None = None,
     decision_id: str | None = None,
+    ops_profile: dict[str, Any] | None = None,
+    decision_template_id: str | None = None,
+    outcomes: dict[str, Any] | None = None,
 ) -> str:
     """
     Persist a decision record. Returns the decision_id.
@@ -42,14 +48,21 @@ def save_decision(
         brief: the built decision brief dict.
         snapshot_summary: optional lightweight snapshot (derived vars only).
         decision_id: supply to overwrite an existing record; generated otherwise.
+        ops_profile: optional operations profile summary for enterprise context.
+        decision_template_id: optional decision template id from ops_decisions.json.
     """
     did = decision_id or str(uuid.uuid4())[:8]
+    now = time.time()
     record = {
         "id": did,
-        "created_at": time.time(),
+        "created_at": now,
+        "check_in_due_at": now + CHECK_IN_DAYS * 86400,
         "decision_input": decision_input or {},
         "brief": brief or {},
+        "outcomes": outcomes or {},
         "snapshot_summary": snapshot_summary or {},
+        "ops_profile": ops_profile or {},
+        "decision_template_id": decision_template_id or "",
         "annotation": None,
     }
     path = _decision_path(did)
@@ -85,13 +98,27 @@ def list_decisions(limit: int = 50) -> list[dict[str, Any]]:
             rec = json.loads(f.read_text(encoding="utf-8"))
             di = rec.get("decision_input") or {}
             brief = rec.get("brief") or {}
+            op = rec.get("ops_profile") or {}
+            check_in_due = rec.get("check_in_due_at")
+            annotated = rec.get("annotation") is not None
+            needs_check_in = (
+                bool(check_in_due)
+                and time.time() >= float(check_in_due)
+                and not annotated
+            )
+            oc = rec.get("outcomes") or {}
             summaries.append({
                 "id": rec.get("id"),
                 "created_at": rec.get("created_at"),
-                "move": di.get("move") or "",
+                "check_in_due_at": check_in_due,
+                "needs_check_in": needs_check_in,
+                "move": di.get("move") or oc.get("decision_label") or "",
                 "horizon_months": di.get("horizon_months"),
-                "outcome": brief.get("outcome") or "",
+                "outcome": brief.get("outcome") or oc.get("one_line_recommendation") or "",
                 "confidence": (brief.get("confidence") or {}).get("level") or "",
+                "site_name": op.get("site_name") or "",
+                "business_unit_type": op.get("business_unit_type") or "",
+                "decision_template_id": rec.get("decision_template_id") or "",
                 "annotation": rec.get("annotation"),
             })
         except Exception:

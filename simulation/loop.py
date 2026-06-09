@@ -61,6 +61,8 @@ from core.llm_service import call_llm as llm_service_call
 from core.world_model import WorldModel
 from core.ontology_manager import OntologyManager
 from core.rule_engine import run_rules
+import core.threshold_rules  # noqa: F401 — registers generic threshold rule primitives (var_above/scale_var/…)
+import core.market_dynamics  # noqa: F401 — registers market shock primitives (at_turn/after_turn/with_probability)
 from core.action_interpreter import interpret_action_spec_with_world
 from core.governance import Governance
 from core.world_summarizer import summarize as world_summarize, detect_language
@@ -465,30 +467,34 @@ class SimulationLoop:
         )
         
         if not has_changes and self.world.variables:
-            # No changes detected - inject systemic drift
+            # No changes detected - inject a NEGLIGIBLE liveliness nudge so the world
+            # is not perfectly frozen (keeps entropy/regime alive). This must never
+            # corrupt the variable: a deliberate no-op ("steady") should leave large-
+            # magnitude variables essentially untouched. Drift is a tiny fraction of
+            # the value, hard-capped, and bounded by the variable's rate_limit if set.
             variables = list(self.world.variables.keys())
             if variables:
-                # Select random variable
                 var = random.choice(variables)
-                # Compute volatility (standard deviation of recent values)
-                # For now, use a simple volatility estimate based on current value
                 current_value = self.world.variables.get(var, 0.0)
-                if isinstance(current_value, (int, float)):
-                    # Scale drift by current value magnitude (10% of value as std dev)
-                    volatility_scale = abs(current_value) * 0.1 if abs(current_value) > 0 else 1.0
+                if isinstance(current_value, (int, float)) and abs(current_value) > 0:
+                    volatility_scale = abs(current_value) * 0.001   # 0.1% std — negligible
+                    cap = abs(current_value) * 0.005                # never exceed 0.5% of magnitude
                 else:
-                    volatility_scale = 1.0
-                
-                # Generate gaussian noise scaled by volatility
+                    volatility_scale, cap = 1e-3, 0.005
+                spec = (self._variable_specs or {}).get(var) if isinstance(self._variable_specs, dict) else None
+                if isinstance(spec, dict) and isinstance(spec.get("rate_limit"), (int, float)):
+                    cap = min(cap, abs(float(spec["rate_limit"])))
+
                 drift = random.gauss(0, volatility_scale)
+                drift = max(-cap, min(cap, drift))  # bound so no-op never wipes a variable
                 merged_numeric[var] = drift
-                
+
                 import logging
                 logging.getLogger(__name__).info(
-                    f"Minimum delta guarantee: injected systemic drift {drift:.3f} to variable '{var}' "
-                    f"(volatility_scale={volatility_scale:.3f})"
+                    f"Minimum delta guarantee: injected negligible drift {drift:.4g} to '{var}' "
+                    f"(scale={volatility_scale:.4g}, cap={cap:.4g})"
                 )
-        
+
         return merged_numeric
     
     def _apply_oscillation_penalty(self, agent_name: str, current_action: str) -> None:
@@ -566,6 +572,8 @@ class SimulationLoop:
         snapshot["derived"]["dissatisfaction"] = dissatisfaction
         if action_tradeoffs := self._scenario.get("action_tradeoffs"):
             snapshot["action_tradeoffs"] = action_tradeoffs
+        if product_action := self._scenario.get("product_decision_action"):
+            snapshot["product_decision_action"] = product_action
         snapshot["causal_links"] = getattr(self.world, "causal_links", None) or []
         if self._variable_specs:
             snapshot["variable_specs"] = dict(self._variable_specs)
@@ -1397,6 +1405,15 @@ class SimulationLoop:
         }
         if governance_intervention:
             provenance_entry["governance_intervention"] = governance_intervention
+        product_action = self._scenario.get("product_decision_action")
+        if product_action and self.world.turn == 1:
+            forced_ids = [
+                tr.get("action_id") for tr in action_trace
+                if tr.get("action_id") == product_action
+            ]
+            if forced_ids:
+                provenance_entry["forced_product_decision"] = True
+                provenance_entry["product_decision_action"] = product_action
         if isinstance(outcome, dict):
             provenance_entry["outcome"] = {
                 "primary_effect": outcome.get("primary_effect"),

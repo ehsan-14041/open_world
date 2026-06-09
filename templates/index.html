@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open World Engine — Engineering Tools</title>
+  <title>Engine Tools — Enterprise Operations Decision Simulator</title>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
   <style>
     .lang-switcher {
@@ -625,10 +625,10 @@
     <a href="/" data-i18n="home">تحلیل تصمیم</a> <span data-i18n="breadcrumbSep">›</span> <span data-i18n="simulator">ابزار مهندسی</span>
   </nav>
   <div class="product-banner" data-i18n-html="productBanner">
-    به‌دنبال <strong>نقشه‌برداری تصمیم</strong> هستید؟ از <a href="/">صفحه اصلی</a> یک تصمیم (قیمت‌گذاری، استخدام، ورود به بازار…) را تحلیل کنید. این صفحه برای دسترسی خام به موتور شبیه‌سازی، JSON و گراف علّی است.
+    به‌دنبال <strong>شبیه‌سازی تصمیم عملیاتی</strong> هستید؟ از <a href="/">صفحه اصلی</a> یک تصمیم (موجودی ایمنی، تسریع سفارش، تغییر تأمین‌کننده…) را تحلیل کنید. این صفحه برای دسترسی خام به موتور شبیه‌سازی، JSON و گراف علّی است.
   </div>
-  <h1 data-i18n="title">Open World Engine — ابزار مهندسی</h1>
-  <p class="hero-subtitle" data-i18n="heroSubtitle">دسترسی سطح پایین به موتور علّی: سناریو را parse کنید، شبیه‌سازی را اجرا کنید، JSON و گراف را ببینید. برای تحلیل تصمیم ساختاریافته به صفحه اصلی بروید.</p>
+  <h1 data-i18n="title">Engine tools (debug)</h1>
+  <p class="hero-subtitle" data-i18n="heroSubtitle">Low-level access to the simulation engine. For the operations product, go to the <a href="/" style="color:var(--accent)">Enterprise Operations Decision Simulator</a>.</p>
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
   <div class="tabs">
     <button type="button" class="tab-btn active" data-tab="main" data-i18n="tabMain">صفحه اصلی</button>
@@ -736,9 +736,9 @@
     const i18n = {
       fa: {
         home: 'تحلیل تصمیم', breadcrumbSep: '›', simulator: 'ابزار مهندسی',
-        productBanner: 'به‌دنبال <strong>نقشه‌برداری تصمیم</strong> هستید؟ از <a href="/">صفحه اصلی</a> یک تصمیم (قیمت‌گذاری، استخدام، ورود به بازار…) را تحلیل کنید. این صفحه برای دسترسی خام به موتور شبیه‌سازی، JSON و گراف علّی است.',
-        title: 'Open World Engine — ابزار مهندسی',
-        heroSubtitle: 'دسترسی سطح پایین به موتور علّی: سناریو را parse کنید، شبیه‌سازی را اجرا کنید، JSON و گراف را ببینید. برای تحلیل تصمیم ساختاریافته به صفحه اصلی بروید.',
+        productBanner: 'به‌دنبال <strong>شبیه‌سازی تصمیم عملیاتی</strong> هستید؟ از <a href="/">صفحه اصلی</a> یک تصمیم (موجودی ایمنی، تسریع سفارش، تغییر تأمین‌کننده…) را تحلیل کنید. این صفحه برای دسترسی خام به موتور شبیه‌سازی، JSON و گراف علّی است.',
+        title: 'ابزار مهندسی (debug)',
+        heroSubtitle: 'دسترسی سطح پایین به موتور. برای محصول بنیان‌گذاران از صفحه اصلی شبیه‌ساز تصمیم استفاده کنید.',
         tabMain: 'صفحه اصلی', tabLlmLogs: 'لاگ LLM',
         step1Title: 'سناریوی علّی را بنویسید', step1Desc: 'وضعیت، بازیگران و متغیرها (revenue، burn، retention، capacity…) را به زبان آزاد توصیف کنید. مثال: «استارتاپ SaaS با runway ۱۰ ماه؛ در حال بررسی افزایش قیمت ۲۵٪.»',
         scenarioLabel: 'توضیحات سناریو / تصمیم', scenarioPlaceholder: 'سناریو یا زمینه تصمیم را اینجا بنویسید…',
@@ -779,11 +779,11 @@
       },
       en: {
         home: 'Decision analysis', breadcrumbSep: '›', simulator: 'Engineering tools',
-        productBanner: 'Looking for <strong>decision mapping</strong>? Analyze a business decision (pricing, hiring, market entry…) on the <a href="/">home page</a>. This page is raw engine access: JSON, causal graph, and simulation controls.',
-        title: 'Open World Engine — Engineering Tools',
-        heroSubtitle: 'Low-level access to the causal engine: parse scenarios, run simulations, inspect JSON and graphs. For structured decision briefs, use the home page.',
+        title: 'Engine tools (debug)',
+        heroSubtitle: 'Low-level simulation engine access. For the operations product, use the Enterprise Operations Decision Simulator home page.',
+        productBanner: 'Looking for <strong>operations decision simulation</strong>? Use the <a href="/">Enterprise Operations Decision Simulator</a>. This page is raw engine access for debugging.',
         tabMain: 'Main', tabLlmLogs: 'LLM Logs',
-        step1Title: 'Write the causal scenario', step1Desc: 'Describe state, actors, and variables (revenue, burn, retention, capacity…) in plain language. Example: "SaaS startup, 10 months runway, weighing a 25% price increase."',
+        step1Title: 'Write the causal scenario', step1Desc: 'Describe state, actors, and variables (inventory, demand, lead time, fill rate…) in plain language. Example: "Regional DC facing a demand spike, 89% fill rate, weighing safety stock vs expedited reorder."',
         scenarioLabel: 'Scenario / decision context', scenarioPlaceholder: 'Write your scenario or decision context here…',
         submitLabel: 'Submit scenario', btnSubmit: 'Submit Scenario', btnSubmitTitle: 'Submit scenario (Ctrl+Enter)',
         useLlmLabel: 'Use LLM to convert to JSON',

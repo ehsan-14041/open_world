@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>دفتر تصمیمات — Open World Engine</title>
+  <title>Decision History — Enterprise Operations Decision Simulator</title>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
   <style>
     :root{
@@ -73,14 +73,14 @@
 <body>
   <div class="top">
     <div class="lang" role="group">
-      <button type="button" data-lang="fa" class="active">فارسی</button>
-      <button type="button" data-lang="en">English</button>
+      <button type="button" data-lang="en" class="active">English</button>
+      <button type="button" data-lang="fa">فارسی</button>
     </div>
     <a href="/" data-i18n="backToAnalysis">← برگشت به تحلیل</a>
   </div>
 
-  <h1 data-i18n="title">دفتر تصمیمات</h1>
-  <p class="sub" data-i18n="sub">تاریخچه تصمیم‌های تحلیل‌شده. نتیجه واقعی را ثبت کنید تا ببینید کدام محرک‌ها و فرضیات درست بودند — حلقه یادگیری برای قضاوت بهتر.</p>
+  <h1 data-i18n="title">Decision history</h1>
+  <p class="sub" data-i18n="sub">Past simulated decisions. Annotate what actually happened to build a learning loop.</p>
 
   <div id="loading"><span class="spinner"></span></div>
   <div id="empty" class="empty hidden" data-i18n="empty">هنوز هیچ تصمیمی ثبت نشده. از صفحه اصلی یک تصمیم تحلیل کنید.</div>
@@ -114,13 +114,14 @@
         confidence:"اطمینان",
         annotated:"ثبت‌شده",
         pending:"در انتظار بازخورد",
+        checkInDue:"۳۰ روز — ثبت نتیجه واقعی",
         effect:"اثر", trigger:"محرک",
         watchVar:"متغیر", threshold:"آستانه",
       },
       en:{
-        title:"Decision Journal",
-        sub:"History of analyzed decisions. Record actual outcomes to see which drivers and assumptions held — a learning loop for better judgment.",
-        backToAnalysis:"← Back to decision analysis",
+        title:"Decision history",
+        sub:"Past simulated decisions. Annotate what actually happened to build a learning loop.",
+        backToAnalysis:"← Back to simulator",
         empty:"No decisions recorded yet. Analyze a decision from the home page.",
         hWhat:"Consequence map (what was likely)",
         hDrivers:"Top drivers",
@@ -143,17 +144,18 @@
         confidence:"Confidence",
         annotated:"Annotated",
         pending:"Awaiting feedback",
+        checkInDue:"30-day check-in — log outcome",
         effect:"Effect", trigger:"Trigger",
         watchVar:"Variable", threshold:"Threshold",
       }
     };
-    let lang = localStorage.getItem('owe_brief_lang') || 'fa';
-    function t(k){ return (I18N[lang]||I18N.fa)[k] ?? (I18N.fa[k]||k); }
+    let lang = localStorage.getItem('owe_brief_lang') || 'en';
+    function t(k){ return (I18N[lang]||I18N.en)[k] ?? (I18N.en[k]||k); }
     function applyLang(l){
       lang=l; localStorage.setItem('owe_brief_lang',l);
       document.documentElement.lang=l==='fa'?'fa':'en';
       document.documentElement.dir=l==='fa'?'rtl':'ltr';
-      document.title=t('title')+' — Open World Engine';
+      document.title=t('title')+' — Enterprise Operations Decision Simulator';
       document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
       document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=t(e.getAttribute('data-i18n')));
     }
@@ -247,16 +249,22 @@
     function buildCard(rec){
       const b=rec.brief||{};
       const di=rec.decision_input||{};
+      const sp=rec.ops_profile||{};
+      const siteLabel=sp.site_name||'';
       const hasAnnotation=!!rec.annotation;
       const conf=((b.confidence||{}).level||'').toLowerCase();
 
       let html=`<div class="card" data-id="${rec.id}">`;
+      if(siteLabel) html+=`<div style="font-size:.78rem;color:var(--accent);margin-bottom:.2rem">${escapeHtml(siteLabel)}</div>`;
       html+=`<div class="decision-move">${escapeHtml(di.move||b.situation||'—')}</div>`;
       html+=`<div class="decision-meta">`;
       if(di.horizon_months) html+=`<span>${t('horizon')}: ${di.horizon_months} ${t('months')}</span>`;
       if(di.actors&&di.actors.length) html+=`<span>${t('actors')}: ${escapeHtml(di.actors.slice(0,3).join(', '))}</span>`;
       html+=`<span>${fmtDate(rec.created_at)}</span>`;
       if(conf) html+=`<span class="conf ${conf}">${conf}</span>`;
+      if(rec.needs_check_in&&!hasAnnotation){
+        html+=`<span class="badge" style="background:rgba(210,153,34,.15);color:var(--warn);border-color:rgba(210,153,34,.4)">${t('checkInDue')}</span>`;
+      }
       html+=`<span class="badge ${hasAnnotation?'annotated':'pending'}">${t(hasAnnotation?'annotated':'pending')}</span>`;
       html+='</div>';
       html+=buildDetail(rec);

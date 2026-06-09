@@ -1,8 +1,21 @@
 # Open World Engine — Architecture Dossier
 
-**Document Version:** 2.0  
-**Scope:** Full repository traversal, structural analysis, no code modifications.  
-**Base Path:** `/root/agent/open_world_engine2`
+**Document Version:** 2.2  
+**Scope:** Full repository traversal, structural analysis.  
+**Base Path:** `owe/` (Open World Engine repository root)
+
+---
+
+## Executive summary (operations product)
+
+The **customer-facing product** is the **Enterprise Operations Decision Simulator** at `/`:
+
+- **Input:** operations profile + decision template (`ops_profile`, `decision_id`)
+- **Output:** verdict, service/cost/risk/delay impact, comparison, walk-away signals
+- **Path:** `adapters/ops_scenario_builder.py` → `SimulationLoop(dry_run=True)` → `ui/ops_outcomes.py`
+- **No LLM, MC+RL, or free-text parsing** on the default demo path
+
+The sections below describe **Open World Engine** internals (causal graph, multi-agent loop, hybrid simulation) used for engineering and research. For buyer-facing documentation, see [PRODUCT_GUIDE.md](PRODUCT_GUIDE.md).
 
 ---
 
@@ -39,7 +52,7 @@ SimulationLoop.run(steps)
 | File | Responsibility | Depends On | Used By | Key Classes | Key Functions |
 |------|----------------|------------|---------|-------------|---------------|
 | `main.py` | CLI entry | config, schemas, simulation, core.narrative_builder, core.llm_client | User | — | `main()` |
-| `ui.py` | Flask web UI | scenario_parser, schemas, simulation, core, visualization | User | — | `app`, `main()` |
+| `ui.py` | Flask web UI: Enterprise Operations Decision Simulator (`/`), journal, graph, advanced engineering surface; `/api/brief`, ops presets/decisions, simulation APIs | scenario_parser, schemas, simulation, core, adapters, ui.*, visualization | User | — | `app`, `main()` |
 | `scenario_parser.py` | Parse scenario text/path → scenario dict | core.scenario_compiler, schemas | main, ui | — | `parse_scenario_text()`, `load_scenario()` |
 
 ## 2.2 Simulation
@@ -104,7 +117,7 @@ SimulationLoop.run(steps)
 | `core/calibration_metrics.py` | Core-only calibration metrics from provenance (prediction_vs_realized, rmse_over_time, overconfidence_flags, health) | — | core.calibration, ui.dashboard_payload | — | `compute_calibration_from_provenance()`, `_extract_actual_delta()`, `_extract_predicted_deltas()` |
 | `core/calibration.py` | Recalibration trigger (periodic/drift), apply_recalibration_action, calibration_event for provenance | core.calibration_metrics (compute_calibration_from_provenance) | simulation.loop | — | `check_recalibration_trigger()`, `apply_recalibration_action()`, `set_last_recalibration_turn()`, `get_recalibration_state()` |
 | `core/prediction_calibration.py` | Per-agent rolling MSE/bias/variance over predicted vs actual deltas; produces bounded `calibration_weight` used in MC+RL and surfaced on dashboard | — | agents.base_agent (MC+RL scoring), ui.dashboard_payload | — | `update()`, `get_calibration_weight()`, `get_metrics()` |
-| `core/risk_assessment.py` | Agent behavior summary, next_turn_risk_score, optional tail_risk_from_mc | — | core.dashboard_payload | — | `agent_behavior_summary()`, `next_turn_risk_score()`, `tail_risk_from_mc()` |
+| `core/risk_assessment.py` | Agent behavior summary, next_turn_risk_score, optional tail_risk_from_mc | — | ui.dashboard_payload | — | `agent_behavior_summary()`, `next_turn_risk_score()`, `tail_risk_from_mc()` |
 | `core/rule_learner.py` | Offline suggest governance strictness/rule updates from (delta, outcome) history | — | External / human review | — | `suggest_rule_updates()` |
 | `core/simulation_mode.py` | Runtime state: simulation_mode, enable_shocks, enable_uncertainty; get/set without restart | config.settings (lazy) | simulation.loop, API consumers | — | `get_simulation_mode()`, `set_simulation_mode()`, `get_enable_shocks()`, `set_enable_shocks()`, `get_enable_uncertainty()`, `set_enable_uncertainty()`, `get_mode_state()` |
 | `core/oracle.py` | LLM Advisor: advisory-only analysis of proposed action (Confidence, Risk Factors, Alternative Scenarios); no state change | core.llm_service, core.world_summarizer | simulation.loop (when ENABLE_ORACLE), dashboard_payload | — | `summarize_history_for_oracle()`, `analyze_action()` |
@@ -114,8 +127,8 @@ SimulationLoop.run(steps)
 | `core/synthesizer.py` | Action diversity (min options by score), expected_utility | — | agents.base_agent | — | `ensure_action_diversity()`, `expected_utility()` |
 | `core/causal_learning.py` | Suggest causal link from trace patterns; apply_belief_drift for edge confidence | — | core.oracle (optional) | — | `suggest_causal_link_from_trace()`, `apply_belief_drift()` |
 | `core/trace_compression.py` | Compress provenance to Causal Event Chain for long-trace analysis; optional SLM | — | External / optional | — | `compress_trace_to_causal_chain()` |
-| `core/narrative_engine.py` | Turn-by-turn narrative: generate_turn_narrative (turn summary, actor_analysis, causal_chain, outcome_assessment, regime_commentary, key_drivers, hidden_costs, confidence_adjustment_note); compute_actor_performance; classify_outcome; domain-agnostic | core.regime_detector (regime), core.propagation (trace), scenario (governance, variable_specs) | core.dashboard_payload | — | `generate_turn_narrative()`, `compute_actor_performance()`, `classify_outcome()` |
-| `core/narrative_memory.py` | Store structured narrative per turn; longitudinal story for dashboard | — | core.dashboard_payload | — | `append_narrative()`, `get_narrative_history()`, `clear_narrative_history()`, `generate_longitudinal_story(last_n_turns)` |
+| `core/narrative_engine.py` | Turn-by-turn narrative: generate_turn_narrative (turn summary, actor_analysis, causal_chain, outcome_assessment, regime_commentary, key_drivers, hidden_costs, confidence_adjustment_note); compute_actor_performance; classify_outcome; domain-agnostic | core.regime_detector (regime), core.propagation (trace), scenario (governance, variable_specs) | ui.dashboard_payload, ui.decision_brief | — | `generate_turn_narrative()`, `compute_actor_performance()`, `classify_outcome()` |
+| `core/narrative_memory.py` | Store structured narrative per turn; longitudinal story for dashboard | — | ui.dashboard_payload | — | `append_narrative()`, `get_narrative_history()`, `clear_narrative_history()`, `generate_longitudinal_story(last_n_turns)` |
 | `core/regime_detector.py` | Classify system state NORMAL / FRAGILE / CRISIS from saturation, entropy growth, optional calibration | — | core.narrative_engine, simulation.loop (optional), dashboard | — | `detect_regime()` |
 
 ## 2.5 World
@@ -146,6 +159,20 @@ SimulationLoop.run(steps)
 | `enterprise/positioning.py` | Tier labels and profiles (Research, Enterprise Core/Pro, Government); feature_flags, dashboard_modules_enabled | config.settings (ENTERPRISE_TIER) | dashboard_payload, ui.dashboard | `get_current_tier()`, `get_enterprise_profile()` |
 | `research/paper_draft.py` | Research draft markdown from provenance | — | ui.dashboard (api_dashboard_research_draft) | `generate_research_draft()` |
 
+## 2.5d Operations Product Layer
+
+| File | Responsibility | Depends On | Used By | Key exports |
+|------|----------------|------------|---------|-------------|
+| `adapters/ops_scenario_builder.py` | Deterministic scenario from operations profile + decision template; business-unit causal links, tradeoffs, agents | schemas.ops_schema, schemas.decision_schema, schemas.scenario_schema, config/ops_decisions.json | ui.py (`/api/brief`) | `build_scenario()`, `get_decision_template()`, `load_decision_templates()` |
+| `schemas/ops_schema.py` | Operations profile validation/normalization (business_unit_type, inventory, demand, fill_rate, lead_time, …) | — | ui.py, ops_scenario_builder | `validate_ops_profile()`, `normalize_ops_profile()` |
+| `schemas/decision_schema.py` | Structured DecisionInput; bridge to free-text via `decision_to_scenario_text()` | — | ui.py, decision_brief, decision_journal | `validate_decision_input()`, `normalize_decision_input()`, `decision_to_scenario_text()` |
+| `ui/ops_outcomes.py` | Operations-facing verdict, service/cost/risk headlines, walk-away signals, comparison cards | ui.decision_brief (indirect) | ui.py | `build_ops_outcomes()`, `build_comparison_card()`, `humanize_var()` |
+| `ui/decision_brief.py` | Display-only brief from dashboard payload + narrative (drivers, effects, kill criteria) | ui.dashboard_payload, core.narrative_engine, core.kill_criteria | ui.py | `build_decision_brief()` |
+| `ui/turn_trace.py` | Compact per-turn variable deltas for product UI | ui.ops_outcomes, core.trace_compression | ui.py | `build_turn_trace()` |
+| `core/decision_journal.py` | File-backed decision records under `output/decisions/`; outcome annotations | — | ui.py (`/api/journal*`) | `save_decision()`, `list_decisions()`, `get_decision()`, `annotate_outcome()` |
+
+**Product path invariant:** When `ops_profile` is in the request body, `parse_scenario_text()` is not called; scenario is always built by `adapters/ops_scenario_builder.build_scenario()`. Default `dry_run=true` for this path (no API key required).
+
 ## 2.6 Schemas
 
 | File | Responsibility | Depends On | Used By | Key Classes | Key Functions |
@@ -157,6 +184,9 @@ SimulationLoop.run(steps)
 | `schemas/strategic_action_schema.py` | Strategic response | pydantic | llm_action_guard | `StrategicActionResponse` | — |
 | `schemas/meta_schema.py` | Meta proposals, events, options | pydantic | environment_agent, option_selector | `NewEventProposal`, `OptionSet`, etc. | — |
 | `schemas/memory_schema.py` | Agent memory / long-term memory structures | pydantic | agents.memory | — | — |
+| `schemas/ops_schema.py` | Operations profile for product layer | — | ui.py, ops_scenario_builder | — | `validate_ops_profile()`, `normalize_ops_profile()` |
+| `schemas/decision_schema.py` | Structured decision input (move, actors, horizon) | — | ui.py, decision_brief, decision_journal | — | `validate_decision_input()`, `decision_to_scenario_text()` |
+| `schemas/contracts.py` | Typed engine contracts (SimulationSpec, State, ActionSpec, …) | pydantic | tests, optional loop | — | `simulation_spec_from_scenario()`, `state_from_dict()` |
 
 ## 2.7 V2 Modules (Generalized Engine)
 
@@ -201,7 +231,7 @@ SimulationLoop.run(steps)
 
 | File | Responsibility | Used By |
 |------|----------------|---------|
-| `config/settings.py` | OWE_* env, SCENARIO_PATH, DRY_RUN, MAX_DELTA, LANG, ALLOW_NUMBERS, ENABLE_SHOCKS, RANDOM_SEED, MAX_LLM_CALLS_PER_TURN, ENABLE_ENVIRONMENT_AGENT, ENABLE_META_ACTIONS, MC_RL_*, PROPOSAL_THROTTLE_TURNS, PROPAGATION_*, PHASE_TOP_K_TURNS, DASHBOARD_ENABLED, DASHBOARD_HISTORY_SIZE, ENTERPRISE_TIER, SIMULATION_MODE, SHOCK_*, ENABLE_BELIEF_LAYER, BELIEF_WEIGHT, ENABLE_RESEARCH_EXPORT, CHECKPOINT_*, CALIBRATION_*, ASSUMPTION_HIGH_IMPACT_THRESHOLD, ENABLE_ORACLE, ORACLE_HISTORY_TURNS, ORACLE_MAX_TOKENS, etc. | simulation, core, agents, ui, enterprise, main |
+| `config/settings.py` | OWE_* env, SCENARIO_PATH, DRY_RUN, MAX_DELTA, LANG, ALLOW_NUMBERS, ENABLE_SHOCKS, RANDOM_SEED, MAX_LLM_CALLS_PER_TURN, ENABLE_ENVIRONMENT_AGENT, ENABLE_META_ACTIONS, MC_RL_*, PROPOSAL_THROTTLE_TURNS, PROPAGATION_*, PHASE_TOP_K_TURNS, DASHBOARD_ENABLED, DASHBOARD_HISTORY_SIZE, ENTERPRISE_TIER, SIMULATION_MODE, SHOCK_*, ENABLE_BELIEF_LAYER, BELIEF_WEIGHT, ENABLE_RESEARCH_EXPORT, CHECKPOINT_*, CALIBRATION_*, ASSUMPTION_HIGH_IMPACT_THRESHOLD, ENABLE_ORACLE, ORACLE_HISTORY_TURNS, ORACLE_MAX_TOKENS, ENABLE_DECISION_JOURNAL, etc. | simulation, core, agents, ui, enterprise, main |
 | `utils/id_generator.py` | Unique ID generation | core, schemas |
 | `utils/logging.py` | Logging setup | — |
 
@@ -674,11 +704,14 @@ main.py
 ui.py
   ├── flask
   ├── scenario_parser
-  ├── schemas
-  ├── simulation
-  ├── core
-  ├── ui.dashboard (register_routes, on_turn_complete)
-  └── visualization
+  ├── schemas (scenario, decision, ops)
+  ├── simulation.loop
+  ├── core (narrative_builder, llm_client, scenario_analysis_output, agent_generator)
+  ├── adapters.ops_scenario_builder (product path)
+  ├── ui.dashboard (register_routes, build_dashboard_payload, on_turn_complete)
+  ├── ui.decision_brief, ui.ops_outcomes, ui.turn_trace
+  ├── core.decision_journal
+  └── visualization (graph_viewer, impact_data)
 
 simulation/loop.py
   ├── config.settings

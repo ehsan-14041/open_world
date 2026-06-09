@@ -33,6 +33,7 @@ from ui.dashboard_payload import build_dashboard_payload
 from core.narrative_engine import outcome_label_display, _humanize_var
 from core.kill_criteria import derive_kill_criteria
 from core.trace_compression import compress_trace_to_causal_chain
+from ui.ops_outcomes import build_ops_outcomes, humanize_var, ops_kill_summary
 
 try:
     from core.world_summarizer import detect_language
@@ -422,7 +423,7 @@ def build_decision_brief(
         limit=5,
     )
 
-    return {
+    brief_core = {
         # Structured decision context (empty dict when legacy free-text path)
         "decision": {
             "move": decision_input.get("move") or "",
@@ -449,3 +450,38 @@ def build_decision_brief(
         "key_drivers": key_drivers_compat,
         "hidden_risks": hidden_risks_compat,
     }
+
+    ops_profile = (scenario or {}).get("ops_profile")
+    if ops_profile:
+        try:
+            initial = provenance[0].get("pre_state") if provenance else None
+            outcomes = build_ops_outcomes(
+                final_snapshot or {},
+                provenance,
+                ops_profile,
+                brief_core,
+                initial_snapshot=initial if isinstance(initial, dict) else None,
+            )
+            brief_core["best_case"] = outcomes.get("best_case", "")
+            brief_core["worst_case"] = outcomes.get("worst_case", "")
+            brief_core["recommended_action"] = outcomes.get("recommended_action", "")
+        except Exception:
+            brief_core.setdefault("best_case", "")
+            brief_core.setdefault("worst_case", "")
+            brief_core.setdefault("recommended_action", "")
+    else:
+        brief_core["best_case"] = ""
+        brief_core["worst_case"] = ""
+        brief_core["recommended_action"] = _fallback_recommended(top_drivers, kill_criteria)
+
+    return brief_core
+
+
+def _fallback_recommended(top_drivers: list, kill_criteria: list) -> str:
+    if kill_criteria and isinstance(kill_criteria[0], dict):
+        return f"Set a clear walk-away rule: {ops_kill_summary(kill_criteria[0])}"
+    if top_drivers:
+        d = top_drivers[0]
+        name = humanize_var(d.get("name", ""))
+        return f"The biggest lever here is {name} — validate it before you commit."
+    return "Review the key assumptions behind this decision before committing."

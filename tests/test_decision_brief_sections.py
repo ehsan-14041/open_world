@@ -94,3 +94,33 @@ def test_build_decision_brief_legacy_path_empty_decision() -> None:
     brief = build_decision_brief({}, [], scenario, agents_list=[])
     assert brief["decision"]["move"] == ""
     assert brief["top_drivers"] == [] or isinstance(brief["top_drivers"], list)
+
+
+def test_build_decision_brief_ops_recommended_fields() -> None:
+    scenario = {
+        "description": "Inventory buffer decision",
+        "ops_profile": {
+            "site_name": "Midwest DC",
+            "business_unit_type": "distribution",
+            "inventory_on_hand": 12000,
+            "weekly_demand": 800,
+            "fill_rate": 0.92,
+            "planning_goal": "hit service target",
+        },
+        "decision_input": {"move": "Increase safety stock", "horizon_months": 2},
+    }
+    final = {
+        "variables": {
+            "fill_rate": 0.94,
+            "holding_cost_weekly": 4200,
+            "stockout_risk": 0.1,
+            "lead_time_days": 14,
+        },
+        "derived": {"system_stability": 60},
+    }
+    provenance = [{"turn": 1, "pre_state": {"variables": {"fill_rate": 0.91, "holding_cost_weekly": 3800}}}]
+    brief = build_decision_brief(final, provenance, scenario, agents_list=[])
+    assert "recommended_action" in brief
+    assert "best_case" in brief
+    assert "worst_case" in brief
+    assert brief["recommended_action"]

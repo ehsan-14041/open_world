@@ -1,0 +1,118 @@
+[
+  {
+    "id": "increase_safety_stock",
+    "label_en": "Increase safety stock",
+    "featured": true,
+    "featured_order": 1,
+    "move_en": "Raise safety stock by 20% and hold additional buffer for 8 weeks",
+    "actors_en": ["VP Operations", "inventory planning manager", "finance controller"],
+    "horizon_weeks": 8,
+    "tradeoff_hint": {"inventory_on_hand": 2400, "holding_cost_weekly": 850, "fill_rate": 0.03},
+    "primary_risks": ["holding_cost", "obsolescence"]
+  },
+  {
+    "id": "expedite_reorder",
+    "label_en": "Expedite reorder",
+    "featured": true,
+    "featured_order": 2,
+    "move_en": "Pay expedite premium to cut lead time by 40% on next inbound shipment",
+    "actors_en": ["supply chain director", "procurement lead", "logistics manager"],
+    "horizon_weeks": 4,
+    "tradeoff_hint": {"lead_time_days": -6, "unit_cost": 1.8, "fill_rate": 0.04},
+    "primary_risks": ["cost", "supplier_capacity"]
+  },
+  {
+    "id": "switch_supplier",
+    "label_en": "Switch supplier mix",
+    "featured": true,
+    "featured_order": 3,
+    "move_en": "Shift 30% of volume to alternate supplier with shorter lead time",
+    "actors_en": ["supply chain director", "sourcing manager", "quality lead"],
+    "horizon_weeks": 12,
+    "tradeoff_hint": {"lead_time_days": -4, "supplier_risk": -0.12, "unit_cost": 0.6},
+    "primary_risks": ["quality", "transition"]
+  },
+  {
+    "id": "reallocate_demand",
+    "label_en": "Reallocate demand",
+    "featured": true,
+    "featured_order": 4,
+    "move_en": "Shift 15% of demand to alternate DC / channel with available capacity",
+    "actors_en": ["demand planning manager", "VP Operations", "sales operations"],
+    "horizon_weeks": 8,
+    "tradeoff_hint": {"weekly_demand": -120, "capacity_utilization": -0.08, "fill_rate": 0.02},
+    "primary_risks": ["customer_impact", "logistics_cost"]
+  },
+  {
+    "id": "reduce_safety_stock",
+    "label_en": "Reduce safety stock",
+    "move_en": "Cut safety stock by 25% to release working capital",
+    "actors_en": ["finance controller", "inventory planning manager", "VP Operations"],
+    "horizon_weeks": 8,
+    "tradeoff_hint": {"inventory_on_hand": -1800, "holding_cost_weekly": -620, "fill_rate": -0.04, "stockout_risk": 0.08},
+    "primary_risks": ["stockout", "service_level"]
+  },
+  {
+    "id": "add_capacity",
+    "label_en": "Add capacity",
+    "move_en": "Add overtime shift or temporary line to raise throughput 12%",
+    "actors_en": ["plant manager", "VP Operations", "HR / labor planning"],
+    "horizon_weeks": 4,
+    "tradeoff_hint": {"capacity_utilization": -0.1, "unit_cost": 1.2, "fill_rate": 0.03, "backlog_weeks": -0.4},
+    "primary_risks": ["labor_cost", "quality"]
+  },
+  {
+    "id": "consolidate_suppliers",
+    "label_en": "Consolidate suppliers",
+    "move_en": "Consolidate to two primary suppliers for volume leverage",
+    "actors_en": ["sourcing manager", "supply chain director", "risk manager"],
+    "horizon_weeks": 12,
+    "tradeoff_hint": {"unit_cost": -0.4, "supplier_risk": 0.1, "lead_time_days": 2},
+    "primary_risks": ["concentration", "negotiation"]
+  },
+  {
+    "id": "raise_price",
+    "label_en": "Raise price (demand response)",
+    "move_en": "Increase list price 5% to dampen demand on constrained SKUs",
+    "actors_en": ["revenue management", "sales director", "demand planning manager"],
+    "horizon_weeks": 8,
+    "tradeoff_hint": {"weekly_demand": -90, "fill_rate": 0.02, "unit_cost": -0.2},
+    "primary_risks": ["volume_loss", "competitive_response"]
+  },
+  {
+    "id": "defer_promotions",
+    "label_en": "Defer promotions",
+    "move_en": "Pause promotional campaigns for 6 weeks to smooth demand",
+    "actors_en": ["marketing ops", "demand planning manager", "VP Operations"],
+    "horizon_weeks": 6,
+    "tradeoff_hint": {"weekly_demand": -70, "capacity_utilization": -0.06, "fill_rate": 0.015},
+    "primary_risks": ["revenue", "market_share"]
+  },
+  {
+    "id": "cross_dock",
+    "label_en": "Cross-dock inbound",
+    "move_en": "Cross-dock 40% of inbound volume to bypass storage and accelerate fulfillment",
+    "actors_en": ["logistics manager", "warehouse lead", "inventory planning manager"],
+    "horizon_weeks": 4,
+    "tradeoff_hint": {"inventory_on_hand": -900, "fill_rate": 0.025, "holding_cost_weekly": -280, "unit_cost": 0.35},
+    "primary_risks": ["execution", "damage"]
+  },
+  {
+    "id": "hold_inventory",
+    "label_en": "Hold current inventory",
+    "move_en": "Maintain current inventory position and monitor for 4 weeks",
+    "actors_en": ["inventory planning manager", "VP Operations"],
+    "horizon_weeks": 4,
+    "tradeoff_hint": {"fill_rate": -0.01, "stockout_risk": 0.03},
+    "primary_risks": ["inaction", "stockout"]
+  },
+  {
+    "id": "emergency_reorder",
+    "label_en": "Emergency reorder",
+    "move_en": "Place emergency replenishment order at 2x normal quantity",
+    "actors_en": ["supply chain director", "procurement lead", "finance controller"],
+    "horizon_weeks": 4,
+    "tradeoff_hint": {"inventory_on_hand": 3600, "holding_cost_weekly": 1200, "fill_rate": 0.05, "unit_cost": 0.9},
+    "primary_risks": ["cost", "overstock"]
+  }
+]

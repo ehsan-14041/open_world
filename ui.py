@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Open World Engine – Web UI.
-Serves a simple interface to submit free-text scenarios, run simulations, and view snapshots.
+Enterprise Operations Decision Simulator – Web UI.
+Decision support for supply chain, inventory, and capacity planning leaders.
 Run: python ui.py [--port 5081]
 """
 
@@ -54,9 +54,20 @@ from visualization.impact_data import prepare_impact_data
 from ui.dashboard import register_routes as register_dashboard_routes
 from ui.dashboard import build_dashboard_payload, on_turn_complete as dashboard_on_turn_complete, set_last_provenance, set_last_scenario
 from ui.decision_brief import build_decision_brief
+from ui.ops_outcomes import build_ops_outcomes, build_comparison_card
+from ui.turn_trace import build_turn_trace
 from schemas.decision_schema import validate_decision_input, decision_to_scenario_text, normalize_decision_input
-from core.decision_journal import save_decision, get_decision, list_decisions, annotate_outcome
-from config.settings import ENABLE_DECISION_JOURNAL
+from schemas.ops_schema import validate_ops_profile, normalize_ops_profile
+from adapters.ops_scenario_builder import (
+    build_scenario,
+    get_decision_template,
+    get_editable_assumptions,
+    load_decision_templates,
+)
+from core.decision_journal import save_decision, get_decision, list_decisions, annotate_outcome, CHECK_IN_DAYS
+from simulation.ensemble import run_ensemble
+from simulation.robustness import aggregate_robustness, compare_scenarios, DISCLAIMER as ROBUSTNESS_DISCLAIMER
+from config.settings import ENABLE_DECISION_JOURNAL, PRODUCT_MODE
 from core.simulation_mode import (
     get_simulation_mode,
     set_simulation_mode,
@@ -68,7 +79,38 @@ from core.simulation_mode import (
 )
 
 app = Flask(__name__, template_folder=str(_PROJECT_ROOT / "templates"), static_folder=str(_PROJECT_ROOT / "static"))
-register_dashboard_routes(app)
+if not PRODUCT_MODE:
+    register_dashboard_routes(app)
+
+_ENGINE_ONLY_PATHS = frozenset({"/advanced", "/viewer", "/dashboard"})
+_ENGINE_ONLY_API_PREFIXES = (
+    "/api/submit_scenario",
+    "/api/run_simulation",
+    "/api/run_simulation_stream",
+    "/api/control/",
+    "/api/llm_logs",
+)
+
+
+@app.before_request
+def _product_mode_guard():
+    """Redirect engineering-only pages when product_mode is enabled (enterprise ops SKU)."""
+    if not PRODUCT_MODE:
+        return None
+    path = request.path.rstrip("/") or "/"
+    if path in _ENGINE_ONLY_PATHS:
+        return render_template(
+            "product_redirect.html",
+            message="Engineering tools are disabled in product mode. Use the operations decision simulator.",
+        ), 403
+    if path.startswith("/api/"):
+        for prefix in _ENGINE_ONLY_API_PREFIXES:
+            if path.startswith(prefix.rstrip("/")) or path == prefix.rstrip("/"):
+                return jsonify({
+                    "ok": False,
+                    "error": "Engineering API disabled in product mode (OWE_PRODUCT_MODE=true).",
+                }), 403
+    return None
 
 
 @app.errorhandler(500)
@@ -94,20 +136,25 @@ def _get_snapshot_dir() -> Path:
 
 @app.route("/")
 def home():
-    """Focused product home: the Decision Brief experience."""
+    """Enterprise Operations Decision Simulator — planning command center."""
     return render_template("brief.html")
 
 
 @app.route("/advanced")
 def advanced():
-    """Advanced/engineering tool home (raw JSON, LLM logs, graph, run viewer)."""
+    """Engine tools (debug): raw JSON, LLM logs, graph, run viewer."""
+    if PRODUCT_MODE:
+        return render_template(
+            "product_redirect.html",
+            message="Engineering tools are disabled in product mode.",
+        ), 403
     return render_template("index.html")
 
 
 @app.route("/health")
 def health():
     """Health check for load balancer / reverse proxy. Returns 200 when app is up."""
-    return jsonify({"status": "ok", "service": "open_world_engine"}), 200
+    return jsonify({"status": "ok", "service": "enterprise_ops_decision_simulator"}), 200
 
 
 @app.route("/api/submit_scenario", methods=["POST"])
@@ -363,28 +410,49 @@ def api_run_simulation():
 
 @app.route("/api/brief", methods=["POST"])
 def api_brief():
-    """Product endpoint: free text or structured decision -> run simulation -> Decision Brief.
+    """Product endpoint: operations profile or decision text -> simulate -> brief + outcomes.
 
-    Body (new structured path):
+    Body (ops path):
+        { "ops_profile": {...}, "decision_id": "increase_safety_stock",
+          "decision_input"?: {...}, "steps"?: int, "dry_run"?: bool, "save_snapshot"?: bool }
+
+    Body (structured decision path):
         { "decision_input": {move, actors?, constraints?, horizon_months?, context?},
           "options"?: [str], "steps"?: int, "dry_run"?: bool, "use_llm"?: bool }
 
     Body (legacy free-text path):
         { "text": str, "options"?: [str], "steps"?: int, "dry_run"?: bool, "use_llm"?: bool }
 
-    Returns { ok, brief, comparison, scenario, decision_id? }.
+    Returns { ok, brief, outcomes?, turn_trace?, comparison, scenario, snapshot_id?, graph_url?, decision_id? }.
     """
-    global _last_scenario, _last_run_result, _current_run_id
+    global _last_scenario, _last_run_result, _last_snapshot_path, _current_run_id
     data = request.get_json(force=True, silent=True) or {}
     text = (data.get("text") or "").strip()
     options = data.get("options") if isinstance(data.get("options"), list) else []
     options = [str(o).strip() for o in options if str(o).strip()][:3]
-    steps = max(1, min(int(data.get("steps", 5)), 30))
-    dry_run = bool(data.get("dry_run", False))
+    steps = max(1, min(int(data.get("steps", 6)), 30))
     use_llm = bool(data.get("use_llm", True))
     save_to_journal = bool(data.get("save_to_journal", ENABLE_DECISION_JOURNAL)) and ENABLE_DECISION_JOURNAL
+    save_snapshot = bool(data.get("save_snapshot", True))
+    assumption_overrides = data.get("assumption_overrides")
+    if not isinstance(assumption_overrides, dict):
+        assumption_overrides = None
 
-    # Structured decision input path
+    ops_profile: dict | None = None
+    raw_profile = data.get("ops_profile")
+    if isinstance(raw_profile, dict):
+        op_errors = validate_ops_profile(raw_profile)
+        if op_errors:
+            return jsonify({"ok": False, "error": "; ".join(op_errors)}), 400
+        ops_profile = normalize_ops_profile(raw_profile)
+
+    # Default dry_run=true for ops path (no API keys needed)
+    if ops_profile is not None:
+        dry_run = bool(data.get("dry_run", True))
+        use_llm = bool(data.get("use_llm", False))
+    else:
+        dry_run = bool(data.get("dry_run", False))
+
     decision_input: dict | None = None
     raw_decision = data.get("decision_input")
     if isinstance(raw_decision, dict):
@@ -394,24 +462,51 @@ def api_brief():
         decision_input = normalize_decision_input(raw_decision)
         text = decision_to_scenario_text(decision_input)
 
-    if not text and not isinstance(data.get("scenario"), dict):
-        return jsonify({"ok": False, "error": "Please describe your decision situation or provide a decision_input object."}), 400
+    decision_template: dict | None = None
+    decision_id = str(data.get("decision_id") or "").strip()
+    if decision_id:
+        decision_template = get_decision_template(decision_id)
+        if decision_template is None:
+            return jsonify({"ok": False, "error": f"Unknown decision_id: {decision_id}"}), 400
 
-    # Parse scenario (reuse existing pipeline; fall back to rule-based on failure).
-    try:
-        if isinstance(data.get("scenario"), dict):
-            scenario = normalize_scenario(data["scenario"])
-        else:
-            scenario = normalize_scenario(parse_scenario_text(text, use_llm=use_llm))
-    except Exception as e:
+    # Ops product path: always build via adapter — never parse free text / LLM pipeline.
+    if ops_profile is not None:
+        if decision_template is None and not decision_input:
+            return jsonify({
+                "ok": False,
+                "error": "Pick a decision to simulate (decision_id is required with ops_profile).",
+            }), 400
         try:
-            scenario = normalize_scenario(parse_scenario_text(text, use_llm=False))
-        except Exception:
-            return jsonify({"ok": False, "error": f"Could not parse scenario: {e}"}), 400
+            scenario = build_scenario(
+                ops_profile,
+                decision_template,
+                decision_input=decision_input,
+                assumption_overrides=assumption_overrides,
+            )
+            if not decision_input:
+                decision_input = scenario.get("decision_input")
+        except Exception as e:
+            return jsonify({"ok": False, "error": f"Could not build operations scenario: {e}"}), 400
+    elif not text and not isinstance(data.get("scenario"), dict):
+        return jsonify({"ok": False, "error": "Provide ops_profile, decision_input, text, or scenario."}), 400
+    else:
+        try:
+            if isinstance(data.get("scenario"), dict):
+                scenario = normalize_scenario(data["scenario"])
+            else:
+                scenario = normalize_scenario(parse_scenario_text(text, use_llm=use_llm))
+        except Exception as e:
+            try:
+                scenario = normalize_scenario(parse_scenario_text(text, use_llm=False))
+            except Exception:
+                return jsonify({"ok": False, "error": f"Could not parse scenario: {e}"}), 400
 
-    # Stash structured decision input on the scenario so the engine can use it
-    if decision_input:
+    if decision_input and "decision_input" not in scenario:
         scenario["decision_input"] = decision_input
+    if ops_profile and "ops_profile" not in scenario:
+        scenario["ops_profile"] = ops_profile
+    if decision_template and "decision_template_id" not in scenario:
+        scenario["decision_template_id"] = decision_template.get("id")
 
     errors = validate_scenario(scenario)
     if errors:
@@ -437,52 +532,432 @@ def api_brief():
         return res, brief
 
     try:
+        my_run_id = _current_run_id + 1
         result, brief = _run_and_brief(scenario)
-        _current_run_id += 1
+        _current_run_id = my_run_id
         _last_run_result = result
 
-        # Persist to decision journal when structured input was used
-        decision_id: str | None = None
+        snapshot_id: int | None = None
+        if save_snapshot:
+            snapshot_dir = _get_snapshot_dir()
+            snapshot_path = str(snapshot_dir / f"snapshot_{my_run_id}.json")
+            try:
+                final = result.get("final") or {}
+                with open(snapshot_path, "w", encoding="utf-8") as f:
+                    json.dump(_make_json_safe(final), f, indent=2)
+                _last_snapshot_path = snapshot_path
+                last_path = snapshot_dir / "last_snapshot.json"
+                with open(last_path, "w", encoding="utf-8") as f:
+                    json.dump(_make_json_safe(final), f, indent=2)
+                snapshot_id = my_run_id
+            except Exception as e:
+                logging.warning("snapshot write failed: %s", e)
+
+        outcomes: dict | None = None
+        turn_trace: list | None = None
+        decision_comparison: dict[str, Any] | None = None
+        if ops_profile:
+            try:
+                initial = (result.get("provenance") or [{}])[0].get("pre_state")
+                primary_label = (decision_template or {}).get("label_en") or decision_id or "Your decision"
+                assumptions_used = scenario.get("assumptions_used") or []
+                outcomes = build_ops_outcomes(
+                    result.get("final") or {},
+                    result.get("provenance") or [],
+                    ops_profile,
+                    brief,
+                    initial_snapshot=initial if isinstance(initial, dict) else None,
+                    decision_id=decision_id or str(scenario.get("decision_template_id") or ""),
+                    decision_label=primary_label,
+                    assumptions=assumptions_used,
+                )
+            except Exception:
+                outcomes = None
+            try:
+                turn_trace = build_turn_trace(result.get("provenance") or [], scenario)
+            except Exception:
+                turn_trace = []
+
+        journal_id: str | None = None
         if decision_input and save_to_journal:
             try:
+                vars_final = (result.get("final") or {}).get("variables") or (result.get("final") or {}).get("global_state") or {}
                 snapshot_summary = {
-                    k: v for k, v in ((result.get("final") or {}).get("derived") or {}).items()
-                    if isinstance(v, (int, float))
+                    k: v for k, v in vars_final.items() if isinstance(v, (int, float))
                 }
-                decision_id = save_decision(decision_input, brief, snapshot_summary)
+                journal_id = save_decision(
+                    decision_input,
+                    brief,
+                    snapshot_summary,
+                    ops_profile=ops_profile,
+                    decision_template_id=str(scenario.get("decision_template_id") or decision_id or ""),
+                    outcomes=outcomes or {},
+                )
             except Exception:
                 pass
 
-        # Option comparison: run a derived scenario per option, build a mini-brief each.
         comparison: list[dict] = []
-        for opt in options:
-            try:
-                derived = normalize_scenario({
-                    **scenario,
-                    "description": (scenario.get("description") or "") + f"\n\nDecision option under consideration: {opt}",
-                })
-                _r, b = _run_and_brief(derived)
-                comparison.append({
-                    "option": opt,
-                    "what_likely_happens": b.get("what_likely_happens", ""),
-                    "outcome": b.get("outcome", ""),
-                    "top_hidden_risk": (b.get("hidden_risks") or [""])[0] if b.get("hidden_risks") else "",
-                    "regime": b.get("regime", {}),
-                    "confidence": b.get("confidence", {}),
-                })
-            except Exception:
-                continue
-        resp = {
+        compare_ids: list[str] = []
+        raw_compare = data.get("compare_decision_ids")
+        if isinstance(raw_compare, list):
+            compare_ids = [str(x).strip() for x in raw_compare if str(x).strip()][:2]
+        single_compare = str(data.get("compare_decision_id") or "").strip()
+        if single_compare and single_compare not in compare_ids:
+            compare_ids.append(single_compare)
+
+        alt_card: dict | None = None
+        if ops_profile and compare_ids:
+            primary_id = decision_id or str(scenario.get("decision_template_id") or "")
+            if outcomes:
+                decision_comparison = {
+                    "primary": {
+                        "decision_id": primary_id,
+                        "label": outcomes.get("decision_label") or primary_id,
+                        **{k: outcomes.get(k) for k in (
+                            "one_line_recommendation", "service_level_headline", "cost_headline",
+                            "fill_rate_delta_pts", "risk_level", "next_step", "regime",
+                        )},
+                    },
+                }
+            for alt_id in compare_ids:
+                if alt_id == primary_id:
+                    continue
+                alt_template = get_decision_template(alt_id)
+                if alt_template is None:
+                    continue
+                try:
+                    alt_scenario = build_scenario(
+                        ops_profile,
+                        alt_template,
+                        assumption_overrides=assumption_overrides,
+                    )
+                    _r, b = _run_and_brief(alt_scenario)
+                    alt_initial = (_r.get("provenance") or [{}])[0].get("pre_state")
+                    alt_label = alt_template.get("label_en") or alt_id
+                    card = build_comparison_card(
+                        alt_id, alt_label,
+                        _r.get("final") or {}, _r.get("provenance") or [],
+                        ops_profile, b,
+                        initial_snapshot=alt_initial if isinstance(alt_initial, dict) else None,
+                    )
+                    comparison.append({
+                        "option": alt_label,
+                        "what_likely_happens": b.get("what_likely_happens", ""),
+                        "outcome": b.get("outcome", ""),
+                        "top_hidden_risk": (b.get("hidden_risks") or [""])[0] if b.get("hidden_risks") else "",
+                        "regime": b.get("regime", {}),
+                        "confidence": b.get("confidence", {}),
+                        **card,
+                    })
+                    alt_card = card
+                except Exception:
+                    continue
+            if decision_comparison and alt_card:
+                decision_comparison["alternative"] = alt_card
+        elif not ops_profile:
+            for opt in options:
+                try:
+                    derived = normalize_scenario({
+                        **scenario,
+                        "description": (scenario.get("description") or "") + f"\n\nDecision option under consideration: {opt}",
+                    })
+                    _r, b = _run_and_brief(derived)
+                    comparison.append({
+                        "option": opt,
+                        "what_likely_happens": b.get("what_likely_happens", ""),
+                        "outcome": b.get("outcome", ""),
+                        "top_hidden_risk": (b.get("hidden_risks") or [""])[0] if b.get("hidden_risks") else "",
+                        "regime": b.get("regime", {}),
+                        "confidence": b.get("confidence", {}),
+                    })
+                except Exception:
+                    continue
+
+        resp: dict[str, Any] = {
             "ok": True,
             "brief": _make_json_safe(brief),
             "comparison": _make_json_safe(comparison),
             "scenario": _make_json_safe(scenario),
+            "graph_url": "/graph",
         }
-        if decision_id:
-            resp["decision_id"] = decision_id
+        if outcomes is not None:
+            resp["outcomes"] = _make_json_safe(outcomes)
+        if decision_comparison is not None:
+            resp["decision_comparison"] = _make_json_safe(decision_comparison)
+        if turn_trace is not None:
+            resp["turn_trace"] = _make_json_safe(turn_trace)
+        if snapshot_id is not None:
+            resp["snapshot_id"] = snapshot_id
+        if journal_id:
+            resp["journal_id"] = journal_id
+            resp["check_in_due_days"] = CHECK_IN_DAYS
+        if scenario.get("assumptions_used"):
+            resp["assumptions_used"] = _make_json_safe(scenario["assumptions_used"])
         return jsonify(resp)
     except Exception as e:
         logging.exception("api_brief failed: %s", e)
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+def _load_robustness_config() -> dict:
+    """Load the robustness defaults block from config/settings.json (defensive)."""
+    defaults = {
+        "default_runs": 20, "default_steps": 5,
+        "causal_jitter": 0.4, "objective_jitter": 0.3, "state_jitter": 0.15,
+        "max_workers": 1, "llm_run_cap": 5,
+        "live_delay_between_rounds": 0.5, "live_inter_member_delay": 1.0,
+    }
+    try:
+        with open(_PROJECT_ROOT / "config" / "settings.json", encoding="utf-8") as f:
+            blk = (json.load(f) or {}).get("robustness") or {}
+        if isinstance(blk, dict):
+            defaults.update({k: v for k, v in blk.items() if k in defaults})
+    except Exception:
+        pass
+    return defaults
+
+
+def _llm_key_present() -> bool:
+    """True if a usable LLM API key is configured (env or config/settings.json).
+    Used to decide whether arbitrary free text can be parsed, or must be declined."""
+    import os
+    for k in ("GROQ_API_KEY", "OPENAI_API_KEY", "AVALAI_API_KEY", "ANTHROPIC_API_KEY"):
+        v = os.environ.get(k)
+        if v and v.strip():
+            return True
+    try:
+        with open(_PROJECT_ROOT / "config" / "settings.json", encoding="utf-8") as f:
+            cfg = json.load(f) or {}
+        for p in ("groq", "openai", "avalai"):
+            sub = cfg.get(p)
+            if isinstance(sub, dict):
+                key = str(sub.get("api_key") or sub.get("key") or "").strip()
+                if key and "YOUR" not in key.upper() and not key.startswith("${"):
+                    return True
+    except Exception:
+        pass
+    return False
+
+
+def _scenario_for_robustness(data: dict) -> tuple[dict | None, dict | None, str | None]:
+    """Build a base scenario from the request, mirroring /api/brief priority.
+    Returns (scenario, decision_input, error)."""
+    text = (data.get("text") or "").strip()
+    use_llm = bool(data.get("use_llm", False))  # default off: robustness favors the deterministic causal model
+
+    decision_input: dict | None = None
+    raw_decision = data.get("decision_input")
+    if isinstance(raw_decision, dict):
+        di_errors = validate_decision_input(raw_decision)
+        if di_errors:
+            return None, None, "; ".join(di_errors)
+        decision_input = normalize_decision_input(raw_decision)
+        text = decision_to_scenario_text(decision_input)
+
+    # Ops path (deterministic causal model — ideal for robustness)
+    raw_profile = data.get("ops_profile")
+    if isinstance(raw_profile, dict):
+        op_errors = validate_ops_profile(raw_profile)
+        if op_errors:
+            return None, None, "; ".join(op_errors)
+        ops_profile = normalize_ops_profile(raw_profile)
+        decision_template = None
+        did = str(data.get("decision_id") or "").strip()
+        if did:
+            decision_template = get_decision_template(did)
+            if decision_template is None:
+                return None, None, f"Unknown decision_id: {did}"
+        try:
+            scenario = build_scenario(ops_profile, decision_template, decision_input=decision_input,
+                                      assumption_overrides=data.get("assumption_overrides") if isinstance(data.get("assumption_overrides"), dict) else None)
+        except Exception as e:
+            return None, None, f"Could not build operations scenario: {e}"
+        return scenario, (decision_input or scenario.get("decision_input")), None
+
+    if isinstance(data.get("scenario"), dict):
+        scenario = normalize_scenario(data["scenario"])
+    elif text:
+        # 1) No-LLM domain converter first (deterministic, well-formed scenario).
+        from core.text_to_scenario import text_to_scenario
+        built, _meta = text_to_scenario(text)
+        if built is not None:
+            scenario = normalize_scenario(built)
+        elif _llm_key_present():
+            # 2) Domain not in KB, but an LLM key exists -> full LLM parse of arbitrary text.
+            try:
+                scenario = normalize_scenario(parse_scenario_text(text, use_llm=True))
+            except Exception as e:
+                return None, None, f"Could not parse scenario via LLM: {e}"
+        else:
+            # 3) No KB match and no LLM key -> decline honestly. Never emit a generic
+            #    placeholder scenario (that was the original Garbage-In failure).
+            doms = ", ".join(_meta.get("available_domains") or [])
+            return None, None, (
+                f"This decision isn't in the domain knowledge base yet. "
+                f"Defined domains: {doms}. "
+                f"Add this domain to config/domain_kb.json, or set an LLM key for arbitrary scenarios."
+            )
+    else:
+        return None, None, "Provide ops_profile, decision_input, text, or scenario."
+
+    if decision_input:
+        scenario["decision_input"] = decision_input
+    return scenario, decision_input, None
+
+
+@app.route("/api/scenario/archetypes", methods=["GET"])
+def api_scenario_archetypes():
+    """List the reacting-actor archetypes (competitor/customer/regulator/supplier)."""
+    from core.actor_archetypes import list_archetypes
+    return jsonify({"ok": True, "archetypes": list_archetypes()})
+
+
+def _apply_requested_actors(scenario: dict, data: dict) -> dict:
+    """Append requested archetype actors (body: add_actors: [str]) to the scenario."""
+    add_actors = data.get("add_actors")
+    if isinstance(add_actors, list) and add_actors:
+        from core.actor_archetypes import apply_archetypes
+        scenario, _added, _skipped = apply_archetypes(scenario, [str(a) for a in add_actors])
+    return scenario
+
+
+@app.route("/api/scenario/lint", methods=["POST"])
+def api_scenario_lint():
+    """Scenario Intelligence Layer: static, simulation-free validation.
+
+    Body: { decision_input | text | scenario | ops_profile(+decision_id), add_actors?: [str] }.
+    Returns { ok, lint: {errors, warnings, level, level_name, level_reasons, runnable} }.
+    """
+    from core.scenario_linter import lint_scenario
+    data = request.get_json(force=True, silent=True) or {}
+    scenario, _decision_input, err = _scenario_for_robustness(data)
+    if err:
+        return jsonify({"ok": False, "error": err}), 400
+    try:
+        scenario = _apply_requested_actors(scenario, data)
+        return jsonify({"ok": True, "lint": _make_json_safe(lint_scenario(scenario))})
+    except Exception as e:
+        logging.exception("api_scenario_lint failed: %s", e)
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/api/robustness", methods=["POST"])
+def api_robustness():
+    """Robustness & failure-mode engine: run the scenario N times under perturbation.
+
+    Body: { decision_input | text | scenario | ops_profile(+decision_id),
+            options?: [str], runs?: int, steps?: int, dry_run?: bool, perturb?: {…} }
+    Returns { ok, robustness, comparison?, scenario, disclaimer }.
+
+    Honesty: outputs are counts ("X of N runs") and named patterns — never a probability.
+    """
+    data = request.get_json(force=True, silent=True) or {}
+    cfg = _load_robustness_config()
+
+    scenario, decision_input, err = _scenario_for_robustness(data)
+    if err:
+        return jsonify({"ok": False, "error": err}), 400
+    scenario = _apply_requested_actors(scenario, data)  # optional archetype actors (add_actors)
+    errors = validate_scenario(scenario)
+    if errors:
+        return jsonify({"ok": False, "error": "; ".join(errors)}), 400
+
+    dry_run = bool(data.get("dry_run", True))  # robustness defaults to dry-run (cheap, deterministic)
+    steps = max(1, min(int(data.get("steps", cfg["default_steps"])), 30))
+    runs = max(2, min(int(data.get("runs", cfg["default_runs"])), 200))
+    if not dry_run:
+        runs = min(runs, int(cfg["llm_run_cap"]))  # cost guard
+    perturb = data.get("perturb") if isinstance(data.get("perturb"), dict) else {}
+    perturb_config = {
+        "causal_jitter": float(perturb.get("causal_jitter", cfg["causal_jitter"])),
+        "objective_jitter": float(perturb.get("objective_jitter", cfg["objective_jitter"])),
+        "state_jitter": float(perturb.get("state_jitter", cfg["state_jitter"])),
+    }
+
+    # Options may be plain strings (text appended to the description — only
+    # differentiates under an LLM re-parse) or dicts with structural overrides
+    # ({"label": str, "initial_state": {...}, "causal_links": [...], ...}) which
+    # produce genuinely different ensembles even in dry-run.
+    raw_options = data.get("options") if isinstance(data.get("options"), list) else []
+    options = [o for o in raw_options if (isinstance(o, str) and o.strip()) or isinstance(o, dict)][:3]
+
+    # Ops comparison: a second decision_id to compare against builds a full ops scenario
+    # (the natural "war-room" option set: decision A vs decision B for the same site).
+    compare_decisions: list[tuple[str, dict]] = []
+    raw_profile = data.get("ops_profile")
+    cmp_id = str(data.get("compare_decision_id") or "").strip()
+    if cmp_id and isinstance(raw_profile, dict):
+        tmpl = get_decision_template(cmp_id)
+        if tmpl is not None:
+            try:
+                cmp_overrides = data.get("assumption_overrides") if isinstance(data.get("assumption_overrides"), dict) else None
+                cmp_sc = build_scenario(normalize_ops_profile(raw_profile), tmpl, assumption_overrides=cmp_overrides)
+                compare_decisions.append((str(tmpl.get("name") or cmp_id), normalize_scenario(cmp_sc)))
+            except Exception:
+                pass
+
+    def _derive_option_scenario(base: dict, opt) -> tuple[str, dict]:
+        if isinstance(opt, dict):
+            label = str(opt.get("label") or "option").strip()
+            overrides = {k: v for k, v in opt.items() if k != "label"}
+            return label, normalize_scenario({**base, **overrides})
+        label = str(opt).strip()
+        return label, normalize_scenario({
+            **base,
+            "description": (base.get("description") or "") + f"\n\nDecision option under consideration: {label}",
+        })
+
+    # Rate-limit throttling: only in live (LLM) mode; dry-run runs at full speed.
+    rounds_delay = 0.0 if dry_run else float(cfg["live_delay_between_rounds"])
+    member_delay = 0.0 if dry_run else float(cfg["live_inter_member_delay"])
+
+    try:
+        seed = int(data.get("seed", 1000))
+        members = run_ensemble(scenario, runs=runs, steps=steps, dry_run=dry_run,
+                               perturb_config=perturb_config, base_seed=seed,
+                               delay_between_rounds=rounds_delay, inter_member_delay=member_delay)
+        report = aggregate_robustness(members, scenario)
+
+        comparison = None
+        if options or compare_decisions:
+            # Share base_seed across options so member i of every option faces the
+            # same perturbation — required for a valid (per-state aligned) regret matrix.
+            base_label = str(data.get("decision_id") or "base").strip() or "base"
+            members_by_option: dict[str, list] = {base_label: members}
+            for opt in options:
+                label, derived = _derive_option_scenario(scenario, opt)
+                members_by_option[label] = run_ensemble(derived, runs=runs, steps=steps, dry_run=dry_run,
+                                                      perturb_config=perturb_config, base_seed=seed,
+                                                      delay_between_rounds=rounds_delay, inter_member_delay=member_delay)
+            for label, derived in compare_decisions:
+                members_by_option[label] = run_ensemble(derived, runs=runs, steps=steps, dry_run=dry_run,
+                                                      perturb_config=perturb_config, base_seed=seed,
+                                                      delay_between_rounds=rounds_delay, inter_member_delay=member_delay)
+            comparison = compare_scenarios(members_by_option)
+
+        # Self-caveat: every war-room verdict carries the completeness level of the
+        # scenario it was built on, so a confident-looking result from a weak (L1/L2)
+        # scenario is never read as decisive. This is the Scenario Intelligence Layer
+        # wired into the live flow — the GIGO guard at the point of decision.
+        try:
+            from core.scenario_linter import lint_scenario
+            lint = lint_scenario(scenario)
+        except Exception:
+            lint = None
+
+        resp = {
+            "ok": True,
+            "robustness": _make_json_safe(report),
+            "scenario": _make_json_safe(scenario),
+            "disclaimer": ROBUSTNESS_DISCLAIMER,
+        }
+        if lint is not None:
+            resp["lint"] = _make_json_safe(lint)
+        if comparison:
+            resp["comparison"] = _make_json_safe(comparison)
+        return jsonify(resp)
+    except Exception as e:
+        logging.exception("api_robustness failed: %s", e)
         return jsonify({"ok": False, "error": str(e)}), 500
 
 
@@ -511,10 +986,44 @@ def api_brief_feedback():
     return jsonify({"ok": True})
 
 
+@app.route("/api/ops_presets", methods=["GET"])
+def api_ops_presets():
+    """Return operations scenario presets (full profile objects)."""
+    path = _PROJECT_ROOT / "config" / "ops_presets.json"
+    try:
+        presets = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(presets, list):
+            presets = []
+    except Exception:
+        presets = []
+    return jsonify({"ok": True, "presets": _make_json_safe(presets)})
+
+
+@app.route("/api/ops_decisions", methods=["GET"])
+def api_ops_decisions():
+    """Return operations decision template library with editable assumption specs."""
+    templates = load_decision_templates()
+    enriched = [
+        {**t, "editable_assumptions": get_editable_assumptions(t)}
+        for t in templates
+    ]
+    return jsonify({"ok": True, "decisions": _make_json_safe(enriched)})
+
+
+@app.route("/api/journal/check-ins", methods=["GET"])
+def api_journal_check_ins():
+    """Return journal entries due for 30-day outcome check-in."""
+    try:
+        pending = [d for d in list_decisions(limit=100) if d.get("needs_check_in")]
+        return jsonify({"ok": True, "check_ins": _make_json_safe(pending), "check_in_days": CHECK_IN_DAYS})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
 @app.route("/api/decision_presets", methods=["GET"])
 def api_decision_presets():
     """Return starter templates for common business decisions (pricing, hiring, etc.)."""
-    path = _PROJECT_ROOT / "config" / "decision_presets.json"
+    path = _PROJECT_ROOT / "legacy" / "startup" / "config" / "decision_presets.json"
     try:
         presets = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(presets, list):
@@ -883,6 +1392,11 @@ def api_last_run_for_viewer():
 @app.route("/viewer", methods=["GET"])
 def run_viewer():
     """Run Viewer: client-only page for pasted/imported run JSON. No server-injected run data."""
+    if PRODUCT_MODE:
+        return render_template(
+            "product_redirect.html",
+            message="Engineering tools are disabled in product mode.",
+        ), 403
     return render_template("run_viewer.html")
 
 
@@ -1015,7 +1529,7 @@ def api_graph_data():
 
 def main() -> int:
     import argparse
-    ap = argparse.ArgumentParser(description="Open World Engine – Web UI")
+    ap = argparse.ArgumentParser(description="Enterprise Operations Decision Simulator – Web UI")
     ap.add_argument("--port", type=int, default=5081, help="Port (default: 5081)")
     ap.add_argument("--host", type=str, default="0.0.0.0", help="Host (default: 0.0.0.0 = all interfaces; use 127.0.0.1 for local only)")
     ap.add_argument("--debug", action="store_true", help="Enable Flask debug mode")

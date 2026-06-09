@@ -1,701 +1,849 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>هوش تصمیم استراتژیک — Open World Engine</title>
-  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+  <title>Enterprise Operations Decision Simulator</title>
   <style>
     :root{
-      --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
-      --text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--accent2:#79c0ff;
-      --ok:#3fb950;--warn:#d29922;--err:#f85149;--radius:14px;--radius-sm:9px;
-      --shadow:0 6px 28px rgba(0,0,0,.28);
+      --bg:#080b10;--surface:#12171f;--surface2:#1a222d;--border:#2a3444;
+      --text:#eef2f7;--muted:#8b949e;--accent:#4d9fff;--accent2:#7ab8ff;
+      --ok:#3fb950;--warn:#d29922;--err:#f85149;--radius:16px;--radius-sm:10px;
     }
     *{box-sizing:border-box}
-    body{font-family:"Vazirmatn","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);
-      margin:0;padding:1.5rem;line-height:1.8;max-width:880px;margin-inline:auto}
-    [dir=ltr] body{font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:1.2rem}
-    .lang button{padding:.3rem .7rem;font:inherit;font-size:.8rem;font-weight:600;background:var(--surface);
-      color:var(--muted);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer}
-    .lang button.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
-    h1{font-size:1.55rem;font-weight:700;margin:0 0 .35rem}
-    .sub{color:var(--muted);font-size:.95rem;margin:0 0 1.4rem}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-      padding:1.25rem 1.35rem;margin-bottom:1.15rem;box-shadow:var(--shadow)}
-    label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:.4rem}
-    textarea{width:100%;min-height:130px;padding:.85rem;background:var(--bg);border:1px solid var(--border);
-      border-radius:var(--radius-sm);color:var(--text);font:inherit;resize:vertical}
-    .opt{width:100%;padding:.6rem .8rem;background:var(--bg);border:1px solid var(--border);
-      border-radius:var(--radius-sm);color:var(--text);font:inherit;margin-bottom:.5rem}
-    .opts-wrap{margin-top:1rem}
-    .hint{font-size:.78rem;color:var(--muted);margin:.2rem 0 .6rem}
-    button.primary{margin-top:1rem;padding:.7rem 1.5rem;background:var(--accent);color:var(--bg);border:none;
-      border-radius:var(--radius-sm);font:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:.15s}
-    button.primary:hover{background:var(--accent2)}
-    button.primary:disabled{opacity:.55;cursor:not-allowed}
-    .brief-section{margin-bottom:1.1rem}
-    .brief-section h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);
-      margin:0 0 .4rem;font-weight:700}
-    .brief-section p{margin:0}
-    ul.clean{margin:.2rem 0 0;padding-inline-start:1.2rem}
-    ul.clean li{margin-bottom:.35rem}
-    .badge{display:inline-block;padding:.3rem .8rem;border-radius:999px;font-weight:700;font-size:.85rem}
-    .badge.NORMAL{background:rgba(63,185,80,.15);color:var(--ok);border:1px solid rgba(63,185,80,.4)}
-    .badge.FRAGILE{background:rgba(210,153,34,.15);color:var(--warn);border:1px solid rgba(210,153,34,.4)}
-    .badge.CRISIS{background:rgba(248,81,73,.15);color:var(--err);border:1px solid rgba(248,81,73,.4)}
-    .conf{display:inline-block;padding:.25rem .7rem;border-radius:var(--radius-sm);font-weight:600;font-size:.85rem;
-      background:var(--surface2);border:1px solid var(--border)}
-    .conf.low{color:var(--err)}.conf.moderate{color:var(--warn)}.conf.high{color:var(--ok)}
-    .muted-note{color:var(--muted);font-size:.85rem;margin-top:.35rem}
-    table{width:100%;border-collapse:collapse;margin-top:.5rem;font-size:.88rem}
-    th,td{text-align:start;padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}
-    th{color:var(--muted);font-weight:700}
-    .spinner{display:inline-block;width:1.1rem;height:1.1rem;border:2px solid var(--border);
-      border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
-    @keyframes spin{to{transform:rotate(360deg)}}
+    body{font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);
+      margin:0;padding:1.25rem 1rem 2.5rem;line-height:1.55;max-width:720px;margin-inline:auto}
+    .brand{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:.35rem}
+    h1{font-size:1.75rem;font-weight:800;margin:0 0 .4rem;letter-spacing:-.03em;line-height:1.2}
+    .hook{color:var(--muted);font-size:1.02rem;margin:0 0 .5rem;max-width:36rem}
+    .subhook{color:var(--muted);font-size:.85rem;margin:0 0 1.5rem;max-width:36rem}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.15rem 1.25rem;margin-bottom:1rem}
+    .card h2{font-size:.92rem;margin:0 0 .85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    label{display:block;color:var(--muted);font-size:.78rem;margin-bottom:.3rem;font-weight:600}
+    input,select{width:100%;padding:.55rem .7rem;background:var(--bg);border:1px solid var(--border);
+      border-radius:var(--radius-sm);color:var(--text);font:inherit;font-size:.92rem}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+    @media(max-width:520px){.grid2{grid-template-columns:1fr}}
+    .field{margin-bottom:.6rem}
+    .preset-row,.decision-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.75rem}
+    .chip{padding:.38rem .75rem;font:inherit;font-size:.8rem;background:var(--surface2);color:var(--text);
+      border:1px solid var(--border);border-radius:999px;cursor:pointer;transition:.12s}
+    .chip:hover{border-color:var(--accent)}
+    .chip.active{background:rgba(77,159,255,.18);border-color:var(--accent);color:var(--accent2);font-weight:600}
+    .chip.featured{font-size:.85rem;padding:.45rem .9rem}
+    .chip.outlook-stable{border-color:rgba(63,185,80,.4)}
+    .chip.outlook-strained{border-color:rgba(210,153,34,.45)}
+    .chip.outlook-uncertain{border-color:rgba(77,159,255,.35)}
+    details summary{cursor:pointer;color:var(--muted);font-size:.82rem;font-weight:600;padding:.4rem 0}
+    button.cta{width:100%;padding:.85rem 1rem;background:var(--accent);color:#041018;border:none;
+      border-radius:var(--radius-sm);font:inherit;font-weight:800;font-size:1.05rem;cursor:pointer;margin-top:.5rem}
+    button.cta:hover{background:var(--accent2)}
+    button.cta:disabled{opacity:.5;cursor:not-allowed}
     .hidden{display:none}
-    .error{color:var(--err)}
-    .feedback{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-top:.6rem}
-    .feedback button{padding:.4rem .9rem;background:var(--surface2);border:1px solid var(--border);
-      border-radius:var(--radius-sm);color:var(--text);font:inherit;cursor:pointer}
-    .feedback button:hover{border-color:var(--accent)}
-    .feedback input{flex:1;min-width:160px;padding:.45rem .7rem;background:var(--bg);border:1px solid var(--border);
-      border-radius:var(--radius-sm);color:var(--text);font:inherit}
-    .adv{text-align:center;margin-top:1.5rem}
-    .adv a{color:var(--muted);font-size:.82rem;text-decoration:none;margin:0 .5rem}
-    .adv a:hover{color:var(--accent)}
-    .mode-toggle{display:flex;gap:.5rem;margin-bottom:1rem}
-    .mode-toggle button{padding:.35rem .8rem;font:inherit;font-size:.82rem;background:var(--surface2);
-      color:var(--muted);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer}
-    .mode-toggle button.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
-    .struct-field{margin-bottom:.9rem}
-    .struct-field label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:.35rem}
-    .struct-field input,.struct-field select{width:100%;padding:.6rem .8rem;background:var(--bg);
-      border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font:inherit}
-    .struct-field textarea{width:100%;min-height:80px;padding:.7rem;background:var(--bg);
-      border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font:inherit;resize:vertical}
-    .chips-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem}
-    .chip{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;background:var(--surface2);
-      border:1px solid var(--border);border-radius:999px;font-size:.82rem}
-    .chip button{background:none;border:none;color:var(--muted);cursor:pointer;padding:0;font-size:.9rem;line-height:1}
-    .chip button:hover{color:var(--err)}
-    .driver-row{display:flex;align-items:baseline;gap:.5rem;margin-bottom:.4rem}
-    .driver-name{font-weight:600}
-    .driver-dir{font-size:.82rem;color:var(--muted)}
-    .driver-why{font-size:.88rem;color:var(--text);opacity:.85}
-    .effect-row{margin-bottom:.5rem;padding:.5rem .7rem;background:var(--surface2);
-      border-radius:var(--radius-sm);border:1px solid var(--border)}
-    .effect-badge{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.75rem;font-weight:700;margin-inline-end:.4rem}
-    .effect-badge.high{background:rgba(248,81,73,.2);color:var(--err)}
-    .effect-badge.medium{background:rgba(210,153,34,.2);color:var(--warn)}
-    .effect-badge.low{background:rgba(88,166,255,.15);color:var(--accent)}
-    .kill-row{margin-bottom:.5rem;padding:.5rem .7rem;background:rgba(248,81,73,.06);
-      border-radius:var(--radius-sm);border:1px solid rgba(248,81,73,.2)}
-    .kill-var{font-weight:700;color:var(--err)}
-    .kill-thresh{font-size:.85rem;font-family:monospace;margin:.1rem 0}
-    .kill-why{font-size:.83rem;color:var(--muted)}
-    .disclaimer{font-size:.76rem;color:var(--muted);text-align:center;margin-top:.5rem;opacity:.8}
-    .accordion{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:.9rem}
-    .accordion summary{padding:.65rem .85rem;background:var(--surface2);cursor:pointer;font-size:.85rem;
-      color:var(--muted);font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
-    .accordion summary::-webkit-details-marker{display:none}
-    .accordion summary::after{content:'+';font-size:1rem;color:var(--accent)}
-    .accordion[open] summary::after{content:'−'}
-    .accordion-body{padding:.75rem .85rem;background:var(--bg)}
-    .constraint-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
-    @media(max-width:560px){.constraint-grid{grid-template-columns:1fr}}
-    .constraint-grid label{font-size:.78rem;margin-bottom:.25rem}
-    .constraint-grid input{width:100%;padding:.5rem .65rem;background:var(--surface);border:1px solid var(--border);
-      border-radius:var(--radius-sm);color:var(--text);font:inherit;font-size:.88rem}
-    .top-nav{display:flex;gap:1rem;align-items:center}
-    .top-nav a{color:var(--muted);font-size:.82rem;text-decoration:none}
-    .top-nav a:hover{color:var(--accent)}
-    .presets{margin-bottom:1rem}
-    .presets-label{font-size:.78rem;color:var(--muted);margin-bottom:.45rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
-    .preset-row{display:flex;flex-wrap:wrap;gap:.45rem}
-    .preset-btn{padding:.35rem .75rem;font:inherit;font-size:.82rem;background:var(--surface2);
-      color:var(--text);border:1px solid var(--border);border-radius:999px;cursor:pointer;transition:.15s}
-    .preset-btn:hover{border-color:var(--accent);color:var(--accent)}
-    .preset-btn.active{background:rgba(88,166,255,.15);border-color:var(--accent);color:var(--accent2)}
-    .value-prop{font-size:.88rem;color:var(--muted);margin:-.5rem 0 1rem;padding:.65rem .85rem;
-      background:rgba(88,166,255,.06);border:1px solid rgba(88,166,255,.15);border-radius:var(--radius-sm)}
+    .error{color:var(--err);font-size:.85rem;margin-top:.5rem}
+    .muted{color:var(--muted);font-size:.82rem}
+    .spinner{display:inline-block;width:.95rem;height:.95rem;border:2px solid var(--border);
+      border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ---- War-Room (robustness) panel ---- */
+    button.cta.secondary{background:var(--surface2);color:var(--accent2);border:1px solid var(--accent);margin-top:.6rem}
+    button.cta.secondary:hover{background:rgba(77,159,255,.12)}
+    #warRoomCard{border-color:rgba(210,153,34,.35)}
+    .wr-disclaimer{background:rgba(210,153,34,.08);border:1px solid rgba(210,153,34,.3);color:var(--warn);
+      font-size:.76rem;padding:.55rem .75rem;border-radius:var(--radius-sm);margin-bottom:1rem;line-height:1.45}
+    .wr-kpi{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+    .wr-kpi-num{font-size:2rem;font-weight:800;letter-spacing:-.02em}
+    .wr-kpi-sub{font-size:.78rem;color:var(--muted)}
+    .wr-band{padding:.3rem .8rem;border-radius:999px;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+    .wr-band.robust{background:rgba(63,185,80,.15);color:var(--ok);border:1px solid rgba(63,185,80,.4)}
+    .wr-band.mixed{background:rgba(210,153,34,.15);color:var(--warn);border:1px solid rgba(210,153,34,.4)}
+    .wr-band.fragile{background:rgba(248,81,73,.15);color:var(--err);border:1px solid rgba(248,81,73,.4)}
+    .wr-section{margin-bottom:1.1rem}
+    .wr-section h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:0 0 .5rem}
+    .wr-distbar{display:flex;height:1.6rem;border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+    .wr-distbar .seg{display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#041018;min-width:2px}
+    .wr-distbar .seg.NORMAL{background:var(--ok)}
+    .wr-distbar .seg.FRAGILE{background:var(--warn)}
+    .wr-distbar .seg.CRISIS{background:var(--err)}
+    .wr-distlegend{display:flex;gap:1rem;margin-top:.4rem;font-size:.72rem;color:var(--muted);flex-wrap:wrap}
+    .wr-distlegend .dot{display:inline-block;width:.6rem;height:.6rem;border-radius:2px;margin-inline-end:.3rem;vertical-align:middle}
+    table.wr-matrix{width:100%;border-collapse:collapse;font-size:.82rem}
+    table.wr-matrix th,table.wr-matrix td{text-align:start;padding:.5rem .55rem;border-bottom:1px solid var(--border)}
+    table.wr-matrix th{color:var(--muted);font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em}
+    table.wr-matrix td.win{color:var(--ok);font-weight:700}
+    table.wr-matrix .crit{font-size:.68rem;color:var(--muted)}
+    .wr-synth{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);
+      padding:.7rem .85rem;font-size:.86rem;font-weight:600;margin-top:.6rem}
+    .wr-fail{padding:.5rem .7rem;background:rgba(248,81,73,.06);border:1px solid rgba(248,81,73,.2);
+      border-radius:var(--radius-sm);margin-bottom:.4rem;font-size:.84rem}
+    .wr-fail .v{font-weight:700;color:var(--err)}
+    .wr-pivotal{background:linear-gradient(135deg,rgba(77,159,255,.12),rgba(77,159,255,.03));
+      border:1px solid var(--accent);border-radius:var(--radius-sm);padding:.85rem 1rem;font-size:.9rem;line-height:1.5}
+    .wr-pivotal .lead{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent2);font-weight:800;margin-bottom:.3rem}
+    .wr-pivotal code{background:var(--bg);padding:.1rem .4rem;border-radius:4px;font-size:.85rem;color:var(--accent2)}
+    .wr-lowsig{background:rgba(248,81,73,.07);border:1px solid rgba(248,81,73,.25);color:var(--muted);
+      font-size:.8rem;padding:.6rem .75rem;border-radius:var(--radius-sm);margin-bottom:1rem}
+    .wr-completeness{display:flex;align-items:flex-start;gap:.7rem;padding:.7rem .85rem;border-radius:var(--radius-sm);
+      margin-bottom:1rem;border:1px solid var(--border);background:var(--surface2);font-size:.84rem}
+    .wr-lvl{flex-shrink:0;padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:.74rem;letter-spacing:.03em}
+    .wr-lvl.l0,.wr-lvl.l1{background:rgba(248,81,73,.15);color:var(--err);border:1px solid rgba(248,81,73,.4)}
+    .wr-lvl.l2{background:rgba(210,153,34,.15);color:var(--warn);border:1px solid rgba(210,153,34,.4)}
+    .wr-lvl.l3{background:rgba(77,159,255,.15);color:var(--accent2);border:1px solid rgba(77,159,255,.4)}
+    .wr-lvl.l4{background:rgba(63,185,80,.15);color:var(--ok);border:1px solid rgba(63,185,80,.4)}
+    .wr-completeness .strengthen{color:var(--muted);margin-top:.2rem}
+    .wr-actors{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin-top:.5rem}
+    .wr-actor-chip{font-size:.74rem;padding:.2rem .55rem}
+    .wr-actor-chip.active{background:rgba(77,159,255,.18);border-color:var(--accent);color:var(--accent2);font-weight:700}
+
+    #resultsCard{padding:0;overflow:hidden;border-color:rgba(77,159,255,.25)}
+    .verdict{background:linear-gradient(135deg,rgba(77,159,255,.12),rgba(77,159,255,.04));padding:1.35rem 1.25rem 1.1rem;border-bottom:1px solid var(--border)}
+    .verdict-line{font-size:1.2rem;font-weight:800;line-height:1.35;margin:0 0 .75rem}
+    .hero-metric{font-size:1.65rem;font-weight:800;letter-spacing:-.02em;margin:0}
+    .hero-sub{font-size:.88rem;color:var(--muted);margin:.35rem 0 0}
+    .hero-metric.positive{color:var(--ok)}
+    .hero-metric.negative{color:var(--err)}
+    .hero-metric.neutral{color:var(--accent2)}
+    .badges{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.75rem}
+    .badge{padding:.28rem .65rem;border-radius:999px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;border:1px solid var(--border)}
+    .badge.risk-Low{background:rgba(63,185,80,.12);color:var(--ok);border-color:rgba(63,185,80,.35)}
+    .badge.risk-Medium{background:rgba(210,153,34,.12);color:var(--warn);border-color:rgba(210,153,34,.35)}
+    .badge.risk-High{background:rgba(248,81,73,.12);color:var(--err);border-color:rgba(248,81,73,.35)}
+    .badge.regime-Stable{background:rgba(63,185,80,.1);color:var(--ok)}
+    .badge.regime-Constrained{background:rgba(210,153,34,.1);color:var(--warn)}
+    .badge.regime-Critical{background:rgba(248,81,73,.1);color:var(--err)}
+    .body{padding:1.15rem 1.25rem}
+    .section{margin-bottom:1rem}
+    .section h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:0 0 .35rem;font-weight:800}
+    .section p,.section li{font-size:.9rem;margin:0}
+    ul.plain{margin:.25rem 0 0;padding-inline-start:1.1rem}
+    ul.plain li{margin-bottom:.3rem}
+    .impact-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.5rem;margin:.5rem 0}
+    @media(max-width:620px){.impact-row{grid-template-columns:1fr 1fr}}
+    @media(max-width:420px){.impact-row{grid-template-columns:1fr}}
+    .impact-pill{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.55rem .65rem;font-size:.78rem}
+    .impact-pill strong{display:block;font-size:.85rem;margin-top:.2rem}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:.5rem}
+    @media(max-width:520px){.compare-grid{grid-template-columns:1fr}}
+    .compare-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.75rem .85rem}
+    .compare-card h4{font-size:.78rem;margin:0 0 .4rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+    .compare-card .line{font-size:.88rem;font-weight:700;margin-bottom:.35rem}
+    .compare-card .metric{font-size:1rem;font-weight:800;color:var(--accent2)}
+    .actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+    .actions button,.actions a{font:inherit;font-size:.8rem;padding:.4rem .75rem;border-radius:var(--radius-sm);
+      border:1px solid var(--border);background:var(--surface2);color:var(--text);text-decoration:none;cursor:pointer}
+    .actions button:hover,.actions a:hover{border-color:var(--accent);color:var(--accent2)}
+    .footer{text-align:center;margin-top:1.5rem;font-size:.72rem;color:var(--muted)}
+    .assumptions-panel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);
+      padding:.85rem;margin-top:.65rem}
+    .assumption-row{margin-bottom:.65rem}
+    .assumption-row:last-child{margin-bottom:0}
+    .assumption-row label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.25rem}
+    .assumption-val{color:var(--accent2);font-weight:700;font-size:.85rem}
+    input[type=range]{width:100%;accent-color:var(--accent)}
+    .disclaimer{font-size:.72rem;color:var(--muted);margin-top:.75rem;line-height:1.45}
+    .journal-banner{background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.35);border-radius:var(--radius-sm);
+      padding:.75rem .85rem;margin-bottom:1rem;font-size:.85rem}
+    .journal-banner a{color:var(--accent2)}
+    .journal-saved{color:var(--ok);font-size:.82rem;margin-top:.5rem}
+    .calc-steps{margin:.35rem 0 0;padding-inline-start:1.1rem;font-size:.85rem;color:var(--muted)}
+    .calc-steps li{margin-bottom:.35rem}
+    .basis-pills{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem}
+    .basis-pill{font-size:.68rem;padding:.2rem .5rem;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+    .advisor-field{margin-top:.65rem}
+    @media print{
+      body{background:#fff;color:#111;max-width:100%}
+      .card,.verdict{border:1px solid #ccc}
+      .no-print{display:none!important}
+      .brand,h1,.hook,.subhook,.footer{display:none}
+    }
   </style>
 </head>
 <body>
-  <div class="top">
-    <div class="lang" role="group" aria-label="Language">
-      <button type="button" data-lang="fa" class="active">فارسی</button>
-      <button type="button" data-lang="en">English</button>
-    </div>
-    <nav class="top-nav">
-      <a href="/journal" data-i18n="journal">دفتر تصمیمات</a>
-      <a href="/advanced" data-i18n="advanced">ابزار مهندسی</a>
-    </nav>
-  </div>
-
-  <h1 data-i18n="title">هوش تصمیم استراتژیک</h1>
-  <p class="sub" data-i18n="sub">پیامدهای یک تصمیم را به‌صورت نقشه‌ی علّی ببینید — نه پیش‌بینی قطعی آینده.</p>
-  <p class="value-prop" data-i18n="valueProp">برای بنیان‌گذاران، مدیران محصول و تیم‌های استراتژی: محرک‌های کلیدی، اثرات درجه دوم، فرضیات پنهان و معیارهای توقف.</p>
+  <p class="brand">For operations &amp; supply chain leaders</p>
+  <h1>Simulate one operational decision before you make it</h1>
+  <p class="hook">Should you hold inventory, switch suppliers, or add capacity — given demand uncertainty, lead times, and service targets?</p>
+  <p class="subhook">Decision support for weekly planning meetings. Causal impact map available as supporting evidence only.</p>
 
   <section class="card">
-    <div class="presets" id="presetsWrap">
-      <div class="presets-label" data-i18n="presetsLabel">الگوهای رایج</div>
-      <div class="preset-row" id="presetRow"></div>
-    </div>
-    <!-- Mode toggle -->
-    <div class="mode-toggle">
-      <button type="button" id="modeStructured" class="active" data-i18n="modeStructured">ورودی ساختاریافته</button>
-      <button type="button" id="modeFreetext" data-i18n="modeFreetext">متن آزاد</button>
-    </div>
+    <h2>Describe a decision in plain text</h2>
+    <p class="muted" style="margin:.2rem 0 .6rem">No forms — type the move (pricing, hiring, fundraise…). Built into a structured scenario and stress-tested. No LLM required.</p>
+    <input type="text" id="freeText" placeholder="e.g. raise prices 30%   ·   double the team this quarter   ·   raise a seed round now"
+           style="width:100%;margin-bottom:.5rem">
+    <button type="button" class="cta secondary" id="btnFreeText" style="margin-top:0">⚔ Stress-test this decision</button>
+    <div id="freeTextStatus" class="muted hidden" style="margin-top:.5rem"></div>
+  </section>
 
-    <!-- Structured input -->
-    <div id="structuredForm">
-      <div class="struct-field">
-        <label data-i18n="moveLabel">تصمیم اصلی (The Move)</label>
-        <input type="text" id="moveInput" data-i18n-ph="movePh">
-      </div>
-      <div class="struct-field">
-        <label data-i18n="actorsLabel">بازیگران کلیدی (Actors)</label>
-        <input type="text" id="actorInput" data-i18n-ph="actorPh">
-        <div class="chips-row" id="actorsChips"></div>
-      </div>
-      <div class="struct-field">
-        <label data-i18n="contextLabel">زمینه (اختیاری)</label>
-        <textarea id="contextInput" rows="2" data-i18n-ph="contextPh"></textarea>
-      </div>
-      <details class="accordion" id="constraintsAccordion">
-        <summary data-i18n="constraintsLabel">محدودیت‌ها (Constraints)</summary>
-        <div class="accordion-body">
-          <div class="constraint-grid">
-            <div>
-              <label data-i18n="budgetLabel">بودجه</label>
-              <input type="text" id="constraintBudget" data-i18n-ph="budgetPh">
-            </div>
-            <div>
-              <label data-i18n="teamSizeLabel">اندازه تیم</label>
-              <input type="number" id="constraintTeamSize" min="1" data-i18n-ph="teamSizePh">
-            </div>
-            <div>
-              <label data-i18n="runwayLabel">runway (ماه)</label>
-              <input type="number" id="constraintRunway" min="1" data-i18n-ph="runwayPh">
-            </div>
-            <div>
-              <label data-i18n="regulatoryLabel">مقررات</label>
-              <input type="text" id="constraintRegulatory" data-i18n-ph="regulatoryPh">
-            </div>
-          </div>
-          <div class="struct-field" style="margin-top:.65rem;margin-bottom:0">
-            <label data-i18n="otherConstraintLabel">سایر محدودیت‌ها</label>
-            <input type="text" id="constraintOther" data-i18n-ph="otherConstraintPh">
-          </div>
+  <section class="card">
+    <h2>1 · Your operations context</h2>
+    <div class="preset-row" id="presetRow"></div>
+    <div class="grid2">
+      <div class="field"><label>Inventory on hand (units)</label><input type="number" id="inventoryOnHand" min="0" value="14000"></div>
+      <div class="field"><label>Safety stock (units)</label><input type="number" id="safetyStock" min="0" value="3200"></div>
+      <div class="field"><label>Weekly demand (units)</label><input type="number" id="weeklyDemand" min="0" value="750"></div>
+      <div class="field"><label>Lead time (days)</label><input type="number" id="leadTimeDays" min="1" value="12"></div>
+      <div class="field"><label>Fill rate / service level (0–1)</label><input type="number" id="fillRate" min="0" max="1" step="0.01" value="0.96"></div>
+      <div class="field"><label>Unit cost ($)</label><input type="number" id="unitCost" min="0" step="0.1" value="11.2"></div>
+      <div class="field"><label>Supplier risk (0–1)</label><input type="number" id="supplierRisk" min="0" max="1" step="0.01" value="0.18"></div>
+      <div class="field"><label>Capacity utilization (0–1)</label><input type="number" id="capacityUtil" min="0" max="1" step="0.01" value="0.72"></div>
+    </div>
+    <details>
+      <summary>More details (optional)</summary>
+      <div class="grid2" style="margin-top:.65rem">
+        <div class="field"><label>Site / DC name</label><input type="text" id="siteName" value="Midwest DC"></div>
+        <div class="field"><label>Business unit type</label>
+          <select id="businessUnitType">
+            <option value="distribution" selected>Distribution</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="retail">Retail</option>
+            <option value="multi_echelon">Multi-echelon</option>
+            <option value="contract_manufacturing">Contract manufacturing</option>
+            <option value="general_ops">General operations</option>
+          </select>
         </div>
-      </details>
-      <div class="struct-field">
-        <label data-i18n="horizonLabel">افق زمانی</label>
-        <select id="horizonInput">
-          <option value="3">۳ ماه</option>
-          <option value="6" selected>۶ ماه</option>
-          <option value="12">۱۲ ماه</option>
-        </select>
+        <div class="field"><label>Product family</label><input type="text" id="productFamily" value="Industrial components"></div>
+        <div class="field"><label>Planning horizon (weeks)</label>
+          <select id="planningHorizon"><option value="4">4</option><option value="8" selected>8</option><option value="12">12</option><option value="26">26</option></select>
+        </div>
+        <div class="field"><label>Holding cost (% of unit cost / yr)</label><input type="number" id="holdingCostPct" min="0" max="1" step="0.01" value="0.16"></div>
+      </div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>2 · Your decision</h2>
+    <div class="decision-row" id="featuredRow"></div>
+    <details>
+      <summary>More decisions</summary>
+      <div class="decision-row" id="moreRow" style="margin-top:.5rem"></div>
+    </details>
+    <div class="field" style="margin-top:.65rem">
+      <label>Compare with (optional)</label>
+      <select id="compareDecision"><option value="">— skip comparison —</option></select>
+    </div>
+    <div class="assumptions-panel hidden" id="assumptionsPanel">
+      <p class="muted" style="margin:0 0 .6rem;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Edit assumptions</p>
+      <div id="assumptionFields"></div>
+    </div>
+    <button type="button" class="cta" id="btnSimulate">Simulate this decision</button>
+    <button type="button" class="cta secondary" id="btnWarRoom">⚔ War-room stress test (20 runs)</button>
+    <div id="status" class="muted hidden" style="margin-top:.6rem"></div>
+  </section>
+
+  <section class="card hidden" id="warRoomCard">
+    <h2>War-Room — robustness &amp; failure modes</h2>
+    <div class="wr-completeness hidden" id="wrCompleteness">
+      <span class="wr-lvl" id="wrLvl">L?</span>
+      <div>
+        <div id="wrLvlName"></div>
+        <div class="strengthen" id="wrStrengthen"></div>
+        <div class="wr-actors" id="wrActors">
+          <span class="muted" style="font-size:.76rem">Add reacting actors &amp; re-run:</span>
+          <button type="button" class="chip wr-actor-chip" data-actor="competitor">competitor</button>
+          <button type="button" class="chip wr-actor-chip" data-actor="customer">customer</button>
+          <button type="button" class="chip wr-actor-chip" data-actor="regulator">regulator</button>
+          <button type="button" class="chip wr-actor-chip" data-actor="supplier">supplier</button>
+        </div>
+      </div>
+    </div>
+    <div class="wr-disclaimer" id="wrDisclaimer"></div>
+    <div class="wr-lowsig hidden" id="wrLowSignal"></div>
+
+    <div class="wr-section">
+      <h3>Robustness</h3>
+      <div class="wr-kpi">
+        <span class="wr-kpi-num" id="wrKpiNum">—</span>
+        <span class="wr-band" id="wrBand">—</span>
+        <span class="wr-kpi-sub" id="wrKpiSub">runs robust under swept assumptions</span>
       </div>
     </div>
 
-    <!-- Free-text fallback -->
-    <div id="freetextForm" class="hidden">
-      <label for="situation" data-i18n="sitLabel">موقعیت تصمیم شما</label>
-      <textarea id="situation" data-i18n-ph="sitPh"></textarea>
+    <div class="wr-section">
+      <h3>Outcome distribution (X out of N runs)</h3>
+      <div class="wr-distbar" id="wrDistBar"></div>
+      <div class="wr-distlegend" id="wrDistLegend"></div>
     </div>
 
-    <div class="opts-wrap">
-      <label data-i18n="optsLabel">گزینه‌هایی که در نظر دارید (اختیاری، تا ۳ مورد)</label>
-      <p class="hint" data-i18n="optsHint">اگر چند گزینه بنویسید، هرکدام جداگانه شبیه‌سازی و کنار هم مقایسه می‌شوند.</p>
-      <input type="text" class="opt" id="opt1" data-i18n-ph="optPh1">
-      <input type="text" class="opt" id="opt2" data-i18n-ph="optPh2">
-      <input type="text" class="opt" id="opt3" data-i18n-ph="optPh3">
+    <div class="wr-section hidden" id="wrMatrixBlock">
+      <h3>Decision trade-off matrix (Robust Decision Making)</h3>
+      <table class="wr-matrix">
+        <thead><tr>
+          <th>Option</th>
+          <th>Worst case<div class="crit">Maximin</div></th>
+          <th>Median<div class="crit">Expected</div></th>
+          <th>Max regret<div class="crit">Minimax-regret</div></th>
+          <th>Worst regime</th>
+        </tr></thead>
+        <tbody id="wrMatrixBody"></tbody>
+      </table>
+      <div class="wr-synth" id="wrSynth"></div>
     </div>
 
-    <button type="button" class="primary" id="btnAnalyze" data-i18n="analyze">تحلیل کن</button>
-    <div id="status" class="muted-note hidden"></div>
-  </section>
-
-  <section class="card hidden" id="briefCard">
-    <!-- Decision context banner (only when structured input used) -->
-    <div class="brief-section hidden" id="decisionBanner">
-      <h3 data-i18n="hDecision">تصمیم مورد بررسی</h3>
-      <p id="bMove" style="font-weight:700;font-size:1.05rem"></p>
-      <p id="bActors" class="muted-note"></p>
-      <p id="bConstraints" class="muted-note"></p>
-      <p id="bHorizon" class="muted-note"></p>
-    </div>
-    <div class="brief-section">
-      <h3 data-i18n="hWhat">چه اتفاقی محتمل است</h3>
-      <p id="bWhat"></p>
-      <p id="bOutcome" class="muted-note"></p>
-    </div>
-    <div class="brief-section" id="driversSection">
-      <h3 data-i18n="hDrivers">محرک‌های کلیدی</h3>
-      <div id="bDrivers"></div>
-    </div>
-    <div class="brief-section hidden" id="secondOrderSection">
-      <h3 data-i18n="hSecondOrder">اثرات درجه دوم</h3>
-      <div id="bSecondOrder"></div>
-    </div>
-    <div class="brief-section" id="assumptionsSection">
-      <h3 data-i18n="hAssumptions">فرضیات پنهان</h3>
-      <ul class="clean" id="bAssumptions"></ul>
-    </div>
-    <div class="brief-section hidden" id="killSection">
-      <h3 data-i18n="hKill">معیارهای توقف (Kill Criteria)</h3>
-      <div id="bKill"></div>
-    </div>
-    <div class="brief-section">
-      <h3 data-i18n="hRegime">وضعیت رژیم</h3>
-      <span id="bRegime" class="badge NORMAL">NORMAL</span>
-      <p id="bRegimeNote" class="muted-note"></p>
-    </div>
-    <div class="brief-section">
-      <h3 data-i18n="hConfidence">سطح اطمینان</h3>
-      <span id="bConfidence" class="conf moderate"></span>
-      <p id="bConfidenceNote" class="muted-note"></p>
-    </div>
-    <div class="brief-section hidden" id="trajectorySection">
-      <h3 data-i18n="hTrajectory">روند تا اینجا</h3>
-      <p id="bTrajectory"></p>
+    <div class="wr-section hidden" id="wrFailBlock">
+      <h3>How it breaks (failure modes)</h3>
+      <div id="wrFailList"></div>
     </div>
 
-    <div class="feedback">
-      <span data-i18n="fbAsk">این تحلیل به تصمیمت کمک کرد؟</span>
-      <button type="button" id="fbUp">👍</button>
-      <button type="button" id="fbDown">👎</button>
-      <input type="text" id="fbWhy" data-i18n-ph="fbWhyPh">
+    <div class="wr-section hidden" id="wrPivotalBlock">
+      <div class="wr-pivotal">
+        <div class="lead">Pivotal assumption</div>
+        <div id="wrPivotalText"></div>
+      </div>
     </div>
   </section>
 
-  <section class="card hidden" id="compareCard">
-    <h3 data-i18n="hCompare">مقایسه‌ی گزینه‌ها</h3>
-    <table>
-      <thead>
-        <tr>
-          <th data-i18n="cOption">گزینه</th>
-          <th data-i18n="cOutcome">نتیجه</th>
-          <th data-i18n="cRisk">مهم‌ترین ریسک</th>
-          <th data-i18n="cRegime">رژیم</th>
-        </tr>
-      </thead>
-      <tbody id="compareBody"></tbody>
-    </table>
-  </section>
-
-  <div class="adv">
-    <a href="/journal" data-i18n="journalLink">دفتر تصمیمات →</a>
-    <a href="/advanced" data-i18n="advancedLink">ابزار مهندسی (JSON، گراف) →</a>
+  <div class="journal-banner hidden no-print" id="checkInBanner">
+    <strong>30-day check-in due</strong> — <span id="checkInText"></span>
+    <a href="/journal" id="checkInLink">Log what actually happened →</a>
   </div>
-  <p class="disclaimer" data-i18n="disclaimer">این ابزار یک سیستم نقشه‌برداری تصمیم است — برای بهبود قضاوت در موقعیت‌های مبهم و پرریسک، نه پیش‌بینی جادویی.</p>
+
+  <section class="card hidden" id="resultsCard">
+    <h2 style="padding:1rem 1.25rem 0;margin:0;font-size:.92rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">4 · Decision recommendation</h2>
+    <div class="verdict" id="verdictBlock">
+      <p class="verdict-line" id="vLine">—</p>
+      <p class="hero-metric neutral" id="vService">—</p>
+      <p class="hero-sub" id="vCostRisk">—</p>
+      <div class="badges">
+        <span class="badge" id="vRisk">Risk</span>
+        <span class="badge" id="vRegime">Stable</span>
+        <span class="badge" id="vConf">Confidence</span>
+      </div>
+    </div>
+    <div class="body">
+      <div class="section"><h3>Why this matters now</h3><p id="vWhy"></p></div>
+      <div class="section"><h3>Expected impact</h3>
+        <div class="impact-row">
+          <div class="impact-pill">Service<span id="vImpactService"><strong>—</strong></span></div>
+          <div class="impact-pill">Cost<span id="vImpactCost"><strong>—</strong></span></div>
+          <div class="impact-pill">Risk<span id="vImpactRisk"><strong>—</strong></span></div>
+          <div class="impact-pill">Delay / bottleneck<span id="vImpactBottleneck"><strong>—</strong></span></div>
+        </div>
+      </div>
+      <div class="section"><h3>What likely happens</h3><p id="vSummary"></p></div>
+
+      <div class="hidden" id="compareBlock">
+        <h3 style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:1rem 0 .5rem">Compare decisions</h3>
+        <div class="compare-grid" id="compareGrid"></div>
+      </div>
+
+      <div class="grid2" style="margin-top:1rem">
+        <div class="section"><h3>Best case</h3><p id="vBest" class="muted"></p></div>
+        <div class="section"><h3>Worst case</h3><p id="vWorst" class="muted"></p></div>
+      </div>
+
+      <div class="section"><h3>Key drivers</h3><ul class="plain" id="vDrivers"></ul></div>
+      <div class="section hidden" id="secondOrderBlock"><h3>Second-order effects</h3><ul class="plain" id="vSecond"></ul></div>
+      <div class="section"><h3>Walk-away signals</h3><ul class="plain" id="vWalk"></ul></div>
+      <div class="section" style="background:var(--surface2);padding:.85rem;border-radius:var(--radius-sm);border:1px solid var(--border)">
+        <h3>Next best action</h3><p id="vNext" style="font-weight:600"></p>
+      </div>
+
+      <details class="section no-print" id="calcDetails">
+        <summary>How we calculated this</summary>
+        <div class="basis-pills" id="basisPills"></div>
+        <ul class="calc-steps" id="calcSteps"></ul>
+        <p class="disclaimer" id="calcDisclaimer"></p>
+      </details>
+
+      <p class="disclaimer" id="resultDisclaimer"></p>
+
+      <div class="advisor-field no-print hidden" id="advisorBlock">
+        <label>Team / firm name (for PDF export)</label>
+        <input type="text" id="advisorName" placeholder="Optional — e.g. Acme Supply Chain Advisory">
+      </div>
+
+      <div class="actions no-print">
+        <button type="button" id="btnSaveJournal" class="cta" style="width:auto;flex:1;min-width:140px">Save to journal</button>
+        <button type="button" id="btnExportPdf">Export PDF</button>
+        <button type="button" id="btnCopy">Copy summary</button>
+        <a href="/graph" id="linkGraph">View impact map (evidence)</a>
+        <a href="/journal">Past decisions</a>
+      </div>
+      <p class="journal-saved hidden" id="journalSaved"></p>
+    </div>
+  </section>
+
+  <p class="footer">Enterprise operations decision support — directional, not a prediction engine.</p>
 
   <script>
-    const I18N = {
-      fa: {
-        title:"هوش تصمیم استراتژیک",
-        sub:"پیامدهای یک تصمیم را به‌صورت نقشه‌ی علّی ببینید — نه پیش‌بینی قطعی آینده.",
-        valueProp:"برای بنیان‌گذاران، مدیران محصول و تیم‌های استراتژی: محرک‌های کلیدی، اثرات درجه دوم، فرضیات پنهان و معیارهای توقف.",
-        presetsLabel:"الگوهای رایج",
-        journal:"دفتر تصمیمات", advanced:"ابزار مهندسی",
-        journalLink:"دفتر تصمیمات →", advancedLink:"ابزار مهندسی (JSON، گراف) →",
-        modeStructured:"ورودی ساختاریافته", modeFreetext:"متن آزاد",
-        moveLabel:"تصمیم اصلی (The Move)", movePh:"مثال: افزایش قیمت ۳۰٪",
-        actorsLabel:"بازیگران کلیدی (Enter بزنید تا اضافه شود)", actorPh:"مثال: مشتریان فعلی، تیم فروش…",
-        contextLabel:"زمینه (اختیاری)", contextPh:"هر اطلاعات پس‌زمینه‌ای که مفید باشد…",
-        constraintsLabel:"محدودیت‌ها (Constraints)",
-        budgetLabel:"بودجه", budgetPh:"مثال: ۵۰۰K USD",
-        teamSizeLabel:"اندازه تیم", teamSizePh:"مثال: ۱۲",
-        runwayLabel:"runway (ماه)", runwayPh:"مثال: ۹",
-        regulatoryLabel:"مقررات", regulatoryPh:"مثال: GDPR، مجوز صادرات…",
-        otherConstraintLabel:"سایر محدودیت‌ها", otherConstraintPh:"هر محدودیت دیگری…",
-        horizonLabel:"افق زمانی",
-        sitLabel:"موقعیت تصمیم شما",
-        sitPh:"مثال: شرکت ما در حال بررسی کاهش ۱۵٪ قیمت برای مقابله با یک رقیب تازه‌وارد است.",
-        optsLabel:"گزینه‌هایی که در نظر دارید (اختیاری، تا ۳ مورد)",
-        optsHint:"اگر چند گزینه بنویسید، هرکدام جداگانه شبیه‌سازی و کنار هم مقایسه می‌شوند.",
-        optPh1:"گزینه ۱", optPh2:"گزینه ۲", optPh3:"گزینه ۳",
-        analyze:"تحلیل کن", analyzing:"در حال تحلیل…",
-        hDecision:"تصمیم مورد بررسی",
-        hWhat:"چه اتفاقی محتمل است", hDrivers:"محرک‌های کلیدی",
-        hSecondOrder:"اثرات درجه دوم (ناخواسته)",
-        hAssumptions:"فرضیات پنهان",
-        hKill:"معیارهای توقف",
-        hRegime:"وضعیت رژیم", hConfidence:"سطح اطمینان",
-        hTrajectory:"روند تا اینجا", hCompare:"مقایسه‌ی گزینه‌ها",
-        cOption:"گزینه", cOutcome:"نتیجه", cRisk:"مهم‌ترین ریسک", cRegime:"رژیم",
-        confLow:"پایین", confModerate:"متوسط", confHigh:"بالا",
-        fbAsk:"این تحلیل به تصمیمت کمک کرد؟", fbWhyPh:"چرا؟ (اختیاری)", fbThanks:"ممنون از بازخوردت!",
-        disclaimer:"این ابزار یک سیستم نقشه‌برداری تصمیم است — برای بهبود قضاوت در موقعیت‌های مبهم و پرریسک، نه پیش‌بینی جادویی.",
-        errMove:"لطفاً تصمیم اصلی را بنویسید.",
-        errEmpty:"لطفاً ابتدا موقعیت تصمیم را بنویسید.",
-        errGeneric:"مشکلی پیش آمد. دوباره تلاش کنید.",
-        running:"در حال شبیه‌سازی… (ممکن است چند ثانیه طول بکشد)",
-        hops:"گام", magnitude:"شدت", trigger:"محرک", effect:"اثر",
-        watchVar:"متغیر", threshold:"آستانه", signal:"نشانه", why:"چرا"
-      },
-      en: {
-        title:"Strategic Decision Intelligence",
-        sub:"Map the consequences of a decision over time — not a magic prediction of the future.",
-        valueProp:"For founders, product leaders, and strategy teams: top drivers, second-order effects, hidden assumptions, and kill criteria.",
-        presetsLabel:"Common decisions",
-        journal:"Decision Journal", advanced:"Engineering tools",
-        journalLink:"Decision Journal →", advancedLink:"Engineering tools (JSON, graph) →",
-        modeStructured:"Structured input", modeFreetext:"Free text",
-        moveLabel:"The Move (core decision)", movePh:"e.g. Raise prices 30%",
-        actorsLabel:"Key actors (press Enter to add)", actorPh:"e.g. existing customers, sales team…",
-        contextLabel:"Context (optional)", contextPh:"Any background information…",
-        constraintsLabel:"Constraints (optional)",
-        budgetLabel:"Budget", budgetPh:"e.g. $500K",
-        teamSizeLabel:"Team size", teamSizePh:"e.g. 12",
-        runwayLabel:"Runway (months)", runwayPh:"e.g. 9",
-        regulatoryLabel:"Regulatory", regulatoryPh:"e.g. GDPR, export license…",
-        otherConstraintLabel:"Other constraints", otherConstraintPh:"Any other limits…",
-        horizonLabel:"Time horizon",
-        sitLabel:"Your decision situation",
-        sitPh:"Example: We're weighing a 15% price cut to counter a new competitor. 18 months runway.",
-        optsLabel:"Options you're considering (optional, up to 3)",
-        optsHint:"Each option is simulated separately and compared side by side.",
-        optPh1:"Option 1", optPh2:"Option 2", optPh3:"Option 3",
-        analyze:"Analyze", analyzing:"Analyzing…",
-        hDecision:"Decision under analysis",
-        hWhat:"What likely happens", hDrivers:"Top drivers",
-        hSecondOrder:"Second-order effects",
-        hAssumptions:"Hidden assumptions",
-        hKill:"Kill criteria",
-        hRegime:"Regime", hConfidence:"Confidence",
-        hTrajectory:"Story so far", hCompare:"Compare options",
-        cOption:"Option", cOutcome:"Outcome", cRisk:"Top hidden risk", cRegime:"Regime",
-        confLow:"low", confModerate:"moderate", confHigh:"high",
-        fbAsk:"Did this help your decision?", fbWhyPh:"Why? (optional)", fbThanks:"Thanks for the feedback!",
-        disclaimer:"A decision mapping system to improve judgment in high-stakes, ambiguous situations — not a black-box predictor.",
-        errMove:"Please describe the core decision (The Move).",
-        errEmpty:"Please describe your decision situation first.",
-        errGeneric:"Something went wrong. Please try again.",
-        running:"Running simulation… (may take a few seconds)",
-        hops:"hops", magnitude:"magnitude", trigger:"trigger", effect:"effect",
-        watchVar:"variable", threshold:"threshold", signal:"signal", why:"why"
-      }
-    };
-    let lang = (localStorage.getItem('owe_brief_lang')) || 'fa';
-    function t(k){ return (I18N[lang]||I18N.fa)[k] ?? (I18N.fa[k]||k); }
-    function applyLang(l){
-      lang=l; localStorage.setItem('owe_brief_lang',l);
-      document.documentElement.lang = l==='fa'?'fa':'en';
-      document.documentElement.dir = l==='fa'?'rtl':'ltr';
-      document.title=t('title')+' — Open World Engine';
-      document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
-      document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=t(e.getAttribute('data-i18n')));
-      document.querySelectorAll('[data-i18n-ph]').forEach(e=>e.placeholder=t(e.getAttribute('data-i18n-ph')));
-      // Update horizon options labels
-      const hor=$('horizonInput');
-      if(hor){
-        const labels = l==='fa'?['۳ ماه','۶ ماه','۱۲ ماه']:['3 months','6 months','12 months'];
-        Array.from(hor.options).forEach((o,i)=>{ o.text=labels[i]||o.text; });
-      }
-      renderPresets();
-    }
-    document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+    let presets=[], decisions=[], selectedDecisionId='increase_safety_stock', lastResponse=null, assumptionValues={};
 
     const $=id=>document.getElementById(id);
-    let lastScenarioDesc="";
-    let actors=[];
-    let presets=[];
-    let activePresetId=null;
+    function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;}
+
+    function collectProfile(){
+      return {
+        site_name:$('siteName').value.trim()||'Regional DC',
+        business_unit_type:$('businessUnitType').value,
+        product_family:$('productFamily').value.trim()||'Core SKU line',
+        planning_horizon_weeks:parseInt($('planningHorizon').value,10)||8,
+        inventory_on_hand:parseFloat($('inventoryOnHand').value)||0,
+        safety_stock:parseFloat($('safetyStock').value)||0,
+        weekly_demand:parseFloat($('weeklyDemand').value)||0,
+        lead_time_days:parseFloat($('leadTimeDays').value)||14,
+        fill_rate:parseFloat($('fillRate').value)||0.94,
+        unit_cost:parseFloat($('unitCost').value)||0,
+        holding_cost_pct:parseFloat($('holdingCostPct').value)||0.18,
+        supplier_risk:parseFloat($('supplierRisk').value)||0.2,
+        capacity_utilization:parseFloat($('capacityUtil').value)||0.75,
+        primary_constraint:'inventory buffer vs service target',
+        planning_goal:'hit service level without excess inventory cost'
+      };
+    }
 
     function applyPreset(p){
-      if(!p) return;
-      structuredMode=true;
-      $('structuredForm').classList.remove('hidden');
-      $('freetextForm').classList.add('hidden');
-      $('modeStructured').classList.add('active');
-      $('modeFreetext').classList.remove('active');
-      const isFa=lang==='fa';
-      $('moveInput').value=isFa?(p.move_fa||p.move_en||''):(p.move_en||p.move_fa||'');
-      actors=[...(isFa?(p.actors_fa||p.actors_en||[]):(p.actors_en||p.actors_fa||[]))];
-      renderChips();
-      $('contextInput').value=isFa?(p.context_fa||p.context_en||''):(p.context_en||p.context_fa||'');
-      const c=p.constraints||{};
-      $('constraintBudget').value=c.budget||'';
-      $('constraintTeamSize').value=c.team_size||'';
-      $('constraintRunway').value=c.runway_months||'';
-      $('constraintRegulatory').value=c.regulatory||'';
-      $('constraintOther').value=c.other||'';
-      if(p.horizon_months) $('horizonInput').value=String(p.horizon_months);
-      activePresetId=p.id||null;
-      renderPresets();
+      const pr=p.profile||{};
+      $('siteName').value=pr.site_name||'';
+      $('businessUnitType').value=pr.business_unit_type||'distribution';
+      $('productFamily').value=pr.product_family||'';
+      $('planningHorizon').value=pr.planning_horizon_weeks||8;
+      $('inventoryOnHand').value=pr.inventory_on_hand||0;
+      $('safetyStock').value=pr.safety_stock||0;
+      $('weeklyDemand').value=pr.weekly_demand||0;
+      $('leadTimeDays').value=pr.lead_time_days||14;
+      $('fillRate').value=pr.fill_rate||0.94;
+      $('unitCost').value=pr.unit_cost||0;
+      $('holdingCostPct').value=pr.holding_cost_pct||0.18;
+      $('supplierRisk').value=pr.supplier_risk||0.2;
+      $('capacityUtil').value=pr.capacity_utilization||0.75;
+      if(p.outlook==='strained'&&selectedDecisionId==='increase_safety_stock'){
+        const alt=decisions.find(d=>d.id==='expedite_reorder');
+        if(alt){selectedDecisionId='increase_safety_stock';$('compareDecision').value='expedite_reorder';}
+      }
+      renderDecisions();
     }
 
     function renderPresets(){
-      const row=$('presetRow');
-      if(!row||!presets.length) return;
-      row.innerHTML='';
-      const isFa=lang==='fa';
+      const row=$('presetRow');row.innerHTML='';
       presets.forEach(p=>{
-        const btn=document.createElement('button');
-        btn.type='button';
-        btn.className='preset-btn'+(activePresetId===p.id?' active':'');
-        btn.textContent=isFa?(p.label_fa||p.label_en||p.id):(p.label_en||p.label_fa||p.id);
-        btn.addEventListener('click',()=>applyPreset(p));
-        row.appendChild(btn);
+        const b=document.createElement('button');
+        b.type='button';
+        b.className='chip'+(p.outlook?(' outlook-'+p.outlook):'');
+        const demoHint=p.id==='demand_spike_capacity'?' ★':'';
+        b.textContent=(p.label_en||p.id)+demoHint;
+        if(p.id==='demand_spike_capacity')b.title='Recommended first demo';
+        b.onclick=()=>{row.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+          b.classList.add('active');applyPreset(p);};
+        row.appendChild(b);
       });
     }
 
-    async function loadPresets(){
-      try{
-        const res=await fetch('/api/decision_presets');
-        const data=await res.json();
-        if(data.ok&&Array.isArray(data.presets)){
-          presets=data.presets;
-          renderPresets();
-        }
-      }catch(e){}
-    }
-
-    // --- Mode toggle ---
-    let structuredMode=true;
-    $('modeStructured').addEventListener('click',()=>{
-      structuredMode=true;
-      $('structuredForm').classList.remove('hidden');
-      $('freetextForm').classList.add('hidden');
-      $('modeStructured').classList.add('active');
-      $('modeFreetext').classList.remove('active');
-    });
-    $('modeFreetext').addEventListener('click',()=>{
-      structuredMode=false;
-      $('freetextForm').classList.remove('hidden');
-      $('structuredForm').classList.add('hidden');
-      $('modeFreetext').classList.add('active');
-      $('modeStructured').classList.remove('active');
-    });
-
-    // --- Actor chips ---
-    function renderChips(){
-      const row=$('actorsChips'); row.innerHTML='';
-      actors.forEach((a,i)=>{
-        const chip=document.createElement('span'); chip.className='chip';
-        chip.innerHTML=`${escapeHtml(a)} <button type="button" aria-label="remove">×</button>`;
-        chip.querySelector('button').addEventListener('click',()=>{ actors.splice(i,1); renderChips(); });
-        row.appendChild(chip);
+    function renderAssumptions(){
+      const dec=decisions.find(d=>d.id===selectedDecisionId);
+      const specs=(dec&&dec.editable_assumptions)||[];
+      const panel=$('assumptionsPanel');
+      const fields=$('assumptionFields');
+      fields.innerHTML='';
+      if(!specs.length){panel.classList.add('hidden');return;}
+      panel.classList.remove('hidden');
+      specs.forEach(spec=>{
+        const key=spec.key;
+        if(assumptionValues[key]==null)assumptionValues[key]=spec.value;
+        const row=document.createElement('div');
+        row.className='assumption-row';
+        const val=assumptionValues[key];
+        const money=spec.tradeoff_key==='holding_cost_weekly'||spec.tradeoff_key==='unit_cost';
+        const display=money?'$'+Number(val).toLocaleString():val;
+        row.innerHTML='<label><span>'+esc(spec.label)+'</span><span class="assumption-val" id="av-'+key+'">'+display+'</span></label>';
+        const range=document.createElement('input');
+        range.type='range';range.min=spec.min;range.max=spec.max;range.step=spec.step||1;range.value=val;
+        range.dataset.key=key;
+        range.oninput=()=>{
+          assumptionValues[key]=parseFloat(range.value);
+          const el=$('av-'+key);
+          const v=assumptionValues[key];
+          el.textContent=money?'$'+v.toLocaleString():v;
+        };
+        row.appendChild(range);
+        fields.appendChild(row);
       });
     }
-    $('actorInput').addEventListener('keydown',e=>{
-      if(e.key==='Enter'||e.key===','){
-        e.preventDefault();
-        const v=e.target.value.trim();
-        if(v&&actors.length<8){ actors.push(v); e.target.value=''; renderChips(); }
+
+    function renderDecisions(){
+      const featured=decisions.filter(d=>d.featured).sort((a,b)=>(a.featured_order||99)-(b.featured_order||99));
+      const rest=decisions.filter(d=>!d.featured);
+      const fill=(row,list)=>{
+        row.innerHTML='';
+        list.forEach(d=>{
+          const b=document.createElement('button');
+          b.type='button';
+          b.className='chip'+(d.featured?' featured':'')+(selectedDecisionId===d.id?' active':'');
+          b.textContent=d.label_en;
+          b.onclick=()=>{selectedDecisionId=d.id;assumptionValues={};renderDecisions();};
+          row.appendChild(b);
+        });
+      };
+      fill($('featuredRow'),featured);
+      fill($('moreRow'),rest);
+      const cmp=$('compareDecision');
+      const cur=cmp.value;
+      cmp.innerHTML='<option value="">— skip comparison —</option>';
+      decisions.forEach(d=>{
+        if(d.id===selectedDecisionId)return;
+        const o=document.createElement('option');
+        o.value=d.id;o.textContent=d.label_en;
+        cmp.appendChild(o);
+      });
+      if(cur&&cur!==selectedDecisionId)cmp.value=cur;
+      renderAssumptions();
+    }
+
+    function metricClass(delta){
+      if(delta>0.15)return 'positive';
+      if(delta<-0.15)return 'negative';
+      return 'neutral';
+    }
+
+    function renderResults(data){
+      const o=data.outcomes||{};
+      const b=data.brief||{};
+      $('vLine').textContent=o.one_line_recommendation||b.recommended_action||'—';
+      const fd=o.fill_rate_delta_pts||0;
+      $('vService').textContent=o.service_level_headline||'—';
+      $('vService').className='hero-metric '+metricClass(fd);
+      $('vCostRisk').textContent=(o.cost_headline||'')+(o.risk_headline?(' · '+o.risk_headline):'');
+      $('vRisk').textContent=(o.risk_level||'Medium')+' risk';
+      $('vRisk').className='badge risk-'+(o.risk_level||'Medium');
+      $('vRegime').textContent=o.regime||'Stable';
+      $('vRegime').className='badge regime-'+(o.regime||'Stable');
+      $('vWhy').textContent=o.why_now||'—';
+      $('vImpactService').innerHTML='<strong>'+esc(o.service_level_headline||'—')+'</strong>';
+      $('vImpactCost').innerHTML='<strong>'+esc(o.cost_headline||'—')+'</strong>';
+      $('vImpactRisk').innerHTML='<strong>'+esc(o.risk_headline||'—')+'</strong>';
+      const bn=o.bottleneck_headline||(o.lead_time_headline||'—');
+      $('vImpactBottleneck').innerHTML='<strong>'+esc(bn)+'</strong>';
+      $('vConf').textContent=o.confidence_label||o.confidence_level||'Moderate uncertainty';
+      $('vSummary').textContent=o.outcome_summary||b.what_likely_happens||'—';
+      $('vBest').textContent=o.best_case||b.best_case||'—';
+      $('vWorst').textContent=o.worst_case||b.worst_case||'—';
+      $('vNext').textContent=o.next_step||o.recommended_action||'—';
+
+      const dr=$('vDrivers');dr.innerHTML='';
+      (o.key_drivers||[]).forEach(d=>{
+        const li=document.createElement('li');
+        li.innerHTML='<strong>'+esc(d.name)+'</strong>'+(d.why?' — '+esc(d.why):'');
+        dr.appendChild(li);
+      });
+
+      const so=$('vSecond');so.innerHTML='';
+      const effects=o.second_order_effects||[];
+      $('secondOrderBlock').classList.toggle('hidden',!effects.length);
+      effects.forEach(t=>{const li=document.createElement('li');li.textContent=t;so.appendChild(li);});
+
+      const wk=$('vWalk');wk.innerHTML='';
+      (o.walk_away_signals||o.top_risks||[]).forEach(t=>{
+        const li=document.createElement('li');li.textContent=t;wk.appendChild(li);
+      });
+
+      const dc=data.decision_comparison;
+      const grid=$('compareGrid');grid.innerHTML='';
+      if(dc&&dc.primary&&dc.alternative){
+        $('compareBlock').classList.remove('hidden');
+        [dc.primary,dc.alternative].forEach(c=>{
+          const div=document.createElement('div');
+          div.className='compare-card';
+          div.innerHTML='<h4>'+esc(c.label)+'</h4><div class="line">'+esc(c.one_line_recommendation||'')+'</div><div class="metric">'+esc(c.service_level_headline||'')+'</div><div class="muted" style="margin-top:.35rem;font-size:.78rem">'+esc(c.cost_headline||'')+' · '+(c.risk_level||'')+' risk</div>';
+          grid.appendChild(div);
+        });
+      }else{$('compareBlock').classList.add('hidden');}
+
+      const calc=o.calculation_explanation||{};
+      const steps=$('calcSteps');steps.innerHTML='';
+      (calc.steps||[]).forEach(t=>{const li=document.createElement('li');li.textContent=t;steps.appendChild(li);});
+      $('calcDisclaimer').textContent=calc.disclaimer||o.disclaimer||'';
+      $('resultDisclaimer').textContent=o.disclaimer||calc.disclaimer||'';
+      const basis=o.verdict_basis||{};
+      const pills=$('basisPills');pills.innerHTML='';
+      const sim=basis.simulation||{};
+      if(sim.fill_rate_delta_pts!=null){
+        const p=document.createElement('span');p.className='basis-pill';
+        p.textContent='Analysis: fill rate '+sim.fill_rate_delta_pts+' pts';
+        pills.appendChild(p);
       }
-    });
-
-    function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML; }
-
-    // --- Renderers ---
-    function regimeBadge(el,level){
-      const lv=(level||'NORMAL').toUpperCase();
-      el.className='badge '+(['NORMAL','FRAGILE','CRISIS'].includes(lv)?lv:'NORMAL');
-      el.textContent=lv;
-    }
-    function confChip(el,level){
-      const lv=(level||'moderate').toLowerCase();
-      el.className='conf '+(['low','moderate','high'].includes(lv)?lv:'moderate');
-      el.textContent = lv==='low'?t('confLow'):lv==='high'?t('confHigh'):t('confModerate');
-    }
-    function renderDrivers(container, drivers){
-      container.innerHTML='';
-      if(!drivers||!drivers.length) return;
-      drivers.forEach(d=>{
-        const name = typeof d==='string' ? d : (d.name||'');
-        const dir  = typeof d==='string' ? '' : (d.direction||'');
-        const why  = typeof d==='string' ? '' : (d.why_it_matters||'');
-        const row=document.createElement('div'); row.className='driver-row';
-        row.innerHTML=`<span class="driver-name">${escapeHtml(name)}</span>`+
-          (dir?`<span class="driver-dir">${escapeHtml(dir)}</span>`:'')+
-          (why?`<span class="driver-why">— ${escapeHtml(why)}</span>`:'');
-        container.appendChild(row);
+      (basis.rules_triggered||[]).forEach(r=>{
+        const p=document.createElement('span');p.className='basis-pill';
+        p.textContent='Rule: '+r.id;
+        pills.appendChild(p);
       });
-    }
-    function renderSecondOrder(container, effects){
-      container.innerHTML='';
-      if(!effects||!effects.length) return;
-      effects.forEach(e=>{
-        const mag=(e.magnitude_label||'low').toLowerCase();
-        const row=document.createElement('div'); row.className='effect-row';
-        row.innerHTML=`<span class="effect-badge ${mag}">${escapeHtml(mag)}</span>`+
-          `<strong>${escapeHtml(e.effect||'')}</strong>`+
-          (e.trigger?` <span class="muted-note">${t('trigger')}: ${escapeHtml(e.trigger)}</span>`:'');
-        container.appendChild(row);
-      });
-    }
-    function renderKill(container, criteria){
-      container.innerHTML='';
-      if(!criteria||!criteria.length) return;
-      criteria.forEach(c=>{
-        const row=document.createElement('div'); row.className='kill-row';
-        row.innerHTML=`<div class="kill-var">${escapeHtml(c.watch_variable||'')}</div>`+
-          `<div class="kill-thresh">${escapeHtml(c.threshold||'')}</div>`+
-          (c.signal?`<div style="font-size:.85rem">${escapeHtml(c.signal)}</div>`:'')+
-          (c.why?`<div class="kill-why">${escapeHtml(c.why)}</div>`:'');
-        container.appendChild(row);
-      });
-    }
-
-    function collectConstraints(){
-      const c={};
-      const budget=$('constraintBudget').value.trim();
-      const team=$('constraintTeamSize').value.trim();
-      const runway=$('constraintRunway').value.trim();
-      const reg=$('constraintRegulatory').value.trim();
-      const other=$('constraintOther').value.trim();
-      if(budget) c.budget=budget;
-      if(team){ const n=parseInt(team,10); if(n>0) c.team_size=n; }
-      if(runway){ const n=parseInt(runway,10); if(n>0) c.runway_months=n; }
-      if(reg) c.regulatory=reg;
-      if(other) c.other=other;
-      return Object.keys(c).length?c:undefined;
-    }
-
-    function formatConstraints(c){
-      if(!c||!Object.keys(c).length) return '';
-      const parts=[];
-      if(c.budget) parts.push((lang==='fa'?'بودجه: ':'Budget: ')+c.budget);
-      if(c.team_size) parts.push((lang==='fa'?'تیم: ':'Team: ')+c.team_size);
-      if(c.runway_months) parts.push((lang==='fa'?'runway: ':'Runway: ')+c.runway_months+(lang==='fa'?' ماه':' mo'));
-      if(c.regulatory) parts.push((lang==='fa'?'مقررات: ':'Regulatory: ')+c.regulatory);
-      if(c.other) parts.push(c.other);
-      return parts.join(lang==='fa'?' · ':' · ');
-    }
-
-    function renderBrief(b){
-      $('briefCard').classList.remove('hidden');
-
-      // Decision banner
-      const dec=b.decision||{};
-      const hasDecision=!!(dec.move);
-      $('decisionBanner').classList.toggle('hidden',!hasDecision);
-      if(hasDecision){
-        $('bMove').textContent=dec.move||'';
-        $('bActors').textContent=dec.actors&&dec.actors.length?dec.actors.join('، '):'';
-        const cText=formatConstraints(dec.constraints||{});
-        $('bConstraints').textContent=cText;
-        $('bConstraints').classList.toggle('hidden',!cText);
-        $('bHorizon').textContent=dec.horizon_months?(dec.horizon_months+(lang==='fa'?' ماه':' months')):'';
+      $('advisorBlock').classList.remove('hidden');
+      $('journalSaved').classList.add('hidden');
+      if(data.journal_id){
+        $('journalSaved').textContent='Saved to journal (#'+data.journal_id+'). Check back in '+(data.check_in_due_days||30)+' days.';
+        $('journalSaved').classList.remove('hidden');
       }
 
-      $('bWhat').textContent=b.what_likely_happens||'—';
-      $('bOutcome').textContent=b.outcome?('▸ '+b.outcome):'';
-
-      // Top drivers (structured objects or compat strings)
-      const drivers = b.top_drivers && b.top_drivers.length ? b.top_drivers : (b.key_drivers||[]).map(s=>({name:s}));
-      renderDrivers($('bDrivers'), drivers);
-      $('driversSection').classList.toggle('hidden', !drivers.length);
-
-      // Second-order effects
-      renderSecondOrder($('bSecondOrder'), b.second_order_effects);
-      $('secondOrderSection').classList.toggle('hidden', !(b.second_order_effects&&b.second_order_effects.length));
-
-      // Hidden assumptions (structured or compat strings)
-      const assumptions = b.hidden_assumptions && b.hidden_assumptions.length
-        ? b.hidden_assumptions.map(a=>typeof a==='string'?a:(a.assumption||a.risk_if_wrong||''))
-        : (b.hidden_risks||[]);
-      const ul=$('bAssumptions'); ul.innerHTML='';
-      assumptions.filter(Boolean).forEach(s=>{ const li=document.createElement('li'); li.textContent=s; ul.appendChild(li); });
-      $('assumptionsSection').classList.toggle('hidden',!assumptions.filter(Boolean).length);
-
-      // Kill criteria
-      renderKill($('bKill'), b.kill_criteria);
-      $('killSection').classList.toggle('hidden', !(b.kill_criteria&&b.kill_criteria.length));
-
-      regimeBadge($('bRegime'),(b.regime||{}).level);
-      $('bRegimeNote').textContent=(b.regime||{}).commentary||'';
-      confChip($('bConfidence'),(b.confidence||{}).level);
-      $('bConfidenceNote').textContent=(b.confidence||{}).note||'';
-      const traj=(b.trajectory||'').trim();
-      $('trajectorySection').classList.toggle('hidden',!traj);
-      $('bTrajectory').textContent=traj;
+      $('resultsCard').classList.remove('hidden');
+      $('resultsCard').scrollIntoView({behavior:'smooth',block:'start'});
     }
 
-    function renderCompare(rows){
-      if(!rows||!rows.length){ $('compareCard').classList.add('hidden'); return; }
-      $('compareCard').classList.remove('hidden');
-      const tb=$('compareBody'); tb.innerHTML="";
-      rows.forEach(r=>{
-        const tr=document.createElement('tr');
-        const lv=((r.regime||{}).level||'NORMAL').toUpperCase();
-        tr.innerHTML=`<td><strong>${escapeHtml(r.option||'')}</strong></td>`+
-          `<td>${escapeHtml(r.outcome||r.what_likely_happens||'—')}</td>`+
-          `<td>${escapeHtml(r.top_hidden_risk||'—')}</td>`+
-          `<td><span class="badge ${['NORMAL','FRAGILE','CRISIS'].includes(lv)?lv:'NORMAL'}">${lv}</span></td>`;
-        tb.appendChild(tr);
-      });
+    function copySummary(){
+      if(!lastResponse)return;
+      const o=lastResponse.outcomes||{};
+      const text=[
+        o.one_line_recommendation,
+        o.service_level_headline,
+        o.cost_headline,
+        o.risk_headline,
+        o.bottleneck_headline||o.lead_time_headline,
+        'Risk: '+(o.risk_level||''),
+        'Confidence: '+(o.confidence_label||o.confidence_level||''),
+        '',
+        'Why now: '+(o.why_now||''),
+        '',
+        'Next action: '+(o.next_step||''),
+      ].filter(Boolean).join('\n');
+      navigator.clipboard.writeText(text).catch(()=>{});
     }
 
-    async function analyze(){
+    function buildBriefBody(saveJournal){
+      const profile=collectProfile();
+      const body={ops_profile:profile,decision_id:selectedDecisionId,steps:6,dry_run:true,save_snapshot:true,
+        save_to_journal:!!saveJournal};
+      const cmp=$('compareDecision').value;
+      if(cmp)body.compare_decision_id=cmp;
+      const overrides={};
+      Object.keys(assumptionValues).forEach(k=>{if(assumptionValues[k]!=null)overrides[k]=assumptionValues[k];});
+      if(Object.keys(overrides).length)body.assumption_overrides=overrides;
+      return body;
+    }
+
+    async function simulate(saveJournal){
       const status=$('status');
-      let body={};
-
-      if(structuredMode){
-        const move=$('moveInput').value.trim();
-        if(!move){ status.classList.remove('hidden'); status.classList.add('error'); status.textContent=t('errMove'); return; }
-        // flush any pending actor text
-        const pending=$('actorInput').value.trim();
-        if(pending&&actors.length<8){ actors.push(pending); $('actorInput').value=''; renderChips(); }
-        const horizon=parseInt($('horizonInput').value,10)||6;
-        const context=$('contextInput').value.trim();
-        const constraints=collectConstraints();
-        const di={move,actors:[...actors],horizon_months:horizon,context};
-        if(constraints) di.constraints=constraints;
-        body={decision_input:di};
-        lastScenarioDesc=move+(context?' — '+context:'');
-      } else {
-        const text=$('situation').value.trim();
-        if(!text){ status.classList.remove('hidden'); status.classList.add('error'); status.textContent=t('errEmpty'); return; }
-        body={text};
-        lastScenarioDesc=text;
-      }
-
-      const options=['opt1','opt2','opt3'].map(id=>$(id).value.trim()).filter(Boolean);
-      if(options.length) body.options=options;
-
-      $('btnAnalyze').disabled=true;
+      if(!selectedDecisionId){status.classList.remove('hidden');status.className='error';status.textContent='Pick a decision first.';return;}
+      $('btnSimulate').disabled=true;
       status.classList.remove('hidden','error');
-      status.innerHTML='<span class="spinner"></span> '+t('running');
+      status.innerHTML='<span class="spinner"></span> Simulating…';
       try{
-        const res=await fetch('/api/brief',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+        const res=await fetch('/api/brief',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(buildBriefBody(saveJournal))});
         const data=await res.json();
-        if(data.ok&&data.brief){
-          renderBrief(data.brief);
-          renderCompare(data.comparison);
+        if(data.ok&&data.outcomes){
+          lastResponse=data;
+          try{localStorage.setItem('ops_last_run',JSON.stringify(data));}catch(e){}
+          renderResults(data);
           status.classList.add('hidden');
-          $('briefCard').scrollIntoView({behavior:'smooth',block:'start'});
         }else{
-          status.classList.add('error'); status.textContent=data.error||t('errGeneric');
+          status.className='error';status.textContent=data.error||'Something went wrong.';
         }
-      }catch(e){
-        status.classList.add('error'); status.textContent=t('errGeneric')+' '+e.message;
-      }finally{
-        $('btnAnalyze').disabled=false;
-      }
+      }catch(e){status.className='error';status.textContent=e.message;}
+      finally{$('btnSimulate').disabled=false;}
     }
-    $('btnAnalyze').addEventListener('click',analyze);
-    $('moveInput').addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='Enter') analyze(); });
-    $('situation').addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='Enter') analyze(); });
 
-    async function sendFeedback(verdict){
+    function exportPdf(){
+      if(!lastResponse)return;
+      const advisor=$('advisorName').value.trim();
+      const o=lastResponse.outcomes||{};
+      const w=window.open('','_blank');
+      if(!w)return;
+      const title=advisor?advisor+' — Operations Decision Brief':'Operations Decision Brief';
+      const html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+esc(title)+'</title><style>'
+        +'body{font-family:Georgia,serif;max-width:640px;margin:2rem auto;color:#111;line-height:1.5}'
+        +'.brand{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:#555}'
+        +'h1{font-size:1.35rem;margin:.5rem 0 1rem}'
+        +'.verdict{background:#f4f8ff;padding:1.25rem;border:1px solid #ccd;margin-bottom:1.25rem}'
+        +'.metric{font-size:1.5rem;font-weight:700;margin:.5rem 0}'
+        +'.section{margin-bottom:1rem}h3{font-size:.7rem;text-transform:uppercase;color:#666;margin:0 0 .35rem}'
+        +'.disc{font-size:.75rem;color:#666;margin-top:1.5rem;border-top:1px solid #ddd;padding-top:.75rem}'
+        +'</style></head><body>'
+        +(advisor?'<p class="brand">'+esc(advisor)+'</p>':'')
+        +'<h1>'+esc(o.decision_label||'Decision brief')+'</h1>'
+        +'<div class="verdict"><p><strong>'+esc(o.one_line_recommendation||'')+'</strong></p>'
+        +'<p class="metric">'+esc(o.service_level_headline||'')+'</p>'
+        +'<p>'+esc(o.cost_headline||'')+' · '+esc(o.risk_level||'')+' risk · '+esc(o.regime||'')+'</p>'
+        +'<p style="font-size:.9rem;margin-top:.5rem">'+esc(o.bottleneck_headline||o.lead_time_headline||'')+'</p>'
+        +'<p style="font-size:.85rem;color:#555">'+esc(o.confidence_label||o.confidence_level||'')+'</p></div>'
+        +'<div class="section"><h3>Why now</h3><p>'+esc(o.why_now||'')+'</p></div>'
+        +'<div class="section"><h3>Next action</h3><p>'+esc(o.next_step||'')+'</p></div>'
+        +'<div class="section"><h3>Walk-away signals</h3><ul>'
+        +(o.walk_away_signals||[]).map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul></div>'
+        +'<p class="disc">'+esc(o.disclaimer||'Directional decision support — not a prediction engine.')+'</p>'
+        +'<script>window.onload=function(){window.print();}<\/script></body></html>';
+      w.document.write(html);
+      w.document.close();
+    }
+
+    async function loadCheckIns(){
       try{
-        await fetch('/api/brief/feedback',{method:'POST',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({verdict,why:$('fbWhy').value.trim(),scenario:lastScenarioDesc})});
+        const res=await fetch('/api/journal/check-ins');
+        const data=await res.json();
+        if(data.ok&&data.check_ins&&data.check_ins.length){
+          const first=data.check_ins[0];
+          const op=first.ops_profile||{};
+          $('checkInText').textContent=(op.site_name||'A saved decision')+' — '+((first.move||'').slice(0,60));
+          $('checkInLink').href='/journal';
+          $('checkInBanner').classList.remove('hidden');
+        }
       }catch(e){}
-      document.querySelector('.feedback').innerHTML='<span>'+t('fbThanks')+'</span>';
     }
-    $('fbUp').addEventListener('click',()=>sendFeedback('up'));
-    $('fbDown').addEventListener('click',()=>sendFeedback('down'));
 
-    applyLang(lang);
-    loadPresets();
+    // ---- War-Room (robustness) ----
+    const selectedActors=new Set();
+    function wrBody(){
+      const body={ops_profile:collectProfile(),decision_id:selectedDecisionId,runs:20,steps:6,dry_run:true};
+      const cmp=$('compareDecision').value;
+      if(cmp)body.compare_decision_id=cmp;
+      const overrides={};
+      Object.keys(assumptionValues).forEach(k=>{if(assumptionValues[k]!=null)overrides[k]=assumptionValues[k];});
+      if(Object.keys(overrides).length)body.assumption_overrides=overrides;
+      if(selectedActors.size)body.add_actors=[...selectedActors];
+      return body;
+    }
+    // Reacting-actor chips: toggle then re-run the war-room with those archetypes.
+    document.querySelectorAll('.wr-actor-chip').forEach(chip=>{
+      chip.addEventListener('click',()=>{
+        const a=chip.dataset.actor;
+        if(selectedActors.has(a)){selectedActors.delete(a);chip.classList.remove('active');}
+        else{selectedActors.add(a);chip.classList.add('active');}
+        runWarRoom();
+      });
+    });
+    const regColor=r=>r==='NORMAL'?'var(--ok)':r==='FRAGILE'?'var(--warn)':'var(--err)';
+
+    function renderWarRoom(d){
+      const rep=d.robustness||{};
+      $('warRoomCard').classList.remove('hidden');
+
+      // Scenario completeness banner — caveats the verdict by input maturity (L0–L4).
+      const lint=d.lint;
+      const cmpEl=$('wrCompleteness');
+      if(lint && typeof lint.level==='number'){
+        cmpEl.classList.remove('hidden');
+        const lv=lint.level;
+        const lvEl=$('wrLvl'); lvEl.className='wr-lvl l'+lv; lvEl.textContent='L'+lv;
+        $('wrLvlName').innerHTML='<strong>'+esc(lint.level_name||'')+'</strong>'
+          + (lv>=3?' — verdict is decision-grade':' — read as directional, not decisive');
+        // "to strengthen": prefer the reason it isn't higher, then top smells.
+        const reasons=lint.level_reasons||{};
+        const nextReason=reasons['L'+(lv+1)]||reasons['L2']||reasons['L3']||reasons['L4']||'';
+        const smells=(lint.warnings||[]).slice(0,2).map(w=>w.hint||w.message);
+        let strengthen='';
+        if(lv<4 && nextReason) strengthen='To strengthen: '+esc(nextReason)+'.';
+        else if(smells.length) strengthen='Watch: '+smells.map(esc).join(' · ');
+        $('wrStrengthen').innerHTML=strengthen;
+      } else cmpEl.classList.add('hidden');
+
+      $('wrDisclaimer').textContent=d.disclaimer||rep.disclaimer||'';
+      const low=$('wrLowSignal');
+      if(rep.low_signal){low.classList.remove('hidden');low.textContent='⚠ '+(rep.low_signal_reason||'Low signal — weak robustness conclusion.');}
+      else low.classList.add('hidden');
+
+      const rob=rep.robustness||{};
+      $('wrKpiNum').textContent=rob.label||'—';
+      const band=(rob.band||'').toLowerCase();
+      const bEl=$('wrBand'); bEl.className='wr-band '+band; bEl.textContent=band||'—';
+
+      const byReg=(rep.outcome_distribution||{}).by_regime||{};
+      const n=rep.n_runs||Object.values(byReg).reduce((a,b)=>a+b,0)||1;
+      const bar=$('wrDistBar'), legend=$('wrDistLegend'); bar.innerHTML='';legend.innerHTML='';
+      ['NORMAL','FRAGILE','CRISIS'].forEach(r=>{
+        const c=byReg[r]||0; if(!c)return;
+        const seg=document.createElement('div'); seg.className='seg '+r; seg.style.width=(100*c/n)+'%';
+        seg.textContent=c; seg.title=r+': '+c+' of '+n; bar.appendChild(seg);
+        const lg=document.createElement('span'); lg.innerHTML='<span class="dot" style="background:'+regColor(r)+'"></span>'+r+': '+c+' of '+n; legend.appendChild(lg);
+      });
+
+      const cmp=d.comparison;
+      if(cmp&&cmp.options&&cmp.options.length>1){
+        $('wrMatrixBlock').classList.remove('hidden');
+        const crit=cmp.criteria||{};
+        const tb=$('wrMatrixBody'); tb.innerHTML='';
+        cmp.options.forEach(o=>{
+          const mw=crit.maximin===o.option, ew=crit.expected_value===o.option, rw=crit.minimax_regret===o.option;
+          const tr=document.createElement('tr');
+          tr.innerHTML='<td><strong>'+esc(o.option)+'</strong></td>'
+            +'<td class="'+(mw?'win':'')+'">'+esc(o.worst_case_score)+(mw?' ✓':'')+'</td>'
+            +'<td class="'+(ew?'win':'')+'">'+esc(o.median_score)+(ew?' ✓':'')+'</td>'
+            +'<td class="'+(rw?'win':'')+'">'+(o.max_regret!=null?esc(o.max_regret)+(rw?' ✓':''):'—')+'</td>'
+            +'<td>'+esc(o.worst_regime||'')+'</td>';
+          tb.appendChild(tr);
+        });
+        $('wrSynth').textContent=cmp.synthesis||'';
+      } else $('wrMatrixBlock').classList.add('hidden');
+
+      const fails=rep.failure_modes||[];
+      if(fails.length){
+        $('wrFailBlock').classList.remove('hidden');
+        const fl=$('wrFailList'); fl.innerHTML='';
+        fails.forEach(f=>{const div=document.createElement('div'); div.className='wr-fail';
+          div.innerHTML='<span class="v">'+esc(f.variable)+'</span> tends <strong>'+esc(f.direction)+'</strong> in failing runs (fail avg '+esc(f.fail_mean)+' vs ok avg '+esc(f.success_mean)+')';
+          fl.appendChild(div);});
+      } else $('wrFailBlock').classList.add('hidden');
+
+      const piv=rep.pivotal_assumption||[];
+      if(piv.length){
+        $('wrPivotalBlock').classList.remove('hidden');
+        const p=piv[0];
+        $('wrPivotalText').innerHTML='This decision is effectively a bet on <code>'+esc(p.assumption)+'</code> — its outcome correlates most strongly with this one assumption (Spearman '+esc(p.correlation)+'). If you can de-risk one thing, de-risk this.';
+      } else $('wrPivotalBlock').classList.add('hidden');
+
+      $('warRoomCard').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    async function runWarRoom(){
+      const status=$('status');
+      if(!selectedDecisionId){status.classList.remove('hidden');status.className='error';status.textContent='Pick a decision first.';return;}
+      $('btnWarRoom').disabled=true;
+      status.classList.remove('hidden','error'); status.innerHTML='<span class="spinner"></span> Running 20 stress simulations…';
+      try{
+        const res=await fetch('/api/robustness',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(wrBody())});
+        const data=await res.json();
+        if(data.ok&&data.robustness){renderWarRoom(data);status.classList.add('hidden');}
+        else{status.className='error';status.textContent=data.error||'Something went wrong.';}
+      }catch(e){status.className='error';status.textContent=e.message;}
+      finally{$('btnWarRoom').disabled=false;}
+    }
+    $('btnWarRoom').addEventListener('click',runWarRoom);
+
+    // ---- Free-text decision -> scenario -> war-room (no LLM) ----
+    async function runFreeText(){
+      const text=$('freeText').value.trim();
+      const st=$('freeTextStatus');
+      if(!text){st.classList.remove('hidden');st.className='error';st.textContent='Type a decision first.';return;}
+      $('btnFreeText').disabled=true;
+      st.classList.remove('hidden','error');st.innerHTML='<span class="spinner"></span> Building scenario & running 20 stress simulations…';
+      try{
+        const res=await fetch('/api/robustness',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({text,runs:20,steps:4,dry_run:true})});
+        const data=await res.json();
+        if(data.ok&&data.robustness){
+          selectedActors.clear();
+          document.querySelectorAll('.wr-actor-chip').forEach(c=>c.classList.remove('active'));
+          renderWarRoom(data);
+          st.classList.add('hidden');
+        }else{st.className='error';st.textContent=data.error||'Could not build a scenario from that text. Try mentioning a pricing, hiring, or fundraise decision.';}
+      }catch(e){st.className='error';st.textContent=e.message;}
+      finally{$('btnFreeText').disabled=false;}
+    }
+    $('btnFreeText').addEventListener('click',runFreeText);
+    $('freeText').addEventListener('keydown',e=>{if(e.key==='Enter')runFreeText();});
+
+    $('btnSimulate').addEventListener('click',()=>simulate(false));
+    $('btnSaveJournal').addEventListener('click',()=>simulate(true));
+    $('btnCopy').addEventListener('click',copySummary);
+    $('btnExportPdf').addEventListener('click',exportPdf);
+
+    async function init(){
+      const [pr,dc]=await Promise.all([
+        fetch('/api/ops_presets').then(r=>r.json()),
+        fetch('/api/ops_decisions').then(r=>r.json())
+      ]);
+      presets=pr.presets||[];decisions=dc.decisions||[];
+      selectedDecisionId='increase_safety_stock';
+      const strained=presets.find(p=>p.id==='demand_spike_capacity')||presets.find(p=>p.outlook==='strained')||presets[0];
+      renderPresets();renderDecisions();
+      if(strained){
+        applyPreset(strained);
+        const idx=presets.indexOf(strained);
+        if($('presetRow').children[idx])$('presetRow').children[idx].classList.add('active');
+        $('compareDecision').value='expedite_reorder';
+      }
+      try{
+        const saved=localStorage.getItem('ops_last_run');
+        if(saved){const data=JSON.parse(saved);if(data.outcomes){lastResponse=data;renderResults(data);}}
+      }catch(e){}
+      loadCheckIns();
+    }
+    init();
   </script>
 </body>
 </html>

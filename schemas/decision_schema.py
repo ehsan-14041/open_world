@@ -11,7 +11,7 @@ from __future__ import annotations
 from typing import Any
 
 
-VALID_HORIZONS = (3, 6, 12)
+VALID_HORIZONS = (3, 6, 12, 24)
 
 
 def validate_decision_input(data: Any) -> list[str]:

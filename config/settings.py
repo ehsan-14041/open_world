@@ -358,6 +358,13 @@ ENABLE_DECISION_JOURNAL: bool = (
     else bool(_cfg.get("enable_decision_journal", True))
 )
 
+# --- Product mode: hide engineering surfaces (/advanced, /dashboard, /viewer) from founders
+_product_mode_env = _from_env("OWE_PRODUCT_MODE")
+PRODUCT_MODE: bool = (
+    _product_mode_env.lower() in ("true", "1", "yes") if _product_mode_env is not None
+    else bool(_cfg.get("product_mode", True))
+)
+
 # --- Enterprise positioning (tier label only; no billing)
 _enterprise_tier = _from_env("ENTERPRISE_TIER") or _cfg.get("enterprise_tier")
 ENTERPRISE_TIER: str = str(_enterprise_tier or "Research Edition").strip()

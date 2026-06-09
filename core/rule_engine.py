@@ -9,13 +9,14 @@ from __future__ import annotations
 from typing import Any, Callable
 
 
-# Registry: condition_key -> (snapshot -> bool), effect_key -> (world, params) -> None or delta dict
-_condition_registry: dict[str, Callable[[dict[str, Any]], bool]] = {}
+# Registry: condition_key -> (snapshot[, params] -> bool), effect_key -> (world, params) -> None or delta dict
+# Conditions may take either (snapshot) [legacy] or (snapshot, params) [parameterized].
+_condition_registry: dict[str, Callable[..., bool]] = {}
 _effect_registry: dict[str, Callable[[Any, dict[str, Any]], None | dict[str, Any]]] = {}
 
 
-def register_condition(key: str, fn: Callable[[dict[str, Any]], bool]) -> None:
-    """Register a condition callable for the given key. Used by scenario/domain loaders."""
+def register_condition(key: str, fn: Callable[..., bool]) -> None:
+    """Register a condition callable for the given key. fn(snapshot) or fn(snapshot, params)."""
     _condition_registry[key] = fn
 
 
@@ -58,6 +59,16 @@ def get_registry_counts() -> tuple[int, int]:
     return len(_condition_registry), len(_effect_registry)
 
 
+def has_condition(key: str) -> bool:
+    """True if a condition is registered under `key` (used by the scenario linter)."""
+    return key in _condition_registry
+
+
+def has_effect(key: str) -> bool:
+    """True if an effect is registered under `key` (used by the scenario linter)."""
+    return key in _effect_registry
+
+
 def run_rules(
     snapshot: dict[str, Any],
     world: Any,
@@ -86,7 +97,13 @@ def run_rules(
         if cond_fn is None or effect_fn is None:
             continue
         try:
-            if not cond_fn(snapshot):
+            # Conditions may be parameterized: prefer cond_fn(snapshot, params); fall
+            # back to legacy cond_fn(snapshot) for zero-arg-params conditions.
+            try:
+                cond_result = cond_fn(snapshot, params)
+            except TypeError:
+                cond_result = cond_fn(snapshot)
+            if not cond_result:
                 continue
         except Exception:
             continue

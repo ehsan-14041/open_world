@@ -499,9 +499,10 @@ def generate_turn_narrative(
         lang,
     )
 
+    # decision_framing is an INTERNAL instruction (kept as its own field below for
+    # LLM/debug use). It must NOT be prepended to turn_summary — that is user-facing
+    # text, and the framing was leaking into "what likely happens".
     decision_framing = _build_decision_framing(decision_input, lang)
-    if decision_framing:
-        turn_summary = decision_framing + " " + turn_summary
 
     causal_chain = build_causal_chain_story(
         agent_actions or [],

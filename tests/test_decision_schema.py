@@ -27,9 +27,10 @@ def test_validate_accepts_minimal_valid() -> None:
 
 
 def test_validate_horizon_must_be_allowed() -> None:
-    errors = validate_decision_input({"move": "Pivot", "horizon_months": 24})
+    errors = validate_decision_input({"move": "Pivot", "horizon_months": 18})
     assert any("horizon_months" in e for e in errors)
-    assert list(VALID_HORIZONS) == [3, 6, 12]
+    assert list(VALID_HORIZONS) == [3, 6, 12, 24]
+    assert validate_decision_input({"move": "Pivot", "horizon_months": 24}) == []
 
 
 def test_validate_actors_must_be_strings() -> None:

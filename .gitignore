@@ -25,3 +25,6 @@ owe.zip
 # Runtime outputs
 data/feedback/
 data/snapshots/last_snapshot.json
+
+# Runtime decision-journal / ensemble outputs
+output/

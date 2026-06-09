@@ -94,9 +94,19 @@ def _get_spec_inertia(var: str, variable_specs: dict[str, dict[str, Any]] | None
     return 0.2
 
 
-def _get_spec_decay(var: str, variable_specs: dict[str, dict[str, Any]] | None) -> float:
+def _get_spec_decay(
+    var: str,
+    variable_specs: dict[str, dict[str, Any]] | None,
+    current_value: float | None = None,
+) -> float:
     spec = (variable_specs or {}).get(var)
     if not spec or not isinstance(spec, dict):
+        # No explicit spec: the default 1% STOCK decay assumes a normalized [0,100]
+        # variable bleeding toward baseline. A large-scale variable (e.g. mrr=10000)
+        # is clearly on a different scale — applying default decay would erode ~1%/turn
+        # (a scale-blind common-mode trend). Leave such variables un-decayed.
+        if isinstance(current_value, (int, float)) and abs(current_value) > 100:
+            return 0.0
         return 0.01
     v = spec.get("decay")
     if isinstance(v, (int, float)):
@@ -242,7 +252,7 @@ def apply_delta_deterministic(
         current = float(current)
         if use_stock_flow and _get_spec_behavior_type(var, variable_specs) == "STOCK":
             inertia = _get_spec_inertia(var, variable_specs)
-            decay = _get_spec_decay(var, variable_specs)
+            decay = _get_spec_decay(var, variable_specs, current)
             # Nonlinear saturation: marginal impact decreases near max_bound
             max_bound = None
             if _spec_min_max is not None:

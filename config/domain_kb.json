@@ -1,0 +1,139 @@
+{
+  "_doc": "Domain knowledge base for the no-LLM text->scenario converter. Each entry is a declarative domain: keywords to match, variables (initial value + spec), a causal feedback loop, actors (incl. a reacting second mover), a constraint variable, and a non-linear failure rule. `parameterize` maps the extracted move magnitude onto link strengths / rule thresholds. Add a domain = add an object here; no code change.",
+  "domains": [
+    {
+      "name": "pricing",
+      "label": "Pricing change",
+      "keywords": ["price", "pricing", "discount", "charge", "subscription fee", "tier", "rate card"],
+      "horizon_months": 6,
+      "actors_hint": ["customers", "competitor"],
+      "variables": {
+        "price":      {"initial": 100.0,     "min": 0, "behavior_type": "FLOW"},
+        "churn_rate": {"initial": 0.15,       "min": 0, "max": 0.5, "behavior_type": "FLOW"},
+        "customers":  {"initial": 500.0,      "min": 0, "behavior_type": "STOCK"},
+        "mrr":        {"initial": 50000.0,    "min": 0, "behavior_type": "STOCK"},
+        "cash":       {"initial": 1200000.0,  "min": 0, "behavior_type": "STOCK"}
+      },
+      "causal_links": [
+        {"from": "price", "to": "churn_rate", "polarity": "positive", "strength": 0.5},
+        {"from": "churn_rate", "to": "customers", "polarity": "negative", "strength": 0.7},
+        {"from": "customers", "to": "mrr", "polarity": "positive", "strength": 0.8},
+        {"from": "mrr", "to": "cash", "polarity": "positive", "strength": 0.6},
+        {"from": "cash", "to": "price", "polarity": "negative", "strength": 0.2}
+      ],
+      "actors": [
+        {"name": "founder", "role": "Founder", "objectives": {"mrr": 0.6, "cash": 0.4}},
+        {"name": "customers", "role": "Customer", "objectives": {"decrease_price": 1.0}},
+        {"name": "competitor", "role": "Competitor", "objectives": {"decrease_customers": 1.0}}
+      ],
+      "allowed_actions": ["increase_price", "decrease_price", "steady"],
+      "rules": [
+        {"id": "churn_cliff", "condition_key": "var_above", "effect_key": "scale_var",
+         "params": {"var": "churn_rate", "threshold": 0.45, "target": "mrr", "factor": 0.7}}
+      ],
+      "parameterize": [
+        {"target": "link", "from": "price", "to": "churn_rate", "field": "strength", "base": 0.35, "per_mag": 0.6, "min": 0.0, "max": 0.9},
+        {"target": "rule", "id": "churn_cliff", "param": "threshold", "base": 0.48, "per_mag": -0.15, "min": 0.25, "max": 0.5}
+      ]
+    },
+    {
+      "name": "hiring",
+      "label": "Hiring / scaling the team",
+      "keywords": ["hire", "hiring", "headcount", "team", "staff", "recruit", "engineers", "grow the team"],
+      "horizon_months": 6,
+      "actors_hint": ["team", "investor"],
+      "variables": {
+        "headcount":     {"initial": 50.0,     "min": 0, "behavior_type": "STOCK"},
+        "burn":          {"initial": 400000.0, "min": 0, "behavior_type": "STOCK"},
+        "runway_months": {"initial": 12.0,     "min": 0, "max": 36, "behavior_type": "FLOW"},
+        "velocity":      {"initial": 100.0,    "min": 0, "max": 200, "behavior_type": "FLOW"},
+        "revenue":       {"initial": 600000.0, "min": 0, "behavior_type": "STOCK"}
+      },
+      "causal_links": [
+        {"from": "headcount", "to": "burn", "polarity": "positive", "strength": 0.7},
+        {"from": "burn", "to": "runway_months", "polarity": "negative", "strength": 0.6},
+        {"from": "headcount", "to": "velocity", "polarity": "positive", "strength": 0.45},
+        {"from": "velocity", "to": "revenue", "polarity": "positive", "strength": 0.5},
+        {"from": "revenue", "to": "runway_months", "polarity": "positive", "strength": 0.4},
+        {"from": "runway_months", "to": "headcount", "polarity": "positive", "strength": 0.3}
+      ],
+      "actors": [
+        {"name": "founder", "role": "Founder", "objectives": {"revenue": 0.5, "runway_months": 0.5}},
+        {"name": "team", "role": "Team", "objectives": {"increase_velocity": 1.0}},
+        {"name": "investor", "role": "Regulator", "objectives": {"increase_runway_months": 1.0}}
+      ],
+      "allowed_actions": ["increase_headcount", "decrease_headcount", "steady"],
+      "rules": [
+        {"id": "runway_crunch", "condition_key": "var_below", "effect_key": "scale_var",
+         "params": {"var": "runway_months", "threshold": 6.0, "target": "velocity", "factor": 0.7}}
+      ],
+      "parameterize": [
+        {"target": "link", "from": "headcount", "to": "velocity", "field": "strength", "base": 0.48, "per_mag": -0.2, "min": 0.05, "max": 0.6}
+      ]
+    },
+    {
+      "name": "fundraise",
+      "label": "Fundraise timing",
+      "keywords": ["fundrais", "round", "investor", "vc", "seed", "series", "dilution", "valuation", "raise capital"],
+      "horizon_months": 12,
+      "actors_hint": ["investor", "competitor"],
+      "variables": {
+        "runway_months": {"initial": 9.0,        "min": 0, "max": 36, "behavior_type": "FLOW"},
+        "valuation":     {"initial": 20.0,        "min": 0, "behavior_type": "STOCK"},
+        "dilution":      {"initial": 0.0,         "min": 0, "max": 1.0, "behavior_type": "FLOW"},
+        "growth_rate":   {"initial": 8.0,         "min": 0, "max": 100, "behavior_type": "FLOW"},
+        "cash":          {"initial": 1500000.0,   "min": 0, "behavior_type": "STOCK"}
+      },
+      "causal_links": [
+        {"from": "growth_rate", "to": "valuation", "polarity": "positive", "strength": 0.7},
+        {"from": "valuation", "to": "dilution", "polarity": "negative", "strength": 0.5},
+        {"from": "cash", "to": "runway_months", "polarity": "positive", "strength": 0.6},
+        {"from": "runway_months", "to": "growth_rate", "polarity": "positive", "strength": 0.3},
+        {"from": "valuation", "to": "cash", "polarity": "positive", "strength": 0.4}
+      ],
+      "actors": [
+        {"name": "founder", "role": "Founder", "objectives": {"valuation": 0.5, "decrease_dilution": 0.5}},
+        {"name": "investor", "role": "Regulator", "objectives": {"decrease_valuation": 1.0}},
+        {"name": "competitor", "role": "Competitor", "objectives": {"decrease_growth_rate": 1.0}}
+      ],
+      "allowed_actions": ["raise_now", "wait", "steady"],
+      "rules": [
+        {"id": "runway_panic", "condition_key": "var_below", "effect_key": "scale_var",
+         "params": {"var": "runway_months", "threshold": 4.0, "target": "valuation", "factor": 0.6}}
+      ],
+      "parameterize": []
+    },
+    {
+      "name": "market_entry",
+      "label": "Enter a new market",
+      "keywords": ["market entry", "enter market", "new market", "expansion", "expand into", "launch in", "go-to-market", "new segment", "new region"],
+      "horizon_months": 12,
+      "actors_hint": ["incumbent", "customer"],
+      "variables": {
+        "market_share":  {"initial": 5.0,        "min": 0, "max": 100, "behavior_type": "FLOW"},
+        "cac":           {"initial": 200.0,       "min": 0, "behavior_type": "STOCK"},
+        "runway_months": {"initial": 10.0,        "min": 0, "max": 36, "behavior_type": "FLOW"},
+        "brand":         {"initial": 30.0,        "min": 0, "max": 100, "behavior_type": "STOCK"},
+        "cash":          {"initial": 2000000.0,   "min": 0, "behavior_type": "STOCK"}
+      },
+      "causal_links": [
+        {"from": "cash", "to": "runway_months", "polarity": "positive", "strength": 0.6},
+        {"from": "runway_months", "to": "market_share", "polarity": "positive", "strength": 0.4},
+        {"from": "market_share", "to": "brand", "polarity": "positive", "strength": 0.4},
+        {"from": "brand", "to": "cac", "polarity": "negative", "strength": 0.5},
+        {"from": "brand", "to": "cash", "polarity": "positive", "strength": 0.3}
+      ],
+      "actors": [
+        {"name": "founder", "role": "Founder", "objectives": {"market_share": 0.6, "runway_months": 0.4}},
+        {"name": "incumbent", "role": "Competitor", "objectives": {"decrease_market_share": 1.0}},
+        {"name": "customer", "role": "Customer", "objectives": {"increase_brand": 1.0}}
+      ],
+      "allowed_actions": ["enter_market", "delay_entry", "steady"],
+      "rules": [
+        {"id": "runway_burnout", "condition_key": "var_below", "effect_key": "scale_var",
+         "params": {"var": "runway_months", "threshold": 4.0, "target": "market_share", "factor": 0.6}}
+      ],
+      "parameterize": []
+    }
+  ]
+}

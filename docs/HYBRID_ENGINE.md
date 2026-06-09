@@ -1,4 +1,6 @@
-# Hybrid Simulation Engine
+# Hybrid Simulation Engine (engineering only)
+
+> **Note:** The Enterprise Operations Decision Simulator product path (`/` + `POST /api/brief` with `ops_profile`) runs **deterministic dry-run** only. It does **not** use MC+RL, belief layer, or stochastic gating. This document is for engineering and `/advanced` workflows.
 
 This document describes the Hybrid Simulation Engine: LLM-driven agents plus rule-based deterministic systems, stochastic gating, and governance.
 
@@ -24,7 +26,7 @@ Stochastic behavior is controlled by explicit flags so that runs can be determin
 
 ## Dashboard Data Independence
 
-Dashboard payload is produced in **`core/dashboard_payload`** from `(snapshot, provenance_entry, scenario, agents_list, provenance_history)`. This module has **no UI dependency**; it performs only lightweight arithmetic and dict building. The payload is JSON-serializable and suitable for API or external consumers. It includes core metrics (state_snapshot, risk_report, calibration_metrics, selected_action, etc.) and, when narrative is enabled, **narrative payload** (narrative, turn_intelligence, actor_ranking, causal_story, hidden_costs, longitudinal_story) from `core/narrative_engine` and `core/narrative_memory`. The UI layer (`ui/dashboard`) and simulation loop call `build_dashboard_payload(...)` and pass the result to the front-end; external systems can call the same function with the same inputs.
+Dashboard payload is produced in **`ui/dashboard_payload.py`** from `(snapshot, provenance_entry, scenario, agents_list, provenance_history)`. The module lives under `ui/` but performs only lightweight arithmetic and dict building (no Flask imports). The payload is JSON-serializable and suitable for API or external consumers. It includes core metrics (state_snapshot, risk_report, calibration_metrics, selected_action, etc.) and, when narrative is enabled, **narrative payload** (narrative, turn_intelligence, actor_ranking, causal_story, hidden_costs, longitudinal_story) from `core/narrative_engine` and `core/narrative_memory`. The UI layer (`ui/dashboard`) and simulation loop call `build_dashboard_payload(...)` and pass the result to the front-end; external systems can call the same function with the same inputs.
 
 ## Feature Toggles
 
