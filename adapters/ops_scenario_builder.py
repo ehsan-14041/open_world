@@ -418,8 +418,15 @@ def build_scenario(
     decision_input: dict[str, Any] | None = None,
     lang: str = "en",
     assumption_overrides: dict[str, Any] | None = None,
+    fitted_links: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Build a normalized scenario JSON from an operations profile and optional decision template."""
+    """Build a normalized scenario JSON from an operations profile and optional decision template.
+
+    If `fitted_links` is provided (causal weights estimated from the customer's own data
+    via core.data_fitting.fit_weights), they REPLACE the archetype-guessed weights — the
+    structure stays, the magnitudes become data-grounded. This is the single switch that
+    turns the engine from "guessed coefficients" into a calibrated, per-customer model.
+    """
     profile = normalize_ops_profile(profile)
     but = profile.get("business_unit_type") or "distribution"
 
@@ -455,7 +462,12 @@ def build_scenario(
         allowed = list(_BASE_ACTIONS)
 
     initial_state = _profile_to_initial_state(profile)
-    causal_links = _ARCHETYPE_CAUSAL.get(but, _ARCHETYPE_CAUSAL["general_ops"])
+    if fitted_links:
+        # Data-fitted weights replace archetype guesses (structure preserved).
+        causal_links = [{"from": l["from"], "to": l["to"], "weight": float(l["weight"])}
+                        for l in fitted_links if l.get("from") and l.get("to")]
+    else:
+        causal_links = deepcopy(_ARCHETYPE_CAUSAL.get(but, _ARCHETYPE_CAUSAL["general_ops"]))
 
     scenario = normalize_scenario({
         "description": _build_description(profile, decision_template),
