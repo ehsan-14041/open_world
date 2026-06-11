@@ -44,6 +44,35 @@ lead time) even exist? If not, the fitter's value *is* the customer's own data, 
 right MVP is **consultant-assisted onboarding** (customer sends ERP export → we map → fit →
 robustness), not a self-serve generic fitter.
 
+## RESOLVED — public ops-shaped datasets are insufficient for full thesis validation
+
+We tested the fitting/backtest pipeline on: a synthetic dataset, the UCI Daily Demand
+Forecasting Orders dataset, and public dataset candidates that partially cover supply-chain
+signals.
+
+Findings:
+1. **Synthetic validation is not sufficient** — a method that performs well on synthetic
+   data may still fail on real data.
+2. The earlier **delta-standardized fitting overfit / underperformed** on real data.
+3. **Ridge-on-levels is materially better** than the previous approach, but still does not
+   validate the full product thesis.
+4. **No public dataset jointly contains the full causal structure** the thesis needs —
+   inventory + demand + lead time + fill rate + replenishment dynamics over time. The two
+   closest each cover only a fragment:
+   - *FreshRetailNet-50K* (arXiv 2505.16319, HuggingFace Dingdong-Inc): real hourly demand +
+     stockout status — but no inventory level, no lead time, no replenishment.
+   - *DataCo Smart Supply Chain* (Kaggle): shipping lead time + late-delivery + demand —
+     but order-level (not a time series), and no inventory or fill rate.
+
+Conclusion:
+- Public datasets can **de-risk the pipeline** (it runs on real, messy data).
+- They **do not validate the product thesis** ("raise safety stock 15% → fill-rate
+  fragility to lead-time shocks").
+- **Real customer operational exports are required for thesis validation.**
+- The recommended MVP path is **consultant-assisted onboarding**, not fully self-serve
+  fitting: customer sends an ERP/WMS export → we map columns → fit weights → backtest →
+  robustness. Build a self-serve fitter only after one real export backtests well.
+
 ## Reproduce
 ```
 curl -L -o data/external/uci_daily_demand.csv \
