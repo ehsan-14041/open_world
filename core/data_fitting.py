@@ -338,6 +338,65 @@ def synthesize_ops_history(
     return rows, tw
 
 
+def corrupt_rows(
+    rows: list[dict[str, float]],
+    *,
+    seed: int = 0,
+    noise: float = 0.0,
+    missing: float = 0.0,
+    outlier: float = 0.0,
+    lag_cols: list[str] | None = None,
+    lag: int = 0,
+    seasonality_col: str | None = None,
+    seasonality: float = 0.0,
+    regime_shift: float = 0.0,
+    regime_col: str | None = None,
+) -> list[dict[str, float]]:
+    """
+    Return a DEGRADED copy of `rows` to simulate dirty real-world data. Models the mess
+    a real ERP export brings, so we can see how much fitted signal survives:
+      - noise: multiplicative gaussian (each value *= 1 + N(0, noise))
+      - missing: fraction of cells dropped, then forward-filled (typical cleaning)
+      - outlier: fraction of cells spiked x3-5
+      - lag: shift driver columns `lag` periods (breaks the same-period assumption)
+      - seasonality: add a sinusoid to `seasonality_col` (amplitude = seasonality*std)
+      - regime_shift: scale the second half of `regime_col` by (1 + regime_shift)
+    """
+    rng = np.random.default_rng(seed)
+    cols = list(rows[0].keys())
+    data = {c: np.array([r[c] for r in rows], float) for c in cols}
+    n = len(rows)
+
+    if lag and lag_cols:
+        for c in lag_cols:
+            if c in data:
+                shifted = np.empty(n); shifted[:lag] = data[c][0]; shifted[lag:] = data[c][:-lag]
+                data[c] = shifted
+    if seasonality and seasonality_col in data:
+        amp = seasonality * (data[seasonality_col].std() or 1.0)
+        data[seasonality_col] = data[seasonality_col] + amp * np.sin(np.arange(n) * 2 * np.pi / 13.0)
+    if regime_shift and regime_col in data:
+        half = n // 2
+        data[regime_col][half:] = data[regime_col][half:] * (1.0 + regime_shift)
+    if noise:
+        for c in cols:
+            data[c] = data[c] * (1.0 + rng.normal(0, noise, n))
+    if outlier:
+        for c in cols:
+            mask = rng.random(n) < outlier
+            data[c][mask] = data[c][mask] * rng.uniform(3, 5, mask.sum())
+    if missing:
+        for c in cols:
+            mask = rng.random(n) < missing
+            arr = data[c].copy()
+            for i in range(n):
+                if mask[i]:
+                    arr[i] = arr[i - 1] if i > 0 else arr[i]  # forward-fill
+            data[c] = arr
+
+    return [{c: float(data[c][i]) for c in cols} for i in range(n)]
+
+
 def write_csv(rows: list[dict[str, float]], path: str) -> None:
     if not rows:
         return

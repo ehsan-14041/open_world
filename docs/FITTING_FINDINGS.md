@@ -87,6 +87,39 @@ print("ridge-levels:", backtest_levels(rows, s)["overall_r2"])
 PY
 ```
 
+## Update 2 — ops-shaped data + chaos test (Data Risk, not Product Risk)
+
+A hand-built **ops-shaped** dataset (demand + inventory + lead_time + fill_rate + stockout
++ supplier_risk, 20 weeks) was fit: the fitter recovered every causal **sign** correctly
+and backtested R²=0.99. Important honesty correction: **this is still synthetic** — the
+author defined the structure, directions, and shocks. It is more *realistic* than the
+earlier synthetic set, but the same family. It does not validate real customer data.
+
+Validation gates:
+| gate | status |
+|---|---|
+| simple synthetic | ✅ closed |
+| ops-shaped synthetic | ✅ closed |
+| public dataset | 🟡 partial (pipeline only) |
+| **real customer dataset** | ❌ still open |
+
+**Chaos test** (degrade the clean ops-shaped data, re-fit; `scripts/chaos_test.py`):
+| corruption | ridge-levels R² |
+|---|---|
+| baseline | 0.99 |
+| noise 10% / 25% | 0.98 / 0.90 ✅ |
+| missing 15% | 0.99 ✅ (forward-fill) |
+| **outliers 8%** | **0.37 🔴** |
+| lag 1wk / seasonality / regime shift | 0.97 / 0.98 / 0.99 ✅ |
+| full chaos (3 seeds) | 0.91 / 0.84 / **0.24** |
+
+Conclusion: the fitter is **robust to noise, missing data, lag, seasonality, regime
+shift**, but **fragile to outliers** — and stacked full-chaos is seed-dependent (can
+collapse). The risk has shifted from *Product Risk* ("can it find relationships?" — yes)
+to **Data Risk** ("does useful signal survive dirty ERP data?"). The concrete next fix —
+when a real customer dataset justifies it — is **outlier-robust regression**
+(Huber / winsorization), NOT a feedback loop added to pass a demo (premature demo-tuning).
+
 ## Code state
 - `core/data_fitting.py`: `fit_weights`/`backtest` now accept an arbitrary `structure`
   (not just the vertical archetype); `backtest_levels` added (ridge regression in levels)
