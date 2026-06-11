@@ -28,3 +28,6 @@ data/snapshots/last_snapshot.json
 
 # Runtime decision-journal / ensemble outputs
 output/
+
+# Downloaded external datasets (public, fetched on demand)
+data/external/

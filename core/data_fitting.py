@@ -28,11 +28,16 @@ from adapters.ops_scenario_builder import _ARCHETYPE_CAUSAL
 
 # ---------- data loading ----------
 
-def load_csv(path: str) -> list[dict[str, float]]:
-    """Load a time-series CSV (one row per period) into a list of numeric dicts."""
+def load_csv(path: str, delimiter: str | None = None) -> list[dict[str, float]]:
+    """Load a time-series CSV (one row per period) into a list of numeric dicts.
+    delimiter is auto-detected (',' vs ';' vs '\\t') from the header if not given."""
     rows: list[dict[str, float]] = []
+    if delimiter is None:
+        with open(path, encoding="utf-8-sig") as f:
+            first = f.readline()
+        delimiter = max([",", ";", "\t"], key=lambda d: first.count(d))
     with open(path, newline="", encoding="utf-8-sig") as f:
-        for raw in csv.DictReader(f):
+        for raw in csv.DictReader(f, delimiter=delimiter):
             row: dict[str, float] = {}
             for k, v in raw.items():
                 if k is None:
@@ -67,16 +72,19 @@ def _edges_for(but: str) -> list[dict[str, Any]]:
 
 # ---------- fitting ----------
 
-def fit_weights(rows: list[dict[str, float]], business_unit_type: str) -> dict[str, Any]:
+def fit_weights(rows: list[dict[str, float]], business_unit_type: str = "distribution",
+                *, structure: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     """
-    Fit causal-link weights from `rows` for the given vertical, keeping the archetype
-    structure. Returns {fitted_links, per_target_r2, mean_r2, n_samples, warnings}.
+    Fit causal-link weights from `rows`, keeping a fixed STRUCTURE. By default the structure
+    is the vertical's archetype graph; pass `structure` (list of {from,to}) to fit an
+    arbitrary graph (e.g. to test the fitter on any real dataset).
+    Returns {fitted_links, per_target_r2, mean_r2, n_samples, warnings}.
 
     Method: for each target Y with declared parents, standardized least-squares of ΔY on
     the parents' Δ (contemporaneous — propagation is within-period). Standardized betas
     are the engine's [-1, 1] weights; sign and relative magnitude are the reliable signal.
     """
-    edges = _edges_for(business_unit_type)
+    edges = structure if structure is not None else _edges_for(business_unit_type)
     targets: dict[str, list[str]] = {}
     for e in edges:
         targets.setdefault(e["to"], []).append(e["from"])
@@ -132,22 +140,24 @@ def fit_weights(rows: list[dict[str, float]], business_unit_type: str) -> dict[s
 
 # ---------- backtest ----------
 
-def backtest(rows: list[dict[str, float]], business_unit_type: str, holdout_frac: float = 0.3) -> dict[str, Any]:
+def backtest(rows: list[dict[str, float]], business_unit_type: str = "distribution",
+             holdout_frac: float = 0.3, *, structure: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     """
     Honest validation: fit on the early portion, then one-step-ahead predict each target
     on the held-out tail and compare to actual. Returns per-target and overall R²/MAPE.
+    Pass `structure` to backtest an arbitrary graph (else the vertical archetype).
     """
     n = len(rows)
     if n < 8:
         return {"ok": False, "reason": f"need >= 8 periods to backtest, got {n}"}
     split = max(4, int(n * (1 - holdout_frac)))
     train, _ = rows[:split], rows[split:]
-    edges = _edges_for(business_unit_type)
+    edges = structure if structure is not None else _edges_for(business_unit_type)
     targets: dict[str, list[str]] = {}
     for e in edges:
         targets.setdefault(e["to"], []).append(e["from"])
 
-    fit = fit_weights(train, business_unit_type)
+    fit = fit_weights(train, business_unit_type, structure=structure)
     wmap = {(l["from"], l["to"]): l["weight"] for l in fit["fitted_links"]}
 
     per_target: dict[str, dict[str, float]] = {}
@@ -198,6 +208,59 @@ def backtest(rows: list[dict[str, float]], business_unit_type: str, holdout_frac
         "holdout_periods": n - split,
         "verdict": ("strong" if overall_r2 >= 0.6 else "moderate" if overall_r2 >= 0.3 else "weak"),
     }
+
+
+# ---------- levels + ridge (honest predictive validation, decoupled from engine weights) ----------
+
+def backtest_levels(
+    rows: list[dict[str, float]],
+    structure: list[dict[str, Any]],
+    *,
+    holdout_frac: float = 0.3,
+    alpha: float = 1.0,
+) -> dict[str, Any]:
+    """
+    Predictive backtest using ridge-regularized regression in LEVELS (with intercept),
+    not the engine's standardized-delta / [-1,1]-clamped weights. This measures the
+    honest predictive ceiling of the structure on real data, separate from whether the
+    coefficients fit the engine's weight representation. alpha = ridge strength.
+    """
+    n = len(rows)
+    if n < 8:
+        return {"ok": False, "reason": f"need >= 8 periods, got {n}"}
+    split = max(4, int(n * (1 - holdout_frac)))
+    targets: dict[str, list[str]] = {}
+    for e in structure:
+        targets.setdefault(e["to"], []).append(e["from"])
+
+    all_a, all_p, per_target = [], [], {}
+    for y, parents in targets.items():
+        ys = _series(rows, y)
+        present = [p for p in parents if _series(rows, p) is not None]
+        if ys is None or not present:
+            continue
+        Xall = np.column_stack([_series(rows, p) for p in present] + [np.ones(n)])
+        # standardize features (not intercept) on train for stable ridge
+        Xtr, ytr = Xall[:split], ys[:split]
+        mu = Xtr[:, :-1].mean(0); sd = Xtr[:, :-1].std(0); sd[sd < 1e-9] = 1.0
+        def _z(M):
+            Z = M.copy(); Z[:, :-1] = (M[:, :-1] - mu) / sd; return Z
+        Xtr_z = _z(Xtr)
+        k = Xtr_z.shape[1]
+        ridge = alpha * np.eye(k); ridge[-1, -1] = 0.0  # don't penalize intercept
+        beta = np.linalg.solve(Xtr_z.T @ Xtr_z + ridge, Xtr_z.T @ ytr)
+        yp = _z(Xall[split:]) @ beta; ya = ys[split:]
+        ss_res = float(((ya - yp) ** 2).sum()); ss_tot = float(((ya - ya.mean()) ** 2).sum())
+        r2 = round(1 - ss_res / ss_tot if ss_tot > 1e-9 else 0.0, 3)
+        per_target[y] = {"r2": r2, "n": len(ya)}
+        all_a.extend(ya.tolist()); all_p.extend(yp.tolist())
+
+    if not all_a:
+        return {"ok": False, "reason": "no predictable targets"}
+    a, pr = np.asarray(all_a), np.asarray(all_p)
+    overall = round(1 - ((a - pr) ** 2).sum() / max(1e-9, ((a - a.mean()) ** 2).sum()), 3)
+    return {"ok": True, "overall_r2": overall, "per_target": per_target,
+            "verdict": ("strong" if overall >= 0.6 else "moderate" if overall >= 0.3 else "weak")}
 
 
 # ---------- synthetic data (validate the fitter recovers known weights) ----------
