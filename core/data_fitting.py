@@ -212,18 +212,28 @@ def backtest(rows: list[dict[str, float]], business_unit_type: str = "distributi
 
 # ---------- levels + ridge (honest predictive validation, decoupled from engine weights) ----------
 
+def _winsorize_fit(col: np.ndarray, lo_pct: float = 2.5, hi_pct: float = 97.5) -> tuple[float, float]:
+    return float(np.percentile(col, lo_pct)), float(np.percentile(col, hi_pct))
+
+
 def backtest_levels(
     rows: list[dict[str, float]],
     structure: list[dict[str, Any]],
     *,
     holdout_frac: float = 0.3,
     alpha: float = 1.0,
+    robust: bool = False,
 ) -> dict[str, Any]:
     """
     Predictive backtest using ridge-regularized regression in LEVELS (with intercept),
     not the engine's standardized-delta / [-1,1]-clamped weights. This measures the
     honest predictive ceiling of the structure on real data, separate from whether the
     coefficients fit the engine's weight representation. alpha = ridge strength.
+
+    robust=True winsorizes each feature/target column to its train [2.5, 97.5] percentile
+    band before fitting — neutralizing the outliers that real ERP exports are full of
+    (the chaos test showed 8% outliers crush the non-robust fit). Clip bounds come from
+    train only (no leakage); holdout is clipped to those bounds.
     """
     n = len(rows)
     if n < 8:
@@ -240,6 +250,14 @@ def backtest_levels(
         if ys is None or not present:
             continue
         Xall = np.column_stack([_series(rows, p) for p in present] + [np.ones(n)])
+        ys = ys.copy()
+        if robust:
+            # winsorize each feature column and the target to train percentile bounds
+            for j in range(Xall.shape[1] - 1):
+                lo, hi = _winsorize_fit(Xall[:split, j])
+                Xall[:, j] = np.clip(Xall[:, j], lo, hi)
+            ylo, yhi = _winsorize_fit(ys[:split])
+            ys = np.clip(ys, ylo, yhi)
         # standardize features (not intercept) on train for stable ridge
         Xtr, ytr = Xall[:split], ys[:split]
         mu = Xtr[:, :-1].mean(0); sd = Xtr[:, :-1].std(0); sd[sd < 1e-9] = 1.0

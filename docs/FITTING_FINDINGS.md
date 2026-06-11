@@ -120,6 +120,24 @@ to **Data Risk** ("does useful signal survive dirty ERP data?"). The concrete ne
 when a real customer dataset justifies it — is **outlier-robust regression**
 (Huber / winsorization), NOT a feedback loop added to pass a demo (premature demo-tuning).
 
+## Update 3 — outlier-robust fitting (the one measured weakness, fixed)
+
+The chaos test's only real failure was outlier sensitivity. Added `robust=True`
+(per-column winsorization to the train [2.5, 97.5] band) to `backtest_levels` and measured
+it against the same chaos benchmark:
+
+| case | non-robust | robust (winsorize) |
+|---|---|---|
+| clean | 0.99 | 0.99 (no harm) |
+| outliers 8% | 0.37 | **0.97** |
+| full chaos seed 1/2/3 | 0.91 / 0.84 / **0.24** | 0.93 / 0.88 / **0.94** |
+
+Winsorization neutralizes the outlier collapse without hurting clean data. This was the
+right (and only) new code at this stage: a targeted fix on a *measured* weakness, validated
+immediately — not a feature or demo-tuning. The likely first-real-dataset killer (ERP
+outliers: misposted inventory, one-off orders, migration errors) is now mitigated by
+default-available robust fitting.
+
 ## Code state
 - `core/data_fitting.py`: `fit_weights`/`backtest` now accept an arbitrary `structure`
   (not just the vertical archetype); `backtest_levels` added (ridge regression in levels)

@@ -67,6 +67,18 @@ def test_fitted_links_override_archetype_in_build_scenario() -> None:
             assert abs(link["weight"] - fitted_map[key]) < 1e-6
 
 
+def test_robust_winsorize_recovers_from_outliers() -> None:
+    from adapters.ops_scenario_builder import _ARCHETYPE_CAUSAL
+    from core.data_fitting import corrupt_rows, backtest_levels
+    rows, _ = synthesize_ops_history("distribution", weeks=80, seed=5, noise=0.15)
+    S = _ARCHETYPE_CAUSAL["distribution"]
+    dirty = corrupt_rows(rows, seed=2, outlier=0.1)
+    nonrobust = backtest_levels(dirty, S, robust=False)["overall_r2"]
+    robust = backtest_levels(dirty, S, robust=True)["overall_r2"]
+    # winsorization must materially recover the fit that outliers destroyed
+    assert robust > nonrobust + 0.2, f"robust={robust} did not beat non-robust={nonrobust}"
+
+
 def test_csv_round_trip(tmp_path) -> None:
     rows, _ = synthesize_ops_history("retail", weeks=20, seed=4)
     p = tmp_path / "hist.csv"
