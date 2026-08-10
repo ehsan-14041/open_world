@@ -66,6 +66,10 @@ def main() -> int:
         "autocorrelation_lag2": baseline.autocorrelation(occ, 2),
         "weekday_effect": baseline.weekday_effect(dates, occ),
         "per_window": baseline.per_window(dates, windows, occ),
+        "variance_decomposition": baseline.variance_decomposition(windows, occ),
+        "vessels_in_region_per_window": baseline.per_window(
+            dates, windows, [d.vessels_in_region for d in result.days]
+        ),
         "entries": baseline.describe(entries).as_dict(),
         "exits": baseline.describe(exits).as_dict(),
         "spells_total": len(result.spells),

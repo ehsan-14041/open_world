@@ -136,6 +136,51 @@ def per_window(dates: Sequence[str], windows: Sequence[str | None], values: Sequ
     }
 
 
+def variance_decomposition(
+    windows: Sequence[str | None], values: Sequence[float]
+) -> dict[str, float]:
+    """Split total variance into within-window and between-window parts.
+
+    This is the diagnostic that decides whether a *pooled* baseline is meaningful at all. A
+    threshold of the form `median + k * MAD` computed over pooled days assumes the days are
+    exchangeable. If most of the variance sits between windows rather than within them, they
+    are not: the pooled spread is measuring drift across the sample period, and a fixed level
+    threshold built from it will fire on where you are in the trend rather than on whether
+    anything happened.
+
+    Added after observing the Hampton Roads baseline. It is instrumentation, not a threshold
+    — no pre-registered constant depends on it.
+    """
+    grouped: dict[str, list[float]] = defaultdict(list)
+    for w, v in zip(windows, values):
+        if w:
+            grouped[w].append(float(v))
+    if len(grouped) < 2:
+        return {}
+
+    flat = [v for vs in grouped.values() for v in vs]
+    grand = statistics.fmean(flat)
+    total = statistics.pvariance(flat)
+    within = statistics.fmean([statistics.pvariance(vs) if len(vs) > 1 else 0.0
+                               for vs in grouped.values()])
+    between = statistics.fmean([(statistics.fmean(vs) - grand) ** 2 for vs in grouped.values()])
+    means = [statistics.fmean(vs) for vs in grouped.values()]
+
+    return {
+        "total_variance": round(total, 4),
+        "within_window_variance": round(within, 4),
+        "between_window_variance": round(between, 4),
+        "between_window_share": round(between / total, 4) if total else 0.0,
+        "window_mean_range": round(max(means) - min(means), 4),
+        "within_window_mad": round(
+            statistics.median(
+                [abs(v - statistics.fmean(grouped[w])) for w, v in zip(windows, values) if w]
+            ),
+            4,
+        ),
+    }
+
+
 def value_histogram(values: Sequence[float]) -> dict[int, int]:
     """Exact count of each observed integer level — the most honest view of a small-count
     series, and the one that shows immediately whether dynamic range exists."""

@@ -179,6 +179,45 @@ def test_dispersion_index_is_none_when_undefined():
     assert baseline.dispersion_index([0, 0, 0]) is None
 
 
+def test_variance_decomposition_separates_trend_from_noise():
+    """A pooled MAD threshold assumes days are exchangeable across windows. This diagnostic
+    is what shows they are not — the Hampton Roads baseline turned out 94% trend."""
+    windows = ["A"] * 4 + ["B"] * 4
+    values = [1, 2, 1, 2, 21, 22, 21, 22]  # tiny noise, huge level shift
+    d = baseline.variance_decomposition(windows, values)
+    assert d["between_window_share"] > 0.95
+    assert d["window_mean_range"] == 20.0
+    assert d["within_window_mad"] < 1.0
+
+
+def test_variance_decomposition_needs_more_than_one_window():
+    assert baseline.variance_decomposition(["A", "A"], [1, 2]) == {}
+
+
+def test_variance_decomposition_is_flat_for_a_stationary_series():
+    windows = ["A"] * 4 + ["B"] * 4
+    d = baseline.variance_decomposition(windows, [5, 6, 5, 6, 5, 6, 5, 6])
+    assert d["between_window_share"] == 0.0
+    assert d["window_mean_range"] == 0.0
+
+
+def test_low_power_outcome_is_recorded_in_the_detectability_document():
+    doc = REPO / "docs" / "replays" / "HAMPTON_ROADS_DETECTABILITY.md"
+    if not doc.exists():
+        pytest.skip("detectability not yet run in this checkout")
+    text = doc.read_text(encoding="utf-8")
+    assert "HAMPTON_ROADS_LOW_POWER" in text
+    assert "H1 was not run" in text or "H1 was not executed" in text
+
+
+def test_frozen_thresholds_were_not_edited_after_the_low_power_finding():
+    """The detectability analysis found a trend that a trend-aware rule would handle. That
+    rule must be a new pre-registration, not an edit to these constants."""
+    assert (anomaly.K_LEVEL, anomaly.MAD_FLOOR, anomaly.PERSISTENCE_DAYS, anomaly.K_DWELL) == (
+        4.0, 1.0, 5, 2.0
+    )
+
+
 def test_autocorrelation_detects_perfect_persistence():
     assert baseline.autocorrelation([1, 1, 1, 1, 2, 2, 2, 2], 1) > 0.5
 
