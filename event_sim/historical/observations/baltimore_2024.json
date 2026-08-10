@@ -1,0 +1,70 @@
+{
+  "event": "baltimore_2024",
+  "_note": "This episode is graded by DATED MILESTONES, not by a level series. No weekly or monthly container throughput series for the Port of Baltimore during the disruption could be obtained from any public source — see sources.json `_not_obtained`. Every milestone below is a dated fact read from a cited source; none is an estimate, and none required converting channel depth into a capacity percentage.",
+
+  "_turn_mapping_rule": "Week 1 begins 2024-03-26 (the collapse). A dated milestone is assigned to the week index containing its date, counted in whole weeks from 2024-03-26.",
+
+  "observations": [],
+
+  "milestones": [
+    {
+      "id": "full_channel_restored",
+      "variable": "port_capacity",
+      "kind": "recovery_to_baseline",
+      "tolerance": 0.05,
+      "observed_turn": 11,
+      "date": "2024-06-11",
+      "source_id": "pemp_baltimore_2024",
+      "status": "observed",
+      "available_at": "2024-06-11",
+      "note": "'the navigation channel was fully reopened, two and a half months after the event.' 11 June 2024 is 77 days after 26 March = week 11. This is the earliest date on which the PHYSICAL constraint on throughput was fully removed, so it is a lower bound on when capacity could have returned to normal — the model reaching baseline before this week is unambiguously too fast."
+    },
+    {
+      "id": "normal_operations",
+      "variable": "port_capacity",
+      "kind": "recovery_to_baseline",
+      "tolerance": 0.05,
+      "observed_turn": 16,
+      "date": "2024-07-15",
+      "source_id": "fortune_baltimore_normal_july_2024",
+      "status": "reported",
+      "available_at": "2024-06-13",
+      "note": "Commercial shipping was expected to return to normal levels in July 2024, with the port operating at normal capacity by mid-July — about week 16. RECORDED AS 'reported', NOT 'observed', because this is an expectation published on 2024-06-13 rather than a measured outcome, and it is therefore excluded from the scored count. It is retained because it bounds the plausible true recovery week from above."
+    }
+  ],
+
+  "_not_observed": [
+    {
+      "variable": "port_capacity",
+      "reason": "No weekly or monthly TEU series for the Port of Baltimore during March-August 2024 was obtainable publicly. Notably, the NEIGHBOURING ports' monthly volumes (NY/NJ, Virginia) were published promptly — observability is asymmetric, and the disrupted node is the hardest one to see."
+    },
+    {
+      "variable": "shipping_delay",
+      "reason": "No port-local transit-delay series exists. The global Sea-Intelligence series used for Yantian was deliberately NOT reused here: applying the same discredited global proxy to a second event would reproduce the first event's confounding rather than test the model independently."
+    },
+    {
+      "variable": "order_backlog",
+      "reason": "Diverted volumes at NY/NJ (790,758 TEU in May 2024) and Virginia (>340,000 TEU in May 2024) were measured and published, but neither port authority quantified how much was Baltimore diversion, and the model's order_backlog is an index against a normal open order book that has no published counterpart."
+    },
+    {
+      "variable": "freight_cost",
+      "reason": "No continuous public weekly lane rate series obtainable, as for Yantian."
+    },
+    {
+      "variable": "inventory_availability",
+      "reason": "Latent: firm-internal, no public counterpart."
+    },
+    {
+      "variable": "production_capacity",
+      "reason": "Latent: firm-internal, no public counterpart attributable to this port."
+    },
+    {
+      "variable": "service_level",
+      "reason": "Latent: firm-internal. The model's headline outcome remains unobservable in a second, entirely independent event — which is now a pattern rather than an accident of one case."
+    },
+    {
+      "variable": "consumer_price_pressure",
+      "reason": "Operates at national/quarterly resolution; not attributable to one port inside a weekly window."
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "id": "yantian_2021",
+  "title": "Yantian International Container Terminal COVID-19 disruption, May-June 2021",
+  "modules": ["port_disruption"],
+  "time_unit": "weeks",
+
+  "start_date": "2021-05-25",
+  "knowledge_cutoff": "2021-05-25",
+  "evaluation_window": {"from": "2021-05-25", "to": "2021-09-05"},
+  "turns": 15,
+
+  "why_this_event": [
+    "It is a CONTAINER PORT CAPACITY disruption, which is exactly what world_models/supply_chain/port_disruption.json models. A canal blockage (e.g. Suez 2021) would have required modelling a different mechanism.",
+    "The reported capacity loss (to ~30% of normal, i.e. -70 index points) coincidentally matches the magnitude of the simulator's default scenario, so the replay tests the model in the regime it was designed for.",
+    "The duration (~4.5 weeks) is long enough to be resolved by weekly simulation, unlike the six-day Suez blockage.",
+    "The timeline is documented in publicly readable trade sources with dates.",
+    "No classified or proprietary data is required to define the event.",
+    "Chosen on data availability, not on prominence: Suez 2021 is the more famous event but is too short for weekly resolution and disrupts a canal rather than a port."
+  ],
+
+  "initial_state": {
+    "shipping_delay": 6.16
+  },
+  "initial_state_provenance": {
+    "shipping_delay": {
+      "value": 6.16,
+      "unit": "days",
+      "source_id": "si_glp_2021_03",
+      "refers_to_period": "2021-03",
+      "available_at": "2021-04-27",
+      "note": "March 2021 is used, NOT April 2021, even though April describes a period closer to the event. The April figure was published on 2021-05-31, six days AFTER the event start, so it was not available at the knowledge cutoff. Using it would be hindsight leakage."
+    },
+    "port_capacity": {
+      "value": 100.0,
+      "unit": "index (100 = normal weekly throughput)",
+      "source_id": null,
+      "available_at": "2021-05-25",
+      "note": "Baseline by construction: the index is defined so that normal pre-event operation is 100. Not an observation."
+    }
+  },
+
+  "event": {
+    "id": "yantian_capacity_loss_phase1",
+    "label": "Yantian throughput to ~30% of normal",
+    "description": "COVID-19 outbreak among terminal workers; portions of Yantian International Container Terminal shuttered from the last week of May 2021, with operating capacity reported at about 30% of normal.",
+    "targets": {"port_capacity": -70.0},
+    "start_turn": 1,
+    "duration": 2,
+    "shape": "step",
+    "status": "expert_assumption",
+    "evidence": [
+      {
+        "type": "news_report",
+        "reference": "source:scdive_yantian_2021",
+        "year": 2021,
+        "note": "Reported operating capacity of 30% of normal during the peak of the disruption."
+      },
+      {
+        "type": "technical_report",
+        "reference": "source:flexport_yantian_2021",
+        "year": 2021,
+        "note": "Portions of the port shuttered since the last week of May 2021."
+      }
+    ]
+  },
+
+  "additional_events": [
+    {
+      "id": "yantian_capacity_loss_phase2",
+      "label": "Yantian partial reopening to ~70% of normal",
+      "description": "A closed section partially reopened on 10 June 2021 after nearly two weeks; operating capacity reported at about 70% of normal before full resumption on 24 June 2021.",
+      "targets": {"port_capacity": -30.0},
+      "start_turn": 3,
+      "duration": 2,
+      "shape": "step",
+      "status": "expert_assumption",
+      "evidence": [
+        {
+          "type": "technical_report",
+          "reference": "source:flexport_yantian_2021",
+          "year": 2021,
+          "note": "Partial reopening of a closed section as of 10 June 2021."
+        },
+        {
+          "type": "news_report",
+          "reference": "source:scdive_yantian_2021",
+          "year": 2021,
+          "note": "Operations reported at around 70% capacity after partial recovery."
+        }
+      ]
+    }
+  ],
+
+  "event_status_note": "The injected event is recorded as expert_assumption, NOT observed. The capacity percentages come from operational statements in trade press rather than measured throughput, and the step boundaries carry a few days of date uncertainty. Marking it 'observed' would overstate what is known about the input.",
+
+  "sources": [
+    {"type": "news_report", "reference": "source:scdive_yantian_2021"},
+    {"type": "technical_report", "reference": "source:flexport_yantian_2021"}
+  ],
+
+  "description": "Weekly replay of the Yantian 2021 terminal disruption. Week 1 begins on 2021-05-25. The injected event holds port_capacity at 30 index points for two weeks, then at 70 index points for two weeks, then releases; the model's own dynamics govern everything downstream and the recovery."
+}

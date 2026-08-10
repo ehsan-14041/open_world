@@ -1,0 +1,581 @@
+{
+  "id": "port_disruption_h1_queue_experimental",
+  "domain": "supply_chain",
+  "title": "Container port disruption — EXPERIMENTAL H1 vessel-queue stock",
+  "time_unit": "weeks",
+  "version": "0.1.0-h1-experimental",
+  "geography": [
+    "global"
+  ],
+  "description": "EXPERIMENTAL variant of port_disruption. Identical in every respect except that the capacity-to-delay pathway is mediated by an explicit vessel_queue STOCK (hypothesis H1). No baseline coefficient, lag, polarity, baseline level, scale or response was changed.",
+  "notes": "EXPERIMENTAL. Tests hypothesis H1 (vessel queue behaves as a stock), which is independently supported by a mechanism test on real port-queue data (docs/replays/H1_QUEUE_MECHANISM.md) but is NOT historically validated. H1 support does not make the new parameters supported: the queue->delay effect range and the clearance surge are expert assumptions with predeclared ranges, swept rather than fitted. Do not use as the default model.",
+  "variables": [
+    {
+      "id": "port_capacity",
+      "label": "Port throughput capacity",
+      "unit": "index (100 = normal weekly throughput)",
+      "baseline": 100.0,
+      "scale": 100.0,
+      "range": {
+        "min": 0.0,
+        "max": 120.0
+      },
+      "dynamics": {
+        "response": 0.55
+      },
+      "observability": "measured",
+      "status": "expert_assumption",
+      "axis": "recovery_rate",
+      "description": "Effective weekly container throughput of the port relative to normal operations. The injected event holds this variable; after release it relaxes back toward baseline at a rate set by the recovery_rate assumption.",
+      "observability_class": "observable",
+      "observability_note": "Port authorities and carriers publish throughput and operating status, and channel/berth status is a public fact. Caveat found in practice: port-level series are typically MONTHLY or event-driven, not weekly, and Yantian weekly TEU could not be obtained at all."
+    },
+    {
+      "id": "vessel_queue",
+      "label": "Vessel / cargo queue at the port",
+      "unit": "normal-flow-weeks of unprocessed arrivals",
+      "baseline": 0.0,
+      "scale": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 60.0
+      },
+      "dynamics": {
+        "response": 1.0,
+        "kind": "stock",
+        "stock": {
+          "inflow": 1.0,
+          "capacity_variable": "port_capacity",
+          "capacity_scale": 100.0,
+          "surge": 1.15,
+          "surge_axis": "queue_clearance"
+        }
+      },
+      "observability": "reported",
+      "observability_class": "proxy_observable",
+      "observability_note": "Vessels waiting are counted and published for some ports (e.g. the Marine Exchange of Southern California) but as vessel counts, not in normal-flow-weeks, and not for the ports replayed here. The unit chosen deliberately avoids converting to vessels or TEU, because no conversion factor is supported by data for these events.",
+      "status": "expert_assumption",
+      "description": "Unprocessed arrivals waiting at the port, measured in weeks of normal throughput. 0 = no queue. Evolves by conservation, not relaxation: it accumulates while arrivals exceed processing capacity and drains only while processing exceeds arrivals."
+    },
+    {
+      "id": "shipping_delay",
+      "label": "Transit delay",
+      "unit": "days",
+      "baseline": 4.0,
+      "scale": 10.0,
+      "range": {
+        "min": 0.0,
+        "max": 60.0
+      },
+      "dynamics": {
+        "response": 0.5
+      },
+      "observability": "measured",
+      "status": "expert_assumption",
+      "description": "Average additional door-to-door transit time for cargo routed through the affected corridor.",
+      "observability_class": "proxy_observable",
+      "observability_note": "No port-local transit-delay series was obtainable. The only series found is Sea-Intelligence's GLOBAL MONTHLY average delay for late vessel arrivals (mapping map_delay_from_si_global). The Yantian replay showed this proxy is dominated by non-local causes: it kept deteriorating for two months after the port had fully recovered."
+    },
+    {
+      "id": "freight_cost",
+      "label": "Freight cost",
+      "unit": "index (100 = pre-event spot rate)",
+      "baseline": 100.0,
+      "scale": 100.0,
+      "range": {
+        "min": 20.0,
+        "max": 500.0
+      },
+      "dynamics": {
+        "response": 0.35
+      },
+      "observability": "measured",
+      "status": "expert_assumption",
+      "description": "Spot container freight rate on the affected lane.",
+      "observability_class": "proxy_observable",
+      "observability_note": "Lane spot-rate indices (Drewry WCI, Freightos FBX) exist weekly and are the right quantity, but full historical series are commercial products and only scattered secondary quotes are public. Obtainable in principle, not obtained here."
+    },
+    {
+      "id": "order_backlog",
+      "label": "Order backlog",
+      "unit": "index (100 = normal open order book)",
+      "baseline": 100.0,
+      "scale": 100.0,
+      "range": {
+        "min": 0.0,
+        "max": 400.0
+      },
+      "dynamics": {
+        "response": 0.4
+      },
+      "observability": "reported",
+      "status": "expert_assumption",
+      "description": "Unfulfilled orders queued behind the disruption, including cargo waiting at anchor.",
+      "observability_class": "proxy_observable",
+      "observability_note": "Published only as irregular point estimates (TEU awaiting export, ships at anchor), usually as lower bounds, and with no normal-conditions baseline to normalise against. Note this is the model's highest-influence edge target, and it is the least measurable."
+    },
+    {
+      "id": "inventory_availability",
+      "label": "Inventory availability",
+      "unit": "index (100 = normal weeks of cover)",
+      "baseline": 100.0,
+      "scale": 100.0,
+      "range": {
+        "min": 0.0,
+        "max": 140.0
+      },
+      "dynamics": {
+        "response": 0.3
+      },
+      "observability": "reported",
+      "status": "expert_assumption",
+      "description": "Downstream stock cover at distribution centres served by the affected port.",
+      "observability_class": "latent",
+      "observability_note": "Firm-internal stock cover. No public counterpart exists; docs/FITTING_FINDINGS.md independently established that no public dataset carries inventory alongside lead time and fill rate."
+    },
+    {
+      "id": "production_capacity",
+      "label": "Production capacity",
+      "unit": "index (100 = normal output)",
+      "baseline": 100.0,
+      "scale": 100.0,
+      "range": {
+        "min": 0.0,
+        "max": 110.0
+      },
+      "dynamics": {
+        "response": 0.35
+      },
+      "observability": "reported",
+      "status": "expert_assumption",
+      "description": "Output of plants dependent on components moving through the affected port.",
+      "observability_class": "latent",
+      "observability_note": "Public industrial production indices exist but cannot be attributed to a single port's inbound flow, so they do not measure this node."
+    },
+    {
+      "id": "service_level",
+      "label": "Customer service level",
+      "unit": "fill rate (0-1)",
+      "baseline": 0.95,
+      "scale": 0.5,
+      "range": {
+        "min": 0.0,
+        "max": 1.0
+      },
+      "dynamics": {
+        "response": 0.45
+      },
+      "observability": "measured",
+      "status": "expert_assumption",
+      "description": "Share of customer demand met from available stock in the affected network.",
+      "observability_class": "latent",
+      "observability_note": "Firm-internal fill rate. This is the model's HEADLINE OUTCOME and it is the least observable variable in the slice — the single most important consequence of the observability audit."
+    },
+    {
+      "id": "consumer_price_pressure",
+      "label": "Consumer price pressure",
+      "unit": "index (100 = no additional pressure)",
+      "baseline": 100.0,
+      "scale": 100.0,
+      "range": {
+        "min": 90.0,
+        "max": 200.0
+      },
+      "dynamics": {
+        "response": 0.2
+      },
+      "observability": "derived",
+      "status": "expert_assumption",
+      "description": "Cost pass-through pressure on end-consumer prices for affected categories.",
+      "observability_class": "proxy_observable",
+      "observability_note": "CPI and import price indices are public and reliable, but operate at national/quarterly resolution and cannot be attributed to one port disruption inside a weekly window."
+    }
+  ],
+  "edges": [
+    {
+      "source": "port_capacity",
+      "target": "vessel_queue",
+      "polarity": "negative",
+      "effect": {
+        "low": 1.0,
+        "central": 1.0,
+        "high": 1.0
+      },
+      "lag": {
+        "min": 0,
+        "max": 0,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "medium",
+      "status": "expert_assumption",
+      "mechanism_type": "conservation",
+      "mechanism": "Realised by the stock's conservation rule, not by a linear coefficient: lost throughput means arrivals exceed processing, and the shortfall accumulates. The effect range is 1.0 by construction (a unit of unprocessed arrival is a unit of queue) and carries no free parameter."
+    },
+    {
+      "source": "vessel_queue",
+      "target": "shipping_delay",
+      "polarity": "positive",
+      "effect": {
+        "low": 0.08,
+        "central": 0.15,
+        "high": 0.25
+      },
+      "lag": {
+        "min": 0,
+        "max": 1,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "low",
+      "status": "expert_assumption",
+      "axis": "alternative_capacity",
+      "mechanism": "Cargo waiting in the queue is cargo arriving late. This edge carries the persistence that the baseline's direct port_capacity->shipping_delay edge represented in reduced form. Bound to the alternative_capacity axis, exactly as the baseline edge it replaces was, so no new axis binding is introduced."
+    },
+    {
+      "source": "port_capacity",
+      "target": "order_backlog",
+      "polarity": "negative",
+      "effect": {
+        "low": 0.4,
+        "central": 0.65,
+        "high": 0.95
+      },
+      "lag": {
+        "min": 1,
+        "max": 1,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "medium",
+      "status": "expert_assumption",
+      "mechanism": "Cargo that cannot be worked accumulates as an open order book behind the port."
+    },
+    {
+      "source": "order_backlog",
+      "target": "shipping_delay",
+      "polarity": "positive",
+      "effect": {
+        "low": 0.1,
+        "central": 0.2,
+        "high": 0.35
+      },
+      "lag": {
+        "min": 1,
+        "max": 2,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "low",
+      "status": "expert_assumption",
+      "mechanism": "Congestion feedback: a large queue slows the working of cargo that is already in the system."
+    },
+    {
+      "source": "shipping_delay",
+      "target": "freight_cost",
+      "polarity": "positive",
+      "effect": {
+        "low": 0.25,
+        "central": 0.45,
+        "high": 0.7
+      },
+      "lag": {
+        "min": 0,
+        "max": 1,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "medium",
+      "status": "expert_assumption",
+      "mechanism": "Longer round trips absorb vessel capacity, tightening effective supply on the lane and lifting spot rates."
+    },
+    {
+      "source": "shipping_delay",
+      "target": "inventory_availability",
+      "polarity": "negative",
+      "effect": {
+        "low": 0.3,
+        "central": 0.5,
+        "high": 0.75
+      },
+      "lag": {
+        "min": 1,
+        "max": 2,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "medium",
+      "status": "expert_assumption",
+      "mechanism": "Replenishment arriving late draws down downstream stock cover."
+    },
+    {
+      "source": "inventory_availability",
+      "target": "service_level",
+      "polarity": "positive",
+      "effect": {
+        "low": 0.4,
+        "central": 0.65,
+        "high": 0.9
+      },
+      "lag": {
+        "min": 0,
+        "max": 1,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "medium",
+      "status": "expert_assumption",
+      "axis": "demand_response",
+      "mechanism": "Fill rate follows stock cover; how sharply depends on whether demand holds up or customers substitute and defer."
+    },
+    {
+      "source": "inventory_availability",
+      "target": "production_capacity",
+      "polarity": "positive",
+      "effect": {
+        "low": 0.25,
+        "central": 0.45,
+        "high": 0.7
+      },
+      "lag": {
+        "min": 1,
+        "max": 2,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "low",
+      "status": "expert_assumption",
+      "mechanism": "Component starvation idles lines once buffer stock is consumed."
+    },
+    {
+      "source": "production_capacity",
+      "target": "service_level",
+      "polarity": "positive",
+      "effect": {
+        "low": 0.15,
+        "central": 0.3,
+        "high": 0.5
+      },
+      "lag": {
+        "min": 1,
+        "max": 2,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "low",
+      "status": "expert_assumption",
+      "mechanism": "Reduced output limits replenishment of finished goods independently of inbound stock."
+    },
+    {
+      "source": "freight_cost",
+      "target": "consumer_price_pressure",
+      "polarity": "positive",
+      "effect": {
+        "low": 0.1,
+        "central": 0.2,
+        "high": 0.35
+      },
+      "lag": {
+        "min": 2,
+        "max": 4,
+        "unit": "weeks"
+      },
+      "evidence": [],
+      "geography": [
+        "global"
+      ],
+      "confidence": "low",
+      "status": "expert_assumption",
+      "axis": "demand_response",
+      "mechanism": "Landed-cost increases pass through to shelf prices with a lag; pass-through is stronger when demand is firm."
+    }
+  ],
+  "axes": [
+    {
+      "id": "recovery_rate",
+      "label": "Recovery speed",
+      "settings": [
+        "slow",
+        "central",
+        "fast"
+      ],
+      "applies_to": [
+        "port_capacity"
+      ],
+      "description": "How quickly the port returns to normal throughput once the disruption is released.",
+      "status": "expert_assumption",
+      "mapping": {
+        "slow": {
+          "response_multiplier": 0.45
+        },
+        "central": {
+          "response_multiplier": 1.0
+        },
+        "fast": {
+          "response_multiplier": 1.7
+        }
+      }
+    },
+    {
+      "id": "alternative_capacity",
+      "label": "Alternative capacity in the range",
+      "settings": [
+        "none",
+        "partial",
+        "high"
+      ],
+      "applies_to": [
+        "port_capacity->shipping_delay"
+      ],
+      "description": "How much of the lost throughput nearby ports and alternative modes can absorb. More alternative capacity weakens the capacity-to-delay transmission.",
+      "status": "expert_assumption",
+      "mapping": {
+        "none": {
+          "effect": "high"
+        },
+        "partial": {
+          "effect": "central"
+        },
+        "high": {
+          "effect": "low"
+        }
+      }
+    },
+    {
+      "id": "demand_response",
+      "label": "Demand response",
+      "settings": [
+        "low",
+        "central",
+        "high"
+      ],
+      "applies_to": [
+        "inventory_availability->service_level",
+        "freight_cost->consumer_price_pressure"
+      ],
+      "description": "Whether end demand holds up (strong transmission to service level and prices) or softens and defers (weak transmission).",
+      "status": "expert_assumption",
+      "mapping": {
+        "low": {
+          "effect": "low"
+        },
+        "central": {
+          "effect": "central"
+        },
+        "high": {
+          "effect": "high"
+        }
+      }
+    },
+    {
+      "id": "queue_clearance",
+      "label": "Backlog clearance headroom",
+      "settings": [
+        "slow",
+        "central",
+        "fast"
+      ],
+      "applies_to": [
+        "vessel_queue"
+      ],
+      "description": "How much above nominal weekly throughput the port can work while clearing a backlog (overtime, extra gangs, extended gate hours). 1.00 would mean a backlog can never be worked off at all.",
+      "status": "expert_assumption",
+      "mapping": {
+        "slow": {
+          "surge": 1.05
+        },
+        "central": {
+          "surge": 1.15
+        },
+        "fast": {
+          "surge": 1.35
+        }
+      }
+    }
+  ],
+  "interventions": [
+    {
+      "id": "redirect_cargo",
+      "label": "Redirect cargo to an alternative port",
+      "description": "Divert a share of inbound cargo to an alternative port. Restores effective throughput at a freight-cost premium (longer inland legs, spot bookings).",
+      "status": "expert_assumption",
+      "magnitude_label": "share of cargo redirected",
+      "default_magnitude": 0.3,
+      "default_start_turn": 3,
+      "default_duration": 8,
+      "effects_per_unit": {
+        "port_capacity": 50.0,
+        "freight_cost": 40.0
+      },
+      "notes": "effects_per_unit are per 1.0 of magnitude: redirecting 30% of cargo restores 15 index points of effective throughput and adds 12 index points of freight cost. Expert assumption, not a fitted figure. Known limitation: the offset is unconditional, so leaving this intervention active after the port has recovered would push effective throughput above normal — set a duration that ends with the disruption."
+    },
+    {
+      "id": "release_buffer_stock",
+      "label": "Release strategic buffer stock",
+      "description": "Draw down held safety stock to protect fill rate during the disruption window.",
+      "status": "expert_assumption",
+      "magnitude_label": "share of buffer released",
+      "default_magnitude": 0.5,
+      "default_start_turn": 2,
+      "default_duration": 4,
+      "effects_per_unit": {
+        "inventory_availability": 30.0
+      },
+      "notes": "Temporary: the effect lasts only while the intervention is active, after which cover returns to what the causal model supports."
+    }
+  ],
+  "observability_note": "Every variable declares an observability_class: observable / proxy_observable / latent. This is metadata about whether the REAL WORLD can be seen for that node; it does not affect the dynamics. It was added after the Yantian 2021 replay established that the binding constraint on validating this model is observability, not the simulation engine. Counts for this module: 1 observable, 4 proxy_observable, 3 latent.",
+  "experimental": true,
+  "derived_from": {
+    "module": "port_disruption",
+    "version": "0.1.0",
+    "changes": [
+      "ADDED variable vessel_queue (kind=stock, unit: normal-flow-weeks of unprocessed arrivals)",
+      "REPLACED edge port_capacity->shipping_delay (linear) with the two-step path port_capacity->vessel_queue (conservation) and vessel_queue->shipping_delay (linear)",
+      "ADDED assumption axis queue_clearance (surge headroom while a backlog exists)",
+      "NOTHING ELSE. All eight original variables keep their baseline, scale, response and observability. All eight remaining edges keep their polarity, effect range and lag."
+    ],
+    "not_changed": [
+      "order_backlog remains a relaxation variable — H2 is not_supported and is NOT implemented",
+      "no downstream lag, threshold or recovery parameter was altered",
+      "no new nonlinearity was introduced"
+    ]
+  },
+  "semantic_debt": [
+    {
+      "variable": "order_backlog",
+      "issue": "Definition conflates the physical logistics queue with downstream customer-order backlog.",
+      "evidence": "H1 supports physical queue accumulation; H2 did not support aggregate customer-order backlog persistence.",
+      "status": "semantic_defect",
+      "impact": "May obscure two separate dynamics behind one variable, and makes the variable unobservable at node level.",
+      "action": "Do not structurally modify until evidence supports a replacement. NOT addressed in the H1 experiment."
+    }
+  ]
+}

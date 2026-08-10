@@ -1,0 +1,127 @@
+{
+  "event": "yantian_2021",
+  "_note": "Observed series used to grade the replay. Every value was read from the cited source; none was reconstructed, interpolated or estimated. Values are stored in their ORIGINAL unit with the original reporting period; the mapping layer converts them, and never overwrites them.",
+
+  "_turn_mapping_rule": "Week 1 begins 2021-05-25. A monthly observation is assigned to the week containing the midpoint of its reporting month (day 15). This is a lossy assignment recorded explicitly in each observation's `turn_assignment` field, not a silent resample.",
+
+  "observations": [
+    {
+      "variable": "shipping_delay",
+      "date": "2021-05-15",
+      "reporting_period": "2021-05",
+      "turn": 0,
+      "turn_assignment": "month midpoint 2021-05-15 falls before week 1 (2021-05-25); assigned to turn 0 as the last pre-event monthly reading",
+      "value": 5.86,
+      "unit": "days",
+      "source_id": "si_glp_2021_05",
+      "mapping_id": "map_delay_from_si_global",
+      "status": "observed",
+      "quality": "observed",
+      "available_at": "2021-06-30",
+      "note": "Global average delay for LATE vessel arrivals, May 2021. Published AFTER the knowledge cutoff, so it may be used for EVALUATION ONLY and must not initialise the model."
+    },
+    {
+      "variable": "shipping_delay",
+      "date": "2021-06-15",
+      "reporting_period": "2021-06",
+      "turn": 3,
+      "turn_assignment": "month midpoint 2021-06-15 falls in week 4 counting from 2021-05-25; assigned to turn 3 (zero-indexed weeks elapsed)",
+      "value": 6.41,
+      "unit": "days",
+      "source_id": "si_glp_2021_06",
+      "mapping_id": "map_delay_from_si_global",
+      "status": "observed",
+      "quality": "observed",
+      "available_at": "2021-07-28",
+      "note": "Global average delay for LATE vessel arrivals, June 2021 — the month containing the bulk of the disruption."
+    },
+    {
+      "variable": "shipping_delay",
+      "date": "2021-07-15",
+      "reporting_period": "2021-07",
+      "turn": 7,
+      "turn_assignment": "month midpoint 2021-07-15 is 51 days after 2021-05-25 = week 8; assigned to turn 7",
+      "value": 6.88,
+      "unit": "days",
+      "source_id": "si_glp_2021_07",
+      "mapping_id": "map_delay_from_si_global",
+      "status": "observed",
+      "quality": "observed",
+      "available_at": "2021-08-26",
+      "note": "Global average delay for LATE vessel arrivals, July 2021 — first full month after Yantian resumed full operations (24 June 2021)."
+    },
+    {
+      "variable": "shipping_delay",
+      "date": "2021-08-15",
+      "reporting_period": "2021-08",
+      "turn": 12,
+      "turn_assignment": "month midpoint 2021-08-15 is 82 days after 2021-05-25 = week 12",
+      "value": 7.57,
+      "unit": "days",
+      "source_id": "si_glp_2021_08",
+      "mapping_id": "map_delay_from_si_global",
+      "status": "observed",
+      "quality": "observed",
+      "available_at": "2021-09-27",
+      "note": "Global average delay for LATE vessel arrivals, August 2021. Continued deterioration well after Yantian recovered — a strong indication that this global series is dominated by causes other than Yantian."
+    },
+
+    {
+      "variable": "shipping_delay",
+      "date": "2021-03-15",
+      "reporting_period": "2021-03",
+      "turn": -2,
+      "turn_assignment": "pre-event context only; negative turn means it is outside the simulated window and is never scored",
+      "value": 6.16,
+      "unit": "days",
+      "source_id": "si_glp_2021_03",
+      "mapping_id": "map_delay_from_si_global",
+      "status": "context",
+      "quality": "observed",
+      "available_at": "2021-04-27",
+      "note": "The baseline used to initialise the replay. Recorded as 'context' rather than 'observed' so that the evaluation cannot score the model against its own initial condition."
+    },
+    {
+      "variable": "shipping_delay",
+      "date": "2021-04-15",
+      "reporting_period": "2021-04",
+      "turn": -1,
+      "turn_assignment": "pre-event context only; not scored",
+      "value": 5.68,
+      "unit": "days",
+      "source_id": "si_glp_2021_04",
+      "mapping_id": "map_delay_from_si_global",
+      "status": "context",
+      "quality": "observed",
+      "available_at": "2021-05-31",
+      "note": "April 2021. Not usable for initialisation (published after the knowledge cutoff) and not scored. Also carries a cross-release inconsistency: see source si_glp_2021_04 notes."
+    }
+  ],
+
+  "_not_observed": [
+    {
+      "variable": "freight_cost",
+      "reason": "No continuous weekly freight index series could be assembled from public, citable sources for May-September 2021; the full historical series are commercial products. freight_cost is therefore NOT evaluated in this replay."
+    },
+    {
+      "variable": "order_backlog",
+      "reason": "Only isolated point estimates exist ('more than 400,000 TEU' on 2021-06-14), they are lower bounds rather than measurements, and no normal-conditions baseline was obtainable to convert them to the model's index. See mapping map_backlog_from_teu_awaiting."
+    },
+    {
+      "variable": "inventory_availability",
+      "reason": "Firm-internal metric; no public counterpart exists."
+    },
+    {
+      "variable": "production_capacity",
+      "reason": "Firm-internal metric; public industrial production indices are not attributable to this port."
+    },
+    {
+      "variable": "service_level",
+      "reason": "Firm-internal metric; no public counterpart exists. This is the model's headline outcome variable, and it cannot be validated with public data."
+    },
+    {
+      "variable": "consumer_price_pressure",
+      "reason": "Pass-through operates over quarters, far outside this replay's weekly window, and cannot be attributed to a single port."
+    }
+  ]
+}
