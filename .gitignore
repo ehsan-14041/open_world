@@ -41,15 +41,10 @@ data/external/*
 !data/external/ais/geometry/
 !data/external/ais/geometry/*.json
 
-# AIS regional extracts and per-day download receipts ARE tracked. They are ~100MB, which is
-# a lot for a repo — but they are the distilled product of 17.1GB of national AIS transfer,
-# and without them reproducing the Hampton Roads baseline means a 34-minute, 17GB download.
-# Each extract is a filtered slice of one national daily file whose SHA-256 is recorded in
-# metadata/, so the provenance chain back to NOAA stays verifiable.
-!data/external/ais/daily/
-!data/external/ais/daily/*.csv
-!data/external/ais/metadata/
-!data/external/ais/metadata/*.json
-
-# The national archives themselves are never kept: ~284MB each, streamed and deleted.
-data/external/ais/national/
+# AIS extracts and per-day download receipts stay out of the repository. Reproduce them with
+#     python scripts/fetch_ais_baseline.py
+# which re-fetches the days named by the frozen sampling rule (~34 min, 17.1GB transferred,
+# ~100MB retained). Only the frozen geometry above is tracked, because that is the definition
+# of the measurement rather than an observation of it.
+data/external/ais/daily/
+data/external/ais/metadata/
