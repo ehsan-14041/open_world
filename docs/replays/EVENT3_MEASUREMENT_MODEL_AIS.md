@@ -100,6 +100,14 @@ Pablo Bay, Carquinez Strait, Suisun Bay and the Sacramento River — roughly 100
 waterway. That geometry describes a river system, not a port approach, and fails local
 specificity.
 
+> **Qualification added later.** This containment statistic used *all* Part 110 coordinates,
+> including the four Naval anchorages, and counted every stationary vessel regardless of
+> navigational status. Most stationary deep-draft vessels at Hampton Roads report `Status 5`
+> (moored alongside a berth), not `Status 1` (at anchor). So 0.9 km measures proximity to
+> designated water, not use of the commercial anchorages, and it is **not** evidence that
+> commercial occupancy is high. See
+> [HAMPTON_ROADS_MEASUREMENT_FREEZE.md](HAMPTON_ROADS_MEASUREMENT_FREEZE.md) §2.2.
+
 **Selected region: Hampton Roads (33 CFR 110.168).** Best containment, tight port-approach
 geometry. Of its 15 parsed anchorages, 4 are Naval and 1 is Commercial Explosives; those are
 excluded, leaving 10 commercial anchorages (F, G, H, I, J, K, M, N, Q, R).
@@ -122,10 +130,16 @@ excluded, leaving 10 commercial anchorages (F, G, H, I, J, K, M, N, Q, R).
 
 ## 5. Validation on real days
 
+> **Superseded.** The figures below were computed with a hand-set region bounding box that
+> excluded anchorage R entirely and clipped anchorage I, so they cover 8 of the 10 commercial
+> anchorages and are **undercounts**. The box is now derived from the geometry; see
+> [HAMPTON_ROADS_MEASUREMENT_FREEZE.md](HAMPTON_ROADS_MEASUREMENT_FREEZE.md) §2.1. Kept here
+> rather than edited away, because they are what the pipeline-validation claim rested on.
+
 | Date | Vessels in region | `anchorage_occupancy` | Status agreement |
 |---|---|---|---|
-| 2022-01-01 | 40 | 4 | 0.996 |
-| 2022-06-15 | 40 | 3 | 0.471 |
+| 2022-01-01 | 40 | 4 (undercount) | 0.996 |
+| 2022-06-15 | 40 | 3 (undercount) | 0.471 |
 
 Acquisition cost: ~284 MB and ~94 s per day. The national file is streamed to a temporary
 path, filtered to the region, and deleted; only the regional extract (~70 k rows) and a

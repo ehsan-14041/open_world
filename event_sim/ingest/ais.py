@@ -68,6 +68,7 @@ import urllib.request
 import zipfile
 from collections import defaultdict
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
 
@@ -124,12 +125,24 @@ def assert_not_queue_named(metric_name: str) -> str:
     return metric_name
 
 
+#: Margin added around the anchorage geometry when deriving a region's pre-filter box,
+#: in degrees (~2 km). The box only exists to avoid running point-in-polygon over the whole
+#: country, so it needs no more than enough slack to be safe against float edge effects.
+BBOX_MARGIN_DEG = 0.02
+
+
 @dataclass(frozen=True)
 class Region:
-    """A study region: a coarse filter box plus the legal anchorage geometry inside it."""
+    """A study region: the legal anchorage geometry, plus a pre-filter box derived from it.
+
+    The box is deliberately **not** a hand-set constant. A hand-set box is a second, silent
+    definition of the study area that can disagree with the geometry — and did: an earlier
+    literal box for Hampton Roads cut off the whole of anchorage R and clipped anchorage I,
+    so the measurement covered 8 of the 10 anchorages its own freeze document named. Deriving
+    the box from the polygons makes that class of mismatch impossible.
+    """
 
     name: str
-    bbox: tuple[float, float, float, float]  # (lat_min, lat_max, lon_min, lon_max)
     geometry_file: str
     description: str
 
@@ -137,7 +150,6 @@ class Region:
 REGIONS: dict[str, Region] = {
     "hampton_roads": Region(
         name="hampton_roads",
-        bbox=(36.80, 37.10, -76.45, -75.95),
         geometry_file="hampton_roads_110.168_2022-01-01.json",
         description=(
             "Hampton Roads / Norfolk port approach. Selected because the independent legal "
@@ -215,6 +227,7 @@ def fetch_day(date: str, region: Region, keep_national: bool = False) -> dict[st
     the regional extract and its provenance record persist.
     """
     url = daily_url(date)
+    bbox = region_bbox(region.name)
     DAILY_DIR.mkdir(parents=True, exist_ok=True)
     METADATA_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -235,7 +248,7 @@ def fetch_day(date: str, region: Region, keep_national: bool = False) -> dict[st
         scanned = 0
         for row in _iter_national_rows(tmp_path):
             scanned += 1
-            if _is_deep_draft(row) and _in_bbox(row, region.bbox):
+            if _is_deep_draft(row) and _in_bbox(row, bbox):
                 kept.append(row)
 
         out = DAILY_DIR / f"{region.name}_{date}.csv"
@@ -257,7 +270,7 @@ def fetch_day(date: str, region: Region, keep_national: bool = False) -> dict[st
             "extract_path": _record_path(out),
             "filters": {
                 "vessel_types": "70-89 (cargo, tanker)",
-                "bbox": list(region.bbox),
+                "bbox": list(bbox),
             },
             "national_file_retained": keep_national,
         }
@@ -323,6 +336,23 @@ def reconstruct_day(
             "designated anchorage polygon at any point during the day; NOT a queue"
         ),
     }
+
+
+@lru_cache(maxsize=None)
+def region_bbox(region_name: str) -> tuple[float, float, float, float]:
+    """Pre-filter box covering every commercial anchorage in the region, plus a margin.
+
+    Derived from the frozen geometry, so it cannot silently disagree with it.
+    """
+    polys = commercial_polygons(REGIONS[region_name])
+    boxes = [p.bbox() for p in polys]
+    m = BBOX_MARGIN_DEG
+    return (
+        min(b[0] for b in boxes) - m,
+        max(b[1] for b in boxes) + m,
+        min(b[2] for b in boxes) - m,
+        max(b[3] for b in boxes) + m,
+    )
 
 
 def commercial_polygons(region: Region) -> list[AnchoragePolygon]:
