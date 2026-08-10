@@ -94,6 +94,16 @@ Config: `config/ops_presets.json`, `config/ops_decisions.json`. Adapter: `adapte
 
 The product demo does not require API keys or LLM calls. For the underlying simulation engine (multi-agent paths, free-text scenarios, dashboard), see [Engine internals](docs/ENGINE_INTERNALS.md). Buyer-facing guide: [Product Guide](docs/PRODUCT_GUIDE.md).
 
+### Event Simulator (experimental)
+
+A second product surface on the same engine, at `/event-sim`: explore how an event could unfold under explicit assumptions — persistent world state, evidence-tagged causal edges, branching worlds, and identical-condition comparison. It is **not** a predictor and produces no probabilities. The Operations product is unaffected.
+
+```bash
+python scripts/run_port_disruption.py
+```
+
+See [Event Simulator](docs/EVENT_SIMULATOR.md) and [its architecture](docs/EVENT_SIMULATOR_ARCHITECTURE.md).
+
 ---
 
 ## Requirements
@@ -412,6 +422,8 @@ pytest tests/test_ops_*.py tests/test_ops_language.py tests/test_ui_routes.py -v
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Engine architecture (advanced) |
 | [docs/ARCHITECTURE_DOSSIER.md](docs/ARCHITECTURE_DOSSIER.md) | Full engine dossier (advanced) |
 | [docs/HYBRID_ENGINE.md](docs/HYBRID_ENGINE.md) | MC+RL and stochastic gating (advanced) |
+| [docs/EVENT_SIMULATOR.md](docs/EVENT_SIMULATOR.md) | Event Simulator: run it, API, reading output honestly |
+| [docs/EVENT_SIMULATOR_ARCHITECTURE.md](docs/EVENT_SIMULATOR_ARCHITECTURE.md) | Event Simulator architecture and repository audit |
 
 ---
 

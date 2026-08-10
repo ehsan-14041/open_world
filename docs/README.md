@@ -21,6 +21,32 @@ Product-first docs for operations decision support. Engine internals are seconda
 | [engine_contracts.md](engine_contracts.md) | Typed contracts |
 | [migration_notes.md](migration_notes.md) | Migration notes |
 
+## Event Simulator (experimental, separate product surface)
+
+A second surface on the same engine: explore how an event could unfold under explicit
+assumptions. It does not change the Operations product in any way.
+
+| Document | Description |
+|----------|-------------|
+| [EVENT_SIMULATOR.md](EVENT_SIMULATOR.md) | How to run it, API, how to read the output honestly |
+| [EVENT_SIMULATOR_ARCHITECTURE.md](EVENT_SIMULATOR_ARCHITECTURE.md) | Repository audit, schemas, why a new evolution rule |
+| [PORT_DISRUPTION_EVIDENCE_AUDIT.md](PORT_DISRUPTION_EVIDENCE_AUDIT.md) | Per-edge audit: what can be grounded, what cannot, and why |
+| [replays/yantian_2021.md](replays/yantian_2021.md) | Historical replay #1 — Yantian 2021 |
+| [replays/baltimore_2024.md](replays/baltimore_2024.md) | Historical replay #2 — Baltimore 2024, frozen model |
+| [replays/CROSS_EVENT_DIAGNOSIS.md](replays/CROSS_EVENT_DIAGNOSIS.md) | **Cross-event falsification: the model is systematically too fast** |
+| [replays/EVENT3_SEARCH.md](replays/EVENT3_SEARCH.md) | Event #3 search: not found, and the measurement trap it exposed |
+| [replays/H1_QUEUE_MECHANISM.md](replays/H1_QUEUE_MECHANISM.md) | **H1 mechanism test: a real port queue is a stock — supported, no simulation used** |
+| [replays/H2_BACKLOG_MECHANISM.md](replays/H2_BACKLOG_MECHANISM.md) | **H2 mechanism test: backlog path dependence — not supported once detrended** |
+| [replays/H1_EXPERIMENT_PROTOCOL.md](replays/H1_EXPERIMENT_PROTOCOL.md) | H1 experiment pre-registration (written before results) |
+| [replays/H1_EXPERIMENT_RESULTS.md](replays/H1_EXPERIMENT_RESULTS.md) | **H1 experiment results: mechanism works, pre-registered rule not met** |
+| [replays/H1_HELDOUT_FREEZE.md](replays/H1_HELDOUT_FREEZE.md) | Model freeze taken before the Event #3 search (hashes pinned by test) |
+| [replays/EVENT3_ELIGIBILITY_CONTRACT.md](replays/EVENT3_ELIGIBILITY_CONTRACT.md) | Event #3 eligibility contract, written before searching |
+| [replays/EVENT3_SEARCH_V2.md](replays/EVENT3_SEARCH_V2.md) | **Event #3 search round 2: no qualifying candidate; the blocker is access, not existence** |
+| [replays/EVENT3_DATA_DECISION.md](replays/EVENT3_DATA_DECISION.md) | **What to acquire, and what it would settle** |
+| [replays/ANTAQ_ACQUISITION.md](replays/ANTAQ_ACQUISITION.md) | **ANTAQ blocked by publisher robots policy — manual download instructions** |
+| [replays/ANTAQ_EVENT_DETECTION_PROTOCOL.md](replays/ANTAQ_EVENT_DETECTION_PROTOCOL.md) | Blind event-detection thresholds, pre-registered before any data |
+| [../world_models/README.md](../world_models/README.md) | World-module library contract and evidence rules |
+
 
 
 ## مسیرهای کلیدی

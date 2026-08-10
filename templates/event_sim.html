@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event Simulator — Open World Engine</title>
+<style>
+  :root {
+    --bg: #0f1216; --panel: #171b21; --line: #262d36; --text: #e6e9ee;
+    --muted: #98a2b3; --accent: #5aa9e6; --warn: #e6a15a; --a: #7f8fa6; --b: #5ae6a9;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 24px 28px 16px; border-bottom: 1px solid var(--line); }
+  h1 { margin: 0 0 6px; font-size: 20px; font-weight: 600; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .06em;
+       color: var(--muted); margin: 0 0 12px; font-weight: 600; }
+  .sub { color: var(--muted); max-width: 76ch; margin: 0; }
+  .disclaimer { margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--warn);
+                background: #1c1a16; color: #e8d5b5; max-width: 90ch; }
+  main { padding: 20px 28px 60px; display: grid; gap: 18px;
+         grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); align-items: start; }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }
+  section.wide { grid-column: 1 / -1; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 500; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .controls { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 14px; }
+  label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+  input { background: #0d1014; border: 1px solid var(--line); color: var(--text);
+          border-radius: 5px; padding: 6px 8px; width: 90px; }
+  button { background: var(--accent); color: #06121c; border: 0; border-radius: 5px;
+           padding: 8px 16px; font-weight: 600; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: default; }
+  pre { background: #0d1014; border: 1px solid var(--line); border-radius: 6px;
+        padding: 12px; overflow-x: auto; font-size: 12.5px; margin: 0; }
+  .tag { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 11px;
+         border: 1px solid var(--line); color: var(--muted); }
+  .tag.assumption { border-color: #6b5a2e; color: #e6c98a; }
+  .tag.ai { border-color: #6b3a3a; color: #e69a9a; }
+  .tag.evidenced { border-color: #2e6b4a; color: #8ae6b5; }
+  .bar { height: 8px; border-radius: 4px; background: #0d1014; overflow: hidden; display: flex; }
+  .bar span { display: block; height: 100%; }
+  .a { color: var(--a); } .b { color: var(--b); }
+  .muted { color: var(--muted); }
+  .status { color: var(--muted); font-size: 13px; }
+  .rank-HIGH { color: #e68a8a; font-weight: 600; }
+  .rank-MEDIUM { color: #e6c98a; }
+  .rank-LOW { color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Event Simulator <span class="muted" style="font-weight:400">— Open World Engine</span></h1>
+  <p class="sub">
+    <strong>What happens if…</strong> a major container port loses 70% of capacity for six weeks?
+  </p>
+  <div class="disclaimer">
+    This is an <strong>executable world model</strong>, not a forecast. Every number below follows
+    from the stated assumptions and the causal edges shown. No probability of any future event is
+    produced anywhere on this page — results are reported as counts of tested assumption worlds.
+  </div>
+</header>
+
+<main>
+  <section class="wide">
+    <h2>Event</h2>
+    <div class="controls">
+      <div><label>Capacity change (index points)</label><input id="capacity_loss" type="number" value="-70" step="5"></div>
+      <div><label>Duration (weeks)</label><input id="duration" type="number" value="6" min="1"></div>
+      <div><label>Horizon (weeks)</label><input id="turns" type="number" value="20" min="4" max="60"></div>
+      <div><label>Branch at week</label><input id="fork_turn" type="number" value="2" min="0"></div>
+      <div><label>Redirect share (World B)</label><input id="redirect_share" type="number" value="0.3" step="0.05" min="0" max="1"></div>
+      <div><button id="run">Run simulation</button></div>
+      <div class="status" id="status"></div>
+    </div>
+    <div id="framing" class="muted"></div>
+  </section>
+
+  <section>
+    <h2>World model — evidence coverage</h2>
+    <div id="coverage"></div>
+  </section>
+
+  <section>
+    <h2>World slice — included / excluded</h2>
+    <div id="slice"></div>
+  </section>
+
+  <section class="wide">
+    <h2>Simulation — World A (no intervention)</h2>
+    <div style="overflow-x:auto"><table id="timeline"></table></div>
+  </section>
+
+  <section class="wide">
+    <h2>Compare worlds — <span class="a">A: no intervention</span> vs <span class="b">B: redirect cargo</span></h2>
+    <div id="compare"></div>
+  </section>
+
+  <section class="wide">
+    <h2>Causal trace — why service level moved</h2>
+    <pre id="trace">Run the simulation to generate a trace.</pre>
+    <p class="muted" style="margin:10px 0 0">
+      Generated from recorded per-edge contributions during execution. No language model wrote this.
+    </p>
+  </section>
+
+  <section>
+    <h2>Emergent trajectories</h2>
+    <div id="trajectories"></div>
+  </section>
+
+  <section>
+    <h2>Pivotal assumptions</h2>
+    <div id="pivotal"></div>
+  </section>
+
+  <section class="wide">
+    <h2>Model health</h2>
+    <div id="health">Loading model health&hellip;</div>
+  </section>
+
+  <section class="wide">
+    <h2>Pivotal assumptions &times; evidence quality</h2>
+    <div id="gaps">Loading evidence state&hellip;</div>
+  </section>
+
+  <section class="wide">
+    <h2>Assumptions &amp; missing evidence</h2>
+    <div id="assumptions"></div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const num = (v, d = 2) => (v === null || v === undefined || isNaN(v)) ? "—" : Number(v).toFixed(d);
+const esc = s => String(s ?? "").replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+function statusTag(status) {
+  const cls = status === "ai_hypothesis" ? "ai"
+            : (status === "expert_assumption" || status === "user_assumption") ? "assumption"
+            : "evidenced";
+  return `<span class="tag ${cls}">${esc(status)}</span>`;
+}
+
+// Strongest evidence first; the JSON transport does not preserve key order.
+const COVERAGE_ORDER = ["observed_empirical", "literature_backed", "assumption", "ai_hypothesis"];
+
+function renderCoverage(cov) {
+  const g = cov.by_group || {}, labels = cov.group_labels || {};
+  const colors = { observed_empirical: "#5ae6a9", literature_backed: "#5aa9e6",
+                   assumption: "#e6c98a", ai_hypothesis: "#e68a8a" };
+  const total = cov.edge_count || 1;
+  const order = COVERAGE_ORDER.filter(k => k in labels);
+  const bar = order.map(k =>
+    `<span style="width:${(100 * (g[k] || 0) / total).toFixed(1)}%;background:${colors[k]}"></span>`).join("");
+  const rows = order.map(k =>
+    `<tr><td>${esc(labels[k])}</td><td class="num">${g[k] || 0}</td>
+     <td class="num">${(100 * (g[k] || 0) / total).toFixed(0)}%</td></tr>`).join("");
+  $("coverage").innerHTML =
+    `<div class="bar">${bar}</div>
+     <table style="margin-top:10px">${rows}</table>
+     <p class="muted" style="margin:10px 0 0">${esc(cov.disclaimer || "")}
+     ${cov.weakly_evidenced ? "<br><strong style='color:#e6c98a'>This model rests mainly on stated assumptions — read every trajectory as conditional on them.</strong>" : ""}</p>`;
+}
+
+function renderSlice(slice) {
+  const vars = slice.variables.map(v =>
+    `<tr><td>${esc(v.label || v.id)}</td><td class="muted">${esc(v.unit)}</td>
+     <td class="num">${num(v.baseline, 2)}</td><td>${statusTag(v.status)}</td></tr>`).join("");
+  const excluded = (slice.excluded_systems || []);
+  $("slice").innerHTML =
+    `<p class="muted" style="margin:0 0 8px">Included: ${slice.included_systems.map(esc).join(", ")}</p>
+     <table><tr><th>Variable</th><th>Unit</th><th class="num">Baseline</th><th>Status</th></tr>${vars}</table>
+     <p class="muted" style="margin:12px 0 0"><strong>Not modelled</strong>
+     ${excluded.length ? "(" + excluded.length + "): " + excluded.map(esc).join(", ")
+                       : ": no other module in the library." }</p>`;
+}
+
+function renderTimeline(world) {
+  const traj = world.trajectory;
+  const ids = traj[0].variables.map(v => v.variable);
+  const head = `<tr><th>Week</th>${ids.map(i => `<th class="num">${esc(i)}</th>`).join("")}<th>Active</th></tr>`;
+  const body = traj.map(rec => {
+    const cells = ids.map(i => `<td class="num">${num(rec.state[i], 2)}</td>`).join("");
+    const active = [...(rec.events_active || []), ...(rec.interventions_active || [])].join(", ");
+    return `<tr><td>${rec.turn}</td>${cells}<td class="muted">${esc(active)}</td></tr>`;
+  }).join("");
+  $("timeline").innerHTML = head + body;
+}
+
+function renderCompare(cmp, summary) {
+  const rows = cmp.variables.map(r =>
+    `<tr><td>${esc(r.label)}</td>
+     <td class="num a">${num(r.final_a, 2)}</td>
+     <td class="num b">${num(r.final_b, 2)}</td>
+     <td class="num">${r.final_difference >= 0 ? "+" : ""}${num(r.final_difference, 2)}</td>
+     <td class="num">${r.peak_difference >= 0 ? "+" : ""}${num(r.peak_difference, 2)} (w${r.peak_turn})</td></tr>`).join("");
+  $("compare").innerHTML =
+    `<p class="muted" style="margin:0 0 10px">
+       Forked at week ${cmp.fork_turn}; identical starting state:
+       <strong>${cmp.identical_at_fork ? "verified" : "MISMATCH"}</strong>;
+       identical assumptions: <strong>${cmp.same_assumptions ? "verified" : "no"}</strong>.
+     </p>
+     <table><tr><th>Variable</th><th class="num">A final</th><th class="num">B final</th>
+     <th class="num">Difference</th><th class="num">Peak difference</th></tr>${rows}</table>
+     <ul class="muted">${summary.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
+     <p class="muted">${esc(cmp.framing)}</p>`;
+}
+
+function renderTrajectories(sw) {
+  if (!sw) { $("trajectories").innerHTML = "<p class='muted'>Sweep disabled.</p>"; return; }
+  const items = sw.trajectories.map(t =>
+    `<tr><td><strong>${esc(t.label)}</strong><br><span class="muted">${esc(t.description)}</span>
+     ${t.critical_assumptions.length ? `<br><span class="muted">Requires: ${t.critical_assumptions.map(esc).join("; ")}</span>` : ""}</td>
+     <td class="num">${t.world_count} / ${sw.world_count}</td></tr>`).join("");
+  $("trajectories").innerHTML =
+    `<table><tr><th>Trajectory</th><th class="num">Tested worlds</th></tr>${items}</table>
+     <p class="muted">${esc(sw.framing)}</p>`;
+}
+
+function renderPivotal(sw) {
+  if (!sw) { $("pivotal").innerHTML = ""; return; }
+  const p = sw.pivotal_assumptions;
+  const rows = p.axes.map(a =>
+    `<tr><td>${esc(a.axis)}</td>
+     <td class="rank-${esc(a.rank)}">${esc(a.rank)}</td>
+     <td class="num">${num(a.influence, 3)}</td>
+     <td class="muted">${esc(a.worst_setting)} → ${esc(a.best_setting)}</td>
+     <td>${a.changes_trajectory ? "yes" : "no"}</td></tr>`).join("");
+  $("pivotal").innerHTML =
+    `<p class="muted" style="margin:0 0 8px">Which assumption changes the conclusion for
+       <strong>${esc(p.outcome_variable)}</strong> the most?</p>
+     <table><tr><th>Assumption</th><th>Rank</th><th class="num">Outcome span</th>
+     <th>Worst → best</th><th>Flips trajectory</th></tr>${rows}</table>
+     <p class="muted">${esc(p.framing)}</p>`;
+}
+
+function renderAssumptions(slice) {
+  const rows = slice.assumptions.slice(0, 14).map(a =>
+    `<tr><td>${esc(a.id)}</td><td>${esc(a.statement)}</td><td>${statusTag(a.status)}</td>
+     <td>${a.sourced ? "yes" : "<span style='color:#e6c98a'>no source</span>"}</td></tr>`).join("");
+  const missing = slice.missing_evidence.slice(0, 8).map(m =>
+    `<li>${esc(m.edge)} — ${esc(m.needs)} <span class="muted">(range width ${num(m.effect_span, 2)})</span></li>`).join("");
+  $("assumptions").innerHTML =
+    `<table><tr><th>Id</th><th>Assumption</th><th>Status</th><th>Sourced</th></tr>${rows}</table>
+     <h2 style="margin-top:16px">Missing evidence</h2><ul class="muted">${missing}</ul>`;
+}
+
+// Model Health says where NOT to trust the model. Ratings come from stated deterministic
+// rules over evidence and replay results; nothing here is assigned by a model.
+const HEALTH_COLOUR = { GOOD: "#8ae6b5", MEDIUM: "#e6c98a", POOR: "#e6a15a",
+                        FAILED: "#e68a8a", UNTESTED: "#98a2b3",
+                        LOW: "#8ae6b5", HIGH: "#e68a8a" };
+
+function renderHealth(h) {
+  if (!h) { $("health").textContent = "unavailable"; return; }
+  const v = h.historical_validation, o = h.observability;
+  const rows = [
+    ["Evidence coverage", h.evidence_coverage.rating,
+     `${(100 * h.evidence_coverage.weighted_assumption_share).toFixed(0)}% of influence rests on assumptions`],
+    ["Observability", o.rating,
+     `${o.counts.observable} observable · ${o.counts.proxy_observable} proxy · ${o.counts.latent} latent`],
+    ["Proxy dependence", h.proxy_dependence.level, h.proxy_dependence.proxy_variables.join(", ")],
+    ["Historical validation", v.rating, `events tested: ${(v.events_tested || []).join(", ") || "none"}`],
+    ["Directional validity", v.directional_validity,
+     v.direction_match_rate === null ? "" : `${(100 * v.direction_match_rate).toFixed(0)}% of variables matched`],
+    ["Timing validity", v.timing_validity,
+     v.median_absolute_timing_error_turns === null ? "" : `median |error| ${v.median_absolute_timing_error_turns} weeks`],
+    ["Magnitude validity", v.magnitude_validity,
+     v.mean_envelope_coverage === null ? "" : `${(100 * v.mean_envelope_coverage).toFixed(0)}% envelope coverage`],
+  ].map(([label, rating, detail]) =>
+    `<tr><td>${esc(label)}</td>
+     <td style="color:${HEALTH_COLOUR[rating] || "#98a2b3"};font-weight:600">${esc(rating)}</td>
+     <td class="muted">${esc(detail)}</td></tr>`).join("");
+
+  // Stating a measured, unfixed defect on the product surface is what builds trust in
+  // serious decision support — the alternative is the user finding it themselves.
+  const defects = (h.known_defects || []).map(d =>
+    `<div style="margin-top:12px;padding:10px 12px;border-left:3px solid #e68a8a;background:#241a1a">
+       <strong style="color:#e68a8a">KNOWN MODEL DEFECT</strong> — ${esc(d.severity)}<br>
+       ${esc(d.statement)}<br>
+       <span class="muted">Status: ${esc(d.status)}. Affects: ${esc(d.affects)}.<br>
+       Still safe for: ${esc(d.safe_to_use_for)}.<br>Why not fixed: ${esc(d.why_not_fixed)}</span>
+     </div>`).join("");
+
+  // Experimental mechanisms under test, and what is NOT yet established.
+  const experiments = (h.__experiments || []).map(x =>
+    `<div style="margin-top:10px;padding:8px 12px;border-left:3px solid #5aa9e6;background:#161c22">
+       <strong>Experimental mechanism:</strong> ${esc(x.hypothesis)} — ${esc(x.name)}<br>
+       <span class="muted">Evidence: ${esc(x.mechanism_evidence)}<br>
+       Current result: <strong>${esc(x.experiment_result)}</strong><br>
+       Historical validation: <strong style="color:#e6c98a">${esc(x.historical_validation)}</strong><br>
+       Default production model changed: ${x.default_model_changed ? "yes" : "no"}</span>
+     </div>`).join("");
+
+  $("health").innerHTML =
+    `<table>${rows}</table>
+     ${defects}
+     ${experiments}
+     <p style="margin-top:12px"><strong>Critical uncertainty:</strong>
+       ${h.critical_uncertainty.map(e => `<code>${esc(e)}</code>`).join(", ") || "none"}</p>
+     <p class="muted"><strong>Latent (no public counterpart):</strong>
+       ${o.latent_variables.map(esc).join(", ")} — including the headline outcome.</p>
+     <p class="muted">${esc(h.framing)}</p>`;
+}
+
+// The core product question: which assumption matters most, and how well do we know it?
+async function loadEvidence() {
+  try {
+    const data = await (await fetch("/api/event_sim/evidence")).json();
+    if (!data.ok) throw new Error(data.error || "evidence load failed");
+    const rows = data.gaps.gaps.map(g => {
+      const critical = g.influence_rank === "HIGH" && g.evidence === "LOW";
+      return `<tr${critical ? ' style="background:#241a1a"' : ""}>
+        <td><code>${esc(g.edge)}</code></td>
+        <td class="rank-${esc(g.influence_rank)}">${esc(g.influence_rank)}</td>
+        <td class="rank-${g.evidence === "LOW" ? "HIGH" : "LOW"}">${esc(g.evidence)}</td>
+        <td>${statusTag(g.status)}</td>
+        <td class="num">${num(g.priority, 3)}</td>
+      </tr>`;
+    }).join("");
+    const critical = data.gaps.high_influence_low_evidence;
+    const reqs = data.data_requirements.map(r =>
+      `<li><code>${esc(r.edge)}</code> — collect ${r.collect.map(c => `<strong>${esc(c.variable)}</strong> (${esc(c.unit)})`).join(", ")}
+       <span class="muted">· ${esc(r.likely_holder)}</span></li>`).join("");
+    data.model_health.__experiments = data.experimental_mechanisms || [];
+    renderHealth(data.model_health);
+    const cov = data.coverage.weighted;
+    $("gaps").innerHTML =
+      `<table><tr><th>Causal edge</th><th>Influence</th><th>Evidence</th><th>Status</th><th class="num">Priority</th></tr>${rows}</table>
+       <p class="muted">${esc(data.gaps.priority_formula)}</p>
+       <p>${critical.length
+            ? `<strong style="color:#e68a8a">Top research priority:</strong> ${critical.map(c => `<code>${esc(c.edge)}</code>`).join(", ")} — high influence on the outcome, low evidence.`
+            : "No edge is simultaneously high-influence and low-evidence."}</p>
+       <p class="muted">Influence-weighted assumption share:
+         <strong>${(100 * cov.assumption_share).toFixed(0)}%</strong>
+         (unweighted ${(100 * data.coverage.assumption_share).toFixed(0)}%).
+         ${esc(cov.weighting_method)}</p>
+       <h2 style="margin-top:16px">What would most improve this model</h2>
+       <ul class="muted">${reqs}</ul>
+       <p class="muted">Registered evidence sources: ${data.sources.length}.
+         ${data.provenance_errors.length
+            ? `<strong style="color:#e68a8a">${data.provenance_errors.length} provenance error(s).</strong>`
+            : "Every edge's declared status is supported by its provenance."}</p>`;
+  } catch (err) {
+    $("gaps").textContent = "Could not load evidence state: " + err.message;
+  }
+}
+
+async function run() {
+  const btn = $("run");
+  btn.disabled = true; $("status").textContent = "Simulating…";
+  try {
+    const body = {
+      capacity_loss: parseFloat($("capacity_loss").value),
+      duration: parseInt($("duration").value, 10),
+      turns: parseInt($("turns").value, 10),
+      fork_turn: parseInt($("fork_turn").value, 10),
+      redirect_share: parseFloat($("redirect_share").value),
+      include_sweep: true
+    };
+    const resp = await fetch("/api/event_sim/run", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
+    });
+    const data = await resp.json();
+    if (!data.ok) throw new Error(data.error || "run failed");
+    const r = data.result;
+    $("framing").textContent = r.framing;
+    renderCoverage(r.coverage);
+    renderSlice(r.slice);
+    renderTimeline(r.worlds.world_a);
+    renderCompare(r.comparison, r.comparison_summary);
+    $("trace").textContent = r.causal_trace_text;
+    renderTrajectories(r.sweep);
+    renderPivotal(r.sweep);
+    renderAssumptions(r.slice);
+    $("status").textContent = `Reproducible run · fingerprint ${r.worlds.world_a.fingerprint.slice(0, 12)}…`;
+  } catch (err) {
+    $("status").textContent = "Error: " + err.message;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+$("run").addEventListener("click", run);
+run();
+loadEvidence();
+</script>
+</body>
+</html>

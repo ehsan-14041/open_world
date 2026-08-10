@@ -144,3 +144,25 @@ default-available robust fitting.
   as the honest predictive yardstick, decoupled from the engine's clamped weights.
 - Not yet done (deliberately deferred until an ops-shaped dataset is confirmed to exist):
   rewriting the engine-facing fitter to use lagged / regularized dynamics.
+
+## Update 4 — the same wall, found again in the Event Simulator (Yantian 2021 replay)
+
+The Event Simulator's port-disruption model was put through the same grounding exercise
+(`docs/PORT_DISRUPTION_EVIDENCE_AUDIT.md`, `docs/replays/yantian_2021.md`). The result
+independently reproduces this document's central finding, from a different domain:
+
+- The model splits into an **upstream half** (port capacity → delay → freight → backlog),
+  which public data can partially reach, and a **downstream half** (inventory → service
+  level → production), which is entirely firm-internal and **cannot be grounded in public
+  data at any price**. That is the same wall as "no public dataset jointly contains
+  inventory + demand + lead time + fill rate".
+- Eight real sources were attached and one real disruption was replayed. **Zero edges were
+  promoted.** Two upstream edges are not separately identifiable from a single event; every
+  other target has no observations.
+- The one scoreable series was a **global monthly** aggregate proxying a **single-port
+  weekly** variable. It fell outside the simulated envelope at all four scored points.
+
+Commercial consequence, identical to the one recorded above: the parts of these models that
+customers care about are grounded by **customer data**, not public data. Consultant-assisted
+onboarding remains the right path, and the evidence-gap report now names exactly which
+variables to ask a customer for and which edge each one would resolve.

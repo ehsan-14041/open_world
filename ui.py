@@ -52,6 +52,7 @@ from core.agent_generator import generate_agents_from_scenario  # LLM Integratio
 from visualization.graph_viewer import prepare_graph_data
 from visualization.impact_data import prepare_impact_data
 from ui.dashboard import register_routes as register_dashboard_routes
+from event_sim.api import register_routes as register_event_sim_routes
 from ui.dashboard import build_dashboard_payload, on_turn_complete as dashboard_on_turn_complete, set_last_provenance, set_last_scenario
 from ui.decision_brief import build_decision_brief
 from ui.ops_outcomes import build_ops_outcomes, build_comparison_card
@@ -82,13 +83,20 @@ app = Flask(__name__, template_folder=str(_PROJECT_ROOT / "templates"), static_f
 if not PRODUCT_MODE:
     register_dashboard_routes(app)
 
-_ENGINE_ONLY_PATHS = frozenset({"/advanced", "/viewer", "/dashboard"})
+# Event Simulator: a separate product surface on the same engine (see
+# docs/EVENT_SIMULATOR_ARCHITECTURE.md). It shares no routes, templates or adapters with
+# the Operations Decision Simulator, and is listed below as engine-only so the
+# buyer-facing product-mode SKU does not expose it.
+register_event_sim_routes(app)
+
+_ENGINE_ONLY_PATHS = frozenset({"/advanced", "/viewer", "/dashboard", "/event-sim"})
 _ENGINE_ONLY_API_PREFIXES = (
     "/api/submit_scenario",
     "/api/run_simulation",
     "/api/run_simulation_stream",
     "/api/control/",
     "/api/llm_logs",
+    "/api/event_sim/",
 )
 
 
