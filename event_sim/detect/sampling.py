@@ -72,6 +72,38 @@ def baseline_days() -> list[str]:
     return [d for d in days if d not in DEVELOPMENT_DAYS]
 
 
+# ---------------------------------------------------------------------------------------
+# Detector v2 blind validation sample
+# ---------------------------------------------------------------------------------------
+
+#: First blind day. The development set ends 2022-05-21; this starts at the next clean
+#: quarter boundary, leaving a deliberate gap so no lookback window can reach back into
+#: development days.
+BLIND_FIRST_DAY = "2022-07-01"
+
+#: Contiguous length. Detector v2 needs 14 days of warmup before its first defined residual,
+#: so 180 days yields 166 evaluable ones — enough to resolve a trigger rate to ~0.6% and to
+#: span two full quarters of seasonal variation. Chosen on warmup arithmetic and acquisition
+#: cost, with no reference to what may have happened in the period.
+BLIND_DAYS = 180
+
+
+def blind_days() -> list[str]:
+    """Every blind-sample day, contiguous and in calendar order.
+
+    Contiguity is required, not incidental: a trailing-window detector cannot be evaluated on
+    disjoint 7-day blocks, which is precisely why the development set can inform Detector v2's
+    parameters but can never validate it.
+    """
+    start = date.fromisoformat(BLIND_FIRST_DAY)
+    return [(start + timedelta(days=i)).isoformat() for i in range(BLIND_DAYS)]
+
+
+def splits_are_disjoint() -> bool:
+    """No blind day may appear in the development set."""
+    return not (set(baseline_days()) & set(blind_days()))
+
+
 def window_of(day: str) -> str | None:
     """Which sampled window a day belongs to, or None. Used to avoid computing entries,
     exits or spells across a gap between windows, where they are undefined."""
