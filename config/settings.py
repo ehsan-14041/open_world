@@ -32,7 +32,18 @@ _cfg = _load_config_file()
 
 
 def _from_env(key: str, env_key: str | None = None) -> str | None:
-    name = env_key or f"OWE_{key.upper()}"
+    """
+    Read an env override for `key`, which is namespaced as OWE_<KEY>.
+
+    Callers may pass either the bare key ("PRODUCT_MODE") or the already-namespaced one
+    ("OWE_PRODUCT_MODE"). Both resolve to OWE_PRODUCT_MODE; without this, a pre-prefixed
+    key produced OWE_OWE_PRODUCT_MODE and the documented override silently did nothing.
+    """
+    if env_key:
+        name = env_key
+    else:
+        upper = key.upper()
+        name = upper if upper.startswith("OWE_") else f"OWE_{upper}"
     v = _env.get(name)
     return v.strip() if isinstance(v, str) and v.strip() else None
 
