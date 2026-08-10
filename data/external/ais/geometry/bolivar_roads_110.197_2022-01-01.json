@@ -1,0 +1,96 @@
+{
+  "name": "bolivar_roads",
+  "cfr_section": "33 CFR 110.197",
+  "effective_date": "2022-01-01",
+  "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2022-01-01/title-33.xml?part=110",
+  "source_sha256": "5ce1f3b7ccbaaddd7c57c3242794a079a4ae7814d428fff55a9c06106784e5b9",
+  "source_bytes": 676745,
+  "source_header_verbatim": "Longtitude",
+  "coordinate_system": "WGS84 decimal degrees, (lat, lon)",
+  "independent_of_ais": true,
+  "polygons": [
+    {
+      "label": "A",
+      "vertices": [
+        [
+          29.346805555555555,
+          -94.715
+        ],
+        [
+          29.345277777777778,
+          -94.74625
+        ],
+        [
+          29.354166666666668,
+          -94.74083333333333
+        ],
+        [
+          29.35138888888889,
+          -94.71444444444445
+        ]
+      ],
+      "designation": ""
+    },
+    {
+      "label": "B",
+      "vertices": [
+        [
+          29.345277777777778,
+          -94.74625
+        ],
+        [
+          29.34361111111111,
+          -94.76888888888888
+        ],
+        [
+          29.35388888888889,
+          -94.76388888888889
+        ],
+        [
+          29.354166666666668,
+          -94.74083333333333
+        ]
+      ],
+      "designation": ""
+    },
+    {
+      "label": "C",
+      "vertices": [
+        [
+          29.344166666666666,
+          -94.76875
+        ],
+        [
+          29.351694444444448,
+          -94.7833888888889
+        ],
+        [
+          29.35666666666667,
+          -94.7761111111111
+        ],
+        [
+          29.35402777777778,
+          -94.76361111111112
+        ],
+        [
+          29.351630555555555,
+          -94.71463888888889
+        ],
+        [
+          29.348330555555556,
+          -94.70198055555556
+        ],
+        [
+          29.345919444444444,
+          -94.71048611111111
+        ],
+        [
+          29.34421111111111,
+          -94.70216944444445
+        ]
+      ],
+      "designation": ""
+    }
+  ],
+  "caveat": "These are the LEGALLY DESIGNATED anchorages only. Vessels waiting outside a designated area are not inside any polygon and will not be counted. That is an undercount, not an error, and it is registered as a measurement risk."
+}

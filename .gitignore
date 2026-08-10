@@ -30,4 +30,18 @@ data/snapshots/last_snapshot.json
 output/
 
 # Downloaded external datasets (public, fetched on demand)
-data/external/
+data/external/*
+
+# ...except frozen anchorage geometry. It is small, it is the *definition* of the AIS
+# measurement rather than an observation, and the ANTAQ round showed why a frozen artifact
+# must not depend on an external service staying reachable: the endpoint the Brazilian
+# federal catalog designated for that dataset is now NXDOMAIN.
+!data/external/ais/
+!data/external/ais/*
+!data/external/ais/geometry/
+!data/external/ais/geometry/*.json
+
+# Bulk AIS extracts and per-day download receipts stay out: they are large and exactly
+# reproducible from the recorded source URL and SHA-256.
+data/external/ais/daily/
+data/external/ais/metadata/
