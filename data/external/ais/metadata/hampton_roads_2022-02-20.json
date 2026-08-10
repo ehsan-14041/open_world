@@ -1,0 +1,21 @@
+{
+  "date": "2022-02-20",
+  "region": "hampton_roads",
+  "source_url": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2022/AIS_2022_02_20.zip",
+  "national_sha256": "62b3ae01f1fc62b3c99f3489df2a46b7502e5ca4d42fd599788fdb9cf6992bcd",
+  "national_bytes": 281149002,
+  "national_rows_scanned": 7211904,
+  "regional_rows_kept": 20604,
+  "distinct_mmsi": 53,
+  "extract_path": "data\\external\\ais\\daily\\hampton_roads_2022-02-20.csv",
+  "filters": {
+    "vessel_types": "70-89 (cargo, tanker)",
+    "bbox": [
+      36.82266666666666,
+      37.33944444444445,
+      -76.47272222222222,
+      -76.06333333333333
+    ]
+  },
+  "national_file_retained": false
+}
