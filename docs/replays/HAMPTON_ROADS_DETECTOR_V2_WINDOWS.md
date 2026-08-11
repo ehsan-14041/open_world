@@ -102,3 +102,28 @@ this is a `measurement_anomaly` signature, not a port-specific one.
 
 Historical research had **not** begun when this file was written. Classifications are
 appended below only after this document was committed.
+
+---
+
+## Appended after freeze — classifications
+
+Added after the above was committed as `9657261`. The detection facts above are unchanged.
+
+Independent source: **NOAA NCEI daily summaries, station USW00013737** (Norfolk International
+Airport), 2022-10-18 → 2022-12-20. Non-AIS and machine-readable.
+
+| Window | Classification | Basis |
+|---|---|---|
+| 2022-10-24..27 | **`unknown`** | No exogenous driver independently supported. Max gust 12.5 m/s, below the period p90 of 14.3; no precipitation. No Coast Guard port condition, channel closure, terminal shutdown, labour action or berth outage found. |
+| 2022-12-11..14 | **`measurement_artifact`** | 3 of 4 days coverage-flagged; on 12-14 the coverage residual (4.50) exceeds the occupancy residual (3.00). Regional vessel presence rose with occupancy. |
+
+Neither window is weather-driven, and the converse check holds: the three windiest days in the
+context period — 2022-11-12 (18.3 m/s), 2022-11-11 (17.0), 2022-10-23 (16.5) — produced no
+trigger.
+
+Recorded as a hypothesis and **not** a finding: 2022-10-23, immediately before window 1, was
+the third windiest day in the period, and occupancy then rose monotonically over four days.
+One day, one station, no documented restriction, noticed after the fact, in a run that failed
+validation. It is not a driver.
+
+**No window qualifies as an Event #3 candidate.**

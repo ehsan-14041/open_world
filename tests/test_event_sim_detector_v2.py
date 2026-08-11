@@ -409,6 +409,61 @@ def test_trigger_windows_are_frozen_before_any_historical_labelling():
         )
 
 
+def test_blind_outcome_is_one_of_the_declared_outcomes():
+    if not RESULTS_DOC.exists():
+        pytest.skip("blind evaluation not run in this checkout")
+    text = RESULTS_DOC.read_text(encoding="utf-8")
+    declared = (
+        "DETECTOR_V2_VALID_NO_EVENT", "DETECTOR_V2_VALID_EVENT_FOUND",
+        "DETECTOR_V2_TOO_SENSITIVE", "DETECTOR_V2_TOO_INSENSITIVE",
+        "DETECTOR_V2_COVERAGE_CONFOUNDED", "DETECTOR_V2_INCONCLUSIVE",
+    )
+    assert any(o in text for o in declared)
+
+
+def test_a_failed_blind_run_nominates_no_event3():
+    """The rule that matters most: a detector that failed its own validity gate may not
+    promote its triggers, however convincing one of them looks."""
+    if not RESULTS_DOC.exists():
+        pytest.skip("blind evaluation not run in this checkout")
+    text = _prose(RESULTS_DOC)
+    failed = any(
+        o in text for o in (
+            "DETECTOR_V2_TOO_SENSITIVE", "DETECTOR_V2_TOO_INSENSITIVE",
+            "DETECTOR_V2_COVERAGE_CONFOUNDED", "DETECTOR_V2_INCONCLUSIVE",
+        )
+    )
+    if failed:
+        assert not (REPLAYS / "EVENT3_FREEZE_V4.md").exists()
+        assert "cannot nominate Event #3" in text or "No Event #3 candidate" in text
+
+
+def test_results_confirm_h1_was_not_run():
+    if not RESULTS_DOC.exists():
+        pytest.skip("blind evaluation not run in this checkout")
+    assert "H1 was not run" in _prose(RESULTS_DOC)
+
+
+def test_historical_classification_used_a_non_ais_source():
+    """A driver may not be established from the same observations that produced the trigger."""
+    if not WINDOWS_DOC.exists():
+        pytest.skip("windows not frozen in this checkout")
+    text = _prose(WINDOWS_DOC)
+    if "Classification" in text or "classification" in text:
+        assert "NCEI" in text or "non-AIS" in text
+
+
+def test_classifications_use_only_the_declared_vocabulary():
+    if not WINDOWS_DOC.exists():
+        pytest.skip("windows not frozen in this checkout")
+    text = WINDOWS_DOC.read_text(encoding="utf-8")
+    allowed = {"capacity_side", "arrival_side", "mixed", "weather", "administrative",
+               "measurement_artifact", "unknown"}
+    found = set(re.findall(r"`(capacity_side|arrival_side|mixed|weather|administrative|"
+                           r"measurement_artifact|unknown)`", text))
+    assert found and found <= allowed
+
+
 def test_no_event3_freeze_without_a_windows_document():
     freeze = REPLAYS / "EVENT3_FREEZE_V4.md"
     if freeze.exists():
