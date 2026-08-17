@@ -20,7 +20,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from event_sim.detect.sampling import baseline_days, blind_days  # noqa: E402
+from event_sim.detect.sampling import baseline_days, blind_days, v3_blind_days  # noqa: E402
 from event_sim.ingest import ais  # noqa: E402
 
 #: Concurrent downloads. Kept low on purpose: NOAA serves these at no charge.
@@ -36,14 +36,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--region", default="hampton_roads")
     parser.add_argument(
         "--split",
-        choices=("development", "blind"),
+        choices=("development", "blind", "v3_blind"),
         default="development",
         help="which frozen day list to acquire",
     )
     args = parser.parse_args(argv)
 
     region = ais.REGIONS[args.region]
-    days = baseline_days() if args.split == "development" else blind_days()
+    days = {
+        "development": baseline_days,
+        "blind": blind_days,
+        "v3_blind": v3_blind_days,
+    }[args.split]()
 
     pending = [
         d for d in days if not (ais.DAILY_DIR / f"{region.name}_{d}.csv").exists()
