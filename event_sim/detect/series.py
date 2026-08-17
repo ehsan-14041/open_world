@@ -28,6 +28,10 @@ from event_sim.ingest.ais import DAILY_DIR, Region, SOG_STATIONARY_KTS, commerci
 from event_sim.ingest.cfr_anchorage import AnchoragePolygon, point_in_polygon
 
 
+#: Grid cell size in degrees (~1.1 km) for the spatial-footprint diagnostic.
+FOOTPRINT_CELL_DEG = 0.01
+
+
 @dataclass(frozen=True)
 class DayRecord:
     date: str
@@ -38,6 +42,21 @@ class DayRecord:
     vessels_in_region: int
     messages_kept: int
     status_agreement_rate: float | None
+
+    # --- measurement-context diagnostics (Detector v3) --------------------------------
+    # These describe the *observation environment*, not the port. They are deliberately
+    # computed over the whole region rather than the anchorages, so that they can never be
+    # mistaken for, or folded into, the port-state observable.
+    region_messages: int = 0          # all deep-draft AIS rows in the region that day
+    region_cells: int = 0             # distinct ~1.1 km grid cells with at least one report
+
+    @property
+    def messages_per_vessel(self) -> float | None:
+        """Report density per vessel. A jump here without a matching jump in vessel count
+        indicates the *character* of observation changed, not the amount of traffic."""
+        if not self.vessels_in_region:
+            return None
+        return self.region_messages / self.vessels_in_region
 
 
 @dataclass(frozen=True)
@@ -81,6 +100,8 @@ def day_presence(
     """
     presence: dict[str, tuple[datetime, datetime]] = {}
     in_region: set[str] = set()
+    cells: set[tuple[int, int]] = set()
+    region_messages = 0
     kept = agree = disagree = 0
 
     with path.open(encoding="utf-8", newline="") as fh:
@@ -89,10 +110,12 @@ def day_presence(
             if not mmsi:
                 continue
             in_region.add(mmsi)
+            region_messages += 1
             try:
                 lat, lon, sog = float(row["LAT"]), float(row["LON"]), float(row["SOG"])
             except (KeyError, TypeError, ValueError):
                 continue
+            cells.add((int(lat / FOOTPRINT_CELL_DEG), int(lon / FOOTPRINT_CELL_DEG)))
             if sog >= SOG_STATIONARY_KTS:
                 continue
             if not any(point_in_polygon(lat, lon, p.vertices) for p in polygons):
@@ -116,6 +139,8 @@ def day_presence(
         "messages_kept": kept,
         "agree": agree,
         "checked": checked,
+        "region_messages": region_messages,
+        "region_cells": len(cells),
     }
     return presence, diagnostics
 
@@ -169,6 +194,8 @@ def build(region: Region, days: Iterable[str]) -> SeriesResult:
                 status_agreement_rate=(
                     round(d["agree"] / d["checked"], 4) if d["checked"] else None
                 ),
+                region_messages=d["region_messages"],
+                region_cells=d["region_cells"],
             )
         )
 

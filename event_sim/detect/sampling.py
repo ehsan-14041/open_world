@@ -104,6 +104,32 @@ def splits_are_disjoint() -> bool:
     return not (set(baseline_days()) & set(blind_days()))
 
 
+# ---------------------------------------------------------------------------------------
+# Detector v3 blind validation sample
+# ---------------------------------------------------------------------------------------
+
+#: First v3 blind day. The v2 blind period ends 2022-12-27 and is spent; this starts at the
+#: first month boundary leaving a buffer of more than twice the 14-day lookback, so no v3
+#: trailing window can reach into data whose validation role is finished.
+V3_BLIND_FIRST_DAY = "2023-02-01"
+
+#: Same length as the v2 sample, for comparability, and long enough to expose the coverage
+#: classifier to more than one regime.
+V3_BLIND_DAYS = 180
+
+
+def v3_blind_days() -> list[str]:
+    """Every Detector v3 blind day, contiguous and in calendar order."""
+    start = date.fromisoformat(V3_BLIND_FIRST_DAY)
+    return [(start + timedelta(days=i)).isoformat() for i in range(V3_BLIND_DAYS)]
+
+
+def v3_splits_are_disjoint() -> bool:
+    """The v3 sample must share no day with either the v1 development set or the v2 sample."""
+    v3 = set(v3_blind_days())
+    return not (v3 & set(baseline_days())) and not (v3 & set(blind_days()))
+
+
 def window_of(day: str) -> str | None:
     """Which sampled window a day belongs to, or None. Used to avoid computing entries,
     exits or spells across a gap between windows, where they are undefined."""
