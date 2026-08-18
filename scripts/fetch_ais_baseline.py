@@ -21,6 +21,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from event_sim.detect.sampling import baseline_days, blind_days, v3_blind_days  # noqa: E402
+from event_sim.detect.discovery import discovery_blocks  # noqa: E402
 from event_sim.ingest import ais  # noqa: E402
 
 #: Concurrent downloads. Kept low on purpose: NOAA serves these at no charge.
@@ -34,20 +35,30 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--workers", type=int, default=DEFAULT_WORKERS)
     parser.add_argument("--region", default="hampton_roads")
+    parser.add_argument("--block", type=int, default=None,
+                        help="discovery block index (1-based), with --split discovery")
     parser.add_argument(
         "--split",
-        choices=("development", "blind", "v3_blind"),
+        choices=("development", "blind", "v3_blind", "discovery"),
         default="development",
         help="which frozen day list to acquire",
     )
     args = parser.parse_args(argv)
 
     region = ais.REGIONS[args.region]
-    days = {
-        "development": baseline_days,
-        "blind": blind_days,
-        "v3_blind": v3_blind_days,
-    }[args.split]()
+    if args.split == "discovery":
+        if args.block is None:
+            parser.error("--block is required with --split discovery")
+        blocks = {b.index: b for b in discovery_blocks()}
+        if args.block not in blocks:
+            parser.error(f"block {args.block} not in the frozen universe {sorted(blocks)}")
+        days = blocks[args.block].all_days
+    else:
+        days = {
+            "development": baseline_days,
+            "blind": blind_days,
+            "v3_blind": v3_blind_days,
+        }[args.split]()
 
     pending = [
         d for d in days if not (ais.DAILY_DIR / f"{region.name}_{d}.csv").exists()

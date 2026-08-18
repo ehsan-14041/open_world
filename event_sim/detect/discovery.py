@@ -28,18 +28,22 @@ from event_sim.detect.sampling import baseline_days, blind_days, v3_blind_days
 # Search universe
 # ---------------------------------------------------------------------------------------
 
-#: The frozen geometry (33 CFR 110.168 @ 2022-01-01) takes effect between 2020-04-01 and
-#: 2020-07-01 and is unchanged through 2026-01-01. Days before this cannot be measured with
-#: the frozen instrument, so they are outside the universe by definition rather than by
-#: preference.
+#: The frozen geometry's definition fingerprint differs on or before this date; the current
+#: definition takes effect somewhere in the interval that follows. Declared as data rather
+#: than left in prose, so the search universe's boundaries are auditable constants.
+GEOMETRY_CHANGE_LAST_OLD_DAY = "2020-04-01"
+
+#: First day measurable with the frozen geometry. Days before this cannot be measured with the
+#: frozen instrument, so they are outside the universe by definition rather than by preference.
 GEOMETRY_ERA_START = "2020-07-01"
 
+#: Last date at which the geometry was verified unchanged, by diffing eCFR revisions.
+GEOMETRY_VERIFIED_STABLE_THROUGH = "2026-01-01"
+
 #: National AIS daily coverage, established by probing the publisher's own directory listings
-#: and the artifacts themselves:
-#:   * 2023 complete,
-#:   * 2024-01-01 .. 2024-06-30 listed but every artifact returns 404,
-#:   * 2024-07-01 .. 2024-12-31 present,
-#:   * 2025 onwards: no directory at all.
+#: and the artifacts themselves rather than assumed. The first half of 2024 is listed in the
+#: directory but every artifact returns 404; after the last available day below there is no
+#: directory at all. Both facts materially shrink the search universe.
 AIS_UNAVAILABLE_SPANS = (("2024-01-01", "2024-06-30"),)
 AIS_LAST_AVAILABLE_DAY = "2024-12-31"
 

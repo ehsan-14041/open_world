@@ -78,7 +78,7 @@
     "event_sim/detect/detector_v2.py": "3d2fa42f1ae17089e78ceae02f1c74b18f7ec4f2eb2954fcdf9c15b38288c7b7",
     "event_sim/detect/detector_v3.py": "8ba6b472df62cbde1dd369a6422d3d54ecd1ec1980b1c909d10f7fdef90a4291",
     "event_sim/detect/series.py": "65412a51e93ab690fe604130b8cb75354e8724f8f37690a72c3b5acaaa8e2999",
-    "event_sim/detect/discovery.py": "22e8ac63191ff9dab4290fe3231bccf2ba00839fd451961e5cbc63ae23b96faf",
+    "event_sim/detect/discovery.py": "4658c289dbcfa45603e061e8dc54bb7d0b5f515a2ab4cbc05c121889bf4add23",
     "event_sim/ingest/ais.py": "705bda4507e1b8f0218aad3679574f6e3451386cffc038dd0105bf4529b81216",
     "event_sim/ingest/cfr_anchorage.py": "a139969441a5ca6243ec6bb3797360134b640f8401dbbeb16e242d9055e44348",
     "event_sim/historical/dataset_contract.py": "84a2f8c3df296d0b1ef5f65b6500de38bdb3dd8f02568ec800870a58251c9a64",

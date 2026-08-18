@@ -25,7 +25,7 @@ Full parameter payload: `data/external/ais/detector_v3_final_freeze.json`.
 | `event_sim/detect/detector_v2.py` (occupancy detector) | `3d2fa42f1ae17089` |
 | `event_sim/detect/detector_v3.py` (coverage-regime classifier) | `8ba6b472df62cbde` |
 | `event_sim/detect/series.py` (reconstruction) | `65412a51e93ab690` |
-| `event_sim/detect/discovery.py` (search ordering) | `22e8ac63191ff9da` |
+| `event_sim/detect/discovery.py` (search ordering) | `4658c289dbcfa456` |
 | `event_sim/ingest/ais.py` (measurement rules) | `705bda4507e1b8f0` |
 | `event_sim/ingest/cfr_anchorage.py` (geometry parsing) | `a139969441a5ca62` |
 | `event_sim/historical/dataset_contract.py` (eligibility contract) | `84a2f8c3df296d0b` |
