@@ -1,0 +1,87 @@
+{
+  "semantic_hash": "49ed3b935527f1fb000ad348c411c5049070b672eb01eea69e4f457e97022f73",
+  "parameters": {
+    "occupancy": {
+      "LOOKBACK_DAYS": 14,
+      "MIN_LOOKBACK_PRESENT": 10,
+      "SCALE_FLOOR": 1.0,
+      "RESIDUAL_THRESHOLD": 3.0,
+      "PERSISTENCE_DAYS": 4
+    },
+    "coverage_regime": {
+      "V_SHIFT": 3.5,
+      "M_ABRUPT": 4.0,
+      "S_ABRUPT": 4.5,
+      "M_STABLE": 2.0,
+      "S_STABLE": 2.5,
+      "WINDOW_REGIME_MIN_DAYS": 2,
+      "SEVERITY": [
+        "stable",
+        "gradual_shift",
+        "uncertain",
+        "abrupt_measurement_shift"
+      ],
+      "REGIME_TO_CANDIDATE": {
+        "stable": "candidate_port_anomaly",
+        "gradual_shift": "candidate_with_context",
+        "abrupt_measurement_shift": "measurement_confounded",
+        "uncertain": "uncertain"
+      }
+    },
+    "validity": {
+      "V2_MAX_TRIGGER_DAY_SHARE": 0.15,
+      "V3_MAX_UNCERTAIN_DAY_SHARE": 0.25,
+      "V4_MAX_ABRUPT_DAY_SHARE": 0.15,
+      "V6_MEDIAN_RESIDUAL_BOUND": 0.5,
+      "V6_MAX_THIRD_DRIFT": 1.0,
+      "STOP_HAMPTON_ROADS_OUTCOMES": [
+        "DETECTOR_V3_MEASUREMENT_UNSTABLE",
+        "DETECTOR_V3_TOO_MANY_UNCERTAIN_DAYS"
+      ]
+    },
+    "measurement": {
+      "SOG_STATIONARY_KTS": 0.5,
+      "DEEP_DRAFT_TYPES": [
+        70,
+        90
+      ],
+      "BBOX_MARGIN_DEG": 0.02,
+      "bbox": [
+        36.8227,
+        37.3394,
+        -76.4727,
+        -76.0633
+      ],
+      "FOOTPRINT_CELL_DEG": 0.01,
+      "geometry_file": "hampton_roads_110.168_2022-01-01.json"
+    },
+    "discovery": {
+      "GEOMETRY_ERA_START": "2020-07-01",
+      "AIS_UNAVAILABLE_SPANS": [
+        [
+          "2024-01-01",
+          "2024-06-30"
+        ]
+      ],
+      "AIS_LAST_AVAILABLE_DAY": "2024-12-31",
+      "BLOCK_DISCOVERY_DAYS": 90,
+      "BLOCK_WARMUP_DAYS": 14,
+      "MIN_DISCOVERY_DAYS": 45,
+      "MAX_DISCOVERY_BLOCKS": 8,
+      "RECOVERY_RESIDUAL_BAND": 1.0,
+      "RECOVERY_DAYS": 7,
+      "EXTENSION_INCREMENT_DAYS": 14,
+      "MAX_EXTENSION_DAYS": 56
+    }
+  },
+  "file_hashes": {
+    "event_sim/detect/detector_v2.py": "3d2fa42f1ae17089e78ceae02f1c74b18f7ec4f2eb2954fcdf9c15b38288c7b7",
+    "event_sim/detect/detector_v3.py": "8ba6b472df62cbde1dd369a6422d3d54ecd1ec1980b1c909d10f7fdef90a4291",
+    "event_sim/detect/series.py": "65412a51e93ab690fe604130b8cb75354e8724f8f37690a72c3b5acaaa8e2999",
+    "event_sim/detect/discovery.py": "22e8ac63191ff9dab4290fe3231bccf2ba00839fd451961e5cbc63ae23b96faf",
+    "event_sim/ingest/ais.py": "705bda4507e1b8f0218aad3679574f6e3451386cffc038dd0105bf4529b81216",
+    "event_sim/ingest/cfr_anchorage.py": "a139969441a5ca6243ec6bb3797360134b640f8401dbbeb16e242d9055e44348",
+    "event_sim/historical/dataset_contract.py": "84a2f8c3df296d0b1ef5f65b6500de38bdb3dd8f02568ec800870a58251c9a64",
+    "data/external/ais/geometry/hampton_roads_110.168_2022-01-01.json": "7baa46a782ede9dd7fd760a13e164a05246844158f4004c408f55032546dfce7"
+  }
+}
