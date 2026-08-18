@@ -1,0 +1,146 @@
+{
+  "outcome": "DETECTOR_V3_VALID",
+  "recommend_stop_hampton_roads": false,
+  "days_wanted": 180,
+  "days_acquired": 180,
+  "days_missing": [],
+  "evaluable_days": 170,
+  "frozen_parameters": {
+    "LOOKBACK_DAYS": 14,
+    "RESIDUAL_THRESHOLD": 3.0,
+    "PERSISTENCE_DAYS": 4,
+    "V_SHIFT": 3.5,
+    "M_ABRUPT": 4.0,
+    "S_ABRUPT": 4.5,
+    "M_STABLE": 2.0,
+    "S_STABLE": 2.5
+  },
+  "coverage_regime_counts": {
+    "stable": 128,
+    "gradual_shift": 10,
+    "abrupt_measurement_shift": 24,
+    "uncertain": 8
+  },
+  "uncertain_day_share": 0.0471,
+  "abrupt_day_share": 0.1412,
+  "coverage_diagnostics": {
+    "vessels_in_region": {
+      "n": 180,
+      "mean": 53.4556,
+      "median": 54.0,
+      "variance": 80.5369,
+      "stdev": 8.9742,
+      "mad": 7.0,
+      "minimum": 33.0,
+      "p10": 42.0,
+      "p25": 47.0,
+      "p75": 61.0,
+      "p90": 64.0,
+      "maximum": 76.0
+    },
+    "messages_per_vessel": {
+      "n": 180,
+      "mean": 348.3112,
+      "median": 351.7863,
+      "variance": 842.8367,
+      "stdev": 29.0317,
+      "mad": 17.5719,
+      "minimum": 228.55,
+      "p10": 312.8181818181818,
+      "p25": 330.39344262295083,
+      "p75": 367.125,
+      "p90": 381.47169811320754,
+      "maximum": 439.5348837209302
+    },
+    "region_cells": {
+      "n": 180,
+      "mean": 186.3722,
+      "median": 184.0,
+      "variance": 448.4448,
+      "stdev": 21.1765,
+      "mad": 13.0,
+      "minimum": 144.0,
+      "p10": 162.0,
+      "p25": 172.0,
+      "p75": 197.0,
+      "p90": 216.0,
+      "maximum": 257.0
+    }
+  },
+  "occupancy_distribution": {
+    "n": 180,
+    "mean": 14.75,
+    "median": 15.0,
+    "variance": 12.7431,
+    "stdev": 3.5697,
+    "mad": 2.0,
+    "minimum": 6.0,
+    "p10": 10.0,
+    "p25": 12.0,
+    "p75": 17.0,
+    "p90": 19.0,
+    "maximum": 26.0
+  },
+  "residual_distribution": {
+    "n": 170,
+    "mean": 0.09,
+    "median": 0.0,
+    "variance": 4.5541,
+    "stdev": 2.134,
+    "mad": 1.2666,
+    "minimum": -5.0,
+    "p10": -2.75,
+    "p25": -1.0,
+    "p75": 1.3333,
+    "p90": 3.0,
+    "maximum": 7.0
+  },
+  "threshold_reachability": {
+    "threshold": 3.0,
+    "max_observed_residual": 7.0,
+    "p99_residual": 7.0,
+    "p95_residual": 3.3333,
+    "days_at_or_above_threshold": 19,
+    "share_at_or_above_threshold": 0.1118,
+    "reachable": true
+  },
+  "trigger_count": 1,
+  "trigger_days": 5,
+  "trigger_day_share": 0.0294,
+  "trigger_windows": [
+    {
+      "start": "2023-06-01",
+      "peak_date": "2023-06-02",
+      "end": "2023-06-05",
+      "duration_days": 5,
+      "peak_residual": 7.0,
+      "mean_residual": 4.0667,
+      "peak_occupancy": 22.0,
+      "baseline_at_peak": 15.0,
+      "occupancy_trajectory": [
+        19.0,
+        22.0,
+        21.0,
+        21.0,
+        21.0
+      ],
+      "coverage_regime": "gradual_shift",
+      "candidate_class": "candidate_with_context",
+      "regime_days": {
+        "abrupt_measurement_shift": 1,
+        "gradual_shift": 2,
+        "stable": 2
+      }
+    }
+  ],
+  "median_residual": 0.0,
+  "third_drift": 0.5,
+  "criteria": {
+    "V1_threshold_reachable": true,
+    "V2_not_too_sensitive": true,
+    "V3_interpretable": true,
+    "V4_measurement_stable": true,
+    "V5_classifier_discriminates": true,
+    "V6_baseline_adapts": true
+  }
+}

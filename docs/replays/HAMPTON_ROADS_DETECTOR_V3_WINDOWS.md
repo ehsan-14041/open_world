@@ -86,3 +86,24 @@ bears directly on how much weight this window can carry.
 
 Historical research had **not** begun when this file was written. Any classification appears
 below only after this document was committed.
+
+---
+
+## Appended after freeze — classification
+
+Added after the above was committed as `363b934`. The detection facts above are unchanged.
+
+Independent, non-AIS source: **NOAA NCEI daily summaries, station USW00013737** (Norfolk
+International Airport), 2023-05-10 → 2023-06-30.
+
+| Window | Classification | Basis |
+|---|---|---|
+| 2023-06-01..05 | **`unknown`** | No exogenous driver independently documented. Max gust 13.9 m/s against a period p90 of 15.7 and max of 21.0; 0.5 mm precipitation across all five days. No Coast Guard port condition, channel closure, terminal shutdown, berth outage or labour action found in Coast Guard, Port of Virginia, Army Corps or trade-press sources. |
+
+Not weather-driven, and the converse check holds: the windiest and wettest days in the context
+period — 2023-06-27 (21.0 m/s), 06-25 (21.0), 06-23 (55.4 mm), 06-21, 06-16 — produced no
+trigger at all.
+
+**The window does not qualify as an Event #3 candidate.** Requirement 4 (independently
+documented exogenous driver) fails outright, and requirement 3 fails on the trajectory:
+occupancy does not recover after the window, it continues rising to 26 by 06-08.
