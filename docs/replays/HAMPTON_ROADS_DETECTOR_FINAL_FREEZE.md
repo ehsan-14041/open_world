@@ -7,16 +7,24 @@
 >
 > From here on, the instrument is fixed and only the world is allowed to surprise us.
 
-## 1. Semantic hash
+## 1. Semantic hashes
 
-Over behaviour-changing parameters only — prose, comments and formatting excluded, so the
-hash moves if and only if the instrument's behaviour would.
+Over behaviour-changing parameters only — prose, comments and formatting excluded.
 
-```
-49ed3b935527f1fb000ad348c411c5049070b672eb01eea69e4f457e97022f73
-```
+Two hashes, because two different things are being frozen and only one of them is the
+instrument. Separating them means "the instrument did not change" stays verifiable even when a
+search-protocol parameter is amended.
 
-Full parameter payload: `data/external/ais/detector_v3_final_freeze.json`.
+| Scope | Hash | Status |
+|---|---|---|
+| **Instrument** — occupancy detector, coverage-regime classifier, validity criteria, measurement rules | `b79b6909f48d384c661818eb1e390e1cabc41704798014fb17a8789b1c5ef472` | **frozen; must never change during discovery** |
+| Search protocol — universe bounds, block structure, budget, recovery rules | `8ac1c174bb2839f89477258c3b9fe048…` | amended once before any detection; see universe doc §10 |
+| Combined | `94ed22b2c19a876009e464f557cdd1f5…` | was `49ed3b935527f1fb…` before the budget amendment |
+
+The combined hash moved **only** because `MAX_DISCOVERY_BLOCKS` moved from 8 to 11. The
+instrument hash is byte-identical across that amendment, which is the claim that matters here.
+
+Full parameter payload and amendment record: `data/external/ais/detector_v3_final_freeze.json`.
 
 ## 2. Component hashes
 

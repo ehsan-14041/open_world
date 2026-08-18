@@ -147,6 +147,73 @@ The universe is **not** expanded post-hoc. At that point Hampton Roads is finish
 project and the correct move is to return to dataset and port selection — not to build a
 Detector v4.
 
+## 10. Amendment — budget raised to the universe exhaustion count
+
+**Amended 2026-08-18, before any discovery detection was run.**
+
+| | |
+|---|---|
+| Field | `MAX_DISCOVERY_BLOCKS` |
+| Old value | **8** (preserved in code as `MAX_DISCOVERY_BLOCKS_ORIGINAL`) |
+| New value | **11** |
+| Discovery detection outcomes inspected at amendment time | **0** |
+| Discovery result artifacts present at amendment time | **none** — no block result file, no ledger, no window document existed |
+| Instrument semantic hash | `b79b6909f48d384c…` — **unchanged** |
+| Search protocol hash | `11993ce1f548d1b4…` → `8ac1c174bb2839f8…` |
+| Blocks unlocked | 3 |
+| Additional discovery days | 220 |
+| Additional acquisition including warmup | 262 days, ≈ 86 GB |
+
+### Reason
+
+The original cap of 8 was a round bound chosen **before the eligible universe had been
+enumerated**. Once enumerated, the universe requires exactly **11** blocks, so the cap
+mechanically truncated an already-frozen universe and left 3 blocks — 220 eligible unseen
+discovery days — unreachable. That is an arbitrary right-censoring of the search: those days
+satisfy every eligibility rule and were excluded only by a number chosen in ignorance of how
+many blocks the rules would produce.
+
+Because **no discovery detection result had been observed**, correcting the cap now removes
+that censoring while preserving blind chronological selection. Nothing else changed: ordering,
+block size, warmup and boundary rules, eligibility, recovery and extension rules, and Detector
+v3 itself are all untouched.
+
+The new value is not a preference for 11; it is the computed exhaustion count. Had the universe
+required a different number, that number would have been used.
+
+### Consequence for the terminal negative outcome
+
+The stopping rule is no longer "search up to a budget". It is:
+
+> Search the entire pre-registered eligible Hampton Roads universe chronologically, stopping
+> early only when the first qualifying Event #3 is found.
+
+So `NO_QUALIFYING_EVENT_IN_SEARCH_UNIVERSE` becomes a strictly stronger claim: it can only be
+returned once the **whole frozen universe has actually been processed**, not merely once the
+first eight blocks have been.
+
+### Full block list after amendment
+
+| Block | Discovery | Days | |
+|---|---|---|---|
+| 1 | 2020-09-05 → 2020-11-14 | 71 | |
+| 2 | 2020-12-06 → 2021-02-14 | 71 | |
+| 3 | 2021-03-08 → 2021-05-14 | 68 | |
+| 4 | 2021-06-05 → 2021-08-14 | 71 | |
+| 5 | 2021-09-05 → 2021-11-14 | 71 | |
+| 6 | 2021-12-06 → 2022-02-14 | 71 | |
+| 7 | 2022-03-08 → 2022-05-14 | 68 | |
+| 8 | 2023-08-14 → 2023-11-11 | 90 | |
+| 9 | 2023-11-12 → 2023-12-31 | 50 | unlocked by amendment |
+| 10 | 2024-07-15 → 2024-10-12 | 90 | unlocked by amendment |
+| 11 | 2024-10-13 → 2024-12-31 | 80 | unlocked by amendment |
+
+**801 discovery days total.** Blocks 9 and 11 are span remainders, admitted by the unchanged
+`MIN_DISCOVERY_DAYS` rule. Block 10 opens a new span, so it carries dedicated warmup
+(2024-07-01 → 07-14); block 9's and block 11's warmup are the preceding blocks' own tails.
+
+Blocks are still processed strictly in order. Block 10 and 11 are **not** inspected early.
+
 ## 9. Valid outcomes
 
 Exactly one of `EVENT3_FROZEN_READY_FOR_HELDOUT`, `NO_QUALIFYING_EVENT_IN_SEARCH_UNIVERSE`,

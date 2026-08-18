@@ -61,9 +61,20 @@ BLOCK_DISCOVERY_DAYS = 90
 #: `Block.warmup_days`.
 BLOCK_WARMUP_DAYS = LOOKBACK_DAYS
 
-#: Pre-registered ceiling on the search. The universe turns out to be smaller than this, but
-#: the bound is declared anyway so that the search cannot be extended post-hoc if it is not.
-MAX_DISCOVERY_BLOCKS = 8
+#: Pre-registered ceiling on the search.
+#:
+#: AMENDED before any discovery detection was run: originally 8, now 11 — the exact number of
+#: blocks the already-frozen eligible universe requires. The original cap was chosen as a
+#: round bound before the universe had been enumerated, and it turned out to truncate that
+#: universe mechanically, leaving 3 blocks and 220 eligible unseen discovery days unreachable.
+#: Raising it to the exhaustion count removes an arbitrary right-censoring of the search while
+#: leaving ordering, block size and eligibility untouched. See
+#: docs/replays/EVENT3_DISCOVERY_UNIVERSE.md §10.
+#:
+#: This is now an exhaustion count rather than a budget: NO_QUALIFYING_EVENT_IN_SEARCH_UNIVERSE
+#: can only be returned if the whole frozen universe was actually processed.
+MAX_DISCOVERY_BLOCKS_ORIGINAL = 8
+MAX_DISCOVERY_BLOCKS = 11
 
 # ---------------------------------------------------------------------------------------
 # Recovery, declared before any discovery day was acquired

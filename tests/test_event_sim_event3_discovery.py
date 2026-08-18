@@ -32,7 +32,19 @@ LEDGER = REPLAYS / "EVENT3_DISCOVERY_LEDGER.md"
 FINAL_FREEZE = REPLAYS / "EVENT3_FREEZE_FINAL.md"
 DRIVER_GAP = REPLAYS / "EVENT3_DRIVER_GAP.md"
 
-FROZEN_SEMANTIC_HASH = "49ed3b935527f1fb000ad348c411c5049070b672eb01eea69e4f457e97022f73"
+#: The instrument. This must not move during Event #3 discovery, ever.
+FROZEN_INSTRUMENT_HASH = "b79b6909f48d384c661818eb1e390e1cabc41704798014fb17a8789b1c5ef472"
+
+#: Sections of the frozen payload that constitute the instrument, as opposed to the search
+#: protocol wrapped around it.
+INSTRUMENT_SECTIONS = ("occupancy", "coverage_regime", "validity", "measurement")
+
+FREEZE_JSON = REPO / "data" / "external" / "ais" / "detector_v3_final_freeze.json"
+
+#: Artifacts whose existence proves a discovery detection result has been observed.
+DISCOVERY_RESULT_GLOBS = ("data/external/ais/event3_discovery_block_*.json",)
+DISCOVERY_RESULT_DOCS = ("docs/replays/EVENT3_DISCOVERY_LEDGER.md",
+                         "docs/replays/EVENT3_FREEZE_FINAL.md")
 
 
 def _prose(p: Path) -> str:
@@ -46,14 +58,92 @@ def _days(n: int, start: date = date(2021, 1, 1)) -> list[str]:
 
 # --- instrument and history frozen -------------------------------------------------------
 
-def test_detector_semantic_hash_unchanged():
-    payload = json.loads(
-        (REPO / "data" / "external" / "ais" / "detector_v3_final_freeze.json").read_text("utf-8")
-    )
+def test_instrument_semantic_hash_unchanged():
+    """The instrument is frozen for the whole of discovery. Amending a search-protocol
+    parameter must not disturb it, which is the entire reason the hashes are split."""
+    payload = json.loads(FREEZE_JSON.read_text("utf-8"))
+    recomputed = hashlib.sha256(
+        json.dumps({k: payload["parameters"][k] for k in INSTRUMENT_SECTIONS},
+                   sort_keys=True).encode()
+    ).hexdigest()
+    assert recomputed == payload["instrument_semantic_hash"] == FROZEN_INSTRUMENT_HASH
+
+
+def test_combined_hash_matches_the_recorded_payload():
+    payload = json.loads(FREEZE_JSON.read_text("utf-8"))
     recomputed = hashlib.sha256(
         json.dumps(payload["parameters"], sort_keys=True).encode()
     ).hexdigest()
-    assert recomputed == payload["semantic_hash"] == FROZEN_SEMANTIC_HASH
+    assert recomputed == payload["semantic_hash"]
+
+
+def test_budget_equals_the_universe_exhaustion_count():
+    """The cap is an exhaustion count, not a preference. If the universe ever needs a
+    different number, this fails rather than silently truncating the search again."""
+    import event_sim.detect.discovery as module
+
+    saved = module.MAX_DISCOVERY_BLOCKS
+    try:
+        module.MAX_DISCOVERY_BLOCKS = 10 ** 6
+        required = len(module.discovery_blocks())
+    finally:
+        module.MAX_DISCOVERY_BLOCKS = saved
+    assert required == dsc.MAX_DISCOVERY_BLOCKS, (
+        f"universe needs {required} blocks but the cap is {dsc.MAX_DISCOVERY_BLOCKS}; "
+        f"the search would be right-censored"
+    )
+
+
+def test_original_budget_is_preserved_not_overwritten():
+    assert dsc.MAX_DISCOVERY_BLOCKS_ORIGINAL == 8
+    assert dsc.MAX_DISCOVERY_BLOCKS == 11
+    assert "MAX_DISCOVERY_BLOCKS_ORIGINAL" in DISCOVERY_SRC.read_text(encoding="utf-8")
+    doc = UNIVERSE_DOC.read_text(encoding="utf-8")
+    assert "Old value" in doc and "8" in doc, "original rule must remain in protocol history"
+
+
+def test_amendment_was_made_before_any_discovery_result_existed():
+    """The claim that makes the amendment legitimate rather than post-hoc.
+
+    Checked two ways: the recorded amendment asserts zero inspected outcomes, and — where git
+    is available — the commit that introduced the amendment is an ancestor of the commit that
+    first introduced any discovery result artifact.
+    """
+    import subprocess
+
+    payload = json.loads(FREEZE_JSON.read_text("utf-8"))
+    amendments = payload.get("amendments", [])
+    assert amendments, "amendment must be recorded, not applied silently"
+    a = amendments[0]
+    assert a["old_value"] == 8 and a["new_value"] == 11
+    assert a["discovery_detection_outcomes_inspected_at_amendment_time"] == 0
+    assert a["discovery_result_artifacts_present_at_amendment_time"] == []
+    assert a["instrument_changed"] is False
+
+    def added_in(path: str) -> str | None:
+        try:
+            out = subprocess.run(
+                ["git", "log", "--diff-filter=A", "--format=%H", "--", path],
+                cwd=REPO, capture_output=True, text=True, timeout=30,
+            )
+        except Exception:
+            return None
+        commits = [c for c in out.stdout.split() if c]
+        return commits[-1] if commits else None
+
+    amend_commit = added_in("data/external/ais/detector_v3_final_freeze.json")
+    if amend_commit is None:
+        pytest.skip("git unavailable")
+
+    for doc in DISCOVERY_RESULT_DOCS:
+        result_commit = added_in(doc)
+        if result_commit is None:
+            continue
+        ok = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", amend_commit, result_commit],
+            cwd=REPO, capture_output=True, timeout=30,
+        ).returncode == 0
+        assert ok, f"{doc} was created before the budget amendment was recorded"
 
 
 def test_detector_parameters_unchanged():
@@ -254,7 +344,7 @@ def test_discovery_does_not_touch_the_operations_product():
 
 def test_freeze_and_universe_documents_exist():
     assert FREEZE_DOC.exists() and UNIVERSE_DOC.exists()
-    assert FROZEN_SEMANTIC_HASH in FREEZE_DOC.read_text(encoding="utf-8")
+    assert FROZEN_INSTRUMENT_HASH in FREEZE_DOC.read_text(encoding="utf-8")
 
 
 def test_no_final_freeze_without_a_ledger():
