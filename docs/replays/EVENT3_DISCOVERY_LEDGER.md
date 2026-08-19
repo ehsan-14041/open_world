@@ -299,6 +299,47 @@ Historical research had **not** begun when this entry was written.
 
 ### Appended after freeze - classification
 
+Added after the above was committed as `3a80959`.
+
+**Trigger 5 (2022-03-15..19)** required no research. It is `measurement_confounded` under the
+frozen gating rule, so it cannot be an Event #3 candidate whatever any source says. Researching
+it could only have produced a narrative to argue against a rule already applied. Classification:
+**`measurement_artifact`**.
+
+**Trigger 6 (2022-04-27..30)** was researched.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2022-04-05 to 2022-05-20.
+
+| | Window 2022-04-27..30 | Context period |
+|---|---|---|
+| Max gust | **13.9 m/s** | p90 17.4, max 20.6 |
+| Precipitation | **0.0 mm** on all four days | - |
+
+**Not weather-driven.** The windiest days - 2022-05-10 (20.6 m/s), 05-16 (19.2), 05-09 (19.2),
+05-11 (17.4) - produced **no trigger**.
+
+No Coast Guard port condition, channel closure, terminal shutdown, berth outage, infrastructure
+failure or labour action was found for Hampton Roads in this window.
+
+**Classification: `unknown`.**
+
+### Event #3 eligibility - trigger 6
+
+| # | Requirement | Status |
+|---|---|---|
+| 1 | Occupancy anomaly independently detected | **met** |
+| 2 | Measurement regime interpretable | **weak** - only 2 of 4 days stable; vessel count climbing throughout; abrupt days on both flanks |
+| 3 | Baseline to accumulation to peak to recovery | **met** - baseline 18.5, peak 24, recovery completing 2022-05-08 |
+| 4 | Exogenous driver independently documented | **NOT MET** |
+| 5-6 | Representability, contract | n/a |
+
+**Neither trigger is an Event #3 candidate.** Search continues to block 8.
+
+---
+
+### Appended after freeze - classification
+
 Added after the above was committed as `921beed`.
 
 **Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
@@ -578,6 +619,47 @@ a degraded observation environment.
 ### Status at freeze time
 
 Historical research had **not** begun when this entry was written.
+
+---
+
+### Appended after freeze - classification
+
+Added after the above was committed as `3a80959`.
+
+**Trigger 5 (2022-03-15..19)** required no research. It is `measurement_confounded` under the
+frozen gating rule, so it cannot be an Event #3 candidate whatever any source says. Researching
+it could only have produced a narrative to argue against a rule already applied. Classification:
+**`measurement_artifact`**.
+
+**Trigger 6 (2022-04-27..30)** was researched.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2022-04-05 to 2022-05-20.
+
+| | Window 2022-04-27..30 | Context period |
+|---|---|---|
+| Max gust | **13.9 m/s** | p90 17.4, max 20.6 |
+| Precipitation | **0.0 mm** on all four days | - |
+
+**Not weather-driven.** The windiest days - 2022-05-10 (20.6 m/s), 05-16 (19.2), 05-09 (19.2),
+05-11 (17.4) - produced **no trigger**.
+
+No Coast Guard port condition, channel closure, terminal shutdown, berth outage, infrastructure
+failure or labour action was found for Hampton Roads in this window.
+
+**Classification: `unknown`.**
+
+### Event #3 eligibility - trigger 6
+
+| # | Requirement | Status |
+|---|---|---|
+| 1 | Occupancy anomaly independently detected | **met** |
+| 2 | Measurement regime interpretable | **weak** - only 2 of 4 days stable; vessel count climbing throughout; abrupt days on both flanks |
+| 3 | Baseline to accumulation to peak to recovery | **met** - baseline 18.5, peak 24, recovery completing 2022-05-08 |
+| 4 | Exogenous driver independently documented | **NOT MET** |
+| 5-6 | Representability, contract | n/a |
+
+**Neither trigger is an Event #3 candidate.** Search continues to block 8.
 
 ---
 
@@ -1000,6 +1082,47 @@ Historical research had **not** begun when this entry was written.
 
 ### Appended after freeze - classification
 
+Added after the above was committed as `3a80959`.
+
+**Trigger 5 (2022-03-15..19)** required no research. It is `measurement_confounded` under the
+frozen gating rule, so it cannot be an Event #3 candidate whatever any source says. Researching
+it could only have produced a narrative to argue against a rule already applied. Classification:
+**`measurement_artifact`**.
+
+**Trigger 6 (2022-04-27..30)** was researched.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2022-04-05 to 2022-05-20.
+
+| | Window 2022-04-27..30 | Context period |
+|---|---|---|
+| Max gust | **13.9 m/s** | p90 17.4, max 20.6 |
+| Precipitation | **0.0 mm** on all four days | - |
+
+**Not weather-driven.** The windiest days - 2022-05-10 (20.6 m/s), 05-16 (19.2), 05-09 (19.2),
+05-11 (17.4) - produced **no trigger**.
+
+No Coast Guard port condition, channel closure, terminal shutdown, berth outage, infrastructure
+failure or labour action was found for Hampton Roads in this window.
+
+**Classification: `unknown`.**
+
+### Event #3 eligibility - trigger 6
+
+| # | Requirement | Status |
+|---|---|---|
+| 1 | Occupancy anomaly independently detected | **met** |
+| 2 | Measurement regime interpretable | **weak** - only 2 of 4 days stable; vessel count climbing throughout; abrupt days on both flanks |
+| 3 | Baseline to accumulation to peak to recovery | **met** - baseline 18.5, peak 24, recovery completing 2022-05-08 |
+| 4 | Exogenous driver independently documented | **NOT MET** |
+| 5-6 | Representability, contract | n/a |
+
+**Neither trigger is an Event #3 candidate.** Search continues to block 8.
+
+---
+
+### Appended after freeze - classification
+
 Added after the above was committed as `921beed`.
 
 **Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
@@ -1202,3 +1325,44 @@ any downstream use must carry that qualification.
 ### Status at freeze time
 
 Historical research had **not** begun when this entry was written.
+
+---
+
+### Appended after freeze - classification
+
+Added after the above was committed as `3a80959`.
+
+**Trigger 5 (2022-03-15..19)** required no research. It is `measurement_confounded` under the
+frozen gating rule, so it cannot be an Event #3 candidate whatever any source says. Researching
+it could only have produced a narrative to argue against a rule already applied. Classification:
+**`measurement_artifact`**.
+
+**Trigger 6 (2022-04-27..30)** was researched.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2022-04-05 to 2022-05-20.
+
+| | Window 2022-04-27..30 | Context period |
+|---|---|---|
+| Max gust | **13.9 m/s** | p90 17.4, max 20.6 |
+| Precipitation | **0.0 mm** on all four days | - |
+
+**Not weather-driven.** The windiest days - 2022-05-10 (20.6 m/s), 05-16 (19.2), 05-09 (19.2),
+05-11 (17.4) - produced **no trigger**.
+
+No Coast Guard port condition, channel closure, terminal shutdown, berth outage, infrastructure
+failure or labour action was found for Hampton Roads in this window.
+
+**Classification: `unknown`.**
+
+### Event #3 eligibility - trigger 6
+
+| # | Requirement | Status |
+|---|---|---|
+| 1 | Occupancy anomaly independently detected | **met** |
+| 2 | Measurement regime interpretable | **weak** - only 2 of 4 days stable; vessel count climbing throughout; abrupt days on both flanks |
+| 3 | Baseline to accumulation to peak to recovery | **met** - baseline 18.5, peak 24, recovery completing 2022-05-08 |
+| 4 | Exogenous driver independently documented | **NOT MET** |
+| 5-6 | Representability, contract | n/a |
+
+**Neither trigger is an Event #3 candidate.** Search continues to block 8.
