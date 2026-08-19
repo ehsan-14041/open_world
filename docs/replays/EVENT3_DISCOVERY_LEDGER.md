@@ -15,7 +15,7 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **4 of 11 — search SUSPENDED, not exhausted** |
+| Blocks processed | **5 of 11 — search resumed** |
 | Triggers frozen so far | **3** (blocks 2, 3, 4) |
 | Qualifying Event #3 so far | **none** |
 
@@ -637,3 +637,71 @@ it, and this document does not pretend otherwise.
 | Tests | 933 passing |
 | `EVENT3_FREEZE_FINAL.md` | deliberately absent |
 | `EVENT3_DRIVER_GAP.md` | deliberately absent — no real event was established whose driver could not be represented |
+
+---
+
+# Search resumed at block 5
+
+Resumed under the frozen protocol with no change to ordering, instrument, thresholds, coverage
+model, eligibility contract, recovery rule or budget. Blocks 1–4 stand as immutable historical
+results.
+
+---
+
+## Block 5 — 2021-09-05 → 2021-11-14
+
+| | |
+|---|---|
+| Span | 2021-08-22 → 2021-11-14 |
+| Warmup | 2021-08-22 → 2021-09-04 |
+| Discovery days | 71 |
+| Days with observations | **84 / 85** |
+| Evaluable discovery days | 70 |
+| Artifact set SHA-256 | `1c10756257567abd5951bdec4ee224c5…` |
+
+### The 2021-10-31 dropout — acquisition succeeded, observation did not
+
+Worth separating carefully, because the two failure modes look identical downstream. The
+national archive for 2021-10-31 downloaded **cleanly**: 279,515,626 bytes, SHA-256 recorded,
+7,204,737 national rows scanned. It then yielded **zero** qualifying regional rows — no
+cargo/tanker vessel anywhere in the Hampton Roads box for the entire day.
+
+That is not operationally possible at a port of this size, so it is a **regional coverage
+dropout in the source**, not a quiet day. The national file has normal volume; the gap is
+specific to this region.
+
+The pipeline treats it as unobserved: no extract, `None` on the contiguous axis, undefined
+residual, regime `uncertain`, and it breaks any trigger run. That is the pre-registered
+missing-data behaviour and it is correct — an unobserved day is unobserved regardless of why.
+Recorded here so the distinction between "not acquired" and "acquired but empty" stays visible.
+
+### Observations
+
+| Series | median | mean | sd | min | max |
+|---|---|---|---|---|---|
+| `anchorage_occupancy` | 14.0 | 13.88 | 1.85 | 9 | 17 |
+| standardised residual | 0.0 | — | 2.05 | −7.0 | **4.0** |
+
+Threshold reachable: max residual 4.0, 8 days at or above 3.0 (11.43%).
+
+Occupancy is both higher and markedly steadier here than in blocks 1–4 — median 14 with sd 1.85,
+against medians of 6–10 with sd 2.1–3.7 earlier. A busy but even period.
+
+### Coverage regimes
+
+| Regime | Days | Share |
+|---|---|---|
+| `stable` | 50 | 71.4% |
+| `abrupt_measurement_shift` | 16 | **22.9%** |
+| `gradual_shift` | 2 | 2.9% |
+| `uncertain` | 2 | 2.9% |
+
+The abrupt rate is the highest of any block so far, just above block 1's 21.1%. Recorded as
+context, not applied as a gate — no per-block measurement gate was pre-registered, and creating
+one now would be a post-hoc rule change.
+
+### Triggers
+
+**None.** Eight days reached the threshold but no run of four consecutive days occurred.
+
+No historical research performed — there is nothing to research.
