@@ -15,7 +15,7 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **4 of 11** |
+| Blocks processed | **4 of 11 — search SUSPENDED, not exhausted** |
 | Triggers frozen so far | **3** (blocks 2, 3, 4) |
 | Qualifying Event #3 so far | **none** |
 
@@ -536,3 +536,104 @@ same reason. That consistency is itself informative: the instrument keeps findin
 anchorage excursions that no independent source explains.
 
 **Not an Event #3 candidate.** Search continues to block 5.
+
+---
+
+# Search suspended at block 4 — no terminal outcome declared
+
+**Suspended by operator decision after block 4, with 7 of 11 blocks unprocessed.**
+
+## Why no terminal outcome is reported
+
+The four declared outcomes are `EVENT3_FROZEN_READY_FOR_HELDOUT`,
+`NO_QUALIFYING_EVENT_IN_SEARCH_UNIVERSE`, `EVENT3_DRIVER_GAP` and
+`MEASUREMENT_INTEGRITY_FAILURE`. **None of them applies.**
+
+In particular this is **not** `NO_QUALIFYING_EVENT_IN_SEARCH_UNIVERSE`. Under the amendment
+committed at `2b4ca78`, that outcome became a strictly stronger claim: it requires the whole
+frozen universe to have been processed. 520 of 801 discovery days — 65% of the universe,
+including every block after 2021-08-14 — have never been looked at. Reporting exhaustion here
+would assert something untrue.
+
+The correct status is: **search in progress, suspended, resumable.**
+
+## Coverage achieved
+
+| | |
+|---|---|
+| Blocks processed | 4 of 11 |
+| Discovery days covered | **281 of 801 (35.1%)** |
+| Days acquired including warmup | 337 |
+| National AIS transferred | **98.5 GB** |
+| National rows scanned | **2,601,750,679** |
+| Regional rows retained | 4,551,207 |
+| Period covered | 2020-09-05 → 2021-08-14, with gaps at the spent v1 windows |
+
+## Blocks remaining
+
+| Block | Discovery window | Days |
+|---|---|---|
+| 5 | 2021-09-05 → 2021-11-14 | 71 |
+| 6 | 2021-12-06 → 2022-02-14 | 71 |
+| 7 | 2022-03-08 → 2022-05-14 | 68 |
+| 8 | 2023-08-14 → 2023-11-11 | 90 |
+| 9 | 2023-11-12 → 2023-12-31 | 50 |
+| 10 | 2024-07-15 → 2024-10-12 | 90 |
+| 11 | 2024-10-13 → 2024-12-31 | 80 |
+
+Resuming requires no protocol change: the ordering, the instrument and the eligibility contract
+are all frozen and unchanged. `python scripts/fetch_ais_baseline.py --split discovery --block N`
+followed by `python scripts/event3_discovery_block.py --block N`, continuing from block 5.
+
+## What the four processed blocks established
+
+**Three triggers, all classified `unknown`, all rejected on requirement 4** — no independently
+documented exogenous driver. None was weather-driven, and in every case the converse check held:
+the windiest and wettest days in each context period produced no trigger.
+
+| Block | Window | Occupancy | Peak resid | Regime | Recovery | Class |
+|---|---|---|---|---|---|---|
+| 1 | — | — | — | — | — | no trigger |
+| 2 | 2020-12-08..11 | 6 → 8 on base 3 | 4.0 | `stable` 4/4 | 2021-01-20 | `unknown` |
+| 3 | 2021-03-09..12 | 7 → 9 on base 4 | 5.0 | `stable` 3/4 | 2021-04-09 | `unknown` |
+| 4 | 2021-06-06..09 | 14 → 16 on base 9 | **7.0** | `stable` 4/4 | 2021-06-17 | `unknown` |
+
+The instrument is doing what it was built to do. All three windows classified
+`candidate_port_anomaly` rather than `measurement_confounded` — the coverage model is
+discriminating, not rubber-stamping. Block 4's window in particular showed occupancy rising by
+seven vessels while the regional vessel count *fell* in residual terms, which is precisely the
+port-specific signature the model exists to isolate, and is not something Detector v2 could have
+distinguished.
+
+What is missing is not detection. It is **drivers**. Three real, well-measured anchorage
+excursions have no independent documentary explanation — no Coast Guard restriction, no channel
+closure, no terminal or berth outage, no labour action, no weather.
+
+## The open question this leaves
+
+Two readings remain live, and four blocks are not enough to separate them:
+
+1. **Hampton Roads had no documented disruption in 2020-09 → 2021-08.** Independent evidence
+   points this way: the Port of Virginia publicly reported record volumes with *no congestion*
+   through 2021 after \$800M of capacity investment. On this reading the remaining 65% of the
+   universe — which includes late 2021, 2022, and the whole of 2023-2024 H2 — may still contain
+   a qualifying event.
+2. **Four-day anchorage excursions at this port routinely have no documented cause.** On this
+   reading the driver requirement may never be satisfiable here, and the eventual outcome is
+   `NO_QUALIFYING_EVENT_IN_SEARCH_UNIVERSE` after full exhaustion.
+
+Distinguishing them requires processing the remaining blocks. Nothing observed so far settles
+it, and this document does not pretend otherwise.
+
+## Invariants at suspension
+
+| | |
+|---|---|
+| Instrument semantic hash | `b79b6909f48d384c…` — unchanged since the final freeze |
+| Detector parameters | unchanged; no Detector v4 exists |
+| Event #3 eligibility contract | unchanged, `84a2f8c3df296d0b` |
+| Frozen model hashes | `d4670fb1…` / `324a8bf1…` / `880d2d0e…`, drift **NONE** |
+| **H1** | **not run** — no simulation, no baseline, no held-out metric |
+| Tests | 933 passing |
+| `EVENT3_FREEZE_FINAL.md` | deliberately absent |
+| `EVENT3_DRIVER_GAP.md` | deliberately absent — no real event was established whose driver could not be represented |
