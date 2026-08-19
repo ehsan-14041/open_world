@@ -299,6 +299,65 @@ Historical research had **not** begun when this entry was written.
 
 ### Appended after freeze — classification
 
+Added after the above was committed as `abc20a7`.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2021-05-15 → 2021-07-15.
+
+| | Window 2021-06-06..09 | Context period |
+|---|---|---|
+| Max gust | **12.1 m/s** | p90 13.9, max 19.7 |
+| Precipitation | 0.8 mm across all four days | — |
+
+**Not weather-driven.** The windiest days — 2021-07-08 (19.7 m/s), 06-22 (16.5), 07-01 (16.1) —
+produced **no trigger**.
+
+No Coast Guard port condition, channel closure, terminal shutdown, berth outage, infrastructure
+failure or labour action was found for Hampton Roads in this window.
+
+#### The narrative that exists, and why it is rejected
+
+Trade-press searching does surface a general 2021 context: an unprecedented import surge, vessel
+bunching, and the Yantian COVID closure in late May–June 2021 rippling through global schedules.
+It would be easy to attach this window to that story. It is rejected on three independent
+grounds, any one of which is sufficient:
+
+1. **It is not an exogenous local driver.** A global import surge is arrival-side pressure, not
+   a documented local capacity event. The protocol names "more vessels appeared" as explicitly
+   *insufficient*, and no Hampton Roads capacity event is documented.
+2. **The measurement contradicts it.** This is the decisive point. Across the window the
+   regional vessel count barely moves — 50 to 55, with its residual *falling* from 3.40 to 0.29
+   — while anchorage occupancy jumps by seven. An arrival surge should raise regional presence.
+   It did not. Whatever filled the anchorage, more ships arriving in the region is not it.
+3. **It would breach independence from H1 development.** Yantian 2021 is one of the two
+   historical events this project used to develop and diagnose H1. An Event #3 whose driver is
+   the downstream wake of Yantian is not held out from H1 development, and the eligibility
+   contract requires that independence. This disqualifies the narrative even if the first two
+   objections were somehow answered.
+
+**Classification: `unknown`.**
+
+### Event #3 eligibility
+
+| # | Requirement | Status |
+|---|---|---|
+| 1 | Occupancy anomaly independently detected | **met** |
+| 2 | Measurement regime interpretable | **met** — 4 of 4 days `stable`, high confidence |
+| 3 | Baseline → accumulation → peak → recovery | **met** — flat baseline 9, peak 16, clean recovery by 2021-06-17 |
+| 4 | Exogenous driver independently documented | **NOT MET** |
+| 5–6 | Representability, contract | n/a |
+
+The best-shaped window in the project, on the cleanest measurement regime, with the clearest
+recovery — and it still fails on requirement 4. Three windows have now been rejected for the
+same reason. That consistency is itself informative: the instrument keeps finding real
+anchorage excursions that no independent source explains.
+
+**Not an Event #3 candidate.** Search continues to block 5.
+
+---
+
+### Appended after freeze — classification
+
 Added after the above was committed as `50efa6e`.
 
 **Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
@@ -418,3 +477,62 @@ a degraded observation environment.
 ### Status at freeze time
 
 Historical research had **not** begun when this entry was written.
+
+---
+
+### Appended after freeze — classification
+
+Added after the above was committed as `abc20a7`.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2021-05-15 → 2021-07-15.
+
+| | Window 2021-06-06..09 | Context period |
+|---|---|---|
+| Max gust | **12.1 m/s** | p90 13.9, max 19.7 |
+| Precipitation | 0.8 mm across all four days | — |
+
+**Not weather-driven.** The windiest days — 2021-07-08 (19.7 m/s), 06-22 (16.5), 07-01 (16.1) —
+produced **no trigger**.
+
+No Coast Guard port condition, channel closure, terminal shutdown, berth outage, infrastructure
+failure or labour action was found for Hampton Roads in this window.
+
+#### The narrative that exists, and why it is rejected
+
+Trade-press searching does surface a general 2021 context: an unprecedented import surge, vessel
+bunching, and the Yantian COVID closure in late May–June 2021 rippling through global schedules.
+It would be easy to attach this window to that story. It is rejected on three independent
+grounds, any one of which is sufficient:
+
+1. **It is not an exogenous local driver.** A global import surge is arrival-side pressure, not
+   a documented local capacity event. The protocol names "more vessels appeared" as explicitly
+   *insufficient*, and no Hampton Roads capacity event is documented.
+2. **The measurement contradicts it.** This is the decisive point. Across the window the
+   regional vessel count barely moves — 50 to 55, with its residual *falling* from 3.40 to 0.29
+   — while anchorage occupancy jumps by seven. An arrival surge should raise regional presence.
+   It did not. Whatever filled the anchorage, more ships arriving in the region is not it.
+3. **It would breach independence from H1 development.** Yantian 2021 is one of the two
+   historical events this project used to develop and diagnose H1. An Event #3 whose driver is
+   the downstream wake of Yantian is not held out from H1 development, and the eligibility
+   contract requires that independence. This disqualifies the narrative even if the first two
+   objections were somehow answered.
+
+**Classification: `unknown`.**
+
+### Event #3 eligibility
+
+| # | Requirement | Status |
+|---|---|---|
+| 1 | Occupancy anomaly independently detected | **met** |
+| 2 | Measurement regime interpretable | **met** — 4 of 4 days `stable`, high confidence |
+| 3 | Baseline → accumulation → peak → recovery | **met** — flat baseline 9, peak 16, clean recovery by 2021-06-17 |
+| 4 | Exogenous driver independently documented | **NOT MET** |
+| 5–6 | Representability, contract | n/a |
+
+The best-shaped window in the project, on the cleanest measurement regime, with the clearest
+recovery — and it still fails on requirement 4. Three windows have now been rejected for the
+same reason. That consistency is itself informative: the instrument keeps finding real
+anchorage excursions that no independent source explains.
+
+**Not an Event #3 candidate.** Search continues to block 5.
