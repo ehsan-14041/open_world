@@ -297,6 +297,107 @@ Historical research had **not** begun when this entry was written.
 
 ---
 
+### Appended after freeze - classification
+
+Added after the above was committed as `921beed`.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2021-12-15 to 2022-02-10.
+
+| | Window 2022-01-06..10 | Context period |
+|---|---|---|
+| Max gust | **16.5 m/s** | p90 17.9, max 24.1 |
+| Precipitation | 8.1 mm total | - |
+| Snow | **0.0 mm** on all five days | up to 9 mm/day later in the month |
+
+**Not weather-driven.** The windiest days - 2022-01-03 (24.1 m/s), 01-16 (21.9), 01-17 (21.5),
+01-28 (20.1) - produced **no trigger**.
+
+#### A documented disruption exists in this block, and it is not this window
+
+Trade-press reporting establishes a real Hampton Roads disruption in January 2022: **two
+late-January snowstorms** halted operations for roughly 96 hours, leaving about 11 vessels
+anchored outside the harbour, growing to 14 within a week.
+
+The snow dates match the independent weather record exactly - the snowiest days in the period
+are **2022-01-22 (9 mm), 01-21 (8 mm), 01-29 (8 mm), 01-28 (2 mm)**.
+
+**That is 11-19 days after this trigger window ended.** The frozen trigger runs 01-06 to 01-10.
+Under the causal-timing rule, an effect that clearly precedes its supposed cause is rejected, and
+no anticipation mechanism is documented or plausible here. The late-January snowstorms do not
+explain the early-January window.
+
+**Classification: `unknown`.** Requirement 4 not met. **Not an Event #3 candidate.**
+
+---
+
+## INSTRUMENT FINDING - the frozen detector missed the documented event
+
+This is the most consequential result of the discovery phase, and it is recorded here rather
+than in a footnote because it reframes every prior block.
+
+The late-January disruption **is plainly visible** in the reconstructed series:
+
+| Date | Occupancy | Baseline | Residual | Regime |
+|---|---|---|---|---|
+| 2022-01-20 | 17 | 19.0 | -2.00 | stable |
+| 2022-01-21 | 17 | 19.0 | -2.00 | stable |
+| 2022-01-22 | 17 | 19.0 | -2.00 | stable |
+| **2022-01-23** | **25** | 18.5 | **4.33** | stable |
+| **2022-01-24** | **23** | 18.5 | **3.00** | stable |
+| **2022-01-25** | **25** | 18.5 | **4.33** | stable |
+| 2022-01-26 | 22 | 19.0 | **1.50** | stable |
+| 2022-01-27 | 24 | 19.0 | 2.50 | stable |
+| 2022-01-28 | 24 | 19.0 | 2.50 | stable |
+| 2022-01-29 | 25 | 19.5 | 2.20 | stable |
+| 2022-01-30 | 26 | **21.0** | 1.43 | stable |
+| 2022-01-31 | 26 | **22.5** | 1.40 | stable |
+| 2022-02-01 | 27 | **23.5** | 1.75 | abrupt |
+
+Occupancy climbs from 17 to a sustained 22-27 and stays there for ten days. **The detector
+produced no trigger.** Two mechanisms combined:
+
+1. **The run broke one day short.** Residuals reached 3.0+ on 01-23, 01-24 and 01-25, then 01-26
+   fell to 1.50. Three consecutive days against a persistence requirement of four.
+2. **The trailing baseline absorbed the event.** As the elevation persisted, the 14-day trailing
+   median climbed with it: 18.5, 19.0, 19.5, 21.0, 22.5, 23.5. By 01-30, occupancy of 26 - nine
+   above the pre-event level - scored a residual of only 1.43.
+
+### What this means, stated plainly
+
+The frozen instrument detects **short, sharp** excursions and is structurally **blind to
+sustained** ones. A 14-day trailing median has a 7-day breakdown point; an event that outlasts
+that becomes its own baseline. This was noted as a design property when the lookback was chosen -
+"an elevated stretch of up to 7 days cannot corrupt its own baseline" - but its converse was
+never tested, because no validation period contained a sustained documented event.
+
+This inverts the reading of blocks 2, 3, 4 and 6. The natural interpretation until now was *the
+instrument keeps finding real anomalies that no source explains*. The better-supported
+interpretation is now:
+
+> The instrument finds a **class** of anomaly - brief, sharp, 4-5 days - that tends not to have
+> documented drivers, while being blind to the class that does: slow-building sustained
+> congestion.
+
+Four unexplained short triggers and one missed documented sustained event is a coherent picture,
+and it is not a flattering one for the search as designed.
+
+### What is NOT being done about it
+
+- **The detector is not changed.** Detector development is finished and the instrument is frozen
+  for the whole of discovery. Adjusting persistence, lookback or baseline estimator now - after
+  seeing which event it missed - is precisely the post-hoc move the protocol forbids. The
+  instrument semantic hash `b79b6909f48d384c...` stands.
+- **Late January 2022 does not become Event #3.** It was **not detected**. Promoting it now would
+  be exactly the forbidden inversion: *historical event, then inspect AIS around event*. The
+  protocol requires detection to precede research, and it did not detect this.
+- **The search continues unchanged** to block 7 under the same rules.
+
+Any future detector generation addressing sustained events would need its own development and
+validation split, and this finding is the honest evidence for why one might be warranted.
+
+---
+
 ### Appended after freeze — classification
 
 Added after the above was committed as `abc20a7`.
@@ -477,6 +578,107 @@ a degraded observation environment.
 ### Status at freeze time
 
 Historical research had **not** begun when this entry was written.
+
+---
+
+### Appended after freeze - classification
+
+Added after the above was committed as `921beed`.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2021-12-15 to 2022-02-10.
+
+| | Window 2022-01-06..10 | Context period |
+|---|---|---|
+| Max gust | **16.5 m/s** | p90 17.9, max 24.1 |
+| Precipitation | 8.1 mm total | - |
+| Snow | **0.0 mm** on all five days | up to 9 mm/day later in the month |
+
+**Not weather-driven.** The windiest days - 2022-01-03 (24.1 m/s), 01-16 (21.9), 01-17 (21.5),
+01-28 (20.1) - produced **no trigger**.
+
+#### A documented disruption exists in this block, and it is not this window
+
+Trade-press reporting establishes a real Hampton Roads disruption in January 2022: **two
+late-January snowstorms** halted operations for roughly 96 hours, leaving about 11 vessels
+anchored outside the harbour, growing to 14 within a week.
+
+The snow dates match the independent weather record exactly - the snowiest days in the period
+are **2022-01-22 (9 mm), 01-21 (8 mm), 01-29 (8 mm), 01-28 (2 mm)**.
+
+**That is 11-19 days after this trigger window ended.** The frozen trigger runs 01-06 to 01-10.
+Under the causal-timing rule, an effect that clearly precedes its supposed cause is rejected, and
+no anticipation mechanism is documented or plausible here. The late-January snowstorms do not
+explain the early-January window.
+
+**Classification: `unknown`.** Requirement 4 not met. **Not an Event #3 candidate.**
+
+---
+
+## INSTRUMENT FINDING - the frozen detector missed the documented event
+
+This is the most consequential result of the discovery phase, and it is recorded here rather
+than in a footnote because it reframes every prior block.
+
+The late-January disruption **is plainly visible** in the reconstructed series:
+
+| Date | Occupancy | Baseline | Residual | Regime |
+|---|---|---|---|---|
+| 2022-01-20 | 17 | 19.0 | -2.00 | stable |
+| 2022-01-21 | 17 | 19.0 | -2.00 | stable |
+| 2022-01-22 | 17 | 19.0 | -2.00 | stable |
+| **2022-01-23** | **25** | 18.5 | **4.33** | stable |
+| **2022-01-24** | **23** | 18.5 | **3.00** | stable |
+| **2022-01-25** | **25** | 18.5 | **4.33** | stable |
+| 2022-01-26 | 22 | 19.0 | **1.50** | stable |
+| 2022-01-27 | 24 | 19.0 | 2.50 | stable |
+| 2022-01-28 | 24 | 19.0 | 2.50 | stable |
+| 2022-01-29 | 25 | 19.5 | 2.20 | stable |
+| 2022-01-30 | 26 | **21.0** | 1.43 | stable |
+| 2022-01-31 | 26 | **22.5** | 1.40 | stable |
+| 2022-02-01 | 27 | **23.5** | 1.75 | abrupt |
+
+Occupancy climbs from 17 to a sustained 22-27 and stays there for ten days. **The detector
+produced no trigger.** Two mechanisms combined:
+
+1. **The run broke one day short.** Residuals reached 3.0+ on 01-23, 01-24 and 01-25, then 01-26
+   fell to 1.50. Three consecutive days against a persistence requirement of four.
+2. **The trailing baseline absorbed the event.** As the elevation persisted, the 14-day trailing
+   median climbed with it: 18.5, 19.0, 19.5, 21.0, 22.5, 23.5. By 01-30, occupancy of 26 - nine
+   above the pre-event level - scored a residual of only 1.43.
+
+### What this means, stated plainly
+
+The frozen instrument detects **short, sharp** excursions and is structurally **blind to
+sustained** ones. A 14-day trailing median has a 7-day breakdown point; an event that outlasts
+that becomes its own baseline. This was noted as a design property when the lookback was chosen -
+"an elevated stretch of up to 7 days cannot corrupt its own baseline" - but its converse was
+never tested, because no validation period contained a sustained documented event.
+
+This inverts the reading of blocks 2, 3, 4 and 6. The natural interpretation until now was *the
+instrument keeps finding real anomalies that no source explains*. The better-supported
+interpretation is now:
+
+> The instrument finds a **class** of anomaly - brief, sharp, 4-5 days - that tends not to have
+> documented drivers, while being blind to the class that does: slow-building sustained
+> congestion.
+
+Four unexplained short triggers and one missed documented sustained event is a coherent picture,
+and it is not a flattering one for the search as designed.
+
+### What is NOT being done about it
+
+- **The detector is not changed.** Detector development is finished and the instrument is frozen
+  for the whole of discovery. Adjusting persistence, lookback or baseline estimator now - after
+  seeing which event it missed - is precisely the post-hoc move the protocol forbids. The
+  instrument semantic hash `b79b6909f48d384c...` stands.
+- **Late January 2022 does not become Event #3.** It was **not detected**. Promoting it now would
+  be exactly the forbidden inversion: *historical event, then inspect AIS around event*. The
+  protocol requires detection to precede research, and it did not detect this.
+- **The search continues unchanged** to block 7 under the same rules.
+
+Any future detector generation addressing sustained events would need its own development and
+validation split, and this finding is the honest evidence for why one might be warranted.
 
 ---
 
@@ -793,3 +995,104 @@ during it.
 ### Status at freeze time
 
 Historical research had **not** begun when this entry was written.
+
+---
+
+### Appended after freeze - classification
+
+Added after the above was committed as `921beed`.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2021-12-15 to 2022-02-10.
+
+| | Window 2022-01-06..10 | Context period |
+|---|---|---|
+| Max gust | **16.5 m/s** | p90 17.9, max 24.1 |
+| Precipitation | 8.1 mm total | - |
+| Snow | **0.0 mm** on all five days | up to 9 mm/day later in the month |
+
+**Not weather-driven.** The windiest days - 2022-01-03 (24.1 m/s), 01-16 (21.9), 01-17 (21.5),
+01-28 (20.1) - produced **no trigger**.
+
+#### A documented disruption exists in this block, and it is not this window
+
+Trade-press reporting establishes a real Hampton Roads disruption in January 2022: **two
+late-January snowstorms** halted operations for roughly 96 hours, leaving about 11 vessels
+anchored outside the harbour, growing to 14 within a week.
+
+The snow dates match the independent weather record exactly - the snowiest days in the period
+are **2022-01-22 (9 mm), 01-21 (8 mm), 01-29 (8 mm), 01-28 (2 mm)**.
+
+**That is 11-19 days after this trigger window ended.** The frozen trigger runs 01-06 to 01-10.
+Under the causal-timing rule, an effect that clearly precedes its supposed cause is rejected, and
+no anticipation mechanism is documented or plausible here. The late-January snowstorms do not
+explain the early-January window.
+
+**Classification: `unknown`.** Requirement 4 not met. **Not an Event #3 candidate.**
+
+---
+
+## INSTRUMENT FINDING - the frozen detector missed the documented event
+
+This is the most consequential result of the discovery phase, and it is recorded here rather
+than in a footnote because it reframes every prior block.
+
+The late-January disruption **is plainly visible** in the reconstructed series:
+
+| Date | Occupancy | Baseline | Residual | Regime |
+|---|---|---|---|---|
+| 2022-01-20 | 17 | 19.0 | -2.00 | stable |
+| 2022-01-21 | 17 | 19.0 | -2.00 | stable |
+| 2022-01-22 | 17 | 19.0 | -2.00 | stable |
+| **2022-01-23** | **25** | 18.5 | **4.33** | stable |
+| **2022-01-24** | **23** | 18.5 | **3.00** | stable |
+| **2022-01-25** | **25** | 18.5 | **4.33** | stable |
+| 2022-01-26 | 22 | 19.0 | **1.50** | stable |
+| 2022-01-27 | 24 | 19.0 | 2.50 | stable |
+| 2022-01-28 | 24 | 19.0 | 2.50 | stable |
+| 2022-01-29 | 25 | 19.5 | 2.20 | stable |
+| 2022-01-30 | 26 | **21.0** | 1.43 | stable |
+| 2022-01-31 | 26 | **22.5** | 1.40 | stable |
+| 2022-02-01 | 27 | **23.5** | 1.75 | abrupt |
+
+Occupancy climbs from 17 to a sustained 22-27 and stays there for ten days. **The detector
+produced no trigger.** Two mechanisms combined:
+
+1. **The run broke one day short.** Residuals reached 3.0+ on 01-23, 01-24 and 01-25, then 01-26
+   fell to 1.50. Three consecutive days against a persistence requirement of four.
+2. **The trailing baseline absorbed the event.** As the elevation persisted, the 14-day trailing
+   median climbed with it: 18.5, 19.0, 19.5, 21.0, 22.5, 23.5. By 01-30, occupancy of 26 - nine
+   above the pre-event level - scored a residual of only 1.43.
+
+### What this means, stated plainly
+
+The frozen instrument detects **short, sharp** excursions and is structurally **blind to
+sustained** ones. A 14-day trailing median has a 7-day breakdown point; an event that outlasts
+that becomes its own baseline. This was noted as a design property when the lookback was chosen -
+"an elevated stretch of up to 7 days cannot corrupt its own baseline" - but its converse was
+never tested, because no validation period contained a sustained documented event.
+
+This inverts the reading of blocks 2, 3, 4 and 6. The natural interpretation until now was *the
+instrument keeps finding real anomalies that no source explains*. The better-supported
+interpretation is now:
+
+> The instrument finds a **class** of anomaly - brief, sharp, 4-5 days - that tends not to have
+> documented drivers, while being blind to the class that does: slow-building sustained
+> congestion.
+
+Four unexplained short triggers and one missed documented sustained event is a coherent picture,
+and it is not a flattering one for the search as designed.
+
+### What is NOT being done about it
+
+- **The detector is not changed.** Detector development is finished and the instrument is frozen
+  for the whole of discovery. Adjusting persistence, lookback or baseline estimator now - after
+  seeing which event it missed - is precisely the post-hoc move the protocol forbids. The
+  instrument semantic hash `b79b6909f48d384c...` stands.
+- **Late January 2022 does not become Event #3.** It was **not detected**. Promoting it now would
+  be exactly the forbidden inversion: *historical event, then inspect AIS around event*. The
+  protocol requires detection to precede research, and it did not detect this.
+- **The search continues unchanged** to block 7 under the same rules.
+
+Any future detector generation addressing sustained events would need its own development and
+validation split, and this finding is the honest evidence for why one might be warranted.
