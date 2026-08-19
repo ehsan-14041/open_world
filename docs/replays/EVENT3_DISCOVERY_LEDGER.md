@@ -15,7 +15,7 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **8 of 11** |
+| Blocks processed | **9 of 11** |
 | Triggers frozen so far | **6** (blocks 2, 3, 4, 6, and two in block 7) |
 | Qualifying Event #3 so far | **none** |
 
@@ -1428,5 +1428,54 @@ against 17.6-22.9% abrupt in blocks 1, 5, 6 and 7.
 ### Triggers
 
 **None.** Eight days reached the threshold but no run of four consecutive days occurred.
+
+No historical research performed - there is nothing to research.
+
+---
+
+## Block 9 - 2023-11-12 to 2023-12-31
+
+| | |
+|---|---|
+| Span | 2023-07-31 to 2023-12-31 (span remainder) |
+| Warmup | 2023-10-29 to 2023-11-11 - the tail of block 8, already acquired |
+| Discovery days | 50 |
+| Days acquired | **64 / 64** - zero failures |
+| Evaluable discovery days | 50 |
+| Artifact set SHA-256 | `5b239275ba7aa06b12b4616668f1e696...` |
+
+This is one of the three blocks unlocked by the pre-detection budget amendment (`2b4ca78`).
+Under the original cap of 8 it would never have been examined.
+
+Its warmup is block 8's own tail rather than dedicated days, which is the boundary-continuity
+rule working as designed: the trailing baseline is continuous across the block boundary and no
+discovery day is counted twice.
+
+### Observations
+
+| Series | median | mean | sd | min | max |
+|---|---|---|---|---|---|
+| `anchorage_occupancy` | 19.0 | 18.91 | 2.07 | 15 | 24 |
+| standardised residual | 0.0 | - | 1.95 | -5.0 | **5.0** |
+
+Threshold reachable: max residual 5.0, 5 days at or above 3.0 (10.0%) - almost exactly the
+design target.
+
+### Coverage regimes
+
+| Regime | Days | Share |
+|---|---|---|
+| `stable` | 43 | **86.0%** |
+| `abrupt_measurement_shift` | 4 | 8.0% |
+| `uncertain` | 2 | 4.0% |
+| `gradual_shift` | 1 | 2.0% |
+
+**The cleanest observation environment of any block processed** - 86% stable against 71-79%
+elsewhere, and 8% abrupt against 13-23%. Occupancy is also the steadiest yet in relative terms:
+median 19 with sd 2.07.
+
+### Triggers
+
+**None.** Five days reached the threshold but no run of four consecutive days occurred.
 
 No historical research performed - there is nothing to research.
