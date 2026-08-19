@@ -15,7 +15,7 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **7 of 11** |
+| Blocks processed | **8 of 11** |
 | Triggers frozen so far | **6** (blocks 2, 3, 4, 6, and two in block 7) |
 | Qualifying Event #3 so far | **none** |
 
@@ -1366,3 +1366,67 @@ failure or labour action was found for Hampton Roads in this window.
 | 5-6 | Representability, contract | n/a |
 
 **Neither trigger is an Event #3 candidate.** Search continues to block 8.
+
+---
+
+## Reporting change from block 8 onward - two fields, never one
+
+From this block forward every trigger reports two separate fields:
+
+| Field | Meaning |
+|---|---|
+| `frozen_regime_classification` | the exact output of the pre-registered classifier |
+| `measurement_confidence` | descriptive audit assessment from the already-existing per-day diagnostics |
+
+The second **never** overrides the first, changes eligibility, or introduces a gate. It exists
+only so the mechanical label cannot be read more strongly than the underlying observations
+support - the failure mode block 7's trigger 6 exposed, where a window with only 2 of 4 days
+individually `stable` still fell through to `stable` because neither minority regime reached the
+2-day threshold.
+
+That aggregation behaviour is **preserved as-is**. It is not fixed, reinterpreted or worked
+around during this discovery run.
+
+---
+
+## Block 8 - 2023-08-14 to 2023-11-11
+
+| | |
+|---|---|
+| Span | 2023-07-31 to 2023-12-31 |
+| Warmup | 2023-07-31 to 2023-08-13 |
+| Discovery days | 90 - the first full-length block |
+| Days acquired | **104 / 104** - zero failures |
+| Evaluable discovery days | 90 |
+| Artifact set SHA-256 | `130f629c1c64fbf5a135a79c5b468f97...` |
+
+First block of the 2023 era, and the first to reach the full 90-day block length.
+
+### Observations
+
+| Series | median | mean | sd | min | max |
+|---|---|---|---|---|---|
+| `anchorage_occupancy` | 16.0 | 15.81 | 3.69 | 7 | 24 |
+| standardised residual | 0.33 | - | 1.91 | -5.0 | **4.5** |
+
+Threshold reachable: max residual 4.5, 8 days at or above 3.0 (**8.89%**) - the lowest trigger
+rate of any discovery block so far, and close to the 9.4% and 11.2% seen in the two validation
+periods.
+
+### Coverage regimes
+
+| Regime | Days | Share |
+|---|---|---|
+| `stable` | 71 | 78.9% |
+| `abrupt_measurement_shift` | 12 | 13.3% |
+| `uncertain` | 5 | 5.6% |
+| `gradual_shift` | 2 | 2.2% |
+
+The steadiest observation environment of any discovery block: 78.9% stable and 13.3% abrupt,
+against 17.6-22.9% abrupt in blocks 1, 5, 6 and 7.
+
+### Triggers
+
+**None.** Eight days reached the threshold but no run of four consecutive days occurred.
+
+No historical research performed - there is nothing to research.
