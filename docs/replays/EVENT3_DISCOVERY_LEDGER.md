@@ -294,3 +294,43 @@ doubling off a low flat baseline, peak residual 4–5 driven substantially by th
 ### Status at freeze time
 
 Historical research had **not** begun when this entry was written.
+
+---
+
+### Appended after freeze — classification
+
+Added after the above was committed as `50efa6e`.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737,
+2021-02-15 → 2021-04-15.
+
+| | Window 2021-03-09..12 | Context period |
+|---|---|---|
+| Max gust | **14.3 m/s** | p90 16.1, max 22.8 |
+| Precipitation | **0.0 mm** on all four days | — |
+
+**Not weather-driven.** The windiest days in the period — 2021-02-22 (22.8 m/s), 03-19 (21.5),
+04-01 / 03-28 / 03-26 (18.3) — produced **no trigger**.
+
+No Coast Guard, Port of Virginia, Army Corps or trade-press record of a channel closure, port
+condition, terminal shutdown, berth outage or labour action in the window.
+
+**Corroborating context, found while searching and worth recording because it cuts against a
+disruption reading:** the Port of Virginia publicly reported record volumes through this period
+with *no congestion* and no adverse service impact, following more than \$800M of capacity
+investment completed between July 2019 and November 2020. That is not proof of absence, but it
+is independent evidence pointing the same way as the null result.
+
+**Classification: `unknown`.**
+
+### Event #3 eligibility
+
+| # | Requirement | Status |
+|---|---|---|
+| 1 | Occupancy anomaly independently detected | **met** |
+| 2 | Measurement regime interpretable | **partial** — peak day `uncertain`; environment unsettles immediately after |
+| 3 | Baseline → accumulation → peak → recovery | **met** — flat baseline of 4, peak 9, recovery completing 2021-04-09 |
+| 4 | Exogenous driver independently documented | **NOT MET** |
+| 5–6 | Representability, contract | n/a |
+
+**Not an Event #3 candidate.** Search continues to block 4.
