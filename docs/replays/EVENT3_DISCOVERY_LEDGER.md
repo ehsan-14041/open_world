@@ -15,9 +15,9 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **2 of 11** |
-| Triggers frozen so far | **1** (block 2) |
-| Qualifying Event #3 so far | **none yet — block 2 trigger not researched at time of writing** |
+| Blocks processed | **3 of 11** |
+| Triggers frozen so far | **2** (blocks 2, 3) |
+| Qualifying Event #3 so far | **none** |
 
 ---
 
@@ -213,3 +213,84 @@ outcome, not a driver; the contract does not accept it as one, and the contract 
 relaxed to accommodate a shape that looks right.
 
 **Not an Event #3 candidate.** The search continues to block 3 under the sequential rule.
+
+---
+
+## Block 3 — 2021-03-08 → 2021-05-14
+
+| | |
+|---|---|
+| Span | 2021-02-22 → 2021-05-14 |
+| Warmup | 2021-02-22 → 2021-03-07 |
+| Discovery days | 68 |
+| Days acquired | **82 / 82** — zero failures |
+| Evaluable discovery days | 68 |
+| Artifact set SHA-256 | `696d7b78c1651b66035652b5bc701e49…` |
+
+### Observations
+
+| Series | median | mean | sd | min | max |
+|---|---|---|---|---|---|
+| `anchorage_occupancy` | 10.0 | 9.87 | 3.72 | 1 | 18 |
+| standardised residual | 0.63 | — | 2.30 | −6.0 | **5.0** |
+
+Threshold reachable: max residual 5.0, 10 days at or above 3.0 (14.71%).
+
+### Coverage regimes
+
+| Regime | Days | Share |
+|---|---|---|
+| `stable` | 50 | 73.5% |
+| `gradual_shift` | 8 | 11.8% |
+| `abrupt_measurement_shift` | 6 | 8.8% |
+| `uncertain` | 4 | 5.9% |
+
+### TRIGGER 2 — 2021-03-09 → 2021-03-12
+
+| Field | Value |
+|---|---|
+| Start | **2021-03-09** |
+| Peak | **2021-03-10** |
+| End | **2021-03-12** |
+| Duration | 4 days (the minimum persistence) |
+| Occupancy trajectory | **7 → 9 → 8 → 9** |
+| Residual trajectory | **3.0 → 5.0 → 4.0 → 3.33** |
+| Mean residual | 3.833 |
+| Trailing baseline | flat at 4.0 throughout |
+| **Coverage regime** | **`stable`** (3 stable, 1 uncertain) |
+| **Candidate class** | **`candidate_port_anomaly`** |
+| Measurement confidence | **moderate** — one `uncertain` day at the peak |
+| Recovery observed | **yes**, run completed **2021-04-09** |
+
+| Date | Occ | Base | Resid | Vessels | v-res | msg/vessel | m-res | Cells | s-res | Regime |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2021-03-07 | 6 | 4.0 | 2.00 | 34 | −0.50 | 165 | −9.55 | 120 | −2.75 | abrupt |
+| 2021-03-08 | 5 | 4.0 | 0.67 | 39 | 3.00 | 295 | −2.28 | 140 | −0.11 | stable |
+| **2021-03-09** | **7** | 4.0 | **3.00** | 35 | 0.00 | 387 | 1.76 | 154 | 1.56 | stable |
+| **2021-03-10** | **9** | 4.0 | **5.00** | 43 | 5.33 | 326 | −0.90 | 173 | 3.67 | uncertain |
+| **2021-03-11** | **8** | 4.0 | **4.00** | 39 | 2.33 | 325 | −0.76 | 158 | 1.89 | stable |
+| **2021-03-12** | **9** | 4.0 | **3.33** | 40 | 2.25 | 356 | 1.17 | 152 | 1.14 | stable |
+| 2021-03-13 | 8 | 4.0 | 2.00 | 47 | 5.75 | 322 | −0.84 | 177 | 3.55 | uncertain |
+| 2021-03-14 | 7 | 4.5 | 1.00 | 49 | 4.50 | 335 | −0.06 | 190 | 4.24 | uncertain |
+| 2021-03-15 | 9 | 5.5 | 1.40 | 49 | 4.17 | 368 | 1.72 | 223 | 5.54 | abrupt |
+
+### Reading, before any external source was consulted
+
+Occupancy roughly doubles off a baseline that stays flat at 4.0 for the whole window, peaking
+at 9 on the second day. Report density is quiet throughout the window (|m-res| ≤ 1.76), which
+is what separates this from a sensor artifact.
+
+The caution here is on the other side from block 2's. On the peak day the vessel-count residual
+reaches 5.33 with footprint at 3.67, so that day classifies `uncertain` rather than `stable` —
+the count moved and the classifier declined to attribute it. And immediately after the window,
+vessel count and footprint climb further (5.75 / 3.55, then 4.50 / 4.24, then an abrupt day),
+so the days following the peak sit in a visibly less settled observation environment than the
+days before it.
+
+Two windows in two consecutive blocks now share a signature: about four days, occupancy roughly
+doubling off a low flat baseline, peak residual 4–5 driven substantially by the MAD floor of
+1.0. That is worth noting as a pattern rather than treating each as a singular event.
+
+### Status at freeze time
+
+Historical research had **not** begun when this entry was written.
