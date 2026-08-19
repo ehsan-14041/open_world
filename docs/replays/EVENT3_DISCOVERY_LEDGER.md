@@ -15,8 +15,9 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **1 of 11** |
-| Qualifying Event #3 so far | **none** |
+| Blocks processed | **2 of 11** |
+| Triggers frozen so far | **1** (block 2) |
+| Qualifying Event #3 so far | **none yet — block 2 trigger not researched at time of writing** |
 
 ---
 
@@ -83,3 +84,89 @@ discovery days.
 
 No candidate. No historical research performed for this block — there is nothing to research.
 Proceeding to block 2 under the sequential rule.
+
+---
+
+## Block 2 — 2020-12-06 → 2021-02-14
+
+| | |
+|---|---|
+| Span | 2020-11-22 → 2021-02-14 |
+| Warmup | 2020-11-22 → 2020-12-05 (acquired, never treated as discovery days) |
+| Discovery days | 71 |
+| Days acquired | **85 / 85** — zero failures |
+| Evaluable discovery days | 71 |
+| Artifact set SHA-256 | `0a2c0dd50298bd850c141e77559f1355…` |
+
+### Observations
+
+| Series | median | mean | sd | min | max |
+|---|---|---|---|---|---|
+| `anchorage_occupancy` | 8.0 | 7.24 | 2.54 | 1 | 14 |
+| standardised residual | 0.5 | — | 1.80 | −4.0 | **6.0** |
+
+Threshold reachable: max residual 6.0, 6 days at or above 3.0 (8.45%).
+
+### Coverage regimes
+
+| Regime | Days | Share |
+|---|---|---|
+| `stable` | 58 | 81.7% |
+| `abrupt_measurement_shift` | 8 | 11.3% |
+| `gradual_shift` | 4 | 5.6% |
+| `uncertain` | 1 | 1.4% |
+
+Notably steadier than block 1 (21.1% abrupt) and comparable to the v3 validation period.
+
+### TRIGGER 1 — 2020-12-08 → 2020-12-11
+
+| Field | Value |
+|---|---|
+| Start | **2020-12-08** |
+| Peak | **2020-12-11** |
+| End | **2020-12-11** |
+| Duration | 4 days (the minimum persistence) |
+| Occupancy trajectory | **6 → 6 → 7 → 8** |
+| Residual trajectory | **3.0 → 3.0 → 3.5 → 4.0** |
+| Mean residual | 3.375 |
+| Trailing baseline | 3.0 → 4.0 |
+| **Coverage regime** | **`stable`** (4 of 4 days) |
+| **Candidate class** | **`candidate_port_anomaly`** |
+| Measurement confidence | **high** — no coverage-flagged day inside the window |
+| Recovery observed | **yes**, run completed **2021-01-20** |
+
+Day by day, with context either side:
+
+| Date | Occ | Base | Resid | Vessels | v-res | msg/vessel | m-res | Cells | s-res | Regime |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2020-12-05 | 3 | 3.0 | 0.00 | 31 | −0.33 | 313 | 2.19 | 130 | −0.50 | stable |
+| 2020-12-06 | 5 | 3.0 | 2.00 | 38 | 2.40 | 305 | 1.34 | 165 | 3.81 | stable |
+| 2020-12-07 | 5 | 3.0 | 2.00 | 31 | −0.50 | 347 | 3.57 | 151 | 1.65 | stable |
+| **2020-12-08** | **6** | 3.0 | **3.00** | 38 | 1.83 | 356 | 3.61 | 165 | 2.86 | stable |
+| **2020-12-09** | **6** | 3.0 | **3.00** | 37 | 1.00 | 338 | 2.46 | 156 | 2.00 | stable |
+| **2020-12-10** | **7** | 3.5 | **3.50** | 39 | 1.83 | 349 | 2.75 | 157 | 1.50 | stable |
+| **2020-12-11** | **8** | 4.0 | **4.00** | 40 | 1.57 | 336 | 1.32 | 160 | 1.26 | stable |
+| 2020-12-12 | 5 | 4.5 | 0.33 | 39 | 1.17 | 361 | 1.49 | 179 | 2.62 | stable |
+| 2020-12-13 | 3 | 5.0 | −2.00 | 40 | 1.40 | 298 | −0.41 | 135 | −1.25 | stable |
+
+### Reading, before any external source was consulted
+
+The shape is a clean monotonic accumulation on a flat baseline of 3, peaking at 8, then an
+immediate drop to 5 and 3. The coverage diagnostics stay quiet throughout: vessel-count
+residual never exceeds 1.83, and while report density reaches 3.61 on the first day it stays
+below the 4.0 abrupt threshold and falls steadily across the window. This is the first window
+in the entire project to classify as `candidate_port_anomaly` rather than
+`candidate_with_context` or `measurement_artifact`.
+
+Two cautions recorded now, so they cannot be softened later:
+
+- **The absolute magnitude is small.** Occupancy moves from a baseline of 3 to a peak of 8 —
+  five vessels. The residual is large only because the trailing MAD is at its 1.0 floor.
+- **The duration is exactly the 4-day minimum**, and occupancy falls back to 5 the very next
+  day. Recovery nonetheless took until 2021-01-20 to complete a 7-day in-band run, because the
+  series makes further excursions to residual 3 and 6 in between.
+
+### Status at freeze time
+
+Historical research had **not** begun when this entry was written. Whether any exogenous driver
+exists is unknown, and the trigger is not yet a candidate for anything.
