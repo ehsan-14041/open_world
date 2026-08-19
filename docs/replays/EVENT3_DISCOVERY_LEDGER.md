@@ -15,8 +15,8 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **5 of 11 — search resumed** |
-| Triggers frozen so far | **3** (blocks 2, 3, 4) |
+| Blocks processed | **6 of 11** |
+| Triggers frozen so far | **4** (blocks 2, 3, 4, 6) |
 | Qualifying Event #3 so far | **none** |
 
 ---
@@ -705,3 +705,91 @@ one now would be a post-hoc rule change.
 **None.** Eight days reached the threshold but no run of four consecutive days occurred.
 
 No historical research performed — there is nothing to research.
+
+---
+
+## Block 6 — 2021-12-06 → 2022-02-14
+
+| | |
+|---|---|
+| Span | 2021-11-22 → 2022-02-14 |
+| Warmup | 2021-11-22 → 2021-12-05 |
+| Discovery days | 71 |
+| Days with observations | **84 / 85** |
+| Evaluable discovery days | 70 |
+| Artifact set SHA-256 | `514728d49cf2c5c6804fdab44008b707…` |
+
+A second regional coverage dropout: **2021-12-05** downloaded cleanly (165,012,669 bytes,
+4,374,815 national rows) and returned zero regional rows. It falls in the warmup, not the
+discovery range, so it affects only the first days' baselines. Treated as unobserved, as before.
+
+### Observations
+
+| Series | median | mean | sd | min | max |
+|---|---|---|---|---|---|
+| `anchorage_occupancy` | 18.0 | 18.86 | 3.48 | 11 | 27 |
+| standardised residual | −0.25 | — | 2.56 | −6.0 | **8.0** |
+
+Threshold reachable: max residual 8.0, 8 days at or above 3.0 (11.43%). This is the busiest
+block yet — median occupancy 18 against 6–14 in blocks 1–5.
+
+### Coverage regimes
+
+| Regime | Days | Share |
+|---|---|---|
+| `stable` | 47 | 67.1% |
+| `abrupt_measurement_shift` | 13 | 18.6% |
+| `gradual_shift` | 5 | 7.1% |
+| `uncertain` | 5 | 7.1% |
+
+### TRIGGER 4 — 2022-01-06 → 2022-01-10
+
+| Field | Value |
+|---|---|
+| Start | **2022-01-06** |
+| Peak | **2022-01-07** |
+| End | **2022-01-10** |
+| Duration | **5 days** — the first trigger to exceed the 4-day minimum |
+| Occupancy trajectory | **19 → 24 → 24 → 21 → 20** |
+| Residual trajectory | **3.0 → 8.0 → 8.0 → 4.0 → 3.0** |
+| Mean residual | **5.2** |
+| Trailing baseline | 16.0 → 17.0 |
+| **Coverage regime** | **`stable`** (5 of 5 days) |
+| **Candidate class** | **`candidate_port_anomaly`** |
+| Measurement confidence | **high** |
+| Recovery observed | **yes**, run completed **2022-01-20** |
+
+| Date | Occ | Base | Resid | Vessels | v-res | msg/vessel | m-res | Cells | s-res | Regime |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2022-01-04 | 16 | 16.0 | 0.00 | 42 | −2.75 | 210 | −7.54 | 144 | −2.69 | abrupt |
+| 2022-01-05 | 18 | 16.0 | 2.00 | 59 | 1.33 | 358 | −1.03 | 188 | 0.56 | stable |
+| **2022-01-06** | **19** | 16.0 | **3.00** | 60 | 1.50 | 360 | −0.88 | 182 | 0.19 | stable |
+| **2022-01-07** | **24** | 16.0 | **8.00** | 63 | 2.00 | 364 | −0.66 | 231 | 4.00 | stable |
+| **2022-01-08** | **24** | 16.0 | **8.00** | 60 | 1.29 | 368 | 0.37 | 174 | −0.31 | stable |
+| **2022-01-09** | **21** | 17.0 | **4.00** | 61 | 1.14 | 373 | 0.84 | 186 | 0.54 | stable |
+| **2022-01-10** | **20** | 17.0 | **3.00** | 54 | −0.75 | 375 | 1.18 | 167 | −1.33 | stable |
+| 2022-01-11 | 18 | 17.0 | 1.00 | 59 | 0.50 | 355 | −0.99 | 165 | −1.56 | stable |
+
+### Reading, before any external source was consulted
+
+**The strongest window in the project, surpassing block 4 on every axis.** It is the first to
+exceed the minimum duration (5 days rather than 4), carries the highest peak residual seen
+anywhere (8.0, sustained across two consecutive days), and sits on the highest baseline (16),
+so the MAD floor plays no part in the result.
+
+The coverage evidence is the cleanest yet. Across the window the regional vessel count moves
+only 54–63 with residuals between −0.75 and 2.00 — never approaching the 3.5 shift threshold —
+while occupancy rises by eight. Report density is flat throughout (|m-res| ≤ 1.18). All five
+days `stable`.
+
+So once again: **the anchorage filled without more ships appearing in the region and without any
+change in how they were reported.** On a base of 16 rather than 3, that is a substantial
+absolute movement, not a small-count artifact.
+
+One caution: on 2022-01-16/17 the vessel-count residual collapses (−4.00, then −8.67), giving
+two `uncertain` days during the recovery tail. As in block 4, this is after the window, not
+during it.
+
+### Status at freeze time
+
+Historical research had **not** begun when this entry was written.
