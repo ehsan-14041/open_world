@@ -1,0 +1,129 @@
+{
+  "block": 7,
+  "span": [
+    "2022-02-22",
+    "2022-05-14"
+  ],
+  "warmup": [
+    "2022-02-22",
+    "2022-03-07"
+  ],
+  "discovery": [
+    "2022-03-08",
+    "2022-05-14"
+  ],
+  "days_acquired": 82,
+  "days_wanted": 82,
+  "discovery_days_evaluable": 68,
+  "detector_semantic_hash": "49ed3b935527f1fb000ad348c411c5049070b672eb01eea69e4f457e97022f73",
+  "artifact_set_sha256": "ca95581fe58c7aca5cc965842fb8e0aad25cc171d401cd4e8e4b7c15bc786af2",
+  "occupancy_distribution": {
+    "n": 82,
+    "mean": 18.0122,
+    "median": 18.0,
+    "variance": 4.6218,
+    "stdev": 2.1498,
+    "mad": 1.0,
+    "minimum": 12.0,
+    "p10": 15.0,
+    "p25": 17.0,
+    "p75": 19.0,
+    "p90": 20.0,
+    "maximum": 24.0
+  },
+  "residual_distribution": {
+    "n": 68,
+    "mean": 0.4412,
+    "median": 0.0,
+    "variance": 3.8971,
+    "stdev": 1.9741,
+    "mad": 1.0,
+    "minimum": -4.0,
+    "p10": -2.0,
+    "p25": -1.0,
+    "p75": 1.5,
+    "p90": 3.0,
+    "maximum": 5.5
+  },
+  "threshold_reachability": {
+    "threshold": 3.0,
+    "max_observed_residual": 5.5,
+    "p99_residual": 5.5,
+    "p95_residual": 4.0,
+    "days_at_or_above_threshold": 13,
+    "share_at_or_above_threshold": 0.1912,
+    "reachable": true
+  },
+  "coverage_regime_counts": {
+    "stable": 49,
+    "abrupt_measurement_shift": 12,
+    "gradual_shift": 3,
+    "uncertain": 4
+  },
+  "trigger_count": 2,
+  "trigger_windows": [
+    {
+      "start": "2022-03-15",
+      "peak_date": "2022-03-16",
+      "end": "2022-03-19",
+      "duration_days": 5,
+      "peak_residual": 5.0,
+      "mean_residual": 3.6,
+      "peak_occupancy": 20.0,
+      "baseline_at_peak": 15.0,
+      "occupancy_trajectory": [
+        19.0,
+        20.0,
+        18.0,
+        18.0,
+        18.0
+      ],
+      "coverage_regime": "abrupt_measurement_shift",
+      "candidate_class": "measurement_confounded",
+      "regime_days": {
+        "abrupt_measurement_shift": 2,
+        "stable": 3
+      },
+      "residual_trajectory": [
+        4.0,
+        5.0,
+        3.0,
+        3.0,
+        3.0
+      ],
+      "recovery_observed": true,
+      "recovery_completed_on": "2022-04-02"
+    },
+    {
+      "start": "2022-04-27",
+      "peak_date": "2022-04-27",
+      "end": "2022-04-30",
+      "duration_days": 4,
+      "peak_residual": 5.5,
+      "mean_residual": 3.875,
+      "peak_occupancy": 24.0,
+      "baseline_at_peak": 18.5,
+      "occupancy_trajectory": [
+        24.0,
+        22.0,
+        22.0,
+        22.0
+      ],
+      "coverage_regime": "stable",
+      "candidate_class": "candidate_port_anomaly",
+      "regime_days": {
+        "abrupt_measurement_shift": 1,
+        "stable": 2,
+        "uncertain": 1
+      },
+      "residual_trajectory": [
+        5.5,
+        3.5,
+        3.5,
+        3.0
+      ],
+      "recovery_observed": true,
+      "recovery_completed_on": "2022-05-08"
+    }
+  ]
+}

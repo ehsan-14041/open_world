@@ -15,8 +15,8 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **6 of 11** |
-| Triggers frozen so far | **4** (blocks 2, 3, 4, 6) |
+| Blocks processed | **7 of 11** |
+| Triggers frozen so far | **6** (blocks 2, 3, 4, 6, and two in block 7) |
 | Qualifying Event #3 so far | **none** |
 
 ---
@@ -1096,3 +1096,109 @@ and it is not a flattering one for the search as designed.
 
 Any future detector generation addressing sustained events would need its own development and
 validation split, and this finding is the honest evidence for why one might be warranted.
+
+---
+
+## Block 7 - 2022-03-08 to 2022-05-14
+
+| | |
+|---|---|
+| Span | 2022-02-22 to 2022-05-14 |
+| Warmup | 2022-02-22 to 2022-03-07 |
+| Discovery days | 68 |
+| Days acquired | **82 / 82** - zero failures |
+| Evaluable discovery days | 68 |
+| Artifact set SHA-256 | `ca95581fe58c7aca5cc965842fb8e0aa...` |
+
+### Observations
+
+| Series | median | mean | sd | min | max |
+|---|---|---|---|---|---|
+| `anchorage_occupancy` | 18.0 | 18.01 | 2.15 | 12 | 24 |
+| standardised residual | 0.0 | - | 1.97 | -4.0 | **5.5** |
+
+Threshold reachable: max residual 5.5, **13 days at or above 3.0 (19.12%)** - the highest rate
+of any block, and roughly double the 9-11% seen in the validation periods.
+
+### Coverage regimes
+
+| Regime | Days | Share |
+|---|---|---|
+| `stable` | 49 | 72.1% |
+| `abrupt_measurement_shift` | 12 | 17.6% |
+| `uncertain` | 4 | 5.9% |
+| `gradual_shift` | 3 | 4.4% |
+
+### TRIGGER 5 - 2022-03-15 to 2022-03-19 - measurement_confounded
+
+| Field | Value |
+|---|---|
+| Duration | 5 days |
+| Occupancy trajectory | **19 to 20 to 18 to 18 to 18** |
+| Residual trajectory | **4.0, 5.0, 3.0, 3.0, 3.0** |
+| Trailing baseline | flat at 15.0 |
+| **Coverage regime** | **`abrupt_measurement_shift`** (2 abrupt, 3 stable) |
+| **Candidate class** | **`measurement_confounded`** |
+| Recovery observed | yes, completed 2022-04-02 |
+
+| Date | Occ | Base | Resid | Vessels | v-res | m-res | s-res | Regime |
+|---|---|---|---|---|---|---|---|---|
+| 2022-03-14 | 15 | 15.0 | 0.00 | 48 | -2.00 | 0.24 | -0.71 | stable |
+| **2022-03-15** | **19** | 15.0 | **4.00** | 57 | 1.00 | -0.80 | 0.25 | stable |
+| **2022-03-16** | **20** | 15.0 | **5.00** | 55 | 0.50 | 0.68 | **8.89** | abrupt |
+| **2022-03-17** | **18** | 15.0 | **3.00** | 54 | 0.20 | 0.69 | -0.78 | stable |
+| **2022-03-18** | **18** | 15.0 | **3.00** | 58 | 2.25 | 0.10 | 4.06 | stable |
+| **2022-03-19** | **18** | 15.0 | **3.00** | 53 | -0.50 | **4.29** | -1.69 | abrupt |
+| 2022-03-20 | 15 | 15.0 | 0.00 | 51 | -1.25 | **-12.78** | -0.24 | abrupt |
+| 2022-03-21 | 19 | 15.0 | 4.00 | 50 | -1.40 | **-12.22** | -0.95 | abrupt |
+
+**The first `measurement_confounded` window of the discovery phase**, and the guard is doing
+exactly what it was built for. The spatial footprint residual hits 8.89 on 03-16 and 4.06 on
+03-18, report density hits 4.29 on 03-19, and immediately after the window density collapses to
+-12.78 and -12.22. The observing system is visibly unsettled across this whole stretch while the
+vessel count barely moves.
+
+Per the frozen gating rule this window is `measurement_confounded` and **cannot be an Event #3
+candidate** regardless of what any historical source might say. No research is required to
+disqualify it, and none was performed for it.
+
+### TRIGGER 6 - 2022-04-27 to 2022-04-30 - candidate_port_anomaly
+
+| Field | Value |
+|---|---|
+| Duration | 4 days |
+| Occupancy trajectory | **24 to 22 to 22 to 22** |
+| Residual trajectory | **5.5, 3.5, 3.5, 3.0** |
+| Trailing baseline | 18.5 to 19.0 |
+| **Coverage regime** | **`stable`** (2 stable, 1 uncertain, 1 abrupt - no regime reaches 2 days except stable) |
+| **Candidate class** | **`candidate_port_anomaly`** |
+| Measurement confidence | **low** - see below |
+| Recovery observed | yes, completed 2022-05-08 |
+
+| Date | Occ | Base | Resid | Vessels | v-res | m-res | s-res | Regime |
+|---|---|---|---|---|---|---|---|---|
+| 2022-04-25 | 18 | 18.5 | -0.50 | 46 | -2.50 | -8.29 | -0.71 | abrupt |
+| 2022-04-26 | 19 | 18.5 | 0.50 | 53 | 1.00 | 0.71 | 1.08 | stable |
+| **2022-04-27** | **24** | 18.5 | **5.50** | 55 | 2.00 | 1.21 | 1.69 | stable |
+| **2022-04-28** | **22** | 18.5 | **3.50** | 63 | **6.00** | -0.83 | 3.08 | uncertain |
+| **2022-04-29** | **22** | 18.5 | **3.50** | 57 | 3.00 | 0.17 | 0.08 | stable |
+| **2022-04-30** | **22** | 19.0 | **3.00** | 61 | 4.00 | -1.07 | **6.85** | abrupt |
+| 2022-05-01 | 21 | 19.0 | 2.00 | 50 | -0.29 | -6.64 | 1.08 | abrupt |
+
+**Classified `candidate_port_anomaly` by the frozen rule, but the label overstates the case and
+that is recorded here rather than discovered later.**
+
+The window regime rule takes the most severe regime present on at least 2 days. Here the counts
+are stable 2, uncertain 1, abrupt 1 - so neither `uncertain` nor `abrupt` reaches the 2-day
+threshold, and the window falls through to `stable`. Yet only half its days are actually stable,
+the vessel count climbs steadily (2.00, 6.00, 3.00, 4.00), and the day either side of the window
+is `abrupt` with density at -8.29 and -6.64.
+
+That is a materially weaker measurement picture than the block 4 or block 6 windows, where all
+four or five days were stable and the vessel count stayed flat. The rule is applied as written -
+it is frozen and will not be adjusted - but measurement confidence is recorded as **low**, and
+any downstream use must carry that qualification.
+
+### Status at freeze time
+
+Historical research had **not** begun when this entry was written.
