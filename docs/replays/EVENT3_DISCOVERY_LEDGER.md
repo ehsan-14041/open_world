@@ -170,3 +170,46 @@ Two cautions recorded now, so they cannot be softened later:
 
 Historical research had **not** begun when this entry was written. Whether any exogenous driver
 exists is unknown, and the trigger is not yet a candidate for anything.
+
+---
+
+### Appended after freeze — classification
+
+Added after the above was committed as `17a5b47`. The detection facts are unchanged.
+
+**Independent, non-AIS source:** NOAA NCEI daily summaries, station USW00013737 (Norfolk
+International Airport), 2020-11-15 → 2021-01-05.
+
+| | Window 2020-12-08..11 | Context period |
+|---|---|---|
+| Max gust | **14.3 m/s** | p90 17.4, max 23.7 |
+| Precipitation | 0.3 mm across all four days | up to 24.6 mm/day |
+| Snow | 0.0 mm | — |
+
+**Not weather-driven**, and the converse check holds: the windiest days in the context period —
+2020-12-24 (23.7 m/s), 12-14 (21.9), 11-30 (20.1), 12-05 (17.9) — produced **no trigger**. The
+wettest days (12-16 at 24.6 mm, 12-14 at 23.1 mm) likewise produced none.
+
+Searches of Coast Guard, Port of Virginia, Army Corps and maritime trade press found no channel
+closure, port condition, terminal shutdown, berth or crane outage, infrastructure failure or
+labour action in the window.
+
+**Classification: `unknown`.**
+
+### Event #3 eligibility
+
+| # | Requirement | Status |
+|---|---|---|
+| 1 | Occupancy anomaly independently detected | **met** |
+| 2 | Measurement regime interpretable across the window | **met** — 4 of 4 days `stable` |
+| 3 | Baseline → accumulation → peak → recovery | **met** — flat baseline of 3, monotonic rise to 8, recovery completing 2021-01-20 |
+| 4 | Exogenous driver independently documented | **NOT MET** |
+| 5 | Driver representable by the simulator | n/a |
+| 6 | Frozen eligibility contract passes unchanged | n/a |
+
+This is the strongest window the project has produced — the first with a clean measurement
+regime *and* an observed recovery — and it still fails, on requirement 4. Occupancy rising is an
+outcome, not a driver; the contract does not accept it as one, and the contract is not being
+relaxed to accommodate a shape that looks right.
+
+**Not an Event #3 candidate.** The search continues to block 3 under the sequential rule.
