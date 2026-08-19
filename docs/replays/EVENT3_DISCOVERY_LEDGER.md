@@ -15,8 +15,8 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **3 of 11** |
-| Triggers frozen so far | **2** (blocks 2, 3) |
+| Blocks processed | **4 of 11** |
+| Triggers frozen so far | **3** (blocks 2, 3, 4) |
 | Qualifying Event #3 so far | **none** |
 
 ---
@@ -334,3 +334,87 @@ is independent evidence pointing the same way as the null result.
 | 5–6 | Representability, contract | n/a |
 
 **Not an Event #3 candidate.** Search continues to block 4.
+
+---
+
+## Block 4 — 2021-06-05 → 2021-08-14
+
+| | |
+|---|---|
+| Span | 2021-05-22 → 2021-08-14 |
+| Warmup | 2021-05-22 → 2021-06-04 |
+| Discovery days | 71 |
+| Days acquired | **85 / 85** — zero failures |
+| Evaluable discovery days | 71 |
+| Artifact set SHA-256 | `1b2ef8c2fb5a8d258fdbf21a19e1ec23…` |
+
+### Observations
+
+| Series | median | mean | sd | min | max |
+|---|---|---|---|---|---|
+| `anchorage_occupancy` | 8.0 | 7.58 | 2.65 | 3 | 16 |
+| standardised residual | 0.0 | — | 2.03 | −3.0 | **7.0** |
+
+Threshold reachable: max residual 7.0, 10 days at or above 3.0 (14.08%).
+
+### Coverage regimes
+
+| Regime | Days | Share |
+|---|---|---|
+| `stable` | 54 | 76.1% |
+| `abrupt_measurement_shift` | 13 | 18.3% |
+| `gradual_shift` | 2 | 2.8% |
+| `uncertain` | 2 | 2.8% |
+
+### TRIGGER 3 — 2021-06-06 → 2021-06-09
+
+| Field | Value |
+|---|---|
+| Start | **2021-06-06** |
+| Peak | **2021-06-08** |
+| End | **2021-06-09** |
+| Duration | 4 days |
+| Occupancy trajectory | **14 → 14 → 16 → 16** |
+| Residual trajectory | **5.0 → 5.0 → 7.0 → 4.33** |
+| Mean residual | **5.333** |
+| Trailing baseline | flat at 9.0, rising to 9.5 |
+| **Coverage regime** | **`stable`** (4 of 4 days) |
+| **Candidate class** | **`candidate_port_anomaly`** |
+| Measurement confidence | **high** — no coverage-flagged day inside the window |
+| Recovery observed | **yes**, run completed **2021-06-17** |
+
+| Date | Occ | Base | Resid | Vessels | v-res | msg/vessel | m-res | Cells | s-res | Regime |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2021-06-04 | 9 | 9.0 | 0.00 | 49 | 1.50 | 337 | −1.17 | 172 | 1.00 | stable |
+| 2021-06-05 | 10 | 9.0 | 1.00 | 54 | 3.00 | 328 | −1.51 | 183 | 2.83 | stable |
+| **2021-06-06** | **14** | 9.0 | **5.00** | 55 | 3.40 | 352 | −0.23 | 186 | 3.08 | stable |
+| **2021-06-07** | **14** | 9.0 | **5.00** | 53 | 2.40 | 382 | 1.27 | 176 | 0.73 | stable |
+| **2021-06-08** | **16** | 9.0 | **7.00** | 54 | 2.00 | 389 | 1.60 | 165 | −0.73 | stable |
+| **2021-06-09** | **16** | 9.5 | **4.33** | 50 | 0.29 | 394 | 1.58 | 169 | −0.21 | stable |
+| 2021-06-10 | 13 | 10.0 | 1.50 | 51 | 0.80 | 389 | 1.34 | 200 | 5.36 | abrupt |
+| 2021-06-11 | 9 | 10.0 | −0.50 | 51 | 0.60 | 388 | 1.32 | 152 | −2.64 | stable |
+| 2021-06-12 | 8 | 10.0 | −1.00 | 50 | −0.25 | 360 | 0.06 | 155 | −2.21 | stable |
+
+### Reading, before any external source was consulted
+
+**This is the strongest window the project has produced.** It improves on the block 2 and 3
+triggers on every axis that was weak there:
+
+- **Magnitude.** Occupancy runs 14–16 against a baseline flat at 9 — seven vessels above
+  baseline, on a base high enough that the MAD floor is not doing the work. Peak residual 7.0.
+- **Measurement confidence is high.** All four days `stable`. The vessel count barely moves
+  (50–55, residual falling 3.40 → 0.29 across the window) while occupancy jumps by 7. Report
+  density stays quiet (|m-res| ≤ 1.60) and footprint likewise. So the anchorage filled up
+  *without* more ships appearing in the region and *without* any change in how they were
+  reported — which is exactly the signature the coverage model exists to isolate.
+- **Recovery is fast and clean**, completing 2021-06-17: occupancy falls 13, 9, 8 and stays
+  down.
+
+The one caution: on 2021-06-13/14 the coverage diagnostics collapse (vessel residual −8.75,
+density −9.47), an abrupt measurement shift **after** the window and during the recovery tail.
+It does not touch the accumulation or the peak, but it means part of the recovery limb sits in
+a degraded observation environment.
+
+### Status at freeze time
+
+Historical research had **not** begun when this entry was written.
