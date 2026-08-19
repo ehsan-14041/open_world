@@ -15,8 +15,8 @@
 | Universe | 1,047 eligible days, 11 blocks, 801 discovery days |
 | Ordering | strictly chronological, earliest first |
 | Stopping rule | first chronologically encountered candidate passing the frozen contract |
-| Blocks processed | **9 of 11** |
-| Triggers frozen so far | **6** (blocks 2, 3, 4, 6, and two in block 7) |
+| Blocks processed | **10 of 11** |
+| Triggers frozen so far | **7** (blocks 2, 3, 4, 6, two in block 7, and block 10) |
 | Qualifying Event #3 so far | **none** |
 
 ---
@@ -1479,3 +1479,108 @@ median 19 with sd 2.07.
 **None.** Five days reached the threshold but no run of four consecutive days occurred.
 
 No historical research performed - there is nothing to research.
+
+---
+
+## Block 10 - 2024-07-15 to 2024-10-12
+
+| | |
+|---|---|
+| Span | 2024-07-01 to 2024-12-31 |
+| Warmup | 2024-07-01 to 2024-07-14 - dedicated, new span |
+| Discovery days | 90 |
+| Days acquired | **104 / 104** - zero failures |
+| Evaluable discovery days | 90 |
+| Artifact set SHA-256 | `75c91eab53132ba8624e2bf6f247b977...` |
+
+The second of the three blocks unlocked by the pre-detection budget amendment (`2b4ca78`), and
+the first to reach the 2024 era at all. Under the original cap of 8 this period was unreachable.
+
+### Observations
+
+| Series | median | mean | sd | min | max |
+|---|---|---|---|---|---|
+| `anchorage_occupancy` | 14.0 | 13.96 | 2.54 | 7 | 21 |
+| standardised residual | 0.25 | - | 2.29 | -7.0 | **8.0** |
+
+Threshold reachable: max residual 8.0, 7 days at or above 3.0 (**7.78%** - the lowest rate of
+the whole search).
+
+### Coverage regimes
+
+| Regime | Days | Share |
+|---|---|---|
+| `stable` | 75 | 83.3% |
+| `abrupt_measurement_shift` | 11 | 12.2% |
+| `uncertain` | 3 | 3.3% |
+| `gradual_shift` | 1 | 1.1% |
+
+### TRIGGER 7 - 2024-10-02 to 2024-10-06
+
+| Field | Value |
+|---|---|
+| Duration | 5 days |
+| Occupancy trajectory | **16 to 20 to 21 to 18 to 20** |
+| Residual trajectory | **3.0, 7.0, 8.0, 3.33, 3.25** |
+| Mean residual | 4.917 |
+| Trailing baseline | 13.0, rising to 13.5 |
+| **`frozen_regime_classification`** | **`stable`** -> `candidate_port_anomaly` |
+| Regime day counts | stable 3, abrupt 1, uncertain 1 |
+| **`measurement_confidence`** | **moderate** |
+| Recovery observed within block | **NO** - see extension below |
+
+| Date | Occ | Base | Resid | Vessels | v-res | m-res | s-res | Regime |
+|---|---|---|---|---|---|---|---|---|
+| 2024-10-01 | 12 | 13.0 | -1.00 | 42 | -3.29 | 0.22 | -0.25 | stable |
+| **2024-10-02** | **16** | 13.0 | **3.00** | 37 | **-4.12** | 2.82 | -4.11 | uncertain |
+| **2024-10-03** | **20** | 13.0 | **7.00** | 44 | -1.36 | 0.51 | -0.89 | stable |
+| **2024-10-04** | **21** | 13.0 | **8.00** | 53 | 0.50 | -1.54 | **11.88** | abrupt |
+| **2024-10-05** | **18** | 13.0 | **3.33** | 47 | -0.75 | 0.73 | 0.00 | stable |
+| **2024-10-06** | **20** | 13.5 | **3.25** | 47 | -0.82 | 0.83 | -2.14 | stable |
+| 2024-10-07 | 17 | 14.5 | 1.00 | 49 | -0.56 | 1.84 | -3.67 | stable |
+| 2024-10-08 | 16 | 15.5 | 0.20 | 49 | -0.56 | 1.60 | 0.69 | stable |
+| 2024-10-09 | 17 | 16.0 | 0.40 | 46 | -1.25 | 1.65 | 1.46 | stable |
+| 2024-10-10 | 17 | 16.5 | 0.25 | 51 | 0.40 | -1.21 | 4.44 | stable |
+| 2024-10-11 | 17 | 17.0 | 0.00 | 55 | 1.33 | -0.84 | 1.19 | stable |
+| 2024-10-12 | 19 | 17.0 | 1.00 | 48 | -0.22 | 0.46 | 2.19 | stable |
+
+### Two fields, reported separately
+
+`frozen_regime_classification` is **`stable`**, produced by the pre-registered rule: counts are
+stable 3, abrupt 1, uncertain 1, so neither minority regime reaches the 2-day threshold and the
+window falls through to `stable`. That output stands and is not adjusted.
+
+`measurement_confidence` is **moderate**, and descriptively only. Three of five days are
+individually stable; 10-02 is `uncertain` and 10-04 is `abrupt` with a spatial-footprint
+residual of 11.88 - the single largest footprint excursion inside any trigger window in the
+search. This is the same aggregation behaviour block 7 exposed, and it is preserved unchanged.
+
+**The confidence field changes nothing.** Eligibility, gating and the classifier output are
+untouched by it.
+
+### The strongest port-specific signature yet, on the coverage evidence
+
+Across the window the regional vessel-count residual is **negative on four of five days**
+(-4.12, -1.36, +0.50, -0.75, -0.82). Occupancy rose from 12 to 21 while *fewer* deep-draft
+vessels were present in the region than usual. In blocks 4 and 6 the vessel count stayed flat
+while occupancy rose; here it actually fell. Whatever filled the anchorage, more ships arriving
+is emphatically not it.
+
+### Recovery - extension rule invoked
+
+Recovery was **not** observed inside the block. The window ends 2024-10-06 and the block ends
+2024-10-12, leaving only **6** days against the pre-registered requirement of **7** consecutive
+in-band days.
+
+Those six days all sit in band: residuals 1.00, 0.20, 0.40, 0.25, 0.00, 1.00 - every one at or
+below the 1.0 recovery band. The run is one day short purely because the block boundary falls
+where it does.
+
+Under the frozen extension rule (fixed 14-day increments, 56-day ceiling, declared before any
+discovery), the window is extended forward. Block 11 begins 2024-10-13 and supplies exactly
+those days, so the extension is satisfied by the next block's acquisition rather than by any
+special-case fetch. Recovery is evaluated after block 11 is acquired.
+
+### Status at freeze time
+
+Historical research had **not** begun when this entry was written.

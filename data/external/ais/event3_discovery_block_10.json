@@ -1,0 +1,99 @@
+{
+  "block": 10,
+  "span": [
+    "2024-07-01",
+    "2024-12-31"
+  ],
+  "warmup": [
+    "2024-07-01",
+    "2024-07-14"
+  ],
+  "discovery": [
+    "2024-07-15",
+    "2024-10-12"
+  ],
+  "days_acquired": 104,
+  "days_wanted": 104,
+  "discovery_days_evaluable": 90,
+  "detector_semantic_hash": "49ed3b935527f1fb000ad348c411c5049070b672eb01eea69e4f457e97022f73",
+  "artifact_set_sha256": "75c91eab53132ba8624e2bf6f247b9774d698816b55f9ee40dfd093ea7d005a1",
+  "occupancy_distribution": {
+    "n": 104,
+    "mean": 13.9615,
+    "median": 14.0,
+    "variance": 6.4601,
+    "stdev": 2.5417,
+    "mad": 2.0,
+    "minimum": 7.0,
+    "p10": 11.0,
+    "p25": 13.0,
+    "p75": 16.0,
+    "p90": 17.0,
+    "maximum": 21.0
+  },
+  "residual_distribution": {
+    "n": 90,
+    "mean": 0.0348,
+    "median": 0.25,
+    "variance": 5.2598,
+    "stdev": 2.2934,
+    "mad": 1.0416,
+    "minimum": -7.0,
+    "p10": -2.5,
+    "p25": -1.0,
+    "p75": 1.0,
+    "p90": 2.3333,
+    "maximum": 8.0
+  },
+  "threshold_reachability": {
+    "threshold": 3.0,
+    "max_observed_residual": 8.0,
+    "p99_residual": 8.0,
+    "p95_residual": 3.3333,
+    "days_at_or_above_threshold": 7,
+    "share_at_or_above_threshold": 0.0778,
+    "reachable": true
+  },
+  "coverage_regime_counts": {
+    "stable": 75,
+    "abrupt_measurement_shift": 11,
+    "gradual_shift": 1,
+    "uncertain": 3
+  },
+  "trigger_count": 1,
+  "trigger_windows": [
+    {
+      "start": "2024-10-02",
+      "peak_date": "2024-10-04",
+      "end": "2024-10-06",
+      "duration_days": 5,
+      "peak_residual": 8.0,
+      "mean_residual": 4.9167,
+      "peak_occupancy": 21.0,
+      "baseline_at_peak": 13.0,
+      "occupancy_trajectory": [
+        16.0,
+        20.0,
+        21.0,
+        18.0,
+        20.0
+      ],
+      "coverage_regime": "stable",
+      "candidate_class": "candidate_port_anomaly",
+      "regime_days": {
+        "abrupt_measurement_shift": 1,
+        "stable": 3,
+        "uncertain": 1
+      },
+      "residual_trajectory": [
+        3.0,
+        7.0,
+        8.0,
+        3.3333,
+        3.25
+      ],
+      "recovery_observed": false,
+      "recovery_completed_on": null
+    }
+  ]
+}
