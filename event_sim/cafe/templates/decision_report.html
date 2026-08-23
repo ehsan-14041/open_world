@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cost Shock Decision Comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F7F6F1; --paper-2:#EFEEE7; --ink:#1E2A30; --muted:#5B6B72; --rule:#D9DDD6; --grid:#E6E8E2;
+  --a:#6B7B84; --b:#1F7A5C; --c:#A97A12; --crit:#B5463A; --good:#1F7A5C;
+  --b-soft:rgba(31,122,92,.10); --c-soft:rgba(169,122,18,.10); --a-soft:rgba(107,123,132,.10);
+  --card:#FFFFFF; --focus:#1F7A5C;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#15191B; --paper-2:#1C2124; --ink:#E8EAE4; --muted:#9AA6AB; --rule:#2B3236; --grid:#242B2F;
+    --a:#8E9CA4; --b:#4FB58E; --c:#D3A230; --crit:#E07A6E; --good:#4FB58E;
+    --b-soft:rgba(79,181,142,.14); --c-soft:rgba(211,162,48,.14); --a-soft:rgba(142,156,164,.14);
+    --card:#1C2124; --focus:#4FB58E;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15191B; --paper-2:#1C2124; --ink:#E8EAE4; --muted:#9AA6AB; --rule:#2B3236; --grid:#242B2F;
+  --a:#8E9CA4; --b:#4FB58E; --c:#D3A230; --crit:#E07A6E; --good:#4FB58E;
+  --b-soft:rgba(79,181,142,.14); --c-soft:rgba(211,162,48,.14); --a-soft:rgba(142,156,164,.14);
+  --card:#1C2124; --focus:#4FB58E;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;font-variant-numeric:tabular-nums}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+p{max-width:65ch}
+h1,h2,h3{text-wrap:balance;margin:0}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(30px,4.2vw,46px);line-height:1.12;letter-spacing:-.01em}
+h2{font-family:var(--display);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.18}
+h3{font-size:18px;font-weight:600}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.num{font-variant-numeric:tabular-nums}
+button,select,input{font:inherit;color:inherit}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:56px}
+.brand{font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.steps{display:flex;gap:4px;margin-left:auto;overflow-x:auto}
+.steps a{text-decoration:none;font-size:13px;font-weight:600;padding:6px 10px;border-radius:4px;color:var(--muted);white-space:nowrap}
+.steps a:hover,.steps a.on{color:var(--ink);background:var(--paper-2)}
+.steps a b{color:var(--b);margin-right:6px}
+.demo-flag{font-size:12px;font-weight:600;color:var(--c);border:1px solid currentColor;border-radius:3px;padding:2px 8px;white-space:nowrap}
+
+/* screens */
+section.screen{padding:64px 0 56px;border-bottom:1px solid var(--rule)}
+section.screen:last-of-type{border-bottom:0}
+.screen-head{display:grid;grid-template-columns:auto 1fr;gap:18px 24px;align-items:baseline;margin-bottom:28px}
+.screen-head .n{font-family:var(--display);font-size:44px;line-height:1;color:var(--b);font-weight:500}
+.screen-head .t{display:flex;flex-direction:column;gap:6px}
+
+/* cards */
+.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0 18px}
+@media (max-width:820px){.worlds{grid-template-columns:1fr}}
+.world{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;position:relative}
+.world.best{border-color:var(--wc);box-shadow:0 0 0 2px var(--wc) inset}
+.world .id{display:flex;align-items:center;gap:10px}
+.world .chip{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;background:var(--wc);font-size:14px}
+.world .lbl{font-weight:600}
+.world .head{font-size:14px;color:var(--muted);min-height:63px}
+.world .big{font-size:30px;font-weight:600;line-height:1.1;margin-top:4px}
+.world .big.neg{color:var(--crit)} .world .row .neg{color:var(--crit)}
+.world .row{display:flex;justify-content:space-between;font-size:14px;border-top:1px solid var(--rule);padding-top:8px}
+.world .row span:last-child{font-weight:600}
+.world .best-tag{position:absolute;top:-11px;right:14px;background:var(--wc);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.wA{--wc:var(--a)} .wB{--wc:var(--b)} .wC{--wc:var(--c)}
+.verdict{background:var(--paper-2);border-left:3px solid var(--b);padding:14px 18px;border-radius:0 4px 4px 0;font-size:18px;max-width:72ch}
+.verdict b{color:var(--b)}
+
+/* chart */
+.chart-wrap{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px;overflow-x:auto}
+.chart-wrap svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin-top:10px}
+.legend span::before{content:"";display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:7px;vertical-align:middle;background:var(--wc)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.num,th.num{text-align:right}
+.tbl-wrap{overflow-x:auto;margin-top:18px}
+
+/* tradeoffs */
+.trade{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:820px){.trade{grid-template-columns:1fr}}
+.trade .t{border-top:3px solid var(--wc);padding-top:12px}
+.trade .t h3{color:var(--wc);margin-bottom:6px}
+.trade li{margin:6px 0 0 18px}
+.callout{margin-top:22px;padding:14px 18px;background:var(--c-soft);border-radius:4px;max-width:75ch;font-size:15px}
+
+/* sensitivity */
+.influence{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.inf{display:grid;grid-template-columns:minmax(180px,1.2fr) 3fr auto;gap:14px;align-items:center;font-size:15px}
+.inf .bar{height:10px;background:var(--grid);border-radius:5px;overflow:hidden}
+.inf .bar i{display:block;height:100%;background:var(--b);border-radius:5px}
+.inf .bar i.flip{background:var(--crit)}
+.inf .tag{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--crit)}
+.inf .tag.ok{color:var(--muted)}
+.shares{display:flex;gap:0;height:28px;border-radius:4px;overflow:hidden;margin:14px 0 6px;max-width:560px}
+.shares div{display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;background:var(--wc)}
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px;margin-top:22px}
+.panel h3{margin-bottom:4px}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+.ctl label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.ctl select,.ctl input{width:100%;padding:8px 10px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+.btn{border:1px solid var(--rule);background:var(--paper-2);padding:8px 14px;border-radius:4px;font-weight:600;cursor:pointer}
+.btn.primary{background:var(--b);border-color:var(--b);color:#fff}
+.btnrow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center}
+
+/* evidence */
+.klass{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid}
+.k-customer{color:var(--b);border-color:var(--b)} .k-research{color:#2F5DA8;border-color:#2F5DA8} .k-assumption{color:var(--c);border-color:var(--c)} .k-derived{color:var(--muted);border-color:var(--muted)}
+:root[data-theme="dark"] .k-research,:root:not([data-theme="light"]) .k-research{color:#7FA7E6;border-color:#7FA7E6}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .k-research{color:#2F5DA8;border-color:#2F5DA8}}
+details{border:1px solid var(--rule);border-radius:6px;padding:0 16px;margin-top:18px;background:var(--card)}
+summary{cursor:pointer;padding:12px 0;font-weight:600}
+details .inner{padding:4px 0 16px;font-size:14px}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background:var(--paper-2);padding:1px 5px;border-radius:3px}
+.foot{padding:28px 0 48px;font-size:14px;color:var(--muted)}
+.banner{background:var(--crit);color:#fff;padding:10px 0;font-weight:600;display:none}
+.banner.on{display:block}
+.hero-sub{font-size:19px;max-width:62ch;margin-top:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:22px}
+.kpi{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:12px 14px}
+.kpi .l{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.kpi .v{font-size:22px;font-weight:600;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="banner" id="banner"></div>
+<header class="top"><div class="wrap">
+  <div class="brand">Decision Comparison</div>
+  <span class="demo-flag" id="demoflag" hidden>Demo data — fictional cafe</span>
+  <nav class="steps" aria-label="Steps">
+    <a href="#s1"><b>1</b>The decision</a><a href="#s2"><b>2</b>What happens</a><a href="#s3"><b>3</b>Trade-offs</a><a href="#s4"><b>4</b>What could change it</a><a href="#s5"><b>5</b>Assumptions</a><a href="#try"><b>+</b>Your numbers</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section class="screen" id="s1">
+  <div class="screen-head"><div class="n">1</div><div class="t">
+    <div class="eyebrow">The decision</div>
+    <h1 id="headline">Your ingredient costs rose 30%. Three responses, one model.</h1>
+    <p class="hero-sub">Each response is run through the same model of your cafe, with the same assumptions. Only the decision differs — so the differences between them come from the decision, not from different guesses.</p>
+  </div></div>
+  <div class="kpis" id="kpis"></div>
+  <div class="worlds" id="cards"></div>
+  <div class="verdict" id="verdict"></div>
+  <p class="small muted" style="margin-top:12px" id="scenario-note"></p>
+</section>
+
+<section class="screen" id="s2">
+  <div class="screen-head"><div class="n">2</div><div class="t">
+    <div class="eyebrow">What happens</div>
+    <h2>Cash in the bank over the next 90 days</h2>
+    <p>Costs take about a week to rise — you are still using stock bought at the old price. Customers take a couple of weeks to react to a new price. Both lags are in the model.</p>
+  </div></div>
+  <div class="chart-wrap"><svg id="chart" viewBox="0 0 960 400" role="img" aria-label="Cash position over 90 days for the three responses"></svg>
+    <div class="legend"><span class="wA">A · Do nothing</span><span class="wB">B · Raise prices 10%</span><span class="wC">C · Raise 5% + trim menu</span></div>
+  </div>
+  <div class="tbl-wrap"><table id="tbl"></table></div>
+</section>
+
+<section class="screen" id="s3">
+  <div class="screen-head"><div class="n">3</div><div class="t">
+    <div class="eyebrow">Trade-offs</div>
+    <h2>What each response gives up</h2>
+    <p>Only what the model actually shows. Each point below is read directly from the three runs.</p>
+  </div></div>
+  <div class="trade" id="trade"></div>
+  <div class="callout" id="horizon-note"></div>
+</section>
+
+<section class="screen" id="s4">
+  <div class="screen-head"><div class="n">4</div><div class="t">
+    <div class="eyebrow">What could change the result</div>
+    <h2>Which assumption matters most?</h2>
+    <p>Every uncertain assumption was moved across a defensible range and the three responses re-run for every combination. What matters is whether the best choice stays the same — not whether a single number is exact.</p>
+  </div></div>
+  <div id="sens-summary"></div>
+  <div class="influence" id="influence"></div>
+  <div class="panel">
+    <h3>Change an assumption. The whole page re-runs.</h3>
+    <p class="small muted">Same model, same cafe, different assumption. Every number above updates.</p>
+    <div class="controls" id="controls"></div>
+    <div class="note" id="snapnote"></div>
+  </div>
+</section>
+
+<section class="screen" id="s5">
+  <div class="screen-head"><div class="n">5</div><div class="t">
+    <div class="eyebrow">Evidence &amp; assumptions</div>
+    <h2>Where every number comes from</h2>
+    <p>Four kinds of number. Yours, which we take as given. Research, with a citation. Our assumptions, stated as such and tested. And arithmetic on the above.</p>
+  </div></div>
+  <div class="tbl-wrap"><table id="evid"></table></div>
+  <details><summary>Research sources</summary><div class="inner" id="sources"></div></details>
+  <details><summary>How this was calculated</summary><div class="inner" id="how"></div></details>
+  <p class="small" style="margin-top:18px"><b id="snf"></b></p>
+</section>
+
+<section class="screen" id="try">
+  <div class="screen-head"><div class="n">+</div><div class="t">
+    <div class="eyebrow">Try your business</div>
+    <h2>Put your own numbers in</h2>
+    <p>Eight figures from your books. The model stays the same; only your starting position changes. Nothing leaves this page.</p>
+  </div></div>
+  <div class="panel">
+    <div class="controls" id="intake"></div>
+    <div class="btnrow"><button class="btn primary" id="apply">Run my comparison</button><button class="btn" id="reset">Back to demo cafe</button><span class="small muted" id="intake-msg"></span></div>
+  </div>
+</section>
+
+</main>
+<footer class="foot"><div class="wrap" id="foot"></div></footer>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function(){
+const qt = new URLSearchParams(location.search).get('theme'); if(qt==='light'||qt==='dark') document.documentElement.dataset.theme = qt;
+const D = JSON.parse(document.getElementById('data').textContent);
+const DPM = 365/12, H = 90;
+const WID = ['A','B','C'];
+const NAMES = {A:'Do nothing', B:'Raise prices 10%', C:'Raise 5% + trim menu'};
+const CLS = {A:'wA',B:'wB',C:'wC'};
+const money = v => (v<0?'−':'') + Math.abs(Math.round(v)).toLocaleString();
+const pct = (v,d=1) => (v>0?'+':'') + v.toFixed(d) + '%';
+
+// ---- state ------------------------------------------------------------------------------
+let base = Object.assign({}, D.baseline_raw);
+let sel = { price_sensitivity:'central', cogs_pass_through:'central', demand_adjustment_speed:'central',
+            supplier_increase_pct: base.supplier_increase_pct, reformulation_effectiveness: 0.30 };
+
+// ---- accounting identities (must match event_sim/cafe/accounting.py) -------------------
+function derived(b){
+  const aov = b.monthly_revenue/(b.daily_orders*DPM);
+  const cpo = b.monthly_cogs/(b.daily_orders*DPM);
+  return {aov, cpo, fixedDay: b.monthly_fixed_costs/DPM};
+}
+function ledger(b, w){
+  const {aov,cpo,fixedDay} = derived(b);
+  const n = Math.min(w.demand.length, w.cogs.length, w.price.length);
+  const L = {orders:[],price:[],revenue:[],cogs:[],gp:[],gm:[],net:[],cash:[]};
+  let cash = b.cash_on_hand;
+  for(let d=0; d<n; d++){
+    const o = b.daily_orders*w.demand[d]/100, p = aov*w.price[d]/100, r = o*p, c = o*cpo*w.cogs[d]/100, gp=r-c, net=gp-fixedDay;
+    if(d>0) cash += net;
+    L.orders.push(o); L.price.push(p); L.revenue.push(r); L.cogs.push(c); L.gp.push(gp); L.gm.push(r>0?100*gp/r:0); L.net.push(net); L.cash.push(cash);
+  }
+  return L;
+}
+function metrics(L, b){
+  const last = Math.min(H, L.cash.length-1), ts = Math.max(1,last-29), td = last-ts+1, sc = DPM/td;
+  const sum = (a,s,e)=>a.slice(s,e+1).reduce((x,y)=>x+y,0);
+  const mrev = sum(L.revenue,ts,last)*sc, mgp = sum(L.gp,ts,last)*sc, mnet = sum(L.net,ts,last)*sc;
+  let worst=1; for(let d=1; d<=last; d++) if(L.gm[d]<L.gm[worst]) worst=d;
+  let minc=0; for(let d=0; d<=last; d++) if(L.cash[d]<L.cash[minc]) minc=d;
+  return {mrev, mgp, mnet, gm_end:L.gm[last], gm_worst:L.gm[worst], worst_day:worst,
+    orders_change:100*(L.orders[last]/L.orders[0]-1), rev_change:100*(mrev/b.monthly_revenue-1),
+    cash30:L.cash[Math.min(30,last)], cash90:L.cash[last], cash_change:L.cash[last]-L.cash[0],
+    min_cash:L.cash[minc], min_day:minc, negative: L.cash.slice(0,last+1).some(c=>c<0),
+    first_negative_day: (()=>{ for(let d=0; d<=last; d++) if(L.cash[d]<0) return d; return null; })(),
+    runway: mnet>=0 ? null : (L.cash[last]<=0 ? 0 : L.cash[last]/(-mnet))};
+}
+
+// ---- grid lookup -----------------------------------------------------------------------
+const redVals = [...new Set(D.grid.map(g=>g.key.reduction_points))].sort((a,b)=>a-b);
+const supVals = [...new Set(D.grid.map(g=>g.key.supplier_increase_pct))].sort((a,b)=>a-b);
+const nearest = (arr,v)=>arr.reduce((p,c)=>Math.abs(c-v)<Math.abs(p-v)?c:p);
+function pick(){
+  const red = nearest(redVals, base.low_margin_share_pct*sel.reformulation_effectiveness);
+  const sup = nearest(supVals, sel.supplier_increase_pct);
+  const g = D.grid.find(g=>g.key.price_sensitivity===sel.price_sensitivity && g.key.cogs_pass_through===sel.cogs_pass_through
+     && g.key.demand_adjustment_speed===sel.demand_adjustment_speed && g.key.supplier_increase_pct===sup && g.key.reduction_points===red);
+  return {g, red, sup};
+}
+
+// ---- self-check against Python central case --------------------------------------------
+(function check(){
+  const central = D.grid.find(g=>g.key.price_sensitivity==='central'&&g.key.cogs_pass_through==='central'&&g.key.demand_adjustment_speed==='central'
+     && g.key.supplier_increase_pct===D.baseline_raw.supplier_increase_pct && Math.abs(g.key.reduction_points - D.worlds[2].cogs_reduction_points)<1e-6);
+  if(!central){ fail('Could not find the central case in the embedded data.'); return; }
+  for(const w of D.worlds){
+    const m = metrics(ledger(D.baseline_raw, central.worlds[w.id]), D.baseline_raw);
+    if(Math.abs(m.cash90 - w.metrics.cash_day_90) > 1){ fail('Page arithmetic does not match the generated report ('+w.id+': '+m.cash90.toFixed(0)+' vs '+w.metrics.cash_day_90.toFixed(0)+'). Numbers withheld.'); return; }
+  }
+})();
+function fail(msg){ const b=document.getElementById('banner'); b.textContent=msg; b.classList.add('on'); throw new Error(msg); }
+
+// ---- render ----------------------------------------------------------------------------
+function compute(){
+  const {g, red, sup} = pick();
+  const out = {};
+  for(const id of WID){ const L = ledger(base, g.worlds[id]); out[id] = {L, m: metrics(L, base)}; }
+  const rank = [...WID].sort((a,b)=>out[b].m.cash90-out[a].m.cash90);
+  return {out, rank, red, sup};
+}
+function render(){
+  const {out, rank, red, sup} = compute();
+  const best = rank[0];
+  document.getElementById('demoflag').hidden = !base.is_demo;
+  document.getElementById('headline').textContent = `Your ingredient costs rose ${sup}%. Three responses, one model.`;
+
+  // KPIs
+  const bd = derived(base);
+  const preNet = base.monthly_revenue - base.monthly_cogs - base.monthly_fixed_costs;
+  document.getElementById('kpis').innerHTML = [
+    ['Monthly sales', money(base.monthly_revenue)],['Orders / day', Math.round(base.daily_orders)],['Avg order', bd.aov.toFixed(2)],
+    ['Ingredients', (100*base.monthly_cogs/base.monthly_revenue).toFixed(0)+'% of sales'],['Net / month today', money(preNet)],['Cash today', money(base.cash_on_hand)]
+  ].map(([l,v])=>`<div class="kpi"><div class="l">${l}</div><div class="v num">${v}</div></div>`).join('');
+
+  // cards
+  const wins = winCounts();
+  document.getElementById('cards').innerHTML = WID.map(id=>{
+    const m = out[id].m, w = D.worlds.find(x=>x.id===id);
+    const head = id==='C' ? `A ${w.price_rise_pct}% price rise, plus removing or reformulating low-margin items (about ${red} points off ingredient cost per order).` : w.headline;
+    const rw = m.first_negative_day!==null ? `<span class="neg">Runs out on day ${m.first_negative_day}</span>` : (m.runway===null ? 'Not at risk' : (m.runway<1 ? 'Under a month after day 90' : m.runway.toFixed(1)+' months from day 90'));
+    return `<div class="world ${CLS[id]} ${id===best?'best':''}">${id===best?`<div class="best-tag">Best in ${wins[best]} of ${D.sensitivity.n} tested cases</div>`:''}
+      <div class="id"><div class="chip">${id}</div><div class="lbl">${NAMES[id]}</div></div>
+      <div class="head">${head}</div>
+      <div class="eyebrow">Net per month, after 90 days</div>
+      <div class="big num ${m.mnet<0?'neg':''}">${money(m.mnet)}</div>
+      <div class="row"><span>Cash at day 90</span><span class="num ${m.cash90<0?'neg':''}">${money(m.cash90)}</span></div>
+      <div class="row"><span>Orders vs today</span><span class="num">${pct(m.orders_change)}</span></div>
+      <div class="row"><span>Gross margin</span><span class="num">${m.gm_end.toFixed(1)}%</span></div>
+      <div class="row"><span>Cash runway</span><span class="num">${rw}</span></div>
+    </div>`;
+  }).join('');
+
+  // verdict
+  const benefit = {}; WID.forEach(id=> benefit[id]=out[id].m.cash90-out['A'].m.cash90);
+  const second = rank[1];
+  document.getElementById('verdict').innerHTML = `Under these assumptions, <b>${id2(best)}</b> leaves you <b>${money(benefit[best])}</b> better off in cash at day 90 than doing nothing, and <b>${money(out[best].m.cash90-out[second].m.cash90)}</b> ahead of ${second} · ${NAMES[second].toLowerCase()}. ${D.sensitivity.verdict}`;
+  document.getElementById('scenario-note').textContent = D.language.scenario_not_forecast;
+
+  drawChart(out, best);
+  renderTable(out);
+  renderTrade(out, rank, red);
+  renderSens();
+  renderEvidence(red, sup);
+  document.getElementById('snapnote').textContent = `Tested at a supplier increase of ${sup}% and ${red} points of ingredient-cost saving from trimming the menu (the nearest values on the tested grid to your inputs).`;
+}
+function id2(id){ return `${id} · ${NAMES[id]}`; }
+function winCounts(){ const c={A:0,B:0,C:0}; D.sensitivity.points.forEach(p=>c[p.ranking[0]]++); return c; }
+
+function niceStep(span, n){ const raw=span/n, mag=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/mag; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*mag; }
+function drawChart(out, best){
+  const svg = document.getElementById('chart'); const W=960, Hh=400, pl=78, pr=118, pt=28, pb=40;
+  const all = WID.flatMap(id=>out[id].L.cash.slice(0,H+1));
+  const mn = Math.min(...all), mx = Math.max(...all);
+  // Anchor the axis at zero only when cash actually gets near it; otherwise the lines are
+  // squeezed into a sliver and the owner cannot see the separation that matters.
+  const threatened = mn < 0.25*mx;
+  let lo = threatened ? Math.min(0, mn) : mn, hi = mx;
+  const step = niceStep(hi-lo, 5);
+  lo = Math.floor(lo/step)*step; hi = Math.ceil(hi/step)*step; if(hi===lo) hi=lo+step;
+  const x = d => pl + d*(W-pl-pr)/H, y = v => pt + (hi-v)*(Hh-pt-pb)/(hi-lo);
+  let s = '';
+  for(let v=lo; v<=hi+1e-9; v+=step){ s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="12" fill="var(--muted)">${money(v)}</text>`; }
+  [0,30,60,90].forEach(d=> s+=`<text x="${x(d)}" y="${Hh-12}" text-anchor="middle" font-size="12" fill="var(--muted)">Day ${d}</text>`);
+  if(lo<=0 && hi>0) s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(0)}" y2="${y(0)}" stroke="var(--crit)" stroke-width="1.5" stroke-dasharray="4 4"/><text x="${W-pr+6}" y="${y(0)+4}" font-size="12" fill="var(--crit)">cash = 0</text>`;
+  const bl = out[best].L.cash; let area = `M${x(0)},${y(bl[0])}`; for(let d=1; d<=H; d++) area+=` L${x(d)},${y(bl[d])}`; area+=` L${x(H)},${y(lo)} L${x(0)},${y(lo)} Z`;
+  s+=`<path d="${area}" fill="var(--${best.toLowerCase()}-soft)"/>`;
+  // end labels, nudged apart if they would overlap
+  const ends = WID.map(id=>({id, v:out[id].L.cash[H], ty:y(out[id].L.cash[H])})).sort((a,b)=>a.ty-b.ty);
+  for(let i=1;i<ends.length;i++) if(ends[i].ty-ends[i-1].ty<16) ends[i].ty=ends[i-1].ty+16;
+  for(const id of WID){
+    const c = out[id].L.cash; let p=`M${x(0)},${y(c[0])}`; for(let d=1; d<=H; d++) p+=` L${x(d)},${y(c[d])}`;
+    s+=`<path d="${p}" fill="none" stroke="var(--${id.toLowerCase()})" stroke-width="${id===best?3:2}" stroke-linejoin="round"/>`;
+    const e = ends.find(z=>z.id===id);
+    s+=`<circle cx="${x(H)}" cy="${y(c[H])}" r="4" fill="var(--${id.toLowerCase()})"/><text x="${x(H)+8}" y="${e.ty+4}" font-size="13" font-weight="600" fill="var(--${id.toLowerCase()})">${id} ${money(c[H])}</text>`;
+  }
+  s+=`<circle cx="${x(0)}" cy="${y(out.A.L.cash[0])}" r="3.5" fill="var(--ink)"/><text x="${x(0)}" y="${y(out.A.L.cash[0])+20}" font-size="12" fill="var(--muted)">today ${money(out.A.L.cash[0])}</text>`;
+  svg.innerHTML = s;
+}
+function renderTable(out){
+  const rows = [['Cash at day 30', m=>money(m.cash30)],['Cash at day 90', m=>money(m.cash90)],['Change in cash over 90 days', m=>money(m.cash_change)],
+    ['Net per month (steady state)', m=>money(m.mnet)],['Gross margin at day 90', m=>m.gm_end.toFixed(1)+'%'],['Orders vs today', m=>pct(m.orders_change)],['Monthly sales vs today', m=>pct(m.rev_change)]];
+  document.getElementById('tbl').innerHTML = `<thead><tr><th></th>${WID.map(id=>`<th class="num">${id} · ${NAMES[id]}</th>`).join('')}</tr></thead><tbody>`+
+    rows.map(([l,f])=>`<tr><td>${l}</td>${WID.map(id=>`<td class="num">${f(out[id].m)}</td>`).join('')}</tr>`).join('')+`</tbody>`;
+}
+function renderTrade(out, rank, red){
+  const A=out.A.m,B=out.B.m,C=out.C.m;
+  const items = {
+    A:[`Keeps every customer: orders unchanged.`, `Absorbs the whole cost increase: gross margin falls to ${A.gm_end.toFixed(1)}%.`, A.mnet<0?`Loses ${money(-A.mnet)} a month once the higher costs fully land.`:`Still clears ${money(A.mnet)} a month.`, A.runway!==null?`At that rate, cash lasts about ${A.runway.toFixed(1)} months.`:`Cash is not at risk within the horizon.`],
+    B:[`Protects margin best: ${B.gm_end.toFixed(1)}% gross margin at day 90.`, `Pays for it in customers: orders ${pct(B.orders_change)}.`, `Net ${money(B.mnet)} a month once customers have reacted.`, `Cash at day 90: ${money(B.cash90)}.`],
+    C:[`Loses fewer customers than B: orders ${pct(C.orders_change)} (about ${(0.33*red).toFixed(1)} points of that is from the removed items).`, `Cuts ingredient cost per order by about ${red} points instead of passing it all on.`, `Net ${money(C.mnet)} a month. Gross margin ${C.gm_end.toFixed(1)}%.`, `Cash at day 90: ${money(C.cash90)}.`]
+  };
+  document.getElementById('trade').innerHTML = WID.map(id=>`<div class="t ${CLS[id]}"><h3>${id} · ${NAMES[id]}</h3><ul>${items[id].map(t=>`<li>${t}</li>`).join('')}</ul></div>`).join('');
+  const byNet = [...WID].sort((a,b)=>out[b].m.mnet-out[a].m.mnet);
+  const disagree = byNet[0]!==rank[0] ? `<b>Note:</b> ranked by cash at day 90, <b>${rank[0]}</b> is ahead; ranked by what each option earns per month once customers have fully reacted, <b>${byNet[0]}</b> is ahead. The difference is timing — lost customers arrive gradually, so a price rise looks better over 90 days than it does after. ` : '';
+  document.getElementById('horizon-note').innerHTML = disagree + `<b>A limit of the 90-day view.</b> If customers react slowly to a price rise, part of the lost demand has not arrived by day 90, which flatters the price-rise options within this window. The comparison is read at day 90 because that is as far as wages and rent can honestly be treated as fixed — not because the effects stop there.`;
+}
+function renderSens(){
+  const S = D.sensitivity, wins = S.win_counts;
+  document.getElementById('sens-summary').innerHTML = `<p><b>${S.verdict}</b></p><div class="shares">${WID.filter(id=>wins[id]>0).map(id=>`<div class="${CLS[id]}" style="flex:${wins[id]}">${id} ${Math.round(100*wins[id]/S.n)}%</div>`).join('')}</div><p class="small muted">Share of the ${S.n} tested assumption combinations in which each response comes out ahead on cash at day 90.</p>`;
+  const maxInf = Math.max(...S.one_at_a_time.map(r=>r.influence));
+  document.getElementById('influence').innerHTML = `<div class="eyebrow" style="margin-top:18px">Assumptions ranked by influence (each moved on its own)</div>`+S.one_at_a_time.map(r=>`<div class="inf"><div>${r.label}</div><div class="bar"><i class="${r.changes_top_choice?'flip':''}" style="width:${Math.max(3,100*r.influence/maxInf).toFixed(0)}%"></i></div><div class="tag ${r.changes_top_choice?'':'ok'}">${r.changes_top_choice?'Changes the answer':'Does not change the answer'}</div></div>`).join('');
+  if(!document.getElementById('controls').children.length){
+    const c = document.getElementById('controls');
+    const opt=(k,opts,lab,fmt)=>{ const d=document.createElement('div'); d.className='ctl'; d.innerHTML=`<label>${lab}</label><select data-k="${k}">${opts.map(o=>`<option value="${o}" ${String(o)===String(sel[k])?'selected':''}>${fmt?fmt(o):o}</option>`).join('')}</select>`; c.appendChild(d); };
+    opt('price_sensitivity',['low','central','high'],S.sweep_labels.price_sensitivity,o=>({low:'Low — loyal customers, competitors raise too (0.50)',central:'Typical — research estimate (0.81)',high:'High — competitors hold prices, easy alternatives (1.60)'})[o]);
+    opt('supplier_increase_pct',supVals,S.sweep_labels.supplier_increase_pct,o=>`+${o}%`);
+    opt('cogs_pass_through',['low','central'],S.sweep_labels.cogs_pass_through,o=>({low:'About 70% — some substitution or contracts',central:'All of it (100%)'})[o]);
+    opt('reformulation_effectiveness',[0.15,0.30,0.45],S.sweep_labels.reformulation_effectiveness,o=>({0.15:'Half as much as assumed',0.3:'As assumed',0.45:'Half again as much'})[o]);
+    opt('demand_adjustment_speed',['slow','central','fast'],S.sweep_labels.demand_adjustment_speed,o=>({slow:'Slowly — about a month',central:'About two weeks',fast:'Quickly — about a week'})[o]);
+    c.addEventListener('change',e=>{ const k=e.target.dataset.k; sel[k] = isNaN(parseFloat(e.target.value))? e.target.value : parseFloat(e.target.value); render(); });
+  }
+}
+function renderEvidence(red, sup){
+  const kcls = {'Customer input':'k-customer','External research':'k-research','Assumption':'k-assumption','Derived':'k-derived'};
+  document.getElementById('evid').innerHTML = `<thead><tr><th>Assumption</th><th>Value</th><th>Kind</th><th>Tested?</th></tr></thead><tbody>`+D.assumptions.map(a=>`<tr><td><b>${a.label}</b>${a.note?`<div class="small muted">${a.note}</div>`:''}</td><td class="num">${a.value}</td><td><span class="klass ${kcls[a.klass]}">${a.klass}</span></td><td>${a.swept?'Yes':'—'}</td></tr>`).join('')+`</tbody>`;
+  document.getElementById('sources').innerHTML = D.sources.map(s=>`<p><b>${s.citation}</b><br><span class="muted">Population:</span> ${s.population}<br><span class="muted">Estimate:</span> ${s.estimate}<br><span class="muted">Limitations:</span> ${s.limitations}<br><span class="muted">Transfer to this comparison:</span> ${s.transfer}</p>`).join('');
+  const R = D.reproducibility;
+  document.getElementById('how').innerHTML = `<p>Two layers. A small causal model of the cafe produces how ingredient cost per order, menu price and daily orders move over 90 days, including the lags. Accounting identities then turn those into money: revenue = orders × price; ingredient cost = orders × cost per order; gross profit = revenue − ingredient cost; cash = yesterday's cash + gross profit − fixed costs. Nothing in the comparison is produced by a language model.</p>
+  <p>The three responses share one model, one set of coefficients, one horizon and one set of assumptions. Only the decision differs. Shared-configuration fingerprint <code>${R.shared_fingerprint.slice(0,16)}</code>; model version <code>${R.module_id}</code> (<code>${R.module_semantic_hash.slice(0,16)}</code>).</p>
+  <p>Each run is reproducible from the record stored with this report: ${R.worlds.map(w=>`${w.spec.id} <code>${w.engine_fingerprint.slice(0,12)}</code>`).join(' · ')}.</p>`;
+  document.getElementById('snf').textContent = D.language.scenario_not_forecast;
+  document.getElementById('foot').textContent = `${base.is_demo?'Demo values are fictional and for illustration only. ':''}Generated for ${base.name}. Report version ${R.module_id}.`;
+}
+
+// ---- intake ------------------------------------------------------------------------------
+(function intake(){
+  const c = document.getElementById('intake');
+  D.intake_fields.forEach(f=>{ const d=document.createElement('div'); d.className='ctl'; d.innerHTML=`<label>${f.label}${f.unit?` <span class="muted">(${f.unit})</span>`:''}</label><input data-k="${f.key}" ${f.key==='name'?'type="text"':'type="number" step="any"'} value="${base[f.key]}"><div class="note">${f.hint}</div>`; c.appendChild(d); });
+  document.getElementById('apply').onclick = ()=>{
+    const nb = Object.assign({}, base); let bad=[];
+    c.querySelectorAll('input').forEach(i=>{ const k=i.dataset.k; nb[k] = k==='name'? i.value : parseFloat(i.value); if(k!=='name' && !isFinite(nb[k])) bad.push(k); });
+    if(bad.length){ document.getElementById('intake-msg').textContent='Please fill every number.'; return; }
+    if(!(nb.monthly_revenue>0&&nb.daily_orders>0&&nb.monthly_cogs>0&&nb.monthly_cogs<nb.monthly_revenue&&nb.monthly_fixed_costs>=0&&nb.cash_on_hand>=0)){ document.getElementById('intake-msg').textContent='Ingredient cost must be below sales; other figures must be positive.'; return; }
+    nb.is_demo=false; base = nb; sel.supplier_increase_pct = nb.supplier_increase_pct;
+    document.getElementById('intake-msg').textContent='Running the same model on your numbers.'; render(); window.scrollTo({top:0});
+  };
+  document.getElementById('reset').onclick = ()=>{ base=Object.assign({},D.baseline_raw); sel.supplier_increase_pct=base.supplier_increase_pct; c.querySelectorAll('input').forEach(i=>i.value=base[i.dataset.k]); document.getElementById('intake-msg').textContent=''; render(); };
+})();
+
+// step highlight
+const links=[...document.querySelectorAll('.steps a')]; const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+e.target.id)); } }); },{rootMargin:'-40% 0px -55% 0px'}).observe && secs.forEach(s=>{ if(s) new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting) links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+e.target.id)); }); },{rootMargin:'-40% 0px -55% 0px'}).observe(s); });
+
+render();
+})();
+</script>
+</body>
+</html>
