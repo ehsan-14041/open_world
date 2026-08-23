@@ -15,8 +15,9 @@ decisions. And you can change any assumption and watch all three move together.*
 
 ## The walk (screen by screen)
 
-**Screen 1 — don't explain, let them read.** Three cards. Point at the one marked best, then
-at the one that goes negative. *"That's doing nothing."* Then the verdict sentence. Wait.
+**Screen 1 — don't explain, let them read.** Three cards. Point at the one ranked first, then
+at the one that goes negative. *"That's doing nothing."* Then the verdict sentence, then the
+box underneath it — *"and that's the one thing the answer hinges on."* Wait.
 
 **Screen 2 — the chart.** Point at the hump in the grey line around day 14. *"That's the
 two weeks where you're still using stock you bought at the old price. It looks fine, then it
@@ -28,7 +29,8 @@ customers. C keeps more customers but earns less per order."*
 **Screen 4 — the important one.** *"Every number on this page depends on assumptions. We
 moved every one of them across a range and re-ran all three decisions 162 times. Four of them
 don't change the answer. One does."* Flip the price-sensitivity dropdown to *High*. Watch C
-take the lead. *"So the real question isn't the model — it's whether your competitors will
+overtake B. *"B ranked first in 130 of 162 tested combinations — that's a count of the cases we
+tested, not a probability."* *"So the real question isn't the model — it's whether your competitors will
 raise prices too. You know that better than any model does."*
 
 **Screen 5 — evidence.** Don't read it. *"Every number is labelled: yours, research, or our
@@ -44,10 +46,43 @@ each time and write down what happened.
 
 | Phase | Who | What you offer |
 |---|---|---|
-| 1 | First 3 owners | A free customised report in exchange for their real eight numbers and 20 minutes of feedback |
-| 2 | Owners 4–20 | The same report, quoted at a real price. Start at **$150**; test **$50** and **$200** across the set |
+| 1 | First 3 owners | A free customised report in exchange for their real eight numbers, one real decision, and 20 minutes of feedback |
+| 2 | Owners 4 onward | The same report at a real price: **$99** (or local equivalent). Do not optimise pricing yet. |
 
 Quote the price before you generate the report, not after.
+
+## Before you show anything — three things to collect first
+
+Do not ask "do you like this?". Ask for:
+
+1. **One real decision** they are facing in the next 60 days. Write it in their words.
+2. **Their real numbers** — the eight inputs. If they guess, note which ones are guesses.
+3. **Their current intuition**: *"Before I show you anything — what do you think you'll do, and
+   why?"* Write it down verbatim. Whether the report changes it is one of the most useful
+   things you will learn.
+
+## After showing it — record every one of these
+
+| Question | Answer |
+|---|---|
+| Did they provide real data (not round guesses)? | yes / partly / no |
+| Did they understand the three-world comparison without help? | yes / with prompting / no |
+| Did they challenge or change an assumption? | which one |
+| Did they ask for a rerun? | what changed |
+| Did it change what they wanted to investigate? | how |
+| Would they use it for another decision? | which |
+| Would they pay? | yes / no / maybe |
+| What price felt reasonable to them? | their number |
+| Their strongest objection, verbatim | |
+
+## Two rules that protect the experiment
+
+**Do not modify the model after Customer 1 to make Customer 2 happier.** Every owner sees the
+same instrument. If the model changes between customers, you have no comparison.
+
+**Keep product feedback separate from model calibration.** "The chart is confusing" is product
+feedback — act on it. "My customers are more loyal than 0.81" is a calibration claim — record
+it, run it for them as a custom assumption, and do not change the default.
 
 ## Signals — record every one
 
@@ -65,9 +100,19 @@ Quote the price before you generate the report, not after.
 - Any compliment about the chart.
 - Clicks, opens, forwards.
 
+## The evidence ladder
+
+| Level | Signal | Worth |
+|---|---|---|
+| 0 | "Looks cool." | Almost nothing |
+| 1 | Provides real business data | Meaningful |
+| 2 | Provides a real upcoming decision | Strong |
+| 3 | Requests a rerun / changes an assumption | Very strong |
+| 4 | Pays | Actual validation |
+
 ## The provisional bar
 
-Roughly **10 serious demonstrations → at least 2 provide real data → at least 1 pays.**
+Roughly **10 serious demonstrations → at least 2 reach Level 1 → at least 1 reaches Level 4.**
 
 This is a commercial go/no-go, not a statistical test. Hitting it means: build the next
 scenario. Missing it means: the product as framed does not clear the bar, and that is a

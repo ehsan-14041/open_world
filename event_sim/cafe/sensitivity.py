@@ -7,7 +7,7 @@ and ranked. The output is not a distribution and not a probability: it is a cens
 tested assumption space — in how many tested combinations does each world come first, and
 which single assumption, when moved on its own, most often changes the answer.
 
-That framing is deliberate. "World B wins in 61% of tested combinations" is a statement
+That framing is deliberate. "World B ranked first in 61% of tested combinations" is a statement
 about the grid we chose, and it is reported as such. It is still far more useful to an owner
 than a single central estimate presented as if it were precise.
 """
@@ -131,17 +131,19 @@ class SensitivityResult:
         shares = self.win_shares()
         best = max(shares, key=shares.get)
         best_label = {"A": "Doing nothing", "B": "Raising prices 10%", "C": "A 5% rise plus trimming the menu"}[best]
+        counts = self.win_counts()
+        tail = " This is sensitivity analysis, not a probability estimate."
         if self.top_stable():
-            return f"{best_label} comes out ahead in every one of the {self.n} assumption combinations tested."
+            return f"{best_label} ranked first in every one of the {self.n} assumption combinations tested." + tail
         oat = self.one_at_a_time()
         deciders = [r["label"].lower() for r in oat if r["changes_top_choice"]]
-        share_txt = f"{100 * shares[best]:.0f}% of the {self.n} combinations tested"
+        count_txt = f"{counts[best]} of the {self.n} assumption combinations tested"
         if deciders:
             return (
-                f"{best_label} comes out ahead in {share_txt}. The choice depends mainly on "
-                f"{deciders[0]}" + (f" and {deciders[1]}" if len(deciders) > 1 else "") + "."
+                f"{best_label} ranked first in {count_txt}. The ranking depends mainly on "
+                f"{deciders[0]}" + (f" and {deciders[1]}" if len(deciders) > 1 else "") + "." + tail
             )
-        return f"{best_label} comes out ahead in {share_txt}."
+        return f"{best_label} ranked first in {count_txt}." + tail
 
     # --- internals ---------------------------------------------------------------------------
 

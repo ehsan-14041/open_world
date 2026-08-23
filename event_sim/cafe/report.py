@@ -138,9 +138,15 @@ def render_html(bundle: dict[str, Any]) -> str:
 
 
 def write_report(baseline: CafeBaseline, out_dir: Path, *, include_grid: bool = True,
-                 custom_elasticity: float | None = None) -> dict[str, Path]:
+                 custom_elasticity: float | None = None,
+                 reformulation_effectiveness: float | None = None) -> dict[str, Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
-    comp = run_comparison(baseline, custom_elasticity=custom_elasticity) if custom_elasticity is not None else None
+    kw: dict[str, Any] = {}
+    if custom_elasticity is not None:
+        kw["custom_elasticity"] = custom_elasticity
+    if reformulation_effectiveness is not None:
+        kw["reformulation_effectiveness"] = reformulation_effectiveness
+    comp = run_comparison(baseline, **kw) if kw else None
     bundle = build_bundle(baseline, comparison=comp, include_grid=include_grid)
     stem = "cafe_decision_report"
     paths = {

@@ -234,3 +234,40 @@ def test_port_disruption_models_unchanged_by_the_wedge():
     s = snapshot()
     assert s["modules"]["port_disruption"].startswith("d4670fb108c2e9a3")
     assert s["modules"]["port_disruption_h1_queue_experimental"].startswith("324a8bf1d67d56ad")
+
+
+# --- audit wording: non-probabilistic, accounting disclosed, World C flagged ------------
+
+def test_sensitivity_verdict_uses_counts_not_probability_language():
+    from event_sim.cafe.sensitivity import SensitivityResult, SweepPoint
+    from event_sim.cafe.sensitivity import SWEEP
+    import itertools
+    keys = list(SWEEP)
+    pts = []
+    for combo in itertools.product(*(SWEEP[k] for k in keys)):
+        s = dict(zip(keys, combo))
+        top = "C" if s["price_sensitivity"] == "high" else "B"
+        pts.append(SweepPoint(settings=s, ranking=[top, "C" if top == "B" else "B", "A"], metric={"A": 0, "B": 1, "C": 2}))
+    r = SensitivityResult(baseline=DEMO_CAFE, metric="cash_day_90", points=pts, central_ranking=["B", "C", "A"])
+    v = r.verdict()
+    assert "ranked first in 108 of the 162" in v
+    assert "not a probability estimate" in v
+    for banned in ("probability", "% of", "wins", "chance", "likely"):
+        assert banned not in v.split("not a probability")[0]
+
+
+def test_template_discloses_accounting_and_flags_world_c():
+    html = TEMPLATE.read_text(encoding="utf-8")
+    assert "Cash is not simulated directly" in html
+    assert "not yet calibrated to your business" in html
+    assert "stress assumption" in html
+    assert "your actual customers may be more or less price-sensitive" in html
+    assert "What this does not do" in html
+    assert "Ranked first in" in html and "Best in" not in html
+    assert "not a probability estimate" in html
+
+
+def test_template_has_four_visible_number_categories():
+    html = TEMPLATE.read_text(encoding="utf-8")
+    for label in ("'Your numbers'", "'External research'", "'Model assumptions'", "'Calculated from your numbers'", "Calculated results"):
+        assert label in html

@@ -32,9 +32,11 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important}}
+html,body{overflow-x:hidden}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;font-variant-numeric:tabular-nums}
 a{color:inherit}
 .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 16px} .worlds{gap:12px} .kpis{grid-template-columns:1fr 1fr} .inf{grid-template-columns:1fr;gap:6px} .inf .tag{justify-self:start}}
 p{max-width:65ch}
 h1,h2,h3{text-wrap:balance;margin:0}
 h1{font-family:var(--display);font-weight:500;font-size:clamp(30px,4.2vw,46px);line-height:1.12;letter-spacing:-.01em}
@@ -49,9 +51,9 @@ button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{ou
 
 /* top bar */
 .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
-.top .wrap{display:flex;align-items:center;gap:18px;height:56px}
+.top .wrap{display:flex;align-items:center;gap:12px 18px;min-height:56px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
 .brand{font-weight:700;letter-spacing:.02em;white-space:nowrap}
-.steps{display:flex;gap:4px;margin-left:auto;overflow-x:auto}
+.steps{display:flex;gap:4px;margin-left:auto;overflow-x:auto;min-width:0;max-width:100%}
 .steps a{text-decoration:none;font-size:13px;font-weight:600;padding:6px 10px;border-radius:4px;color:var(--muted);white-space:nowrap}
 .steps a:hover,.steps a.on{color:var(--ink);background:var(--paper-2)}
 .steps a b{color:var(--b);margin-right:6px}
@@ -81,6 +83,15 @@ section.screen:last-of-type{border-bottom:0}
 .wA{--wc:var(--a)} .wB{--wc:var(--b)} .wC{--wc:var(--c)}
 .verdict{background:var(--paper-2);border-left:3px solid var(--b);padding:14px 18px;border-radius:0 4px 4px 0;font-size:18px;max-width:72ch}
 .verdict b{color:var(--b)}
+.unknown{margin-top:14px;padding:16px 18px;border:1px solid var(--c);border-radius:6px;background:var(--c-soft);max-width:72ch}
+.unknown .eyebrow{color:var(--c)}
+.unknown p{margin:6px 0 0}
+.disclose{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+@media (max-width:720px){.disclose{grid-template-columns:1fr}}
+.disclose div{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px 18px}
+.disclose h3{margin-bottom:8px}
+.disclose li{margin:4px 0 0 18px}
+.evid-group td.group{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);background:var(--paper-2);padding-top:12px}
 
 /* chart */
 .chart-wrap{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px;overflow-x:auto}
@@ -161,6 +172,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background
   <div class="kpis" id="kpis"></div>
   <div class="worlds" id="cards"></div>
   <div class="verdict" id="verdict"></div>
+  <div class="unknown" id="unknown"></div>
   <p class="small muted" style="margin-top:12px" id="scenario-note"></p>
 </section>
 
@@ -169,6 +181,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background
     <div class="eyebrow">What happens</div>
     <h2>Cash in the bank over the next 90 days</h2>
     <p>Costs take about a week to rise — you are still using stock bought at the old price. Customers take a couple of weeks to react to a new price. Both lags are in the model.</p>
+    <p class="small muted"><b>How this chart is made.</b> The model simulates three things: your ingredient cost per order, your average price, and your daily orders. Cash is then <em>calculated</em> from those simulated figures using the business inputs you gave — revenue is orders × price, gross profit is revenue minus ingredient cost, and cash is yesterday's cash plus gross profit minus your fixed costs. Cash is not simulated directly.</p>
   </div></div>
   <div class="chart-wrap"><svg id="chart" viewBox="0 0 960 400" role="img" aria-label="Cash position over 90 days for the three responses"></svg>
     <div class="legend"><span class="wA">A · Do nothing</span><span class="wB">B · Raise prices 10%</span><span class="wC">C · Raise 5% + trim menu</span></div>
@@ -190,7 +203,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background
   <div class="screen-head"><div class="n">4</div><div class="t">
     <div class="eyebrow">What could change the result</div>
     <h2>Which assumption matters most?</h2>
-    <p>Every uncertain assumption was moved across a defensible range and the three responses re-run for every combination. What matters is whether the best choice stays the same — not whether a single number is exact.</p>
+    <p>Every uncertain assumption was moved across a defensible range and the three responses re-run for every combination. What matters is whether the top-ranked option stays the same — not whether a single number is exact.</p>
   </div></div>
   <div id="sens-summary"></div>
   <div class="influence" id="influence"></div>
@@ -206,11 +219,16 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background
   <div class="screen-head"><div class="n">5</div><div class="t">
     <div class="eyebrow">Evidence &amp; assumptions</div>
     <h2>Where every number comes from</h2>
-    <p>Four kinds of number. Yours, which we take as given. Research, with a citation. Our assumptions, stated as such and tested. And arithmetic on the above.</p>
+    <p>Four kinds of number. Yours, which we take as given. External research, with a citation. Our model assumptions, stated as such and tested. And results calculated from the three.</p>
+    <p class="small muted">On price sensitivity: external research provides a plausible reference range for eating out as a whole; your actual customers may be more or less price-sensitive than that. The high setting is a stress assumption, not a research finding.</p>
   </div></div>
   <div class="tbl-wrap"><table id="evid"></table></div>
   <details><summary>Research sources</summary><div class="inner" id="sources"></div></details>
   <details><summary>How this was calculated</summary><div class="inner" id="how"></div></details>
+  <div class="disclose">
+    <div><h3>What this does</h3><ul><li>Compares three responses under one consistent model of your cafe.</li><li>Shows the relative financial trade-offs between them.</li><li>Tests how sensitive the result is to each uncertain assumption.</li><li>Tells you which unknowns matter most — and which don't.</li></ul></div>
+    <div><h3>What this does not do</h3><ul><li>Predict the future or guarantee any sales or profit figure.</li><li>Model how competitors will react to your prices.</li><li>Model the wider economy, seasons, or new customers.</li><li>Replace your accountant or financial advice.</li></ul></div>
+  </div>
   <p class="small" style="margin-top:18px"><b id="snf"></b></p>
 </section>
 
@@ -330,7 +348,7 @@ function render(){
     const m = out[id].m, w = D.worlds.find(x=>x.id===id);
     const head = id==='C' ? `A ${w.price_rise_pct}% price rise, plus removing or reformulating low-margin items (about ${red} points off ingredient cost per order).` : w.headline;
     const rw = m.first_negative_day!==null ? `<span class="neg">Runs out on day ${m.first_negative_day}</span>` : (m.runway===null ? 'Not at risk' : (m.runway<1 ? 'Under a month after day 90' : m.runway.toFixed(1)+' months from day 90'));
-    return `<div class="world ${CLS[id]} ${id===best?'best':''}">${id===best?`<div class="best-tag">Best in ${wins[best]} of ${D.sensitivity.n} tested cases</div>`:''}
+    return `<div class="world ${CLS[id]} ${id===best?'best':''}">${id===best?`<div class="best-tag">Ranked first in ${wins[best]} of ${wins.n} tested cases</div>`:''}
       <div class="id"><div class="chip">${id}</div><div class="lbl">${NAMES[id]}</div></div>
       <div class="head">${head}</div>
       <div class="eyebrow">Net per month, after 90 days</div>
@@ -345,7 +363,8 @@ function render(){
   // verdict
   const benefit = {}; WID.forEach(id=> benefit[id]=out[id].m.cash90-out['A'].m.cash90);
   const second = rank[1];
-  document.getElementById('verdict').innerHTML = `Under these assumptions, <b>${id2(best)}</b> leaves you <b>${money(benefit[best])}</b> better off in cash at day 90 than doing nothing, and <b>${money(out[best].m.cash90-out[second].m.cash90)}</b> ahead of ${second} · ${NAMES[second].toLowerCase()}. ${D.sensitivity.verdict}`;
+  document.getElementById('verdict').innerHTML = `Under these assumptions, <b>${id2(best)}</b> leaves you <b>${money(benefit[best])}</b> better off in cash at day 90 than doing nothing, and <b>${money(out[best].m.cash90-out[second].m.cash90)}</b> ahead of ${second} · ${NAMES[second].toLowerCase()}. ${sensVerdict()}`;
+  renderUnknown(rank);
   document.getElementById('scenario-note').textContent = D.language.scenario_not_forecast;
 
   drawChart(out, best);
@@ -356,7 +375,51 @@ function render(){
   document.getElementById('snapnote').textContent = `Tested at a supplier increase of ${sup}% and ${red} points of ingredient-cost saving from trimming the menu (the nearest values on the tested grid to your inputs).`;
 }
 function id2(id){ return `${id} · ${NAMES[id]}`; }
-function winCounts(){ const c={A:0,B:0,C:0}; D.sensitivity.points.forEach(p=>c[p.ranking[0]]++); return c; }
+function renderUnknown(rank){
+  const {oat, pts} = census(); const el=document.getElementById('unknown');
+  const f = oat.find(r=>r.flips);
+  if(!f){ el.innerHTML = `<div class="eyebrow">The biggest unknown</div><p>No single tested assumption changes which response ranks first. The ranking is robust across the tested grid; the sizes of the differences still depend on the assumptions listed on screen 5.</p>`; return; }
+  // who overtakes at the extreme of the flipping axis
+  const alt = f.tops.find(x=>x!==rank[0]) || f.tops[f.tops.length-1];
+  const practical = {
+    price_sensitivity: 'A small price test on a few items, or how your sales responded the last time you changed prices, would narrow this down materially.',
+    reduction_points: 'Costing out the specific items you would remove — their ingredient cost and how often they are ordered — would replace this assumption with your own number.',
+    supplier_increase_pct: 'Confirming the actual increase across your main suppliers would settle this.',
+    cogs_pass_through: 'Checking which of your supply contracts are fixed-price would settle this.',
+    demand_adjustment_speed: 'Weekly sales after a past price change would show how fast your customers react.'
+  }[f.k];
+  el.innerHTML = `<div class="eyebrow">The biggest unknown</div><p><b>${AXIS_LABELS[f.k]}.</b> Under the current assumptions ${rank[0]} · ${NAMES[rank[0]].toLowerCase()} ranks first; move this one assumption to its ${f.tops.indexOf(alt)===f.tops.length-1?'high':'other'} setting and <b>${alt} · ${NAMES[alt].toLowerCase()} overtakes it</b>. No other tested assumption does that on its own.</p><p>${practical}</p>`;
+}
+// Census of the whole tested grid for the CURRENT cafe. The grid holds engine trajectories,
+// which do not depend on money; applying this cafe's money to every point gives this cafe's
+// own ranking census rather than the demo's.
+let _censusKey = null, _census = null;
+function census(){
+  const key = JSON.stringify([base.monthly_revenue, base.daily_orders, base.monthly_cogs, base.monthly_fixed_costs, base.cash_on_hand]);
+  if(_censusKey===key) return _census;
+  const pts = D.grid.map(g=>{ const m={}; for(const id of WID) m[id]=metrics(ledger(base, g.worlds[id]), base).cash90; const rank=[...WID].sort((a,b)=>m[b]-m[a]); return {key:g.key, rank, m}; });
+  const wins={A:0,B:0,C:0}; pts.forEach(p=>wins[p.rank[0]]++); wins.n=pts.length;
+  // one-at-a-time around the grid centre
+  const axes = {price_sensitivity:['low','central','high'], supplier_increase_pct:supVals, cogs_pass_through:['low','central'], reduction_points:redVals, demand_adjustment_speed:['slow','central','fast']};
+  const centre = {price_sensitivity:'central', supplier_increase_pct:nearest(supVals, D.baseline_raw.supplier_increase_pct), cogs_pass_through:'central', reduction_points:redVals[Math.floor(redVals.length/2)], demand_adjustment_speed:'central'};
+  const find = s => pts.find(p=>Object.keys(axes).every(k=>p.key[k]===s[k]));
+  const oat = Object.keys(axes).map(k=>{ const tops=[], spread=[]; for(const v of axes[k]){ const q=find({...centre,[k]:v}); if(!q) continue; tops.push(q.rank[0]); spread.push(q.m.B-q.m.C);} return {k, tops, flips:new Set(tops).size>1, influence: spread.length?Math.max(...spread)-Math.min(...spread):0}; });
+  oat.sort((a,b)=>(b.flips-a.flips)||(b.influence-a.influence));
+  const c0 = find(centre);
+  _censusKey=key; _census={wins, oat, pts, centreTop: c0?c0.rank[0]:null};
+  return _census;
+}
+function winCounts(){ return census().wins; }
+const AXIS_LABELS = {price_sensitivity:'How price-sensitive customers are', supplier_increase_pct:'How large the supplier increase actually is', cogs_pass_through:'How much of the supplier increase reaches your costs', reduction_points:'How much trimming the menu really saves', demand_adjustment_speed:'How quickly customers react'};
+function sensVerdict(){
+  const {wins, oat, centreTop} = census(); const top = centreTop || 'B';
+  const lbl = {A:'Doing nothing', B:'Raising prices 10%', C:'A 5% rise plus trimming the menu'}[top];
+  const flips = oat.filter(r=>r.flips).map(r=>AXIS_LABELS[r.k].toLowerCase());
+  let s = `${lbl} ranked first in ${wins[top]} of the ${wins.n} assumption combinations tested.`;
+  if(wins[top]===wins.n) s = `${lbl} ranked first in every one of the ${wins.n} assumption combinations tested.`;
+  else if(flips.length) s += ` The ranking depends mainly on ${flips[0]}${flips[1]?' and '+flips[1]:''}.`;
+  return s + ' This is sensitivity analysis, not a probability estimate.';
+}
 
 function niceStep(span, n){ const raw=span/n, mag=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/mag; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*mag; }
 function drawChart(out, best){
@@ -398,8 +461,8 @@ function renderTrade(out, rank, red){
   const A=out.A.m,B=out.B.m,C=out.C.m;
   const items = {
     A:[`Keeps every customer: orders unchanged.`, `Absorbs the whole cost increase: gross margin falls to ${A.gm_end.toFixed(1)}%.`, A.mnet<0?`Loses ${money(-A.mnet)} a month once the higher costs fully land.`:`Still clears ${money(A.mnet)} a month.`, A.runway!==null?`At that rate, cash lasts about ${A.runway.toFixed(1)} months.`:`Cash is not at risk within the horizon.`],
-    B:[`Protects margin best: ${B.gm_end.toFixed(1)}% gross margin at day 90.`, `Pays for it in customers: orders ${pct(B.orders_change)}.`, `Net ${money(B.mnet)} a month once customers have reacted.`, `Cash at day 90: ${money(B.cash90)}.`],
-    C:[`Loses fewer customers than B: orders ${pct(C.orders_change)} (about ${(0.33*red).toFixed(1)} points of that is from the removed items).`, `Cuts ingredient cost per order by about ${red} points instead of passing it all on.`, `Net ${money(C.mnet)} a month. Gross margin ${C.gm_end.toFixed(1)}%.`, `Cash at day 90: ${money(C.cash90)}.`]
+    B:[`Keeps the highest gross margin: ${B.gm_end.toFixed(1)}% at day 90.`, `Pays for it in customers: orders ${pct(B.orders_change)}.`, `Net ${money(B.mnet)} a month once customers have reacted.`, `Cash at day 90: ${money(B.cash90)}.`],
+    C:[`<b>More assumption-dependent than A or B:</b> the saving from reformulating the menu (${red} points off ingredient cost) and the orders lost with the removed items (${(0.33*red).toFixed(1)}%) are our assumptions, not yet calibrated to your business.`, `Loses fewer customers than B: orders ${pct(C.orders_change)}.`, `Cuts ingredient cost per order by about ${red} points instead of passing it all on.`, `Net ${money(C.mnet)} a month. Gross margin ${C.gm_end.toFixed(1)}%.`, `Cash at day 90: ${money(C.cash90)}.`]
   };
   document.getElementById('trade').innerHTML = WID.map(id=>`<div class="t ${CLS[id]}"><h3>${id} · ${NAMES[id]}</h3><ul>${items[id].map(t=>`<li>${t}</li>`).join('')}</ul></div>`).join('');
   const byNet = [...WID].sort((a,b)=>out[b].m.mnet-out[a].m.mnet);
@@ -407,14 +470,14 @@ function renderTrade(out, rank, red){
   document.getElementById('horizon-note').innerHTML = disagree + `<b>A limit of the 90-day view.</b> If customers react slowly to a price rise, part of the lost demand has not arrived by day 90, which flatters the price-rise options within this window. The comparison is read at day 90 because that is as far as wages and rent can honestly be treated as fixed — not because the effects stop there.`;
 }
 function renderSens(){
-  const S = D.sensitivity, wins = S.win_counts;
-  document.getElementById('sens-summary').innerHTML = `<p><b>${S.verdict}</b></p><div class="shares">${WID.filter(id=>wins[id]>0).map(id=>`<div class="${CLS[id]}" style="flex:${wins[id]}">${id} ${Math.round(100*wins[id]/S.n)}%</div>`).join('')}</div><p class="small muted">Share of the ${S.n} tested assumption combinations in which each response comes out ahead on cash at day 90.</p>`;
-  const maxInf = Math.max(...S.one_at_a_time.map(r=>r.influence));
-  document.getElementById('influence').innerHTML = `<div class="eyebrow" style="margin-top:18px">Assumptions ranked by influence (each moved on its own)</div>`+S.one_at_a_time.map(r=>`<div class="inf"><div>${r.label}</div><div class="bar"><i class="${r.changes_top_choice?'flip':''}" style="width:${Math.max(3,100*r.influence/maxInf).toFixed(0)}%"></i></div><div class="tag ${r.changes_top_choice?'':'ok'}">${r.changes_top_choice?'Changes the answer':'Does not change the answer'}</div></div>`).join('');
+  const S = D.sensitivity, {wins, oat} = census();
+  document.getElementById('sens-summary').innerHTML = `<p><b>${sensVerdict()}</b></p><div class="shares">${WID.filter(id=>wins[id]>0).map(id=>`<div class="${CLS[id]}" style="flex:${wins[id]}">${id} · ${wins[id]} of ${wins.n}</div>`).join('')}</div><p class="small muted">Number of the ${wins.n} tested assumption combinations in which each response ranked first on cash at day 90. This is sensitivity analysis, not a probability estimate: the grid was chosen by us, and no combination is more likely than another.</p>`;
+  const maxInf = Math.max(1, ...oat.map(r=>r.influence));
+  document.getElementById('influence').innerHTML = `<div class="eyebrow" style="margin-top:18px">Assumptions ranked by influence (each moved on its own)</div>`+oat.map(r=>`<div class="inf"><div>${AXIS_LABELS[r.k]}</div><div class="bar"><i class="${r.flips?'flip':''}" style="width:${Math.max(3,100*r.influence/maxInf).toFixed(0)}%"></i></div><div class="tag ${r.flips?'':'ok'}">${r.flips?'Changes the ranking':'Does not change the ranking'}</div></div>`).join('');
   if(!document.getElementById('controls').children.length){
     const c = document.getElementById('controls');
     const opt=(k,opts,lab,fmt)=>{ const d=document.createElement('div'); d.className='ctl'; d.innerHTML=`<label>${lab}</label><select data-k="${k}">${opts.map(o=>`<option value="${o}" ${String(o)===String(sel[k])?'selected':''}>${fmt?fmt(o):o}</option>`).join('')}</select>`; c.appendChild(d); };
-    opt('price_sensitivity',['low','central','high'],S.sweep_labels.price_sensitivity,o=>({low:'Low — loyal customers, competitors raise too (0.50)',central:'Typical — research estimate (0.81)',high:'High — competitors hold prices, easy alternatives (1.60)'})[o]);
+    opt('price_sensitivity',['low','central','high'],S.sweep_labels.price_sensitivity,o=>({low:'Low — loyal customers, competitors raise too (0.50)',central:'Typical — research estimate (0.81)',high:'High — stress assumption: competitors hold prices (1.60)'})[o]);
     opt('supplier_increase_pct',supVals,S.sweep_labels.supplier_increase_pct,o=>`+${o}%`);
     opt('cogs_pass_through',['low','central'],S.sweep_labels.cogs_pass_through,o=>({low:'About 70% — some substitution or contracts',central:'All of it (100%)'})[o]);
     opt('reformulation_effectiveness',[0.15,0.30,0.45],S.sweep_labels.reformulation_effectiveness,o=>({0.15:'Half as much as assumed',0.3:'As assumed',0.45:'Half again as much'})[o]);
@@ -424,7 +487,15 @@ function renderSens(){
 }
 function renderEvidence(red, sup){
   const kcls = {'Customer input':'k-customer','External research':'k-research','Assumption':'k-assumption','Derived':'k-derived'};
-  document.getElementById('evid').innerHTML = `<thead><tr><th>Assumption</th><th>Value</th><th>Kind</th><th>Tested?</th></tr></thead><tbody>`+D.assumptions.map(a=>`<tr><td><b>${a.label}</b>${a.note?`<div class="small muted">${a.note}</div>`:''}</td><td class="num">${a.value}</td><td><span class="klass ${kcls[a.klass]}">${a.klass}</span></td><td>${a.swept?'Yes':'—'}</td></tr>`).join('')+`</tbody>`;
+  const groups = [['Customer input','Your numbers'],['External research','External research'],['Assumption','Model assumptions'],['Derived','Calculated from your numbers']];
+  const liveVal = a => { // show the CURRENT cafe's value for customer inputs, not the demo's
+    const map = {monthly_revenue: money(base.monthly_revenue), daily_orders: Math.round(base.daily_orders), monthly_cogs: `${money(base.monthly_cogs)} (${(100*base.monthly_cogs/base.monthly_revenue).toFixed(0)}% of sales)`, monthly_fixed_costs: money(base.monthly_fixed_costs), cash_on_hand: money(base.cash_on_hand), supplier_increase_pct: `+${sup}%`, low_margin_share_pct: `${base.low_margin_share_pct}%`, average_order_value: derived(base).aov.toFixed(2), cogs_per_order: derived(base).cpo.toFixed(2), reformulation_effectiveness: `${red} points off average ingredient cost`, reformulation_demand_cost: `${(0.33*red).toFixed(1)}% of orders`};
+    return map[a.key] ?? a.value; };
+  let rows='';
+  for(const [klass,title] of groups){ const items=D.assumptions.filter(a=>a.klass===klass); if(!items.length) continue;
+    rows += `<tr class="evid-group"><td class="group" colspan="4">${title}</td></tr>` + items.map(a=>`<tr><td><b>${a.label}</b>${a.note?`<div class="small muted">${a.note}</div>`:''}</td><td class="num">${liveVal(a)}</td><td><span class="klass ${kcls[a.klass]}">${a.klass==='Customer input'?'Your number':a.klass==='Derived'?'Calculated':a.klass}</span></td><td>${a.swept?'Yes':'—'}</td></tr>`).join(''); }
+  rows += `<tr class="evid-group"><td class="group" colspan="4">Calculated results</td></tr>` + [['90-day cash for each response','From simulated orders, price and ingredient cost, plus your fixed costs and cash'],['Net per month after 90 days','Last 30 simulated days, scaled to a calendar month'],['Cash runway','Cash at day 90 divided by the monthly shortfall, if any'],['Ranking of A, B and C','By cash at day 90']].map(([l,n])=>`<tr><td><b>${l}</b><div class="small muted">${n}</div></td><td></td><td><span class="klass k-derived">Calculated</span></td><td>—</td></tr>`).join('');
+  document.getElementById('evid').innerHTML = `<thead><tr><th>Item</th><th>Value</th><th>Kind</th><th>Tested?</th></tr></thead><tbody>${rows}</tbody>`;
   document.getElementById('sources').innerHTML = D.sources.map(s=>`<p><b>${s.citation}</b><br><span class="muted">Population:</span> ${s.population}<br><span class="muted">Estimate:</span> ${s.estimate}<br><span class="muted">Limitations:</span> ${s.limitations}<br><span class="muted">Transfer to this comparison:</span> ${s.transfer}</p>`).join('');
   const R = D.reproducibility;
   document.getElementById('how').innerHTML = `<p>Two layers. A small causal model of the cafe produces how ingredient cost per order, menu price and daily orders move over 90 days, including the lags. Accounting identities then turn those into money: revenue = orders × price; ingredient cost = orders × cost per order; gross profit = revenue − ingredient cost; cash = yesterday's cash + gross profit − fixed costs. Nothing in the comparison is produced by a language model.</p>

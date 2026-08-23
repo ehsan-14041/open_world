@@ -9,7 +9,7 @@ is a separate track (`docs/replays/`), and a sale does not validate it.
 
 A self-contained HTML report, five screens:
 
-1. **The decision** — the three responses side by side, the best one marked, a one-paragraph
+1. **The decision** — the three responses side by side, the top-ranked one marked, a one-paragraph
    verdict in plain language.
 2. **What happens** — cash in the bank over 90 days, one chart, one table.
 3. **Trade-offs** — what each response gives up, read directly from the runs.
@@ -92,6 +92,17 @@ python scripts/cafe_decision_report.py --inputs corner_bean.json --out reports/c
 The headline comparison then uses 0.5 and the evidence table shows it as the customer's own
 value. The sensitivity grid still sweeps the three standard settings, so the "what could change
 it" screen keeps its meaning.
+
+If the owner has costed the items they would remove, override the reformulation saving too:
+
+```bash
+python scripts/cafe_decision_report.py --inputs corner_bean.json --out reports/corner_bean --reformulation-effectiveness 0.2
+```
+
+(points of average ingredient cost saved per point of low-margin share; default 0.30.)
+
+Inside the page, the owner's eight numbers drive *everything*: the cards, the chart, and the
+"ranked first in N of 162" census are all recomputed for their cafe, not the demo's.
 
 ## What is fixed, and why
 

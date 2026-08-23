@@ -2437,7 +2437,7 @@
   },
   "top_stable": false,
   "ranking_stable": false,
-  "verdict": "Raising prices 10% comes out ahead in 80% of the 162 combinations tested. The choice depends mainly on how price-sensitive customers are.",
+  "verdict": "Raising prices 10% ranked first in 130 of the 162 assumption combinations tested. The ranking depends mainly on how price-sensitive customers are. This is sensitivity analysis, not a probability estimate.",
   "one_at_a_time": [
    {
     "assumption": "price_sensitivity",

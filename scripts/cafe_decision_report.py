@@ -34,6 +34,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--inputs", help="JSON file with the intake fields for a real cafe")
     ap.add_argument("--out", default=None, help="output directory (default: reports/cafe_demo or reports/<name>)")
     ap.add_argument("--no-grid", action="store_true", help="skip the in-page assumption grid (faster, page not interactive)")
+    ap.add_argument("--reformulation-effectiveness", type=float, default=None,
+                    help="COGS points saved per point of low-margin share (default 0.30); use when the owner has costed the items")
     ap.add_argument("--custom-elasticity", type=float, default=None,
                     help="use this price elasticity (e.g. 0.5) instead of the three-setting axis; labelled as the customer's value")
     args = ap.parse_args(argv)
@@ -57,7 +59,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     t0 = time.time()
     print(f"Generating report for {baseline.name} -> {out_dir}")
-    paths = write_report(baseline, out_dir, include_grid=not args.no_grid, custom_elasticity=args.custom_elasticity)
+    paths = write_report(baseline, out_dir, include_grid=not args.no_grid, custom_elasticity=args.custom_elasticity,
+                         reformulation_effectiveness=args.reformulation_effectiveness)
     print(f"  {paths['html']}")
     print(f"  {paths['json']}")
     print(f"done in {time.time() - t0:.0f}s")
