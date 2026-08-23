@@ -105,10 +105,10 @@
     "min_cash": 16387.8904,
     "min_cash_day": 90,
     "cash_goes_negative": false,
+    "first_negative_day": null,
     "runway_months_at_end": 14.6977,
     "cumulative_gross_profit_90": 85675.5616,
-    "cumulative_net_90": -1612.1096,
-    "first_negative_day": null
+    "cumulative_net_90": -1612.1096
    },
    "ledger": {
     "cash": [
@@ -881,10 +881,10 @@
     "min_cash": 18000.0,
     "min_cash_day": 0,
     "cash_goes_negative": false,
+    "first_negative_day": null,
     "runway_months_at_end": null,
     "cumulative_gross_profit_90": 93809.5683,
-    "cumulative_net_90": 6521.897,
-    "first_negative_day": null
+    "cumulative_net_90": 6521.897
    },
    "ledger": {
     "cash": [
@@ -1657,10 +1657,10 @@
     "min_cash": 18000.0,
     "min_cash_day": 0,
     "cash_goes_negative": false,
+    "first_negative_day": null,
     "runway_months_at_end": null,
     "cumulative_gross_profit_90": 90749.7434,
-    "cumulative_net_90": 3462.0722,
-    "first_negative_day": null
+    "cumulative_net_90": 3462.0722
    },
    "ledger": {
     "cash": [

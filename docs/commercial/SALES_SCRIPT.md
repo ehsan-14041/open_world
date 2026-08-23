@@ -13,31 +13,32 @@ If they ask how that differs from asking ChatGPT three times: *that gives you th
 from three different invented cafes. This gives you one cafe, one set of assumptions, three
 decisions. And you can change any assumption and watch all three move together.*
 
-## The walk (screen by screen)
+## The walk (section by section)
 
-**Screen 1 — don't explain, let them read.** Three cards. Point at the one ranked first, then
-at the one that goes negative. *"That's doing nothing."* Then the verdict sentence, then the
-box underneath it — *"and that's the one thing the answer hinges on."* Wait.
+**The decision.** Don't explain; let them read the question and the three cards. Point at the
+one tagged *Ranks first under current assumptions*, then at the one in red. *"That's doing
+nothing."* Then the sentence under the cards. Wait.
 
-**Screen 2 — the chart.** Point at the hump in the grey line around day 14. *"That's the
-two weeks where you're still using stock you bought at the old price. It looks fine, then it
-doesn't."* This is the moment most owners lean in, because they have lived it.
+**How stable is this result?** Point at the big number. *"Raise 10% came first in 130 of the
+162 assumption combinations we tested — that's a count of cases, not a probability."* Then the
+box beside it: *"And this is the one thing the answer hinges on."* Tap **High**. Watch the
+cards re-order and the line under the buttons change. Tap **Medium** to put it back.
 
-**Screen 3 — trade-offs.** Read the B and C bullets. *"B keeps margin but loses more
-customers. C keeps more customers but earns less per order."*
+**What could change the answer?** Two cards, two leaders. Then the amber box: *"So the real
+question isn't our model — it's whether your competitors will raise prices too. A small price
+test would tell you more than any assumption we make."*
 
-**Screen 4 — the important one.** *"Every number on this page depends on assumptions. We
-moved every one of them across a range and re-ran all three decisions 162 times. Four of them
-don't change the answer. One does."* Flip the price-sensitivity dropdown to *High*. Watch C
-overtake B. *"B ranked first in 130 of 162 tested combinations — that's a count of the cases we
-tested, not a probability."* *"So the real question isn't the model — it's whether your competitors will
-raise prices too. You know that better than any model does."*
+**The next 90 days.** Point at the hump in the grey line around day 14. *"That's the two weeks
+you're still using stock bought at the old price. It looks fine, then it doesn't."* Hover to
+show day-by-day values.
 
-**Screen 5 — evidence.** Don't read it. *"Every number is labelled: yours, research, or our
-assumption. Nothing is hidden in the machinery."* Then: *"This is a comparison under stated
-assumptions, not a forecast."* Say that sentence out loud, every time.
+**Where did these numbers come from?** Don't read it. *"Four boxes: yours, research, our
+assumptions, and what we calculated. Nothing hidden."* Point at the amber note: *"and these two
+only affect option C — they're our judgement until you cost the items yourself."*
 
-**The ask.** Scroll to "Try your business". *"Eight numbers. Want to put yours in now?"*
+**What this does — and doesn't do.** Read the "does not" list aloud. Every time.
+
+**The ask.** Tap *Try your business* at the top. *"Eight numbers. Want to put yours in now?"*
 
 ## What you are actually testing
 

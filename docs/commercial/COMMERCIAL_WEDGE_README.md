@@ -7,18 +7,26 @@ is a separate track (`docs/replays/`), and a sale does not validate it.
 
 ## What the customer gets
 
-A self-contained HTML report, five screens:
+A self-contained HTML page built as a decision product, in this order:
 
-1. **The decision** — the three responses side by side, the top-ranked one marked, a one-paragraph
-   verdict in plain language.
-2. **What happens** — cash in the bank over 90 days, one chart, one table.
-3. **Trade-offs** — what each response gives up, read directly from the runs.
-4. **What could change the result** — every uncertain assumption moved across a range; which
-   ones change the answer; live controls to flip them.
-5. **Evidence & assumptions** — where every number comes from, with the research cited.
+1. **The decision** — the question in their numbers, then three large decision cards
+   (monthly impact, orders, cash at day 90), the current leader tagged *Ranks first under
+   current assumptions*, and a one-line "not a prediction" note.
+2. **How stable is this result?** — the sensitivity count (e.g. *130 of 162*), the chip
+   *This is a sensitivity count, not a probability*, and the biggest uncertainty with a
+   Low / Medium / High control that re-runs the whole page.
+3. **What could change the answer?** — the leader at each extreme, and what real evidence
+   would narrow it.
+4. **The next 90 days** — one cash chart with hover values, and the plain statement that cash
+   is calculated from the model's outputs rather than simulated directly.
+5. **Where did these numbers come from?** — four groups: your numbers, external research,
+   model assumptions (with the C-only ones flagged), calculated results.
+6. **What this does — and doesn't do.**
+7. **Try your business** — eight fields in four groups; running it drops the demo state.
+8. **How this was calculated** — collapsed. Method, sources, hashes, fingerprints, the
+   internal evidence classification for every assumption.
 
-Plus a "Try your business" panel at the end where the owner can enter their own eight figures
-and watch the whole page re-run — in the room, on a laptop, without touching the model.
+Add `?theme=light` to the URL for the print/projector version.
 
 ## Producing a report for a new cafe
 

@@ -8,240 +8,278 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  --paper:#F7F6F1; --paper-2:#EFEEE7; --ink:#1E2A30; --muted:#5B6B72; --rule:#D9DDD6; --grid:#E6E8E2;
-  --a:#6B7B84; --b:#1F7A5C; --c:#A97A12; --crit:#B5463A; --good:#1F7A5C;
-  --b-soft:rgba(31,122,92,.10); --c-soft:rgba(169,122,18,.10); --a-soft:rgba(107,123,132,.10);
-  --card:#FFFFFF; --focus:#1F7A5C;
+  --paper:#F7F6F1; --paper-2:#EFEEE7; --ink:#1E2A30; --muted:#5B6B72; --rule:#DFE2DB; --grid:#E8EAE4;
+  --a:#6B7B84; --b:#1F7A5C; --c:#A97A12; --crit:#B5463A;
+  --b-soft:rgba(31,122,92,.09); --c-soft:rgba(169,122,18,.10); --a-soft:rgba(107,123,132,.10);
+  --card:#FFFFFF; --focus:#1F7A5C; --shadow:0 1px 2px rgba(30,42,48,.06),0 8px 24px -12px rgba(30,42,48,.12);
   --display:"Fraunces",Georgia,"Times New Roman",serif;
   --body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#15191B; --paper-2:#1C2124; --ink:#E8EAE4; --muted:#9AA6AB; --rule:#2B3236; --grid:#242B2F;
-    --a:#8E9CA4; --b:#4FB58E; --c:#D3A230; --crit:#E07A6E; --good:#4FB58E;
-    --b-soft:rgba(79,181,142,.14); --c-soft:rgba(211,162,48,.14); --a-soft:rgba(142,156,164,.14);
-    --card:#1C2124; --focus:#4FB58E;
+    --a:#8E9CA4; --b:#4FB58E; --c:#D3A230; --crit:#E07A6E;
+    --b-soft:rgba(79,181,142,.13); --c-soft:rgba(211,162,48,.14); --a-soft:rgba(142,156,164,.14);
+    --card:#1C2124; --focus:#4FB58E; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
   }
 }
 :root[data-theme="dark"]{
   --paper:#15191B; --paper-2:#1C2124; --ink:#E8EAE4; --muted:#9AA6AB; --rule:#2B3236; --grid:#242B2F;
-  --a:#8E9CA4; --b:#4FB58E; --c:#D3A230; --crit:#E07A6E; --good:#4FB58E;
-  --b-soft:rgba(79,181,142,.14); --c-soft:rgba(211,162,48,.14); --a-soft:rgba(142,156,164,.14);
-  --card:#1C2124; --focus:#4FB58E;
+  --a:#8E9CA4; --b:#4FB58E; --c:#D3A230; --crit:#E07A6E;
+  --b-soft:rgba(79,181,142,.13); --c-soft:rgba(211,162,48,.14); --a-soft:rgba(142,156,164,.14);
+  --card:#1C2124; --focus:#4FB58E; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
 }
 *{box-sizing:border-box}
+.options>*,.groups>*,.cond>*,.limits>*,.stab>*,.fields>*,.grp li>*{min-width:0}
 html{scroll-behavior:smooth}
-@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important}}
 html,body{overflow-x:hidden}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important}}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;font-variant-numeric:tabular-nums}
 a{color:inherit}
-.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
-@media (max-width:600px){.wrap{padding:0 16px} .worlds{gap:12px} .kpis{grid-template-columns:1fr 1fr} .inf{grid-template-columns:1fr;gap:6px} .inf .tag{justify-self:start}}
-p{max-width:65ch}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 18px}}
+p{max-width:62ch;margin:0}
 h1,h2,h3{text-wrap:balance;margin:0}
-h1{font-family:var(--display);font-weight:500;font-size:clamp(30px,4.2vw,46px);line-height:1.12;letter-spacing:-.01em}
-h2{font-family:var(--display);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.18}
-h3{font-size:18px;font-weight:600}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(34px,5vw,56px);line-height:1.06;letter-spacing:-.015em}
+h2{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.2vw,36px);line-height:1.15;letter-spacing:-.01em}
+h3{font-size:17px;font-weight:600}
 .eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.muted{color:var(--muted)}
-.small{font-size:14px}
-.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)} .small{font-size:14px} .neg{color:var(--crit)}
 button,select,input{font:inherit;color:inherit}
 button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.wA{--wc:var(--a);--ws:var(--a-soft)} .wB{--wc:var(--b);--ws:var(--b-soft)} .wC{--wc:var(--c);--ws:var(--c-soft)}
 
 /* top bar */
-.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
-.top .wrap{display:flex;align-items:center;gap:12px 18px;min-height:56px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
-.brand{font-weight:700;letter-spacing:.02em;white-space:nowrap}
-.steps{display:flex;gap:4px;margin-left:auto;overflow-x:auto;min-width:0;max-width:100%}
-.steps a{text-decoration:none;font-size:13px;font-weight:600;padding:6px 10px;border-radius:4px;color:var(--muted);white-space:nowrap}
-.steps a:hover,.steps a.on{color:var(--ink);background:var(--paper-2)}
-.steps a b{color:var(--b);margin-right:6px}
-.demo-flag{font-size:12px;font-weight:600;color:var(--c);border:1px solid currentColor;border-radius:3px;padding:2px 8px;white-space:nowrap}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:54px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.brand{font-weight:700;letter-spacing:.01em}
+.badge{font-size:12px;font-weight:600;color:var(--c);border:1px solid currentColor;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.top .cta{margin-left:auto;text-decoration:none;font-size:14px;font-weight:600;background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:999px;white-space:nowrap}
 
-/* screens */
-section.screen{padding:64px 0 56px;border-bottom:1px solid var(--rule)}
-section.screen:last-of-type{border-bottom:0}
-.screen-head{display:grid;grid-template-columns:auto 1fr;gap:18px 24px;align-items:baseline;margin-bottom:28px}
-.screen-head .n{font-family:var(--display);font-size:44px;line-height:1;color:var(--b);font-weight:500}
-.screen-head .t{display:flex;flex-direction:column;gap:6px}
+/* sections */
+section{padding:56px 0}
+section+section{border-top:1px solid var(--rule)}
+.sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:26px}
+.lede{font-size:19px;color:var(--muted)}
+@media (max-width:600px){section{padding:40px 0}}
 
-/* cards */
-.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0 18px}
-@media (max-width:820px){.worlds{grid-template-columns:1fr}}
-.world{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;position:relative}
-.world.best{border-color:var(--wc);box-shadow:0 0 0 2px var(--wc) inset}
-.world .id{display:flex;align-items:center;gap:10px}
-.world .chip{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;background:var(--wc);font-size:14px}
-.world .lbl{font-weight:600}
-.world .head{font-size:14px;color:var(--muted);min-height:63px}
-.world .big{font-size:30px;font-weight:600;line-height:1.1;margin-top:4px}
-.world .big.neg{color:var(--crit)} .world .row .neg{color:var(--crit)}
-.world .row{display:flex;justify-content:space-between;font-size:14px;border-top:1px solid var(--rule);padding-top:8px}
-.world .row span:last-child{font-weight:600}
-.world .best-tag{position:absolute;top:-11px;right:14px;background:var(--wc);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
-.wA{--wc:var(--a)} .wB{--wc:var(--b)} .wC{--wc:var(--c)}
-.verdict{background:var(--paper-2);border-left:3px solid var(--b);padding:14px 18px;border-radius:0 4px 4px 0;font-size:18px;max-width:72ch}
-.verdict b{color:var(--b)}
-.unknown{margin-top:14px;padding:16px 18px;border:1px solid var(--c);border-radius:6px;background:var(--c-soft);max-width:72ch}
-.unknown .eyebrow{color:var(--c)}
-.unknown p{margin:6px 0 0}
-.disclose{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
-@media (max-width:720px){.disclose{grid-template-columns:1fr}}
-.disclose div{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px 18px}
-.disclose h3{margin-bottom:8px}
-.disclose li{margin:4px 0 0 18px}
-.evid-group td.group{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);background:var(--paper-2);padding-top:12px}
+/* hero */
+#decision{padding-top:64px}
+#decision .lede{margin-top:12px;font-size:20px;max-width:54ch}
+.cafe-name{margin-top:18px;font-size:14px;color:var(--muted)}
+
+/* option cards */
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+@media (max-width:820px){.options{grid-template-columns:1fr}}
+.opt{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:22px 22px 20px;display:flex;flex-direction:column;gap:14px;position:relative;box-shadow:var(--shadow)}
+.opt.lead{border-color:var(--wc);box-shadow:0 0 0 2px var(--wc) inset,var(--shadow)}
+.opt .letter{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;background:var(--wc);font-size:15px}
+.opt .name{font-size:20px;font-weight:600;line-height:1.2;margin-top:2px;min-height:2.4em}
+.opt .lead-tag{position:absolute;top:-12px;left:18px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:var(--wc);padding:4px 10px;border-radius:999px}
+.opt .impact{margin-top:6px}
+.opt .impact .v{font-size:38px;font-weight:600;line-height:1;letter-spacing:-.01em}
+.opt .impact .l{font-size:13px;color:var(--muted);margin-top:6px}
+.opt .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;border-top:1px solid var(--rule);padding-top:14px}
+.opt .facts div span{display:block}
+.opt .facts .v{font-size:20px;font-weight:600;line-height:1.1}
+.opt .facts .l{font-size:12px;color:var(--muted);margin-top:3px}
+.opt .note{font-size:13px;color:var(--muted);border-top:1px solid var(--rule);padding-top:12px;line-height:1.4}
+.opt .note b{color:var(--c)}
+.lead-line{margin-top:20px;font-size:18px;max-width:64ch}
+.lead-line b{color:var(--b)}
+.scenario{margin-top:12px;font-size:14px;color:var(--muted)}
+
+/* stability */
+.stab{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:820px){.stab{grid-template-columns:1fr}}
+.count{font-family:var(--display);font-size:clamp(56px,8vw,84px);font-weight:500;line-height:1;letter-spacing:-.02em;color:var(--b)}
+.count small{font-size:.42em;color:var(--muted);font-family:var(--body);font-weight:600;letter-spacing:0}
+.count-l{font-size:17px;margin-top:8px;max-width:40ch}
+.not-prob{display:inline-block;margin-top:14px;font-size:13px;font-weight:600;color:var(--ink);background:var(--paper-2);border-radius:999px;padding:5px 12px}
+.uncert{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:22px;box-shadow:var(--shadow)}
+.uncert .eyebrow{color:var(--c)}
+.uncert h3{font-size:22px;font-family:var(--display);font-weight:500;margin-top:6px;line-height:1.2}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:18px;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--paper-2)}
+.seg button{border:0;background:transparent;padding:12px 8px;font-weight:600;font-size:15px;cursor:pointer;color:var(--muted);min-height:48px}
+.seg button.on{background:var(--ink);color:var(--paper)}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg-help{font-size:14px;color:var(--muted);margin-top:10px;min-height:42px}
+.seg-effect{margin-top:14px;font-size:16px;padding:12px 14px;border-radius:10px;background:var(--paper-2)}
+.seg-effect b{color:var(--c)}
+.seg-effect.steady b{color:var(--b)}
+
+/* what could change */
+.cond{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+@media (max-width:720px){.cond{grid-template-columns:1fr}}
+.cond>div{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+.cond .k{font-size:13px;color:var(--muted);font-weight:600}
+.cond .r{font-size:19px;margin-top:6px;line-height:1.3}
+.cond .r b{color:var(--wc)}
+.next{margin-top:18px;padding:18px 20px;border-left:3px solid var(--c);background:var(--c-soft);border-radius:0 10px 10px 0;max-width:70ch}
+.next .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.next p{margin-top:6px}
+.others{margin-top:20px;font-size:14px;color:var(--muted);max-width:70ch}
+details.adv{margin-top:14px;border:1px solid var(--rule);border-radius:12px;background:var(--card)}
+details.adv summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:15px}
+details.adv .inner{padding:4px 16px 16px}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.ctl label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.ctl select{width:100%;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);min-height:44px}
+.snap{font-size:13px;color:var(--muted);margin-top:10px}
 
 /* chart */
-.chart-wrap{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px;overflow-x:auto}
-.chart-wrap svg{width:100%;height:auto;display:block}
-.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin-top:10px}
+.chart-wrap{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 18px 12px;position:relative;box-shadow:var(--shadow)}
+.chart-wrap svg{width:100%;height:auto;display:block;touch-action:pan-y}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:8px 10px;border-radius:8px;display:none;min-width:150px;box-shadow:var(--shadow);z-index:2}
+.tip b{display:block;margin-bottom:4px}
+.tip span{display:flex;justify-content:space-between;gap:10px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin-top:8px;padding:0 4px}
 .legend span::before{content:"";display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:7px;vertical-align:middle;background:var(--wc)}
-table{border-collapse:collapse;width:100%;font-size:15px}
-th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-td.num,th.num{text-align:right}
-.tbl-wrap{overflow-x:auto;margin-top:18px}
+.chart-note{font-size:14px;color:var(--muted);margin-top:14px;max-width:70ch}
+.mini{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:0;margin-top:22px;font-size:15px}
+.mini div{padding:10px 8px;border-bottom:1px solid var(--rule)}
+.mini .h{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mini .n{text-align:right;font-weight:600}
+@media (max-width:600px){.mini{font-size:14px} .mini div{padding:9px 4px}}
+.horizon{font-size:14px;color:var(--muted);margin-top:16px;max-width:70ch}
 
-/* tradeoffs */
-.trade{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-@media (max-width:820px){.trade{grid-template-columns:1fr}}
-.trade .t{border-top:3px solid var(--wc);padding-top:12px}
-.trade .t h3{color:var(--wc);margin-bottom:6px}
-.trade li{margin:6px 0 0 18px}
-.callout{margin-top:22px;padding:14px 18px;background:var(--c-soft);border-radius:4px;max-width:75ch;font-size:15px}
+/* sources */
+.groups{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:720px){.groups{grid-template-columns:1fr}}
+.grp{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+.grp .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.grp.yours .k{color:var(--b)} .grp.research .k{color:#2F5DA8} .grp.assume .k{color:var(--c)} .grp.calc .k{color:var(--muted)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .grp.research .k{color:#7FA7E6}}
+:root[data-theme="dark"] .grp.research .k{color:#7FA7E6}
+.grp ul{list-style:none;margin:0;padding:0}
+.grp li{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-top:1px solid var(--rule);font-size:15px}
+.grp li:first-child{border-top:0}
+.grp li>div{flex:1 1 auto}
+.grp li .v{font-weight:600;text-align:right;flex:0 0 auto;max-width:55%;overflow-wrap:anywhere}
+.grp li .s{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.grp .flag{font-size:13px;color:var(--c);margin-top:10px}
+.src-note{font-size:14px;color:var(--muted);margin-top:16px;max-width:70ch}
 
-/* sensitivity */
-.influence{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-.inf{display:grid;grid-template-columns:minmax(180px,1.2fr) 3fr auto;gap:14px;align-items:center;font-size:15px}
-.inf .bar{height:10px;background:var(--grid);border-radius:5px;overflow:hidden}
-.inf .bar i{display:block;height:100%;background:var(--b);border-radius:5px}
-.inf .bar i.flip{background:var(--crit)}
-.inf .tag{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--crit)}
-.inf .tag.ok{color:var(--muted)}
-.shares{display:flex;gap:0;height:28px;border-radius:4px;overflow:hidden;margin:14px 0 6px;max-width:560px}
-.shares div{display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;background:var(--wc)}
-.panel{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px;margin-top:22px}
-.panel h3{margin-bottom:4px}
-.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
-.ctl label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:5px}
-.ctl select,.ctl input{width:100%;padding:8px 10px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
-.note{font-size:13px;color:var(--muted);margin-top:10px}
-.btn{border:1px solid var(--rule);background:var(--paper-2);padding:8px 14px;border-radius:4px;font-weight:600;cursor:pointer}
-.btn.primary{background:var(--b);border-color:var(--b);color:#fff}
-.btnrow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center}
+/* limits */
+.limits{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:720px){.limits{grid-template-columns:1fr}}
+.limits div{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 20px}
+.limits h3{margin-bottom:8px}
+.limits ul{margin:0;padding-left:20px} .limits li{margin:5px 0}
 
-/* evidence */
-.klass{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid}
-.k-customer{color:var(--b);border-color:var(--b)} .k-research{color:#2F5DA8;border-color:#2F5DA8} .k-assumption{color:var(--c);border-color:var(--c)} .k-derived{color:var(--muted);border-color:var(--muted)}
-:root[data-theme="dark"] .k-research,:root:not([data-theme="light"]) .k-research{color:#7FA7E6;border-color:#7FA7E6}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .k-research{color:#2F5DA8;border-color:#2F5DA8}}
-details{border:1px solid var(--rule);border-radius:6px;padding:0 16px;margin-top:18px;background:var(--card)}
-summary{cursor:pointer;padding:12px 0;font-weight:600}
-details .inner{padding:4px 0 16px;font-size:14px}
-code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background:var(--paper-2);padding:1px 5px;border-radius:3px}
-.foot{padding:28px 0 48px;font-size:14px;color:var(--muted)}
+/* intake */
+.form{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.fgroup{margin-top:22px} .fgroup:first-child{margin-top:0}
+.fgroup .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.field .in{display:flex;align-items:center;border:1px solid var(--rule);border-radius:10px;background:var(--paper);overflow:hidden}
+.field .in .u{padding:0 12px;color:var(--muted);font-size:14px;border-right:1px solid var(--rule);min-height:46px;display:grid;place-items:center}
+.field .in .u.r{border-right:0;border-left:1px solid var(--rule)}
+.field input{flex:1;min-width:0;border:0;background:transparent;padding:11px 12px;font-size:17px;min-height:46px}
+.field .hint{font-size:13px;color:var(--muted);margin-top:5px}
+.btnrow{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--rule);background:var(--paper-2);padding:12px 18px;border-radius:999px;font-weight:600;cursor:pointer;min-height:46px}
+.btn.primary{background:var(--b);border-color:var(--b);color:#fff;font-size:16px}
+.msg{font-size:14px;color:var(--muted)}
+
+/* technical */
+details.tech{border:1px solid var(--rule);border-radius:12px;background:var(--card);margin-top:8px}
+details.tech summary{cursor:pointer;padding:14px 18px;font-weight:600}
+details.tech .inner{padding:0 18px 18px;font-size:14px}
+details.tech .inner p{max-width:72ch;margin-top:10px}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;background:var(--paper-2);padding:1px 5px;border-radius:4px}
+table.tech{border-collapse:collapse;width:100%;font-size:13px;margin-top:10px}
+table.tech th,table.tech td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl-wrap{overflow-x:auto}
+.foot{padding:24px 0 56px;font-size:13px;color:var(--muted)}
 .banner{background:var(--crit);color:#fff;padding:10px 0;font-weight:600;display:none}
 .banner.on{display:block}
-.hero-sub{font-size:19px;max-width:62ch;margin-top:12px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:22px}
-.kpi{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:12px 14px}
-.kpi .l{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.kpi .v{font-size:22px;font-weight:600;margin-top:4px}
 </style>
 </head>
 <body>
 <div class="banner" id="banner"></div>
 <header class="top"><div class="wrap">
   <div class="brand">Decision Comparison</div>
-  <span class="demo-flag" id="demoflag" hidden>Demo data — fictional cafe</span>
-  <nav class="steps" aria-label="Steps">
-    <a href="#s1"><b>1</b>The decision</a><a href="#s2"><b>2</b>What happens</a><a href="#s3"><b>3</b>Trade-offs</a><a href="#s4"><b>4</b>What could change it</a><a href="#s5"><b>5</b>Assumptions</a><a href="#try"><b>+</b>Your numbers</a>
-  </nav>
+  <span class="badge" id="demoflag" hidden>Demo — fictional cafe</span>
+  <a class="cta" href="#try">Try your business</a>
 </div></header>
 
 <main class="wrap">
 
-<section class="screen" id="s1">
-  <div class="screen-head"><div class="n">1</div><div class="t">
-    <div class="eyebrow">The decision</div>
-    <h1 id="headline">Your ingredient costs rose 30%. Three responses, one model.</h1>
-    <p class="hero-sub">Each response is run through the same model of your cafe, with the same assumptions. Only the decision differs — so the differences between them come from the decision, not from different guesses.</p>
-  </div></div>
-  <div class="kpis" id="kpis"></div>
-  <div class="worlds" id="cards"></div>
-  <div class="verdict" id="verdict"></div>
-  <div class="unknown" id="unknown"></div>
-  <p class="small muted" style="margin-top:12px" id="scenario-note"></p>
+<section id="decision">
+  <div class="eyebrow">The decision</div>
+  <h1 id="headline">Ingredient costs are up 30%. What should you do?</h1>
+  <p class="lede">We compared three decisions using the same model of your cafe and the same assumptions. Only the decision changes between them — so the differences come from the decision, not from different guesses.</p>
+  <div class="cafe-name" id="cafe-name"></div>
+  <div class="options" id="options"></div>
+  <p class="lead-line" id="lead-line"></p>
+  <p class="scenario" id="scenario-note"></p>
 </section>
 
-<section class="screen" id="s2">
-  <div class="screen-head"><div class="n">2</div><div class="t">
-    <div class="eyebrow">What happens</div>
-    <h2>Cash in the bank over the next 90 days</h2>
-    <p>Costs take about a week to rise — you are still using stock bought at the old price. Customers take a couple of weeks to react to a new price. Both lags are in the model.</p>
-    <p class="small muted"><b>How this chart is made.</b> The model simulates three things: your ingredient cost per order, your average price, and your daily orders. Cash is then <em>calculated</em> from those simulated figures using the business inputs you gave — revenue is orders × price, gross profit is revenue minus ingredient cost, and cash is yesterday's cash plus gross profit minus your fixed costs. Cash is not simulated directly.</p>
-  </div></div>
-  <div class="chart-wrap"><svg id="chart" viewBox="0 0 960 400" role="img" aria-label="Cash position over 90 days for the three responses"></svg>
-    <div class="legend"><span class="wA">A · Do nothing</span><span class="wB">B · Raise prices 10%</span><span class="wC">C · Raise 5% + trim menu</span></div>
-  </div>
-  <div class="tbl-wrap"><table id="tbl"></table></div>
-</section>
-
-<section class="screen" id="s3">
-  <div class="screen-head"><div class="n">3</div><div class="t">
-    <div class="eyebrow">Trade-offs</div>
-    <h2>What each response gives up</h2>
-    <p>Only what the model actually shows. Each point below is read directly from the three runs.</p>
-  </div></div>
-  <div class="trade" id="trade"></div>
-  <div class="callout" id="horizon-note"></div>
-</section>
-
-<section class="screen" id="s4">
-  <div class="screen-head"><div class="n">4</div><div class="t">
-    <div class="eyebrow">What could change the result</div>
-    <h2>Which assumption matters most?</h2>
-    <p>Every uncertain assumption was moved across a defensible range and the three responses re-run for every combination. What matters is whether the top-ranked option stays the same — not whether a single number is exact.</p>
-  </div></div>
-  <div id="sens-summary"></div>
-  <div class="influence" id="influence"></div>
-  <div class="panel">
-    <h3>Change an assumption. The whole page re-runs.</h3>
-    <p class="small muted">Same model, same cafe, different assumption. Every number above updates.</p>
-    <div class="controls" id="controls"></div>
-    <div class="note" id="snapnote"></div>
+<section id="stability">
+  <div class="sec-head"><div class="eyebrow">How stable is this result?</div><h2 id="stab-title">Does the ranking survive different assumptions?</h2></div>
+  <div class="stab">
+    <div>
+      <div class="count" id="count"></div>
+      <div class="count-l" id="count-l"></div>
+      <div class="not-prob">This is a sensitivity count, not a probability.</div>
+      <p class="small muted" style="margin-top:14px;max-width:46ch" id="count-note"></p>
+    </div>
+    <div class="uncert" id="uncert">
+      <div class="eyebrow">The biggest uncertainty</div>
+      <h3 id="uncert-title">How price-sensitive are your customers?</h3>
+      <div class="seg" id="seg" role="group" aria-label="Customer price sensitivity">
+        <button data-v="low">Low</button><button data-v="central" class="on">Medium</button><button data-v="high">High</button>
+      </div>
+      <div class="seg-help" id="seg-help"></div>
+      <div class="seg-effect" id="seg-effect"></div>
+    </div>
   </div>
 </section>
 
-<section class="screen" id="s5">
-  <div class="screen-head"><div class="n">5</div><div class="t">
-    <div class="eyebrow">Evidence &amp; assumptions</div>
-    <h2>Where every number comes from</h2>
-    <p>Four kinds of number. Yours, which we take as given. External research, with a citation. Our model assumptions, stated as such and tested. And results calculated from the three.</p>
-    <p class="small muted">On price sensitivity: external research provides a plausible reference range for eating out as a whole; your actual customers may be more or less price-sensitive than that. The high setting is a stress assumption, not a research finding.</p>
-  </div></div>
-  <div class="tbl-wrap"><table id="evid"></table></div>
-  <details><summary>Research sources</summary><div class="inner" id="sources"></div></details>
-  <details><summary>How this was calculated</summary><div class="inner" id="how"></div></details>
-  <div class="disclose">
-    <div><h3>What this does</h3><ul><li>Compares three responses under one consistent model of your cafe.</li><li>Shows the relative financial trade-offs between them.</li><li>Tests how sensitive the result is to each uncertain assumption.</li><li>Tells you which unknowns matter most — and which don't.</li></ul></div>
-    <div><h3>What this does not do</h3><ul><li>Predict the future or guarantee any sales or profit figure.</li><li>Model how competitors will react to your prices.</li><li>Model the wider economy, seasons, or new customers.</li><li>Replace your accountant or financial advice.</li></ul></div>
-  </div>
-  <p class="small" style="margin-top:18px"><b id="snf"></b></p>
+<section id="change">
+  <div class="sec-head"><div class="eyebrow">What could change the answer?</div><h2 id="change-title">Two settings of one assumption, two different leaders</h2></div>
+  <div class="cond" id="cond"></div>
+  <div class="next"><div class="k">How could you reduce this uncertainty?</div><p id="next-p"></p></div>
+  <p class="others" id="others"></p>
+  <details class="adv"><summary>Other assumptions you can change</summary><div class="inner"><div class="controls" id="controls"></div><div class="snap" id="snapnote"></div></div></details>
 </section>
 
-<section class="screen" id="try">
-  <div class="screen-head"><div class="n">+</div><div class="t">
-    <div class="eyebrow">Try your business</div>
-    <h2>Put your own numbers in</h2>
-    <p>Eight figures from your books. The model stays the same; only your starting position changes. Nothing leaves this page.</p>
-  </div></div>
-  <div class="panel">
-    <div class="controls" id="intake"></div>
-    <div class="btnrow"><button class="btn primary" id="apply">Run my comparison</button><button class="btn" id="reset">Back to demo cafe</button><span class="small muted" id="intake-msg"></span></div>
+<section id="consequences">
+  <div class="sec-head"><div class="eyebrow">The next 90 days</div><h2>Cash in the bank under each decision</h2><p class="lede">Costs take about a week to rise — you are still using stock bought at the old price. Customers take a couple of weeks to react to a new price.</p></div>
+  <div class="chart-wrap">
+    <svg id="chart" viewBox="0 0 960 380" role="img" aria-label="Cash position over 90 days for the three decisions"></svg>
+    <div class="tip" id="tip"></div>
+    <div class="legend" id="legend"></div>
   </div>
+  <p class="chart-note">Cash is calculated from the model's daily orders, price and ingredient-cost outputs, using your sales, costs and cash figures below. Cash itself is not simulated directly.</p>
+  <div class="mini" id="mini"></div>
+  <p class="horizon" id="horizon"></p>
+</section>
+
+<section id="sources">
+  <div class="sec-head"><div class="eyebrow">Where did these numbers come from?</div><h2>Four kinds of number</h2></div>
+  <div class="groups" id="groups"></div>
+  <p class="src-note">On price sensitivity: external research gives a reference range for eating out as a whole. Your actual customers may be more or less price-sensitive than that, and the High setting is a stress assumption rather than a research finding.</p>
+</section>
+
+<section id="limits">
+  <div class="sec-head"><div class="eyebrow">Limitations</div><h2>What this does — and doesn't do</h2></div>
+  <div class="limits">
+    <div><h3>This does</h3><ul><li>Compare three decisions under the same assumptions.</li><li>Show how the result changes when an important assumption changes.</li><li>Make every assumption behind the comparison visible.</li></ul></div>
+    <div><h3>This does not</h3><ul><li>Predict the future or guarantee an outcome.</li><li>Model how competitors react.</li><li>Model the wider economy, seasons or new customers.</li><li>Know your customers' price sensitivity — unless you bring evidence.</li></ul></div>
+  </div>
+</section>
+
+<section id="try">
+  <div class="sec-head"><div class="eyebrow">Try your business</div><h2>Eight figures from your books</h2><p class="lede">The comparison stays the same. Only your starting position changes. Nothing leaves this page.</p></div>
+  <div class="form" id="form"></div>
+</section>
+
+<section id="how">
+  <div class="sec-head"><div class="eyebrow">For the curious</div><h2>How this was calculated</h2></div>
+  <details class="tech"><summary>Method, sources and reproducibility</summary><div class="inner" id="how-body"></div></details>
 </section>
 
 </main>
@@ -254,9 +292,11 @@ const qt = new URLSearchParams(location.search).get('theme'); if(qt==='light'||q
 const D = JSON.parse(document.getElementById('data').textContent);
 const DPM = 365/12, H = 90;
 const WID = ['A','B','C'];
-const NAMES = {A:'Do nothing', B:'Raise prices 10%', C:'Raise 5% + trim menu'};
+const NAMES = {A:'Hold prices', B:'Raise prices 10%', C:'Raise prices 5% + simplify low-margin items'};
+const SHORT = {A:'Hold prices', B:'Raise 10%', C:'Raise 5% + simplify'};
 const CLS = {A:'wA',B:'wB',C:'wC'};
 const money = v => (v<0?'−':'') + Math.abs(Math.round(v)).toLocaleString();
+const signed = v => (v<0?'−':'+') + Math.abs(Math.round(v)).toLocaleString();
 const pct = (v,d=1) => (v>0?'+':'') + v.toFixed(d) + '%';
 
 // ---- state ------------------------------------------------------------------------------
@@ -320,7 +360,28 @@ function pick(){
 })();
 function fail(msg){ const b=document.getElementById('banner'); b.textContent=msg; b.classList.add('on'); throw new Error(msg); }
 
-// ---- render ----------------------------------------------------------------------------
+// ---- census over the whole tested grid for the CURRENT cafe ------------------------------
+let _censusKey = null, _census = null;
+function census(){
+  const key = JSON.stringify([base.monthly_revenue, base.daily_orders, base.monthly_cogs, base.monthly_fixed_costs, base.cash_on_hand]);
+  if(_censusKey===key) return _census;
+  const pts = D.grid.map(g=>{ const m={}; for(const id of WID) m[id]=metrics(ledger(base, g.worlds[id]), base).cash90; const rank=[...WID].sort((a,b)=>m[b]-m[a]); return {key:g.key, rank, m}; });
+  const wins={A:0,B:0,C:0}; pts.forEach(p=>wins[p.rank[0]]++); wins.n=pts.length;
+  const axes = {price_sensitivity:['low','central','high'], supplier_increase_pct:supVals, cogs_pass_through:['low','central'], reduction_points:redVals, demand_adjustment_speed:['slow','central','fast']};
+  const centre = {price_sensitivity:'central', supplier_increase_pct:nearest(supVals, D.baseline_raw.supplier_increase_pct), cogs_pass_through:'central', reduction_points:redVals[Math.floor(redVals.length/2)], demand_adjustment_speed:'central'};
+  const find = s => pts.find(p=>Object.keys(axes).every(k=>p.key[k]===s[k]));
+  const oat = Object.keys(axes).map(k=>{ const tops=[], spread=[]; for(const v of axes[k]){ const q=find({...centre,[k]:v}); if(!q) continue; tops.push(q.rank[0]); spread.push(q.m.B-q.m.C);} return {k, tops, flips:new Set(tops).size>1, influence: spread.length?Math.max(...spread)-Math.min(...spread):0}; });
+  oat.sort((a,b)=>(b.flips-a.flips)||(b.influence-a.influence));
+  const c0 = find(centre);
+  _censusKey=key; _census={wins, oat, pts, centreTop: c0?c0.rank[0]:null, find, centre};
+  return _census;
+}
+const AXIS_LABELS = {price_sensitivity:'how price-sensitive your customers are', supplier_increase_pct:'how large the supplier increase actually is', cogs_pass_through:'how much of the supplier increase reaches your costs', reduction_points:'how much simplifying the menu really saves', demand_adjustment_speed:'how quickly customers react'};
+const SENS_HELP = {low:'Loyal customers, or your competitors are raising prices too.', central:'The typical response found in research on eating out.', high:'Stress case: competitors hold their prices and customers have easy alternatives.'};
+const SENS_VAL = {low:'0.50', central:'0.81', high:'1.60'};
+function niceStep(span, n){ const raw=span/n, mag=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/mag; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*mag; }
+
+// ---- compute current state ---------------------------------------------------------------
 function compute(){
   const {g, red, sup} = pick();
   const out = {};
@@ -328,201 +389,179 @@ function compute(){
   const rank = [...WID].sort((a,b)=>out[b].m.cash90-out[a].m.cash90);
   return {out, rank, red, sup};
 }
-function render(){
-  const {out, rank, red, sup} = compute();
-  const best = rank[0];
-  document.getElementById('demoflag').hidden = !base.is_demo;
-  document.getElementById('headline').textContent = `Your ingredient costs rose ${sup}%. Three responses, one model.`;
+let current = null;
 
-  // KPIs
-  const bd = derived(base);
+// ---- render ------------------------------------------------------------------------------
+function render(){
+  current = compute();
+  const {out, rank, red, sup} = current;
+  const lead = rank[0], second = rank[1];
   const preNet = base.monthly_revenue - base.monthly_cogs - base.monthly_fixed_costs;
-  document.getElementById('kpis').innerHTML = [
-    ['Monthly sales', money(base.monthly_revenue)],['Orders / day', Math.round(base.daily_orders)],['Avg order', bd.aov.toFixed(2)],
-    ['Ingredients', (100*base.monthly_cogs/base.monthly_revenue).toFixed(0)+'% of sales'],['Net / month today', money(preNet)],['Cash today', money(base.cash_on_hand)]
-  ].map(([l,v])=>`<div class="kpi"><div class="l">${l}</div><div class="v num">${v}</div></div>`).join('');
+  const {wins, oat} = census();
+
+  document.getElementById('demoflag').hidden = !base.is_demo;
+  document.getElementById('headline').textContent = `Ingredient costs are up ${sup}%. What should you do?`;
+  document.getElementById('cafe-name').textContent = base.is_demo ? `Shown for a fictional demo cafe: ${money(base.monthly_revenue)} a month in sales, ${Math.round(base.daily_orders)} orders a day, ${money(base.cash_on_hand)} in the bank.` : `${base.name}: ${money(base.monthly_revenue)} a month in sales, ${Math.round(base.daily_orders)} orders a day, ${money(base.cash_on_hand)} in the bank.`;
 
   // cards
-  const wins = winCounts();
-  document.getElementById('cards').innerHTML = WID.map(id=>{
-    const m = out[id].m, w = D.worlds.find(x=>x.id===id);
-    const head = id==='C' ? `A ${w.price_rise_pct}% price rise, plus removing or reformulating low-margin items (about ${red} points off ingredient cost per order).` : w.headline;
-    const rw = m.first_negative_day!==null ? `<span class="neg">Runs out on day ${m.first_negative_day}</span>` : (m.runway===null ? 'Not at risk' : (m.runway<1 ? 'Under a month after day 90' : m.runway.toFixed(1)+' months from day 90'));
-    return `<div class="world ${CLS[id]} ${id===best?'best':''}">${id===best?`<div class="best-tag">Ranked first in ${wins[best]} of ${wins.n} tested cases</div>`:''}
-      <div class="id"><div class="chip">${id}</div><div class="lbl">${NAMES[id]}</div></div>
-      <div class="head">${head}</div>
-      <div class="eyebrow">Net per month, after 90 days</div>
-      <div class="big num ${m.mnet<0?'neg':''}">${money(m.mnet)}</div>
-      <div class="row"><span>Cash at day 90</span><span class="num ${m.cash90<0?'neg':''}">${money(m.cash90)}</span></div>
-      <div class="row"><span>Orders vs today</span><span class="num">${pct(m.orders_change)}</span></div>
-      <div class="row"><span>Gross margin</span><span class="num">${m.gm_end.toFixed(1)}%</span></div>
-      <div class="row"><span>Cash runway</span><span class="num">${rw}</span></div>
+  document.getElementById('options').innerHTML = WID.map(id=>{
+    const m = out[id].m;
+    const cashLine = m.first_negative_day!==null ? `<span class="v neg">Day ${m.first_negative_day}</span><span class="l">cash runs out</span>` : `<span class="v ${m.cash90<0?'neg':''}">${money(m.cash90)}</span><span class="l">cash at day 90</span>`;
+    const note = id==='C' ? `<div class="note"><b>Depends on two of our assumptions:</b> how much simplifying the menu cuts ingredient cost (about ${red} points here) and how many orders leave with the removed items (${(0.33*red).toFixed(1)}%). Neither is calibrated to your business yet.</div>` : '';
+    return `<div class="opt ${CLS[id]} ${id===lead?'lead':''}">
+      <div class="letter">${id}</div>
+      ${id===lead?`<div class="lead-tag">Ranks first under current assumptions</div>`:''}
+      <div class="name">${NAMES[id]}</div>
+      <div class="impact"><div class="v ${m.mnet<0?'neg':''}">${signed(m.mnet)}</div><div class="l">per month, once costs and customers have settled · today ${signed(preNet)}</div></div>
+      <div class="facts"><div><span class="v">${pct(m.orders_change,0)}</span><span class="l">orders</span></div><div>${cashLine}</div></div>
+      ${note}
     </div>`;
   }).join('');
 
-  // verdict
-  const benefit = {}; WID.forEach(id=> benefit[id]=out[id].m.cash90-out['A'].m.cash90);
-  const second = rank[1];
-  document.getElementById('verdict').innerHTML = `Under these assumptions, <b>${id2(best)}</b> leaves you <b>${money(benefit[best])}</b> better off in cash at day 90 than doing nothing, and <b>${money(out[best].m.cash90-out[second].m.cash90)}</b> ahead of ${second} · ${NAMES[second].toLowerCase()}. ${sensVerdict()}`;
-  renderUnknown(rank);
-  document.getElementById('scenario-note').textContent = D.language.scenario_not_forecast;
+  const gap = out[lead].m.cash90 - out[second].m.cash90;
+  document.getElementById('lead-line').innerHTML = `Under the current assumptions, <b>${SHORT[lead]}</b> leaves you ${money(out[lead].m.cash90 - out.A.m.cash90)} more cash at day 90 than holding prices, and ${money(gap)} ahead of ${SHORT[second].toLowerCase()}.`;
+  document.getElementById('scenario-note').textContent = 'This is a scenario comparison under stated assumptions, not a prediction.';
 
-  drawChart(out, best);
-  renderTable(out);
-  renderTrade(out, rank, red);
-  renderSens();
-  renderEvidence(red, sup);
-  document.getElementById('snapnote').textContent = `Tested at a supplier increase of ${sup}% and ${red} points of ingredient-cost saving from trimming the menu (the nearest values on the tested grid to your inputs).`;
-}
-function id2(id){ return `${id} · ${NAMES[id]}`; }
-function renderUnknown(rank){
-  const {oat, pts} = census(); const el=document.getElementById('unknown');
-  const f = oat.find(r=>r.flips);
-  if(!f){ el.innerHTML = `<div class="eyebrow">The biggest unknown</div><p>No single tested assumption changes which response ranks first. The ranking is robust across the tested grid; the sizes of the differences still depend on the assumptions listed on screen 5.</p>`; return; }
-  // who overtakes at the extreme of the flipping axis
-  const alt = f.tops.find(x=>x!==rank[0]) || f.tops[f.tops.length-1];
-  const practical = {
-    price_sensitivity: 'A small price test on a few items, or how your sales responded the last time you changed prices, would narrow this down materially.',
-    reduction_points: 'Costing out the specific items you would remove — their ingredient cost and how often they are ordered — would replace this assumption with your own number.',
-    supplier_increase_pct: 'Confirming the actual increase across your main suppliers would settle this.',
-    cogs_pass_through: 'Checking which of your supply contracts are fixed-price would settle this.',
-    demand_adjustment_speed: 'Weekly sales after a past price change would show how fast your customers react.'
-  }[f.k];
-  el.innerHTML = `<div class="eyebrow">The biggest unknown</div><p><b>${AXIS_LABELS[f.k]}.</b> Under the current assumptions ${rank[0]} · ${NAMES[rank[0]].toLowerCase()} ranks first; move this one assumption to its ${f.tops.indexOf(alt)===f.tops.length-1?'high':'other'} setting and <b>${alt} · ${NAMES[alt].toLowerCase()} overtakes it</b>. No other tested assumption does that on its own.</p><p>${practical}</p>`;
-}
-// Census of the whole tested grid for the CURRENT cafe. The grid holds engine trajectories,
-// which do not depend on money; applying this cafe's money to every point gives this cafe's
-// own ranking census rather than the demo's.
-let _censusKey = null, _census = null;
-function census(){
-  const key = JSON.stringify([base.monthly_revenue, base.daily_orders, base.monthly_cogs, base.monthly_fixed_costs, base.cash_on_hand]);
-  if(_censusKey===key) return _census;
-  const pts = D.grid.map(g=>{ const m={}; for(const id of WID) m[id]=metrics(ledger(base, g.worlds[id]), base).cash90; const rank=[...WID].sort((a,b)=>m[b]-m[a]); return {key:g.key, rank, m}; });
-  const wins={A:0,B:0,C:0}; pts.forEach(p=>wins[p.rank[0]]++); wins.n=pts.length;
-  // one-at-a-time around the grid centre
-  const axes = {price_sensitivity:['low','central','high'], supplier_increase_pct:supVals, cogs_pass_through:['low','central'], reduction_points:redVals, demand_adjustment_speed:['slow','central','fast']};
-  const centre = {price_sensitivity:'central', supplier_increase_pct:nearest(supVals, D.baseline_raw.supplier_increase_pct), cogs_pass_through:'central', reduction_points:redVals[Math.floor(redVals.length/2)], demand_adjustment_speed:'central'};
-  const find = s => pts.find(p=>Object.keys(axes).every(k=>p.key[k]===s[k]));
-  const oat = Object.keys(axes).map(k=>{ const tops=[], spread=[]; for(const v of axes[k]){ const q=find({...centre,[k]:v}); if(!q) continue; tops.push(q.rank[0]); spread.push(q.m.B-q.m.C);} return {k, tops, flips:new Set(tops).size>1, influence: spread.length?Math.max(...spread)-Math.min(...spread):0}; });
-  oat.sort((a,b)=>(b.flips-a.flips)||(b.influence-a.influence));
-  const c0 = find(centre);
-  _censusKey=key; _census={wins, oat, pts, centreTop: c0?c0.rank[0]:null};
-  return _census;
-}
-function winCounts(){ return census().wins; }
-const AXIS_LABELS = {price_sensitivity:'How price-sensitive customers are', supplier_increase_pct:'How large the supplier increase actually is', cogs_pass_through:'How much of the supplier increase reaches your costs', reduction_points:'How much trimming the menu really saves', demand_adjustment_speed:'How quickly customers react'};
-function sensVerdict(){
-  const {wins, oat, centreTop} = census(); const top = centreTop || 'B';
-  const lbl = {A:'Doing nothing', B:'Raising prices 10%', C:'A 5% rise plus trimming the menu'}[top];
-  const flips = oat.filter(r=>r.flips).map(r=>AXIS_LABELS[r.k].toLowerCase());
-  let s = `${lbl} ranked first in ${wins[top]} of the ${wins.n} assumption combinations tested.`;
-  if(wins[top]===wins.n) s = `${lbl} ranked first in every one of the ${wins.n} assumption combinations tested.`;
-  else if(flips.length) s += ` The ranking depends mainly on ${flips[0]}${flips[1]?' and '+flips[1]:''}.`;
-  return s + ' This is sensitivity analysis, not a probability estimate.';
+  // stability
+  const cTop = census().centreTop || lead;
+  document.getElementById('count').innerHTML = `${wins[cTop]}<small> of ${wins.n}</small>`;
+  document.getElementById('count-l').innerHTML = `<b>${SHORT[cTop]}</b> ranked first in ${wins[cTop]} of the ${wins.n} assumption combinations we tested for your cafe.`;
+  const flips = oat.filter(r=>r.flips);
+  document.getElementById('count-note').textContent = flips.length ? `Only ${flips.length===1?'one':flips.length} of the five assumptions tested can change which decision ranks first when moved on its own.` : 'None of the five assumptions tested changes which decision ranks first when moved on its own.';
+
+  // segmented control state + effect line
+  document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on', b.dataset.v===sel.price_sensitivity));
+  document.getElementById('seg-help').textContent = SENS_HELP[sel.price_sensitivity];
+  const eff = document.getElementById('seg-effect');
+  if(lead===cTop){ eff.className='seg-effect steady'; eff.innerHTML = `At this setting <b>${SHORT[lead]}</b> still ranks first.`; }
+  else { eff.className='seg-effect'; eff.innerHTML = `At this setting the ranking changes: <b>${SHORT[lead]}</b> moves ahead of ${SHORT[cTop].toLowerCase()}.`; }
+
+  // what could change
+  const {find, centre} = census();
+  const lo = find({...centre, price_sensitivity:'low'}), hi = find({...centre, price_sensitivity:'high'}), mid = find(centre);
+  const who = p => p ? `<b class="${CLS[p.rank[0]]}">${SHORT[p.rank[0]]}</b>` : '—';
+  document.getElementById('change-title').textContent = (lo&&hi&&lo.rank[0]!==hi.rank[0]) ? 'Two settings of one assumption, two different leaders' : 'The same leader at every setting we tested';
+  document.getElementById('cond').innerHTML = `
+    <div class="${lo?CLS[lo.rank[0]]:''}"><div class="k">If customers are not very price-sensitive</div><div class="r">${who(lo)} tends to rank first.</div></div>
+    <div class="${hi?CLS[hi.rank[0]]:''}"><div class="k">If customers are highly price-sensitive</div><div class="r">${who(hi)} ${hi&&mid&&hi.rank[0]!==mid.rank[0]?'moves ahead':'still ranks first'}.</div></div>`;
+  document.getElementById('next-p').textContent = 'A small real-world price test — a few items, a few weeks — or your sales figures from the last time you changed prices would give much better evidence about how your customers respond. That evidence can replace the research estimate in this comparison.';
+  const steady = oat.filter(r=>!r.flips).map(r=>AXIS_LABELS[r.k]);
+  document.getElementById('others').textContent = steady.length ? `We also tested ${steady.join(', ')}. None of them changes which decision ranks first on its own — they change the size of the gap, not the order.` : '';
+  document.getElementById('snapnote').textContent = `Tested at a supplier increase of ${sup}% and ${red} points of ingredient-cost saving from simplifying the menu (the nearest tested values to your inputs).`;
+
+  drawChart(out, lead);
+  document.getElementById('legend').innerHTML = WID.map(id=>`<span class="${CLS[id]}">${id} · ${SHORT[id]}</span>`).join('');
+  document.getElementById('mini').innerHTML = `<div class="h"></div>${WID.map(id=>`<div class="h n">${id}</div>`).join('')}` +
+    [['Cash at day 30', m=>money(m.cash30)],['Cash at day 90', m=>money(m.cash90)],['Net per month after 90 days', m=>signed(m.mnet)]].map(([l,f])=>`<div>${l}</div>${WID.map(id=>`<div class="n ${f(out[id].m).startsWith('−')?'neg':''}">${f(out[id].m)}</div>`).join('')}`).join('');
+  const byNet = [...WID].sort((a,b)=>out[b].m.mnet-out[a].m.mnet);
+  document.getElementById('horizon').textContent = (byNet[0]!==rank[0] ? `Note: by cash at day 90, ${SHORT[rank[0]]} is ahead; by what each decision earns per month once customers have fully reacted, ${SHORT[byNet[0]]} is ahead. Lost customers arrive gradually, so a price rise looks better over 90 days than it does after. ` : '') + `The comparison stops at 90 days because that is as far as wages and rent can honestly be treated as fixed — not because the effects stop there.`;
+
+  renderSources(red, sup);
+  renderHow();
+  document.getElementById('foot').textContent = `${base.is_demo?'Demo values are fictional and for illustration only. ':''}Prepared for ${base.name}.`;
 }
 
-function niceStep(span, n){ const raw=span/n, mag=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/mag; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*mag; }
-function drawChart(out, best){
-  const svg = document.getElementById('chart'); const W=960, Hh=400, pl=78, pr=118, pt=28, pb=40;
+function drawChart(out, lead){
+  const svg = document.getElementById('chart'); const W=960, Hh=380, pl=64, pr=96, pt=24, pb=36;
   const all = WID.flatMap(id=>out[id].L.cash.slice(0,H+1));
   const mn = Math.min(...all), mx = Math.max(...all);
-  // Anchor the axis at zero only when cash actually gets near it; otherwise the lines are
-  // squeezed into a sliver and the owner cannot see the separation that matters.
   const threatened = mn < 0.25*mx;
   let lo = threatened ? Math.min(0, mn) : mn, hi = mx;
-  const step = niceStep(hi-lo, 5);
+  const step = niceStep(hi-lo, 4);
   lo = Math.floor(lo/step)*step; hi = Math.ceil(hi/step)*step; if(hi===lo) hi=lo+step;
   const x = d => pl + d*(W-pl-pr)/H, y = v => pt + (hi-v)*(Hh-pt-pb)/(hi-lo);
   let s = '';
-  for(let v=lo; v<=hi+1e-9; v+=step){ s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="12" fill="var(--muted)">${money(v)}</text>`; }
-  [0,30,60,90].forEach(d=> s+=`<text x="${x(d)}" y="${Hh-12}" text-anchor="middle" font-size="12" fill="var(--muted)">Day ${d}</text>`);
+  for(let v=lo; v<=hi+1e-9; v+=step){ s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="12" fill="var(--muted)">${money(v)}</text>`; }
+  [0,30,60,90].forEach(d=> s+=`<text x="${x(d)}" y="${Hh-10}" text-anchor="middle" font-size="12" fill="var(--muted)">Day ${d}</text>`);
   if(lo<=0 && hi>0) s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(0)}" y2="${y(0)}" stroke="var(--crit)" stroke-width="1.5" stroke-dasharray="4 4"/><text x="${W-pr+6}" y="${y(0)+4}" font-size="12" fill="var(--crit)">cash = 0</text>`;
-  const bl = out[best].L.cash; let area = `M${x(0)},${y(bl[0])}`; for(let d=1; d<=H; d++) area+=` L${x(d)},${y(bl[d])}`; area+=` L${x(H)},${y(lo)} L${x(0)},${y(lo)} Z`;
-  s+=`<path d="${area}" fill="var(--${best.toLowerCase()}-soft)"/>`;
-  // end labels, nudged apart if they would overlap
-  const ends = WID.map(id=>({id, v:out[id].L.cash[H], ty:y(out[id].L.cash[H])})).sort((a,b)=>a.ty-b.ty);
+  const bl = out[lead].L.cash; let area = `M${x(0)},${y(bl[0])}`; for(let d=1; d<=H; d++) area+=` L${x(d)},${y(bl[d])}`; area+=` L${x(H)},${y(lo)} L${x(0)},${y(lo)} Z`;
+  s+=`<path d="${area}" fill="var(--${lead.toLowerCase()}-soft)"/>`;
+  const ends = WID.map(id=>({id, ty:y(out[id].L.cash[H])})).sort((a,b)=>a.ty-b.ty);
   for(let i=1;i<ends.length;i++) if(ends[i].ty-ends[i-1].ty<16) ends[i].ty=ends[i-1].ty+16;
   for(const id of WID){
     const c = out[id].L.cash; let p=`M${x(0)},${y(c[0])}`; for(let d=1; d<=H; d++) p+=` L${x(d)},${y(c[d])}`;
-    s+=`<path d="${p}" fill="none" stroke="var(--${id.toLowerCase()})" stroke-width="${id===best?3:2}" stroke-linejoin="round"/>`;
+    s+=`<path d="${p}" fill="none" stroke="var(--${id.toLowerCase()})" stroke-width="${id===lead?3.5:2}" stroke-linejoin="round" stroke-linecap="round"/>`;
     const e = ends.find(z=>z.id===id);
     s+=`<circle cx="${x(H)}" cy="${y(c[H])}" r="4" fill="var(--${id.toLowerCase()})"/><text x="${x(H)+8}" y="${e.ty+4}" font-size="13" font-weight="600" fill="var(--${id.toLowerCase()})">${id} ${money(c[H])}</text>`;
   }
   s+=`<circle cx="${x(0)}" cy="${y(out.A.L.cash[0])}" r="3.5" fill="var(--ink)"/><text x="${x(0)}" y="${y(out.A.L.cash[0])+20}" font-size="12" fill="var(--muted)">today ${money(out.A.L.cash[0])}</text>`;
+  s+=`<g id="hover" style="display:none"><line id="hl" y1="${pt}" y2="${Hh-pb}" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3"/>${WID.map(id=>`<circle id="hc${id}" r="4.5" fill="var(--${id.toLowerCase()})" stroke="var(--card)" stroke-width="2"/>`).join('')}</g>`;
   svg.innerHTML = s;
-}
-function renderTable(out){
-  const rows = [['Cash at day 30', m=>money(m.cash30)],['Cash at day 90', m=>money(m.cash90)],['Change in cash over 90 days', m=>money(m.cash_change)],
-    ['Net per month (steady state)', m=>money(m.mnet)],['Gross margin at day 90', m=>m.gm_end.toFixed(1)+'%'],['Orders vs today', m=>pct(m.orders_change)],['Monthly sales vs today', m=>pct(m.rev_change)]];
-  document.getElementById('tbl').innerHTML = `<thead><tr><th></th>${WID.map(id=>`<th class="num">${id} · ${NAMES[id]}</th>`).join('')}</tr></thead><tbody>`+
-    rows.map(([l,f])=>`<tr><td>${l}</td>${WID.map(id=>`<td class="num">${f(out[id].m)}</td>`).join('')}</tr>`).join('')+`</tbody>`;
-}
-function renderTrade(out, rank, red){
-  const A=out.A.m,B=out.B.m,C=out.C.m;
-  const items = {
-    A:[`Keeps every customer: orders unchanged.`, `Absorbs the whole cost increase: gross margin falls to ${A.gm_end.toFixed(1)}%.`, A.mnet<0?`Loses ${money(-A.mnet)} a month once the higher costs fully land.`:`Still clears ${money(A.mnet)} a month.`, A.runway!==null?`At that rate, cash lasts about ${A.runway.toFixed(1)} months.`:`Cash is not at risk within the horizon.`],
-    B:[`Keeps the highest gross margin: ${B.gm_end.toFixed(1)}% at day 90.`, `Pays for it in customers: orders ${pct(B.orders_change)}.`, `Net ${money(B.mnet)} a month once customers have reacted.`, `Cash at day 90: ${money(B.cash90)}.`],
-    C:[`<b>More assumption-dependent than A or B:</b> the saving from reformulating the menu (${red} points off ingredient cost) and the orders lost with the removed items (${(0.33*red).toFixed(1)}%) are our assumptions, not yet calibrated to your business.`, `Loses fewer customers than B: orders ${pct(C.orders_change)}.`, `Cuts ingredient cost per order by about ${red} points instead of passing it all on.`, `Net ${money(C.mnet)} a month. Gross margin ${C.gm_end.toFixed(1)}%.`, `Cash at day 90: ${money(C.cash90)}.`]
+  // hover / touch
+  const tip = document.getElementById('tip'), hov = svg.querySelector('#hover');
+  const show = ev => {
+    const r = svg.getBoundingClientRect(); if(!r.width) return; const px = (ev.clientX - r.left) * (W / r.width);
+    const d = Math.max(0, Math.min(H, Math.round((px - pl) * H / (W - pl - pr))));
+    if(px < pl - 10 || px > W - pr + 10){ hide(); return; }
+    hov.style.display=''; svg.querySelector('#hl').setAttribute('x1', x(d)); svg.querySelector('#hl').setAttribute('x2', x(d));
+    WID.forEach(id=>{ const c=svg.querySelector('#hc'+id); c.setAttribute('cx',x(d)); c.setAttribute('cy',y(out[id].L.cash[d])); });
+    tip.innerHTML = `<b>Day ${d}</b>` + WID.map(id=>`<span><span>${id} · ${SHORT[id]}</span><span>${money(out[id].L.cash[d])}</span></span>`).join('');
+    tip.style.display='block';
+    const wrapR = svg.parentElement.getBoundingClientRect(); let left = ev.clientX - wrapR.left + 14; if(left + 190 > wrapR.width) left = ev.clientX - wrapR.left - 200;
+    tip.style.left = Math.max(8,left)+'px'; tip.style.top = Math.max(8, ev.clientY - wrapR.top - 70)+'px';
   };
-  document.getElementById('trade').innerHTML = WID.map(id=>`<div class="t ${CLS[id]}"><h3>${id} · ${NAMES[id]}</h3><ul>${items[id].map(t=>`<li>${t}</li>`).join('')}</ul></div>`).join('');
-  const byNet = [...WID].sort((a,b)=>out[b].m.mnet-out[a].m.mnet);
-  const disagree = byNet[0]!==rank[0] ? `<b>Note:</b> ranked by cash at day 90, <b>${rank[0]}</b> is ahead; ranked by what each option earns per month once customers have fully reacted, <b>${byNet[0]}</b> is ahead. The difference is timing — lost customers arrive gradually, so a price rise looks better over 90 days than it does after. ` : '';
-  document.getElementById('horizon-note').innerHTML = disagree + `<b>A limit of the 90-day view.</b> If customers react slowly to a price rise, part of the lost demand has not arrived by day 90, which flatters the price-rise options within this window. The comparison is read at day 90 because that is as far as wages and rent can honestly be treated as fixed — not because the effects stop there.`;
+  const hide = ()=>{ hov.style.display='none'; tip.style.display='none'; };
+  svg.onpointermove = show; svg.onpointerdown = show; svg.onpointerleave = hide;
 }
-function renderSens(){
-  const S = D.sensitivity, {wins, oat} = census();
-  document.getElementById('sens-summary').innerHTML = `<p><b>${sensVerdict()}</b></p><div class="shares">${WID.filter(id=>wins[id]>0).map(id=>`<div class="${CLS[id]}" style="flex:${wins[id]}">${id} · ${wins[id]} of ${wins.n}</div>`).join('')}</div><p class="small muted">Number of the ${wins.n} tested assumption combinations in which each response ranked first on cash at day 90. This is sensitivity analysis, not a probability estimate: the grid was chosen by us, and no combination is more likely than another.</p>`;
-  const maxInf = Math.max(1, ...oat.map(r=>r.influence));
-  document.getElementById('influence').innerHTML = `<div class="eyebrow" style="margin-top:18px">Assumptions ranked by influence (each moved on its own)</div>`+oat.map(r=>`<div class="inf"><div>${AXIS_LABELS[r.k]}</div><div class="bar"><i class="${r.flips?'flip':''}" style="width:${Math.max(3,100*r.influence/maxInf).toFixed(0)}%"></i></div><div class="tag ${r.flips?'':'ok'}">${r.flips?'Changes the ranking':'Does not change the ranking'}</div></div>`).join('');
-  if(!document.getElementById('controls').children.length){
-    const c = document.getElementById('controls');
-    const opt=(k,opts,lab,fmt)=>{ const d=document.createElement('div'); d.className='ctl'; d.innerHTML=`<label>${lab}</label><select data-k="${k}">${opts.map(o=>`<option value="${o}" ${String(o)===String(sel[k])?'selected':''}>${fmt?fmt(o):o}</option>`).join('')}</select>`; c.appendChild(d); };
-    opt('price_sensitivity',['low','central','high'],S.sweep_labels.price_sensitivity,o=>({low:'Low — loyal customers, competitors raise too (0.50)',central:'Typical — research estimate (0.81)',high:'High — stress assumption: competitors hold prices (1.60)'})[o]);
-    opt('supplier_increase_pct',supVals,S.sweep_labels.supplier_increase_pct,o=>`+${o}%`);
-    opt('cogs_pass_through',['low','central'],S.sweep_labels.cogs_pass_through,o=>({low:'About 70% — some substitution or contracts',central:'All of it (100%)'})[o]);
-    opt('reformulation_effectiveness',[0.15,0.30,0.45],S.sweep_labels.reformulation_effectiveness,o=>({0.15:'Half as much as assumed',0.3:'As assumed',0.45:'Half again as much'})[o]);
-    opt('demand_adjustment_speed',['slow','central','fast'],S.sweep_labels.demand_adjustment_speed,o=>({slow:'Slowly — about a month',central:'About two weeks',fast:'Quickly — about a week'})[o]);
-    c.addEventListener('change',e=>{ const k=e.target.dataset.k; sel[k] = isNaN(parseFloat(e.target.value))? e.target.value : parseFloat(e.target.value); render(); });
-  }
+
+function renderSources(red, sup){
+  const d = derived(base);
+  const yours = [['Monthly sales', money(base.monthly_revenue)],['Orders per day', Math.round(base.daily_orders)],['Monthly ingredient cost', `${money(base.monthly_cogs)} · ${(100*base.monthly_cogs/base.monthly_revenue).toFixed(0)}% of sales`],['Monthly fixed costs', money(base.monthly_fixed_costs)],['Cash available', money(base.cash_on_hand)],['Supplier cost increase', `+${sup}%`],['Orders on low-margin items', `${base.low_margin_share_pct}%`]];
+  const research = [['Customer price sensitivity', `${SENS_VAL[sel.price_sensitivity]}${sel.price_sensitivity==='high'?' · stress assumption':sel.price_sensitivity==='low'?' · low-end assumption':''}`, 'A 1% price rise eventually reduces orders by about this percentage. Research on eating out as a whole puts it near 0.81; your customers may differ.']];
+  const assume = [['Delay before higher prices reach your costs','about 7 days','Fresh stock turns over in roughly a week.'],['How quickly customers react to a new price',{slow:'about a month',central:'about two weeks',fast:'about a week'}[sel.demand_adjustment_speed]+' to half-react',''],['Saving from simplifying the menu',`${red} points off ingredient cost`,'Tested at half and one-and-a-half times this.'],['Orders lost with the removed items',`${(0.33*red).toFixed(1)}%`,'One third of the saving, in points of orders.'],['Share of the increase reaching your costs',{low:'70%',central:'100%'}[sel.cogs_pass_through],'']];
+  const calc = [['Average order value', d.aov.toFixed(2)],['Ingredient cost per order', d.cpo.toFixed(2)],['Net per month for each decision','from the last 30 simulated days'],['Cash at day 30 and day 90','yesterday\'s cash + gross profit − fixed costs, every day'],['Which decision ranks first','by cash at day 90']];
+  const li = rows => rows.map(r=>`<li><div><span>${r[0]}</span>${r[2]?`<span class="s">${r[2]}</span>`:''}</div><span class="v">${r[1]}</span></li>`).join('');
+  document.getElementById('groups').innerHTML = `
+    <div class="grp yours"><div class="k">Your numbers</div><ul>${li(yours)}</ul></div>
+    <div class="grp research"><div class="k">External research</div><ul>${li(research)}</ul></div>
+    <div class="grp assume"><div class="k">Model assumptions</div><ul>${li(assume)}</ul><div class="flag">The two menu-simplification assumptions affect option C only. They are our judgement, not measured from your business.</div></div>
+    <div class="grp calc"><div class="k">Calculated results</div><ul>${li(calc)}</ul></div>`;
 }
-function renderEvidence(red, sup){
-  const kcls = {'Customer input':'k-customer','External research':'k-research','Assumption':'k-assumption','Derived':'k-derived'};
-  const groups = [['Customer input','Your numbers'],['External research','External research'],['Assumption','Model assumptions'],['Derived','Calculated from your numbers']];
-  const liveVal = a => { // show the CURRENT cafe's value for customer inputs, not the demo's
-    const map = {monthly_revenue: money(base.monthly_revenue), daily_orders: Math.round(base.daily_orders), monthly_cogs: `${money(base.monthly_cogs)} (${(100*base.monthly_cogs/base.monthly_revenue).toFixed(0)}% of sales)`, monthly_fixed_costs: money(base.monthly_fixed_costs), cash_on_hand: money(base.cash_on_hand), supplier_increase_pct: `+${sup}%`, low_margin_share_pct: `${base.low_margin_share_pct}%`, average_order_value: derived(base).aov.toFixed(2), cogs_per_order: derived(base).cpo.toFixed(2), reformulation_effectiveness: `${red} points off average ingredient cost`, reformulation_demand_cost: `${(0.33*red).toFixed(1)}% of orders`};
-    return map[a.key] ?? a.value; };
-  let rows='';
-  for(const [klass,title] of groups){ const items=D.assumptions.filter(a=>a.klass===klass); if(!items.length) continue;
-    rows += `<tr class="evid-group"><td class="group" colspan="4">${title}</td></tr>` + items.map(a=>`<tr><td><b>${a.label}</b>${a.note?`<div class="small muted">${a.note}</div>`:''}</td><td class="num">${liveVal(a)}</td><td><span class="klass ${kcls[a.klass]}">${a.klass==='Customer input'?'Your number':a.klass==='Derived'?'Calculated':a.klass}</span></td><td>${a.swept?'Yes':'—'}</td></tr>`).join(''); }
-  rows += `<tr class="evid-group"><td class="group" colspan="4">Calculated results</td></tr>` + [['90-day cash for each response','From simulated orders, price and ingredient cost, plus your fixed costs and cash'],['Net per month after 90 days','Last 30 simulated days, scaled to a calendar month'],['Cash runway','Cash at day 90 divided by the monthly shortfall, if any'],['Ranking of A, B and C','By cash at day 90']].map(([l,n])=>`<tr><td><b>${l}</b><div class="small muted">${n}</div></td><td></td><td><span class="klass k-derived">Calculated</span></td><td>—</td></tr>`).join('');
-  document.getElementById('evid').innerHTML = `<thead><tr><th>Item</th><th>Value</th><th>Kind</th><th>Tested?</th></tr></thead><tbody>${rows}</tbody>`;
-  document.getElementById('sources').innerHTML = D.sources.map(s=>`<p><b>${s.citation}</b><br><span class="muted">Population:</span> ${s.population}<br><span class="muted">Estimate:</span> ${s.estimate}<br><span class="muted">Limitations:</span> ${s.limitations}<br><span class="muted">Transfer to this comparison:</span> ${s.transfer}</p>`).join('');
+
+function renderHow(){
   const R = D.reproducibility;
-  document.getElementById('how').innerHTML = `<p>Two layers. A small causal model of the cafe produces how ingredient cost per order, menu price and daily orders move over 90 days, including the lags. Accounting identities then turn those into money: revenue = orders × price; ingredient cost = orders × cost per order; gross profit = revenue − ingredient cost; cash = yesterday's cash + gross profit − fixed costs. Nothing in the comparison is produced by a language model.</p>
-  <p>The three responses share one model, one set of coefficients, one horizon and one set of assumptions. Only the decision differs. Shared-configuration fingerprint <code>${R.shared_fingerprint.slice(0,16)}</code>; model version <code>${R.module_id}</code> (<code>${R.module_semantic_hash.slice(0,16)}</code>).</p>
-  <p>Each run is reproducible from the record stored with this report: ${R.worlds.map(w=>`${w.spec.id} <code>${w.engine_fingerprint.slice(0,12)}</code>`).join(' · ')}.</p>`;
-  document.getElementById('snf').textContent = D.language.scenario_not_forecast;
-  document.getElementById('foot').textContent = `${base.is_demo?'Demo values are fictional and for illustration only. ':''}Generated for ${base.name}. Report version ${R.module_id}.`;
+  const ladder = D.assumptions.map(a=>`<tr><td>${a.label}</td><td>${a.value}</td><td>${a.klass}</td><td><code>${a.ladder_status}</code></td></tr>`).join('');
+  document.getElementById('how-body').innerHTML = `
+    <p>Two layers. A small causal model of the cafe produces how ingredient cost per order, menu price and daily orders move over 90 days, including the lags: the supplier increase reaches cost of goods after about a week of inventory; customers respond to a price change with a half-life of about two weeks through a price elasticity. Revenue, gross profit and cash are then accounting identities over those trajectories — revenue = orders × price; ingredient cost = orders × cost per order; gross profit = revenue − ingredient cost; cash = yesterday's cash + gross profit − fixed costs. Nothing in the comparison is produced by a language model.</p>
+    <p>The three decisions share one model, one set of coefficients, one horizon and one set of assumptions; only the decision differs. Model <code>${R.module_id}</code>, semantic hash <code>${R.module_semantic_hash.slice(0,16)}</code>; shared-configuration fingerprint <code>${R.shared_fingerprint.slice(0,16)}</code>; engine fingerprints ${R.worlds.map(w=>`${w.spec.id} <code>${w.engine_fingerprint.slice(0,12)}</code>`).join(' · ')}. Every run is reproducible from the record stored with this report.</p>
+    <p>Sensitivity: five assumptions were varied across pre-set ranges (${Object.values(D.sensitivity.sweep_labels).map(s=>s.toLowerCase()).join('; ')}), giving ${D.sensitivity.n} combinations, each re-run for all three decisions. The count shown above is how many of those combinations each decision ranked first in, for this cafe's own numbers. No combination is weighted as more likely than another.</p>
+    <p><b>Sources.</b> ${D.sources.map(s=>`${s.citation} — ${s.estimate}. ${s.transfer}`).join('<br><br>')}</p>
+    <div class="tbl-wrap"><table class="tech"><thead><tr><th>Assumption</th><th>Value (demo)</th><th>Kind</th><th>Internal status</th></tr></thead><tbody>${ladder}</tbody></table></div>`;
 }
+
+// ---- controls ----------------------------------------------------------------------------
+document.getElementById('seg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; sel.price_sensitivity=b.dataset.v; render(); });
+(function advanced(){
+  const c = document.getElementById('controls');
+  const opt=(k,opts,lab,fmt)=>{ const d=document.createElement('div'); d.className='ctl'; d.innerHTML=`<label>${lab}</label><select data-k="${k}">${opts.map(o=>`<option value="${o}" ${String(o)===String(sel[k])?'selected':''}>${fmt?fmt(o):o}</option>`).join('')}</select>`; c.appendChild(d); };
+  opt('supplier_increase_pct',supVals,'Size of the supplier increase',o=>`+${o}%`);
+  opt('cogs_pass_through',['low','central'],'How much of it reaches your costs',o=>({low:'About 70% — some substitution or fixed contracts',central:'All of it'})[o]);
+  opt('reformulation_effectiveness',[0.15,0.30,0.45],'How much simplifying the menu saves',o=>({0.15:'Half what we assumed',0.3:'As assumed',0.45:'Half again as much'})[o]);
+  opt('demand_adjustment_speed',['slow','central','fast'],'How quickly customers react',o=>({slow:'Slowly — about a month',central:'About two weeks',fast:'Quickly — about a week'})[o]);
+  c.addEventListener('change',e=>{ const k=e.target.dataset.k; sel[k] = isNaN(parseFloat(e.target.value))? e.target.value : parseFloat(e.target.value); render(); });
+})();
 
 // ---- intake ------------------------------------------------------------------------------
 (function intake(){
-  const c = document.getElementById('intake');
-  D.intake_fields.forEach(f=>{ const d=document.createElement('div'); d.className='ctl'; d.innerHTML=`<label>${f.label}${f.unit?` <span class="muted">(${f.unit})</span>`:''}</label><input data-k="${f.key}" ${f.key==='name'?'type="text"':'type="number" step="any"'} value="${base[f.key]}"><div class="note">${f.hint}</div>`; c.appendChild(d); });
+  const f = document.getElementById('form');
+  const field = (k,label,unit,hint,right)=>`<div class="field"><label for="f_${k}">${label}</label><div class="in">${unit&&!right?`<span class="u">${unit}</span>`:''}<input id="f_${k}" data-k="${k}" ${k==='name'?'type="text"':'type="number" inputmode="decimal" step="any"'} value="${base[k]}">${unit&&right?`<span class="u r">${unit}</span>`:''}</div>${hint?`<div class="hint">${hint}</div>`:''}</div>`;
+  f.innerHTML = `
+    <div class="fgroup"><div class="k">Your business</div><div class="fields">${field('monthly_revenue','Monthly sales','$','A typical month, before the cost increase.')}${field('daily_orders','Orders per day','','Average transactions a day.')}${field('cash_on_hand','Cash available','$','In the business account today.')}</div></div>
+    <div class="fgroup"><div class="k">Your costs</div><div class="fields">${field('monthly_cogs','Monthly ingredient cost','$','What you pay suppliers for what you sell. Not wages, not rent.')}${field('monthly_fixed_costs','Monthly fixed costs','$','Rent, wages, utilities, loans — everything that won\'t move in 90 days.')}</div></div>
+    <div class="fgroup"><div class="k">The shock</div><div class="fields">${field('supplier_increase_pct','Supplier cost increase','%','As a percentage of your ingredient cost.',true)}</div></div>
+    <div class="fgroup"><div class="k">Your menu</div><div class="fields">${field('low_margin_share_pct','Orders on low-margin items','%','Roughly what share of orders are items you could drop or simplify. A guess is fine — it is tested as an assumption.',true)}${field('name','Business name','','Only used on the report.')}</div></div>
+    <div class="btnrow"><button class="btn primary" id="apply">Run my comparison</button><button class="btn" id="reset">Back to demo cafe</button><span class="msg" id="intake-msg"></span></div>`;
   document.getElementById('apply').onclick = ()=>{
     const nb = Object.assign({}, base); let bad=[];
-    c.querySelectorAll('input').forEach(i=>{ const k=i.dataset.k; nb[k] = k==='name'? i.value : parseFloat(i.value); if(k!=='name' && !isFinite(nb[k])) bad.push(k); });
-    if(bad.length){ document.getElementById('intake-msg').textContent='Please fill every number.'; return; }
-    if(!(nb.monthly_revenue>0&&nb.daily_orders>0&&nb.monthly_cogs>0&&nb.monthly_cogs<nb.monthly_revenue&&nb.monthly_fixed_costs>=0&&nb.cash_on_hand>=0)){ document.getElementById('intake-msg').textContent='Ingredient cost must be below sales; other figures must be positive.'; return; }
+    f.querySelectorAll('input').forEach(i=>{ const k=i.dataset.k; nb[k] = k==='name'? (i.value||'Your cafe') : parseFloat(i.value); if(k!=='name' && !isFinite(nb[k])) bad.push(k); });
+    const msg = document.getElementById('intake-msg');
+    if(bad.length){ msg.textContent='Please fill in every number.'; return; }
+    if(!(nb.monthly_revenue>0&&nb.daily_orders>0&&nb.monthly_cogs>0&&nb.monthly_cogs<nb.monthly_revenue&&nb.monthly_fixed_costs>=0&&nb.cash_on_hand>=0)){ msg.textContent='Ingredient cost must be below sales; the other figures must be positive.'; return; }
     nb.is_demo=false; base = nb; sel.supplier_increase_pct = nb.supplier_increase_pct;
-    document.getElementById('intake-msg').textContent='Running the same model on your numbers.'; render(); window.scrollTo({top:0});
+    msg.textContent='Done — the page now uses your numbers.'; render(); window.scrollTo({top:0});
   };
-  document.getElementById('reset').onclick = ()=>{ base=Object.assign({},D.baseline_raw); sel.supplier_increase_pct=base.supplier_increase_pct; c.querySelectorAll('input').forEach(i=>i.value=base[i.dataset.k]); document.getElementById('intake-msg').textContent=''; render(); };
+  document.getElementById('reset').onclick = ()=>{ base=Object.assign({},D.baseline_raw); sel.supplier_increase_pct=base.supplier_increase_pct; f.querySelectorAll('input').forEach(i=>i.value=base[i.dataset.k]); document.getElementById('intake-msg').textContent=''; render(); };
 })();
-
-// step highlight
-const links=[...document.querySelectorAll('.steps a')]; const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
-new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+e.target.id)); } }); },{rootMargin:'-40% 0px -55% 0px'}).observe && secs.forEach(s=>{ if(s) new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting) links.forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+e.target.id)); }); },{rootMargin:'-40% 0px -55% 0px'}).observe(s); });
 
 render();
 })();

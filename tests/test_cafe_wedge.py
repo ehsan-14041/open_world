@@ -177,7 +177,8 @@ def test_customer_copy_never_promises_a_forecast():
     # The disclaimer is injected from the bundle so it cannot be edited out of the page alone.
     report_src = (REPO / "event_sim" / "cafe" / "report.py").read_text(encoding="utf-8")
     assert "not a forecast" in report_src
-    assert 'id="scenario-note"' in html and 'id="snf"' in html
+    # The page states it in its own words on the first screen and in the limitations.
+    assert "not a prediction" in html and "Predict the future" in html
 
 
 def test_customer_ui_avoids_engineering_vocabulary():
@@ -258,16 +259,49 @@ def test_sensitivity_verdict_uses_counts_not_probability_language():
 
 def test_template_discloses_accounting_and_flags_world_c():
     html = TEMPLATE.read_text(encoding="utf-8")
-    assert "Cash is not simulated directly" in html
-    assert "not yet calibrated to your business" in html
+    assert "Cash itself is not simulated directly" in html
+    assert "calibrated to your business yet" in html
     assert "stress assumption" in html
-    assert "your actual customers may be more or less price-sensitive" in html
-    assert "What this does not do" in html
-    assert "Ranked first in" in html and "Best in" not in html
-    assert "not a probability estimate" in html
+    assert "may be more or less price-sensitive" in html
+    assert "This does not" in html and "Predict the future" in html
+    assert "Ranks first under current assumptions" in html and "Best in" not in html
+    assert "not a probability" in html
 
 
 def test_template_has_four_visible_number_categories():
     html = TEMPLATE.read_text(encoding="utf-8")
-    for label in ("'Your numbers'", "'External research'", "'Model assumptions'", "'Calculated from your numbers'", "Calculated results"):
+    for label in ("Your numbers", "External research", "Model assumptions", "Calculated results"):
         assert label in html
+
+
+# --- product copy rules (UI phase) ---------------------------------------------------------
+
+def test_primary_ui_never_uses_recommendation_language():
+    html = TEMPLATE.read_text(encoding="utf-8")
+    visible = re.sub(r"<script.*?</script>", "", html, flags=re.S)
+    visible = re.sub(r"<style.*?</style>", "", visible, flags=re.S)
+    for banned in ("Recommended", "recommended", "Optimal", "optimal", "Best decision", "best decision",
+                   "You should choose", "probability of", "% chance", "confidence"):
+        assert banned not in visible, banned
+
+
+def test_primary_ui_avoids_model_internals():
+    """These may appear only inside the 'How this was calculated' disclosure."""
+    html = TEMPLATE.read_text(encoding="utf-8")
+    body = html[: html.index('id="how"')]
+    for jargon in ("fingerprint", "WorldModule", "elasticity coefficient", "causal", "intervention",
+                   "evidence ladder", "sensitivity census", "ai_hypothesis", "literature_backed"):
+        assert jargon not in body, jargon
+
+
+def test_technical_disclosure_preserves_reproducibility():
+    html = TEMPLATE.read_text(encoding="utf-8")
+    how = html[html.index("function renderHow"):]
+    for must in ("module_semantic_hash", "shared_fingerprint", "engine_fingerprint", "ladder_status", "D.sources"):
+        assert must in how, must
+
+
+def test_price_sensitivity_control_is_three_plain_settings():
+    html = TEMPLATE.read_text(encoding="utf-8")
+    assert 'data-v="low">Low' in html and 'data-v="central"' in html and 'data-v="high">High' in html
+    assert "This is a sensitivity count, not a probability." in html
