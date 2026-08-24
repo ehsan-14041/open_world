@@ -2,22 +2,21 @@
 
 DirectoryIndex index.php
 
-# The report is only ever served through index.php, so the gate cannot be walked around.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(data|lib|assets)/ - [F,L]
+</IfModule>
+
 <IfModule mod_authz_core.c>
-  <FilesMatch "\.(gz|sample\.php)$">
+  <FilesMatch "\.(gz|json|sample\.php)$">
     Require all denied
   </FilesMatch>
 </IfModule>
 <IfModule !mod_authz_core.c>
-  <FilesMatch "\.(gz|sample\.php)$">
+  <FilesMatch "\.(gz|json|sample\.php)$">
     Order allow,deny
     Deny from all
   </FilesMatch>
-</IfModule>
-
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteRule ^data/ - [F,L]
 </IfModule>
 
 # index.php sets its own encoding and cache headers; don't let the server re-compress.
