@@ -48,3 +48,6 @@ data/external/*
 # of the measurement rather than an observation of it.
 data/external/ais/daily/
 data/external/ais/metadata/
+
+# built upload bundles (may contain a config.php with a password)
+dist/
