@@ -21,48 +21,19 @@ from typing import Any
 from event_sim.cafe.baseline import CafeBaseline
 from event_sim.cafe.worlds import PRICE_RISE_B, PRICE_RISE_C, REFORMULATION_EFFECTIVENESS, cogs_reduction_points
 
-CUSTOMER = "Customer input"
-RESEARCH = "External research"
-ASSUMPTION = "Assumption"
-DERIVED = "Derived"
-
-LADDER = {CUSTOMER: "user_assumption", RESEARCH: "literature_backed", ASSUMPTION: "expert_assumption", DERIVED: "derived"}
-
-
-@dataclass(frozen=True)
-class Assumption:
-    key: str
-    label: str
-    value: str
-    klass: str
-    swept: bool
-    note: str = ""
-    source: str = ""
-
-    def to_dict(self) -> dict[str, Any]:
-        d = asdict(self)
-        d["ladder_status"] = LADDER[self.klass]
-        return d
+from event_sim.wedge.evidence import (  # noqa: F401  (re-exported for existing importers)
+    ASSUMPTION,
+    CUSTOMER,
+    DERIVED,
+    LADDER,
+    RESEARCH,
+    Assumption,
+    class_counts,
+)
+from event_sim.wedge.evidence import ANDREYEVA_2010, BIJMOLT_2005
 
 
-SOURCES: list[dict[str, str]] = [
-    {
-        "id": "andreyeva2010",
-        "citation": "Andreyeva T, Long MW, Brownell KD. The impact of food prices on consumption: a systematic review of research on the price elasticity of demand for food. American Journal of Public Health. 2010;100(2):216-222. doi:10.2105/AJPH.2008.151415",
-        "population": "160 US studies, 1938-2007; 13 estimates for the 'food away from home' category",
-        "estimate": "Own-price elasticity 0.81 (95% CI 0.56-1.07; range 0.23-1.76)",
-        "limitations": "Category-level (primary demand): how much less the public eats out when eating out as a whole gets dearer. Not firm-level. US only. Studies up to 2007.",
-        "transfer": "Justified for the CENTRAL setting when the cost shock is market-wide and competitors also raise prices, so the cafe's price moves with the category. Not justified on its own for a single cafe raising prices while competitors hold theirs.",
-    },
-    {
-        "id": "bijmolt2005",
-        "citation": "Bijmolt THA, van Heerde HJ, Pieters RGM. New empirical generalizations on the determinants of price elasticity. Journal of Marketing Research. 2005;42(2):141-156.",
-        "population": "1,851 price elasticities from 81 studies, predominantly packaged consumer goods in retail scanner data",
-        "estimate": "Mean brand-level price elasticity -2.62",
-        "limitations": "Brand-level in supermarket categories with near-perfect substitutes on the same shelf. An independent cafe is differentiated by location, habit and service in ways a packaged brand is not.",
-        "transfer": "Used only as the upper reference point. The HIGH setting of 1.60 is a judgement placed between the category CI top (1.07) and this mean, and is classified as an assumption, not research.",
-    },
-]
+SOURCES: list[dict[str, str]] = [ANDREYEVA_2010, BIJMOLT_2005]
 
 
 def registry(
@@ -113,10 +84,3 @@ def registry(
                    note="Monthly sales divided by monthly orders."),
         Assumption("cogs_per_order", "Ingredient cost per order", f"{baseline.cogs_per_order:,.2f}", DERIVED, False),
     ]
-
-
-def class_counts(items: list[Assumption]) -> dict[str, int]:
-    out: dict[str, int] = {}
-    for a in items:
-        out[a.klass] = out.get(a.klass, 0) + 1
-    return out

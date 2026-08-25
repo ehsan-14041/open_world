@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cost Shock Decision Comparison</title>
+<title>Decision Comparison</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap">
 <style>
@@ -201,7 +201,7 @@ table.tech th,table.tech td{text-align:left;padding:6px 8px;border-bottom:1px so
 <div class="banner" id="banner"></div>
 <header class="top"><div class="wrap">
   <div class="brand">Decision Comparison</div>
-  <span class="badge" id="demoflag" hidden>Demo — fictional cafe</span>
+  <span class="badge" id="demoflag" hidden>Demo — fictional business</span>
   <a class="cta" href="#try">Try your business</a>
 </div></header>
 
@@ -290,35 +290,60 @@ table.tech th,table.tech td{text-align:left;padding:6px 8px;border-bottom:1px so
 (function(){
 const qt = new URLSearchParams(location.search).get('theme'); if(qt==='light'||qt==='dark') document.documentElement.dataset.theme = qt;
 const D = JSON.parse(document.getElementById('data').textContent);
-const DPM = 365/12, H = 90;
+const C = D.copy;                        // wedge-specific wording; never arithmetic
+const F = C.fields;                      // which baseline field plays which role
+const DPM = 365/12, H = D.reproducibility.horizon_days || 90;
 const WID = ['A','B','C'];
-const NAMES = {A:'Hold prices', B:'Raise prices 10%', C:'Raise prices 5% + simplify low-margin items'};
-const SHORT = {A:'Hold prices', B:'Raise 10%', C:'Raise 5% + simplify'};
+const NAMES = C.world_names, SHORT = C.world_short;
 const CLS = {A:'wA',B:'wB',C:'wC'};
+if(C.page_title) document.title = C.page_title;
 const money = v => (v<0?'−':'') + Math.abs(Math.round(v)).toLocaleString();
 const signed = v => (v<0?'−':'+') + Math.abs(Math.round(v)).toLocaleString();
 const pct = (v,d=1) => (v>0?'+':'') + v.toFixed(d) + '%';
+const fill = (s,vals) => s.replace(/\{(\w+)\}/g, (m,k) => (k in vals) ? vals[k] : m);
 
 // ---- state ------------------------------------------------------------------------------
 let base = Object.assign({}, D.baseline_raw);
-let sel = { price_sensitivity:'central', cogs_pass_through:'central', demand_adjustment_speed:'central',
-            supplier_increase_pct: base.supplier_increase_pct, reformulation_effectiveness: 0.30 };
+// The page's selection is exactly the set of keys the grid was built on, so any wedge's grid
+// is selectable without the page knowing what those keys mean.
+const GRID_KEYS = Object.keys(D.grid[0].key);
+const GRID_VALS = {};
+GRID_KEYS.forEach(k => { GRID_VALS[k] = [...new Set(D.grid.map(g=>g.key[k]))]
+    .sort((a,b)=> (typeof a==='number') ? a-b : String(a).localeCompare(String(b))); });
+const PRIMARY = C.primary_axis;
+const CENTRE = {};
+GRID_KEYS.forEach(k => { const v = GRID_VALS[k]; CENTRE[k] = v.includes('central') ? 'central' : v[Math.floor(v.length/2)]; });
+let sel = Object.assign({}, CENTRE);
 
-// ---- accounting identities (must match event_sim/cafe/accounting.py) -------------------
+// The shock and the low-margin share come from the owner's own figures, so the grid point is
+// chosen by snapping those to the nearest tested value — and the page says so.
+const SHOCK_KEY = GRID_KEYS.find(k => k.endsWith('_pct') && k !== 'utilisation_pct') || null;
+const REDUCTION_KEY = GRID_KEYS.includes('reduction_points') ? 'reduction_points' : null;
+
+function capacity(b){
+  // Only a wedge with a capacity ceiling declares a utilisation field.
+  if(!F.utilisation) return null;
+  const u = b[F.utilisation];
+  return (u > 0) ? b[F.units_per_day] / (u/100) : null;
+}
 function derived(b){
-  const aov = b.monthly_revenue/(b.daily_orders*DPM);
-  const cpo = b.monthly_cogs/(b.daily_orders*DPM);
-  return {aov, cpo, fixedDay: b.monthly_fixed_costs/DPM};
+  const units = b[F.units_per_day];
+  return {aov: b[F.revenue]/(units*DPM), cpo: b[F.unit_cost_total]/(units*DPM), fixedDay: b[F.fixed]/DPM};
 }
 function ledger(b, w){
   const {aov,cpo,fixedDay} = derived(b);
+  const cap = capacity(b);
   const n = Math.min(w.demand.length, w.cogs.length, w.price.length);
-  const L = {orders:[],price:[],revenue:[],cogs:[],gp:[],gm:[],net:[],cash:[]};
-  let cash = b.cash_on_hand;
+  const L = {orders:[],price:[],revenue:[],cogs:[],gp:[],gm:[],net:[],cash:[],demanded:[],away:[],util:[]};
+  let cash = b[F.cash];
   for(let d=0; d<n; d++){
-    const o = b.daily_orders*w.demand[d]/100, p = aov*w.price[d]/100, r = o*p, c = o*cpo*w.cogs[d]/100, gp=r-c, net=gp-fixedDay;
+    const wanted = b[F.units_per_day]*w.demand[d]/100;
+    const o = (cap===null) ? wanted : Math.min(wanted, cap);
+    if(cap!==null){ L.demanded.push(wanted); L.away.push(Math.max(0,wanted-o)); L.util.push(cap>0?100*o/cap:0); }
+    const p = aov*w.price[d]/100, r = o*p, c = o*cpo*w.cogs[d]/100, gp=r-c, net=gp-fixedDay;
     if(d>0) cash += net;
-    L.orders.push(o); L.price.push(p); L.revenue.push(r); L.cogs.push(c); L.gp.push(gp); L.gm.push(r>0?100*gp/r:0); L.net.push(net); L.cash.push(cash);
+    L.orders.push(o); L.price.push(p); L.revenue.push(r); L.cogs.push(c); L.gp.push(gp);
+    L.gm.push(r>0?100*gp/r:0); L.net.push(net); L.cash.push(cash);
   }
   return L;
 }
@@ -328,30 +353,38 @@ function metrics(L, b){
   const mrev = sum(L.revenue,ts,last)*sc, mgp = sum(L.gp,ts,last)*sc, mnet = sum(L.net,ts,last)*sc;
   let worst=1; for(let d=1; d<=last; d++) if(L.gm[d]<L.gm[worst]) worst=d;
   let minc=0; for(let d=0; d<=last; d++) if(L.cash[d]<L.cash[minc]) minc=d;
-  return {mrev, mgp, mnet, gm_end:L.gm[last], gm_worst:L.gm[worst], worst_day:worst,
-    orders_change:100*(L.orders[last]/L.orders[0]-1), rev_change:100*(mrev/b.monthly_revenue-1),
+  const m = {mrev, mgp, mnet, gm_end:L.gm[last], gm_worst:L.gm[worst], worst_day:worst,
+    orders_change:100*(L.orders[last]/L.orders[0]-1),
+    rev_change:100*(mrev/b[F.revenue]-1),
     cash30:L.cash[Math.min(30,last)], cash90:L.cash[last], cash_change:L.cash[last]-L.cash[0],
     min_cash:L.cash[minc], min_day:minc, negative: L.cash.slice(0,last+1).some(c=>c<0),
     first_negative_day: (()=>{ for(let d=0; d<=last; d++) if(L.cash[d]<0) return d; return null; })(),
     runway: mnet>=0 ? null : (L.cash[last]<=0 ? 0 : L.cash[last]/(-mnet))};
+  if(L.util.length){
+    m.util_end = L.util[last]; m.away_end = L.away[last];
+    m.wanted_change = 100*(L.demanded[last]/L.demanded[0]-1);
+  }
+  return m;
 }
 
 // ---- grid lookup -----------------------------------------------------------------------
-const redVals = [...new Set(D.grid.map(g=>g.key.reduction_points))].sort((a,b)=>a-b);
-const supVals = [...new Set(D.grid.map(g=>g.key.supplier_increase_pct))].sort((a,b)=>a-b);
 const nearest = (arr,v)=>arr.reduce((p,c)=>Math.abs(c-v)<Math.abs(p-v)?c:p);
+function snapped(){
+  const want = Object.assign({}, sel);
+  if(SHOCK_KEY && typeof base[F.shock] === 'number') want[SHOCK_KEY] = nearest(GRID_VALS[SHOCK_KEY], base[F.shock]);
+  return want;
+}
 function pick(){
-  const red = nearest(redVals, base.low_margin_share_pct*sel.reformulation_effectiveness);
-  const sup = nearest(supVals, sel.supplier_increase_pct);
-  const g = D.grid.find(g=>g.key.price_sensitivity===sel.price_sensitivity && g.key.cogs_pass_through===sel.cogs_pass_through
-     && g.key.demand_adjustment_speed===sel.demand_adjustment_speed && g.key.supplier_increase_pct===sup && g.key.reduction_points===red);
-  return {g, red, sup};
+  const want = snapped();
+  const g = D.grid.find(g => GRID_KEYS.every(k => g.key[k] === want[k]));
+  return {g, want};
 }
 
-// ---- self-check against Python central case --------------------------------------------
+// ---- self-check against the generated report --------------------------------------------
 (function check(){
-  const central = D.grid.find(g=>g.key.price_sensitivity==='central'&&g.key.cogs_pass_through==='central'&&g.key.demand_adjustment_speed==='central'
-     && g.key.supplier_increase_pct===D.baseline_raw.supplier_increase_pct && Math.abs(g.key.reduction_points - D.worlds[2].cogs_reduction_points)<1e-6);
+  const centralWant = Object.assign({}, CENTRE);
+  if(SHOCK_KEY) centralWant[SHOCK_KEY] = nearest(GRID_VALS[SHOCK_KEY], D.baseline_raw[F.shock]);
+  const central = D.grid.find(g => GRID_KEYS.every(k => g.key[k] === centralWant[k]));
   if(!central){ fail('Could not find the central case in the embedded data.'); return; }
   for(const w of D.worlds){
     const m = metrics(ledger(D.baseline_raw, central.worlds[w.id]), D.baseline_raw);
@@ -360,104 +393,149 @@ function pick(){
 })();
 function fail(msg){ const b=document.getElementById('banner'); b.textContent=msg; b.classList.add('on'); throw new Error(msg); }
 
-// ---- census over the whole tested grid for the CURRENT cafe ------------------------------
+// ---- census over the whole tested grid for the CURRENT business --------------------------
 let _censusKey = null, _census = null;
 function census(){
-  const key = JSON.stringify([base.monthly_revenue, base.daily_orders, base.monthly_cogs, base.monthly_fixed_costs, base.cash_on_hand]);
+  const key = JSON.stringify(Object.values(F).map(f=>base[f]));
   if(_censusKey===key) return _census;
-  const pts = D.grid.map(g=>{ const m={}; for(const id of WID) m[id]=metrics(ledger(base, g.worlds[id]), base).cash90; const rank=[...WID].sort((a,b)=>m[b]-m[a]); return {key:g.key, rank, m}; });
+  const pts = D.grid.map(g=>{ const m={}; for(const id of WID) m[id]=metrics(ledger(base, g.worlds[id]), base).cash90;
+                              const rank=[...WID].sort((a,b)=>m[b]-m[a]); return {key:g.key, rank, m}; });
   const wins={A:0,B:0,C:0}; pts.forEach(p=>wins[p.rank[0]]++); wins.n=pts.length;
-  const axes = {price_sensitivity:['low','central','high'], supplier_increase_pct:supVals, cogs_pass_through:['low','central'], reduction_points:redVals, demand_adjustment_speed:['slow','central','fast']};
-  const centre = {price_sensitivity:'central', supplier_increase_pct:nearest(supVals, D.baseline_raw.supplier_increase_pct), cogs_pass_through:'central', reduction_points:redVals[Math.floor(redVals.length/2)], demand_adjustment_speed:'central'};
-  const find = s => pts.find(p=>Object.keys(axes).every(k=>p.key[k]===s[k]));
-  const oat = Object.keys(axes).map(k=>{ const tops=[], spread=[]; for(const v of axes[k]){ const q=find({...centre,[k]:v}); if(!q) continue; tops.push(q.rank[0]); spread.push(q.m.B-q.m.C);} return {k, tops, flips:new Set(tops).size>1, influence: spread.length?Math.max(...spread)-Math.min(...spread):0}; });
+  const centre = snapped();
+  const find = s => pts.find(p=>GRID_KEYS.every(k=>p.key[k]===s[k]));
+  const oat = GRID_KEYS.map(k=>{ const tops=[], spread=[];
+      for(const v of GRID_VALS[k]){ const q=find(Object.assign({},centre,{[k]:v})); if(!q) continue;
+                                    tops.push(q.rank[0]); spread.push(q.m.B-q.m.C); }
+      return {k, tops, flips:new Set(tops).size>1, influence: spread.length?Math.max(...spread)-Math.min(...spread):0}; });
   oat.sort((a,b)=>(b.flips-a.flips)||(b.influence-a.influence));
   const c0 = find(centre);
   _censusKey=key; _census={wins, oat, pts, centreTop: c0?c0.rank[0]:null, find, centre};
   return _census;
 }
-const AXIS_LABELS = {price_sensitivity:'how price-sensitive your customers are', supplier_increase_pct:'how large the supplier increase actually is', cogs_pass_through:'how much of the supplier increase reaches your costs', reduction_points:'how much simplifying the menu really saves', demand_adjustment_speed:'how quickly customers react'};
-const SENS_HELP = {low:'Loyal customers, or your competitors are raising prices too.', central:'The typical response found in research on eating out.', high:'Stress case: competitors hold their prices and customers have easy alternatives.'};
-const SENS_VAL = {low:'0.50', central:'0.81', high:'1.60'};
+const AXIS_LABELS = D.sensitivity.sweep_labels;
+function axisLabel(k){
+  if(AXIS_LABELS[k]) return AXIS_LABELS[k].charAt(0).toLowerCase()+AXIS_LABELS[k].slice(1);
+  if(k==='reduction_points') return 'how much the change to what you sell really saves';
+  return k.replace(/_/g,' ');
+}
 function niceStep(span, n){ const raw=span/n, mag=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/mag; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*mag; }
 
 // ---- compute current state ---------------------------------------------------------------
 function compute(){
-  const {g, red, sup} = pick();
+  const {g, want} = pick();
   const out = {};
   for(const id of WID){ const L = ledger(base, g.worlds[id]); out[id] = {L, m: metrics(L, base)}; }
   const rank = [...WID].sort((a,b)=>out[b].m.cash90-out[a].m.cash90);
-  return {out, rank, red, sup};
+  return {out, rank, want, red: REDUCTION_KEY ? g.key[REDUCTION_KEY] : null,
+          shock: SHOCK_KEY ? g.key[SHOCK_KEY] : base[F.shock]};
 }
 let current = null;
 
 // ---- render ------------------------------------------------------------------------------
 function render(){
   current = compute();
-  const {out, rank, red, sup} = current;
+  const {out, rank, red, shock} = current;
   const lead = rank[0], second = rank[1];
-  const preNet = base.monthly_revenue - base.monthly_cogs - base.monthly_fixed_costs;
+  const d0 = derived(base);
+  const preNet = base[F.revenue] - base[F.unit_cost_total] - base[F.fixed];
   const {wins, oat} = census();
+  const cap = capacity(base);
 
-  document.getElementById('demoflag').hidden = !base.is_demo;
-  document.getElementById('headline').textContent = `Ingredient costs are up ${sup}%. What should you do?`;
-  document.getElementById('cafe-name').textContent = base.is_demo ? `Shown for a fictional demo cafe: ${money(base.monthly_revenue)} a month in sales, ${Math.round(base.daily_orders)} orders a day, ${money(base.cash_on_hand)} in the bank.` : `${base.name}: ${money(base.monthly_revenue)} a month in sales, ${Math.round(base.daily_orders)} orders a day, ${money(base.cash_on_hand)} in the bank.`;
+  const flag = document.getElementById('demoflag');
+  flag.hidden = !base.is_demo;
+  flag.textContent = 'Demo — fictional ' + (C.demo_noun || 'business');
+  document.getElementById('headline').textContent = fill(C.headline, {shock: (+shock).toLocaleString()});
+  document.querySelector('#decision .lede').textContent = C.hero_lede;
+  const who = base.is_demo ? `Shown for a fictional demo business: ` : `${base.name}: `;
+  document.getElementById('cafe-name').textContent = who +
+    `${money(base[F.revenue])} a month in sales, ${Math.round(base[F.units_per_day])} ${C.unit_word} a day, ` +
+    `${money(base[F.cash])} in the bank` + (cap ? `, about ${cap.toFixed(1)} ${C.unit_word} of space a day.` : '.');
 
   // cards
   document.getElementById('options').innerHTML = WID.map(id=>{
     const m = out[id].m;
-    const cashLine = m.first_negative_day!==null ? `<span class="v neg">Day ${m.first_negative_day}</span><span class="l">cash runs out</span>` : `<span class="v ${m.cash90<0?'neg':''}">${money(m.cash90)}</span><span class="l">cash at day 90</span>`;
-    const note = id==='C' ? `<div class="note"><b>Depends on two of our assumptions:</b> how much simplifying the menu cuts ingredient cost (about ${red} points here) and how many orders leave with the removed items (${(0.33*red).toFixed(1)}%). Neither is calibrated to your business yet.</div>` : '';
+    const cashLine = m.first_negative_day!==null
+      ? `<span class="v neg">Day ${m.first_negative_day}</span><span class="l">cash runs out</span>`
+      : `<span class="v ${m.cash90<0?'neg':''}">${money(m.cash90)}</span><span class="l">cash at day 90</span>`;
+    const note = (id==='C' && C.c_card_note && red!==null)
+      ? `<div class="note"><b>Depends on our assumptions:</b> ${fill(C.c_card_note.replace(/^Depends on[^:]*:\s*/,''),
+          {red: (+red).toFixed(1), loss: (0.33*red).toFixed(1), unit: C.unit_word, cost: C.cost_word})}</div>` : '';
+    const unitsLine = (m.util_end!==undefined)
+      ? `<div><span class="v">${pct(m.orders_change,0)}</span><span class="l">${C.unit_word} served</span></div>`
+      : `<div><span class="v">${pct(m.orders_change,0)}</span><span class="l">${C.unit_word}</span></div>`;
     return `<div class="opt ${CLS[id]} ${id===lead?'lead':''}">
       <div class="letter">${id}</div>
       ${id===lead?`<div class="lead-tag">Ranks first under current assumptions</div>`:''}
       <div class="name">${NAMES[id]}</div>
-      <div class="impact"><div class="v ${m.mnet<0?'neg':''}">${signed(m.mnet)}</div><div class="l">per month, once costs and customers have settled · today ${signed(preNet)}</div></div>
-      <div class="facts"><div><span class="v">${pct(m.orders_change,0)}</span><span class="l">orders</span></div><div>${cashLine}</div></div>
+      <div class="impact"><div class="v ${m.mnet<0?'neg':''}">${signed(m.mnet)}</div><div class="l">per month, once things have settled · today ${signed(preNet)}</div></div>
+      <div class="facts">${unitsLine}<div>${cashLine}</div></div>
       ${note}
     </div>`;
   }).join('');
 
   const gap = out[lead].m.cash90 - out[second].m.cash90;
-  document.getElementById('lead-line').innerHTML = `Under the current assumptions, <b>${SHORT[lead]}</b> leaves you ${money(out[lead].m.cash90 - out.A.m.cash90)} more cash at day 90 than holding prices, and ${money(gap)} ahead of ${SHORT[second].toLowerCase()}.`;
+  document.getElementById('lead-line').innerHTML =
+    `Under the current assumptions, <b>${SHORT[lead]}</b> leaves you ${money(out[lead].m.cash90 - out.A.m.cash90)} more cash at day 90 than ${SHORT.A.toLowerCase()}, and ${money(gap)} ahead of ${SHORT[second].toLowerCase()}.`;
   document.getElementById('scenario-note').textContent = 'This is a scenario comparison under stated assumptions, not a prediction.';
 
   // stability
   const cTop = census().centreTop || lead;
   document.getElementById('count').innerHTML = `${wins[cTop]}<small> of ${wins.n}</small>`;
-  document.getElementById('count-l').innerHTML = `<b>${SHORT[cTop]}</b> ranked first in ${wins[cTop]} of the ${wins.n} assumption combinations we tested for your cafe.`;
+  document.getElementById('count-l').innerHTML = `<b>${SHORT[cTop]}</b> ranked first in ${wins[cTop]} of the ${wins.n} assumption combinations we tested for your business.`;
   const flips = oat.filter(r=>r.flips);
-  document.getElementById('count-note').textContent = flips.length ? `Only ${flips.length===1?'one':flips.length} of the five assumptions tested can change which decision ranks first when moved on its own.` : 'None of the five assumptions tested changes which decision ranks first when moved on its own.';
+  document.getElementById('count-note').textContent = flips.length
+    ? `Only ${flips.length===1?'one':flips.length} of the ${oat.length} assumptions tested can change which decision ranks first when moved on its own.`
+    : `None of the ${oat.length} assumptions tested changes which decision ranks first when moved on its own.`;
 
-  // segmented control state + effect line
-  document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on', b.dataset.v===sel.price_sensitivity));
-  document.getElementById('seg-help').textContent = SENS_HELP[sel.price_sensitivity];
+  // the one interactive assumption
+  document.getElementById('uncert-title').textContent = C.uncertainty_title;
+  document.querySelector('#uncert .eyebrow').textContent = C.uncertainty_eyebrow;
+  document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on', b.dataset.v===sel[PRIMARY]));
+  document.getElementById('seg-help').textContent = C.sens_help[sel[PRIMARY]];
   const eff = document.getElementById('seg-effect');
   if(lead===cTop){ eff.className='seg-effect steady'; eff.innerHTML = `At this setting <b>${SHORT[lead]}</b> still ranks first.`; }
   else { eff.className='seg-effect'; eff.innerHTML = `At this setting the ranking changes: <b>${SHORT[lead]}</b> moves ahead of ${SHORT[cTop].toLowerCase()}.`; }
 
   // what could change
   const {find, centre} = census();
-  const lo = find({...centre, price_sensitivity:'low'}), hi = find({...centre, price_sensitivity:'high'}), mid = find(centre);
-  const who = p => p ? `<b class="${CLS[p.rank[0]]}">${SHORT[p.rank[0]]}</b>` : '—';
-  document.getElementById('change-title').textContent = (lo&&hi&&lo.rank[0]!==hi.rank[0]) ? 'Two settings of one assumption, two different leaders' : 'The same leader at every setting we tested';
+  const lo = find(Object.assign({},centre,{[PRIMARY]:'low'})), hi = find(Object.assign({},centre,{[PRIMARY]:'high'})), mid = find(centre);
+  const w2 = p => p ? `<b class="${CLS[p.rank[0]]}">${SHORT[p.rank[0]]}</b>` : '—';
+  document.getElementById('change-title').textContent = (lo&&hi&&lo.rank[0]!==hi.rank[0])
+    ? 'Two settings of one assumption, two different leaders' : 'The same leader at every setting we tested';
   document.getElementById('cond').innerHTML = `
-    <div class="${lo?CLS[lo.rank[0]]:''}"><div class="k">If customers are not very price-sensitive</div><div class="r">${who(lo)} tends to rank first.</div></div>
-    <div class="${hi?CLS[hi.rank[0]]:''}"><div class="k">If customers are highly price-sensitive</div><div class="r">${who(hi)} ${hi&&mid&&hi.rank[0]!==mid.rank[0]?'moves ahead':'still ranks first'}.</div></div>`;
-  document.getElementById('next-p').textContent = 'A small real-world price test — a few items, a few weeks — or your sales figures from the last time you changed prices would give much better evidence about how your customers respond. That evidence can replace the research estimate in this comparison.';
-  const steady = oat.filter(r=>!r.flips).map(r=>AXIS_LABELS[r.k]);
-  document.getElementById('others').textContent = steady.length ? `We also tested ${steady.join(', ')}. None of them changes which decision ranks first on its own — they change the size of the gap, not the order.` : '';
-  document.getElementById('snapnote').textContent = `Tested at a supplier increase of ${sup}% and ${red} points of ingredient-cost saving from simplifying the menu (the nearest tested values to your inputs).`;
+    <div class="${lo?CLS[lo.rank[0]]:''}"><div class="k">If they are not very price-sensitive</div><div class="r">${w2(lo)} tends to rank first.</div></div>
+    <div class="${hi?CLS[hi.rank[0]]:''}"><div class="k">If they are highly price-sensitive</div><div class="r">${w2(hi)} ${hi&&mid&&hi.rank[0]!==mid.rank[0]?'moves ahead':'still ranks first'}.</div></div>`;
+  document.getElementById('next-p').textContent = C.next_measurement;
+  const steady = oat.filter(r=>!r.flips).map(r=>axisLabel(r.k));
+  document.getElementById('others').textContent = steady.length
+    ? `We also tested ${steady.join(', ')}. None of them changes which decision ranks first on its own — they change the size of the gap, not the order.` : '';
 
   drawChart(out, lead);
+  document.querySelector('#consequences h2').textContent = C.chart_title;
+  document.querySelector('#consequences .lede').textContent = C.chart_lede;
   document.getElementById('legend').innerHTML = WID.map(id=>`<span class="${CLS[id]}">${id} · ${SHORT[id]}</span>`).join('');
-  document.getElementById('mini').innerHTML = `<div class="h"></div>${WID.map(id=>`<div class="h n">${id}</div>`).join('')}` +
-    [['Cash at day 30', m=>money(m.cash30)],['Cash at day 90', m=>money(m.cash90)],['Net per month after 90 days', m=>signed(m.mnet)]].map(([l,f])=>`<div>${l}</div>${WID.map(id=>`<div class="n ${f(out[id].m).startsWith('−')?'neg':''}">${f(out[id].m)}</div>`).join('')}`).join('');
-  const byNet = [...WID].sort((a,b)=>out[b].m.mnet-out[a].m.mnet);
-  document.getElementById('horizon').textContent = (byNet[0]!==rank[0] ? `Note: by cash at day 90, ${SHORT[rank[0]]} is ahead; by what each decision earns per month once customers have fully reacted, ${SHORT[byNet[0]]} is ahead. Lost customers arrive gradually, so a price rise looks better over 90 days than it does after. ` : '') + `The comparison stops at 90 days because that is as far as wages and rent can honestly be treated as fixed — not because the effects stop there.`;
 
-  renderSources(red, sup);
+  const rows = [['Cash at day 30', m=>money(m.cash30)],['Cash at day 90', m=>money(m.cash90)],
+                ['Net per month once settled', m=>signed(m.mnet)]];
+  if(out.A.m.util_end!==undefined){
+    rows.push([`How full you end up`, m=>m.util_end.toFixed(0)+'%']);
+    rows.push([`${C.unit_word.charAt(0).toUpperCase()+C.unit_word.slice(1)} turned away a day`, m=>m.away_end.toFixed(1)]);
+  }
+  document.getElementById('mini').innerHTML = `<div class="h"></div>${WID.map(id=>`<div class="h n">${id}</div>`).join('')}` +
+    rows.map(([l,f])=>`<div>${l}</div>${WID.map(id=>`<div class="n ${String(f(out[id].m)).startsWith('−')?'neg':''}">${f(out[id].m)}</div>`).join('')}`).join('');
+
+  const byNet = [...WID].sort((a,b)=>out[b].m.mnet-out[a].m.mnet);
+  let horizon = '';
+  if(byNet[0]!==rank[0]) horizon += `Note: by cash at day 90, ${SHORT[rank[0]]} is ahead; by what each decision earns per month once things have settled, ${SHORT[byNet[0]]} is ahead. `;
+  if(out.A.m.util_end!==undefined && C.capacity_note)
+    horizon += fill(C.capacity_note, {unit: C.unit_word}) + ' ';
+  horizon += 'The comparison stops at 90 days because that is as far as wages and rent can honestly be treated as fixed — not because the effects stop there.';
+  document.getElementById('horizon').textContent = horizon;
+
+  renderSources(red, shock, d0, cap);
+  renderLimits();
   renderHow();
+  document.getElementById('snapnote').textContent = 'Tested at the nearest values to your own figures on the grid above.';
   document.getElementById('foot').textContent = `${base.is_demo?'Demo values are fictional and for illustration only. ':''}Prepared for ${base.name}.`;
 }
 
@@ -487,7 +565,6 @@ function drawChart(out, lead){
   s+=`<circle cx="${x(0)}" cy="${y(out.A.L.cash[0])}" r="3.5" fill="var(--ink)"/><text x="${x(0)}" y="${y(out.A.L.cash[0])+20}" font-size="12" fill="var(--muted)">today ${money(out.A.L.cash[0])}</text>`;
   s+=`<g id="hover" style="display:none"><line id="hl" y1="${pt}" y2="${Hh-pb}" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3"/>${WID.map(id=>`<circle id="hc${id}" r="4.5" fill="var(--${id.toLowerCase()})" stroke="var(--card)" stroke-width="2"/>`).join('')}</g>`;
   svg.innerHTML = s;
-  // hover / touch
   const tip = document.getElementById('tip'), hov = svg.querySelector('#hover');
   const show = ev => {
     const r = svg.getBoundingClientRect(); if(!r.width) return; const px = (ev.clientX - r.left) * (W / r.width);
@@ -504,63 +581,106 @@ function drawChart(out, lead){
   svg.onpointermove = show; svg.onpointerdown = show; svg.onpointerleave = hide;
 }
 
-function renderSources(red, sup){
-  const d = derived(base);
-  const yours = [['Monthly sales', money(base.monthly_revenue)],['Orders per day', Math.round(base.daily_orders)],['Monthly ingredient cost', `${money(base.monthly_cogs)} · ${(100*base.monthly_cogs/base.monthly_revenue).toFixed(0)}% of sales`],['Monthly fixed costs', money(base.monthly_fixed_costs)],['Cash available', money(base.cash_on_hand)],['Supplier cost increase', `+${sup}%`],['Orders on low-margin items', `${base.low_margin_share_pct}%`]];
-  const research = [['Customer price sensitivity', `${SENS_VAL[sel.price_sensitivity]}${sel.price_sensitivity==='high'?' · stress assumption':sel.price_sensitivity==='low'?' · low-end assumption':''}`, 'A 1% price rise eventually reduces orders by about this percentage. Research on eating out as a whole puts it near 0.81; your customers may differ.']];
-  const assume = [['Delay before higher prices reach your costs','about 7 days','Fresh stock turns over in roughly a week.'],['How quickly customers react to a new price',{slow:'about a month',central:'about two weeks',fast:'about a week'}[sel.demand_adjustment_speed]+' to half-react',''],['Saving from simplifying the menu',`${red} points off ingredient cost`,'Tested at half and one-and-a-half times this.'],['Orders lost with the removed items',`${(0.33*red).toFixed(1)}%`,'One third of the saving, in points of orders.'],['Share of the increase reaching your costs',{low:'70%',central:'100%'}[sel.cogs_pass_through],'']];
-  const calc = [['Average order value', d.aov.toFixed(2)],['Ingredient cost per order', d.cpo.toFixed(2)],['Net per month for each decision','from the last 30 simulated days'],['Cash at day 30 and day 90','yesterday\'s cash + gross profit − fixed costs, every day'],['Which decision ranks first','by cash at day 90']];
+function renderSources(red, shock, d, cap){
+  const yours = [['Monthly sales', money(base[F.revenue])],
+                 [C.unit_word.charAt(0).toUpperCase()+C.unit_word.slice(1)+' per day', Math.round(base[F.units_per_day])],
+                 ['Monthly '+C.cost_word, `${money(base[F.unit_cost_total])} · ${(100*base[F.unit_cost_total]/base[F.revenue]).toFixed(0)}% of sales`],
+                 ['Monthly fixed costs', money(base[F.fixed])],
+                 ['Cash available', money(base[F.cash])]];
+  if(F.utilisation) yours.push(['How full the diary is', base[F.utilisation]+'%']);
+  yours.push([SHOCK_KEY==='demand_growth_pct' ? 'How much busier' : 'Cost increase', `+${(+shock).toLocaleString()}%`]);
+  if(F.low_margin) yours.push(['Share on low-margin '+C.unit_word, `${base[F.low_margin]}%`]);
+
+  // Only claim "research" where a published figure actually backs the setting in use. For the
+  // shop that is the high setting alone; for the salon there is no usable published figure at
+  // any setting, and the card says so rather than sitting empty.
+  const sv = C.sens_values[sel[PRIMARY]];
+  const backed = (C.research_settings || []).includes(sel[PRIMARY]);
+  const research = backed
+    ? [['Price sensitivity of customers', sv, C.sources_note]]
+    : [];
+
+  const assume = [];
+  if(!backed) assume.push(['Price sensitivity of customers', sv, 'Our judgement, not a published figure. Tested across low, medium and high.']);
+  if(red!==null) assume.push(['Saving from changing what you sell', `${(+red).toFixed(1)} points off ${C.cost_word}`, 'Tested at half and one-and-a-half times this.']);
+  if(cap) assume.push(['Space available per day', cap.toFixed(1)+' '+C.unit_word, 'Fixed for 90 days: hiring or longer hours is a different decision.']);
+  D.assumptions.filter(a=>a.klass==='Assumption').slice(0,4).forEach(a=>assume.push([a.label, a.value, a.note||'']));
+
+  const calc = [['Average '+(F.utilisation?'ticket':'order value'), d.aov.toFixed(2)],
+                [C.cost_word.charAt(0).toUpperCase()+C.cost_word.slice(1)+' per '+C.unit_word_singular, d.cpo.toFixed(2)],
+                ['Net per month for each decision','from the last 30 simulated days'],
+                ['Cash at day 30 and day 90',"yesterday's cash + gross profit − fixed costs, every day"],
+                ['Which decision ranks first','by cash at day 90']];
+  if(cap) calc.push([C.unit_word.charAt(0).toUpperCase()+C.unit_word.slice(1)+' served', 'the smaller of wanted and available']);
+
   const li = rows => rows.map(r=>`<li><div><span>${r[0]}</span>${r[2]?`<span class="s">${r[2]}</span>`:''}</div><span class="v">${r[1]}</span></li>`).join('');
   document.getElementById('groups').innerHTML = `
     <div class="grp yours"><div class="k">Your numbers</div><ul>${li(yours)}</ul></div>
-    <div class="grp research"><div class="k">External research</div><ul>${li(research)}</ul></div>
-    <div class="grp assume"><div class="k">Model assumptions</div><ul>${li(assume)}</ul><div class="flag">The two menu-simplification assumptions affect option C only. They are our judgement, not measured from your business.</div></div>
+    <div class="grp research"><div class="k">External research</div>${research.length
+      ? `<ul>${li(research)}</ul>`
+      : `<p class="s" style="font-size:14px;color:var(--muted);margin:0">Nothing in this comparison is set from a published study at the setting you have chosen. ${(C.research_settings||[]).length ? 'Move the price-sensitivity control to the setting a study supports and it will appear here.' : 'The studies listed under &ldquo;How this was calculated&rdquo; are reference points our range was positioned against, not measurements of this trade.'}</p>`}</div>
+    <div class="grp assume"><div class="k">Model assumptions</div><ul>${li(assume)}</ul><div class="flag">These are our judgement, not measured from your business, and every one of them is tested across a range.</div></div>
     <div class="grp calc"><div class="k">Calculated results</div><ul>${li(calc)}</ul></div>`;
+  document.querySelector('.src-note').textContent = C.sources_note;
+}
+
+function renderLimits(){
+  document.querySelector('#limits .limits div:last-child ul').innerHTML =
+    C.limits_does_not.map(x=>`<li>${x}</li>`).join('');
 }
 
 function renderHow(){
   const R = D.reproducibility;
   const ladder = D.assumptions.map(a=>`<tr><td>${a.label}</td><td>${a.value}</td><td>${a.klass}</td><td><code>${a.ladder_status}</code></td></tr>`).join('');
+  const capLine = F.utilisation
+    ? ' Appointments served is the smaller of appointments wanted and the slots available — an identity about slots, applied after the model, never simulated.' : '';
   document.getElementById('how-body').innerHTML = `
-    <p>Two layers. A small causal model of the cafe produces how ingredient cost per order, menu price and daily orders move over 90 days, including the lags: the supplier increase reaches cost of goods after about a week of inventory; customers respond to a price change with a half-life of about two weeks through a price elasticity. Revenue, gross profit and cash are then accounting identities over those trajectories — revenue = orders × price; ingredient cost = orders × cost per order; gross profit = revenue − ingredient cost; cash = yesterday's cash + gross profit − fixed costs. Nothing in the comparison is produced by a language model.</p>
+    <p>Two layers. A small causal model produces how ${C.cost_word}, price and ${C.unit_word} move over ${H} days, including the lags. Revenue, gross profit and cash are then accounting identities over those trajectories — revenue = ${C.unit_word} × price; cost = ${C.unit_word} × cost each; gross profit = revenue − cost; cash = yesterday's cash + gross profit − fixed costs.${capLine} Nothing in the comparison is produced by a language model.</p>
     <p>The three decisions share one model, one set of coefficients, one horizon and one set of assumptions; only the decision differs. Model <code>${R.module_id}</code>, semantic hash <code>${R.module_semantic_hash.slice(0,16)}</code>; shared-configuration fingerprint <code>${R.shared_fingerprint.slice(0,16)}</code>; engine fingerprints ${R.worlds.map(w=>`${w.spec.id} <code>${w.engine_fingerprint.slice(0,12)}</code>`).join(' · ')}. Every run is reproducible from the record stored with this report.</p>
-    <p>Sensitivity: five assumptions were varied across pre-set ranges (${Object.values(D.sensitivity.sweep_labels).map(s=>s.toLowerCase()).join('; ')}), giving ${D.sensitivity.n} combinations, each re-run for all three decisions. The count shown above is how many of those combinations each decision ranked first in, for this cafe's own numbers. No combination is weighted as more likely than another.</p>
+    <p>Sensitivity: ${Object.keys(D.sensitivity.sweep).length} assumptions were varied across pre-set ranges (${Object.values(D.sensitivity.sweep_labels).map(s=>s.toLowerCase()).join('; ')}), giving ${D.sensitivity.n} combinations, each re-run for all three decisions. The count shown above is how many of those combinations each decision ranked first in, for this business's own numbers. No combination is weighted as more likely than another.</p>
     <p><b>Sources.</b> ${D.sources.map(s=>`${s.citation} — ${s.estimate}. ${s.transfer}`).join('<br><br>')}</p>
-    <div class="tbl-wrap"><table class="tech"><thead><tr><th>Assumption</th><th>Value (demo)</th><th>Kind</th><th>Internal status</th></tr></thead><tbody>${ladder}</tbody></table></div>`;
+    <div class="tbl-wrap"><table class="tech"><thead><tr><th>Assumption</th><th>Value</th><th>Kind</th><th>Internal status</th></tr></thead><tbody>${ladder}</tbody></table></div>`;
 }
 
 // ---- controls ----------------------------------------------------------------------------
-document.getElementById('seg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; sel.price_sensitivity=b.dataset.v; render(); });
+document.getElementById('seg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; sel[PRIMARY]=b.dataset.v; render(); });
 (function advanced(){
   const c = document.getElementById('controls');
-  const opt=(k,opts,lab,fmt)=>{ const d=document.createElement('div'); d.className='ctl'; d.innerHTML=`<label>${lab}</label><select data-k="${k}">${opts.map(o=>`<option value="${o}" ${String(o)===String(sel[k])?'selected':''}>${fmt?fmt(o):o}</option>`).join('')}</select>`; c.appendChild(d); };
-  opt('supplier_increase_pct',supVals,'Size of the supplier increase',o=>`+${o}%`);
-  opt('cogs_pass_through',['low','central'],'How much of it reaches your costs',o=>({low:'About 70% — some substitution or fixed contracts',central:'All of it'})[o]);
-  opt('reformulation_effectiveness',[0.15,0.30,0.45],'How much simplifying the menu saves',o=>({0.15:'Half what we assumed',0.3:'As assumed',0.45:'Half again as much'})[o]);
-  opt('demand_adjustment_speed',['slow','central','fast'],'How quickly customers react',o=>({slow:'Slowly — about a month',central:'About two weeks',fast:'Quickly — about a week'})[o]);
-  c.addEventListener('change',e=>{ const k=e.target.dataset.k; sel[k] = isNaN(parseFloat(e.target.value))? e.target.value : parseFloat(e.target.value); render(); });
+  GRID_KEYS.filter(k=>k!==PRIMARY && k!==SHOCK_KEY).forEach(k=>{
+    const opts = GRID_VALS[k];
+    const label = AXIS_LABELS[k] || (k==='reduction_points' ? 'How much changing what you sell saves' : k.replace(/_/g,' '));
+    const fmt = o => (typeof o==='number') ? (k.endsWith('_pct') ? o+'%' : o+' points') : o;
+    const d=document.createElement('div'); d.className='ctl';
+    d.innerHTML=`<label>${label}</label><select data-k="${k}">${opts.map(o=>`<option value="${o}" ${String(o)===String(sel[k])?'selected':''}>${fmt(o)}</option>`).join('')}</select>`;
+    c.appendChild(d);
+  });
+  c.addEventListener('change',e=>{ const k=e.target.dataset.k; const v=e.target.value;
+    sel[k] = isNaN(parseFloat(v)) ? v : parseFloat(v); render(); });
 })();
 
 // ---- intake ------------------------------------------------------------------------------
 (function intake(){
   const f = document.getElementById('form');
-  const field = (k,label,unit,hint,right)=>`<div class="field"><label for="f_${k}">${label}</label><div class="in">${unit&&!right?`<span class="u">${unit}</span>`:''}<input id="f_${k}" data-k="${k}" ${k==='name'?'type="text"':'type="number" inputmode="decimal" step="any"'} value="${base[k]}">${unit&&right?`<span class="u r">${unit}</span>`:''}</div>${hint?`<div class="hint">${hint}</div>`:''}</div>`;
-  f.innerHTML = `
-    <div class="fgroup"><div class="k">Your business</div><div class="fields">${field('monthly_revenue','Monthly sales','$','A typical month, before the cost increase.')}${field('daily_orders','Orders per day','','Average transactions a day.')}${field('cash_on_hand','Cash available','$','In the business account today.')}</div></div>
-    <div class="fgroup"><div class="k">Your costs</div><div class="fields">${field('monthly_cogs','Monthly ingredient cost','$','What you pay suppliers for what you sell. Not wages, not rent.')}${field('monthly_fixed_costs','Monthly fixed costs','$','Rent, wages, utilities, loans — everything that won\'t move in 90 days.')}</div></div>
-    <div class="fgroup"><div class="k">The shock</div><div class="fields">${field('supplier_increase_pct','Supplier cost increase','%','As a percentage of your ingredient cost.',true)}</div></div>
-    <div class="fgroup"><div class="k">Your menu</div><div class="fields">${field('low_margin_share_pct','Orders on low-margin items','%','Roughly what share of orders are items you could drop or simplify. A guess is fine — it is tested as an assumption.',true)}${field('name','Business name','','Only used on the report.')}</div></div>
-    <div class="btnrow"><button class="btn primary" id="apply">Run my comparison</button><button class="btn" id="reset">Back to demo cafe</button><span class="msg" id="intake-msg"></span></div>`;
+  const byKey = {}; D.intake_fields.forEach(x=>byKey[x.key]=x);
+  const unitOf = x => x.unit==='currency' ? '$' : (x.unit==='%' ? '%' : '');
+  const field = k => { const x = byKey[k]; if(!x) return '';
+    const u = unitOf(x), right = u==='%';
+    return `<div class="field"><label for="f_${k}">${x.label}</label><div class="in">${u&&!right?`<span class="u">${u}</span>`:''}<input id="f_${k}" data-k="${k}" ${k==='name'?'type="text"':'type="number" inputmode="decimal" step="any"'} value="${base[k]}">${u&&right?`<span class="u r">${u}</span>`:''}</div>${x.hint?`<div class="hint">${x.hint}</div>`:''}</div>`; };
+  f.innerHTML = C.intake_groups.map(g=>
+      `<div class="fgroup"><div class="k">${g.label}</div><div class="fields">${g.fields.map(field).join('')}</div></div>`).join('') +
+    `<div class="btnrow"><button class="btn primary" id="apply">Run my comparison</button><button class="btn" id="reset">Back to the demo</button><span class="msg" id="intake-msg"></span></div>`;
   document.getElementById('apply').onclick = ()=>{
     const nb = Object.assign({}, base); let bad=[];
-    f.querySelectorAll('input').forEach(i=>{ const k=i.dataset.k; nb[k] = k==='name'? (i.value||'Your cafe') : parseFloat(i.value); if(k!=='name' && !isFinite(nb[k])) bad.push(k); });
+    f.querySelectorAll('input').forEach(i=>{ const k=i.dataset.k; nb[k] = k==='name'? (i.value||'Your business') : parseFloat(i.value); if(k!=='name' && !isFinite(nb[k])) bad.push(k); });
     const msg = document.getElementById('intake-msg');
     if(bad.length){ msg.textContent='Please fill in every number.'; return; }
-    if(!(nb.monthly_revenue>0&&nb.daily_orders>0&&nb.monthly_cogs>0&&nb.monthly_cogs<nb.monthly_revenue&&nb.monthly_fixed_costs>=0&&nb.cash_on_hand>=0)){ msg.textContent='Ingredient cost must be below sales; the other figures must be positive.'; return; }
-    nb.is_demo=false; base = nb; sel.supplier_increase_pct = nb.supplier_increase_pct;
+    if(!(nb[F.revenue]>0 && nb[F.units_per_day]>0 && nb[F.unit_cost_total]>0 && nb[F.unit_cost_total]<nb[F.revenue] && nb[F.fixed]>=0 && nb[F.cash]>=0)){
+      msg.textContent='Costs must be below sales; the other figures must be positive.'; return; }
+    if(F.utilisation && !(nb[F.utilisation]>0 && nb[F.utilisation]<=100)){ msg.textContent='How full the diary is must be between 1% and 100%.'; return; }
+    nb.is_demo=false; base = nb;
     msg.textContent='Done — the page now uses your numbers.'; render(); window.scrollTo({top:0});
   };
-  document.getElementById('reset').onclick = ()=>{ base=Object.assign({},D.baseline_raw); sel.supplier_increase_pct=base.supplier_increase_pct; f.querySelectorAll('input').forEach(i=>i.value=base[i.dataset.k]); document.getElementById('intake-msg').textContent=''; render(); };
+  document.getElementById('reset').onclick = ()=>{ base=Object.assign({},D.baseline_raw); f.querySelectorAll('input').forEach(i=>i.value=base[i.dataset.k]); document.getElementById('intake-msg').textContent=''; render(); };
 })();
 
 render();

@@ -175,7 +175,8 @@ def test_customer_copy_never_promises_a_forecast():
     for banned in ("will happen", "guaranteed", "optimal decision", "we predict", "forecast of"):
         assert banned not in customer_text.lower(), f"banned phrase in customer copy: {banned}"
     # The disclaimer is injected from the bundle so it cannot be edited out of the page alone.
-    report_src = (REPO / "event_sim" / "cafe" / "report.py").read_text(encoding="utf-8")
+    # The phrase lives in the shared bundle builder now that three wedges are built from it.
+    report_src = (REPO / "event_sim" / "wedge" / "report.py").read_text(encoding="utf-8")
     assert "not a forecast" in report_src
     # The page states it in its own words on the first screen and in the limitations.
     assert "not a prediction" in html and "Predict the future" in html
@@ -240,6 +241,7 @@ def test_port_disruption_models_unchanged_by_the_wedge():
 # --- audit wording: non-probabilistic, accounting disclosed, World C flagged ------------
 
 def test_sensitivity_verdict_uses_counts_not_probability_language():
+    from event_sim.cafe.wedge import CAFE_WEDGE
     from event_sim.cafe.sensitivity import SensitivityResult, SweepPoint
     from event_sim.cafe.sensitivity import SWEEP
     import itertools
@@ -249,7 +251,8 @@ def test_sensitivity_verdict_uses_counts_not_probability_language():
         s = dict(zip(keys, combo))
         top = "C" if s["price_sensitivity"] == "high" else "B"
         pts.append(SweepPoint(settings=s, ranking=[top, "C" if top == "B" else "B", "A"], metric={"A": 0, "B": 1, "C": 2}))
-    r = SensitivityResult(baseline=DEMO_CAFE, metric="cash_day_90", points=pts, central_ranking=["B", "C", "A"])
+    r = SensitivityResult(wedge=CAFE_WEDGE, baseline=DEMO_CAFE, metric="cash_day_90", points=pts,
+                          central_ranking=["B", "C", "A"])
     v = r.verdict()
     assert "ranked first in 108 of the 162" in v
     assert "not a probability estimate" in v
@@ -258,14 +261,24 @@ def test_sensitivity_verdict_uses_counts_not_probability_language():
 
 
 def test_template_discloses_accounting_and_flags_world_c():
+    """
+    The template is shared by three wedges now, so the wedge-specific disclosures live in that
+    wedge's copy and reach the page through the bundle. Both halves are checked.
+    """
+    from event_sim.cafe.wedge import CAFE_WEDGE
+
     html = TEMPLATE.read_text(encoding="utf-8")
+    copy = CAFE_WEDGE.copy
+    # Generic, and still in the page itself:
     assert "Cash itself is not simulated directly" in html
-    assert "calibrated to your business yet" in html
-    assert "stress assumption" in html
-    assert "may be more or less price-sensitive" in html
     assert "This does not" in html and "Predict the future" in html
     assert "Ranks first under current assumptions" in html and "Best in" not in html
     assert "not a probability" in html
+    # Cafe-specific, and now carried by the bundle:
+    assert "calibrated to your business yet" in copy["c_card_note"]
+    assert "stress assumption" in copy["sens_help"]["high"] or "stress assumption" in copy["sources_note"]
+    assert "may be more or less price-sensitive" in copy["sources_note"]
+    assert "Predict the future or guarantee an outcome." in copy["limits_does_not"]
 
 
 def test_template_has_four_visible_number_categories():

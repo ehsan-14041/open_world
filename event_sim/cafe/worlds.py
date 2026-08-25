@@ -19,6 +19,7 @@ from typing import Any
 
 from event_sim.engine import Intervention
 from event_sim.schemas import EventDefinition, WorldSlice
+from event_sim.wedge.spec import WorldSpec
 
 from event_sim.cafe.baseline import CafeBaseline
 
@@ -35,28 +36,6 @@ REFORMULATION_EFFECTIVENESS = 0.30
 #: Price rises compared. Fixed by the product definition.
 PRICE_RISE_B = 10.0
 PRICE_RISE_C = 5.0
-
-
-@dataclass(frozen=True)
-class WorldSpec:
-    id: str
-    label: str
-    headline: str
-    price_rise_pct: float
-    cogs_reduction_points: float
-    events: list[EventDefinition] = field(default_factory=list)
-    interventions: list[Intervention] = field(default_factory=list)
-
-    def to_dict(self) -> dict[str, Any]:
-        return {
-            "id": self.id,
-            "label": self.label,
-            "headline": self.headline,
-            "price_rise_pct": self.price_rise_pct,
-            "cogs_reduction_points": self.cogs_reduction_points,
-            "events": [e.to_dict() for e in self.events],
-            "interventions": [i.to_dict() for i in self.interventions],
-        }
 
 
 def cost_shock(baseline: CafeBaseline) -> EventDefinition:

@@ -2,91 +2,55 @@
  "source_language": "en",
  "strings": [
   {
-   "text": "Note: by cash at day 90, ${SHORT[rank[0]]} is ahead; by what each decision earns per month once customers have fully reacted, ${SHORT[byNet[0]]} is ahead. Lost customers arrive gradually, so a price rise looks better over 90 days than it does after.",
-   "placeholders": [
-    "${SHORT[rank[0]]}",
-    "${SHORT[byNet[0]]}"
-   ],
-   "tags": [],
-   "id": "s000"
-  },
-  {
    "text": "On price sensitivity: external research gives a reference range for eating out as a whole. Your actual customers may be more or less price-sensitive than that, and the High setting is a stress assumption rather than a research finding.",
    "placeholders": [],
    "tags": [],
-   "id": "s001"
-  },
-  {
-   "text": "Under the current assumptions, <b>${SHORT[lead]}</b> leaves you ${money(out[lead].m.cash90 - out.A.m.cash90)} more cash at day 90 than holding prices, and ${money(gap)} ahead of ${SHORT[second].toLowerCase()}.",
-   "placeholders": [
-    "${SHORT[lead]}",
-    "${money(out[lead].m.cash90 - out.A.m.cash90)}",
-    "${money(gap)}",
-    "${SHORT[second].toLowerCase()}"
-   ],
-   "tags": [
-    "<b>",
-    "</b>"
-   ],
-   "id": "s002"
+   "id": "s000"
   },
   {
    "text": "We compared three decisions using the same model of your cafe and the same assumptions. Only the decision changes between them — so the differences come from the decision, not from different guesses.",
    "placeholders": [],
    "tags": [],
-   "id": "s003"
+   "id": "s001"
   },
   {
    "text": "Cash is calculated from the model's daily orders, price and ingredient-cost outputs, using your sales, costs and cash figures below. Cash itself is not simulated directly.",
    "placeholders": [],
    "tags": [],
+   "id": "s002"
+  },
+  {
+   "text": "Appointments served is the smaller of appointments wanted and the slots available — an identity about slots, applied after the model, never simulated.",
+   "placeholders": [],
+   "tags": [],
+   "id": "s003"
+  },
+  {
+   "text": "The studies listed under &ldquo;How this was calculated&rdquo; are reference points our range was positioned against, not measurements of this trade.",
+   "placeholders": [],
+   "tags": [],
    "id": "s004"
   },
   {
-   "text": "Tested at a supplier increase of ${sup}% and ${red} points of ingredient-cost saving from simplifying the menu (the nearest tested values to your inputs).",
+   "text": "Note: by cash at day 90, ${SHORT[rank[0]]} is ahead; by what each decision earns per month once things have settled, ${SHORT[byNet[0]]} is ahead.",
    "placeholders": [
-    "${sup}",
-    "${red}"
+    "${SHORT[rank[0]]}",
+    "${SHORT[byNet[0]]}"
    ],
    "tags": [],
    "id": "s005"
   },
   {
-   "text": "A 1% price rise eventually reduces orders by about this percentage. Research on eating out as a whole puts it near 0.81; your customers may differ.",
+   "text": "The comparison stops at 90 days because that is as far as wages and rent can honestly be treated as fixed — not because the effects stop there.",
    "placeholders": [],
    "tags": [],
    "id": "s006"
   },
   {
-   "text": "The comparison stops at 90 days because that is as far as wages and rent can honestly be treated as fixed — not because the effects stop there.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s007"
-  },
-  {
    "text": "Costs take about a week to rise — you are still using stock bought at the old price. Customers take a couple of weeks to react to a new price.",
    "placeholders": [],
    "tags": [],
-   "id": "s008"
-  },
-  {
-   "text": "<b>${SHORT[cTop]}</b> ranked first in ${wins[cTop]} of the ${wins.n} assumption combinations we tested for your cafe.",
-   "placeholders": [
-    "${SHORT[cTop]}",
-    "${wins[cTop]}",
-    "${wins.n}"
-   ],
-   "tags": [
-    "<b>",
-    "</b>"
-   ],
-   "id": "s009"
-  },
-  {
-   "text": "Roughly what share of orders are items you could drop or simplify. A guess is fine — it is tested as an assumption.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s010"
+   "id": "s007"
   },
   {
    "text": "At this setting the ranking changes: <b>${SHORT[lead]}</b> moves ahead of ${SHORT[cTop].toLowerCase()}.",
@@ -98,7 +62,15 @@
     "<b>",
     "</b>"
    ],
-   "id": "s011"
+   "id": "s008"
+  },
+  {
+   "text": "None of the ${oat.length} assumptions tested changes which decision ranks first when moved on its own.",
+   "placeholders": [
+    "${oat.length}"
+   ],
+   "tags": [],
+   "id": "s009"
   },
   {
    "text": "<span class=\"v ${m.cash90<0?'neg':''}\">${money(m.cash90)}</span><span class=\"l\">cash at day 90</span>",
@@ -112,13 +84,19 @@
     "<span class=\"l\">",
     "</span>"
    ],
-   "id": "s012"
+   "id": "s010"
   },
   {
    "text": "The comparison stays the same. Only your starting position changes. Nothing leaves this page.",
    "placeholders": [],
    "tags": [],
-   "id": "s013"
+   "id": "s011"
+  },
+  {
+   "text": "Move the price-sensitivity control to the setting a study supports and it will appear here.",
+   "placeholders": [],
+   "tags": [],
+   "id": "s012"
   },
   {
    "text": "<span class=\"v neg\">Day ${m.first_negative_day}</span><span class=\"l\">cash runs out</span>",
@@ -131,10 +109,16 @@
     "<span class=\"l\">",
     "</span>"
    ],
+   "id": "s013"
+  },
+  {
+   "text": "Our judgement, not a published figure. Tested across low, medium and high.",
+   "placeholders": [],
+   "tags": [],
    "id": "s014"
   },
   {
-   "text": "Stress case: competitors hold their prices and customers have easy alternatives.",
+   "text": "s selection is exactly the set of keys the grid was built on, so any wedge",
    "placeholders": [],
    "tags": [],
    "id": "s015"
@@ -146,13 +130,13 @@
    "id": "s016"
   },
   {
-   "text": "Ingredient cost must be below sales; the other figures must be positive.",
+   "text": "Know your customers' price sensitivity — unless you bring evidence.",
    "placeholders": [],
    "tags": [],
    "id": "s017"
   },
   {
-   "text": "Know your customers' price sensitivity — unless you bring evidence.",
+   "text": "Tested at the nearest values to your own figures on the grid above.",
    "placeholders": [],
    "tags": [],
    "id": "s018"
@@ -164,16 +148,10 @@
    "id": "s019"
   },
   {
-   "text": "What you pay suppliers for what you sell. Not wages, not rent.",
+   "text": "Costs must be below sales; the other figures must be positive.",
    "placeholders": [],
    "tags": [],
    "id": "s020"
-  },
-  {
-   "text": "Loyal customers, or your competitors are raising prices too.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s021"
   },
   {
    "text": "At this setting <b>${SHORT[lead]}</b> still ranks first.",
@@ -184,477 +162,319 @@
     "<b>",
     "</b>"
    ],
-   "id": "s022"
+   "id": "s021"
   },
   {
    "text": "Could not find the central case in the embedded data.",
    "placeholders": [],
    "tags": [],
-   "id": "s023"
-  },
-  {
-   "text": "The typical response found in research on eating out.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s024"
-  },
-  {
-   "text": "Ingredient costs are up ${sup}%. What should you do?",
-   "placeholders": [
-    "${sup}"
-   ],
-   "tags": [],
-   "id": "s025"
+   "id": "s022"
   },
   {
    "text": "Make every assumption behind the comparison visible.",
    "placeholders": [],
    "tags": [],
-   "id": "s026"
-  },
-  {
-   "text": "how much of the supplier increase reaches your costs",
-   "placeholders": [],
-   "tags": [],
-   "id": "s027"
+   "id": "s023"
   },
   {
    "text": "Compare three decisions under the same assumptions.",
    "placeholders": [],
    "tags": [],
-   "id": "s028"
+   "id": "s024"
+  },
+  {
+   "text": "How full the diary is must be between 1% and 100%.",
+   "placeholders": [],
+   "tags": [],
+   "id": "s025"
   },
   {
    "text": "Model the wider economy, seasons or new customers.",
    "placeholders": [],
    "tags": [],
-   "id": "s029"
+   "id": "s026"
   },
   {
-   "text": "About 70% — some substitution or fixed contracts",
+   "text": "how much the change to what you sell really saves",
    "placeholders": [],
    "tags": [],
-   "id": "s030"
+   "id": "s027"
   },
   {
    "text": "Ingredient costs are up 30%. What should you do?",
    "placeholders": [],
    "tags": [],
-   "id": "s031"
+   "id": "s028"
   },
   {
    "text": "Does the ranking survive different assumptions?",
    "placeholders": [],
    "tags": [],
-   "id": "s032"
+   "id": "s029"
   },
   {
    "text": "This is a sensitivity count, not a probability.",
    "placeholders": [],
    "tags": [],
-   "id": "s033"
-  },
-  {
-   "text": "s cash + gross profit − fixed costs, every day",
-   "placeholders": [],
-   "tags": [],
-   "id": "s034"
-  },
-  {
-   "text": "One third of the saving, in points of orders.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s035"
+   "id": "s030"
   },
   {
    "text": "Tested at half and one-and-a-half times this.",
    "placeholders": [],
    "tags": [],
-   "id": "s036"
-  },
-  {
-   "text": "Delay before higher prices reach your costs",
-   "placeholders": [],
-   "tags": [],
-   "id": "s037"
+   "id": "s031"
   },
   {
    "text": "Predict the future or guarantee an outcome.",
    "placeholders": [],
    "tags": [],
-   "id": "s038"
-  },
-  {
-   "text": "Raise prices 5% + simplify low-margin items",
-   "placeholders": [],
-   "tags": [],
-   "id": "s039"
-  },
-  {
-   "text": "how large the supplier increase actually is",
-   "placeholders": [],
-   "tags": [],
-   "id": "s040"
-  },
-  {
-   "text": "A typical month, before the cost increase.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s041"
-  },
-  {
-   "text": "How quickly customers react to a new price",
-   "placeholders": [],
-   "tags": [],
-   "id": "s042"
+   "id": "s032"
   },
   {
    "text": "The same leader at every setting we tested",
    "placeholders": [],
    "tags": [],
-   "id": "s043"
-  },
-  {
-   "text": "how much simplifying the menu really saves",
-   "placeholders": [],
-   "tags": [],
-   "id": "s044"
-  },
-  {
-   "text": "Fresh stock turns over in roughly a week.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s045"
-  },
-  {
-   "text": "Share of the increase reaching your costs",
-   "placeholders": [],
-   "tags": [],
-   "id": "s046"
-  },
-  {
-   "text": "As a percentage of your ingredient cost.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s047"
+   "id": "s033"
   },
   {
    "text": "How price-sensitive are your customers?",
    "placeholders": [],
    "tags": [],
-   "id": "s048"
+   "id": "s034"
   },
   {
    "text": "Done — the page now uses your numbers.",
    "placeholders": [],
    "tags": [],
-   "id": "s049"
+   "id": "s035"
   },
   {
    "text": "How could you reduce this uncertainty?",
    "placeholders": [],
    "tags": [],
-   "id": "s050"
+   "id": "s036"
   },
   {
-   "text": "how price-sensitive your customers are",
+   "text": "How much changing what you sell saves",
    "placeholders": [],
    "tags": [],
-   "id": "s051"
+   "id": "s037"
   },
   {
    "text": "Cash in the bank under each decision",
    "placeholders": [],
    "tags": [],
-   "id": "s052"
+   "id": "s038"
   },
   {
-   "text": "How much simplifying the menu saves",
+   "text": "Shown for a fictional demo business:",
    "placeholders": [],
    "tags": [],
-   "id": "s053"
+   "id": "s039"
   },
   {
    "text": "Method, sources and reproducibility",
    "placeholders": [],
    "tags": [],
-   "id": "s054"
+   "id": "s040"
   },
   {
-   "text": "Orders lost with the removed items",
+   "text": "the smaller of wanted and available",
    "placeholders": [],
    "tags": [],
-   "id": "s055"
+   "id": "s041"
+  },
+  {
+   "text": "Saving from changing what you sell",
+   "placeholders": [],
+   "tags": [],
+   "id": "s042"
   },
   {
    "text": "Where did these numbers come from?",
    "placeholders": [],
    "tags": [],
-   "id": "s056"
-  },
-  {
-   "text": "How much of it reaches your costs",
-   "placeholders": [],
-   "tags": [],
-   "id": "s057"
+   "id": "s043"
   },
   {
    "text": "Other assumptions you can change",
    "placeholders": [],
    "tags": [],
-   "id": "s058"
-  },
-  {
-   "text": "Saving from simplifying the menu",
-   "placeholders": [],
-   "tags": [],
-   "id": "s059"
+   "id": "s044"
   },
   {
    "text": "Net per month for each decision",
    "placeholders": [],
    "tags": [],
-   "id": "s060"
+   "id": "s045"
   },
   {
    "text": "What this does — and doesn't do",
    "placeholders": [],
    "tags": [],
-   "id": "s061"
+   "id": "s046"
   },
   {
    "text": "from the last 30 simulated days",
    "placeholders": [],
    "tags": [],
-   "id": "s062"
-  },
-  {
-   "text": "In the business account today.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s063"
+   "id": "s047"
   },
   {
    "text": "Eight figures from your books",
    "placeholders": [],
    "tags": [],
-   "id": "s064"
-  },
-  {
-   "text": "Size of the supplier increase",
-   "placeholders": [],
-   "tags": [],
-   "id": "s065"
+   "id": "s048"
   },
   {
    "text": "What could change the answer?",
    "placeholders": [],
    "tags": [],
-   "id": "s066"
+   "id": "s049"
   },
   {
    "text": "Model how competitors react.",
    "placeholders": [],
    "tags": [],
-   "id": "s067"
+   "id": "s050"
   },
   {
    "text": "Please fill in every number.",
    "placeholders": [],
    "tags": [],
-   "id": "s068"
-  },
-  {
-   "text": "Average transactions a day.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s069"
-  },
-  {
-   "text": "Net per month after 90 days",
-   "placeholders": [],
-   "tags": [],
-   "id": "s070"
-  },
-  {
-   "text": "how quickly customers react",
-   "placeholders": [],
-   "tags": [],
-   "id": "s071"
+   "id": "s051"
   },
   {
    "text": "How stable is this result?",
    "placeholders": [],
    "tags": [],
-   "id": "s072"
+   "id": "s052"
+  },
+  {
+   "text": "Net per month once settled",
+   "placeholders": [],
+   "tags": [],
+   "id": "s053"
   },
   {
    "text": "Which decision ranks first",
    "placeholders": [],
    "tags": [],
-   "id": "s073"
+   "id": "s054"
   },
   {
    "text": "Cash at day 30 and day 90",
    "placeholders": [],
    "tags": [],
-   "id": "s074"
+   "id": "s055"
   },
   {
-   "text": "Ingredient cost per order",
+   "text": "Demo — fictional business",
    "placeholders": [],
    "tags": [],
-   "id": "s075"
+   "id": "s056"
   },
   {
-   "text": "Only used on the report.",
+   "text": "Space available per day",
    "placeholders": [],
    "tags": [],
-   "id": "s076"
-  },
-  {
-   "text": "How this was calculated",
-   "placeholders": [],
-   "tags": [],
-   "id": "s077"
+   "id": "s057"
   },
   {
    "text": "The biggest uncertainty",
    "placeholders": [],
    "tags": [],
-   "id": "s078"
-  },
-  {
-   "text": "Quickly — about a week",
-   "placeholders": [],
-   "tags": [],
-   "id": "s079"
-  },
-  {
-   "text": "Slowly — about a month",
-   "placeholders": [],
-   "tags": [],
-   "id": "s080"
-  },
-  {
-   "text": "Demo — fictional cafe",
-   "placeholders": [],
-   "tags": [],
-   "id": "s081"
+   "id": "s058"
   },
   {
    "text": "Four kinds of number",
    "placeholders": [],
    "tags": [],
-   "id": "s082"
+   "id": "s059"
   },
   {
-   "text": "Half what we assumed",
+   "text": "How full you end up",
    "placeholders": [],
    "tags": [],
-   "id": "s083"
+   "id": "s060"
   },
   {
-   "text": "Average order value",
+   "text": "Monthly fixed costs",
    "placeholders": [],
    "tags": [],
-   "id": "s084"
+   "id": "s061"
   },
   {
-   "text": "Raise 5% + simplify",
+   "text": "Share on low-margin",
    "placeholders": [],
    "tags": [],
-   "id": "s085"
-  },
-  {
-   "text": "Half again as much",
-   "placeholders": [],
-   "tags": [],
-   "id": "s086"
-  },
-  {
-   "text": "t move in 90 days.",
-   "placeholders": [],
-   "tags": [],
-   "id": "s087"
+   "id": "s062"
   },
   {
    "text": "seg-effect steady",
    "placeholders": [],
    "tags": [],
-   "id": "s088"
-  },
-  {
-   "text": "Raise prices 10%",
-   "placeholders": [],
-   "tags": [],
-   "id": "s089"
+   "id": "s063"
   },
   {
    "text": "The next 90 days",
    "placeholders": [],
    "tags": [],
-   "id": "s090"
-  },
-  {
-   "text": "About two weeks",
-   "placeholders": [],
-   "tags": [],
-   "id": "s091"
+   "id": "s064"
   },
   {
    "text": "For the curious",
    "placeholders": [],
    "tags": [],
-   "id": "s092"
+   "id": "s065"
+  },
+  {
+   "text": "How much busier",
+   "placeholders": [],
+   "tags": [],
+   "id": "s066"
   },
   {
    "text": "Cash at day 90",
    "placeholders": [],
    "tags": [],
-   "id": "s093"
+   "id": "s067"
   },
   {
-   "text": "Business name",
+   "text": "Cash available",
    "placeholders": [],
    "tags": [],
-   "id": "s094"
+   "id": "s068"
+  },
+  {
+   "text": "Cost increase",
+   "placeholders": [],
+   "tags": [],
+   "id": "s069"
+  },
+  {
+   "text": "Monthly sales",
+   "placeholders": [],
+   "tags": [],
+   "id": "s070"
   },
   {
    "text": "This does not",
    "placeholders": [],
    "tags": [],
-   "id": "s095"
-  },
-  {
-   "text": "to half-react",
-   "placeholders": [],
-   "tags": [],
-   "id": "s096"
+   "id": "s071"
   },
   {
    "text": "The decision",
    "placeholders": [],
    "tags": [],
-   "id": "s097"
+   "id": "s072"
   },
   {
-   "text": "about 7 days",
+   "text": "order value",
    "placeholders": [],
    "tags": [],
-   "id": "s098"
-  },
-  {
-   "text": "As assumed",
-   "placeholders": [],
-   "tags": [],
-   "id": "s099"
-  },
-  {
-   "text": "All of it",
-   "placeholders": [],
-   "tags": [],
-   "id": "s100"
+   "id": "s073"
   }
  ]
 }

@@ -69,6 +69,24 @@ class CafeBaseline:
     def daily_fixed_costs(self) -> float:
         return self.monthly_fixed_costs / DAYS_PER_MONTH
 
+    # --- names the shared accounting uses, so one ledger serves every wedge ---------------
+
+    @property
+    def daily_units(self) -> float:
+        return self.daily_orders
+
+    @property
+    def average_ticket(self) -> float:
+        return self.average_order_value
+
+    @property
+    def unit_cost(self) -> float:
+        return self.cogs_per_order
+
+    def replace(self, **changes: Any) -> "CafeBaseline":
+        from dataclasses import replace as _replace
+        return _replace(self, **changes)
+
     def validate(self) -> list[str]:
         """Plain-language problems with the inputs. Empty list means usable."""
         problems: list[str] = []

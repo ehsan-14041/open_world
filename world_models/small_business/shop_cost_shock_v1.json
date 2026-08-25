@@ -1,0 +1,175 @@
+{
+ "id": "shop_cost_shock_v1",
+ "domain": "small_business",
+ "title": "Shop / online store supplier cost shock",
+ "time_unit": "days",
+ "version": "1.0.0",
+ "geography": ["global"],
+ "description": "Behavioural slice for a small retailer — a shop or a small online store — facing a supplier/wholesale cost increase and choosing a pricing and range response. Daily resolution. The module carries ONLY the causal/behavioural relationships, in index space (100 = pre-shock normal). Revenue, gross profit and cash are accounting identities over these trajectories and are computed by event_sim.wedge.accounting, never by edges - a margin or a cash balance is not a state that relaxes toward a pressure.",
+ "notes": "DESIGN AUDIT (2026-08-25). Structurally this is the cafe module pointed at a retailer, and that is deliberate: the mechanism really is the same one - a supplier increase reaches unit cost after an inventory delay, and a price change moves demand through an elasticity. Two things genuinely differ and are the reason this is a separate module rather than a relabelling. (1) ELASTICITY. A cafe is bought for location and habit; a shop frequently sells items a customer can buy identically elsewhere, so the evidenced brand-level meta-analyses transfer more closely here and the whole range sits higher. (2) INVENTORY LAG. A shop typically holds more days of stock than a cafe holds fresh food, so the cost increase arrives later and is swept over a wider range. Nothing here models competitor reactions, advertising, marketplace ranking or the wider economy; those are outside what this engine can honestly represent.",
+ "observability_note": "Unit cost and price are read from the owner's own records; demand is the daily order count. None of the three requires an estimate from us.",
+
+ "variables": [
+  {
+   "id": "supplier_cost",
+   "label": "Supplier / wholesale cost",
+   "unit": "index (100 = pre-shock)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {"min": 0.0, "max": 300.0},
+   "dynamics": {"response": 1.0},
+   "kind": "relaxation",
+   "observability": "measured",
+   "observability_class": "observable",
+   "observability_note": "Supplier invoices.",
+   "status": "user_assumption",
+   "description": "What the shop pays its suppliers, relative to before the increase. Held at the shock level by the injected event; it is an input to the world, not something the shop's own decisions move."
+  },
+  {
+   "id": "unit_cost",
+   "label": "Cost of goods per order",
+   "unit": "index (100 = pre-shock)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {"min": 0.0, "max": 300.0},
+   "dynamics": {"response": 0.5},
+   "kind": "relaxation",
+   "observability": "measured",
+   "observability_class": "observable",
+   "observability_note": "Cost of goods sold divided by orders, from the books.",
+   "status": "expert_assumption",
+   "axis": "cogs_pass_through",
+   "description": "Average cost of the goods in a typical order. Follows the supplier cost after an inventory delay: stock already on the shelf was bought at the old price, so the increase arrives only as that stock is replaced."
+  },
+  {
+   "id": "retail_price",
+   "label": "Retail price",
+   "unit": "index (100 = pre-shock)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {"min": 50.0, "max": 200.0},
+   "dynamics": {"response": 1.0},
+   "kind": "relaxation",
+   "observability": "measured",
+   "observability_class": "observable",
+   "observability_note": "The shop's own price list.",
+   "status": "user_assumption",
+   "description": "Average selling price relative to before the increase. Moved only by the decision being tested; nothing in the module moves it on its own."
+  },
+  {
+   "id": "demand",
+   "label": "Customer orders",
+   "unit": "index (100 = pre-shock daily orders)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {"min": 0.0, "max": 200.0},
+   "dynamics": {"response": 0.08},
+   "kind": "relaxation",
+   "observability": "measured",
+   "observability_class": "observable",
+   "observability_note": "Daily order count from the till or the store back-end.",
+   "status": "expert_assumption",
+   "axis": "demand_adjustment_speed",
+   "description": "Daily orders relative to before the increase. Responds to the retail price through the elasticity edge, gradually: response 0.08/day means customers reach half of their full reaction in about eight days. Retail shoppers are taken to notice a price change somewhat faster than cafe customers because prices are displayed per item and are easy to compare; that speed is an assumption and is swept."
+  }
+ ],
+
+ "edges": [
+  {
+   "source": "supplier_cost",
+   "target": "unit_cost",
+   "polarity": "positive",
+   "effect": {"low": 0.7, "central": 1.0, "high": 1.0},
+   "lag": {"min": 10, "max": 30, "unit": "days"},
+   "evidence": [],
+   "geography": ["global"],
+   "confidence": "medium",
+   "status": "expert_assumption",
+   "axis": "cogs_pass_through",
+   "mechanism_type": "behavioural",
+   "description": "How much of the supplier increase reaches cost of goods, and how long the stock on the shelf delays it. Central 1.0: all of it arrives, because a shop that keeps selling the same items eventually pays the new price for all of them. Low 0.7: some is absorbed by substituting cheaper lines, renegotiating, or fixed-price contracts. The lag range of 10-30 days is a judgement about how many days of stock a small shop holds - wider than a cafe's fresh-food week, and the midpoint of 20 days is what the comparison uses."
+  },
+  {
+   "source": "retail_price",
+   "target": "demand",
+   "polarity": "negative",
+   "effect": {"low": 0.7, "central": 1.3, "high": 2.6},
+   "lag": {"min": 0, "max": 0, "unit": "days"},
+   "evidence": [
+    {
+     "type": "empirical_study",
+     "reference": "Bijmolt THA, van Heerde HJ, Pieters RGM. New empirical generalizations on the determinants of price elasticity. J Marketing Res. 2005;42(2):141-156.",
+     "year": 2005,
+     "note": "Mean BRAND-level price elasticity -2.62 across 1,851 estimates from 81 studies, predominantly packaged consumer goods in retail scanner data. Supports the HIGH setting: the case where the shop's customers can buy an identical item elsewhere, which is what brand-level switching inside a category measures. It does NOT measure what happens when one shop raises all of its prices at once, which is harder for a customer to escape."
+    },
+    {
+     "type": "empirical_study",
+     "reference": "Tellis GJ. The price elasticity of selective demand: a meta-analysis of econometric models of sales. J Marketing Res. 1988;25(4):331-341.",
+     "year": 1988,
+     "note": "Mean price elasticity -1.76 across 367 estimates from roughly 220 brands and markets. A second brand-level reference point, quoted so the upper end of the range does not rest on a single meta-analysis. Same limitation: selective (brand) demand, largely goods, not store-level."
+    }
+   ],
+   "geography": ["global"],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "price_sensitivity",
+   "mechanism_type": "behavioural",
+   "description": "How many orders are lost per percent of price increase. The two meta-analyses cited measure BRAND-level switching inside a shop (-1.76 and -2.62); switching between shops is harder than switching between brands on one shelf, so those figures bound the range from above rather than sitting at its centre. HIGH 2.6 is the brand-level mean and is the literature-backed end. CENTRAL 1.3 and LOW 0.7 are our judgement, placed below brand-level because a shop's customers must change where they shop, not just what they pick up. No store-level meta-analysis with a usable published mean was found, so the central value is an assumption and is labelled as one."
+  }
+ ],
+
+ "axes": [
+  {
+   "id": "price_sensitivity",
+   "label": "How price-sensitive are your customers?",
+   "settings": ["low", "central", "high"],
+   "applies_to": ["retail_price->demand"],
+   "description": "The single assumption most likely to change the decision. Low 0.70: loyal customers, an inconvenient-to-replace shop, or competitors raising prices too. Central 1.30: our judgement for a small shop whose customers could shop elsewhere with some effort. High 2.60: the brand-level meta-analytic mean, i.e. customers who can buy the identical item elsewhere with no friction.",
+   "status": "expert_assumption",
+   "mapping": {"low": {"effect": "low"}, "central": {"effect": "central"}, "high": {"effect": "high"}}
+  },
+  {
+   "id": "cogs_pass_through",
+   "label": "How much of the supplier increase reaches your cost of goods?",
+   "settings": ["low", "central", "high"],
+   "applies_to": ["supplier_cost->unit_cost"],
+   "description": "Low: you absorb some through substitution, renegotiation or fixed-price contracts (0.70). Central and high: all of it (1.00).",
+   "status": "expert_assumption",
+   "mapping": {"low": {"effect": "low"}, "central": {"effect": "central"}, "high": {"effect": "high"}}
+  },
+  {
+   "id": "demand_adjustment_speed",
+   "label": "How quickly do customers react?",
+   "settings": ["slow", "central", "fast"],
+   "applies_to": ["demand"],
+   "description": "Multiplies the demand response rate. Slow: half-reaction in about two and a half weeks. Central: about eight days. Fast: about four days.",
+   "status": "expert_assumption",
+   "mapping": {"slow": {"response_multiplier": 0.5}, "central": {"response_multiplier": 1.0}, "fast": {"response_multiplier": 2.0}}
+  }
+ ],
+
+ "interventions": [
+  {
+   "id": "raise_prices",
+   "label": "Raise retail prices",
+   "description": "Adds the given number of percentage points to the average retail price for the whole horizon. Magnitude is the price increase in percent.",
+   "status": "user_assumption",
+   "magnitude_label": "price increase, percent",
+   "default_magnitude": 8.0,
+   "default_start_turn": 1,
+   "default_duration": 90,
+   "effects_per_unit": {"retail_price": 1.0}
+  },
+  {
+   "id": "trim_low_margin_range",
+   "label": "Stop restocking low-margin lines",
+   "description": "Lowers average cost of goods per order by the given number of percentage points of the pre-shock cost, by shifting the mix away from lines that earn little, and costs a share of orders from customers who came for those lines. Magnitude is the cost reduction in percentage points; the demand cost is a fixed ratio of it (expert assumption, see the evidence registry).",
+   "status": "expert_assumption",
+   "magnitude_label": "cost-of-goods reduction, percentage points",
+   "default_magnitude": 7.5,
+   "default_start_turn": 1,
+   "default_duration": 90,
+   "effects_per_unit": {"unit_cost": -1.0, "demand": -0.45}
+  }
+ ]
+}

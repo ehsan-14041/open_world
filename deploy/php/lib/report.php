@@ -111,6 +111,18 @@ function top_stable(array $sens): bool
     return true;
 }
 
+/** Options that never rank first anywhere on the grid. */
+function dominated_worlds(array $sens): array
+{
+    $out = [];
+    foreach (win_counts($sens) as $id => $n) {
+        if ($n === 0) {
+            $out[] = $id;
+        }
+    }
+    return $out;
+}
+
 function ranking_stable(array $sens): bool
 {
     foreach ($sens['points'] as $p) {
@@ -348,6 +360,8 @@ function build_bundle(Slice $slice, array $frozen, Baseline $baseline, bool $inc
     }
 
     $bundle = [
+        'wedge' => $frozen['wedge'],
+        'copy' => $frozen['copy'],
         'generated_for' => $baseline->name,
         'is_demo' => $baseline->is_demo,
         'baseline' => $baseline->summary(),
@@ -363,6 +377,7 @@ function build_bundle(Slice $slice, array $frozen, Baseline $baseline, bool $inc
             'win_shares' => $shares,
             'top_stable' => top_stable($sens),
             'ranking_stable' => ranking_stable($sens),
+            'dominated_worlds' => dominated_worlds($sens),
             'verdict' => sensitivity_verdict($sens, $oat),
             'one_at_a_time' => $oat,
             'flip_attribution' => flip_attribution($sens),
@@ -374,11 +389,13 @@ function build_bundle(Slice $slice, array $frozen, Baseline $baseline, bool $inc
         'assumption_class_counts' => $classCounts,
         'sources' => $frozen['sources'],
         'reproducibility' => [
+            'wedge_id' => $frozen['wedge']['id'],
             'module_id' => $frozen['module_id'],
             'module_semantic_hash' => $frozen['module_semantic_hash'],
             'horizon_days' => (int) $defaults['horizon_days'],
             'axis_settings' => $defaults['axis_settings'],
             'lag_setting' => 'central',
+            'knobs' => ['reformulation_effectiveness' => $effectiveness],
             'reformulation_effectiveness' => $effectiveness,
             'custom_elasticity' => null,
             'baseline' => $baseline->toDict(),

@@ -1,0 +1,227 @@
+{
+ "id": "salon_capacity_pricing_v1",
+ "domain": "small_business",
+ "title": "Salon / service business capacity and pricing",
+ "time_unit": "days",
+ "version": "1.0.0",
+ "geography": [
+  "global"
+ ],
+ "description": "Behavioural slice for an appointment-based service business - a salon, a barber, a clinic, a studio - whose schedule is filling up, choosing between holding prices and serving more people, or raising prices to protect a full diary. Daily resolution. The module carries ONLY the causal/behavioural relationships, in index space (100 = normal). Appointments actually served, revenue, contribution and cash are accounting identities over these trajectories and are computed by event_sim.wedge.accounting, never by edges.",
+ "notes": "DESIGN AUDIT (2026-08-25). This is deliberately NOT another cost-shock calculator. The thing that changes is DEMAND, not cost, and the economics turn on a constraint the engine cannot express: a business with a fixed number of slots cannot serve more appointments than it has. That clip - served = min(demanded, capacity) - is an identity about slots, so it lives in the accounting layer alongside cash, and the demand trajectory stays interpretable as what customers WANTED rather than what they got. Keeping it there also keeps the module acyclic: price moves demand, and nothing feeds back. STRUCTURE: the demand increase is injected into an exogenous driver (market_demand) which reaches appointment_demand through an edge, NOT into appointment_demand itself. That is not cosmetic. The engine HOLDS an event's target variable at its displacement, discarding the relaxation term - so an event pointed straight at appointment_demand would silently disable the price elasticity feeding the same variable, and every option would show identical demand. This was caught by reading the central-case output, where holding prices and raising them 10% produced exactly the same appointments wanted. Not modelled, because the engine cannot honestly carry them: competitor responses, word-of-mouth contagion, staff scheduling games, or any recursive price-demand-price loop. ELASTICITY WARNING: no peer-reviewed price elasticity for personal-care services with a usable published mean was found. All three settings on that axis are our judgement and are labelled as assumptions, not research.",
+ "observability_note": "Appointments demanded is partly latent - a business sees the bookings it took, not the ones it turned away - which is why the report reports turned-away appointments as a model quantity rather than a measurement.",
+ "variables": [
+  {
+   "id": "market_demand",
+   "label": "Demand for appointments in your area",
+   "unit": "index (100 = before it got busier)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 0.0,
+    "max": 400.0
+   },
+   "dynamics": {
+    "response": 1.0
+   },
+   "kind": "relaxation",
+   "observability": "inferred",
+   "observability_class": "proxy_observable",
+   "observability_note": "Seen through enquiries, waiting lists and how far ahead the diary is booked.",
+   "status": "user_assumption",
+   "description": "How much demand there is for appointments, independent of what this business charges. Held at the growth level by the injected event; it is an input to the world, not something the salon's own pricing moves."
+  },
+  {
+   "id": "appointment_demand",
+   "label": "Appointments wanted",
+   "unit": "index (100 = current daily appointments)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 0.0,
+    "max": 300.0
+   },
+   "dynamics": {
+    "response": 0.06
+   },
+   "kind": "relaxation",
+   "observability": "inferred",
+   "observability_class": "proxy_observable",
+   "observability_note": "Bookings taken are measured; appointments wanted but refused are not, unless the business keeps a waiting list.",
+   "status": "expert_assumption",
+   "axis": "demand_adjustment_speed",
+   "description": "How many appointments customers WANT per day, relative to today - before any capacity limit is applied. Moves toward the sum of two pressures: demand in the area (one for one) and the price, through the elasticity edge. Response 0.06/day means it covers half the distance to that combined pressure in about eleven days, so both the extra demand and the reaction to a price change arrive gradually and at the same speed. That single speed is a simplification, it is an assumption, and it is swept."
+  },
+  {
+   "id": "service_price",
+   "label": "Average service price",
+   "unit": "index (100 = current)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 50.0,
+    "max": 200.0
+   },
+   "dynamics": {
+    "response": 1.0
+   },
+   "kind": "relaxation",
+   "observability": "measured",
+   "observability_class": "observable",
+   "observability_note": "The price list.",
+   "status": "user_assumption",
+   "description": "Average price of an appointment relative to today. Moved only by the decision being tested."
+  },
+  {
+   "id": "cost_per_appointment",
+   "label": "Variable cost per appointment",
+   "unit": "index (100 = current)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 0.0,
+    "max": 200.0
+   },
+   "dynamics": {
+    "response": 0.5
+   },
+   "kind": "relaxation",
+   "observability": "measured",
+   "observability_class": "observable",
+   "observability_note": "Product and consumable cost per appointment from the books.",
+   "status": "expert_assumption",
+   "description": "What each appointment costs in products and consumables, relative to today. Wages and rent are NOT here - they are fixed costs over this horizon and are handled by the accounting layer. Moved only by a decision that changes the service mix."
+  }
+ ],
+ "edges": [
+  {
+   "source": "market_demand",
+   "target": "appointment_demand",
+   "polarity": "positive",
+   "effect": {
+    "low": 1.0,
+    "central": 1.0,
+    "high": 1.0
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "global"
+   ],
+   "confidence": "high",
+   "status": "expert_assumption",
+   "mechanism_type": "behavioural",
+   "description": "Demand in the area passes through to appointments wanted one for one. This edge exists so that the injected demand increase and the price elasticity both act on appointments wanted, instead of the event overriding the elasticity. The coefficient is 1.0 at every setting by definition and is not swept. Status is expert_assumption rather than anything stronger because the one-for-one pass-through is our structural choice, not a measured relationship: it says the salon's own pricing is the only other thing moving appointments wanted."
+  },
+  {
+   "source": "service_price",
+   "target": "appointment_demand",
+   "polarity": "negative",
+   "effect": {
+    "low": 0.3,
+    "central": 0.6,
+    "high": 1.2
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "global"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "price_sensitivity",
+   "mechanism_type": "behavioural",
+   "description": "How many appointments are lost per percent of price increase. NO published elasticity for personal-care services with a usable mean was found, so all three settings are our judgement rather than research, and the report says so. The range is set BELOW the retail brand-level meta-analyses (-1.76, -2.62) for a stated reason: an appointment is booked with a particular person the customer trusts, and changing supplier means finding and trying someone new, which is a larger switching cost than picking a different tin off a shelf. That reasoning is an argument, not evidence, and the HIGH setting of 1.2 exists precisely to test what happens if it is wrong."
+  }
+ ],
+ "axes": [
+  {
+   "id": "price_sensitivity",
+   "label": "How price-sensitive are your clients?",
+   "settings": [
+    "low",
+    "central",
+    "high"
+   ],
+   "applies_to": [
+    "service_price->appointment_demand"
+   ],
+   "description": "The assumption most likely to change the decision. Low 0.30: a loyal client base with a strong personal relationship. Central 0.60: our judgement for an appointment business with real but surmountable switching costs. High 1.20: clients who treat the service as a commodity and shop on price. All three are assumptions; none is a research finding.",
+   "status": "expert_assumption",
+   "mapping": {
+    "low": {
+     "effect": "low"
+    },
+    "central": {
+     "effect": "central"
+    },
+    "high": {
+     "effect": "high"
+    }
+   }
+  },
+  {
+   "id": "demand_adjustment_speed",
+   "label": "How quickly do clients react?",
+   "settings": [
+    "slow",
+    "central",
+    "fast"
+   ],
+   "applies_to": [
+    "appointment_demand"
+   ],
+   "description": "Multiplies the demand response rate. Slow: half-reaction in about three weeks - clients on a six-week cycle only meet the new price at their next visit. Central: about eleven days. Fast: about five days.",
+   "status": "expert_assumption",
+   "mapping": {
+    "slow": {
+     "response_multiplier": 0.5
+    },
+    "central": {
+     "response_multiplier": 1.0
+    },
+    "fast": {
+     "response_multiplier": 2.0
+    }
+   }
+  }
+ ],
+ "interventions": [
+  {
+   "id": "raise_prices",
+   "label": "Raise service prices",
+   "description": "Adds the given number of percentage points to the average service price for the whole horizon. Magnitude is the price increase in percent.",
+   "status": "user_assumption",
+   "magnitude_label": "price increase, percent",
+   "default_magnitude": 10.0,
+   "default_start_turn": 1,
+   "default_duration": 90,
+   "effects_per_unit": {
+    "service_price": 1.0
+   }
+  },
+  {
+   "id": "shift_service_mix",
+   "label": "Shift the diary toward higher-margin services",
+   "description": "Reduces discounting and moves slots toward services that earn more per appointment. Magnitude is the reduction in variable cost per appointment, in percentage points of today's cost; it also lifts the average price slightly because the mix is richer, and costs a share of appointments from clients who came for the discounted services. All three ratios are expert assumptions - see the evidence registry.",
+   "status": "expert_assumption",
+   "magnitude_label": "variable-cost reduction, percentage points",
+   "default_magnitude": 8.0,
+   "default_start_turn": 1,
+   "default_duration": 90,
+   "effects_per_unit": {
+    "cost_per_appointment": -1.0,
+    "service_price": 0.25,
+    "appointment_demand": -0.4
+   }
+  }
+ ]
+}

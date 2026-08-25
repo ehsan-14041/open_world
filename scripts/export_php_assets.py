@@ -23,6 +23,7 @@ from event_sim.cafe.baseline import DAYS_PER_MONTH, DEMO_CAFE, INTAKE_FIELDS  # 
 from event_sim.cafe.evidence import SOURCES  # noqa: E402
 from event_sim.cafe.run import DEFAULT_AXES, _shared_fingerprint, _slice  # noqa: E402
 from event_sim.cafe.sensitivity import SWEEP, SWEEP_LABELS  # noqa: E402
+from event_sim.cafe.wedge import CAFE_WEDGE  # noqa: E402
 from event_sim.cafe.worlds import (  # noqa: E402
     HORIZON_DAYS,
     MODULE_ID,
@@ -90,6 +91,15 @@ def main() -> int:
             "price_rise_c": PRICE_RISE_C,
         },
         "demo_cafe": DEMO_CAFE.to_dict(),
+        # The page is shared by three wedges now and reads its wording from the bundle. The PHP
+        # host serves the cafe, so the cafe's copy travels with the frozen instrument.
+        "wedge": {
+            "id": CAFE_WEDGE.id,
+            "business": CAFE_WEDGE.business,
+            "question": CAFE_WEDGE.question,
+            "module_id": CAFE_WEDGE.module_id,
+        },
+        "copy": {k: v for k, v in CAFE_WEDGE.copy.items() if not callable(v)},
         "sweep": SWEEP,
         "sweep_labels": SWEEP_LABELS,
         "sources": SOURCES,
