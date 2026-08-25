@@ -31,6 +31,35 @@ from event_sim.wedge.spec import WedgeSpec
 TEMPLATE = Path(__file__).resolve().parent.parent / "cafe" / "templates" / "decision_report.html"
 
 
+def summarise(wedge: WedgeSpec, baseline: Any) -> dict[str, Any]:
+    """
+    The baseline block, from the wedge's own declaration of what is worth showing.
+
+    Declarative because the PHP host renders the same block; a summary written twice would be
+    a summary that eventually disagreed with itself.
+    """
+    derived = {
+        "average_ticket": lambda b: b.average_ticket if hasattr(b, "average_ticket") else b.average_order_value,
+        "cost_pct": lambda b: getattr(b, "cogs_pct", None) or b.variable_cost_pct,
+        "gross_margin_pct": lambda b: b.gross_margin_pct,
+        "monthly_net": lambda b: b.monthly_net,
+        "net_margin_pct": lambda b: b.net_margin_pct,
+        "capacity_per_day": lambda b: b.capacity_per_day,
+    }
+    fields = wedge.copy["fields"]
+    raw = baseline.to_dict()
+    out: dict[str, Any] = {"name": baseline.name, "is_demo": baseline.is_demo}
+    for name, source, dp in wedge.copy["summary_fields"]:
+        if source in derived:
+            value = derived[source](baseline)
+        elif source in fields:
+            value = raw[fields[source]]
+        else:
+            value = raw[source]
+        out[name] = round(float(value), dp) if dp is not None else value
+    return out
+
+
 def _round_series(values: Any, nd: int = 3) -> list[float]:
     return [round(float(x), nd) for x in values]
 
@@ -85,7 +114,7 @@ def build_bundle(
         "copy": {k: v for k, v in wedge.copy.items() if not callable(v)},
         "generated_for": baseline.name,
         "is_demo": baseline.is_demo,
-        "baseline": baseline.summary(),
+        "baseline": summarise(wedge, baseline),
         "baseline_raw": baseline.to_dict(),
         "intake_fields": wedge.intake_fields,
         "worlds": [

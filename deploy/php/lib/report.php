@@ -1,10 +1,14 @@
 <?php
 /**
- * The sensitivity sweep, the evidence registry and the report bundle.
+ * The sensitivity sweep, the assumption registry and the report bundle.
  *
- * Ports event_sim/cafe/{sensitivity,evidence,report}.py. The sweep is a CENSUS over a chosen
- * grid — every combination is run, none is weighted as more likely than another — so the
- * result is a count of cases, never a probability.
+ * Wedge-generic. Ports event_sim/wedge/{sensitivity,evidence,report}.py. The sweep is a CENSUS
+ * over a chosen grid — every combination is run, none is weighted as more likely than another —
+ * so the result is a count of cases, never a probability.
+ *
+ * The registry is rendered from the same declarative spec the Python side renders, exported in
+ * assets/<wedge>.json. That is deliberate: the registry is the most prose-heavy part of a
+ * wedge, and writing it twice would guarantee the two drifted.
  */
 declare(strict_types=1);
 
@@ -21,10 +25,33 @@ const LADDER = [
     DERIVED => 'derived',
 ];
 
-/** Every combination of the swept assumptions, each re-run for all three decisions. */
-function run_sensitivity(Slice $slice, array $frozen, Baseline $baseline): array
+/**
+ * Split a swept name into where it belongs: an assumption axis the engine understands, a knob
+ * the wedge accepts, or a field of the baseline itself.
+ */
+function split_settings(array $wedge, array $settings): array
 {
-    $sweep = $frozen['sweep'];
+    $axisNames = array_keys($wedge['defaults']['axis_settings']);
+    $knobNames = array_keys($wedge['defaults']['knobs']);
+    $axes = [];
+    $knob = null;
+    $overrides = [];
+    foreach ($settings as $k => $v) {
+        if (in_array($k, $axisNames, true)) {
+            $axes[$k] = $v;
+        } elseif (in_array($k, $knobNames, true)) {
+            $knob = (float) $v;
+        } else {
+            $overrides[$k] = (float) $v;
+        }
+    }
+    return [$axes, $knob, $overrides];
+}
+
+/** Every combination of the swept assumptions, each re-run for all three decisions. */
+function run_sensitivity(Slice $slice, array $wedge, Baseline $baseline): array
+{
+    $sweep = $wedge['sweep'];
     $keys = array_keys($sweep);
     $points = [];
 
@@ -39,13 +66,11 @@ function run_sensitivity(Slice $slice, array $frozen, Baseline $baseline): array
         $combos = $next;
     }
 
+    $defaultKnob = (float) reset($wedge['defaults']['knobs']);
     foreach ($combos as $settings) {
-        $b = $baseline->withSupplierIncrease((float) $settings['supplier_increase_pct']);
-        $comp = run_comparison($slice, $frozen, $b, [
-            'price_sensitivity' => $settings['price_sensitivity'],
-            'cogs_pass_through' => $settings['cogs_pass_through'],
-            'demand_adjustment_speed' => $settings['demand_adjustment_speed'],
-        ], (float) $settings['reformulation_effectiveness']);
+        [$axes, $knob, $overrides] = split_settings($wedge, $settings);
+        $b = $overrides ? $baseline->replace($overrides) : $baseline;
+        $comp = run_comparison($slice, $wedge, $b, $axes, $knob ?? $defaultKnob);
 
         $metric = [];
         foreach ($comp['worlds'] as $w) {
@@ -56,6 +81,7 @@ function run_sensitivity(Slice $slice, array $frozen, Baseline $baseline): array
             'ranking' => ranking($comp),
             'metric' => $metric,
             'comparison' => $comp,
+            'baseline' => $b,
         ];
     }
 
@@ -134,8 +160,8 @@ function ranking_stable(array $sens): bool
 }
 
 /**
- * For each assumption: move it alone off centre, holding the others at centre. Reports
- * whether the top choice changes and the spread of the decision metric.
+ * For each assumption: move it alone off centre, holding the others at centre. Reports whether
+ * the top choice changes and the spread of the decision metric.
  */
 function one_at_a_time(array $sens, array $labels): array
 {
@@ -170,8 +196,8 @@ function one_at_a_time(array $sens, array $labels): array
 
 /**
  * Across the whole grid: for each assumption, how many points differ from the central top
- * choice AND share every other setting with a point that agrees with it — a count of how
- * often that assumption alone is the deciding one.
+ * choice AND share every other setting with a point that agrees with it — a count of how often
+ * that assumption alone is the deciding one.
  */
 function flip_attribution(array $sens): array
 {
@@ -200,14 +226,13 @@ function flip_attribution(array $sens): array
     return $counts;
 }
 
-/** One sentence a cafe owner can act on. Only says what the grid supports. */
-function sensitivity_verdict(array $sens, array $oat): string
+/** One sentence an owner can act on. Only says what the grid supports. */
+function sensitivity_verdict(array $sens, array $oat, array $wedge): string
 {
     $counts = win_counts($sens);
     $n = count($sens['points']);
     $best = array_keys($counts, max($counts))[0];
-    $labels = ['A' => 'Doing nothing', 'B' => 'Raising prices 10%', 'C' => 'A 5% rise plus trimming the menu'];
-    $bestLabel = $labels[$best];
+    $bestLabel = $wedge['copy']['world_verdict_labels'][$best];
     $tail = ' This is sensitivity analysis, not a probability estimate.';
 
     if (top_stable($sens)) {
@@ -230,68 +255,133 @@ function sensitivity_verdict(array $sens, array $oat): string
     return "$bestLabel ranked first in $countTxt." . $tail;
 }
 
-/** The customer-facing classification of every number behind the comparison. */
-function evidence_registry(Baseline $b, array $axisSettings, float $effectiveness, array $defaults): array
+// ---- the assumption registry, rendered from the shared spec ---------------------------------
+
+/** One row's value. Mirrors render_value() in event_sim/wedge/evidence.py. */
+function render_value(array $kind, array $ctx): string
 {
-    $ps = $axisSettings['price_sensitivity'] ?? 'central';
-    $elasticity = ['low' => '0.50', 'central' => '0.81', 'high' => '1.60'][$ps];
-    $elasticityClass = $ps === 'central' ? RESEARCH : ASSUMPTION_CLASS;
-    $passThrough = ['low' => '70%', 'central' => '100%', 'high' => '100%'][$axisSettings['cogs_pass_through'] ?? 'central'];
-    $speed = [
-        'slow' => 'about a month to half-react',
-        'central' => 'about two weeks to half-react',
-        'fast' => 'about a week to half-react',
-    ][$axisSettings['demand_adjustment_speed'] ?? 'central'];
-    $reduction = cogs_reduction_points($b, $effectiveness);
-    $priceB = py_g((float) $defaults['price_rise_b']);
-    $priceC = py_g((float) $defaults['price_rise_c']);
+    switch ($kind['kind']) {
+        case 'literal':
+            return (string) $kind['text'];
+        case 'money':
+            return py_thousands((float) $ctx[$kind['field']], (int) ($kind['dp'] ?? 0));
+        case 'money_with_pct':
+            return py_thousands((float) $ctx[$kind['field']])
+                . ' (' . sprintf('%.0f', py_round((float) $ctx[$kind['pct_of']], 0)) . '% of sales)';
+        case 'g':
+            return ($kind['prefix'] ?? '') . py_g((float) $ctx[$kind['field']]) . ($kind['suffix'] ?? '');
+        case 'fixed':
+            return ($kind['prefix'] ?? '')
+                . sprintf('%.' . (int) ($kind['dp'] ?? 1) . 'f', py_round((float) $ctx[$kind['field']], (int) ($kind['dp'] ?? 1)))
+                . ($kind['suffix'] ?? '');
+        case 'axis':
+            $setting = $ctx['axis_settings'][$kind['axis']] ?? 'central';
+            return (string) $kind['map'][$setting];
+        case 'template':
+            return render_template((string) $kind['text'], $ctx);
+    }
+    throw new RuntimeException('unknown registry value kind ' . $kind['kind']);
+}
 
-    $rows = [
-        ['monthly_revenue', 'Current monthly sales', py_thousands($b->monthly_revenue), CUSTOMER, false, ''],
-        ['daily_orders', 'Orders per day', py_thousands($b->daily_orders), CUSTOMER, false, ''],
-        ['monthly_cogs', 'Monthly ingredient cost',
-            py_thousands($b->monthly_cogs) . ' (' . sprintf('%.0f', py_round($b->cogsPct(), 0)) . '% of sales)', CUSTOMER, false, ''],
-        ['monthly_fixed_costs', 'Monthly fixed costs (incl. wages)', py_thousands($b->monthly_fixed_costs), CUSTOMER, false,
-            'Treated as unchanged over 90 days.'],
-        ['cash_on_hand', 'Cash available today', py_thousands($b->cash_on_hand), CUSTOMER, false, ''],
-        ['supplier_increase_pct', 'Supplier cost increase', '+' . py_g($b->supplier_increase_pct) . '%', CUSTOMER, true,
-            'Tested at 20%, 30% and 40%.'],
-        ['low_margin_share_pct', 'Share of orders on low-margin items', py_g($b->low_margin_share_pct) . '%', CUSTOMER, false, ''],
-        ['price_sensitivity', 'Price sensitivity of customers', $elasticity, $elasticityClass, true,
-            'A 1% price rise eventually reduces orders by this percentage. Low 0.50 / central 0.81 / high 1.60. '
-            . 'This is the assumption most likely to change the decision.'],
-        ['cogs_pass_through', 'Share of supplier increase reaching your costs', $passThrough, ASSUMPTION_CLASS, true,
-            '100% by definition unless you can substitute, renegotiate or have fixed-price contracts (tested at 70%).'],
-        ['cogs_lag', 'Delay before higher prices reach your costs', 'about 7 days (stock on hand)', ASSUMPTION_CLASS, false,
-            'Fresh inventory turns over in roughly a week; costs then rise over a few more days.'],
-        ['demand_adjustment_speed', 'How quickly customers react to a price change', $speed, ASSUMPTION_CLASS, true, ''],
-        ['reformulation_effectiveness', 'Ingredient-cost saving from trimming the menu',
-            py_g($reduction) . ' points off average ingredient cost (' . sprintf('%.2f', py_round($effectiveness, 2))
-            . ' per point of low-margin share)', ASSUMPTION_CLASS, true,
-            'Tested at half and one-and-a-half times this rate.'],
-        ['reformulation_demand_cost', 'Orders lost from removing items',
-            sprintf('%.1f', py_round(0.33 * $reduction, 1)) . '% of orders', ASSUMPTION_CLASS, false,
-            'One third of the ingredient-cost saving, in points of orders: customers who came for the removed items.'],
-        ['price_rises', 'Price rises compared', "B: +$priceB%   C: +$priceC%", CUSTOMER, false,
-            'The decisions being compared; fixed by the question.'],
-        ['horizon', 'Comparison horizon', '90 days', ASSUMPTION_CLASS, false,
-            'Long enough for costs and most of the customer reaction to land; short enough that wages and rent can be '
-            . 'treated as fixed. Slow customer reactions are not fully visible within it.'],
-        ['average_order_value', 'Average order value', py_thousands($b->averageOrderValue(), 2), DERIVED, false,
-            'Monthly sales divided by monthly orders.'],
-        ['cogs_per_order', 'Ingredient cost per order', py_thousands($b->cogsPerOrder(), 2), DERIVED, false, ''],
-    ];
-
-    $out = [];
-    foreach ($rows as $r) {
-        $a = ['key' => $r[0], 'label' => $r[1], 'value' => $r[2], 'klass' => $r[3], 'swept' => $r[4],
-              'note' => $r[5], 'source' => '', 'ladder_status' => LADDER[$r[3]]];
-        if ($r[0] === 'price_sensitivity') {
-            $a['source'] = 'andreyeva2010; bijmolt2005 (upper reference)';
+/** The `{name:spec}` subset Python's str.format uses in the registry specs. */
+function render_template(string $text, array $ctx): string
+{
+    return preg_replace_callback('/\{(\w+)(?::([^}]*))?\}/', function ($m) use ($ctx) {
+        $value = $ctx[$m[1]];
+        $spec = $m[2] ?? '';
+        if ($spec === '' || $spec === null) {
+            return (string) $value;
         }
-        $out[] = $a;
+        if ($spec === 'g') {
+            return py_g((float) $value);
+        }
+        if (preg_match('/^\.(\d+)f$/', $spec, $f)) {
+            return sprintf('%.' . $f[1] . 'f', py_round((float) $value, (int) $f[1]));
+        }
+        if (preg_match('/^,\.(\d+)f$/', $spec, $f)) {
+            return py_thousands((float) $value, (int) $f[1]);
+        }
+        throw new RuntimeException("unsupported format spec {$spec}");
+    }, $text);
+}
+
+/** The customer-facing classification of every number behind the comparison. */
+function evidence_registry(Baseline $b, array $wedge, array $axisSettings, float $effectiveness,
+                           ?float $customElasticity = null): array
+{
+    $ctx = $b->toDict();
+    $ctx['axis_settings'] = $axisSettings;
+    foreach ($wedge['defaults']['knobs'] as $name => $_) {
+        $ctx[$name] = $effectiveness;
+    }
+    // The derived quantities a spec may refer to, under the names the spec uses.
+    $reduction = reduction_points($b, $wedge, $effectiveness);
+    $ctx['reduction'] = $reduction;
+    $ctx['cogs_pct'] = $b->costPct();
+    $ctx['variable_cost_pct'] = $b->costPct();
+    $ctx['average_order_value'] = $b->averageTicket();
+    $ctx['average_ticket'] = $b->averageTicket();
+    $ctx['cogs_per_order'] = $b->unitCost();
+    $ctx['unit_cost'] = $b->unitCost();
+    $ctx['capacity_per_day'] = $b->capacityPerDay() ?? 0.0;
+    $ctx['demand_cost'] = ((float) demand_cost_ratio($wedge)) * $reduction;
+    $ctx['price_gain'] = ((float) price_gain_ratio($wedge)) * $reduction;
+
+    $research = $wedge['research_settings'];
+    $out = [];
+    foreach ($wedge['registry_spec'] as $row) {
+        $klass = $row['klass'];
+        $value = render_value($row['value'], $ctx);
+        $source = $row['source'] ?? '';
+        if (!empty($row['elasticity'])) {
+            $setting = $axisSettings[$row['value']['axis'] ?? 'price_sensitivity'] ?? 'central';
+            $klass = in_array($setting, $research, true) ? RESEARCH : ASSUMPTION_CLASS;
+            if ($customElasticity !== null) {
+                $value = sprintf('%.2f', abs($customElasticity)) . ' (your value)';
+                $klass = CUSTOMER;
+                $source = '';
+            }
+            if ($klass !== RESEARCH) {
+                $source = $row['assumption_source'] ?? ($klass === CUSTOMER ? $source : '');
+            }
+        }
+        $out[] = [
+            'key' => $row['key'], 'label' => $row['label'], 'value' => $value,
+            'klass' => $klass, 'swept' => (bool) ($row['swept'] ?? false),
+            'note' => $row['note'] ?? '', 'source' => $source,
+            'ladder_status' => LADDER[$klass],
+        ];
     }
     return $out;
+}
+
+/** Ratios the interventions encode, read back off the module so they exist in one place. */
+function demand_cost_ratio(array $wedge): float
+{
+    foreach ($wedge['slice']['interventions'] as $iv) {
+        if ($iv['id'] === $wedge['worlds']['levers']['reduce']) {
+            foreach ($iv['effects_per_unit'] as $var => $per) {
+                if ($var === $wedge['roles']['demand_var']) {
+                    return abs((float) $per);
+                }
+            }
+        }
+    }
+    return 0.0;
+}
+
+function price_gain_ratio(array $wedge): float
+{
+    foreach ($wedge['slice']['interventions'] as $iv) {
+        if ($iv['id'] === $wedge['worlds']['levers']['reduce']) {
+            foreach ($iv['effects_per_unit'] as $var => $per) {
+                if ($var === $wedge['roles']['price_var']) {
+                    return abs((float) $per);
+                }
+            }
+        }
+    }
+    return 0.0;
 }
 
 function round_list(array $xs, int $nd): array
@@ -300,14 +390,15 @@ function round_list(array $xs, int $nd): array
 }
 
 /** Everything the page needs, in the shape the template's JavaScript expects. */
-function build_bundle(Slice $slice, array $frozen, Baseline $baseline, bool $includeGrid = true): array
+function build_bundle(Slice $slice, array $wedge, Baseline $baseline, bool $includeGrid = true): array
 {
-    $defaults = $frozen['defaults'];
-    $effectiveness = (float) $defaults['reformulation_effectiveness'];
-    $comp = run_comparison($slice, $frozen, $baseline, [], $effectiveness);
-    $sens = run_sensitivity($slice, $frozen, $baseline);
-    $oat = one_at_a_time($sens, $frozen['sweep_labels']);
-    $reg = evidence_registry($baseline, $comp['axis_settings'], $effectiveness, $defaults);
+    $defaults = $wedge['defaults'];
+    $effectiveness = (float) reset($defaults['knobs']);
+    $knobName = (string) array_key_first($defaults['knobs']);
+    $comp = run_comparison($slice, $wedge, $baseline, [], $effectiveness);
+    $sens = run_sensitivity($slice, $wedge, $baseline);
+    $oat = one_at_a_time($sens, $wedge['sweep_labels']);
+    $reg = evidence_registry($baseline, $wedge, $comp['axis_settings'], $effectiveness);
 
     $classCounts = [];
     foreach ($reg as $a) {
@@ -318,7 +409,21 @@ function build_bundle(Slice $slice, array $frozen, Baseline $baseline, bool $inc
     foreach ($comp['worlds'] as $w) {
         $metrics = [];
         foreach ($w['metrics'] as $k => $v) {
-            $metrics[$k] = (is_float($v)) ? py_round($v, 4) : $v;
+            $metrics[$k] = is_float($v) ? py_round($v, 4) : $v;
+        }
+        $ledger = [
+            'cash' => round_list($w['ledger']['cash'], 2),
+            'gross_margin_pct' => round_list($w['ledger']['gross_margin_pct'], 3),
+            'orders' => round_list($w['ledger']['orders'], 2),
+            'revenue' => round_list($w['ledger']['revenue'], 2),
+        ];
+        if ($w['ledger']['utilisation_pct']) {
+            $ledger['utilisation_pct'] = round_list($w['ledger']['utilisation_pct'], 2);
+            $ledger['turned_away'] = round_list($w['ledger']['turned_away'], 3);
+        }
+        $indices = [];
+        foreach ($w['indices'] as $name => $series) {
+            $indices[$name] = round_list($series, 3);
         }
         $worlds[] = [
             'id' => $w['spec']['id'],
@@ -327,18 +432,8 @@ function build_bundle(Slice $slice, array $frozen, Baseline $baseline, bool $inc
             'price_rise_pct' => $w['spec']['price_rise_pct'],
             'cogs_reduction_points' => $w['spec']['cogs_reduction_points'],
             'metrics' => $metrics,
-            'ledger' => [
-                'cash' => round_list($w['ledger']['cash'], 2),
-                'gross_margin_pct' => round_list($w['ledger']['gross_margin_pct'], 3),
-                'orders' => round_list($w['ledger']['orders'], 2),
-                'revenue' => round_list($w['ledger']['revenue'], 2),
-            ],
-            'indices' => [
-                'input_cost' => round_list($w['indices']['input_cost'], 3),
-                'cogs_per_order' => round_list($w['indices']['cogs_per_order'], 3),
-                'menu_price' => round_list($w['indices']['menu_price'], 3),
-                'demand' => round_list($w['indices']['demand'], 3),
-            ],
+            'ledger' => $ledger,
+            'indices' => $indices,
         ];
     }
 
@@ -360,13 +455,13 @@ function build_bundle(Slice $slice, array $frozen, Baseline $baseline, bool $inc
     }
 
     $bundle = [
-        'wedge' => $frozen['wedge'],
-        'copy' => $frozen['copy'],
+        'wedge' => $wedge['wedge'],
+        'copy' => $wedge['copy'],
         'generated_for' => $baseline->name,
         'is_demo' => $baseline->is_demo,
-        'baseline' => $baseline->summary(),
+        'baseline' => $baseline->summary($wedge),
         'baseline_raw' => $baseline->toDict(),
-        'intake_fields' => $frozen['intake_fields'],
+        'intake_fields' => $wedge['intake_fields'],
         'worlds' => $worlds,
         'central_ranking' => ranking($comp),
         'net_benefit_vs_a' => $netBenefit,
@@ -378,28 +473,28 @@ function build_bundle(Slice $slice, array $frozen, Baseline $baseline, bool $inc
             'top_stable' => top_stable($sens),
             'ranking_stable' => ranking_stable($sens),
             'dominated_worlds' => dominated_worlds($sens),
-            'verdict' => sensitivity_verdict($sens, $oat),
+            'verdict' => sensitivity_verdict($sens, $oat, $wedge),
             'one_at_a_time' => $oat,
             'flip_attribution' => flip_attribution($sens),
-            'sweep' => $frozen['sweep'],
-            'sweep_labels' => $frozen['sweep_labels'],
+            'sweep' => $wedge['sweep'],
+            'sweep_labels' => $wedge['sweep_labels'],
             'points' => $points,
         ],
         'assumptions' => $reg,
         'assumption_class_counts' => $classCounts,
-        'sources' => $frozen['sources'],
+        'sources' => $wedge['sources'],
         'reproducibility' => [
-            'wedge_id' => $frozen['wedge']['id'],
-            'module_id' => $frozen['module_id'],
-            'module_semantic_hash' => $frozen['module_semantic_hash'],
+            'wedge_id' => $wedge['wedge']['id'],
+            'module_id' => $wedge['module_id'],
+            'module_semantic_hash' => $wedge['module_semantic_hash'],
             'horizon_days' => (int) $defaults['horizon_days'],
             'axis_settings' => $defaults['axis_settings'],
             'lag_setting' => 'central',
-            'knobs' => ['reformulation_effectiveness' => $effectiveness],
-            'reformulation_effectiveness' => $effectiveness,
+            'knobs' => [$knobName => $effectiveness],
+            $knobName => $effectiveness,
             'custom_elasticity' => null,
             'baseline' => $baseline->toDict(),
-            'shared_fingerprint' => $frozen['shared_fingerprint'],
+            'shared_fingerprint' => $wedge['shared_fingerprint'],
             'worlds' => array_map(fn ($w) => [
                 'spec' => [
                     'id' => $w['spec']['id'],
@@ -411,41 +506,50 @@ function build_bundle(Slice $slice, array $frozen, Baseline $baseline, bool $inc
                     'interventions' => $w['spec']['interventions'],
                 ],
                 'engine_fingerprint' => $w['fingerprint'],
+                'trajectory_fingerprint' => $w['trajectory_fingerprint'],
             ], $comp['worlds']),
         ],
-        'language' => $frozen['language'],
+        'language' => $wedge['language'],
     ];
 
     if ($includeGrid) {
-        // Index trajectories do not depend on the money inputs at all — only on the supplier
-        // increase, the axis settings and the COGS reduction points — so the page can apply
-        // any owner's money to them exactly.
+        // Index trajectories do not depend on the owner's money at all — only on the shock, the
+        // axis settings and the intervention sizes — so the page can apply any owner's figures
+        // to them exactly.
         $grid = [];
         foreach ($sens['points'] as $p) {
             $s = $p['settings'];
-            $b = $baseline->withSupplierIncrease((float) $s['supplier_increase_pct']);
+            [$axes, $knob, $overrides] = split_settings($wedge, $s);
+            $b = $p['baseline'];
             $gw = [];
             foreach ($p['comparison']['worlds'] as $w) {
                 $gw[$w['spec']['id']] = [
-                    'demand' => round_list($w['indices']['demand'], 3),
-                    'cogs' => round_list($w['indices']['cogs_per_order'], 3),
-                    'price' => round_list($w['indices']['menu_price'], 2),
+                    'demand' => round_list($w['indices'][$wedge['roles']['demand_var']], 3),
+                    'cogs' => round_list($w['indices'][$wedge['roles']['unit_cost_var']], 3),
+                    'price' => round_list($w['indices'][$wedge['roles']['price_var']], 2),
                 ];
             }
-            $grid[] = [
-                'key' => [
-                    'price_sensitivity' => $s['price_sensitivity'],
-                    'cogs_pass_through' => $s['cogs_pass_through'],
-                    'supplier_increase_pct' => (float) $s['supplier_increase_pct'],
-                    'reduction_points' => cogs_reduction_points($b, (float) $s['reformulation_effectiveness']),
-                    'demand_adjustment_speed' => $s['demand_adjustment_speed'],
-                ],
-                'worlds' => $gw,
-            ];
+            $grid[] = ['key' => grid_key($wedge, $b, $s, $knob ?? $effectiveness), 'worlds' => $gw];
         }
         $bundle['grid'] = $grid;
     }
     return $bundle;
+}
+
+/** The keys the page selects a grid point by. Mirrors each wedge's _grid_key in Python. */
+function grid_key(array $wedge, Baseline $b, array $settings, float $knob): array
+{
+    $key = [];
+    foreach ($wedge['copy']['grid_key_fields'] as $name => $source) {
+        if ($source === 'reduction') {
+            $key[$name] = reduction_points($b, $wedge, $knob);
+        } elseif (is_array($source)) {
+            $key[$name] = (float) $settings[$source['float']];
+        } else {
+            $key[$name] = $settings[$source];
+        }
+    }
+    return $key;
 }
 
 /** Fill the template. Mirrors report.render_html: compact separators, escaped `</`. */

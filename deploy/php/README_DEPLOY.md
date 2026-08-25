@@ -1,15 +1,21 @@
-# Running the comparison on a PHP host
+# Running the three comparisons on a PHP host
 
-Everything runs on the host: the engine, the accounting, the 162-point sensitivity sweep and
-the rendering. No Python on the server, no database, no build step, no framework. PHP 7.4+
-with zlib and json — every shared host has both.
+Three decision products — cafe, shop and salon — all generated on the host: the engine, the
+accounting, the 162-point sensitivity sweep and the rendering. No Python on the server, no
+database, no build step, no framework. PHP 7.4+ with zlib and json — every shared host has both.
 
-The generator under `lib/` is a port of the Python pipeline. It is verified to produce a
-**byte-identical** bundle: same trajectories, same metrics, same 162 grid points, same module
-hash, same shared fingerprint, same three engine fingerprints. Run the check yourself:
+The generator under `lib/` is wedge-generic: nothing in it knows what a cafe is. Each wedge
+arrives as data in `assets/<wedge>.json`, exported from the Python definitions — including the
+assumption registry, which is a declarative spec both languages render, so the prose exists
+once rather than once per language.
+
+It is verified to produce a **byte-identical** bundle for every wedge: same trajectories, same
+metrics, same 162 grid points, same module hash, same shared fingerprint, same engine and
+trajectory fingerprints. Run the check yourself:
 
 ```bash
-python scripts/verify_php_port.py
+python scripts/verify_php_port.py            # all three
+python scripts/verify_php_port.py salon      # just one
 ```
 
 ## 1. Build the bundle
@@ -21,15 +27,16 @@ python scripts/build_web_bundle.py --zip
 You get `dist/cafe_php/` and a `.zip`:
 
 ```
-index.php            routes, gate, gzip, caching
-intake.php           the eight-field form
+index.php            routes (which wedge), gate, gzip, caching
+intake.php           the intake form, built from the chosen wedge's fields
 admin.php            maintainer settings — see README_LLM.md
 unlock.php           the password screen
 config.sample.php    rename to config.php and set the passwords
 lib/                 engine.php, cafe.php, report.php, canon.php  — the generator
                      llm.php, i18n.php, assist.php               — the optional LLM layer
-assets/              frozen.json (the instrument), decision_report.html (the template),
-                     strings.json (the translatable copy)
+assets/              cafe.json, shop.json, salon.json (the three instruments),
+                     wedges.json (the chooser), decision_report.html (the report template),
+                     chooser.html (the first screen), strings.json (the translatable copy)
 data/cache/          generated pages, keyed by a hash of the inputs (safe to delete)
 data/settings.json   written by admin.php; holds the API key if you set one there
 data/i18n/           generated translations
@@ -62,10 +69,11 @@ returns 404. Everything it configures is optional — see [README_LLM.md](README
 
 | URL | What it does |
 |---|---|
-| `/` | the demo cafe |
-| `/?new=1` | the intake form — eight figures |
-| `/?lang=fa` | the same report with translated copy, once you have generated a language |
-| `/?theme=light` | the projector/print version, for showing on someone else's screen |
+| `/` | the chooser — "What kind of business do you run?" |
+| `/?w=cafe` · `/?w=shop` · `/?w=salon` | that wedge's demo report |
+| `/?w=<id>&new=1` | the intake form for that business type |
+| `/?w=<id>&lang=fa` | the same report with translated copy, once you have generated a language |
+| `/?w=<id>&theme=light` | the projector/print version, for showing on someone else's screen |
 | `/admin.php` | maintainer settings (only once `admin_password` is set) |
 
 Posting the form builds a full report for that cafe, in about half a second.
@@ -77,7 +85,7 @@ That one is instant and nothing leaves the page, but it snaps the supplier incre
 low-margin share to the nearest values in the grid shipped with the page, and says so on
 screen.
 
-`?new=1` re-runs the whole sweep on the server for that cafe's actual figures — so an owner
+`?w=<id>&new=1` re-runs the whole sweep on the server for that business's actual figures — so an owner
 with 30% of orders on low-margin items gets a grid built on 4.5 / 9 / 13.5 points of
 ingredient-cost saving instead of the demo's 3 / 6 / 9. Use the in-page form in the room; use
 `?new=1` for the report you send afterwards.
@@ -109,7 +117,7 @@ is a hash of the inputs, so it is not guessable.
   You can say that to a cautious owner and it is true.
 - **Memory**: building the full grid peaks around 26 MB. A host capped at 16 MB will fail;
   raise `memory_limit`, or set `allow_custom_reports` to false and serve the cached demo.
-- **Speed**: about 0.4 s to build a report, then cached. The Python pipeline takes minutes for
+- **Speed**: about 0.4 s to build any of the three reports, then cached. The Python pipeline takes minutes for
   the same output because it records a full causal trace the report does not use.
 - **Fonts** come from Google Fonts; without internet the page falls back to Georgia and the
   system UI font and still reads fine.

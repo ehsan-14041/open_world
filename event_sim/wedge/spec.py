@@ -98,3 +98,16 @@ class WedgeSpec:
 
     def world_ids(self) -> tuple[str, str, str]:
         return ("A", "B", "C")
+
+
+def _key_from_fields(fields: dict, reduction: float, settings: dict) -> dict:
+    """Build a grid key from the declarative description both languages share."""
+    key = {}
+    for name, source in fields.items():
+        if source == "reduction":
+            key[name] = reduction
+        elif isinstance(source, dict):
+            key[name] = float(settings[source["float"]])
+        else:
+            key[name] = settings[source]
+    return key

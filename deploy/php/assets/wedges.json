@@ -1,0 +1,22 @@
+{
+ "chooser": [
+  {
+   "id": "cafe",
+   "icon": "\u2615",
+   "business": "Cafe / Restaurant",
+   "question": "Ingredient costs jumped. What should I change?"
+  },
+  {
+   "id": "shop",
+   "icon": "\ud83d\udecd",
+   "business": "Shop / Online Store",
+   "question": "My supplier raised prices. Should I pass it on?"
+  },
+  {
+   "id": "salon",
+   "icon": "\u2702",
+   "business": "Salon / Service Business",
+   "question": "My schedule is filling up. Is it time to raise prices?"
+  }
+ ]
+}

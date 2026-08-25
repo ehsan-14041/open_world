@@ -1,11 +1,11 @@
-<?php /** Server-side intake. In scope: $heading, $input, $errors, $assist, $assistOn, $description, $languages, $lang, FIELDS. */ ?>
+<?php /** Server-side intake. In scope: $wedge, $fields, $input, $errors, $assist, $assistOn, $description, $languages, $lang, $wedgeId. */ ?>
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Run the comparison for your cafe</title>
+<title>Run the comparison for your business</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Source+Sans+3:wght@400;600;700&display=swap">
 <style>
@@ -44,15 +44,15 @@ a{color:var(--b)}
 </head>
 <body>
 <div class="wrap">
-  <h1>Run the comparison for your cafe</h1>
-  <p class="lede">Eight figures from your books. The comparison itself does not change — only your
-     starting position does.</p>
+  <h1>Run the comparison for your <?= htmlspecialchars(strtolower(explode(" /", $wedge["wedge"]["business"])[0]), ENT_QUOTES) ?></h1>
+  <p class="lede"><?= count($fields) ?> figures from your books. The comparison itself does not
+     change — only your starting position does.</p>
 
   <?php if (!empty($languages)): ?>
     <div class="langs">Language:
-      <a href="?new=1">English</a>
+      <a href="?w=<?= urlencode($wedgeId) ?>&amp;new=1">English</a>
       <?php foreach ($languages as $l): ?>
-        · <a href="?new=1&amp;lang=<?= urlencode($l['code']) ?>"><?= htmlspecialchars($l['label'], ENT_QUOTES) ?></a>
+        · <a href="?w=<?= urlencode($wedgeId) ?>&amp;new=1&amp;lang=<?= urlencode($l['code']) ?>"><?= htmlspecialchars($l['label'], ENT_QUOTES) ?></a>
       <?php endforeach; ?>
     </div>
   <?php endif; ?>
@@ -66,6 +66,7 @@ a{color:var(--b)}
   <?php if (!empty($assistOn)): ?>
     <form class="card" method="post" action="./">
       <input type="hidden" name="form_action" value="assist">
+      <input type="hidden" name="w" value="<?= htmlspecialchars($wedgeId, ENT_QUOTES) ?>">
       <input type="hidden" name="lang" value="<?= htmlspecialchars((string) ($lang ?? ''), ENT_QUOTES) ?>">
       <h2>Or just describe it</h2>
       <p class="hint" style="margin-bottom:12px">Write it the way you would say it. The fields below get
@@ -82,7 +83,7 @@ a{color:var(--b)}
         Filled in <?= count($assist['fields']) ?> field(s) from what you wrote — please check each one.
         <?php if ($assist['missing']): ?>
           <br>Not found, so left empty: <?= htmlspecialchars(implode(', ', array_map(
-              fn ($k) => FIELDS[$k][0] ?? $k, $assist['missing'])), ENT_QUOTES) ?>.
+              fn ($k) => $fields[$k][0] ?? $k, $assist['missing'])), ENT_QUOTES) ?>.
         <?php endif; ?>
         <?php if ($assist['note'] !== ''): ?>
           <br><?= htmlspecialchars($assist['note'], ENT_QUOTES) ?>
@@ -93,10 +94,11 @@ a{color:var(--b)}
 
   <form class="card" method="post" action="./">
     <input type="hidden" name="form_action" value="run">
+    <input type="hidden" name="w" value="<?= htmlspecialchars($wedgeId, ENT_QUOTES) ?>">
     <input type="hidden" name="lang" value="<?= htmlspecialchars((string) ($lang ?? ''), ENT_QUOTES) ?>">
     <h2>Your figures</h2>
     <div class="fields" style="margin-top:16px">
-      <?php foreach (FIELDS as $key => [$label, $unit, $hint, $type]): ?>
+      <?php foreach ($fields as $key => [$label, $unit, $hint, $type]): ?>
         <div>
           <label for="f_<?= $key ?>"><?= htmlspecialchars($label, ENT_QUOTES) ?></label>
           <div class="in">
@@ -118,7 +120,7 @@ a{color:var(--b)}
 
   <p class="note">This runs the full sweep on the server — all 162 assumption combinations, for your
      own low-margin share rather than the nearest tested value. It takes a moment.
-     <a href="./">Back to the demo cafe</a>.</p>
+     <a href="?w=<?= urlencode($wedgeId) ?>">Back to the demo</a> · <a href="./">choose another business</a>.</p>
 </div>
 </body>
 </html>

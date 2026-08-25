@@ -57,8 +57,8 @@ def test_a_translation_cannot_reach_the_data_payload():
         run_php(f"""
 require '{PHP_ROOT.as_posix()}/lib/i18n.php';
 require '{PHP_ROOT.as_posix()}/lib/report.php';
-$frozen = json_decode(file_get_contents('{PHP_ROOT.as_posix()}/assets/frozen.json'), true);
-$bundle = build_bundle(new Slice($frozen['slice']), $frozen, new Baseline($frozen['demo_cafe']), false);
+$wedge = json_decode(file_get_contents('{PHP_ROOT.as_posix()}/assets/cafe.json'), true);
+$bundle = build_bundle(new Slice($wedge['slice']), $wedge, new Baseline($wedge['demo'], $wedge), false);
 $data = str_replace('</', '<\\\\/', json_encode($bundle, JSON_PRESERVE_ZERO_FRACTION));
 $template = file_get_contents('{PHP_ROOT.as_posix()}/assets/decision_report.html');
 $translation = json_decode(file_get_contents('{Path(tmp).as_posix()}/t.json'), true);
@@ -132,7 +132,7 @@ echo json_encode([
     'configured_off'   => llm_configured($off),
     'configured_nokey' => llm_configured($noKey),
     'chat_off'         => llm_chat($off, 's', 'u')['ok'],
-    'assist_off'       => assist_extract($off, 'we do 30000 a month')['ok'],
+    'assist_off'       => assist_extract($off, 'we do 30000 a month', ['monthly_revenue'])['ok'],
     'feature_off'      => llm_feature_on($off, 'translation'),
 ]);
 """)

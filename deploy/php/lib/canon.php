@@ -112,6 +112,23 @@ function py_json($value): string
  */
 function engine_fingerprint(array $frozen, array $events, array $interventions): string
 {
+    return _fingerprint($frozen['canonical']['slice'], $frozen, $events, $interventions);
+}
+
+/**
+ * The registry-independent companion figure.
+ *
+ * The engine's own fingerprint hashes the whole slice dict, which includes `excluded_systems` —
+ * a list of every other module in the repository — so it moves when an unrelated module is
+ * added even though no coefficient did. This one covers only what determines a trajectory.
+ */
+function trajectory_fingerprint(array $frozen, array $events, array $interventions): string
+{
+    return _fingerprint($frozen['canonical']['trajectory_slice'], $frozen, $events, $interventions);
+}
+
+function _fingerprint(string $sliceBlob, array $frozen, array $events, array $interventions): string
+{
     $eventDicts = [];
     foreach ($events as $e) {
         $eventDicts[] = [
@@ -141,6 +158,6 @@ function engine_fingerprint(array $frozen, array $events, array $interventions):
     $payload = '{"config": ' . $frozen['canonical']['config']
         . ', "events": ' . py_json($eventDicts)
         . ', "interventions": ' . py_json($ivDicts)
-        . ', "slice": ' . $frozen['canonical']['slice'] . '}';
+        . ', "slice": ' . $sliceBlob . '}';
     return hash('sha256', $payload);
 }

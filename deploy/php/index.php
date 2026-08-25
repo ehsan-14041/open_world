@@ -1,17 +1,19 @@
 <?php
 /**
- * The cafe decision comparison, generated on the host.
+ * Three decision products, generated on the host.
  *
  * Routes:
- *   GET  /                 the demo cafe
- *   GET  /?lang=fa         the same report with translated copy
- *   GET  /?new=1           the intake form
- *   POST /                 generate a report for the submitted numbers
- *   POST / (assist)        draft the form fields from a typed description
+ *   GET  /                      the chooser — "What kind of business do you run?"
+ *   GET  /?w=cafe|shop|salon    that wedge's demo report
+ *   GET  /?w=<id>&lang=fa       the same report with translated copy
+ *   GET  /?w=<id>&new=1         the intake form
+ *   POST /                      generate a report for the submitted numbers
+ *   POST / (assist)             draft the form fields from a typed description
  *
- * The report is built here — engine, accounting, 162-point sweep, rendering — by lib/, which
- * is a port of the Python pipeline verified to produce a byte-identical bundle. Nothing is
- * stored except a gzip cache keyed by a hash of the inputs and the language.
+ * Each report is built here — engine, accounting, 162-point sweep, rendering — by lib/, which
+ * is a port of the Python pipeline verified to produce a byte-identical bundle for all three.
+ * Nothing is stored except a gzip cache keyed by a hash of the wedge, the inputs and the
+ * language.
  */
 declare(strict_types=1);
 
@@ -53,22 +55,35 @@ if ($password !== '') {
     }
 }
 
-// ---- inputs --------------------------------------------------------------------------------
-const FIELDS = [
-    'name' => ['Business name', '', 'Only used on the report.', 'text'],
-    'monthly_revenue' => ['Monthly sales', '$', 'A typical month, before the cost increase.', 'number'],
-    'daily_orders' => ['Orders per day', '', 'Average transactions a day.', 'number'],
-    'monthly_cogs' => ['Monthly ingredient cost', '$', 'What you pay suppliers for what you sell. Not wages, not rent.', 'number'],
-    'monthly_fixed_costs' => ['Monthly fixed costs', '$', 'Rent, wages, utilities, loans.', 'number'],
-    'cash_on_hand' => ['Cash available', '$', 'In the business account today.', 'number'],
-    'supplier_increase_pct' => ['Supplier cost increase', '%', 'As a percentage of your ingredient cost.', 'number'],
-    'low_margin_share_pct' => ['Orders on low-margin items', '%', 'A rough guess is fine — it is tested as an assumption.', 'number'],
-];
+// ---- which wedge ---------------------------------------------------------------------------
+$catalogue = json_decode((string) file_get_contents(__DIR__ . '/assets/wedges.json'), true);
+$available = array_column($catalogue['chooser'] ?? [], 'id');
 
-$frozen = json_decode((string) file_get_contents(__DIR__ . '/assets/frozen.json'), true);
-if (!is_array($frozen)) {
+$wedgeId = preg_replace('/[^a-z]/', '', (string) ($_GET['w'] ?? $_POST['w'] ?? ''));
+if ($wedgeId === '' || !in_array($wedgeId, $available, true)) {
+    // No wedge chosen: show the chooser rather than guessing which business someone runs.
+    header('Content-Type: text/html; charset=utf-8');
+    header('Cache-Control: public, max-age=300');
+    $chooser = (string) file_get_contents(__DIR__ . '/assets/chooser.html');
+    // The static chooser links to files; here each card is a query on this one entry point.
+    foreach ($catalogue['chooser'] as $entry) {
+        $chooser = str_replace("{$entry['id']}/{$entry['id']}_decision_report.html",
+                               "?w={$entry['id']}", $chooser);
+    }
+    echo $chooser;
+    exit;
+}
+
+$wedge = json_decode((string) file_get_contents(__DIR__ . "/assets/{$wedgeId}.json"), true);
+if (!is_array($wedge)) {
     http_response_code(500);
-    exit('assets/frozen.json is missing or unreadable. Upload the whole bundle.');
+    exit("assets/{$wedgeId}.json is missing or unreadable. Upload the whole bundle.");
+}
+
+// ---- inputs --------------------------------------------------------------------------------
+$fields = [];
+foreach ($wedge['intake_fields'] as $f) {
+    $fields[$f['key']] = [$f['label'], $f['unit'], $f['hint'], $f['key'] === 'name' ? 'text' : 'number'];
 }
 
 $languages = i18n_available();
@@ -84,20 +99,21 @@ $assisting = $_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'assist' && $a
 $errors = [];
 $assist = null;
 $description = '';
-$input = $frozen['demo_cafe'];
+$input = $wedge['demo'];
 
 if ($assisting) {
     $description = (string) ($_POST['description'] ?? '');
-    $assist = assist_extract($llm, $description);
+    $assist = assist_extract($llm, $description, array_keys($fields));
     if ($assist['ok']) {
-        $input = array_merge(['name' => 'Your cafe', 'is_demo' => false, 'notes' => []], $assist['fields']);
+        $input = array_merge($input, ['name' => 'Your business', 'is_demo' => false], $assist['fields']);
     } else {
         $errors[] = $assist['error'];
     }
     $wantsForm = true;                          // always back to the form for the owner to check
 } elseif ($submitted) {
-    $input = ['name' => trim((string) ($_POST['name'] ?? '')) ?: 'Your cafe', 'is_demo' => false, 'notes' => []];
-    foreach (FIELDS as $key => $meta) {
+    $input = ['name' => trim((string) ($_POST['name'] ?? '')) ?: 'Your business',
+              'is_demo' => false, 'notes' => []];
+    foreach ($fields as $key => $meta) {
         if ($key === 'name') {
             continue;
         }
@@ -110,7 +126,7 @@ if ($assisting) {
         }
     }
     if (!$errors) {
-        $errors = (new Baseline($input))->validate();
+        $errors = (new Baseline($input, $wedge))->validate();
     }
     if ($errors) {
         $wantsForm = true;
@@ -124,12 +140,12 @@ if ($wantsForm) {
     exit;
 }
 
-// ---- build (cached by a hash of the inputs and the language) --------------------------------
-$baseline = new Baseline($input);
+// ---- build (cached by wedge, inputs and language) -------------------------------------------
+$baseline = new Baseline($input, $wedge);
 $templatePath = __DIR__ . '/assets/decision_report.html';
 $langStamp = $translation !== null ? ($lang . '|' . ($translation['generated'] ?? '')) : 'en';
-$cacheKey = hash('sha256', json_encode($baseline->toDict()) . '|' . $langStamp
-    . '|' . filemtime(__DIR__ . '/assets/frozen.json') . '|' . filemtime($templatePath));
+$cacheKey = hash('sha256', $wedgeId . '|' . json_encode($baseline->toDict()) . '|' . $langStamp
+    . '|' . filemtime(__DIR__ . "/assets/{$wedgeId}.json") . '|' . filemtime($templatePath));
 $cacheFile = __DIR__ . '/data/cache/' . $cacheKey . '.html.gz';
 
 $gzipped = is_file($cacheFile) ? (string) file_get_contents($cacheFile) : '';
@@ -140,7 +156,7 @@ if ($gzipped === '') {
         // ranking or fingerprint is ever in reach of a substitution.
         [$template, , ] = i18n_apply($template, $translation);
     }
-    $bundle = build_bundle(new Slice($frozen['slice']), $frozen, $baseline, true);
+    $bundle = build_bundle(new Slice($wedge['slice']), $wedge, $baseline, true);
     $html = str_replace('__DATA__',
         str_replace('</', '<\\/', (string) json_encode($bundle,
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION)),

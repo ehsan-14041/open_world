@@ -84,3 +84,77 @@ TELLIS_1988 = {
     "limitations": "Selective (brand-level) demand, largely goods rather than services, and estimated from studies published up to the mid-1980s. Like Bijmolt it measures brand switching, not store switching.",
     "transfer": "A second brand-level reference point for the shop wedge, quoted so the range shown is not resting on a single meta-analysis. It does not establish what happens when one shop raises all of its prices at once.",
 }
+
+
+# ---- one spec, two renderers ---------------------------------------------------------------
+#
+# The registry is the most prose-heavy part of a wedge, and the PHP host has to produce exactly
+# the same rows so a report generated on a shared host is the same report. Writing it twice
+# would guarantee drift, so it is written once as a declarative spec and rendered from that in
+# both languages. Only these value kinds exist; a wedge that needs a new one is a wedge whose
+# evidence does not fit the shape, which is worth noticing.
+
+
+def _money(value: float, dp: int = 0) -> str:
+    return f"{value:,.{dp}f}"
+
+
+def render_value(kind: dict, ctx: dict) -> str:
+    """Render one registry row's value. `ctx` holds the baseline figures and derived numbers."""
+    k = kind["kind"]
+    if k == "literal":
+        return str(kind["text"])
+    if k == "money":
+        return _money(ctx[kind["field"]], int(kind.get("dp", 0)))
+    if k == "money_with_pct":
+        return f"{_money(ctx[kind['field']])} ({ctx[kind['pct_of']]:.0f}% of sales)"
+    if k == "g":
+        return f"{kind.get('prefix', '')}{ctx[kind['field']]:g}{kind.get('suffix', '')}"
+    if k == "fixed":
+        return f"{kind.get('prefix', '')}{ctx[kind['field']]:.{int(kind.get('dp', 1))}f}{kind.get('suffix', '')}"
+    if k == "axis":
+        return str(kind["map"][ctx["axis_settings"].get(kind["axis"], "central")])
+    if k == "template":
+        return kind["text"].format(**ctx)
+    raise KeyError(f"unknown registry value kind {k!r}")
+
+
+def build_context(baseline, axis_settings: dict, knobs: dict, extra: dict) -> dict:
+    """Everything a value kind may refer to, in one flat mapping."""
+    ctx = dict(baseline.to_dict())
+    ctx.update(knobs)
+    ctx.update(extra)
+    ctx["axis_settings"] = axis_settings
+    return ctx
+
+
+def render_registry(spec: list[dict], baseline, *, axis_settings: dict, knobs: dict,
+                    extra: dict, custom_elasticity: float | None,
+                    research_settings: list[str]) -> list[Assumption]:
+    """
+    Turn a wedge's spec into its assumption registry.
+
+    The one rule with teeth: a row is classed as External research only at the axis settings a
+    published study actually supports. Everywhere else it is a model assumption, whatever the
+    prose around it says.
+    """
+    ctx = build_context(baseline, axis_settings, knobs, extra)
+    out: list[Assumption] = []
+    for row in spec:
+        klass = row["klass"]
+        value = render_value(row["value"], ctx)
+        source = row.get("source", "")
+        if row.get("elasticity"):
+            setting = axis_settings.get(row["value"].get("axis", "price_sensitivity"), "central")
+            klass = RESEARCH if setting in research_settings else ASSUMPTION
+            if custom_elasticity is not None:
+                value = f"{abs(custom_elasticity):.2f} (your value)"
+                klass = CUSTOMER
+                source = ""
+            if klass != RESEARCH:
+                source = row.get("assumption_source", source if klass == CUSTOMER else "")
+        out.append(Assumption(
+            key=row["key"], label=row["label"], value=value, klass=klass,
+            swept=bool(row.get("swept", False)), note=row.get("note", ""), source=source,
+        ))
+    return out

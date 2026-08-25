@@ -23,7 +23,7 @@ from event_sim.shop.worlds import (
     build_worlds,
     cogs_reduction_points,
 )
-from event_sim.wedge.spec import WedgeSpec
+from event_sim.wedge.spec import WedgeSpec, _key_from_fields
 
 DEFAULT_AXES: dict[str, str] = {
     "price_sensitivity": "central",
@@ -48,14 +48,8 @@ SWEEP_LABELS: dict[str, str] = {
 }
 
 
-def _grid_key(baseline: ShopBaseline, settings: dict[str, Any], _comparison: Any) -> dict[str, Any]:
-    return {
-        "price_sensitivity": settings["price_sensitivity"],
-        "cogs_pass_through": settings["cogs_pass_through"],
-        "supplier_increase_pct": float(settings["supplier_increase_pct"]),
-        "reduction_points": cogs_reduction_points(baseline, float(settings["trim_effectiveness"])),
-        "demand_adjustment_speed": settings["demand_adjustment_speed"],
-    }
+def _grid_key(baseline, settings: dict[str, Any], _comparison: Any) -> dict[str, Any]:
+    return _key_from_fields(COPY["grid_key_fields"], cogs_reduction_points(baseline, float(settings["trim_effectiveness"])), settings)
 
 
 COPY: dict[str, Any] = {
@@ -70,6 +64,22 @@ COPY: dict[str, Any] = {
         "low_margin": "low_margin_share_pct",
     },
     "primary_axis": "price_sensitivity",
+    "summary_fields": [
+        ["monthly_revenue", "monthly_revenue", 2], ["daily_orders", "daily_orders", 1],
+        ["average_order_value", "average_ticket", 2], ["monthly_cogs", "unit_cost_total", 2],
+        ["cogs_pct", "cost_pct", 1], ["gross_margin_pct", "gross_margin_pct", 1],
+        ["monthly_fixed_costs", "fixed", 2], ["monthly_net", "monthly_net", 2],
+        ["net_margin_pct", "net_margin_pct", 1], ["cash_on_hand", "cash", 2],
+        ["supplier_increase_pct", "supplier_increase_pct", None],
+        ["low_margin_share_pct", "low_margin_share_pct", None],
+    ],
+    "grid_key_fields": {
+        "price_sensitivity": "price_sensitivity",
+        "cogs_pass_through": "cogs_pass_through",
+        "supplier_increase_pct": {"float": "supplier_increase_pct"},
+        "reduction_points": "reduction",
+        "demand_adjustment_speed": "demand_adjustment_speed",
+    },
     "demo_noun": "shop",
     "page_title": "Shop cost decision — three options compared",
     "research_settings": ["high"],

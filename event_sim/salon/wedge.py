@@ -24,7 +24,7 @@ from event_sim.salon.worlds import (
     capacity_per_day,
     cost_reduction_points,
 )
-from event_sim.wedge.spec import WedgeSpec
+from event_sim.wedge.spec import WedgeSpec, _key_from_fields
 
 DEFAULT_AXES: dict[str, str] = {
     "price_sensitivity": "central",
@@ -48,14 +48,8 @@ SWEEP_LABELS: dict[str, str] = {
 }
 
 
-def _grid_key(baseline: SalonBaseline, settings: dict[str, Any], _comparison: Any) -> dict[str, Any]:
-    return {
-        "price_sensitivity": settings["price_sensitivity"],
-        "utilisation_pct": float(settings["utilisation_pct"]),
-        "demand_growth_pct": float(settings["demand_growth_pct"]),
-        "reduction_points": cost_reduction_points(baseline, float(settings["mix_effectiveness"])),
-        "demand_adjustment_speed": settings["demand_adjustment_speed"],
-    }
+def _grid_key(baseline, settings: dict[str, Any], _comparison: Any) -> dict[str, Any]:
+    return _key_from_fields(COPY["grid_key_fields"], cost_reduction_points(baseline, float(settings["mix_effectiveness"])), settings)
 
 
 COPY: dict[str, Any] = {
@@ -71,6 +65,23 @@ COPY: dict[str, Any] = {
         "utilisation": "utilisation_pct",
     },
     "primary_axis": "price_sensitivity",
+    "summary_fields": [
+        ["monthly_revenue", "monthly_revenue", 2], ["appointments_per_day", "appointments_per_day", 2],
+        ["average_ticket", "average_ticket", 2], ["monthly_variable_costs", "unit_cost_total", 2],
+        ["variable_cost_pct", "cost_pct", 1], ["gross_margin_pct", "gross_margin_pct", 1],
+        ["monthly_fixed_costs", "fixed", 2], ["monthly_net", "monthly_net", 2],
+        ["net_margin_pct", "net_margin_pct", 1], ["cash_on_hand", "cash", 2],
+        ["utilisation_pct", "utilisation_pct", None], ["capacity_per_day", "capacity_per_day", 2],
+        ["demand_growth_pct", "demand_growth_pct", None],
+        ["low_margin_share_pct", "low_margin_share_pct", None],
+    ],
+    "grid_key_fields": {
+        "price_sensitivity": "price_sensitivity",
+        "utilisation_pct": {"float": "utilisation_pct"},
+        "demand_growth_pct": {"float": "demand_growth_pct"},
+        "reduction_points": "reduction",
+        "demand_adjustment_speed": "demand_adjustment_speed",
+    },
     "demo_noun": "salon",
     "page_title": "Salon pricing decision — three options compared",
     "research_settings": [],

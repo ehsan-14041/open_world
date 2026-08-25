@@ -1,7 +1,8 @@
 """
 The PHP port must change nothing.
 
-The port exists so a cafe owner's report can be generated on a PHP-only host. That is only
+The port exists so an owner's report can be generated on a PHP-only host, for any of the
+three wedges. That is only
 worth having if it is the same instrument: same trajectories, same metrics, same
 reproducibility hashes. These tests compare the two implementations directly and fail if they
 diverge at all.
@@ -25,20 +26,21 @@ from pathlib import Path
 import pytest
 
 from event_sim.cafe.baseline import DEMO_CAFE
-from event_sim.cafe.run import run_comparison
+from event_sim.wedge.compare import run_comparison as run_wedge
+from event_sim.wedge.registry import WEDGES
 
 ROOT = Path(__file__).resolve().parent.parent
 PHP_ROOT = ROOT / "deploy" / "php"
-FROZEN = PHP_ROOT / "assets" / "frozen.json"
+FROZEN = PHP_ROOT / "assets"
 
 pytestmark = pytest.mark.skipif(shutil.which("php") is None, reason="php CLI not on PATH")
 
 DRIVER = """<?php
 require __DIR__ . '/lib/report.php';
-$frozen = json_decode(file_get_contents(__DIR__ . '/assets/frozen.json'), true);
-$slice = new Slice($frozen['slice']);
-$baseline = new Baseline(json_decode($argv[1], true));
-$comp = run_comparison($slice, $frozen, $baseline, [], (float) $frozen['defaults']['reformulation_effectiveness']);
+$wedge = json_decode(file_get_contents(__DIR__ . '/assets/' . $argv[1] . '.json'), true);
+$slice = new Slice($wedge['slice']);
+$baseline = new Baseline(json_decode($argv[2], true), $wedge);
+$comp = run_comparison($slice, $wedge, $baseline, [], (float) reset($wedge['defaults']['knobs']));
 $out = ['ranking' => ranking($comp), 'worlds' => []];
 foreach ($comp['worlds'] as $w) {
     $out['worlds'][$w['spec']['id']] = [
@@ -46,26 +48,31 @@ foreach ($comp['worlds'] as $w) {
         'indices' => $w['indices'],
         'cash' => $w['ledger']['cash'],
         'fingerprint' => $w['fingerprint'],
+        'trajectory_fingerprint' => $w['trajectory_fingerprint'],
     ];
 }
 echo json_encode($out, JSON_PRESERVE_ZERO_FRACTION);
 """
 
-CAFES = [
-    DEMO_CAFE,
-    replace(DEMO_CAFE, name="Corner Bean", monthly_revenue=32000.0, daily_orders=140.0,
-            monthly_cogs=11200.0, monthly_fixed_costs=20500.0, cash_on_hand=6000.0,
-            supplier_increase_pct=40.0, low_margin_share_pct=30.0, is_demo=False, notes=[]),
-]
+#: Every wedge's demo, plus one non-demo cafe — the PHP host must serve all three.
+CASES = (
+    [("cafe", DEMO_CAFE)]
+    + [(wid, w.demo_factory()) for wid, w in sorted(WEDGES.items()) if wid != "cafe"]
+    + [("cafe", replace(DEMO_CAFE, name="Corner Bean", monthly_revenue=32000.0, daily_orders=140.0,
+                        monthly_cogs=11200.0, monthly_fixed_costs=20500.0, cash_on_hand=6000.0,
+                        supplier_increase_pct=40.0, low_margin_share_pct=30.0, is_demo=False,
+                        notes=[]))]
+)
 
 
-def _php(baseline) -> dict:
+def _php(wedge_id: str, baseline) -> dict:
     with tempfile.TemporaryDirectory():
         driver = PHP_ROOT / "_test_driver.php"
         driver.write_text(DRIVER, encoding="utf-8")
         try:
             proc = subprocess.run(
-                ["php", "-d", "memory_limit=512M", str(driver), json.dumps(baseline.to_dict())],
+                ["php", "-d", "memory_limit=512M", str(driver), wedge_id,
+                 json.dumps(baseline.to_dict())],
                 capture_output=True, text=True, check=False,
             )
         finally:
@@ -74,10 +81,10 @@ def _php(baseline) -> dict:
     return json.loads(proc.stdout)
 
 
-@pytest.mark.parametrize("baseline", CAFES, ids=lambda b: b.name)
-def test_php_reproduces_the_engine_trajectories_exactly(baseline):
-    php = _php(baseline)
-    comp = run_comparison(baseline)
+@pytest.mark.parametrize("wedge_id,baseline", CASES, ids=lambda x: x if isinstance(x, str) else x.name)
+def test_php_reproduces_the_engine_trajectories_exactly(wedge_id, baseline):
+    php = _php(wedge_id, baseline)
+    comp = run_wedge(WEDGES[wedge_id], baseline)
 
     assert php["ranking"] == comp.ranking()
     for w in comp.worlds:
@@ -88,10 +95,10 @@ def test_php_reproduces_the_engine_trajectories_exactly(baseline):
                 assert a == pytest.approx(b, abs=1e-9), f"{w.spec.id} {key} day {day}"
 
 
-@pytest.mark.parametrize("baseline", CAFES, ids=lambda b: b.name)
-def test_php_reproduces_the_accounting_and_the_decision_metrics(baseline):
-    php = _php(baseline)
-    comp = run_comparison(baseline)
+@pytest.mark.parametrize("wedge_id,baseline", CASES, ids=lambda x: x if isinstance(x, str) else x.name)
+def test_php_reproduces_the_accounting_and_the_decision_metrics(wedge_id, baseline):
+    php = _php(wedge_id, baseline)
+    comp = run_wedge(WEDGES[wedge_id], baseline)
 
     for w in comp.worlds:
         got = php["worlds"][w.spec.id]
@@ -105,17 +112,21 @@ def test_php_reproduces_the_accounting_and_the_decision_metrics(baseline):
                 assert float(value) == pytest.approx(float(other), abs=1e-6), key
 
 
-@pytest.mark.parametrize("baseline", CAFES, ids=lambda b: b.name)
-def test_php_reproduces_the_reproducibility_hashes(baseline):
+@pytest.mark.parametrize("wedge_id,baseline", CASES, ids=lambda x: x if isinstance(x, str) else x.name)
+def test_php_reproduces_the_reproducibility_hashes(wedge_id, baseline):
     """A fingerprint that differs would mean the two are not the same instrument."""
-    php = _php(baseline)
-    comp = run_comparison(baseline)
-    frozen = json.loads(FROZEN.read_text(encoding="utf-8"))
+    php = _php(wedge_id, baseline)
+    comp = run_wedge(WEDGES[wedge_id], baseline)
+    frozen = json.loads((FROZEN / f"{wedge_id}.json").read_text(encoding="utf-8"))
 
     assert frozen["module_semantic_hash"] == comp.module_semantic_hash
     assert frozen["shared_fingerprint"] == comp.shared_fingerprint
     for w in comp.worlds:
-        assert php["worlds"][w.spec.id]["fingerprint"] == w.fingerprint, w.spec.id
+        got = php["worlds"][w.spec.id]
+        assert got["fingerprint"] == w.fingerprint, w.spec.id
+        # The registry-independent one has to match too, or a report generated on the host
+        # could not be checked against one generated here across repository states.
+        assert got["trajectory_fingerprint"] == w.trajectory_fingerprint, w.spec.id
 
 
 def test_frozen_assets_are_current():
@@ -125,7 +136,10 @@ def test_frozen_assets_are_current():
     assert proc.returncode == 0, proc.stderr
     template = (ROOT / "event_sim" / "cafe" / "templates" / "decision_report.html").read_text(encoding="utf-8")
     assert (PHP_ROOT / "assets" / "decision_report.html").read_text(encoding="utf-8") == template
-    frozen = json.loads(FROZEN.read_text(encoding="utf-8"))
-    assert frozen["demo_cafe"]["monthly_revenue"] == DEMO_CAFE.monthly_revenue
-    assert len(frozen["slice"]["variables"]) == 4
-    assert len(frozen["slice"]["edges"]) == 2
+    for wedge_id, wedge in WEDGES.items():
+        frozen = json.loads((FROZEN / f"{wedge_id}.json").read_text(encoding="utf-8"))
+        assert frozen["demo"] == wedge.demo_factory().to_dict()
+        assert frozen["module_id"] == wedge.module_id
+        assert frozen["registry_spec"], f"{wedge_id} exported no registry spec"
+        assert len(frozen["sweep"]) == len(wedge.sweep)
+        assert frozen["research_settings"] == wedge.copy["research_settings"]

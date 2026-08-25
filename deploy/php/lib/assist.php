@@ -20,9 +20,7 @@ const ASSIST_SYSTEM = <<<'PROMPT'
 You extract business figures from a short description written by a small business owner, so
 they can be shown back in a form for the owner to check and correct.
 
-Return a JSON object with exactly these keys:
-  name, monthly_revenue, daily_orders, monthly_cogs, monthly_fixed_costs, cash_on_hand,
-  supplier_increase_pct, low_margin_share_pct, evidence, missing, note
+Return a JSON object with exactly the keys you are given, plus `evidence`, `missing` and `note`.
 
 Rules:
 - Every figure must come from the text. Use null for anything the text does not give. Never
@@ -42,13 +40,12 @@ Rules:
 Return nothing but the JSON object.
 PROMPT;
 
-const ASSIST_FIELDS = ['monthly_revenue', 'daily_orders', 'monthly_cogs', 'monthly_fixed_costs',
-                       'cash_on_hand', 'supplier_increase_pct', 'low_margin_share_pct'];
+
 
 /**
  * @return array{ok:bool, error:string, fields:array, evidence:array, missing:array, note:string}
  */
-function assist_extract(array $llm, string $description): array
+function assist_extract(array $llm, string $description, array $wanted): array
 {
     $fail = static fn (string $why): array => ['ok' => false, 'error' => $why, 'fields' => [],
                                                'evidence' => [], 'missing' => [], 'note' => ''];
@@ -63,7 +60,10 @@ function assist_extract(array $llm, string $description): array
         return $fail('The intake assistant is switched off.');
     }
 
-    $result = llm_chat($llm, ASSIST_SYSTEM, $description, ['json' => true, 'max_output_tokens' => 1200]);
+    $askFor = "Fields to fill: " . implode(', ', $wanted) . "
+
+" . $description;
+    $result = llm_chat($llm, ASSIST_SYSTEM, $askFor, ['json' => true, 'max_output_tokens' => 1200]);
     if (!$result['ok']) {
         return $fail($result['error']);
     }
@@ -77,7 +77,10 @@ function assist_extract(array $llm, string $description): array
         $fields['name'] = mb_substr(trim($decoded['name']), 0, 80);
     }
     $missing = [];
-    foreach (ASSIST_FIELDS as $key) {
+    foreach ($wanted as $key) {
+        if ($key === 'name') {
+            continue;
+        }
         $value = $decoded[$key] ?? null;
         // A model may return "32000" or 32000; anything else is not a figure.
         if (is_string($value) && is_numeric(str_replace([',', ' '], '', $value))) {

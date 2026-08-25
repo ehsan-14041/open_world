@@ -1,9 +1,177 @@
 {
+ "wedge": {
+  "id": "cafe",
+  "business": "Cafe / Restaurant",
+  "question": "Ingredient costs jumped. What should I change?",
+  "module_id": "cafe_cost_shock_v1"
+ },
+ "copy": {
+  "fields": {
+   "units_per_day": "daily_orders",
+   "unit_cost_total": "monthly_cogs",
+   "revenue": "monthly_revenue",
+   "fixed": "monthly_fixed_costs",
+   "cash": "cash_on_hand",
+   "shock": "supplier_increase_pct",
+   "low_margin": "low_margin_share_pct"
+  },
+  "primary_axis": "price_sensitivity",
+  "summary_fields": [
+   [
+    "monthly_revenue",
+    "monthly_revenue",
+    2
+   ],
+   [
+    "daily_orders",
+    "daily_orders",
+    1
+   ],
+   [
+    "average_order_value",
+    "average_ticket",
+    2
+   ],
+   [
+    "monthly_cogs",
+    "unit_cost_total",
+    2
+   ],
+   [
+    "cogs_pct",
+    "cost_pct",
+    1
+   ],
+   [
+    "gross_margin_pct",
+    "gross_margin_pct",
+    1
+   ],
+   [
+    "monthly_fixed_costs",
+    "fixed",
+    2
+   ],
+   [
+    "monthly_net",
+    "monthly_net",
+    2
+   ],
+   [
+    "net_margin_pct",
+    "net_margin_pct",
+    1
+   ],
+   [
+    "cash_on_hand",
+    "cash",
+    2
+   ],
+   [
+    "supplier_increase_pct",
+    "supplier_increase_pct",
+    null
+   ],
+   [
+    "low_margin_share_pct",
+    "low_margin_share_pct",
+    null
+   ]
+  ],
+  "grid_key_fields": {
+   "price_sensitivity": "price_sensitivity",
+   "cogs_pass_through": "cogs_pass_through",
+   "supplier_increase_pct": {
+    "float": "supplier_increase_pct"
+   },
+   "reduction_points": "reduction",
+   "demand_adjustment_speed": "demand_adjustment_speed"
+  },
+  "demo_noun": "cafe",
+  "page_title": "Cafe cost decision — three options compared",
+  "research_settings": [
+   "central"
+  ],
+  "world_verdict_labels": {
+   "A": "Doing nothing",
+   "B": "Raising prices 10%",
+   "C": "A 5% rise plus trimming the menu"
+  },
+  "world_names": {
+   "A": "Hold prices",
+   "B": "Raise prices 10%",
+   "C": "Raise prices 5% + simplify low-margin items"
+  },
+  "world_short": {
+   "A": "Hold prices",
+   "B": "Raise 10%",
+   "C": "Raise 5% + simplify"
+  },
+  "headline": "Ingredient costs are up {shock}%. What should you do?",
+  "hero_lede": "We compared three decisions using the same model of your cafe and the same assumptions. Only the decision changes between them — so the differences come from the decision, not from different guesses.",
+  "unit_word": "orders",
+  "unit_word_singular": "order",
+  "cost_word": "ingredient cost",
+  "uncertainty_title": "How price-sensitive are your customers?",
+  "uncertainty_eyebrow": "The biggest uncertainty",
+  "sens_help": {
+   "low": "Loyal customers, or your competitors are raising prices too.",
+   "central": "The typical response found in research on eating out.",
+   "high": "Stress case: competitors hold their prices and customers have easy alternatives."
+  },
+  "sens_values": {
+   "low": "0.50",
+   "central": "0.81",
+   "high": "1.60"
+  },
+  "c_card_note": "Depends on two of our assumptions: how much simplifying the menu cuts ingredient cost (about {red} points here) and how many {unit} leave with the removed items ({loss}%). Neither is calibrated to your business yet.",
+  "chart_title": "Cash in the bank under each decision",
+  "chart_lede": "Costs take about a week to rise — you are still using stock bought at the old price. Customers take a couple of weeks to react to a new price.",
+  "next_measurement": "A small real-world price test — a few items, a few weeks — or your sales figures from the last time you changed prices would give much better evidence about how your customers respond. That evidence can replace the research estimate in this comparison.",
+  "sources_note": "On price sensitivity: external research gives a reference range for eating out as a whole. Your actual customers may be more or less price-sensitive than that, and the High setting is a stress assumption rather than a research finding.",
+  "limits_does_not": [
+   "Predict the future or guarantee an outcome.",
+   "Model how competitors react.",
+   "Model the wider economy, seasons or new customers.",
+   "Know your customers' price sensitivity — unless you bring evidence."
+  ],
+  "intake_groups": [
+   {
+    "label": "Your business",
+    "fields": [
+     "monthly_revenue",
+     "daily_orders",
+     "cash_on_hand"
+    ]
+   },
+   {
+    "label": "Your costs",
+    "fields": [
+     "monthly_cogs",
+     "monthly_fixed_costs"
+    ]
+   },
+   {
+    "label": "The shock",
+    "fields": [
+     "supplier_increase_pct"
+    ]
+   },
+   {
+    "label": "Your menu",
+    "fields": [
+     "low_margin_share_pct",
+     "name"
+    ]
+   }
+  ]
+ },
  "module_id": "cafe_cost_shock_v1",
  "module_semantic_hash": "2f23cedf54da0e509b51a5406338834dfb301f5bf30392c2d45cbef7d8ec2968",
  "shared_fingerprint": "5ec5e89c2e2bf861057df1ec34cb4c2638085b50d2acfae55ee91c431bacc8b4",
  "canonical": {
   "slice": "{\"assumptions\": [{\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"input_cost\", \"kind\": \"variable_dynamics\", \"mechanism\": \"What the cafe pays its suppliers per unit of ingredients, relative to before the shock. Held by the cost-shock event for the whole horizon: a cost increase is a stated fact, not a pressure to relax away from.\", \"sourced\": false, \"statement\": \"input_cost baseline 100.0 index (100 = pre-shock), closes 100% of the gap to causal pressure per turn\", \"status\": \"user_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"menu_price\", \"kind\": \"variable_dynamics\", \"mechanism\": \"Average price charged per order relative to before the shock. A decision variable, not an outcome: it has no incoming edges and holds exactly the intervention offset.\", \"sourced\": false, \"statement\": \"menu_price baseline 100.0 index (100 = pre-shock), closes 100% of the gap to causal pressure per turn\", \"status\": \"user_assumption\"}, {\"confidence\": \"medium\", \"effect_span\": 0.30000000000000004, \"id\": \"input_cost->cogs_per_order\", \"kind\": \"causal_edge\", \"mechanism\": \"Ingredient purchases are the cafe's cost of goods. A supplier increase lands in COGS once inventory bought at the old price is consumed (~a week for fresh stock). Central pass-through is 1.0 by definition of the input; the low setting represents partial substitution, renegotiation or hedged contracts absorbing some of it. Pass-through above 1.0 is not modelled.\", \"sourced\": false, \"statement\": \"input_cost affects cogs_per_order (positive, effect 0.7-1.0, lag 5-10 days)\", \"status\": \"expert_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"cogs_pass_through\", \"kind\": \"assumption_axis\", \"mechanism\": \"Low: you absorb some through substitution, renegotiation or contracts (0.70). Central and high: all of it (1.00).\", \"sourced\": false, \"statement\": \"How much of the supplier increase reaches your cost of goods?: swept over low, central, high\", \"status\": \"expert_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"cogs_per_order\", \"kind\": \"variable_dynamics\", \"mechanism\": \"Average ingredient cost embedded in one order. Rises toward the new input price as old inventory is used up (response 0.25/day ~ a 2-3 day half-life on top of the 7-day edge lag). World C's menu reformulation lowers it by a fixed number of index points.\", \"sourced\": false, \"statement\": \"cogs_per_order baseline 100.0 index (100 = pre-shock), closes 25% of the gap to causal pressure per turn\", \"status\": \"expert_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"demand\", \"kind\": \"variable_dynamics\", \"mechanism\": \"Daily orders relative to before the shock. Responds to the menu price through the elasticity edge, gradually: response 0.05/day means customers reach half of their full reaction in about two weeks. That speed is an assumption and is swept.\", \"sourced\": false, \"statement\": \"demand baseline 100.0 index (100 = pre-shock daily orders), closes 5% of the gap to causal pressure per turn\", \"status\": \"expert_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"demand_adjustment_speed\", \"kind\": \"assumption_axis\", \"mechanism\": \"Multiplies the demand response rate. Slow: half-reaction in about a month. Central: about two weeks. Fast: about a week.\", \"sourced\": false, \"statement\": \"How quickly do customers react?: swept over slow, central, fast\", \"status\": \"expert_assumption\"}, {\"confidence\": \"medium\", \"effect_span\": 1.1, \"id\": \"menu_price->demand\", \"kind\": \"causal_edge\", \"mechanism\": \"Customers buy fewer orders, trade down, or go elsewhere when the average price rises. Coefficient is the own-price elasticity magnitude: a 1% price rise eventually reduces orders by that percentage. The lag is 0 because the reaction begins at once; how fast it completes is the demand variable's response rate, not the edge.\", \"sourced\": true, \"statement\": \"menu_price affects demand (negative, effect 0.5-1.6, lag 0-0 days)\", \"status\": \"literature_backed\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"price_sensitivity\", \"kind\": \"assumption_axis\", \"mechanism\": \"The single assumption most likely to change the decision. Low: loyal customers and competitors raising too (0.50). Central: the food-away-from-home category estimate (0.81, literature). High: you raise, competitors hold, customers have an easy alternative (1.60, expert judgement).\", \"sourced\": false, \"statement\": \"How price-sensitive are your customers?: swept over low, central, high\", \"status\": \"literature_backed\"}], \"axes\": [{\"applies_to\": [\"menu_price->demand\"], \"description\": \"The single assumption most likely to change the decision. Low: loyal customers and competitors raising too (0.50). Central: the food-away-from-home category estimate (0.81, literature). High: you raise, competitors hold, customers have an easy alternative (1.60, expert judgement).\", \"id\": \"price_sensitivity\", \"label\": \"How price-sensitive are your customers?\", \"mapping\": {\"central\": {\"effect_setting\": \"central\"}, \"high\": {\"effect_setting\": \"high\"}, \"low\": {\"effect_setting\": \"low\"}}, \"settings\": [\"low\", \"central\", \"high\"], \"status\": \"literature_backed\"}, {\"applies_to\": [\"input_cost->cogs_per_order\"], \"description\": \"Low: you absorb some through substitution, renegotiation or contracts (0.70). Central and high: all of it (1.00).\", \"id\": \"cogs_pass_through\", \"label\": \"How much of the supplier increase reaches your cost of goods?\", \"mapping\": {\"central\": {\"effect_setting\": \"central\"}, \"high\": {\"effect_setting\": \"high\"}, \"low\": {\"effect_setting\": \"low\"}}, \"settings\": [\"low\", \"central\", \"high\"], \"status\": \"expert_assumption\"}, {\"applies_to\": [\"demand\"], \"description\": \"Multiplies the demand response rate. Slow: half-reaction in about a month. Central: about two weeks. Fast: about a week.\", \"id\": \"demand_adjustment_speed\", \"label\": \"How quickly do customers react?\", \"mapping\": {\"central\": {\"response_multiplier\": 1.0}, \"fast\": {\"response_multiplier\": 2.0}, \"slow\": {\"response_multiplier\": 0.5}}, \"settings\": [\"slow\", \"central\", \"fast\"], \"status\": \"expert_assumption\"}], \"coverage\": {\"assumption_share\": 0.5, \"by_group\": {\"ai_hypothesis\": 0, \"assumption\": 1, \"literature_backed\": 1, \"observed_empirical\": 0}, \"by_status\": {\"expert_assumption\": 1, \"literature_backed\": 1}, \"disclaimer\": \"Coverage counts how many causal mechanisms carry evidence. It is not a probability that the simulated trajectories are correct.\", \"edge_count\": 2, \"group_labels\": {\"ai_hypothesis\": \"AI hypothesis\", \"assumption\": \"Expert or user assumption\", \"literature_backed\": \"Literature-backed / historically calibrated\", \"observed_empirical\": \"Observed / empirical\"}, \"shares\": {\"ai_hypothesis\": 0.0, \"assumption\": 0.5, \"literature_backed\": 0.5, \"observed_empirical\": 0.0}, \"sourced_edges\": 1, \"variable_count\": 4, \"variables_by_status\": {\"expert_assumption\": 2, \"user_assumption\": 2}, \"weakly_evidenced\": true}, \"edges\": [{\"axis\": \"cogs_pass_through\", \"calibration\": {}, \"confidence\": \"medium\", \"effect\": {\"central\": 1.0, \"high\": 1.0, \"low\": 0.7}, \"evidence\": [], \"geography\": [\"global\"], \"lag\": {\"max\": 10, \"min\": 5, \"unit\": \"days\"}, \"mechanism\": \"Ingredient purchases are the cafe's cost of goods. A supplier increase lands in COGS once inventory bought at the old price is consumed (~a week for fresh stock). Central pass-through is 1.0 by definition of the input; the low setting represents partial substitution, renegotiation or hedged contracts absorbing some of it. Pass-through above 1.0 is not modelled.\", \"mechanism_type\": \"linear\", \"polarity\": \"positive\", \"source\": \"input_cost\", \"status\": \"expert_assumption\", \"target\": \"cogs_per_order\"}, {\"axis\": \"price_sensitivity\", \"calibration\": {}, \"confidence\": \"medium\", \"effect\": {\"central\": 0.81, \"high\": 1.6, \"low\": 0.5}, \"evidence\": [{\"note\": \"Food away from home: mean own-price elasticity 0.81 (95% CI 0.56-1.07; range 0.23-1.76) across 13 US estimates, studies 1938-2007. CATEGORY-level: describes demand for eating out as a whole when the whole category's price moves. Supports the CENTRAL setting for a cost shock that hits the whole local market, so competitors raise too.\", \"reference\": \"Andreyeva T, Long MW, Brownell KD. The impact of food prices on consumption: a systematic review of research on the price elasticity of demand for food. Am J Public Health. 2010;100(2):216-222. doi:10.2105/AJPH.2008.151415\", \"type\": \"empirical_study\", \"year\": 2010}, {\"note\": \"Mean BRAND-level price elasticity -2.62 across 1,851 estimates from 81 studies, predominantly packaged goods in scanner data. Cited as the reference point for a single outlet raising prices while competitors hold theirs; NOT transferred directly, because an independent cafe is differentiated by location and habit in ways a supermarket brand is not. The HIGH setting (1.60) is an expert judgement between the category CI top (1.07) and this mean, and is labelled expert_assumption.\", \"reference\": \"Bijmolt THA, van Heerde HJ, Pieters RGM. New empirical generalizations on the determinants of price elasticity. J Marketing Res. 2005;42(2):141-156.\", \"type\": \"empirical_study\", \"year\": 2005}], \"geography\": [\"US\"], \"lag\": {\"max\": 0, \"min\": 0, \"unit\": \"days\"}, \"mechanism\": \"Customers buy fewer orders, trade down, or go elsewhere when the average price rises. Coefficient is the own-price elasticity magnitude: a 1% price rise eventually reduces orders by that percentage. The lag is 0 because the reaction begins at once; how fast it completes is the demand variable's response rate, not the edge.\", \"mechanism_type\": \"linear\", \"polarity\": \"negative\", \"source\": \"menu_price\", \"status\": \"literature_backed\", \"target\": \"demand\"}], \"excluded_systems\": [\"small_business/salon_capacity_pricing_v1\", \"small_business/shop_cost_shock_v1\", \"supply_chain/port_disruption\", \"supply_chain/port_disruption_h1_queue_experimental\"], \"id\": \"cafe_cost_shock_v1\", \"included_systems\": [\"small_business/cafe_cost_shock_v1\"], \"interventions\": [{\"default_duration\": 90, \"default_magnitude\": 10.0, \"default_start_turn\": 1, \"description\": \"Adds the given number of percentage points to the average menu price for the whole horizon. Magnitude is the price increase in percent.\", \"effects_per_unit\": {\"menu_price\": 1.0}, \"id\": \"raise_prices\", \"label\": \"Raise average menu prices\", \"magnitude_label\": \"price increase, percent\", \"module\": \"cafe_cost_shock_v1\", \"status\": \"user_assumption\"}, {\"default_duration\": 90, \"default_magnitude\": 6.0, \"default_start_turn\": 1, \"description\": \"Lowers average ingredient cost per order by the given number of percentage points of the pre-shock COGS, and costs a small share of orders from customers who came for the removed items. Magnitude is the COGS reduction in percentage points; the demand cost is a fixed ratio of it (expert assumption, see evidence registry).\", \"effects_per_unit\": {\"cogs_per_order\": -1.0, \"demand\": -0.33}, \"id\": \"reformulate_menu\", \"label\": \"Remove or reformulate low-margin items\", \"magnitude_label\": \"COGS reduction, percentage points\", \"module\": \"cafe_cost_shock_v1\", \"status\": \"expert_assumption\"}], \"missing_evidence\": [{\"confidence\": \"medium\", \"edge\": \"input_cost->cogs_per_order\", \"effect_span\": 0.30000000000000004, \"mechanism\": \"Ingredient purchases are the cafe's cost of goods. A supplier increase lands in COGS once inventory bought at the old price is consumed (~a week for fresh stock). Central pass-through is 1.0 by definition of the input; the low setting represents partial substitution, renegotiation or hedged contracts absorbing some of it. Pass-through above 1.0 is not modelled.\", \"needs\": \"empirical estimate of effect size and lag\", \"source\": \"input_cost\", \"status\": \"expert_assumption\", \"target\": \"cogs_per_order\"}], \"question\": \"Ingredient costs rose. Which response?\", \"time_unit\": \"days\", \"variables\": [{\"axis\": null, \"baseline\": 100.0, \"description\": \"What the cafe pays its suppliers per unit of ingredients, relative to before the shock. Held by the cost-shock event for the whole horizon: a cost increase is a stated fact, not a pressure to relax away from.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 1.0, \"stock\": {}}, \"id\": \"input_cost\", \"label\": \"Supplier / ingredient price level\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"The owner sees this directly on supplier invoices. The shock event holds it.\", \"range\": {\"max\": 300.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"user_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": \"cogs_pass_through\", \"baseline\": 100.0, \"description\": \"Average ingredient cost embedded in one order. Rises toward the new input price as old inventory is used up (response 0.25/day ~ a 2-3 day half-life on top of the 7-day edge lag). World C's menu reformulation lowers it by a fixed number of index points.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 0.25, \"stock\": {}}, \"id\": \"cogs_per_order\", \"label\": \"Ingredient cost per order\", \"observability\": \"derived\", \"observability_class\": \"proxy_observable\", \"observability_note\": \"Observable from the owner's purchase ledger divided by order count, with a lag: ingredients already on the shelf were bought at the old price.\", \"range\": {\"max\": 300.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"expert_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": null, \"baseline\": 100.0, \"description\": \"Average price charged per order relative to before the shock. A decision variable, not an outcome: it has no incoming edges and holds exactly the intervention offset.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 1.0, \"stock\": {}}, \"id\": \"menu_price\", \"label\": \"Average menu price\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Set by the owner. No incoming edges: it moves only when an intervention moves it.\", \"range\": {\"max\": 200.0, \"min\": 50.0}, \"scale\": 100.0, \"status\": \"user_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": \"demand_adjustment_speed\", \"baseline\": 100.0, \"description\": \"Daily orders relative to before the shock. Responds to the menu price through the elasticity edge, gradually: response 0.05/day means customers reach half of their full reaction in about two weeks. That speed is an assumption and is swept.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 0.05, \"stock\": {}}, \"id\": \"demand\", \"label\": \"Customer orders\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Daily order count from the till.\", \"range\": {\"max\": 200.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"expert_assumption\", \"unit\": \"index (100 = pre-shock daily orders)\"}]}",
+  "trajectory_slice": "[{\"axis\": null, \"baseline\": 100.0, \"description\": \"What the cafe pays its suppliers per unit of ingredients, relative to before the shock. Held by the cost-shock event for the whole horizon: a cost increase is a stated fact, not a pressure to relax away from.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 1.0, \"stock\": {}}, \"id\": \"input_cost\", \"label\": \"Supplier / ingredient price level\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"The owner sees this directly on supplier invoices. The shock event holds it.\", \"range\": {\"max\": 300.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"user_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": \"cogs_pass_through\", \"baseline\": 100.0, \"description\": \"Average ingredient cost embedded in one order. Rises toward the new input price as old inventory is used up (response 0.25/day ~ a 2-3 day half-life on top of the 7-day edge lag). World C's menu reformulation lowers it by a fixed number of index points.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 0.25, \"stock\": {}}, \"id\": \"cogs_per_order\", \"label\": \"Ingredient cost per order\", \"observability\": \"derived\", \"observability_class\": \"proxy_observable\", \"observability_note\": \"Observable from the owner's purchase ledger divided by order count, with a lag: ingredients already on the shelf were bought at the old price.\", \"range\": {\"max\": 300.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"expert_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": null, \"baseline\": 100.0, \"description\": \"Average price charged per order relative to before the shock. A decision variable, not an outcome: it has no incoming edges and holds exactly the intervention offset.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 1.0, \"stock\": {}}, \"id\": \"menu_price\", \"label\": \"Average menu price\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Set by the owner. No incoming edges: it moves only when an intervention moves it.\", \"range\": {\"max\": 200.0, \"min\": 50.0}, \"scale\": 100.0, \"status\": \"user_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": \"demand_adjustment_speed\", \"baseline\": 100.0, \"description\": \"Daily orders relative to before the shock. Responds to the menu price through the elasticity edge, gradually: response 0.05/day means customers reach half of their full reaction in about two weeks. That speed is an assumption and is swept.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 0.05, \"stock\": {}}, \"id\": \"demand\", \"label\": \"Customer orders\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Daily order count from the till.\", \"range\": {\"max\": 200.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"expert_assumption\", \"unit\": \"index (100 = pre-shock daily orders)\"}, {\"axis\": \"cogs_pass_through\", \"calibration\": {}, \"confidence\": \"medium\", \"effect\": {\"central\": 1.0, \"high\": 1.0, \"low\": 0.7}, \"evidence\": [], \"geography\": [\"global\"], \"lag\": {\"max\": 10, \"min\": 5, \"unit\": \"days\"}, \"mechanism\": \"Ingredient purchases are the cafe's cost of goods. A supplier increase lands in COGS once inventory bought at the old price is consumed (~a week for fresh stock). Central pass-through is 1.0 by definition of the input; the low setting represents partial substitution, renegotiation or hedged contracts absorbing some of it. Pass-through above 1.0 is not modelled.\", \"mechanism_type\": \"linear\", \"polarity\": \"positive\", \"source\": \"input_cost\", \"status\": \"expert_assumption\", \"target\": \"cogs_per_order\"}, {\"axis\": \"price_sensitivity\", \"calibration\": {}, \"confidence\": \"medium\", \"effect\": {\"central\": 0.81, \"high\": 1.6, \"low\": 0.5}, \"evidence\": [{\"note\": \"Food away from home: mean own-price elasticity 0.81 (95% CI 0.56-1.07; range 0.23-1.76) across 13 US estimates, studies 1938-2007. CATEGORY-level: describes demand for eating out as a whole when the whole category's price moves. Supports the CENTRAL setting for a cost shock that hits the whole local market, so competitors raise too.\", \"reference\": \"Andreyeva T, Long MW, Brownell KD. The impact of food prices on consumption: a systematic review of research on the price elasticity of demand for food. Am J Public Health. 2010;100(2):216-222. doi:10.2105/AJPH.2008.151415\", \"type\": \"empirical_study\", \"year\": 2010}, {\"note\": \"Mean BRAND-level price elasticity -2.62 across 1,851 estimates from 81 studies, predominantly packaged goods in scanner data. Cited as the reference point for a single outlet raising prices while competitors hold theirs; NOT transferred directly, because an independent cafe is differentiated by location and habit in ways a supermarket brand is not. The HIGH setting (1.60) is an expert judgement between the category CI top (1.07) and this mean, and is labelled expert_assumption.\", \"reference\": \"Bijmolt THA, van Heerde HJ, Pieters RGM. New empirical generalizations on the determinants of price elasticity. J Marketing Res. 2005;42(2):141-156.\", \"type\": \"empirical_study\", \"year\": 2005}], \"geography\": [\"US\"], \"lag\": {\"max\": 0, \"min\": 0, \"unit\": \"days\"}, \"mechanism\": \"Customers buy fewer orders, trade down, or go elsewhere when the average price rises. Coefficient is the own-price elasticity magnitude: a 1% price rise eventually reduces orders by that percentage. The lag is 0 because the reaction begins at once; how fast it completes is the demand variable's response rate, not the edge.\", \"mechanism_type\": \"linear\", \"polarity\": \"negative\", \"source\": \"menu_price\", \"status\": \"literature_backed\", \"target\": \"demand\"}, {\"applies_to\": [\"menu_price->demand\"], \"description\": \"The single assumption most likely to change the decision. Low: loyal customers and competitors raising too (0.50). Central: the food-away-from-home category estimate (0.81, literature). High: you raise, competitors hold, customers have an easy alternative (1.60, expert judgement).\", \"id\": \"price_sensitivity\", \"label\": \"How price-sensitive are your customers?\", \"mapping\": {\"central\": {\"effect_setting\": \"central\"}, \"high\": {\"effect_setting\": \"high\"}, \"low\": {\"effect_setting\": \"low\"}}, \"settings\": [\"low\", \"central\", \"high\"], \"status\": \"literature_backed\"}, {\"applies_to\": [\"input_cost->cogs_per_order\"], \"description\": \"Low: you absorb some through substitution, renegotiation or contracts (0.70). Central and high: all of it (1.00).\", \"id\": \"cogs_pass_through\", \"label\": \"How much of the supplier increase reaches your cost of goods?\", \"mapping\": {\"central\": {\"effect_setting\": \"central\"}, \"high\": {\"effect_setting\": \"high\"}, \"low\": {\"effect_setting\": \"low\"}}, \"settings\": [\"low\", \"central\", \"high\"], \"status\": \"expert_assumption\"}, {\"applies_to\": [\"demand\"], \"description\": \"Multiplies the demand response rate. Slow: half-reaction in about a month. Central: about two weeks. Fast: about a week.\", \"id\": \"demand_adjustment_speed\", \"label\": \"How quickly do customers react?\", \"mapping\": {\"central\": {\"response_multiplier\": 1.0}, \"fast\": {\"response_multiplier\": 2.0}, \"slow\": {\"response_multiplier\": 0.5}}, \"settings\": [\"slow\", \"central\", \"fast\"], \"status\": \"expert_assumption\"}]",
   "config": "{\"axis_settings\": {\"cogs_pass_through\": \"central\", \"demand_adjustment_speed\": \"central\", \"price_sensitivity\": \"central\"}, \"label\": \"cafe\", \"lag_setting\": \"central\", \"seed\": 0, \"turns\": 90}"
  },
  "slice": {
@@ -190,6 +358,17 @@
    }
   ]
  },
+ "roles": {
+  "demand_var": "demand",
+  "price_var": "menu_price",
+  "unit_cost_var": "cogs_per_order",
+  "index_vars": [
+   "input_cost",
+   "cogs_per_order",
+   "menu_price",
+   "demand"
+  ]
+ },
  "defaults": {
   "horizon_days": 90,
   "days_per_month": 30.416666666666668,
@@ -198,121 +377,250 @@
    "cogs_pass_through": "central",
    "demand_adjustment_speed": "central"
   },
-  "reformulation_effectiveness": 0.3,
+  "knobs": {
+   "reformulation_effectiveness": 0.3
+  },
   "price_rise_b": 10.0,
   "price_rise_c": 5.0
  },
- "demo_cafe": {
-  "name": "Demo cafe (fictional)",
-  "monthly_revenue": 48600.0,
-  "daily_orders": 200.0,
-  "monthly_cogs": 15550.0,
-  "monthly_fixed_costs": 29500.0,
-  "cash_on_hand": 18000.0,
-  "supplier_increase_pct": 30.0,
-  "low_margin_share_pct": 20.0,
-  "is_demo": true,
-  "notes": [
-   "All values are fictional and chosen for illustration; they are not from any real business.",
-   "Fixed costs include wages: over a 90-day horizon staffing is treated as fixed."
-  ]
- },
- "wedge": {
-  "id": "cafe",
-  "business": "Cafe / Restaurant",
-  "question": "Ingredient costs jumped. What should I change?",
-  "module_id": "cafe_cost_shock_v1"
- },
- "copy": {
-  "fields": {
-   "units_per_day": "daily_orders",
-   "unit_cost_total": "monthly_cogs",
-   "revenue": "monthly_revenue",
-   "fixed": "monthly_fixed_costs",
-   "cash": "cash_on_hand",
-   "shock": "supplier_increase_pct",
-   "low_margin": "low_margin_share_pct"
+ "worlds": {
+  "event": {
+   "id": "supplier_cost_increase",
+   "target": "input_cost",
+   "magnitude_field": "supplier_increase_pct",
+   "label": "Supplier prices +{shock}%",
+   "description": "Ingredient / input prices rise and stay at the new level for 90 days."
   },
-  "primary_axis": "price_sensitivity",
-  "demo_noun": "cafe",
-  "page_title": "Cafe cost decision \u2014 three options compared",
-  "research_settings": [
-   "central"
-  ],
-  "world_verdict_labels": {
-   "A": "Doing nothing",
-   "B": "Raising prices 10%",
-   "C": "A 5% rise plus trimming the menu"
+  "reduction": {
+   "share_field": "low_margin_share_pct",
+   "knob": "reformulation_effectiveness"
   },
-  "world_names": {
-   "A": "Hold prices",
-   "B": "Raise prices 10%",
-   "C": "Raise prices 5% + simplify low-margin items"
+  "levers": {
+   "price": "raise_prices",
+   "reduce": "reformulate_menu"
   },
-  "world_short": {
-   "A": "Hold prices",
-   "B": "Raise 10%",
-   "C": "Raise 5% + simplify"
-  },
-  "headline": "Ingredient costs are up {shock}%. What should you do?",
-  "hero_lede": "We compared three decisions using the same model of your cafe and the same assumptions. Only the decision changes between them \u2014 so the differences come from the decision, not from different guesses.",
-  "unit_word": "orders",
-  "unit_word_singular": "order",
-  "cost_word": "ingredient cost",
-  "uncertainty_title": "How price-sensitive are your customers?",
-  "uncertainty_eyebrow": "The biggest uncertainty",
-  "sens_help": {
-   "low": "Loyal customers, or your competitors are raising prices too.",
-   "central": "The typical response found in research on eating out.",
-   "high": "Stress case: competitors hold their prices and customers have easy alternatives."
-  },
-  "sens_values": {
-   "low": "0.50",
-   "central": "0.81",
-   "high": "1.60"
-  },
-  "c_card_note": "Depends on two of our assumptions: how much simplifying the menu cuts ingredient cost (about {red} points here) and how many {unit} leave with the removed items ({loss}%). Neither is calibrated to your business yet.",
-  "chart_title": "Cash in the bank under each decision",
-  "chart_lede": "Costs take about a week to rise \u2014 you are still using stock bought at the old price. Customers take a couple of weeks to react to a new price.",
-  "next_measurement": "A small real-world price test \u2014 a few items, a few weeks \u2014 or your sales figures from the last time you changed prices would give much better evidence about how your customers respond. That evidence can replace the research estimate in this comparison.",
-  "sources_note": "On price sensitivity: external research gives a reference range for eating out as a whole. Your actual customers may be more or less price-sensitive than that, and the High setting is a stress assumption rather than a research finding.",
-  "limits_does_not": [
-   "Predict the future or guarantee an outcome.",
-   "Model how competitors react.",
-   "Model the wider economy, seasons or new customers.",
-   "Know your customers' price sensitivity \u2014 unless you bring evidence."
-  ],
-  "intake_groups": [
+  "options": [
    {
-    "label": "Your business",
-    "fields": [
-     "monthly_revenue",
-     "daily_orders",
-     "cash_on_hand"
-    ]
+    "id": "A",
+    "label": "Do nothing",
+    "headline": "Hold prices. Absorb the full cost increase.",
+    "price_rise_pct": 0.0,
+    "uses_reduction": false
    },
    {
-    "label": "Your costs",
-    "fields": [
-     "monthly_cogs",
-     "monthly_fixed_costs"
-    ]
+    "id": "B",
+    "label": "Raise prices 10%",
+    "headline": "Pass most of the increase to customers with a 10% average price rise.",
+    "price_rise_pct": 10.0,
+    "uses_reduction": false
    },
    {
-    "label": "The shock",
-    "fields": [
-     "supplier_increase_pct"
-    ]
-   },
-   {
-    "label": "Your menu",
-    "fields": [
-     "low_margin_share_pct",
-     "name"
-    ]
+    "id": "C",
+    "label": "Raise prices 5% + trim the menu",
+    "headline": "A smaller 5% price rise, plus removing or reformulating low-margin items to cut ingredient cost per order.",
+    "price_rise_pct": 5.0,
+    "uses_reduction": true
    }
   ]
  },
+ "capacity": null,
+ "registry_spec": [
+  {
+   "key": "monthly_revenue",
+   "label": "Current monthly sales",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money",
+    "field": "monthly_revenue"
+   }
+  },
+  {
+   "key": "daily_orders",
+   "label": "Orders per day",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money",
+    "field": "daily_orders"
+   }
+  },
+  {
+   "key": "monthly_cogs",
+   "label": "Monthly ingredient cost",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money_with_pct",
+    "field": "monthly_cogs",
+    "pct_of": "cogs_pct"
+   }
+  },
+  {
+   "key": "monthly_fixed_costs",
+   "label": "Monthly fixed costs (incl. wages)",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money",
+    "field": "monthly_fixed_costs"
+   },
+   "note": "Treated as unchanged over 90 days."
+  },
+  {
+   "key": "cash_on_hand",
+   "label": "Cash available today",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money",
+    "field": "cash_on_hand"
+   }
+  },
+  {
+   "key": "supplier_increase_pct",
+   "label": "Supplier cost increase",
+   "klass": "Customer input",
+   "swept": true,
+   "value": {
+    "kind": "g",
+    "field": "supplier_increase_pct",
+    "prefix": "+",
+    "suffix": "%"
+   },
+   "note": "Tested at 20%, 30% and 40%."
+  },
+  {
+   "key": "low_margin_share_pct",
+   "label": "Share of orders on low-margin items",
+   "klass": "Customer input",
+   "value": {
+    "kind": "g",
+    "field": "low_margin_share_pct",
+    "suffix": "%"
+   }
+  },
+  {
+   "key": "price_sensitivity",
+   "label": "Price sensitivity of customers",
+   "klass": "Assumption",
+   "swept": true,
+   "elasticity": true,
+   "value": {
+    "kind": "axis",
+    "axis": "price_sensitivity",
+    "map": {
+     "low": "0.50",
+     "central": "0.81",
+     "high": "1.60"
+    }
+   },
+   "source": "andreyeva2010; bijmolt2005 (upper reference)",
+   "assumption_source": "No study supports this setting. andreyeva2010 backs the central value; bijmolt2005 is the upper reference the high setting was placed against.",
+   "note": "A 1% price rise eventually reduces orders by this percentage. Low 0.50 / central 0.81 / high 1.60. This is the assumption most likely to change the decision."
+  },
+  {
+   "key": "cogs_pass_through",
+   "label": "Share of supplier increase reaching your costs",
+   "klass": "Assumption",
+   "swept": true,
+   "value": {
+    "kind": "axis",
+    "axis": "cogs_pass_through",
+    "map": {
+     "low": "70%",
+     "central": "100%",
+     "high": "100%"
+    }
+   },
+   "note": "100% by definition unless you can substitute, renegotiate or have fixed-price contracts (tested at 70%)."
+  },
+  {
+   "key": "cogs_lag",
+   "label": "Delay before higher prices reach your costs",
+   "klass": "Assumption",
+   "value": {
+    "kind": "literal",
+    "text": "about 7 days (stock on hand)"
+   },
+   "note": "Fresh inventory turns over in roughly a week; costs then rise over a few more days."
+  },
+  {
+   "key": "demand_adjustment_speed",
+   "label": "How quickly customers react to a price change",
+   "klass": "Assumption",
+   "swept": true,
+   "value": {
+    "kind": "axis",
+    "axis": "demand_adjustment_speed",
+    "map": {
+     "slow": "about a month to half-react",
+     "central": "about two weeks to half-react",
+     "fast": "about a week to half-react"
+    }
+   }
+  },
+  {
+   "key": "reformulation_effectiveness",
+   "label": "Ingredient-cost saving from trimming the menu",
+   "klass": "Assumption",
+   "swept": true,
+   "value": {
+    "kind": "template",
+    "text": "{reduction:g} points off average ingredient cost ({reformulation_effectiveness:.2f} per point of low-margin share)"
+   },
+   "note": "Tested at half and one-and-a-half times this rate."
+  },
+  {
+   "key": "reformulation_demand_cost",
+   "label": "Orders lost from removing items",
+   "klass": "Assumption",
+   "value": {
+    "kind": "template",
+    "text": "{demand_cost:.1f}% of orders"
+   },
+   "note": "One third of the ingredient-cost saving, in points of orders: customers who came for the removed items."
+  },
+  {
+   "key": "price_rises",
+   "label": "Price rises compared",
+   "klass": "Customer input",
+   "value": {
+    "kind": "literal",
+    "text": "B: +10%   C: +5%"
+   },
+   "note": "The decisions being compared; fixed by the question."
+  },
+  {
+   "key": "horizon",
+   "label": "Comparison horizon",
+   "klass": "Assumption",
+   "value": {
+    "kind": "literal",
+    "text": "90 days"
+   },
+   "note": "Long enough for costs and most of the customer reaction to land; short enough that wages and rent can be treated as fixed. Slow customer reactions are not fully visible within it."
+  },
+  {
+   "key": "average_order_value",
+   "label": "Average order value",
+   "klass": "Derived",
+   "value": {
+    "kind": "money",
+    "field": "average_order_value",
+    "dp": 2
+   },
+   "note": "Monthly sales divided by monthly orders."
+  },
+  {
+   "key": "cogs_per_order",
+   "label": "Ingredient cost per order",
+   "klass": "Derived",
+   "value": {
+    "kind": "money",
+    "field": "cogs_per_order",
+    "dp": 2
+   }
+  }
+ ],
+ "research_settings": [
+  "central"
+ ],
  "sweep": {
   "price_sensitivity": [
    "low",
@@ -393,7 +701,7 @@
    "key": "monthly_fixed_costs",
    "label": "Monthly fixed costs",
    "unit": "currency",
-   "hint": "Rent, wages, utilities, loan payments \u2014 everything that will not change in the next 90 days."
+   "hint": "Rent, wages, utilities, loan payments — everything that will not change in the next 90 days."
   },
   {
    "key": "cash_on_hand",
@@ -414,6 +722,21 @@
    "hint": "Roughly what share of orders are items you could drop or reformulate. A guess is fine; it is tested as an assumption."
   }
  ],
+ "demo": {
+  "name": "Demo cafe (fictional)",
+  "monthly_revenue": 48600.0,
+  "daily_orders": 200.0,
+  "monthly_cogs": 15550.0,
+  "monthly_fixed_costs": 29500.0,
+  "cash_on_hand": 18000.0,
+  "supplier_increase_pct": 30.0,
+  "low_margin_share_pct": 20.0,
+  "is_demo": true,
+  "notes": [
+   "All values are fictional and chosen for illustration; they are not from any real business.",
+   "Fixed costs include wages: over a 90-day horizon staffing is treated as fixed."
+  ]
+ },
  "language": {
   "scenario_not_forecast": "This is a scenario comparison under stated assumptions, not a forecast."
  }

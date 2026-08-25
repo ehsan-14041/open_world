@@ -1,15 +1,21 @@
 <?php
 /**
- * The cafe layer: baseline, the three decisions, the accounting identities, the sensitivity
- * sweep and the report bundle.
+ * The business layer: baseline, the three decisions, the accounting identities.
  *
- * Ports event_sim/cafe/{baseline,worlds,accounting,sensitivity,evidence,report}.py. The
- * accounting deliberately lives outside the engine: the engine's only stock rule is a
+ * Wedge-generic. Nothing here knows what a cafe, a shop or a salon is — the differences arrive
+ * as data in assets/<wedge>.json, exported from the Python definitions. Ports
+ * event_sim/wedge/{accounting,compare}.py and each wedge's worlds.py.
+ *
+ * The accounting deliberately lives outside the engine: the engine's only stock rule is a
  * capacity-bounded queue floored at zero, and cash must be free to go negative.
  *
- *     revenue = orders * price
- *     cogs    = orders * cogs_per_order * index/100
- *     cash(t) = cash(t-1) + gross_profit - fixed_costs_per_day
+ *     revenue      = units * price
+ *     unit cost    = units * cost each * index/100
+ *     gross profit = revenue - unit cost
+ *     cash(t)      = cash(t-1) + gross profit - fixed costs per day
+ *     served       = min(wanted, slots)        <- only where a wedge declares a capacity
+ *
+ * The file keeps its name so existing deployments' includes do not break.
  */
 declare(strict_types=1);
 
@@ -18,129 +24,153 @@ require_once __DIR__ . '/canon.php';
 
 const DAYS_PER_MONTH = 365.0 / 12.0;
 
+/**
+ * One business's figures, whatever business it is.
+ *
+ * Which field plays which role comes from the wedge's `copy.fields` map, so the ledger can be
+ * written once: `units_per_day` is orders for a shop and appointments for a salon, and neither
+ * this class nor the accounting needs to care.
+ */
 final class Baseline
 {
-    public string $name;
-    public float $monthly_revenue;
-    public float $daily_orders;
-    public float $monthly_cogs;
-    public float $monthly_fixed_costs;
-    public float $cash_on_hand;
-    public float $supplier_increase_pct;
-    public float $low_margin_share_pct;
-    public bool $is_demo;
-    public array $notes;
+    public array $values;
+    private array $fields;
+    private ?array $capacity;
 
-    public function __construct(array $d)
+    public function __construct(array $values, array $wedge)
     {
-        $this->name = (string) ($d['name'] ?? 'Unnamed cafe');
-        $this->monthly_revenue = (float) $d['monthly_revenue'];
-        $this->daily_orders = (float) $d['daily_orders'];
-        $this->monthly_cogs = (float) $d['monthly_cogs'];
-        $this->monthly_fixed_costs = (float) $d['monthly_fixed_costs'];
-        $this->cash_on_hand = (float) $d['cash_on_hand'];
-        $this->supplier_increase_pct = (float) ($d['supplier_increase_pct'] ?? 30.0);
-        $this->low_margin_share_pct = (float) ($d['low_margin_share_pct'] ?? 20.0);
-        $this->is_demo = (bool) ($d['is_demo'] ?? false);
-        $this->notes = array_values($d['notes'] ?? []);
+        $this->fields = $wedge['copy']['fields'];
+        $this->capacity = $wedge['capacity'] ?? null;
+        $this->values = $values;
+        foreach ($values as $k => $v) {
+            if ($k !== 'name' && $k !== 'is_demo' && $k !== 'notes' && is_numeric($v)) {
+                $this->values[$k] = (float) $v;
+            }
+        }
+        $this->values['name'] = (string) ($values['name'] ?? 'Unnamed business');
+        $this->values['is_demo'] = (bool) ($values['is_demo'] ?? false);
+        $this->values['notes'] = array_values($values['notes'] ?? []);
     }
 
-    public function withSupplierIncrease(float $pct): Baseline
+    public function __get(string $name)
     {
-        $copy = clone $this;
-        $copy->supplier_increase_pct = $pct;
-        return $copy;
+        return $this->values[$name] ?? null;
     }
 
-    public function averageOrderValue(): float { return $this->monthly_revenue / ($this->daily_orders * DAYS_PER_MONTH); }
-    public function cogsPerOrder(): float      { return $this->monthly_cogs / ($this->daily_orders * DAYS_PER_MONTH); }
-    public function dailyFixedCosts(): float   { return $this->monthly_fixed_costs / DAYS_PER_MONTH; }
-    public function cogsPct(): float           { return 100.0 * $this->monthly_cogs / $this->monthly_revenue; }
-    public function grossMarginPct(): float    { return 100.0 - $this->cogsPct(); }
-    public function monthlyGrossProfit(): float { return $this->monthly_revenue - $this->monthly_cogs; }
-    public function monthlyNet(): float        { return $this->monthlyGrossProfit() - $this->monthly_fixed_costs; }
-    public function netMarginPct(): float      { return 100.0 * $this->monthlyNet() / $this->monthly_revenue; }
+    public function field(string $role): float
+    {
+        return (float) $this->values[$this->fields[$role]];
+    }
+
+    public function withField(string $role, float $value): Baseline
+    {
+        $copy = $this->values;
+        $copy[$this->fields[$role]] = $value;
+        return new Baseline($copy, $this->wedgeShape());
+    }
+
+    public function replace(array $changes): Baseline
+    {
+        return new Baseline(array_merge($this->values, $changes), $this->wedgeShape());
+    }
+
+    private function wedgeShape(): array
+    {
+        return ['copy' => ['fields' => $this->fields], 'capacity' => $this->capacity];
+    }
+
+    public function monthlyUnits(): float   { return $this->field('units_per_day') * DAYS_PER_MONTH; }
+    public function averageTicket(): float  { return $this->field('revenue') / $this->monthlyUnits(); }
+    public function unitCost(): float       { return $this->field('unit_cost_total') / $this->monthlyUnits(); }
+    public function dailyFixedCosts(): float { return $this->field('fixed') / DAYS_PER_MONTH; }
+    public function costPct(): float        { return 100.0 * $this->field('unit_cost_total') / $this->field('revenue'); }
+    public function grossMarginPct(): float { return 100.0 - $this->costPct(); }
+    public function monthlyGrossProfit(): float { return $this->field('revenue') - $this->field('unit_cost_total'); }
+    public function monthlyNet(): float     { return $this->monthlyGrossProfit() - $this->field('fixed'); }
+    public function netMarginPct(): float   { return 100.0 * $this->monthlyNet() / $this->field('revenue'); }
+
+    /** Slots per day, or null where the wedge has no ceiling. */
+    public function capacityPerDay(): ?float
+    {
+        if ($this->capacity === null) {
+            return null;
+        }
+        $u = (float) $this->values[$this->capacity['utilisation_field']];
+        return $u > 0 ? ((float) $this->values[$this->capacity['units_field']]) / ($u / 100.0) : null;
+    }
 
     /** @return string[] empty when the inputs are usable */
     public function validate(): array
     {
         $p = [];
-        if ($this->monthly_revenue <= 0) { $p[] = 'Monthly sales must be greater than zero.'; }
-        if ($this->daily_orders <= 0) { $p[] = 'Orders per day must be greater than zero.'; }
-        if ($this->monthly_cogs <= 0) { $p[] = 'Monthly ingredient cost must be greater than zero.'; }
-        if ($this->monthly_revenue > 0 && $this->monthly_cogs >= $this->monthly_revenue) {
-            $p[] = 'Ingredient cost must be below monthly sales.';
+        if ($this->field('revenue') <= 0) { $p[] = 'Monthly sales must be greater than zero.'; }
+        if ($this->field('units_per_day') <= 0) { $p[] = 'The daily count must be greater than zero.'; }
+        if ($this->field('unit_cost_total') <= 0) { $p[] = 'Monthly cost must be greater than zero.'; }
+        if ($this->field('revenue') > 0 && $this->field('unit_cost_total') >= $this->field('revenue')) {
+            $p[] = 'Cost must be below monthly sales.';
         }
-        if ($this->monthly_fixed_costs < 0) { $p[] = 'Fixed costs cannot be negative.'; }
-        if ($this->cash_on_hand < 0) { $p[] = 'Cash on hand cannot be negative.'; }
-        if ($this->supplier_increase_pct < 0 || $this->supplier_increase_pct > 200) {
-            $p[] = 'The supplier increase should be between 0% and 200%.';
-        }
-        if ($this->low_margin_share_pct < 0 || $this->low_margin_share_pct > 100) {
-            $p[] = 'The low-margin share should be between 0% and 100%.';
+        if ($this->field('fixed') < 0) { $p[] = 'Fixed costs cannot be negative.'; }
+        if ($this->field('cash') < 0) { $p[] = 'Cash on hand cannot be negative.'; }
+        if ($this->capacity !== null) {
+            $u = (float) $this->values[$this->capacity['utilisation_field']];
+            if ($u <= 0 || $u > 100) { $p[] = 'How full the diary is must be between 1% and 100%.'; }
         }
         return $p;
     }
 
-    public function toDict(): array
-    {
-        return [
-            'name' => $this->name,
-            'monthly_revenue' => $this->monthly_revenue,
-            'daily_orders' => $this->daily_orders,
-            'monthly_cogs' => $this->monthly_cogs,
-            'monthly_fixed_costs' => $this->monthly_fixed_costs,
-            'cash_on_hand' => $this->cash_on_hand,
-            'supplier_increase_pct' => $this->supplier_increase_pct,
-            'low_margin_share_pct' => $this->low_margin_share_pct,
-            'is_demo' => $this->is_demo,
-            'notes' => $this->notes,
-        ];
-    }
+    public function toDict(): array { return $this->values; }
 
-    public function summary(): array
+    /**
+     * The baseline block, from the wedge's own declaration of what is worth showing.
+     * Mirrors summarise() in event_sim/wedge/report.py — one declaration, two renderers.
+     */
+    public function summary(array $wedge): array
     {
-        return [
-            'name' => $this->name,
-            'is_demo' => $this->is_demo,
-            'monthly_revenue' => py_round($this->monthly_revenue, 2),
-            'daily_orders' => py_round($this->daily_orders, 1),
-            'average_order_value' => py_round($this->averageOrderValue(), 2),
-            'monthly_cogs' => py_round($this->monthly_cogs, 2),
-            'cogs_pct' => py_round($this->cogsPct(), 1),
-            'gross_margin_pct' => py_round($this->grossMarginPct(), 1),
-            'monthly_fixed_costs' => py_round($this->monthly_fixed_costs, 2),
-            'monthly_net' => py_round($this->monthlyNet(), 2),
-            'net_margin_pct' => py_round($this->netMarginPct(), 1),
-            'cash_on_hand' => py_round($this->cash_on_hand, 2),
-            'supplier_increase_pct' => $this->supplier_increase_pct,
-            'low_margin_share_pct' => $this->low_margin_share_pct,
-        ];
+        $fields = $this->fields;
+        $out = ['name' => $this->values['name'], 'is_demo' => $this->values['is_demo']];
+        foreach ($wedge['copy']['summary_fields'] as [$name, $source, $dp]) {
+            switch ($source) {
+                case 'average_ticket':   $value = $this->averageTicket(); break;
+                case 'cost_pct':         $value = $this->costPct(); break;
+                case 'gross_margin_pct': $value = $this->grossMarginPct(); break;
+                case 'monthly_net':      $value = $this->monthlyNet(); break;
+                case 'net_margin_pct':   $value = $this->netMarginPct(); break;
+                case 'capacity_per_day': $value = $this->capacityPerDay() ?? 0.0; break;
+                default:
+                    $value = isset($fields[$source])
+                        ? $this->values[$fields[$source]]
+                        : $this->values[$source];
+            }
+            $out[$name] = $dp === null ? $value : py_round((float) $value, (int) $dp);
+        }
+        return $out;
     }
 }
 
-/** Percentage points of average COGS removed, from the owner's low-margin share estimate. */
-function cogs_reduction_points(Baseline $b, float $effectiveness): float
+/** Percentage points of unit cost removed, from the owner's low-margin share estimate. */
+function reduction_points(Baseline $b, array $wedge, float $effectiveness): float
 {
-    return py_round($b->low_margin_share_pct * $effectiveness, 3);
+    $share = (float) $b->values[$wedge['worlds']['reduction']['share_field']];
+    return py_round($share * $effectiveness, 3);
 }
 
 /**
- * The three decisions as engine events and interventions. These are the ONLY things allowed
- * to differ between worlds: same slice, same config, same horizon, same coefficients.
+ * The three decisions as engine events and interventions — the ONLY things allowed to differ
+ * between worlds. Everything else is shared by construction.
  */
-function build_worlds(Slice $slice, Baseline $b, array $defaults, float $effectiveness): array
+function build_worlds(Slice $slice, Baseline $b, array $wedge, float $effectiveness): array
 {
+    $defaults = $wedge['defaults'];
+    $shape = $wedge['worlds'];
     $horizon = (int) $defaults['horizon_days'];
-    $priseB = (float) $defaults['price_rise_b'];
-    $priseC = (float) $defaults['price_rise_c'];
-    $reduction = cogs_reduction_points($b, $effectiveness);
+    $shock = (float) $b->values[$shape['event']['magnitude_field']];
+    $reduction = reduction_points($b, $wedge, $effectiveness);
 
-    $shock = [
-        'id' => 'supplier_cost_increase',
-        'label' => 'Supplier prices +' . py_g($b->supplier_increase_pct) . '%',
-        'description' => 'Ingredient / input prices rise and stay at the new level for 90 days.',
-        'targets' => ['input_cost' => $b->supplier_increase_pct],
+    $event = [
+        'id' => $shape['event']['id'],
+        'label' => str_replace('{shock}', py_g($shock), $shape['event']['label']),
+        'description' => $shape['event']['description'],
+        'targets' => [$shape['event']['target'] => $shock],
         'start_turn' => 1,
         'duration' => $horizon,
         'shape' => 'step',
@@ -148,54 +178,60 @@ function build_worlds(Slice $slice, Baseline $b, array $defaults, float $effecti
         'evidence' => [],
     ];
 
-    return [
-        [
-            'id' => 'A', 'label' => 'Do nothing',
-            'headline' => 'Hold prices. Absorb the full cost increase.',
-            'price_rise_pct' => 0.0, 'cogs_reduction_points' => 0.0,
-            'events' => [$shock], 'interventions' => [],
-        ],
-        [
-            'id' => 'B', 'label' => 'Raise prices ' . py_g($priseB) . '%',
-            'headline' => 'Pass most of the increase to customers with a ' . py_g($priseB) . '% average price rise.',
-            'price_rise_pct' => $priseB, 'cogs_reduction_points' => 0.0,
-            'events' => [$shock],
-            'interventions' => [$slice->intervention('raise_prices', $priseB, 1, $horizon)],
-        ],
-        [
-            'id' => 'C', 'label' => 'Raise prices ' . py_g($priseC) . '% + trim the menu',
-            'headline' => 'A smaller ' . py_g($priseC) . '% price rise, plus removing or reformulating '
-                . 'low-margin items to cut ingredient cost per order.',
-            'price_rise_pct' => $priseC, 'cogs_reduction_points' => $reduction,
-            'events' => [$shock],
-            'interventions' => [
-                $slice->intervention('raise_prices', $priseC, 1, $horizon),
-                $slice->intervention('reformulate_menu', $reduction, 1, $horizon),
-            ],
-        ],
-    ];
+    $worlds = [];
+    foreach ($shape['options'] as $opt) {
+        $interventions = [];
+        if ($opt['price_rise_pct'] > 0) {
+            $interventions[] = $slice->intervention($shape['levers']['price'],
+                (float) $opt['price_rise_pct'], 1, $horizon);
+        }
+        if (!empty($opt['uses_reduction'])) {
+            $interventions[] = $slice->intervention($shape['levers']['reduce'], $reduction, 1, $horizon);
+        }
+        $worlds[] = [
+            'id' => $opt['id'],
+            'label' => $opt['label'],
+            'headline' => $opt['headline'],
+            'price_rise_pct' => (float) $opt['price_rise_pct'],
+            'cogs_reduction_points' => !empty($opt['uses_reduction']) ? $reduction : 0.0,
+            'events' => [$event],
+            'interventions' => $interventions,
+        ];
+    }
+    return $worlds;
 }
 
-/** Daily business quantities for one world. Index 0 is the day before the shock. */
-function build_ledger(Baseline $b, array $demandIndex, array $priceIndex, array $cogsIndex): array
+/** Daily business quantities for one world. Index 0 is the day before anything changes. */
+function build_ledger(Baseline $b, array $demandIndex, array $priceIndex, array $cogsIndex,
+                      ?float $capacity = null): array
 {
     $n = min(count($demandIndex), count($priceIndex), count($cogsIndex));
     $led = ['days' => [], 'orders' => [], 'price' => [], 'revenue' => [], 'cogs' => [],
-            'gross_profit' => [], 'gross_margin_pct' => [], 'net' => [], 'cash' => []];
-    $cash = $b->cash_on_hand;
+            'gross_profit' => [], 'gross_margin_pct' => [], 'net' => [], 'cash' => [],
+            'demanded' => [], 'turned_away' => [], 'utilisation_pct' => []];
+    $cash = $b->field('cash');
     $fixed = $b->dailyFixedCosts();
-    $aov = $b->averageOrderValue();
-    $cpo = $b->cogsPerOrder();
+    $ticket = $b->averageTicket();
+    $unit = $b->unitCost();
+    $units = $b->field('units_per_day');
 
     for ($day = 0; $day < $n; $day++) {
-        $orders = $b->daily_orders * $demandIndex[$day] / 100.0;
-        $price = $aov * $priceIndex[$day] / 100.0;
+        $wanted = $units * $demandIndex[$day] / 100.0;
+        if ($capacity === null) {
+            $orders = $wanted;
+        } else {
+            $orders = min($wanted, $capacity);
+            $led['demanded'][] = $wanted;
+            $led['turned_away'][] = max(0.0, $wanted - $orders);
+            $led['utilisation_pct'][] = $capacity > 0 ? 100.0 * $orders / $capacity : 0.0;
+        }
+        $price = $ticket * $priceIndex[$day] / 100.0;
         $revenue = $orders * $price;
-        $cogs = $orders * $cpo * $cogsIndex[$day] / 100.0;
+        $cogs = $orders * $unit * $cogsIndex[$day] / 100.0;
         $gp = $revenue - $cogs;
         $net = $gp - $fixed;
         if ($day > 0) {
-            $cash += $net;                       // day 0 is the position before the shock
+            $cash += $net;                       // day 0 is the position before anything changes
         }
         $led['days'][] = $day;
         $led['orders'][] = $orders;
@@ -219,7 +255,7 @@ function window_sum(array $led, string $key, int $start, int $end): float
     return $total;
 }
 
-/** The quantities a cafe owner would actually use to choose. */
+/** The quantities an owner would actually use to choose. */
 function decision_metrics(array $led, Baseline $b, int $horizon = 90): array
 {
     $last = min($horizon, count($led['days']) - 1);
@@ -262,7 +298,7 @@ function decision_metrics(array $led, Baseline $b, int $horizon = 90): array
         $runway = $led['cash'][$last] / (-$monthlyNet);
     }
 
-    return [
+    $metrics = [
         'monthly_revenue' => $monthlyRevenue,
         'monthly_gross_profit' => $monthlyGp,
         'monthly_net' => $monthlyNet,
@@ -271,7 +307,7 @@ function decision_metrics(array $led, Baseline $b, int $horizon = 90): array
         'worst_gross_margin_pct' => $led['gross_margin_pct'][$worstMarginDay],
         'worst_gross_margin_day' => $worstMarginDay,
         'orders_change_pct' => 100.0 * ($led['orders'][$last] / $led['orders'][0] - 1.0),
-        'revenue_change_pct' => 100.0 * ($monthlyRevenue / $b->monthly_revenue - 1.0),
+        'revenue_change_pct' => 100.0 * ($monthlyRevenue / $b->field('revenue') - 1.0),
         'cash_day_30' => $led['cash'][min(30, $last)],
         'cash_day_90' => $led['cash'][$last],
         'cash_change_90' => $led['cash'][$last] - $led['cash'][0],
@@ -283,12 +319,29 @@ function decision_metrics(array $led, Baseline $b, int $horizon = 90): array
         'cumulative_gross_profit_90' => window_sum($led, 'gross_profit', 1, $last),
         'cumulative_net_90' => window_sum($led, 'net', 1, $last),
     ];
+
+    // Capacity figures exist only where a capacity limit was applied, so a wedge without one
+    // produces exactly the metric set it would have without this code path.
+    if ($led['utilisation_pct']) {
+        $capacity = $led['utilisation_pct'][$last] > 0
+            ? $led['orders'][$last] / ($led['utilisation_pct'][$last] / 100.0) : 0.0;
+        $metrics['utilisation_pct_end'] = $led['utilisation_pct'][$last];
+        $metrics['utilisation_pct_start'] = $led['utilisation_pct'][0];
+        $metrics['turned_away_per_day_end'] = $led['turned_away'][$last];
+        $metrics['turned_away_per_day_start'] = $led['turned_away'][0];
+        $metrics['demanded_change_pct'] = 100.0 * ($led['demanded'][$last] / $led['demanded'][0] - 1.0);
+        $metrics['revenue_per_slot_end'] = $capacity > 0 ? $led['revenue'][$last] / $capacity : 0.0;
+        $metrics['gross_profit_per_slot_end'] = $capacity > 0 ? $led['gross_profit'][$last] / $capacity : 0.0;
+        $metrics['monthly_turned_away'] = window_sum($led, 'turned_away', $tailStart, $last) * $scale;
+    }
+    return $metrics;
 }
 
 /** One slice, one config, three runs. */
-function run_comparison(Slice $slice, array $frozen, Baseline $b, array $axisSettings, float $effectiveness): array
+function run_comparison(Slice $slice, array $wedge, Baseline $b, array $axisSettings, float $effectiveness): array
 {
-    $defaults = $frozen['defaults'];
+    $defaults = $wedge['defaults'];
+    $roles = $wedge['roles'];
     $horizon = (int) $defaults['horizon_days'];
     $settings = array_merge($defaults['axis_settings'], $axisSettings);
     foreach ($slice->axes as $axis) {
@@ -296,26 +349,28 @@ function run_comparison(Slice $slice, array $frozen, Baseline $b, array $axisSet
             $settings[$axis['id']] = $axis['default_setting'];
         }
     }
+    $capacity = $b->capacityPerDay();
 
     $worlds = [];
-    foreach (build_worlds($slice, $b, $defaults, $effectiveness) as $spec) {
+    foreach (build_worlds($slice, $b, $wedge, $effectiveness) as $spec) {
         $sim = new Simulation($slice, $settings, $spec['events'], $spec['interventions'], $horizon);
         $sim->run();
-        $led = build_ledger($b, $sim->series('demand'), $sim->series('menu_price'), $sim->series('cogs_per_order'));
+        $led = build_ledger($b, $sim->series($roles['demand_var']), $sim->series($roles['price_var']),
+                            $sim->series($roles['unit_cost_var']), $capacity);
+        $indices = [];
+        foreach ($roles['index_vars'] as $name) {
+            $indices[$name] = $sim->series($name);
+        }
         $worlds[] = [
             'spec' => $spec,
-            'indices' => [
-                'input_cost' => $sim->series('input_cost'),
-                'cogs_per_order' => $sim->series('cogs_per_order'),
-                'menu_price' => $sim->series('menu_price'),
-                'demand' => $sim->series('demand'),
-            ],
+            'indices' => $indices,
             'ledger' => $led,
             'metrics' => decision_metrics($led, $b, $horizon),
-            'fingerprint' => engine_fingerprint($frozen, $spec['events'], $spec['interventions']),
+            'fingerprint' => engine_fingerprint($wedge, $spec['events'], $spec['interventions']),
+            'trajectory_fingerprint' => trajectory_fingerprint($wedge, $spec['events'], $spec['interventions']),
         ];
     }
-    return ['worlds' => $worlds, 'axis_settings' => $settings, 'reformulation_effectiveness' => $effectiveness];
+    return ['worlds' => $worlds, 'axis_settings' => $settings, 'effectiveness' => $effectiveness];
 }
 
 /** World ids, best first, on a metric where higher is better. Ties keep A, B, C order. */

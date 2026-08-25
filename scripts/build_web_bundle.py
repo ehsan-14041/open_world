@@ -5,8 +5,8 @@ Package the PHP application into a folder you can upload to any PHP host.
     python scripts/build_web_bundle.py --password hunter2 --zip
 
 The host runs the whole pipeline itself — engine, accounting, the 162-point sweep, rendering —
-from a port of the Python code that is verified to produce a byte-identical bundle
-(scripts/verify_php_port.py). See deploy/php/README_DEPLOY.md.
+for all three wedges, from a port of the Python code that is verified to produce a
+byte-identical bundle for each (scripts/verify_php_port.py). See deploy/php/README_DEPLOY.md.
 """
 
 from __future__ import annotations
@@ -66,13 +66,13 @@ def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bo
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--out", default=None, help="output directory (default: dist/cafe_php)")
+    ap.add_argument("--out", default=None, help="output directory (default: dist/wedges_php)")
     ap.add_argument("--password", default=None, help="write config.php with this shared password")
     ap.add_argument("--heading", default=None, help="heading on the password screen")
     ap.add_argument("--zip", action="store_true", help="also produce a .zip to upload")
     args = ap.parse_args(argv)
 
-    out_dir = Path(args.out) if args.out else ROOT / "dist" / "cafe_php"
+    out_dir = Path(args.out) if args.out else ROOT / "dist" / "wedges_php"
     build(out_dir, args.password, args.heading, args.zip)
     return 0
 
