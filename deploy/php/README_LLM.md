@@ -19,14 +19,35 @@ your host.
 
    | Field | What it is |
    |---|---|
-   | Base URL | anything speaking the OpenAI chat-completions shape, ending before `/chat/completions` — a provider, a gateway, or a local proxy |
+   | Base URL | anything speaking the OpenAI chat-completions shape, ending before `/chat/completions`. Defaults to AvalAI; one-click presets for AvalAI and OpenAI, or type your own gateway |
    | Model | the model id exactly as your provider names it |
    | API key | stored in `data/settings.json`, `chmod 600`, never sent to a browser |
    | Monthly call cap | a hard stop; calls are refused once it is hit. 0 disables the cap |
    | Max output tokens, Timeout | per call |
 
-3. Press **Run the test**. One very short call proves the key, the URL and the model name all
+3. Press **List available models** to see what your key can actually use — they become
+   suggestions in the Model field. If your gateway does not expose `/v1/models`, it says so and
+   you type the id yourself.
+
+4. Press **Run the test**. One very short call proves the key, the URL and the model name all
    work, and tells you what it cost in tokens.
+
+## AvalAI
+
+The default. `https://api.avalai.ir/v1`, `Authorization: Bearer <key>`, `/chat/completions`,
+and the usual `choices[0].message.content` with a `usage` object — the same shape the client
+already speaks, so nothing special is needed beyond pasting your key and choosing a model.
+
+Two things a gateway does that plain OpenAI does not, both handled:
+
+- **`response_format` may be refused.** Both features ask for JSON, and some gateways (or the
+  models behind them) reject the whole request over that one parameter. The client notices,
+  drops the parameter and asks again. Both callers already parse a reply that was not promised
+  as JSON, so nothing is lost.
+- **A fenced reply.** Models wrap JSON in ``` even when told not to; the fence is stripped.
+
+Both are held in place by tests that run against a stub gateway which refuses `response_format`
+and fences its replies on purpose.
 
 If you would rather the key never sat in a data file, put it in `config.php` instead — the
 server executes that file and never serves it:

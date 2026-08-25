@@ -51,6 +51,7 @@ $notice = '';
 $problem = '';
 $testResult = null;
 $generateResult = null;
+$modelList = null;
 
 // ---- actions -------------------------------------------------------------------------------
 $action = (string) ($_POST['action'] ?? '');
@@ -82,6 +83,8 @@ if ($action === 'save') {
     }
 } elseif ($action === 'test') {
     $testResult = llm_test($llm);
+} elseif ($action === 'models') {
+    $modelList = llm_models($llm);
 } elseif ($action === 'translate') {
     if (!llm_feature_on($llm, 'translation')) {
         $problem = 'Switch the LLM on and enable translation first.';
@@ -194,7 +197,8 @@ details summary{cursor:pointer;font-weight:600;font-size:14px;margin-top:12px}
   <form method="post" class="card">
     <input type="hidden" name="action" value="save">
     <h2>Model access</h2>
-    <p class="sub">Any endpoint that speaks the OpenAI chat-completions shape.</p>
+    <p class="sub">Any endpoint that speaks the OpenAI chat-completions shape — AvalAI, OpenAI, or a
+       gateway of your own. Save the key first, then list the models to see what it can actually use.</p>
 
     <label class="check"><input type="checkbox" name="enabled" value="1" <?= !empty($llm['enabled']) ? 'checked' : '' ?>>
       <span>Switched on. With this off, nothing here is called and the product behaves exactly as it does
@@ -203,14 +207,25 @@ details summary{cursor:pointer;font-weight:600;font-size:14px;margin-top:12px}
     <div class="grid">
       <div>
         <label for="base_url">Base URL</label>
-        <input id="base_url" type="text" name="base_url" value="<?= htmlspecialchars((string) $llm['base_url'], ENT_QUOTES) ?>"
-               <?= $keyFromConfig ? '' : '' ?>>
-        <div class="hint">Ends before <code>/chat/completions</code>. A local proxy or gateway works here.</div>
+        <input id="base_url" type="text" name="base_url" value="<?= htmlspecialchars((string) $llm['base_url'], ENT_QUOTES) ?>">
+        <div class="hint">Ends before <code>/chat/completions</code>. Known-good:
+          <?php $first = true; foreach (LLM_PRESETS as $name => $preset): ?>
+            <?= $first ? '' : ' · ' ?><a href="#" onclick="document.getElementById('base_url').value='<?= $preset ?>';return false"><?= $name ?></a>
+            <?php $first = false; endforeach; ?>
+          — or any other gateway or proxy that speaks the same shape.</div>
       </div>
       <div>
         <label for="model">Model</label>
-        <input id="model" type="text" name="model" value="<?= htmlspecialchars((string) $llm['model'], ENT_QUOTES) ?>"
+        <input id="model" type="text" name="model" list="model_options"
+               value="<?= htmlspecialchars((string) $llm['model'], ENT_QUOTES) ?>"
                placeholder="the model id your provider expects">
+        <?php if ($modelList !== null && $modelList['ok']): ?>
+          <datalist id="model_options">
+            <?php foreach ($modelList['models'] as $m): ?>
+              <option value="<?= htmlspecialchars($m, ENT_QUOTES) ?>"></option>
+            <?php endforeach; ?>
+          </datalist>
+        <?php endif; ?>
         <div class="hint">Exactly as your provider names it.</div>
       </div>
       <div>
@@ -255,8 +270,19 @@ details summary{cursor:pointer;font-weight:600;font-size:14px;margin-top:12px}
       This one <em>does</em> send what the visitor types to your provider, so the form says so plainly.
       Off by default.</span></label>
 
+    <?php if ($modelList !== null): ?>
+      <div class="msg <?= $modelList['ok'] ? 'ok' : 'warn' ?>">
+        <?= $modelList['ok']
+            ? 'Your key can use ' . count($modelList['models']) . ' model(s). They are now suggested in the Model field: '
+              . htmlspecialchars(implode(', ', array_slice($modelList['models'], 0, 12)), ENT_QUOTES)
+              . (count($modelList['models']) > 12 ? ' …' : '')
+            : htmlspecialchars($modelList['error'], ENT_QUOTES) ?>
+      </div>
+    <?php endif; ?>
+
     <div class="row">
       <button class="primary" type="submit">Save settings</button>
+      <button type="submit" name="action" value="models" formnovalidate>List available models</button>
       <?php if (!$keyFromConfig && $llm['api_key'] !== ''): ?>
         <label class="check" style="margin:0"><input type="checkbox" name="clear_key" value="1"><span>Delete the stored key</span></label>
       <?php endif; ?>

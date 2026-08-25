@@ -24,7 +24,7 @@ const USAGE_FILE = __DIR__ . '/../data/llm_usage.json';
 
 const LLM_DEFAULTS = [
     'enabled' => false,
-    'base_url' => 'https://api.openai.com/v1',
+    'base_url' => 'https://api.avalai.ir/v1',
     'api_key' => '',
     'model' => '',
     'timeout_seconds' => 60,
@@ -133,6 +133,7 @@ function llm_chat(array $llm, string $system, string $user, array $options = [])
         return $fail("The monthly cap of $cap calls has been reached. Raise it in the admin page if that is intended.");
     }
 
+    $wantsJson = !empty($options['json']);
     $body = [
         'model' => $llm['model'],
         'messages' => [
@@ -142,7 +143,7 @@ function llm_chat(array $llm, string $system, string $user, array $options = [])
         'max_tokens' => (int) ($options['max_output_tokens'] ?? $llm['max_output_tokens']),
         'temperature' => $options['temperature'] ?? 0,
     ];
-    if (!empty($options['json'])) {
+    if ($wantsJson) {
         $body['response_format'] = ['type' => 'json_object'];
     }
 
@@ -155,8 +156,22 @@ function llm_chat(array $llm, string $system, string $user, array $options = [])
     if ($transportError !== '') {
         return $fail($transportError);
     }
-
     $decoded = json_decode((string) $raw, true);
+
+    // Not every gateway or model behind one accepts response_format. Rather than make the
+    // maintainer discover that through a failure, drop the hint and ask once more — both
+    // callers already tolerate a reply that is JSON without being promised as JSON.
+    if ($wantsJson && ($status < 200 || $status >= 300)
+        && stripos(json_encode($decoded['error'] ?? []), 'response_format') !== false) {
+        unset($body['response_format']);
+        $retryPayload = json_encode($body, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        [$raw, $status, $transportError] = llm_post($url, $retryPayload, $headers, $timeout);
+        if ($transportError !== '') {
+            return $fail($transportError);
+        }
+        $decoded = json_decode((string) $raw, true);
+    }
+
     if ($status < 200 || $status >= 300) {
         $message = $decoded['error']['message'] ?? ('HTTP ' . $status);
         // Never echo the request back; it carries the key in a header.
@@ -223,6 +238,85 @@ function llm_post(string $url, string $payload, array $headers, int $timeout): a
     }
     return [(string) $raw, $status, ''];
 }
+
+/**
+ * Model ids this key can actually use, from the OpenAI-compatible /models endpoint.
+ *
+ * Not every gateway exposes it. When it is missing the maintainer simply types the id, so a
+ * failure here is reported as "could not list" rather than treated as a broken configuration.
+ *
+ * @return array{ok:bool, models:array<int,string>, error:string}
+ */
+function llm_models(array $llm): array
+{
+    if ($llm['api_key'] === '') {
+        return ['ok' => false, 'models' => [], 'error' => 'Set an API key first.'];
+    }
+    $url = rtrim((string) $llm['base_url'], '/') . '/models';
+    $headers = ['Authorization: Bearer ' . $llm['api_key']];
+    $timeout = max(5, (int) $llm['timeout_seconds']);
+
+    [$raw, $status, $transportError] = llm_get($url, $headers, $timeout);
+    if ($transportError !== '') {
+        return ['ok' => false, 'models' => [], 'error' => $transportError];
+    }
+    $decoded = json_decode((string) $raw, true);
+    if ($status < 200 || $status >= 300 || !isset($decoded['data'])) {
+        $message = $decoded['error']['message'] ?? ('HTTP ' . $status);
+        return ['ok' => false, 'models' => [],
+                'error' => 'Could not list models (' . llm_redact((string) $message, (string) $llm['api_key'])
+                    . '). Type the model id instead.'];
+    }
+    $models = [];
+    foreach ($decoded['data'] as $row) {
+        if (!empty($row['id'])) {
+            $models[] = (string) $row['id'];
+        }
+    }
+    sort($models, SORT_NATURAL | SORT_FLAG_CASE);
+    return ['ok' => true, 'models' => $models, 'error' => ''];
+}
+
+/** @return array{0:string,1:int,2:string} body, status, transport error */
+function llm_get(string $url, array $headers, int $timeout): array
+{
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_CONNECTTIMEOUT => min(15, $timeout),
+        ]);
+        $raw = curl_exec($ch);
+        $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = $raw === false ? ('Could not reach the provider: ' . curl_error($ch)) : '';
+        curl_close($ch);
+        return [(string) $raw, $status, $error];
+    }
+    if (!ini_get('allow_url_fopen')) {
+        return ['', 0, 'This host has neither cURL nor allow_url_fopen, so it cannot call an API.'];
+    }
+    $context = stream_context_create(['http' => [
+        'method' => 'GET', 'header' => implode("
+", $headers),
+        'timeout' => $timeout, 'ignore_errors' => true,
+    ]]);
+    $raw = @file_get_contents($url, false, $context);
+    $status = 0;
+    foreach ($http_response_header ?? [] as $line) {
+        if (preg_match('#^HTTP/\S+\s+(\d{3})#', $line, $m)) {
+            $status = (int) $m[1];
+        }
+    }
+    return $raw === false ? ['', $status, 'Could not reach the provider.'] : [(string) $raw, $status, ''];
+}
+
+/** Base URLs known to speak this shape, offered in the admin page. */
+const LLM_PRESETS = [
+    'AvalAI' => 'https://api.avalai.ir/v1',
+    'OpenAI' => 'https://api.openai.com/v1',
+];
 
 /** A cheap round trip that proves the key, the base URL and the model name all work. */
 function llm_test(array $llm): array
