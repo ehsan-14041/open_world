@@ -51,3 +51,10 @@ data/external/ais/metadata/
 
 # built upload bundles (may contain a config.php with a password)
 dist/
+
+# PHP bundle runtime state (never part of the template)
+deploy/php/config.php
+deploy/php/data/settings.json
+deploy/php/data/llm_usage.json
+deploy/php/data/i18n/
+deploy/php/data/cache/*.gz
