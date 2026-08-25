@@ -23,11 +23,16 @@ You get `dist/cafe_php/` and a `.zip`:
 ```
 index.php            routes, gate, gzip, caching
 intake.php           the eight-field form
+admin.php            maintainer settings — see README_LLM.md
 unlock.php           the password screen
-config.sample.php    rename to config.php and set the password
+config.sample.php    rename to config.php and set the passwords
 lib/                 engine.php, cafe.php, report.php, canon.php  — the generator
-assets/              frozen.json (the instrument) + decision_report.html (the template)
+                     llm.php, i18n.php, assist.php               — the optional LLM layer
+assets/              frozen.json (the instrument), decision_report.html (the template),
+                     strings.json (the translatable copy)
 data/cache/          generated pages, keyed by a hash of the inputs (safe to delete)
+data/settings.json   written by admin.php; holds the API key if you set one there
+data/i18n/           generated translations
 .htaccess            Apache: blocks direct access to lib/, assets/ and data/
 robots.txt           keeps it out of search engines
 ```
@@ -50,13 +55,18 @@ Rename `config.sample.php` to `config.php`:
 Leave `'password' => ''` to make the page public. Set `allow_custom_reports` to `false` to
 serve only the demo and hide the intake form. `?logout=1` clears your own session.
 
-## 4. The three URLs
+To reach the settings page, also set a **different** `admin_password`. Until you do, `admin.php`
+returns 404. Everything it configures is optional — see [README_LLM.md](README_LLM.md).
+
+## 4. The URLs
 
 | URL | What it does |
 |---|---|
 | `/` | the demo cafe |
 | `/?new=1` | the intake form — eight figures |
+| `/?lang=fa` | the same report with translated copy, once you have generated a language |
 | `/?theme=light` | the projector/print version, for showing on someone else's screen |
+| `/admin.php` | maintainer settings (only once `admin_password` is set) |
 
 Posting the form builds a full report for that cafe, in about half a second.
 
@@ -103,6 +113,9 @@ is a hash of the inputs, so it is not guessable.
   the same output because it records a full causal trace the report does not use.
 - **Fonts** come from Google Fonts; without internet the page falls back to Georgia and the
   system UI font and still reads fine.
+- **No outbound calls** unless you switch the LLM on in the admin page. Even then, generating a
+  report never calls anything: translation is generated once and cached to disk, and the intake
+  assistant only runs when a visitor asks it to.
 - **After changing the model or the template**, re-run `python scripts/export_php_assets.py`
   and re-upload `assets/`. Cache keys include both files' timestamps, so stale pages expire by
   themselves.

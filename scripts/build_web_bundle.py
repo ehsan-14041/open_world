@@ -30,8 +30,13 @@ def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bo
     if out_dir.exists():
         shutil.rmtree(out_dir)
     shutil.copytree(TEMPLATE, out_dir)
-    for stale in out_dir.glob("data/cache/*.gz"):
-        stale.unlink()
+
+    # Runtime state must never travel in a bundle: settings.json can hold an API key, the cache
+    # can hold a real cafe's figures, and a translation belongs to the install that made it.
+    for pattern in ("data/cache/*.gz", "data/settings.json", "data/llm_usage.json",
+                    "data/i18n/*.json", "config.php"):
+        for leaked in out_dir.glob(pattern):
+            leaked.unlink()
 
     if password:
         sample = (out_dir / "config.sample.php").read_text(encoding="utf-8")
