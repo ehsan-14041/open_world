@@ -26,6 +26,25 @@ TEMPLATE = ROOT / "deploy" / "php"
 PHP_FLOOR = "7.1"
 
 
+def build_stamp() -> dict[str, str]:
+    """
+    What this build is, in a form that survives a download.
+
+    A dirty tree is marked, because a zip built from uncommitted changes cannot be traced back
+    to anything and should not look as though it can.
+    """
+    def git(*args: str) -> str:
+        return subprocess.run(["git", *args], cwd=str(ROOT),
+                              capture_output=True, text=True).stdout.strip()
+
+    commit = git("rev-parse", "--short", "HEAD") or "nogit"
+    dirty = bool(git("status", "--porcelain"))
+    now = datetime.datetime.now()
+    version = now.strftime("%Y%m%d-%H%M") + "-" + commit + ("-dirty" if dirty else "")
+    return {"version": version, "commit": commit, "dirty": dirty,
+            "built": now.strftime("%Y-%m-%d %H:%M")}
+
+
 def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bool) -> dict[str, Path]:
     # Refresh the frozen instruments so a bundle can never ship a stale model or template.
     subprocess.run([sys.executable, str(ROOT / "scripts" / "export_php_assets.py")],
@@ -44,16 +63,16 @@ def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bo
 
     # A plain-text stamp, so "did my upload actually land?" is answerable by opening a URL.
     # Static on purpose: when PHP cannot parse the app, nothing dynamic can answer that.
-    commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=str(ROOT),
-                            capture_output=True, text=True).stdout.strip() or "unknown"
-    built = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    stamp = build_stamp()
     lines = [
-        "build   " + built,
-        "commit  " + commit,
+        "version " + stamp["version"],
+        "build   " + stamp["built"],
+        "commit  " + stamp["commit"] + (" (uncommitted changes)" if stamp["dirty"] else ""),
         "php     needs " + PHP_FLOOR + " or newer",
         "wedges  cafe, shop, salon",
         "",
-        "If the site errors but this file is older than your upload, the files were not replaced.",
+        "The zip this came from is named after `version` above. If they disagree, or if the",
+        "build date is older than your upload, the files on the server were not replaced.",
         "",
     ]
     (out_dir / "VERSION.txt").write_text("\n".join(lines), encoding="utf-8")
@@ -69,7 +88,9 @@ def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bo
 
     written = {"dir": out_dir}
     if make_zip:
-        archive = out_dir.with_suffix(".zip")
+        # The filename carries the version. Successive downloads that all share one name are
+        # how the wrong build ends up on a server, which is not a hypothetical.
+        archive = out_dir.parent / (out_dir.name + "_" + stamp["version"] + ".zip")
         with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as z:
             for path in sorted(out_dir.rglob("*")):
                 if path.is_file():
@@ -77,7 +98,8 @@ def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bo
         written["zip"] = archive
 
     total = sum(p.stat().st_size for p in out_dir.rglob("*") if p.is_file())
-    print(f"bundle  {total:,} bytes   commit {commit}   php {PHP_FLOOR}+")
+    print(f"version {stamp['version']}")
+    print(f"bundle  {total:,} bytes   php {PHP_FLOOR}+")
     for label, path in written.items():
         print(f"{label:<7} {path}")
     return written

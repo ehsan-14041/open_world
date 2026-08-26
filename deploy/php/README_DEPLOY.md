@@ -35,9 +35,13 @@ python scripts/verify_php_port.py salon      # just one
 python scripts/build_web_bundle.py --zip
 ```
 
-You get `dist/cafe_php/` and a `.zip`:
+You get `dist/wedges_php/` and a zip named after the build, e.g.
+`wedges_php_20260826-2214-a1b2c3d.zip`. The name carries the date, the time and the commit, so
+two downloads are never confusable — and `-dirty` on the end means it was built from
+uncommitted changes.
 
 ```
+VERSION.txt          which build this is — open it in a browser to check an upload landed
 index.php            routes (which wedge), gate, gzip, caching
 intake.php           the intake form, built from the chosen wedge's fields
 admin.php            maintainer settings — see README_LLM.md
@@ -86,6 +90,12 @@ returns 404. Everything it configures is optional — see [README_LLM.md](README
 | `/?w=<id>&lang=fa` | the same report with translated copy, once you have generated a language |
 | `/?w=<id>&theme=light` | the projector/print version, for showing on someone else's screen |
 | `/admin.php` | maintainer settings (only once `admin_password` is set) |
+| `/VERSION.txt` | which build is deployed — a plain file, so it answers even when PHP cannot |
+| `/?version` | the same, plus the PHP version the host is actually running |
+
+**After every upload, open `/VERSION.txt` first.** If it does not match the zip you just
+uploaded, the files were not replaced — which is a far more common cause of "the fix did not
+work" than the fix being wrong.
 
 Posting the form builds a full report for that cafe, in about half a second.
 

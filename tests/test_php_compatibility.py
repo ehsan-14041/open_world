@@ -97,3 +97,39 @@ def test_the_guard_itself_parses_on_any_php():
 def test_every_php_file_still_parses(path):
     proc = subprocess.run(["php", "-l", str(PHP_ROOT / path)], capture_output=True, text=True, check=False)
     assert proc.returncode == 0, proc.stdout or proc.stderr
+
+
+# ---- build identity --------------------------------------------------------------------------
+
+def test_the_bundle_carries_a_version_the_download_keeps():
+    """
+    A stale upload is invisible unless the build says what it is.
+
+    This is not hypothetical: a fix was shipped, the live host kept returning the identical
+    parse error at the identical line, and there was no way to tell from outside whether the
+    files had been replaced. The version now travels in three places that agree — the zip's
+    filename, VERSION.txt inside it, and the app's ?version route.
+    """
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "build_web_bundle", ROOT / "scripts" / "build_web_bundle.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    stamp = module.build_stamp()
+    assert re.fullmatch(r"\d{8}-\d{4}-[0-9a-f]{7,}(-dirty)?", stamp["version"]), stamp["version"]
+    assert stamp["commit"] in stamp["version"]
+    assert stamp["dirty"] == stamp["version"].endswith("-dirty")
+    assert module.PHP_FLOOR == MIN_PHP.rsplit(".", 1)[0], (
+        "the builder's advertised PHP floor and lib/compat.php must agree")
+
+    source = (ROOT / "scripts" / "build_web_bundle.py").read_text(encoding="utf-8")
+    assert 'stamp["version"] + ".zip"' in source, "the zip filename must carry the version"
+
+
+def test_the_app_can_report_which_build_is_deployed():
+    source = (PHP_ROOT / "index.php").read_text(encoding="utf-8")
+    assert "$_GET['version']" in source
+    assert "VERSION.txt" in source
+    assert "PHP_VERSION" in source, "the version route should also say what PHP the host runs"
