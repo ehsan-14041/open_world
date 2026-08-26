@@ -386,7 +386,9 @@ function price_gain_ratio(array $wedge): float
 
 function round_list(array $xs, int $nd): array
 {
-    return array_map(fn ($x) => py_round((float) $x, $nd), $xs);
+    return array_map(function ($x) use ($nd) {
+        return py_round((float) $x, $nd);
+    }, $xs);
 }
 
 /** Everything the page needs, in the shape the template's JavaScript expects. */
@@ -394,7 +396,8 @@ function build_bundle(Slice $slice, array $wedge, Baseline $baseline, bool $incl
 {
     $defaults = $wedge['defaults'];
     $effectiveness = (float) reset($defaults['knobs']);
-    $knobName = (string) array_key_first($defaults['knobs']);
+    $knobNames = array_keys($defaults['knobs']);
+    $knobName = (string) $knobNames[0];
     $comp = run_comparison($slice, $wedge, $baseline, [], $effectiveness);
     $sens = run_sensitivity($slice, $wedge, $baseline);
     $oat = one_at_a_time($sens, $wedge['sweep_labels']);
@@ -495,7 +498,8 @@ function build_bundle(Slice $slice, array $wedge, Baseline $baseline, bool $incl
             'custom_elasticity' => null,
             'baseline' => $baseline->toDict(),
             'shared_fingerprint' => $wedge['shared_fingerprint'],
-            'worlds' => array_map(fn ($w) => [
+            'worlds' => array_map(function ($w) {
+                return [
                 'spec' => [
                     'id' => $w['spec']['id'],
                     'label' => $w['spec']['label'],
@@ -507,7 +511,8 @@ function build_bundle(Slice $slice, array $wedge, Baseline $baseline, bool $incl
                 ],
                 'engine_fingerprint' => $w['fingerprint'],
                 'trajectory_fingerprint' => $w['trajectory_fingerprint'],
-            ], $comp['worlds']),
+                ];
+            }, $comp['worlds']),
         ],
         'language' => $wedge['language'],
     ];

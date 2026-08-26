@@ -8,6 +8,7 @@
  */
 declare(strict_types=1);
 
+require_once __DIR__ . '/lib/compat.php';
 require_once __DIR__ . '/lib/llm.php';
 require_once __DIR__ . '/lib/i18n.php';
 

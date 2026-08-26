@@ -33,9 +33,9 @@ const DAYS_PER_MONTH = 365.0 / 12.0;
  */
 final class Baseline
 {
-    public array $values;
-    private array $fields;
-    private ?array $capacity;
+    public $values;
+    private $fields;
+    private $capacity;
 
     public function __construct(array $values, array $wedge)
     {
@@ -386,7 +386,9 @@ function ranking(array $comp, string $key = 'cash_day_90'): array
         }
         return $y[1] <=> $x[1];
     });
-    return array_map(fn ($r) => $r[0], $rows);
+    return array_map(function ($r) {
+        return $r[0];
+    }, $rows);
 }
 
 function world_by_id(array $comp, string $id): array

@@ -122,7 +122,9 @@ function llm_record_call(string $month, int $inputTokens, int $outputTokens): vo
  */
 function llm_chat(array $llm, string $system, string $user, array $options = []): array
 {
-    $fail = static fn (string $why): array => ['ok' => false, 'text' => '', 'error' => $why, 'usage' => []];
+    $fail = static function ($why) {
+        return ['ok' => false, 'text' => '', 'error' => $why, 'usage' => []];
+    };
 
     if (!llm_configured($llm)) {
         return $fail('The LLM is not configured. Set a key and a model in the admin page.');
@@ -298,7 +300,8 @@ function llm_get(string $url, array $headers, int $timeout): array
         return ['', 0, 'This host has neither cURL nor allow_url_fopen, so it cannot call an API.'];
     }
     $context = stream_context_create(['http' => [
-        'method' => 'GET', 'header' => implode("
+        'method' => 'GET', 'header' => implode("
+
 ", $headers),
         'timeout' => $timeout, 'ignore_errors' => true,
     ]]);

@@ -47,8 +47,10 @@ PROMPT;
  */
 function assist_extract(array $llm, string $description, array $wanted): array
 {
-    $fail = static fn (string $why): array => ['ok' => false, 'error' => $why, 'fields' => [],
-                                               'evidence' => [], 'missing' => [], 'note' => ''];
+    $fail = static function ($why) {
+        return ['ok' => false, 'error' => $why, 'fields' => [],
+                'evidence' => [], 'missing' => [], 'note' => ''];
+    };
     $description = trim($description);
     if ($description === '') {
         return $fail('Write a sentence or two about the business first.');

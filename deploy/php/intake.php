@@ -83,7 +83,7 @@ a{color:var(--b)}
         Filled in <?= count($assist['fields']) ?> field(s) from what you wrote — please check each one.
         <?php if ($assist['missing']): ?>
           <br>Not found, so left empty: <?= htmlspecialchars(implode(', ', array_map(
-              fn ($k) => $fields[$k][0] ?? $k, $assist['missing'])), ENT_QUOTES) ?>.
+              function ($k) use ($fields) { return $fields[$k][0] ?? $k; }, $assist['missing'])), ENT_QUOTES) ?>.
         <?php endif; ?>
         <?php if ($assist['note'] !== ''): ?>
           <br><?= htmlspecialchars($assist['note'], ENT_QUOTES) ?>

@@ -18,11 +18,11 @@ declare(strict_types=1);
 
 final class Slice
 {
-    /** @var array<int,array<string,mixed>> */ public array $variables;
-    /** @var array<int,array<string,mixed>> */ public array $edges;
-    /** @var array<string,array<string,mixed>> */ public array $axes = [];
-    /** @var array<int,array<string,mixed>> */ public array $interventions;
-    /** @var array<string,array<int,array<string,mixed>>> */ private array $edgesByTarget = [];
+    /** @var array<int,array<string,mixed>> */ public $variables;
+    /** @var array<int,array<string,mixed>> */ public $edges;
+    /** @var array<string,array<string,mixed>> */ public $axes = [];
+    /** @var array<int,array<string,mixed>> */ public $interventions;
+    /** @var array<string,array<int,array<string,mixed>>> */ private $edgesByTarget = [];
 
     public function __construct(array $slice)
     {
@@ -74,21 +74,21 @@ final class Slice
 
 final class Simulation
 {
-    private Slice $slice;
-    private array $axisSettings;
-    private array $events;
-    private array $interventions;
-    private int $turns;
+    private $slice;
+    private $axisSettings;
+    private $events;
+    private $interventions;
+    private $turns;
 
     /** @var array<string,float> current values, in the variables' own units */
-    private array $values = [];
+    private $values = [];
     /** @var array<int,array<string,float>> observed deviation — what causal edges read */
-    private array $devHistory = [];
+    private $devHistory = [];
     /** @var array<int,array<string,float>> endogenous deviation — what relaxation acts on */
-    private array $endoHistory = [];
+    private $endoHistory = [];
     /** @var array<string,array<int,float>> */
-    private array $series = [];
-    private bool $clampEngaged = false;
+    private $series = [];
+    private $clampEngaged = false;
 
     public function __construct(Slice $slice, array $axisSettings, array $events, array $interventions, int $turns)
     {

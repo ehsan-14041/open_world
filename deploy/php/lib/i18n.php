@@ -110,7 +110,9 @@ function i18n_apply(string $template, array $translation): array
     // Longest first: a short string can be a substring of a longer one, and replacing the
     // long one first keeps the short replacement from cutting into it.
     $ids = array_keys($translation['strings'] ?? []);
-    usort($ids, fn ($a, $b) => strlen($byId[$b]['text'] ?? '') <=> strlen($byId[$a]['text'] ?? ''));
+    usort($ids, function ($a, $b) use ($byId) {
+        return strlen($byId[$b]['text'] ?? '') <=> strlen($byId[$a]['text'] ?? '');
+    });
 
     foreach ($ids as $id) {
         $entry = $byId[$id] ?? null;

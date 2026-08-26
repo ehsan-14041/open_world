@@ -2,7 +2,18 @@
 
 Three decision products — cafe, shop and salon — all generated on the host: the engine, the
 accounting, the 162-point sensitivity sweep and the rendering. No Python on the server, no
-database, no build step, no framework. PHP 7.4+ with zlib and json — every shared host has both.
+database, no build step, no framework.
+
+**PHP 7.1 or newer**, with zlib and json. The floor is deliberately low: arrow functions and
+typed properties (both PHP 7.4) are kept out of the bundle on purpose, because shared hosts are
+often years behind their control panel's default. If the host is older still, the app says so
+in plain language instead of dying with a parse error — `lib/compat.php` is written in PHP
+5-era syntax and is the first thing every entry point requires, since PHP parses a whole file
+at include time and a check living inside a modern file never gets to run.
+
+Anything before PHP 7.4 has been out of security support for years, so raising the version in
+your control panel is worth doing regardless. In DirectAdmin it is usually under *Account
+Manager → PHP Version Selector*; in cPanel, *Select PHP Version*.
 
 The generator under `lib/` is wedge-generic: nothing in it knows what a cafe is. Each wedge
 arrives as data in `assets/<wedge>.json`, exported from the Python definitions — including the
