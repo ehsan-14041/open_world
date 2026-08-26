@@ -56,6 +56,16 @@ if ($password !== '') {
     }
 }
 
+// A quick way to confirm which build is deployed, without opening a report.
+if (isset($_GET['version'])) {
+    header('Content-Type: text/plain; charset=utf-8');
+    $stamp = is_file(__DIR__ . '/VERSION.txt') ? file_get_contents(__DIR__ . '/VERSION.txt') : "no VERSION.txt
+";
+    echo $stamp . "running on PHP " . PHP_VERSION . "
+";
+    exit;
+}
+
 // ---- which wedge ---------------------------------------------------------------------------
 $catalogue = json_decode((string) file_get_contents(__DIR__ . '/assets/wedges.json'), true);
 $available = array_column($catalogue['chooser'] ?? [], 'id');

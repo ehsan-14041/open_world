@@ -12,6 +12,7 @@ byte-identical bundle for each (scripts/verify_php_port.py). See deploy/php/READ
 from __future__ import annotations
 
 import argparse
+import datetime
 import shutil
 import subprocess
 import sys
@@ -21,9 +22,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "deploy" / "php"
 
+#: Kept in step with lib/compat.php.
+PHP_FLOOR = "7.1"
+
 
 def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bool) -> dict[str, Path]:
-    # Refresh the frozen instrument so a bundle can never ship a stale model or template.
+    # Refresh the frozen instruments so a bundle can never ship a stale model or template.
     subprocess.run([sys.executable, str(ROOT / "scripts" / "export_php_assets.py")],
                    check=True, capture_output=True)
 
@@ -32,11 +36,27 @@ def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bo
     shutil.copytree(TEMPLATE, out_dir)
 
     # Runtime state must never travel in a bundle: settings.json can hold an API key, the cache
-    # can hold a real cafe's figures, and a translation belongs to the install that made it.
+    # can hold a real business's figures, and a translation belongs to the install that made it.
     for pattern in ("data/cache/*.gz", "data/settings.json", "data/llm_usage.json",
                     "data/i18n/*.json", "config.php"):
         for leaked in out_dir.glob(pattern):
             leaked.unlink()
+
+    # A plain-text stamp, so "did my upload actually land?" is answerable by opening a URL.
+    # Static on purpose: when PHP cannot parse the app, nothing dynamic can answer that.
+    commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=str(ROOT),
+                            capture_output=True, text=True).stdout.strip() or "unknown"
+    built = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    lines = [
+        "build   " + built,
+        "commit  " + commit,
+        "php     needs " + PHP_FLOOR + " or newer",
+        "wedges  cafe, shop, salon",
+        "",
+        "If the site errors but this file is older than your upload, the files were not replaced.",
+        "",
+    ]
+    (out_dir / "VERSION.txt").write_text("\n".join(lines), encoding="utf-8")
 
     if password:
         sample = (out_dir / "config.sample.php").read_text(encoding="utf-8")
@@ -57,7 +77,7 @@ def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bo
         written["zip"] = archive
 
     total = sum(p.stat().st_size for p in out_dir.rglob("*") if p.is_file())
-    print(f"bundle  {total:,} bytes")
+    print(f"bundle  {total:,} bytes   commit {commit}   php {PHP_FLOOR}+")
     for label, path in written.items():
         print(f"{label:<7} {path}")
     return written
