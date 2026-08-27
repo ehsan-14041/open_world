@@ -218,6 +218,9 @@ def test_the_report_page_reads_every_string_from_the_catalogue():
     assert "navigator.languages" in html, "the browser's language is a reasonable default"
     # Nothing user-visible should be hard-coded in the markup.
     body = html.split("<body>", 1)[1].split("<script", 1)[0]
+    # <noscript> is the one exception, and has to be: if the script never runs, nothing can look
+    # a string up. That message is written into the markup, in both languages.
+    body = re.sub(r"<noscript>.*?</noscript>", " ", body, flags=re.S)
     text = re.sub(r"<[^>]+>", " ", body)
     words = [x for x in re.findall(r"[A-Za-z]{4,}", text) if x.lower() not in ("business",)]
     assert not words, f"hard-coded English in the page body: {words[:10]}"

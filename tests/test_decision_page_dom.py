@@ -65,7 +65,9 @@ def rendered(wedge_id: str, lang: str) -> str:
         proc = subprocess.run(
             [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
              "--virtual-time-budget=9000", "--dump-dom",
-             page.as_uri() + f"?lang={lang}"],
+             # The page asks before it answers, so the worked example is the way to render a
+             # result without a flow to drive. It is the same route the home screen offers.
+             page.as_uri() + f"?lang={lang}&demo=1"],
             capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
         )
         assert proc.returncode == 0, proc.stderr[-800:]
@@ -134,7 +136,8 @@ def test_exactly_one_card_carries_the_winner_badge(wedge_id, lang):
     dom = rendered(wedge_id, lang)
     badges = re.findall(r'class="lead-tag"[^>]*>(.*?)</div>', dom, re.S)
     assert len(badges) == 1, f"{wedge_id}/{lang}: {len(badges)} winner badges"
-    assert catalogue(lang)["ui"]["best_badge"] in html_mod.unescape(badges[0])
+    # The badge says where the option stands right now, not that it is the right answer.
+    assert catalogue(lang)["ui"]["ahead_now"] in html_mod.unescape(badges[0])
     leads = re.findall(r'class="opt [^"]*\blead\b[^"]*"', dom)
     assert len(leads) == 1, f"{wedge_id}/{lang}: {len(leads)} cards marked as leading"
 

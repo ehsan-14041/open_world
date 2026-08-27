@@ -137,7 +137,6 @@
     "why_price_through": "and the higher price carries almost straight through to what you keep.",
     "verdict": "{option} leaves you with the most cash after 90 days — under these assumptions.",
     "verdict_close": "{lead} and {second} finish within {amount} of each other after 90 days — under these assumptions.",
-    "best_badge": "Best under current assumptions",
     "use_your_numbers": "Use your own numbers",
     "answer_changed_banner": "The answer changed — this is the assumption that matters most.",
     "home_flow": "Pick your business → see three choices → test your numbers.",
@@ -151,7 +150,41 @@
     "currency_pick": "Show figures in",
     "currency_none": "no symbol",
     "print_view": "Print or save as PDF",
-    "print_hint": "Verdict, chart and assumptions. Everything else is left out."
+    "print_hint": "Verdict, chart and assumptions. Everything else is left out.",
+    "flow_step_of": "{n} of {total}",
+    "flow_back": "Back",
+    "flow_next": "Next",
+    "flow_see": "Show me the comparison",
+    "flow_other": "Something else",
+    "flow_approx": "It doesn't need to be exact.",
+    "flow_example": "Or look at a worked example",
+    "flow_change": "Change your numbers",
+    "result_intro": "I compared three ways to respond.",
+    "ahead_now": "Currently ahead",
+    "per_month_label": "monthly",
+    "why_q": "Why is {option} ahead?",
+    "unknown_lead": "But one thing could change the answer.",
+    "flip_title": "The answer changed.",
+    "flip_body": "At this setting, {winner} moves ahead of {loser}.",
+    "flip_same": "At this setting {winner} still comes out ahead.",
+    "unsure_q": "Not sure?",
+    "unsure_lead": "Here is a simple way to find out:",
+    "give_me_test": "Show me that test",
+    "test_reading": "After two weeks:",
+    "test_low": "Lost less than {n} — not very price-sensitive",
+    "test_mid": "Lost about {n} — typical",
+    "test_high": "Lost more than {n} — very price-sensitive",
+    "chart_reveal_q": "Want to see how the next 90 days play out?",
+    "chart_reveal_btn": "Show the chart",
+    "assume_reveal_q": "What is this answer built on?",
+    "assume_reveal_btn": "Show the assumptions",
+    "method_btn": "How it was calculated",
+    "home_hero": "Got a business decision to make?",
+    "home_hero_2": "See the trade-offs before you make it.",
+    "home_problem_q": "What's the problem right now?",
+    "home_example_lead": "Say your ingredient costs go up 30%:",
+    "home_example_cta": "Compare them",
+    "noscript": "This page needs JavaScript to work."
   },
   "wedges": {
     "cafe": {
@@ -311,7 +344,42 @@
           "label": "Ingredient cost per order"
         }
       },
-      "chart_turn": "old stock runs out around here"
+      "chart_turn": "old stock runs out around here",
+      "problem": "Ingredient costs went up",
+      "flow_q": {
+        "shock": "How much did your ingredient costs go up?",
+        "sales": "How busy is the cafe?",
+        "costs": "What do you spend in a month?",
+        "cash": "How much cash have you got set aside for the business?",
+        "mix": "How many of your orders are low-margin?"
+      },
+      "flow_choices": {
+        "shock": {
+          "10": "10%",
+          "20": "20%",
+          "30": "30%"
+        },
+        "mix": {
+          "10": "Few — about 10%",
+          "20": "Some — about 20%",
+          "30": "Many — about 30%"
+        }
+      },
+      "tradeoff": {
+        "A": {
+          "good": "Nothing changes for your customers",
+          "bad": "but your margin takes the hit"
+        },
+        "B": {
+          "good": "You keep more of the money",
+          "bad": "but orders drop by about {pct}"
+        },
+        "C": {
+          "good": "Smaller drop in orders",
+          "bad": "but it leans more on your menu mix"
+        }
+      },
+      "experiment": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily order count. Compare it with the week before."
     },
     "shop": {
       "business": "Shop / Online Store",
@@ -470,7 +538,42 @@
           "label": "Cost of goods per order"
         }
       },
-      "chart_turn": "old stock runs out around here"
+      "chart_turn": "old stock runs out around here",
+      "problem": "My supplier raised prices",
+      "flow_q": {
+        "shock": "How much did your supplier put prices up?",
+        "sales": "How busy is the shop?",
+        "costs": "What do you spend in a month?",
+        "cash": "How much cash have you got set aside for the business?",
+        "mix": "How many of your sales are low-margin?"
+      },
+      "flow_choices": {
+        "shock": {
+          "15": "15%",
+          "25": "25%",
+          "35": "35%"
+        },
+        "mix": {
+          "10": "Few — about 10%",
+          "20": "Some — about 20%",
+          "30": "Many — about 30%"
+        }
+      },
+      "tradeoff": {
+        "A": {
+          "good": "Your prices stay where they are",
+          "bad": "but you absorb the whole increase"
+        },
+        "B": {
+          "good": "You pass most of the increase on",
+          "bad": "but sales drop by about {pct}"
+        },
+        "C": {
+          "good": "A smaller rise, and your costs come down too",
+          "bad": "but it depends on what dropping low-margin lines really saves"
+        }
+      },
+      "experiment": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily sales count. Compare it with the week before."
     },
     "salon": {
       "business": "Salon / Service Business",
@@ -642,7 +745,42 @@
           "label": "Product cost per appointment"
         }
       },
-      "chart_turn": "holding your price stops paying here"
+      "chart_turn": "holding your price stops paying here",
+      "problem": "My schedule is filling up",
+      "flow_q": {
+        "shock": "How much busier has it got?",
+        "full": "How full is your diary, usually?",
+        "sales": "How busy is the salon?",
+        "costs": "What do you spend in a month?",
+        "cash": "A couple of last numbers"
+      },
+      "flow_choices": {
+        "shock": {
+          "15": "15%",
+          "25": "25%",
+          "35": "35%"
+        },
+        "full": {
+          "55": "Under 60%",
+          "70": "Between 60 and 80%",
+          "88": "Over 80%"
+        }
+      },
+      "tradeoff": {
+        "A": {
+          "good": "Prices stay put and clients are happy",
+          "bad": "but you fill up and start turning appointments away"
+        },
+        "B": {
+          "good": "The same hours bring in more",
+          "bad": "but demand shifts by about {pct}"
+        },
+        "C": {
+          "good": "A smaller rise, and a richer service mix",
+          "bad": "but it depends on how well the mix shift actually works"
+        }
+      },
+      "experiment": "Put the price of one or two in-demand services up {rise} for two weeks and write down how many people ask for them. Compare with the fortnight before."
     }
   }
 }

@@ -25,17 +25,17 @@ ROOT = Path(__file__).resolve().parent.parent
 #: not do, and a check that cannot tell a disclaimer from a claim would push that honesty out
 #: of the product. These patterns match the claim and leave the denial alone.
 OVERCLAIM_PATTERNS = (
-    r"we (?:predict|forecast)",
-    r"(?:predicts|forecasts|will happen|is guaranteed|guaranteed (?:to|outcome|result))",
-    r"(?:the|an|is the) optimal",
-    r"optimal (?:decision|choice|price|answer)",
-    r"probability (?:of|that)",
-    r"\d+\s?% (?:chance|likely|probability)",
-    r"(?:high|low)?\s?confidence (?:that|interval|level)",
-    r"AI (?:recommends|suggests|advises)",
-    r"scientifically validated",
-    r"you should choose",
-    r"recommended (?:option|decision|choice)",
+    r"\bwe (?:predict|forecast)\b",
+    r"\b(?:predicts|forecasts|will happen|is guaranteed|guaranteed (?:to|outcome|result))\b",
+    r"\b(?:the|an|is the) optimal\b",
+    r"\boptimal (?:decision|choice|price|answer)\b",
+    r"\bprobability (?:of|that)\b",
+    r"\b\d+\s?% (?:chance|likely|probability)\b",
+    r"\b(?:high|low)?\s?confidence (?:that|interval|level)\b",
+    r"\bAI (?:recommends|suggests|advises)\b",
+    r"\bscientifically validated\b",
+    r"\byou should choose\b",
+    r"\brecommended (?:option|decision|choice)\b",
 )
 
 
@@ -263,3 +263,20 @@ def test_a_failed_render_is_announced_rather_than_left_half_drawn():
     for lang in ("en", "fa"):
         from event_sim.wedge.i18n import catalogue
         assert catalogue(lang)["ui"]["render_failed"].strip()
+
+
+def test_every_element_the_script_writes_to_exists():
+    """
+    A render that reaches for an element the markup no longer has takes the rest of the page
+    down with it. The page catches that and says so, which is better than a half-drawn screen —
+    but it is a build-time mistake, and it should be caught before a reader ever sees the
+    apology.
+
+    The invariant is simply that every id the script asks for is an id something writes: either
+    the static markup, or one of the fragments the script assembles.
+    """
+    html = TEMPLATE.read_text(encoding="utf-8")
+    written = set(re.findall(r'\bid="([\w-]+)"', html))
+    read = set(re.findall(r"getElementById\('([^']+)'\)", html))
+    missing = sorted(read - written)
+    assert not missing, f"the script writes to elements that are never created: {missing}"

@@ -106,7 +106,7 @@ html[dir="rtl"] .verdict{font-weight:700;letter-spacing:0;line-height:1.7;max-wi
 /* The decision arrives rather than appearing, once, on first paint only. Anything the reader
    triggers themselves is not animated — they already know they did it. */
 @media (prefers-reduced-motion:no-preference){
-  .intro-1,.intro-2,.intro-3{animation:rise .28s cubic-bezier(.32,.72,0,1) both}
+  .intro-1,.intro-2{animation:rise .28s cubic-bezier(.32,.72,0,1) both}
   .intro-2{animation-delay:.05s}
   .intro-3{animation-delay:.1s}
 }
@@ -333,6 +333,100 @@ html[dir="rtl"] .fgroup .k{letter-spacing:0;font-size:13px;text-transform:none}
 @media (max-width:560px){.sticky-t{display:none}.sticky .btn{width:100%}}
 body.has-sticky{padding-bottom:84px}
 .count-note{margin:14px 0 0;font-size:13.5px;color:var(--muted)}
+/* ================= asking =====================================================================
+   One question to a screen, at a size that says it is the only thing being asked. The page is
+   quiet here: no navigation, no summary, nothing to read past. */
+#ask{padding:38px 0 64px;max-width:620px;margin:0 auto}
+body.asking .top .bizpick,body.asking .top .badge{display:none}
+.askhead{display:flex;flex-direction:column;gap:10px;margin-bottom:30px}
+.progress{font-size:13.5px;color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums}
+.progbar{height:4px;border-radius:999px;background:var(--sunk);overflow:hidden}
+.progbar i{display:block;height:100%;background:var(--win);border-radius:999px;
+           transition:width .3s cubic-bezier(.32,.72,0,1)}
+.askq{font-family:var(--display);font-weight:600;font-size:clamp(26px,4.4vw,40px);line-height:1.18;
+      letter-spacing:-.015em;margin:0;text-wrap:balance}
+html[dir="rtl"] .askq{font-weight:700;letter-spacing:0;line-height:1.5}
+.askhint{color:var(--muted);margin:12px 0 0;font-size:16px}
+#ask-body{margin-top:28px}
+.choices{display:grid;gap:12px}
+.choice{width:100%;text-align:start;border:1px solid var(--rule);background:var(--raised);
+        border-radius:var(--r-md);padding:20px 22px;font:600 19px/1.35 var(--body);color:inherit;
+        cursor:pointer;min-height:64px;box-shadow:var(--shadow-1);
+        transition:border-color .16s ease,transform .16s ease,box-shadow .16s ease}
+html[dir="rtl"] .choice{font-size:18px}
+.choice:hover,.choice:focus-visible{border-color:var(--win);outline:none;transform:translateY(-1px);
+        box-shadow:var(--shadow-2)}
+.choice.on{border-color:var(--win);box-shadow:0 0 0 2px var(--win) inset}
+.choice.other{font-weight:500;color:var(--muted);min-height:56px;font-size:17px}
+.askfields{display:grid;gap:20px}
+.askfield{display:block}
+.askfield .afl{display:block;font-size:16.5px;font-weight:600;margin-bottom:9px}
+.askfield .in{display:flex;align-items:center;border:1px solid var(--rule);border-radius:var(--r-md);
+              background:var(--raised);overflow:hidden}
+.askfield .in:focus-within{border-color:var(--win);box-shadow:0 0 0 2px var(--win) inset}
+.askfield input{flex:1;min-width:0;border:0;background:transparent;color:inherit;
+       font:600 26px/1 var(--body);padding:18px 20px;min-height:66px;font-variant-numeric:tabular-nums}
+.askfield input:focus{outline:none}
+.askfield .u{padding-inline-end:20px;color:var(--muted);font-weight:600}
+.otherwrap{margin-top:12px}
+.askerr{color:var(--crit);font-size:15px;margin-top:14px;min-height:1.2em}
+.askfoot{display:flex;gap:12px;align-items:center;margin-top:30px}
+.askfoot .btn.primary{margin-inline-start:auto;min-height:56px;font-size:17px;padding-inline:32px}
+.askalt{margin-top:26px}
+.linkish{border:0;background:none;color:var(--muted);font:inherit;font-size:15px;cursor:pointer;
+         text-decoration:underline;text-underline-offset:3px;padding:10px 0;min-height:44px}
+@media (max-width:560px){
+  .askfoot{flex-wrap:wrap}
+  .askfoot .btn.primary{width:100%;margin-inline-start:0;order:-1}
+  .askfoot .btn:not(.primary){width:100%}
+}
+
+/* ================= the three choices ==========================================================
+   Name, one figure, what you get, what you give up. */
+.money-block{display:flex;flex-direction:column;gap:3px}
+.money-k{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+html[dir="rtl"] .money-k{letter-spacing:0;text-transform:none;font-size:13.5px}
+.trade{display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--rule);padding-top:14px}
+.trade p{margin:0;font-size:15.5px;line-height:1.5}
+.trade .good{font-weight:600}
+.trade .bad{color:var(--muted)}
+
+/* ================= the moment ================================================================ */
+.unknown-lead{font-family:var(--display);font-weight:600;font-size:clamp(19px,2.4vw,26px);
+              margin:0 0 20px;line-height:1.3;text-wrap:balance}
+html[dir="rtl"] .unknown-lead{font-weight:700;line-height:1.6}
+#unknown .unknown{padding:26px 24px}
+#unknown .seg{margin-top:6px}
+#unknown .seg button{font-size:16.5px;min-height:56px}
+.unsure{margin-top:28px;border:1px solid var(--rule);border-radius:var(--r-md);
+        padding:22px 24px;background:var(--raised)}
+.unsure h3{margin:0 0 6px;font-size:19px}
+.unsure p{margin:0 0 16px;color:var(--muted)}
+.testplan{margin-top:18px;border-top:1px solid var(--rule);padding-top:18px}
+.testplan p{color:inherit}
+.readings{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
+.readings li{display:flex;flex-direction:column;gap:3px;background:var(--sunk);
+             border-radius:var(--r-sm);padding:12px 14px}
+.readings .r-n{font-weight:600;font-size:15.5px}
+.readings .r-s{font-size:13.5px;color:var(--muted)}
+
+/* ================= what is offered, not pushed ============================================== */
+.reveal{border:1px solid var(--rule);border-radius:var(--r-md);background:var(--raised);
+        margin-top:20px;box-shadow:var(--shadow-1)}
+.reveal>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;
+        padding:22px 24px;min-height:68px;flex-wrap:wrap}
+.reveal>summary::-webkit-details-marker{display:none}
+.reveal .rq{font-size:17.5px;font-weight:600;flex:1;min-width:0}
+.reveal .rb{font-size:15px;font-weight:600;color:var(--win);border:1px solid var(--rule);
+        border-radius:999px;padding:9px 16px;white-space:nowrap}
+.reveal[open]>summary{border-bottom:1px solid var(--rule)}
+.reveal[open] .rb{opacity:.55}
+.reveal-body{padding:24px}
+.sec-head.sub{margin:34px 0 14px}
+.sec-head.sub h3{font-family:var(--display);font-weight:600;font-size:21px;margin:0}
+.noscript{padding:24px 0;color:var(--crit);font-weight:600}
+@media (max-width:560px){.reveal>summary{padding:18px}.reveal-body{padding:18px}}
+
 /* Everything a finger is meant to land on clears the comfortable minimum, including the ones
    that are only incidentally interactive. */
 .mark a{display:inline-flex;align-items:center;min-height:44px}
@@ -412,87 +506,120 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
 </header>
 
 <main class="wrap" id="main">
+
+  <!-- ================= the questions =================================================
+       The page opens by asking, not by reporting. One question to a screen, every one of
+       them an input the model actually needs — nothing is asked to make the flow feel
+       longer, and nothing the model needs is guessed on the owner's behalf. -->
+  <section id="ask">
+    <div class="askhead">
+      <span class="progress" id="ask-progress"></span>
+      <div class="progbar"><i id="ask-bar"></i></div>
+    </div>
+    <h1 class="askq" id="ask-q"></h1>
+    <p class="askhint" id="ask-hint"></p>
+    <div id="ask-body"></div>
+    <div id="ask-err" class="askerr" role="alert"></div>
+    <div class="askfoot">
+      <button type="button" class="btn" id="ask-back"></button>
+      <button type="button" class="btn primary" id="ask-next"></button>
+    </div>
+    <p class="askalt"><button type="button" class="linkish" id="ask-example"></button></p>
+  </section>
+
+  <!-- ================= the answer ==================================================== -->
+  <div id="result" hidden>
+
   <section id="decision">
     <p class="changed"><span class="dot"></span><span id="changed-t"></span></p>
     <h1 id="headline"></h1>
-    <p class="lede" id="hero-lede"></p>
     <p class="whoami" id="whoami"></p>
+    <p class="result-intro" id="result-intro"></p>
     <!-- The answer in one sentence, before the cards that justify it. A reader who stops
          here should still have left with the right conclusion. -->
     <p class="verdict intro-1" id="verdict"></p>
     <h2 class="sr" id="options-h"></h2>
     <div class="options intro-2" id="options"></div>
-    <p class="count-note" id="count-note"></p>
-    <!-- Below the cards: keeping a copy is something you decide after reading them, not before. -->
-    <p class="printrow"><button class="btn ghost" id="printbtn"></button>
-       <span class="print-hint" id="print-hint"></span></p>
-  </section>
-
-  <!-- The chart follows the cards directly: it is what makes the difference between them felt
-       rather than merely read. -->
-  <section id="money">
-    <div class="sec-head tight">
-      <h2 id="chart-title"></h2>
-      <p class="lede" id="chart-lede"></p>
-    </div>
-    <div class="chart-wrap intro-3">
-      <svg id="chart" viewBox="0 0 960 380" role="img" aria-labelledby="chart-alt"></svg>
-      <p class="sr" id="chart-alt"></p>
-      <div class="tip" id="tip"></div>
-      <div class="legend" id="legend"></div>
-    </div>
-    <p class="note" id="cash-note"></p>
-    <div class="mini"><table id="mini"></table></div>
     <div class="why"><h3 id="why-h"></h3><p id="why-p"></p></div>
     <p class="scenario" id="scenario"></p>
   </section>
 
+  <!-- ================= the moment the product exists for ============================
+       One assumption, three settings, and the answer moving in front of the reader. This
+       is promoted above the chart and the evidence because experiencing the flip teaches
+       more than any amount of prose about sensitivity. -->
   <section id="unknown">
+    <p class="unknown-lead" id="unknown-lead"></p>
     <div class="unknown">
       <div class="unknown-top">
         <div class="eyebrow" id="unknown-eyebrow"></div>
         <h2 id="unknown-title"></h2>
       </div>
-      <div class="unknown-grid">
-        <div><div class="k" id="uk-what-k"></div><p id="uk-what"></p></div>
-        <div><div class="k" id="uk-why-k"></div><p id="uk-why"></p></div>
-        <div><div class="k" id="uk-could-k"></div><p id="uk-could"></p></div>
-        <div><div class="k" id="uk-how-k"></div><p id="uk-how"></p></div>
-      </div>
-      <div class="unknown-cta"><button class="btn" id="uk-try"></button></div>
-    </div>
-  </section>
-
-  <section id="change">
-    <div class="sec-head">
-      <div class="eyebrow" id="change-eyebrow"></div>
-      <h2 id="change-title"></h2>
-    </div>
-    <ul class="influence" id="influence"></ul>
-    <p class="flipline" id="flipline"></p>
-    <div class="control">
-      <h3 id="ctrl-title"></h3>
-      <div class="seg" id="seg" role="group" aria-labelledby="ctrl-title"></div>
+      <div class="seg" id="seg" role="group" aria-labelledby="unknown-title"></div>
       <div class="seg-help" id="seg-help"></div>
       <p class="flipbanner" id="flipbanner" role="status" aria-live="assertive"><span class="m"></span><span id="flipbanner-t"></span></p>
       <div class="effect" id="effect" role="status" aria-live="polite"></div>
+      <p class="count-note" id="count-note"></p>
+      <div class="unknown-grid">
+        <div><div class="k" id="uk-why-k"></div><p id="uk-why"></p></div>
+        <div><div class="k" id="uk-could-k"></div><p id="uk-could"></p></div>
+      </div>
     </div>
-    <details class="adv"><summary id="adv-sum"></summary><div class="inner"><div class="controls" id="controls"></div></div></details>
+
+    <!-- Uncertainty stops being a disclaimer the moment it comes with a way to settle it. -->
+    <div class="unsure">
+      <h3 id="unsure-q"></h3>
+      <p id="unsure-lead"></p>
+      <button type="button" class="btn" id="uk-try"></button>
+      <div class="testplan" id="testplan" hidden>
+        <p id="test-what"></p>
+        <div class="k" id="test-reading"></div>
+        <ul class="readings" id="test-readings"></ul>
+        <p class="note" id="uk-how"></p>
+      </div>
+    </div>
   </section>
 
-  <section id="evidence">
-    <div class="sec-head"><div class="eyebrow" id="ev-eyebrow"></div><h2 id="ev-title"></h2>
-      <p class="ev-summary" id="ev-summary"></p></div>
-    <div class="groups" id="groups"></div>
-  </section>
-
-  <section id="limits">
-    <div class="sec-head"><h2 id="limits-title"></h2></div>
-    <div class="limits">
-      <div><h3 id="does-h"></h3><ul id="does"></ul></div>
-      <div><h3 id="doesnot-h"></h3><ul id="doesnot"></ul></div>
+  <!-- ================= evidence, on request ==========================================
+       Everything below here is secondary. The default experience is complete without any
+       of it being opened. -->
+  <details class="reveal" id="chart-disc">
+    <summary><span class="rq" id="chart-reveal-q"></span><span class="rb" id="chart-reveal-btn"></span></summary>
+    <div class="reveal-body">
+      <div class="sec-head tight"><h2 id="chart-title"></h2><p class="lede" id="chart-lede"></p></div>
+      <div class="chart-wrap">
+        <svg id="chart" viewBox="0 0 960 380" role="img" aria-labelledby="chart-alt"></svg>
+        <p class="sr" id="chart-alt"></p>
+        <div class="tip" id="tip"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <p class="note" id="cash-note"></p>
+      <div class="mini"><table id="mini"></table></div>
     </div>
-  </section>
+  </details>
+
+  <details class="reveal" id="assume-disc">
+    <summary><span class="rq" id="assume-reveal-q"></span><span class="rb" id="assume-reveal-btn"></span></summary>
+    <div class="reveal-body">
+      <p class="ev-summary" id="ev-summary"></p>
+      <div class="groups" id="groups"></div>
+
+      <div class="sec-head sub"><h3 id="change-title"></h3></div>
+      <ul class="influence" id="influence"></ul>
+      <p class="flipline" id="flipline"></p>
+      <details class="adv"><summary id="adv-sum"></summary><div class="inner"><div class="controls" id="controls"></div></div></details>
+
+      <div class="sec-head sub"><h3 id="limits-title"></h3></div>
+      <div class="limits">
+        <div><h4 id="does-h"></h4><ul id="does"></ul></div>
+        <div><h4 id="doesnot-h"></h4><ul id="doesnot"></ul></div>
+      </div>
+
+      <details class="tech" id="how"><summary id="how-open"></summary><div class="inner" id="how-body"></div></details>
+      <p class="printrow"><button class="btn ghost" id="printbtn"></button>
+         <span class="print-hint" id="print-hint"></span></p>
+    </div>
+  </details>
 
   <section id="try">
     <div class="sec-head">
@@ -505,11 +632,14 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     <p class="note" id="currency-note"></p>
   </section>
 
-  <section id="how">
-    <div class="sec-head"><h2 id="how-title"></h2></div>
-    <details class="tech"><summary id="how-open"></summary><div class="inner" id="how-body"></div></details>
-  </section>
+  </div><!-- /#result -->
 </main>
+
+<!-- The one message the catalogue cannot deliver: if the script never runs, nothing can
+     look a string up. Both languages are written out, because there is no way to know
+     which one this reader wanted. -->
+<noscript><p class="wrap noscript" lang="fa" dir="rtl">این صفحه برای کار کردن به جاوااسکریپت نیاز دارد.</p>
+<p class="wrap noscript" lang="en" dir="ltr">This page needs JavaScript to work.</p></noscript>
 
 <!-- Follows the reader down the page and steps aside once the form itself is on screen. -->
 <div class="sticky" id="sticky" hidden>
@@ -749,38 +879,42 @@ function render(langChanged){
   flag.hidden = !base.is_demo; flag.textContent = t('demo_badge', {noun: w('noun')});
 
   document.getElementById('changed-t').textContent = fill(w('what_changed'), {shock: num(shock)});
+  document.getElementById('result-intro').textContent = t('result_intro');
+  document.getElementById('unknown-lead').textContent = t('unknown_lead');
+  document.getElementById('unknown-title').textContent = w('uncertainty_title');
+  document.getElementById('chart-reveal-q').textContent = t('chart_reveal_q');
+  document.getElementById('chart-reveal-btn').textContent = t('chart_reveal_btn');
+  document.getElementById('assume-reveal-q').textContent = t('assume_reveal_q');
+  document.getElementById('assume-reveal-btn').textContent = t('assume_reveal_btn');
+  document.getElementById('unsure-q').textContent = t('unsure_q');
+  document.getElementById('unsure-lead').textContent = t('unsure_lead');
+  document.getElementById('uk-try').textContent = t('give_me_test');
+  document.getElementById('test-reading').textContent = t('test_reading');
   document.getElementById('headline').textContent = fill(w('headline'), {shock: num(shock)});
-  document.getElementById('hero-lede').textContent = w('hero_lede');
   document.getElementById('options-h').textContent = t('your_options');
   document.getElementById('whoami').textContent = whoami(cap);
   document.getElementById('scenario').textContent = t('not_a_prediction');
 
+  /* A card carries one figure and one trade-off. The robustness count, the 90-day cash and
+     the model's caveats are all true and all available further down — none of them helps a
+     reader who is still working out what the three choices even are. */
+  var TRADE = w('tradeoff');
   document.getElementById('options').innerHTML = WID.map(function(id){
-    var m = out[id].m, isLead = (id === lead);
-    var cashLine = (m.first_negative_day !== null)
-      ? '<span class="v neg">' + t('cash_runs_out', {day:num(m.first_negative_day)}) + '</span>'
-      : '<span class="v' + (m.cash90<0?' neg':'') + '">' + money(m.cash90) + '</span>'
-        + '<span class="l">' + t('cash_at_90') + '</span>';
-    var robust = '<div class="robust" title="' + esc(t('tested_cases_tooltip')) + '">'
-      + fill(t('ranked_first_cases'),
-        {n:'<b>'+num(wins[id])+'</b>', total:num(wins.n)}) + '</div>';
-    var note = (id === 'C' && w('c_card_note') && red !== null)
-      ? '<details><summary>' + t('advanced') + '</summary><div class="inner">'
-        + esc(fill(w('c_card_note'), {red:num(red,1), loss:num(0.33*red,1),
-              unit:w('unit_word'), cost:w('cost_word')})) + '</div></details>' : '';
+    var m = out[id].m, isLead = (id === lead), tr = TRADE[id] || {good:'', bad:''};
     return '<article class="opt ' + CLS[id] + (isLead ? ' lead' : '') + '">'
-      + (isLead ? '<div class="lead-tag">' + esc(t('best_badge')) + '</div>' : '')
+      + (isLead ? '<div class="lead-tag">' + esc(t('ahead_now')) + '</div>' : '')
       + '<div class="opt-head"><span class="letter" aria-hidden="true">' + id + '</span>'
       + '<h3 class="name">' + esc(NAMES[id]) + '</h3></div>'
-      + '<div><div class="money' + (m.mnet<0?' neg':'') + '">' + signed(m.mnet) + '</div>'
-      + '<div class="money-l">' + t('per_month') + ' · ' + t('per_month_after')
-      + ' · ' + t('today') + ' ' + signed(preNet) + '</div></div>'
-      + '<div class="rowline"><span class="v">' + pct(m.orders_change) + '</span>'
-      + '<span class="l">' + esc(w('unit_word')) + '</span></div>'
-      + '<div class="rowline">' + cashLine + '</div>' + robust + note + '</article>';
+      + '<div class="money-block"><div class="money-k">' + esc(t('per_month_label')) + '</div>'
+      + '<div class="money' + (m.mnet<0?' neg':'') + '">' + signed(m.mnet) + '</div></div>'
+      + '<div class="trade"><p class="good">' + esc(tr.good) + '</p>'
+      + '<p class="bad">' + esc(fill(tr.bad, {pct: num(Math.abs(m.orders_change)) + PS()})) + '</p></div>'
+      + '</article>';
   }).join('');
 
-  document.getElementById('count-note').textContent = t('tested_cases_tooltip');
+  document.getElementById('count-note').innerHTML =
+      fill(t('ranked_first_cases'), {n:'<b>'+num(wins[lead])+'</b>', total:num(wins.n)})
+      + ' · ' + esc(t('tested_cases_tooltip'));
 
   var gap = out[lead].m.cash90 - out[second].m.cash90;
   var close = Math.abs(gap) < 0.02 * Math.max(1, Math.abs(out[lead].m.cash90));
@@ -803,25 +937,27 @@ function render(langChanged){
   renderTable(out);
 
   var flips = oat.filter(function(x){ return x.flips; });
-  document.getElementById('unknown-eyebrow').textContent = t('unknown_eyebrow');
   document.getElementById('unknown-title').textContent = w('uncertainty_title');
-  document.getElementById('uk-what-k').textContent = t('unknown_what');
-  document.getElementById('uk-what').textContent = axisLabel(oat[0].k);
   document.getElementById('uk-why-k').textContent = t('unknown_why');
   document.getElementById('uk-why').textContent = w('unknown_why');
   document.getElementById('uk-could-k').textContent = t('unknown_could');
   document.getElementById('uk-could').textContent = !flips.length ? t('unknown_could_no')
     : (flips.length === 1 ? t('unknown_could_yes') : t('unknown_could_yes_multi', {n:num(flips.length)}));
-  document.getElementById('uk-how-k').textContent = t('unknown_how');
   document.getElementById('uk-how').textContent = w('unknown_how');
-  var ukTry = document.getElementById('uk-try');
-  ukTry.textContent = t('try_it');
-  ukTry.onclick = function(){
-    document.getElementById('change').scrollIntoView({behavior:'smooth', block:'start'});
-    setTimeout(function(){ var b = document.querySelector('#seg button:last-child'); if(b) b.focus(); }, 420);
-  };
+  /* The three readings are the wedge's own elasticity settings turned into what the owner
+     would actually see on the till: a 10% rise times each setting. Nothing new is assumed —
+     it is the same three numbers the control below is switching between, read backwards. */
+  var TEST_RISE = 10;
+  document.getElementById('test-what').textContent =
+      fill(w('experiment'), {rise: pct(TEST_RISE)});
+  document.getElementById('test-readings').innerHTML = ['low','central','high'].map(function(k){
+    var e = parseFloat(C.sens_values[k]);
+    var drop = num(Math.abs(e) * TEST_RISE, 1) + PS();
+    var key = k === 'low' ? 'test_low' : (k === 'central' ? 'test_mid' : 'test_high');
+    return '<li><span class="r-n">' + esc(fill(t(key), {n: drop})) + '</span>'
+         + '<span class="r-s">' + esc(w('sens_help')[k]) + '</span></li>';
+  }).join('');
 
-  document.getElementById('change-eyebrow').textContent = t('change_eyebrow');
   document.getElementById('change-title').textContent = t('change_title');
   var maxInf = Math.max.apply(null, oat.map(function(x){ return x.influence; }).concat([1]));
   document.getElementById('influence').innerHTML = oat.map(function(x){
@@ -839,7 +975,6 @@ function render(langChanged){
         : fill(t('several_flip'), {n:num(flips.length),
             names: flips.map(function(x){ return '<b>' + esc(axisLabel(x.k)) + '</b>'; }).join(sep)}));
 
-  document.getElementById('ctrl-title').textContent = w('uncertainty_title');
   document.getElementById('seg').innerHTML = ['low','central','high'].map(function(v){
     var lbl = v === 'low' ? t('influence_low') : v === 'central' ? t('influence_medium') : t('influence_high');
     return '<button type="button" data-v="' + v + '" aria-pressed="' + (sel[PRIMARY]===v) + '">' + lbl + '</button>';
@@ -861,18 +996,17 @@ function render(langChanged){
   }
   if(flipped || lead !== cTop){
     eff.className = 'effect changed-now';
-    eff.innerHTML = '<b>' + t('decision_changed') + '</b> '
-      + fill(t('decision_changed_detail'), {option:'<b>' + esc(SHORT[lead]) + '</b>'});
+    eff.innerHTML = '<b>' + t('flip_title') + '</b> '
+      + fill(t('flip_body'), {winner:'<b>' + esc(SHORT[lead]) + '</b>',
+                              loser: esc(SHORT[cTop && cTop !== lead ? cTop : rank[1]])});
   } else {
     eff.className = 'effect';
-    eff.innerHTML = fill(t('decision_unchanged'), {option:'<b>' + esc(SHORT[lead]) + '</b>'});
+    eff.innerHTML = fill(t('flip_same'), {winner:'<b>' + esc(SHORT[lead]) + '</b>'});
   }
   previousLead = lead;
   document.getElementById('adv-sum').textContent = t('other_assumptions');
   renderAdvanced();
 
-  document.getElementById('ev-eyebrow').textContent = t('evidence_eyebrow');
-  document.getElementById('ev-title').textContent = t('evidence_eyebrow');
   renderSources(red, shock, cap, out, cTop);
 
   document.getElementById('limits-title').textContent = t('does_title');
@@ -884,18 +1018,19 @@ function render(langChanged){
     return '<li>' + esc(x) + '</li>'; }).join('');
 
   document.getElementById('cta-eyebrow').textContent = t('cta_eyebrow');
-  document.getElementById('cta-title').textContent = base.is_demo ? t('cta_demo') : t('cta_again');
+  document.getElementById('cta-title').textContent =
+      base.is_demo ? t('cta_demo') : t('flow_change');
   document.getElementById('cta-lede').textContent = t('cta_lede');
   document.getElementById('currency-note').textContent = t('currency_note');
   renderIntake();
 
-  document.getElementById('how-title').textContent = t('how_title');
-  document.getElementById('how-open').textContent = t('how_open');
+  document.getElementById('how-open').textContent = t('method_btn');
   renderHow();
   document.getElementById('printbtn').textContent = t('print_view');
   document.getElementById('print-hint').textContent = t('print_hint');
   document.getElementById('sticky-t').textContent = t('cta_lede');
-  document.getElementById('sticky-go').textContent = t('use_your_numbers');
+  document.getElementById('sticky-go').textContent =
+      base.is_demo ? t('use_your_numbers') : t('flow_change');
   document.getElementById('foot').textContent = t('product') + ' · '
     + t('principle_1') + ' ' + t('principle_2') + ' ' + t('principle_3');
 }
@@ -905,7 +1040,7 @@ function whoami(cap){
               num(Math.round(base[F.units_per_day])) + ' ' + w('unit_word') + ' ' + t('per_day'),
               money(base[F.cash]) + ' ' + t('whoami_cash')];
   if(cap) bits.push(num(cap,1) + ' ' + t('whoami_capacity'));
-  return (base.is_demo ? '' : base.name + ' — ') + bits.join(' · ');
+  return ((base.is_demo || !base.name) ? '' : base.name + ' — ') + bits.join(' · ');
 }
 
 /* The explanation comes from this run's own figures, so a different winner explains itself. */
@@ -1210,6 +1345,21 @@ function renderIntake(){
     document.getElementById('errs').innerHTML = ''; render(); window.scrollTo({top:0}); };
 }
 
+/* One set of rules about what makes a usable baseline, used by the flow and by the full form
+   so the two can never disagree about which numbers the page will accept. */
+function validate(nb){
+  var errs = [], IF = w('intake'), sepc = (lang === 'fa') ? '، ' : ', ';
+  var zero = [];
+  [F.revenue, F.units_per_day, F.unit_cost_total].forEach(function(k){
+    if(!(nb[k] > 0)) zero.push((IF[k] && IF[k].label) || k); });
+  if(zero.length) errs.push(fill(t('err_positive'), {names: zero.join(sepc)}));
+  else if(nb[F.unit_cost_total] >= nb[F.revenue]) errs.push(t('err_cost_high'));
+  if(F.utilisation && !(nb[F.utilisation] > 0 && nb[F.utilisation] <= 100)) errs.push(t('err_utilisation'));
+  if(nb[F.fixed] < 0 || nb[F.cash] < 0)
+    errs.push(fill(t('err_positive'), {names: (IF[F.fixed] && IF[F.fixed].label) || F.fixed}));
+  return errs;
+}
+
 function applyInputs(){
   var f = document.getElementById('form'), nb = Object.assign({}, base), bad = [], IF = w('intake');
   Array.prototype.forEach.call(f.querySelectorAll('input'), function(i){
@@ -1314,7 +1464,12 @@ document.getElementById('controls').addEventListener('change', function(e){
   var inner = render;
   render = function(langChanged){
     try { inner(langChanged); }
-    catch(err){ fail(t('render_failed')); throw err; }
+    catch(err){
+      // fail() raises its own error to stop the page, so the original cause is logged
+      // first — otherwise the only thing left is the message shown to the reader.
+      if(window.console && console.error) console.error('render failed:', err);
+      fail(t('render_failed'));
+    }
   };
 })();
 
@@ -1366,7 +1521,173 @@ document.getElementById('printbtn').addEventListener('click', function(){
   window.__stickyUpdate = update;      // so the state can be checked without a real scroll
 })();
 
+
+/* ---- the question flow ---------------------------------------------------------------------
+   The owner answers a few questions and then gets an answer. Every question here is an input
+   the model needs; the flow does not invent one to seem thorough, and does not skip one and
+   guess it. `base` is only written once, at the end, so a half-finished flow can never leave
+   the page showing a comparison of half-entered figures. */
+var FLOW = (C.flow || []).slice();
+var askAt = 0;
+var draft = Object.assign({}, D.baseline_raw);
+var answered = {};                       // fields the owner has actually filled in
+var showing = 'ask';
+
+function stepQ(step){ return (w('flow_q') || {})[step.key] || ''; }
+function stepChoices(step){ return (w('flow_choices') || {})[step.key] || null; }
+
+function showScreen(which){
+  showing = which;
+  document.getElementById('ask').hidden = (which !== 'ask');
+  document.getElementById('result').hidden = (which !== 'result');
+  document.body.classList.toggle('asking', which === 'ask');
+}
+
+function renderAsk(){
+  if(!FLOW.length){ finishAsk(true); return; }
+  var step = FLOW[askAt], IF = w('intake'), body = document.getElementById('ask-body');
+  document.getElementById('ask-progress').textContent =
+      fill(t('flow_step_of'), {n: num(askAt + 1), total: num(FLOW.length)});
+  document.getElementById('ask-bar').style.width = ((askAt + 1) / FLOW.length * 100) + '%';
+  document.getElementById('ask-q').textContent = stepQ(step);
+  document.getElementById('ask-err').textContent = '';
+
+  var choices = stepChoices(step);
+  var hint = '';
+  if(choices){
+    var f = step.fields[0];
+    body.innerHTML = '<div class="choices">' + Object.keys(choices).map(function(v){
+        var on = String(draft[f]) === String(v);
+        return '<button type="button" class="choice' + (on ? ' on' : '') + '" data-f="' + esc(f)
+             + '" data-v="' + esc(v) + '">' + esc(choices[v]) + '</button>'; }).join('')
+      + (step.other ? '<button type="button" class="choice other" data-other="' + esc(f) + '">'
+           + esc(t('flow_other')) + '</button>' : '')
+      + '</div><div class="otherwrap" id="otherwrap" hidden></div>';
+  } else {
+    body.innerHTML = '<div class="askfields">' + step.fields.map(function(f){
+        var meta = IF[f] || {}, isPct = /_pct$/.test(f);
+        hint = hint || meta.hint || '';
+        return '<label class="askfield"><span class="afl">' + esc(meta.label || f) + '</span>'
+          + '<span class="in"><input id="a_' + f + '" data-k="' + f + '" type="number"'
+          + ' inputmode="decimal" step="any" value="'
+          + (answered[f] ? esc(String(draft[f])) : '') + '"'
+          + ' placeholder="' + esc(String(D.baseline_raw[f])) + '">'
+          + (isPct ? '<span class="u">' + PS() + '</span>' : '') + '</span></label>';
+      }).join('') + '</div>';
+  }
+  document.getElementById('ask-hint').textContent = choices ? '' : (hint || t('flow_approx'));
+  document.getElementById('ask-back').textContent = t('flow_back');
+  document.getElementById('ask-back').style.visibility = askAt === 0 ? 'hidden' : '';
+  document.getElementById('ask-next').textContent =
+      askAt === FLOW.length - 1 ? t('flow_see') : t('flow_next');
+  document.getElementById('ask-example').textContent = t('flow_example');
+  var first = body.querySelector('input');
+  if(first && motionOK()) setTimeout(function(){ first.focus(); }, 60);
+}
+
+/* Reading a screen's answers into the draft. Returns the label of anything unreadable, so the
+   flow can say which figure it could not use rather than refusing as a whole. */
+function readStep(){
+  var step = FLOW[askAt], IF = w('intake'), bad = [];
+  Array.prototype.forEach.call(document.querySelectorAll('#ask-body input[data-k]'), function(i){
+    var k = i.dataset.k;
+    var raw = String(i.value).replace(/[,\s٬،]/g, '')
+      .replace(/[۰-۹]/g, function(ch){ return String(ch.charCodeAt(0) - 0x06F0); })
+      .replace(/[٠-٩]/g, function(ch){ return String(ch.charCodeAt(0) - 0x0660); });
+    var v = parseFloat(raw);
+    if(!isFinite(v) || v < 0) bad.push((IF[k] && IF[k].label) || k);
+    else { draft[k] = v; answered[k] = true; }
+  });
+  return bad;
+}
+
+function finishAsk(isDemo){
+  draft.is_demo = !!isDemo;
+  if(!isDemo) draft.name = '';           // these are your figures, not the fictional cafe's
+  base = draft;
+  document.getElementById('errs').innerHTML = '';
+  render();
+  showScreen('result');
+  window.scrollTo({top: 0, behavior: motionOK() ? 'smooth' : 'auto'});
+}
+
+document.getElementById('ask-body').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return;
+  if(b.dataset.other !== undefined){
+    var wrap = document.getElementById('otherwrap');
+    wrap.hidden = false;
+    wrap.innerHTML = '<label class="askfield"><span class="in"><input id="a_' + b.dataset.other
+      + '" data-k="' + b.dataset.other + '" type="number" inputmode="decimal" step="any"'
+      + ' placeholder="' + esc(String(D.baseline_raw[b.dataset.other])) + '"'
+      + ' value=""><span class="u">' + PS() + '</span></span></label>';
+    Array.prototype.forEach.call(document.querySelectorAll('#ask-body .choice'),
+      function(c){ c.classList.remove('on'); });
+    b.classList.add('on');
+    wrap.querySelector('input').focus();
+    return;
+  }
+  if(b.dataset.f === undefined) return;
+  draft[b.dataset.f] = parseFloat(b.dataset.v);
+  answered[b.dataset.f] = true;
+  Array.prototype.forEach.call(document.querySelectorAll('#ask-body .choice'),
+    function(c){ c.classList.toggle('on', c === b); });
+  var wrap2 = document.getElementById('otherwrap');
+  if(wrap2){ wrap2.hidden = true; wrap2.innerHTML = ''; }
+  // A tapped choice is an answer; carrying straight on is what the reader expects.
+  setTimeout(nextStep, 140);
+});
+
+document.getElementById('ask-body').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); nextStep(); }
+});
+
+function nextStep(){
+  var bad = readStep();
+  if(bad.length){
+    document.getElementById('ask-err').textContent =
+      fill(t('err_positive'), {names: bad.join(lang === 'fa' ? '، ' : ', ')});
+    return;
+  }
+  if(askAt < FLOW.length - 1){ askAt++; renderAsk(); }
+  else {
+    // The same validation the full form applies, so the flow cannot produce a baseline the
+    // rest of the page would refuse.
+    var errs = validate(draft);
+    if(errs.length){ document.getElementById('ask-err').textContent = errs[0]; return; }
+    finishAsk(false);
+  }
+}
+
+document.getElementById('ask-next').addEventListener('click', nextStep);
+document.getElementById('ask-back').addEventListener('click', function(){
+  readStep();
+  if(askAt > 0){ askAt--; renderAsk(); }
+});
+document.getElementById('ask-example').addEventListener('click', function(){
+  draft = Object.assign({}, D.baseline_raw);
+  finishAsk(true);
+});
+
+/* ---- the reveals ----------------------------------------------------------------------------
+   The chart is drawn for a width, and inside a closed <details> it has none. It is drawn when
+   the reader opens it, and again if they resize afterwards. */
+document.getElementById('chart-disc').addEventListener('toggle', function(){
+  if(this.open && showing === 'result') render(true);
+});
+document.getElementById('uk-try').addEventListener('click', function(){
+  var tp = document.getElementById('testplan');
+  tp.hidden = !tp.hidden;
+  this.setAttribute('aria-expanded', String(!tp.hidden));
+});
+
 applyLanguage(lang, false);
+
+/* A page that opens on the report is a page that answered a question nobody asked yet. The
+   only way in that skips the questions is the explicit worked-example link. */
+(function boot(){
+  if(P.get('demo') === '1' || !FLOW.length){ finishAsk(true); }
+  else { showScreen('ask'); renderAsk(); }
+})();
 })();
 </script>
 </body>

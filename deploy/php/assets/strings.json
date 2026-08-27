@@ -834,12 +834,6 @@
    "tags": []
   },
   {
-   "id": "ui.best_badge",
-   "text": "Best under current assumptions",
-   "placeholders": [],
-   "tags": []
-  },
-  {
    "id": "ui.use_your_numbers",
    "text": "Use your own numbers",
    "placeholders": [],
@@ -928,6 +922,226 @@
   {
    "id": "ui.print_hint",
    "text": "Verdict, chart and assumptions. Everything else is left out.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flow_step_of",
+   "text": "{n} of {total}",
+   "placeholders": [
+    "{n}",
+    "{total}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.flow_back",
+   "text": "Back",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flow_next",
+   "text": "Next",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flow_see",
+   "text": "Show me the comparison",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flow_other",
+   "text": "Something else",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flow_approx",
+   "text": "It doesn't need to be exact.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flow_example",
+   "text": "Or look at a worked example",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flow_change",
+   "text": "Change your numbers",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.result_intro",
+   "text": "I compared three ways to respond.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.ahead_now",
+   "text": "Currently ahead",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.per_month_label",
+   "text": "monthly",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.why_q",
+   "text": "Why is {option} ahead?",
+   "placeholders": [
+    "{option}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.unknown_lead",
+   "text": "But one thing could change the answer.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flip_title",
+   "text": "The answer changed.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flip_body",
+   "text": "At this setting, {winner} moves ahead of {loser}.",
+   "placeholders": [
+    "{winner}",
+    "{loser}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.flip_same",
+   "text": "At this setting {winner} still comes out ahead.",
+   "placeholders": [
+    "{winner}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.unsure_q",
+   "text": "Not sure?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.unsure_lead",
+   "text": "Here is a simple way to find out:",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.give_me_test",
+   "text": "Show me that test",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.test_reading",
+   "text": "After two weeks:",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.test_low",
+   "text": "Lost less than {n} — not very price-sensitive",
+   "placeholders": [
+    "{n}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.test_mid",
+   "text": "Lost about {n} — typical",
+   "placeholders": [
+    "{n}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.test_high",
+   "text": "Lost more than {n} — very price-sensitive",
+   "placeholders": [
+    "{n}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.chart_reveal_q",
+   "text": "Want to see how the next 90 days play out?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.chart_reveal_btn",
+   "text": "Show the chart",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.assume_reveal_q",
+   "text": "What is this answer built on?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.assume_reveal_btn",
+   "text": "Show the assumptions",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.method_btn",
+   "text": "How it was calculated",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.home_hero",
+   "text": "Got a business decision to make?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.home_hero_2",
+   "text": "See the trade-offs before you make it.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.home_problem_q",
+   "text": "What's the problem right now?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.home_example_lead",
+   "text": "Say your ingredient costs go up 30%:",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.home_example_cta",
+   "text": "Compare them",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.noscript",
+   "text": "This page needs JavaScript to work.",
    "placeholders": [],
    "tags": []
   },
@@ -1449,6 +1663,124 @@
    "tags": []
   },
   {
+   "id": "wedges.cafe.problem",
+   "text": "Ingredient costs went up",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_q.shock",
+   "text": "How much did your ingredient costs go up?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_q.sales",
+   "text": "How busy is the cafe?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_q.costs",
+   "text": "What do you spend in a month?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_q.cash",
+   "text": "How much cash have you got set aside for the business?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_q.mix",
+   "text": "How many of your orders are low-margin?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_choices.shock.10",
+   "text": "10%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_choices.shock.20",
+   "text": "20%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_choices.shock.30",
+   "text": "30%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_choices.mix.10",
+   "text": "Few — about 10%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_choices.mix.20",
+   "text": "Some — about 20%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.flow_choices.mix.30",
+   "text": "Many — about 30%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.tradeoff.A.good",
+   "text": "Nothing changes for your customers",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.tradeoff.A.bad",
+   "text": "but your margin takes the hit",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.tradeoff.B.good",
+   "text": "You keep more of the money",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.tradeoff.B.bad",
+   "text": "but orders drop by about {pct}",
+   "placeholders": [
+    "{pct}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.tradeoff.C.good",
+   "text": "Smaller drop in orders",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.tradeoff.C.bad",
+   "text": "but it leans more on your menu mix",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.experiment",
+   "text": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily order count. Compare it with the week before.",
+   "placeholders": [
+    "{rise}"
+   ],
+   "tags": []
+  },
+  {
    "id": "wedges.shop.business",
    "text": "Shop / Online Store",
    "placeholders": [],
@@ -1963,6 +2295,124 @@
    "id": "wedges.shop.chart_turn",
    "text": "old stock runs out around here",
    "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.problem",
+   "text": "My supplier raised prices",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_q.shock",
+   "text": "How much did your supplier put prices up?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_q.sales",
+   "text": "How busy is the shop?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_q.costs",
+   "text": "What do you spend in a month?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_q.cash",
+   "text": "How much cash have you got set aside for the business?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_q.mix",
+   "text": "How many of your sales are low-margin?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_choices.shock.15",
+   "text": "15%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_choices.shock.25",
+   "text": "25%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_choices.shock.35",
+   "text": "35%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_choices.mix.10",
+   "text": "Few — about 10%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_choices.mix.20",
+   "text": "Some — about 20%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.flow_choices.mix.30",
+   "text": "Many — about 30%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.tradeoff.A.good",
+   "text": "Your prices stay where they are",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.tradeoff.A.bad",
+   "text": "but you absorb the whole increase",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.tradeoff.B.good",
+   "text": "You pass most of the increase on",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.tradeoff.B.bad",
+   "text": "but sales drop by about {pct}",
+   "placeholders": [
+    "{pct}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.tradeoff.C.good",
+   "text": "A smaller rise, and your costs come down too",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.tradeoff.C.bad",
+   "text": "but it depends on what dropping low-margin lines really saves",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.experiment",
+   "text": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily sales count. Compare it with the week before.",
+   "placeholders": [
+    "{rise}"
+   ],
    "tags": []
   },
   {
@@ -2526,6 +2976,124 @@
    "id": "wedges.salon.chart_turn",
    "text": "holding your price stops paying here",
    "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.problem",
+   "text": "My schedule is filling up",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_q.shock",
+   "text": "How much busier has it got?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_q.full",
+   "text": "How full is your diary, usually?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_q.sales",
+   "text": "How busy is the salon?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_q.costs",
+   "text": "What do you spend in a month?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_q.cash",
+   "text": "A couple of last numbers",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_choices.shock.15",
+   "text": "15%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_choices.shock.25",
+   "text": "25%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_choices.shock.35",
+   "text": "35%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_choices.full.55",
+   "text": "Under 60%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_choices.full.70",
+   "text": "Between 60 and 80%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.flow_choices.full.88",
+   "text": "Over 80%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.tradeoff.A.good",
+   "text": "Prices stay put and clients are happy",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.tradeoff.A.bad",
+   "text": "but you fill up and start turning appointments away",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.tradeoff.B.good",
+   "text": "The same hours bring in more",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.tradeoff.B.bad",
+   "text": "but demand shifts by about {pct}",
+   "placeholders": [
+    "{pct}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.tradeoff.C.good",
+   "text": "A smaller rise, and a richer service mix",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.tradeoff.C.bad",
+   "text": "but it depends on how well the mix shift actually works",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.experiment",
+   "text": "Put the price of one or two in-demand services up {rise} for two weeks and write down how many people ask for them. Compare with the fortnight before.",
+   "placeholders": [
+    "{rise}"
+   ],
    "tags": []
   }
  ]

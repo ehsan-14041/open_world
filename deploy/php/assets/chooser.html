@@ -47,8 +47,24 @@ header{padding:44px 0 6px}
 h1{font:500 clamp(30px,5.4vw,50px)/1.08 var(--display);letter-spacing:-.015em;margin:0;text-wrap:balance}
 html[dir="rtl"] h1{font-weight:700;letter-spacing:0;line-height:1.4}
 .tagline{color:var(--muted);font-size:15px;margin:0 0 14px;font-weight:600}
+.pq{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,26px);margin:44px 0 0;
+    letter-spacing:-.01em}
+html[dir="rtl"] .pq{font-weight:700;letter-spacing:0;line-height:1.6}
+/* The problem is what the reader recognises; the trade it belongs to is the footnote. */
+.problem{font-family:var(--display);font-size:23px;font-weight:600;line-height:1.28;margin-top:2px}
+html[dir="rtl"] .problem{font-size:21px;font-weight:700;line-height:1.6}
+.biz{font-size:14.5px;color:var(--muted);font-weight:600;margin-top:auto}
+html[dir="rtl"] .biz{font-size:14px}
+.example{margin-top:44px;border:1px solid var(--rule);border-radius:20px;background:var(--raised);
+         padding:26px 26px 22px;box-shadow:var(--shadow-1);max-width:560px}
+.ex-lead{margin:0 0 14px;font-weight:600;font-size:16.5px}
+.ex-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.ex-list li{background:var(--sunk);border-radius:10px;padding:12px 15px;font-size:16px}
+.ex-cta{display:inline-flex;align-items:center;min-height:48px;margin-top:18px;font-weight:700;
+        color:var(--cafe);text-decoration:none}
+.ex-cta:hover,.ex-cta:focus-visible{text-decoration:underline;text-underline-offset:3px}
 .lede{color:var(--muted);margin:16px 0 0;max-width:54ch;font-size:19px}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
 @media (max-width:860px){.cards{grid-template-columns:1fr}}
 a.card{display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit;background:var(--raised);
        border:1px solid var(--rule);border-radius:20px;padding:26px 24px 24px;box-shadow:var(--shadow-2);min-height:212px}
@@ -82,11 +98,20 @@ html[dir="rtl"] .flow{font-size:15px}
     <div class="langs" id="langs" role="group" aria-label="Language"></div>
   </div>
   <header>
-    <p class="tagline" id="tagline"></p>
-    <h1 id="q"></h1>
-    <p class="lede" id="lede"></p>
+    <h1 id="hero"></h1>
+    <p class="lede" id="hero2"></p>
   </header>
+  <h2 class="pq" id="problem-q"></h2>
   <div class="cards" id="cards"></div>
+
+  <!-- Showing one comparison is a better explanation of the product than a paragraph about
+       what the product does. -->
+  <section class="example" id="example">
+    <p class="ex-lead" id="ex-lead"></p>
+    <ul class="ex-list" id="ex-list"></ul>
+    <a class="ex-cta" id="ex-cta" href="cafe/cafe_decision_report.html"></a>
+  </section>
+
   <p class="flow" id="flow"></p>
   <p class="foot"><b id="principle"></b><span id="footer"></span></p>
   <p class="credibility" id="credibility"></p>
@@ -121,9 +146,9 @@ function render(){
   document.documentElement.dir = L.dir;
   document.title = U.product;
   document.getElementById('mark').textContent = U.product;
-  document.getElementById('tagline').textContent = U.tagline;
-  document.getElementById('q').textContent = U.home_question;
-  document.getElementById('lede').textContent = U.home_lede;
+  document.getElementById('hero').textContent = U.home_hero;
+  document.getElementById('hero2').textContent = U.home_hero_2;
+  document.getElementById('problem-q').textContent = U.home_problem_q;
   document.getElementById('langs').innerHTML = I.languages.map(function(l){
     return '<button type="button" data-l="'+l.code+'" lang="'+l.code+'" aria-pressed="'
       + (l.code===lang) + '">' + esc(l.label) + '</button>'; }).join('');
@@ -134,11 +159,21 @@ function render(){
     var href = HREF[id] + (HREF[id].indexOf('?')>=0 ? '&' : '?') + 'lang=' + lang;
     return '<a class="card '+id+'" href="'+esc(href)+'">'
       + '<span class="icon" aria-hidden="true">'+esc(x.icon)+'</span>'
+      + '<span class="problem">'+esc(x.problem)+'</span>'
       + '<span class="biz">'+esc(x.business)+'</span>'
-      + '<span class="q">“'+esc(x.question)+'”</span>'
       + '<span class="go">'+esc(U.home_pick)+' '+ARROW+'</span></a>'; }).join('');
   document.getElementById('flow').textContent = U.home_flow;
   document.getElementById('credibility').textContent = U.credibility;
+
+  /* The worked example names the cafe's three real decisions, so the thing being promised on
+     the home screen is the thing the next page delivers. */
+  var ex = L.wedges.cafe;
+  document.getElementById('ex-lead').textContent = U.home_example_lead;
+  document.getElementById('ex-list').innerHTML = ['A','B','C'].map(function(k){
+    return '<li>' + esc(ex.world_names[k]) + '</li>'; }).join('');
+  var cta = document.getElementById('ex-cta');
+  cta.textContent = U.home_example_cta + ' ' + ARROW;
+  cta.href = HREF.cafe + (HREF.cafe.indexOf('?') >= 0 ? '&' : '?') + 'lang=' + lang + '&demo=1';
   document.getElementById('principle').textContent =
     U.principle_1 + ' ' + U.principle_2 + ' ' + U.principle_3;
   document.getElementById('footer').textContent = U.home_footer;

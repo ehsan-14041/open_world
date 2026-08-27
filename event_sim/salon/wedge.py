@@ -137,6 +137,7 @@ COPY: dict[str, Any] = {
         "Model competitors, word of mouth or reputation.",
         "Know your clients' price sensitivity — there is no published figure, so your own test is the only real evidence.",
     ],
+    "flow": [{"key": "shock", "fields": ["demand_growth_pct"], "choices": [15, 25, 35], "other": True}, {"key": "full", "fields": ["utilisation_pct"], "choices": [55, 70, 88]}, {"key": "sales", "fields": ["monthly_revenue", "appointments_per_day"]}, {"key": "costs", "fields": ["monthly_variable_costs", "monthly_fixed_costs"]}, {"key": "cash", "fields": ["cash_on_hand", "low_margin_share_pct"]}],
     "intake_groups": [
         {"label": "Your business", "fields": ["monthly_revenue", "appointments_per_day", "cash_on_hand"]},
         {"label": "Your diary", "fields": ["utilisation_pct", "demand_growth_pct"]},
