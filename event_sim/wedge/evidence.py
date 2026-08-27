@@ -18,6 +18,7 @@ business-specific says so in its own transfer note.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from string import Formatter
 from typing import Any
 
 CUSTOMER = "Customer input"
@@ -42,6 +43,11 @@ class Assumption:
     swept: bool
     note: str = ""
     source: str = ""
+    #: How the value was built, and the figures it was built from. `value` above is the English
+    #: rendering; these two let a page re-render the same value in another language without
+    #: recomputing anything — the numbers travel, only the words around them change.
+    value_spec: dict[str, Any] | None = None
+    value_ctx: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         d = asdict(self)
@@ -97,6 +103,21 @@ TELLIS_1988 = {
 
 def _money(value: float, dp: int = 0) -> str:
     return f"{value:,.{dp}f}"
+
+
+#: Which ctx fields each value kind reads. Only these travel to the page — a registry row
+#: should carry the numbers it shows, not the whole baseline.
+def value_context(kind: dict, ctx: dict) -> dict[str, Any]:
+    k = kind["kind"]
+    if k in ("money", "g", "fixed"):
+        return {kind["field"]: ctx[kind["field"]]}
+    if k == "money_with_pct":
+        return {kind["field"]: ctx[kind["field"]], kind["pct_of"]: ctx[kind["pct_of"]]}
+    if k == "axis":
+        return {"setting": ctx["axis_settings"].get(kind["axis"], "central")}
+    if k == "template":
+        return {name: ctx[name] for _, name, _, _ in Formatter().parse(kind["text"]) if name}
+    return {}
 
 
 def render_value(kind: dict, ctx: dict) -> str:
@@ -156,5 +177,6 @@ def render_registry(spec: list[dict], baseline, *, axis_settings: dict, knobs: d
         out.append(Assumption(
             key=row["key"], label=row["label"], value=value, klass=klass,
             swept=bool(row.get("swept", False)), note=row.get("note", ""), source=source,
+            value_spec=row["value"], value_ctx=value_context(row["value"], ctx),
         ))
     return out

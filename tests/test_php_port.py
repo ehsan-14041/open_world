@@ -143,3 +143,60 @@ def test_frozen_assets_are_current():
         assert frozen["registry_spec"], f"{wedge_id} exported no registry spec"
         assert len(frozen["sweep"]) == len(wedge.sweep)
         assert frozen["research_settings"] == wedge.copy["research_settings"]
+
+
+REGISTRY_DRIVER = """<?php
+require __DIR__ . '/lib/report.php';
+$wedge = json_decode(file_get_contents(__DIR__ . '/assets/' . $argv[1] . '.json'), true);
+$baseline = new Baseline(json_decode($argv[2], true), $wedge);
+$axes = $wedge['defaults']['axis_settings'];
+echo json_encode(evidence_registry($baseline, $wedge, $axes,
+    (float) reset($wedge['defaults']['knobs'])), JSON_PRESERVE_ZERO_FRACTION);
+"""
+
+
+def _php_registry(wedge_id: str, baseline) -> list:
+    driver = PHP_ROOT / "_test_registry_driver.php"
+    driver.write_text(REGISTRY_DRIVER, encoding="utf-8")
+    try:
+        proc = subprocess.run(
+            ["php", "-d", "memory_limit=512M", str(driver), wedge_id,
+             json.dumps(baseline.to_dict())],
+            capture_output=True, text=True, check=False,
+        )
+    finally:
+        driver.unlink(missing_ok=True)
+    assert proc.returncode == 0, proc.stderr or proc.stdout
+    return json.loads(proc.stdout)
+
+
+@pytest.mark.parametrize("wedge_id,baseline", CASES, ids=lambda x: x if isinstance(x, str) else x.name)
+def test_php_reproduces_the_evidence_registry(wedge_id, baseline):
+    """
+    Where every number came from has to be the same story on both hosts.
+
+    The registry is prose as well as arithmetic, and the page now re-renders each value in the
+    reader's language from the spec and the figures behind it. A host that shipped the sentence
+    but not the figures would quietly fall back to English.
+    """
+    wedge = WEDGES[wedge_id]
+    py = wedge.build_registry(baseline, axis_settings=dict(wedge.default_axes),
+                              custom_elasticity=None, **wedge.knob_defaults)
+    php = _php_registry(wedge_id, baseline)
+
+    assert [a.key for a in py] == [r["key"] for r in php]
+    for expected, got in zip(py, php):
+        where = f"{wedge_id}.{expected.key}"
+        assert got["label"] == expected.label, where
+        assert got["value"] == expected.value, where
+        assert got["klass"] == expected.klass, where
+        assert got["ladder_status"] == expected.to_dict()["ladder_status"], where
+        # Both halves of what the page re-renders from.
+        assert got["value_spec"] == expected.value_spec, where
+        assert set(got["value_ctx"]) == set(expected.value_ctx), f"{where}: different figures carried"
+        for name, value in expected.value_ctx.items():
+            other = got["value_ctx"][name]
+            if isinstance(value, float):
+                assert abs(other - value) < 1e-9, f"{where}.{name}: {other} != {value}"
+            else:
+                assert other == value, f"{where}.{name}"

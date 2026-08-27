@@ -178,8 +178,14 @@ def test_customer_copy_never_promises_a_forecast():
     # The phrase lives in the shared bundle builder now that three wedges are built from it.
     report_src = (REPO / "event_sim" / "wedge" / "report.py").read_text(encoding="utf-8")
     assert "not a forecast" in report_src
-    # The page states it in its own words on the first screen and in the limitations.
-    assert "not a prediction" in html and "Predict the future" in html
+    # The page states it in its own words on the first screen and in the limitations. The copy
+    # lives in the catalogue now that the page is bilingual, so the claim is checked where it is
+    # written — and in every language, since a promise dropped in translation is still dropped.
+    from event_sim.wedge.i18n import LANGUAGES, catalogue
+    assert "not a prediction" in catalogue("en")["ui"]["not_a_prediction"]
+    for lang in LANGUAGES:
+        assert catalogue(lang)["ui"]["not_a_prediction"].strip()
+        assert catalogue(lang)["wedges"]["cafe"]["limits_does_not"]
 
 
 def test_customer_ui_avoids_engineering_vocabulary():
@@ -267,24 +273,44 @@ def test_template_discloses_accounting_and_flags_world_c():
     """
     from event_sim.cafe.wedge import CAFE_WEDGE
 
+    from event_sim.wedge.i18n import catalogue
+
     html = TEMPLATE.read_text(encoding="utf-8")
-    copy = CAFE_WEDGE.copy
-    # Generic, and still in the page itself:
-    assert "Cash itself is not simulated directly" in html
-    assert "This does not" in html and "Predict the future" in html
-    assert "Ranks first under current assumptions" in html and "Best in" not in html
-    assert "not a probability" in html
-    # Cafe-specific, and now carried by the bundle:
-    assert "calibrated to your business yet" in copy["c_card_note"]
-    assert "stress assumption" in copy["sens_help"]["high"] or "stress assumption" in copy["sources_note"]
-    assert "may be more or less price-sensitive" in copy["sources_note"]
-    assert "Predict the future or guarantee an outcome." in copy["limits_does_not"]
+    ui = catalogue("en")["ui"]
+    cafe = catalogue("en")["wedges"]["cafe"]
+    # Generic, and carried by the catalogue the page renders from:
+    assert "not directly simulated" in ui["cash_derived"]
+    assert "Ranks first under the current assumptions" == ui["ranked_first_central"]
+    assert "not probabilities" in ui["tested_cases_tooltip"]
+    assert "Best in" not in html, "the page must not call a ranking a winner"
+    # Cafe-specific, and now carried by the same catalogue:
+    # Option C's saving is a model assumption, and the card says so rather than implying the
+    # figure was measured. The words changed in the redesign; the disclosure did not.
+    assert "measured from your" in cafe["c_card_note"]
+    for lang in ("en", "fa"):
+        note = catalogue(lang)["wedges"]["cafe"]["c_card_note"]
+        assert all(slot in note for slot in ("{red}", "{loss}", "{unit}")), (
+            f"{lang}: the C note must take its figures from the model, not state its own")
+    # The High setting is a stress case, not a research finding, and is labelled as one.
+    assert "Stress case" in cafe["sens_help"]["high"]
+    assert "may be more or less price-sensitive" in cafe["sources_note"]
+    # The "what this does not do" list leads with the one a reader is most likely to assume.
+    assert cafe["limits_does_not"][0] == "Predict your future sales."
+    for lang in ("en", "fa"):
+        assert len(catalogue(lang)["wedges"]["cafe"]["limits_does_not"]) == 4
 
 
 def test_template_has_four_visible_number_categories():
-    html = TEMPLATE.read_text(encoding="utf-8")
-    for label in ("Your numbers", "External research", "Model assumptions", "Calculated results"):
-        assert label in html
+    """The four groups are named for the reader, in every language the page offers."""
+    from event_sim.wedge.i18n import LANGUAGES, catalogue
+
+    keys = ("group_yours", "group_research", "group_assumptions", "group_calculated")
+    assert [catalogue("en")["ui"][k] for k in keys] == [
+        "Your numbers", "External research", "Model assumptions", "Calculated results"]
+    for lang in LANGUAGES:
+        for key in keys:
+            assert catalogue(lang)["ui"][key].strip(), f"{lang}: {key} unnamed"
+    assert "renderSources" in TEMPLATE.read_text(encoding="utf-8")
 
 
 # --- product copy rules (UI phase) ---------------------------------------------------------
@@ -315,6 +341,15 @@ def test_technical_disclosure_preserves_reproducibility():
 
 
 def test_price_sensitivity_control_is_three_plain_settings():
+    """Three named settings, each explained in plain words — and no odds anywhere near them."""
+    from event_sim.wedge.i18n import LANGUAGES, catalogue
+
     html = TEMPLATE.read_text(encoding="utf-8")
-    assert 'data-v="low">Low' in html and 'data-v="central"' in html and 'data-v="high">High' in html
-    assert "This is a sensitivity count, not a probability." in html
+    assert "settingLabel" in html and "sens_help" in html
+    for lang in LANGUAGES:
+        cat = catalogue(lang)
+        for setting in ("low", "central", "high"):
+            assert cat["ui"]["setting_labels"][setting].strip(), f"{lang}: {setting} unnamed"
+            assert cat["wedges"]["cafe"]["sens_help"][setting].strip(), f"{lang}: {setting} unexplained"
+        assert cat["ui"]["tested_cases_tooltip"].strip()
+    assert "not probabilities" in catalogue("en")["ui"]["tested_cases_tooltip"]

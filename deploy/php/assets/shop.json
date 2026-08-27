@@ -166,6 +166,659 @@
    }
   ]
  },
+ "i18n": {
+  "languages": [
+   {
+    "code": "en",
+    "label": "English",
+    "dir": "ltr"
+   },
+   {
+    "code": "fa",
+    "label": "فارسی",
+    "dir": "rtl"
+   }
+  ],
+  "default": "en",
+  "strings": {
+   "en": {
+    "dir": "ltr",
+    "label": "English",
+    "numerals": "latn",
+    "ui": {
+     "product": "Decision Compare",
+     "tagline": "See the trade-offs before you decide.",
+     "principle_1": "Same business.",
+     "principle_2": "Same assumptions.",
+     "principle_3": "Different decision.",
+     "home_question": "What kind of business do you run?",
+     "home_lede": "Pick the one closest to yours. You will compare a few versions of one real decision — with your own figures.",
+     "home_pick": "Compare the options",
+     "home_footer": "Each report compares three versions of one decision on the same model, so the differences come from the decision rather than from different guesses. It is a scenario comparison under stated assumptions — not a prediction, and not advice.",
+     "journey_1": "Your business",
+     "journey_2": "What changed",
+     "journey_3": "Compare your choices",
+     "journey_4": "The money and the trade-offs",
+     "journey_5": "What could change the answer",
+     "journey_6": "Assumptions",
+     "switch_business": "Change business type",
+     "language": "Language",
+     "demo_badge": "Demo — fictional {noun}",
+     "back_home": "All business types",
+     "decision_eyebrow": "The decision",
+     "your_options": "Your three choices",
+     "ranked_first": "Ranked first",
+     "ranked_first_cases": "Ranked first in {n} of {total} tested cases",
+     "ranked_first_central": "Ranks first under the current assumptions",
+     "per_month": "per month",
+     "per_month_after": "once things have settled",
+     "today": "today",
+     "cash_at_90": "cash after 90 days",
+     "cash_runs_out": "cash runs out on day {day}",
+     "orders_change": "{unit}",
+     "not_a_prediction": "A scenario comparison under stated assumptions — not a prediction.",
+     "tested_cases_tooltip": "These are tested assumption combinations, not probabilities.",
+     "why_title": "Why does {option} come out ahead?",
+     "why_tie": "Why is it this close?",
+     "why_lose_units": "You lose about {pct} of your {unit},",
+     "why_gain": "but under the current assumptions the higher price more than makes up for it.",
+     "why_gain_capacity": "but your diary was already full, so most of those were people you were turning away anyway.",
+     "why_cost": "and the saving on {cost} more than makes up for it.",
+     "why_vs_a": "Against {other}, that is {amount} more cash after 90 days.",
+     "why_gap": "{lead} is {amount} ahead of {second}.",
+     "chart_eyebrow": "The next 90 days",
+     "chart_title": "Cash in the bank under each choice",
+     "chart_alt": "Cash over 90 days for the three choices. {summary}",
+     "chart_today": "today",
+     "cash_zero": "cash = 0",
+     "day": "Day {n}",
+     "cash_derived": "Cash is calculated from the simulated business activity. It is not directly simulated by the engine.",
+     "compare_table": "Side by side",
+     "row_cash_30": "Cash after 30 days",
+     "row_cash_90": "Cash after 90 days",
+     "row_net": "Net per month once settled",
+     "row_utilisation": "How full you end up",
+     "row_turned_away": "Turned away per day",
+     "unknown_eyebrow": "The biggest unknown",
+     "unknown_what": "What we don't know",
+     "unknown_why": "Why it matters",
+     "unknown_could": "Could it change the decision?",
+     "unknown_could_yes": "Yes. It is the one assumption that changes which choice ranks first.",
+     "unknown_could_yes_multi": "Yes. It is one of {n} assumptions that can change which choice ranks first.",
+     "unknown_could_no": "Not within the range we tested. It changes the size of the gap, not the order.",
+     "unknown_how": "How you could find out",
+     "change_eyebrow": "What could change the answer?",
+     "change_title": "Which assumptions actually move the decision",
+     "influence_high": "High",
+     "influence_medium": "Medium",
+     "influence_low": "Low",
+     "changes_ranking": "changes which ranks first",
+     "changes_size": "changes the size of the gap",
+     "only_one_flips": "Only one assumption changed which option ranked first: {name}.",
+     "several_flip": "{n} assumptions changed which option ranked first: {names}.",
+     "none_flips": "Nothing we tested changed which option ranked first.",
+     "try_it": "Try it",
+     "decision_changed": "The decision changed.",
+     "decision_changed_detail": "At this setting, {option} now ranks first.",
+     "decision_unchanged": "{option} still ranks first at this setting.",
+     "other_assumptions": "Other assumptions you can change",
+     "evidence_eyebrow": "Where the numbers come from",
+     "group_yours": "Your numbers",
+     "group_research": "External research",
+     "group_assumptions": "Model assumptions",
+     "group_calculated": "Calculated results",
+     "no_research": "Nothing here is set from a published study at the setting you have chosen.",
+     "no_research_ever": "No published study covers this trade closely enough to use. Every setting here is our judgement.",
+     "does_title": "What this does — and doesn't do",
+     "does": "This does",
+     "does_not": "This does not",
+     "does_1": "Compare several decisions consistently.",
+     "does_2": "Show the financial trade-offs.",
+     "does_3": "Show which assumptions matter.",
+     "does_4": "Show what could change the ranking.",
+     "cta_eyebrow": "Your turn",
+     "cta_demo": "Try it with your business",
+     "cta_again": "Compare another decision",
+     "cta_lede": "Your figures stay in this page. Nothing is sent anywhere.",
+     "cta_run": "Compare my choices",
+     "cta_reset": "Back to the demo",
+     "cta_done": "Done — this page now uses your numbers.",
+     "group_about": "About your business",
+     "group_costs": "Your costs",
+     "group_capacity": "Your capacity",
+     "group_changed": "What changed",
+     "group_mix": "What you sell",
+     "err_numbers": "Please fill in every number.",
+     "err_cost_high": "We can't compare these options with these numbers yet.",
+     "err_cost_high_why": "Your costs are the same as or higher than your sales, so there is no margin to compare. Check the cost figure.",
+     "err_positive": "These need to be more than zero: {names}.",
+     "err_utilisation": "How full the diary is should be between 1% and 100%.",
+     "err_failed": "Something went wrong while comparing. No numbers are shown, because half-finished ones would be worse than none.",
+     "how_title": "How this was calculated",
+     "how_open": "Method, sources and reproducibility",
+     "advanced": "Advanced",
+     "currency_note": "All figures are in whatever currency you entered.",
+     "klass_labels": {
+      "Customer input": "Your numbers",
+      "External research": "External research",
+      "Assumption": "Model assumption",
+      "Derived": "Calculated"
+     },
+     "setting_labels": {
+      "low": "Low",
+      "central": "Middle",
+      "high": "High",
+      "slow": "Slow",
+      "fast": "Fast"
+     },
+     "value_of_sales": "{v} ({p}% of sales)",
+     "pct_sign": "%",
+     "per_day": "a day",
+     "whoami_cash": "in cash",
+     "whoami_capacity": "of capacity a day",
+     "elasticity_plain": "≈{v}% of {unit} per 1% rise",
+     "render_failed": "Something went wrong drawing this page. The figures shown may be out of date — please reload.",
+     "why_demand_grows": "Demand is still growing at this price,",
+     "why_demand_holds": "Demand barely moves at this price,",
+     "why_capacity_full": "and you were already at capacity, so the gain comes from the price rather than from more work.",
+     "why_price_through": "and the higher price carries almost straight through to what you keep."
+    },
+    "wedge": {
+     "business": "Shop / Online Store",
+     "business_short": "Shop",
+     "noun": "shop",
+     "icon": "🛍",
+     "question": "My supplier raised prices. Should I pass it on?",
+     "page_title": "Shop cost decision — three choices compared",
+     "headline": "Your supplier put prices up {shock}%. Should you pass it on?",
+     "hero_lede": "Three ways to respond, compared on the same model of your shop and the same assumptions. Only the decision changes between them.",
+     "what_changed": "Your supplier put wholesale prices up {shock}%.",
+     "unit_word": "orders",
+     "unit_word_singular": "order",
+     "cost_word": "cost of goods",
+     "world_names": {
+      "A": "Hold prices",
+      "B": "Raise prices 8%",
+      "C": "Raise prices 4% + drop low-margin lines"
+     },
+     "world_short": {
+      "A": "Hold prices",
+      "B": "Raise 8%",
+      "C": "Raise 4% + drop lines"
+     },
+     "world_verdict_labels": {
+      "A": "Holding prices",
+      "B": "Raising prices 8%",
+      "C": "A 4% rise plus dropping low-margin lines"
+     },
+     "uncertainty_title": "How price-sensitive are your customers?",
+     "unknown_why": "A shop's customers can often buy the same item elsewhere, so a price rise costs more orders here than in a trade where people come for you specifically. How much more is the thing nobody has measured for your shop.",
+     "unknown_how": "Put prices up on a handful of lines for two weeks and watch what happens to those lines against the rest. Your own numbers from the last time you raised prices work too.",
+     "sens_help": {
+      "low": "Loyal customers, an awkward shop to replace, or competitors raising prices too.",
+      "central": "Our judgement: customers who could shop elsewhere, with some effort.",
+      "high": "The research figure for customers who can buy the identical item elsewhere."
+     },
+     "c_card_note": "Depends on how much dropping low-margin lines cuts your cost of goods (about {red} points here) and how many {unit} leave with those lines ({loss}%). Neither is measured from your shop.",
+     "chart_lede": "Costs take about three weeks to rise — the stock on your shelves was bought at the old price. Customers react to a new price within a week or two.",
+     "sources_note": "The research quoted measures customers switching between brands on the same shelf, which is easier than switching shops. It sets the top of the range rather than the middle.",
+     "limits_does_not": [
+      "Predict your future sales.",
+      "Know how your individual customers will behave.",
+      "Model competitors, marketplaces or search ranking.",
+      "Model advertising or promotions."
+     ],
+     "intake": {
+      "monthly_revenue": {
+       "label": "About how much do you sell in a month?",
+       "hint": "A typical month, before the increase.",
+       "placeholder": "92,000"
+      },
+      "daily_orders": {
+       "label": "About how many orders a day?",
+       "hint": "In store and online together.",
+       "placeholder": "90"
+      },
+      "monthly_cogs": {
+       "label": "What do the goods cost you a month?",
+       "hint": "What you pay suppliers for what you sell. Not wages, not rent.",
+       "placeholder": "53,360"
+      },
+      "monthly_fixed_costs": {
+       "label": "Rent, wages and bills a month?",
+       "hint": "Everything that will not change in the next 90 days.",
+       "placeholder": "33,000"
+      },
+      "cash_on_hand": {
+       "label": "How much cash is in the account today?",
+       "hint": "What you could spend right now.",
+       "placeholder": "26,000"
+      },
+      "supplier_increase_pct": {
+       "label": "How much did your supplier put prices up?",
+       "hint": "As a percentage of what you pay for goods.",
+       "placeholder": "25"
+      },
+      "low_margin_share_pct": {
+       "label": "What share of orders are lines that earn you little?",
+       "hint": "Roughly. A guess is fine — it is tested as an assumption.",
+       "placeholder": "20"
+      },
+      "name": {
+       "label": "What is your shop called?",
+       "hint": "Only used on this page.",
+       "placeholder": "Nine Yards"
+      }
+     },
+     "sweep_labels": {
+      "price_sensitivity": "How price-sensitive your customers are",
+      "cogs_pass_through": "How much of the increase reaches your costs",
+      "supplier_increase_pct": "How big the supplier increase really is",
+      "reduction_points": "How much dropping low-margin lines really saves",
+      "demand_adjustment_speed": "How quickly customers react"
+     },
+     "assumptions": {
+      "monthly_revenue": {
+       "label": "Current monthly sales"
+      },
+      "daily_orders": {
+       "label": "Orders per day"
+      },
+      "monthly_cogs": {
+       "label": "Monthly cost of goods"
+      },
+      "monthly_fixed_costs": {
+       "label": "Monthly fixed costs (incl. wages)"
+      },
+      "cash_on_hand": {
+       "label": "Cash available today"
+      },
+      "supplier_increase_pct": {
+       "label": "Supplier cost increase"
+      },
+      "low_margin_share_pct": {
+       "label": "Share of orders on low-margin lines"
+      },
+      "price_sensitivity": {
+       "label": "Price sensitivity of customers"
+      },
+      "cogs_pass_through": {
+       "label": "Share of supplier increase reaching your cost of goods"
+      },
+      "inventory_lag": {
+       "label": "Delay before higher supplier prices reach your costs",
+       "text": "about 20 days (stock on hand)"
+      },
+      "demand_adjustment_speed": {
+       "label": "How quickly customers react to a price change",
+       "map": {
+        "slow": "about two and a half weeks to half-react",
+        "central": "about eight days to half-react",
+        "fast": "about four days to half-react"
+       }
+      },
+      "trim_effectiveness": {
+       "label": "Cost saving from dropping low-margin lines",
+       "text": "{reduction:g} points off average cost of goods ({trim_effectiveness:.3f} per point of low-margin share)"
+      },
+      "trim_demand_cost": {
+       "label": "Orders lost from dropping those lines",
+       "text": "{demand_cost:.1f}% of orders"
+      },
+      "price_rises": {
+       "label": "Price rises compared",
+       "text": "B: +8%   C: +4%"
+      },
+      "horizon": {
+       "label": "Comparison horizon",
+       "text": "90 days"
+      },
+      "average_order_value": {
+       "label": "Average order value"
+      },
+      "cogs_per_order": {
+       "label": "Cost of goods per order"
+      }
+     }
+    },
+    "all_wedges": {
+     "cafe": {
+      "business": "Cafe / Restaurant",
+      "business_short": "Cafe",
+      "icon": "☕"
+     },
+     "shop": {
+      "business": "Shop / Online Store",
+      "business_short": "Shop",
+      "icon": "🛍"
+     },
+     "salon": {
+      "business": "Salon / Service Business",
+      "business_short": "Salon",
+      "icon": "✂"
+     }
+    }
+   },
+   "fa": {
+    "dir": "rtl",
+    "label": "فارسی",
+    "numerals": "arabext",
+    "ui": {
+     "product": "مقایسهٔ تصمیم",
+     "tagline": "قبل از تصمیم، پیامد انتخاب‌هایت را ببین.",
+     "principle_1": "همان کسب‌وکار.",
+     "principle_2": "همان فرض‌ها.",
+     "principle_3": "تصمیم متفاوت.",
+     "home_question": "چه کسب‌وکاری داری؟",
+     "home_lede": "نزدیک‌ترین را انتخاب کن. قرار است چند حالت از یک تصمیم واقعی را با عددهای خودت مقایسه کنی.",
+     "home_pick": "انتخاب‌ها را مقایسه کن",
+     "home_footer": "هر گزارش سه حالت از یک تصمیم را روی یک مدل مقایسه می‌کند، تا تفاوت‌ها از خودِ تصمیم بیاید نه از حدس‌های متفاوت. این یک مقایسهٔ سناریو با فرض‌های مشخص است؛ نه پیش‌بینی، نه توصیه.",
+     "journey_1": "کسب‌وکار تو",
+     "journey_2": "چه چیزی تغییر کرده",
+     "journey_3": "انتخاب‌ها را مقایسه کن",
+     "journey_4": "اثر مالی و بده‌بستان‌ها",
+     "journey_5": "چه چیزی می‌تواند جواب را عوض کند",
+     "journey_6": "فرض‌ها",
+     "switch_business": "تغییر نوع کسب‌وکار",
+     "language": "زبان",
+     "demo_badge": "نمونه — {noun} فرضی",
+     "back_home": "همهٔ کسب‌وکارها",
+     "decision_eyebrow": "تصمیم",
+     "your_options": "سه انتخاب تو",
+     "ranked_first": "انتخاب اول",
+     "ranked_first_cases": "انتخاب اول در {n} حالت از {total} حالت بررسی‌شده",
+     "ranked_first_central": "با فرض‌های فعلی، اول است",
+     "per_month": "در ماه",
+     "per_month_after": "بعد از اینکه اوضاع آرام گرفت",
+     "today": "الان",
+     "cash_at_90": "موجودی بعد از ۹۰ روز",
+     "cash_runs_out": "پول روز {day} تمام می‌شود",
+     "orders_change": "{unit}",
+     "not_a_prediction": "مقایسهٔ سناریو با فرض‌های مشخص — نه پیش‌بینی.",
+     "tested_cases_tooltip": "این عدد احتمال موفقیت نیست؛ تعداد حالت‌های مختلفی است که بررسی شده‌اند.",
+     "why_title": "چرا {option} جلو می‌افتد؟",
+     "why_tie": "چرا این‌قدر نزدیک است؟",
+     "why_lose_units": "حدود {pct} از {unit} کم می‌شود،",
+     "why_gain": "اما با فرض‌های فعلی، افزایش قیمت بیشتر از این افت را جبران می‌کند.",
+     "why_gain_capacity": "اما وقت‌هایت از قبل پر بود، پس بیشترشان کسانی بودند که به‌هرحال جا نمی‌شدند.",
+     "why_cost": "و صرفه‌جویی در {cost} بیشتر از این افت را جبران می‌کند.",
+     "why_vs_a": "در مقایسه با {other}، بعد از ۹۰ روز {amount} پول بیشتری در حساب می‌ماند.",
+     "why_gap": "{lead} به اندازهٔ {amount} از {second} جلوتر است.",
+     "chart_eyebrow": "۹۰ روز آینده",
+     "chart_title": "موجودی حساب با هر انتخاب",
+     "chart_alt": "موجودی نقدی در ۹۰ روز برای سه انتخاب. {summary}",
+     "chart_today": "الان",
+     "cash_zero": "صفر",
+     "day": "روز {n}",
+     "cash_derived": "مسیر نقدینگی از نتایج فعالیت کسب‌وکار محاسبه می‌شود؛ خودِ موتور مستقیماً پول نقد را شبیه‌سازی نمی‌کند.",
+     "compare_table": "کنار هم",
+     "row_cash_30": "موجودی بعد از ۳۰ روز",
+     "row_cash_90": "موجودی بعد از ۹۰ روز",
+     "row_net": "سود ماهانه بعد از آرام‌شدن",
+     "row_utilisation": "در پایان چقدر پر می‌شوی",
+     "row_turned_away": "روزانه چند نفر جا نمی‌شوند",
+     "unknown_eyebrow": "مهم‌ترین چیزی که هنوز نمی‌دانیم",
+     "unknown_what": "چه چیزی را نمی‌دانیم",
+     "unknown_why": "چرا مهم است",
+     "unknown_could": "می‌تواند تصمیم را عوض کند؟",
+     "unknown_could_yes": "بله. تنها فرضی است که انتخاب اول را عوض می‌کند.",
+     "unknown_could_yes_multi": "بله. یکی از {n} فرضی است که می‌توانند انتخاب اول را عوض کنند.",
+     "unknown_could_no": "در بازه‌ای که بررسی کردیم، نه. فاصله را کم و زیاد می‌کند، ولی ترتیب را نه.",
+     "unknown_how": "چطور می‌توانی بفهمی",
+     "change_eyebrow": "چه چیزی می‌تواند نتیجه را عوض کند؟",
+     "change_title": "کدام فرض‌ها واقعاً تصمیم را جابه‌جا می‌کنند",
+     "influence_high": "زیاد",
+     "influence_medium": "متوسط",
+     "influence_low": "کم",
+     "changes_ranking": "ترتیب را عوض می‌کند",
+     "changes_size": "فقط فاصله را کم و زیاد می‌کند",
+     "only_one_flips": "فقط یک فرض توانست انتخاب اول را عوض کند: {name}.",
+     "several_flip": "{n} فرض توانستند انتخاب اول را عوض کنند: {names}.",
+     "none_flips": "هیچ‌کدام از چیزهایی که بررسی کردیم انتخاب اول را عوض نکرد.",
+     "try_it": "امتحان کن",
+     "decision_changed": "انتخاب اول عوض شد.",
+     "decision_changed_detail": "با این تنظیم، حالا {option} جلو می‌افتد.",
+     "decision_unchanged": "با این تنظیم هم {option} اول می‌ماند.",
+     "other_assumptions": "فرض‌های دیگری که می‌توانی عوض کنی",
+     "evidence_eyebrow": "این عددها از کجا آمده‌اند",
+     "group_yours": "عددهای کسب‌وکار شما",
+     "group_research": "اطلاعات پژوهشی",
+     "group_assumptions": "فرض‌های مدل",
+     "group_calculated": "نتایج محاسبه‌شده",
+     "no_research": "با تنظیمی که انتخاب کرده‌ای، هیچ عددی اینجا از یک پژوهش منتشرشده نیامده.",
+     "no_research_ever": "هیچ پژوهش منتشرشده‌ای این صنف را به‌اندازهٔ کافی پوشش نمی‌دهد. همهٔ تنظیم‌های اینجا قضاوت ماست.",
+     "does_title": "این ابزار چه کاری می‌کند و چه کاری نمی‌کند",
+     "does": "این کار را می‌کند",
+     "does_not": "این کار را نمی‌کند",
+     "does_1": "چند تصمیم را با یک معیار مقایسه می‌کند.",
+     "does_2": "بده‌بستان مالی هر کدام را نشان می‌دهد.",
+     "does_3": "نشان می‌دهد کدام فرض‌ها مهم‌اند.",
+     "does_4": "نشان می‌دهد چه چیزی می‌تواند ترتیب را عوض کند.",
+     "cta_eyebrow": "نوبت توست",
+     "cta_demo": "با کسب‌وکار خودت امتحان کن",
+     "cta_again": "یک تصمیم دیگر را مقایسه کن",
+     "cta_lede": "عددهایت در همین صفحه می‌ماند. هیچ‌جا فرستاده نمی‌شود.",
+     "cta_run": "انتخاب‌هایم را مقایسه کن",
+     "cta_reset": "برگرد به نمونه",
+     "cta_done": "انجام شد — این صفحه حالا با عددهای توست.",
+     "group_about": "دربارهٔ کسب‌وکارت",
+     "group_costs": "هزینه‌هایت",
+     "group_capacity": "ظرفیتت",
+     "group_changed": "چه چیزی تغییر کرده",
+     "group_mix": "چه چیزی می‌فروشی",
+     "err_numbers": "لطفاً همهٔ عددها را پر کن.",
+     "err_cost_high": "با این عددها هنوز نمی‌توانیم گزینه‌ها را درست مقایسه کنیم.",
+     "err_cost_high_why": "هزینه‌ات برابر یا بیشتر از فروشت است، پس حاشیه‌ای نمی‌ماند که مقایسه شود. عدد هزینه را یک بار دیگر ببین.",
+     "err_positive": "این‌ها باید بیشتر از صفر باشند: {names}.",
+     "err_utilisation": "پر بودن وقت‌ها باید بین ۱٪ تا ۱۰۰٪ باشد.",
+     "err_failed": "در مقایسه مشکلی پیش آمد. هیچ عددی نشان نمی‌دهیم، چون عدد نصفه‌ونیمه از هیچ بدتر است.",
+     "how_title": "این محاسبه چطور انجام شده؟",
+     "how_open": "روش، منابع و قابلیت بازتولید",
+     "advanced": "پیشرفته",
+     "currency_note": "همهٔ عددها به همان واحد پولی است که خودت وارد کرده‌ای.",
+     "klass_labels": {
+      "Customer input": "عددهای خودت",
+      "External research": "پژوهش بیرونی",
+      "Assumption": "فرض مدل",
+      "Derived": "محاسبه‌شده"
+     },
+     "setting_labels": {
+      "low": "کم",
+      "central": "متوسط",
+      "high": "زیاد",
+      "slow": "کند",
+      "fast": "سریع"
+     },
+     "value_of_sales": "{v} ({p}٪ از فروش)",
+     "pct_sign": "٪",
+     "per_day": "در روز",
+     "whoami_cash": "پول نقد",
+     "whoami_capacity": "ظرفیت در روز",
+     "elasticity_plain": "حدود {v}٪ از {unit} به ازای هر ۱٪ گرانی",
+     "render_failed": "در ترسیم این صفحه خطایی رخ داد. ممکن است عددهای نمایش‌داده‌شده به‌روز نباشند — صفحه را دوباره باز کن.",
+     "why_demand_grows": "تقاضا با این قیمت همچنان رشد می‌کند،",
+     "why_demand_holds": "تقاضا با این قیمت تقریباً ثابت می‌ماند،",
+     "why_capacity_full": "و ظرفیتت از قبل پر بود، پس سود از قیمت می‌آید نه از کار بیشتر.",
+     "why_price_through": "و افزایش قیمت تقریباً مستقیم به چیزی که برایت می‌ماند اضافه می‌شود."
+    },
+    "wedge": {
+     "business": "فروشگاه / آنلاین‌شاپ",
+     "business_short": "فروشگاه",
+     "noun": "فروشگاه",
+     "icon": "🛍",
+     "question": "تأمین‌کننده قیمت را بالا برده. من هم قیمت را بالا ببرم؟",
+     "page_title": "تصمیم هزینه در فروشگاه — مقایسهٔ سه انتخاب",
+     "headline": "تأمین‌کننده قیمت را {shock}٪ بالا برده. تو هم بالا ببری؟",
+     "hero_lede": "سه راه واکنش، روی یک مدل از فروشگاه خودت و با همان فرض‌ها مقایسه شده‌اند. تنها چیزی که بینشان فرق می‌کند، خودِ تصمیم است.",
+     "what_changed": "تأمین‌کننده قیمت عمده را {shock}٪ بالا برده.",
+     "unit_word": "سفارش",
+     "unit_word_singular": "سفارش",
+     "cost_word": "قیمت تمام‌شدهٔ کالا",
+     "world_names": {
+      "A": "قیمت را نگه دار",
+      "B": "قیمت را ۸٪ بالا ببر",
+      "C": "قیمت ۴٪ بالا + حذف کالاهای کم‌سود"
+     },
+     "world_short": {
+      "A": "نگه‌داشتن قیمت",
+      "B": "۸٪ بالا",
+      "C": "۴٪ بالا + حذف کم‌سودها"
+     },
+     "world_verdict_labels": {
+      "A": "نگه‌داشتن قیمت",
+      "B": "۸٪ بالا بردن قیمت",
+      "C": "۴٪ بالا بردن قیمت همراه با حذف کالاهای کم‌سود"
+     },
+     "uncertainty_title": "مشتری‌های تو چقدر به قیمت حساس‌اند؟",
+     "unknown_why": "مشتری فروشگاه معمولاً همان جنس را جای دیگری هم پیدا می‌کند، پس بالا بردن قیمت اینجا بیشتر از صنف‌هایی که مشتری برای خودِ تو می‌آید سفارش می‌برد. اینکه چقدر بیشتر، برای فروشگاه تو اندازه‌گیری نشده.",
+     "unknown_how": "قیمت چند قلم را دو هفته بالا ببر و ببین فروش همان‌ها نسبت به بقیه چه می‌شود. عددهای دفعهٔ قبلی که قیمت را بالا بردی هم کار می‌کند.",
+     "sens_help": {
+      "low": "مشتری وفادار، فروشگاهی که جایگزین‌کردنش سخت است، یا رقبایی که آن‌ها هم گران کرده‌اند.",
+      "central": "قضاوت ما: مشتری‌ای که می‌تواند جای دیگری برود، ولی کمی زحمت دارد.",
+      "high": "عدد پژوهشی برای مشتری‌ای که دقیقاً همان جنس را جای دیگر می‌خرد."
+     },
+     "c_card_note": "به این بستگی دارد که حذف کالاهای کم‌سود چقدر از قیمت تمام‌شده کم می‌کند (اینجا حدود {red} واحد) و چند {unit} همراه آن کالاها می‌رود ({loss}٪). هیچ‌کدام از فروشگاه تو اندازه‌گیری نشده.",
+     "chart_lede": "هزینه‌ها حدود سه هفته طول می‌کشد تا بالا بیاید — جنسی که روی قفسه است با قیمت قبلی خریده شده. مشتری‌ها یکی دو هفته‌ای واکنش نشان می‌دهند.",
+     "sources_note": "پژوهشی که نقل شده، جابه‌جا شدن مشتری بین برندهای روی یک قفسه را می‌سنجد، که از عوض‌کردن فروشگاه راحت‌تر است. پس سقف بازه را تعیین می‌کند، نه وسط آن را.",
+     "limits_does_not": [
+      "فروش آیندهٔ تو را پیش‌بینی کند.",
+      "بداند تک‌تک مشتری‌هایت چه می‌کنند.",
+      "رقبا، مارکت‌پلیس‌ها یا رتبهٔ جست‌وجو را مدل کند.",
+      "تبلیغات یا کمپین‌ها را مدل کند."
+     ],
+     "intake": {
+      "monthly_revenue": {
+       "label": "تقریباً ماهی چقدر فروش داری؟",
+       "hint": "یک ماه معمولی، قبل از گران‌شدن.",
+       "placeholder": "۹۲٬۰۰۰"
+      },
+      "daily_orders": {
+       "label": "روزی تقریباً چند سفارش داری؟",
+       "hint": "حضوری و آنلاین با هم.",
+       "placeholder": "۹۰"
+      },
+      "monthly_cogs": {
+       "label": "خودِ جنس ماهی چقدر برایت خرج برمی‌دارد؟",
+       "hint": "چیزی که بابت جنسی که می‌فروشی به تأمین‌کننده می‌دهی. نه حقوق، نه اجاره.",
+       "placeholder": "۵۳٬۳۶۰"
+      },
+      "monthly_fixed_costs": {
+       "label": "اجاره و حقوق و قبض‌ها ماهی چقدر است؟",
+       "hint": "هر چیزی که در ۹۰ روز آینده تغییر نمی‌کند.",
+       "placeholder": "۳۳٬۰۰۰"
+      },
+      "cash_on_hand": {
+       "label": "الان چقدر پول نقد داری؟",
+       "hint": "چیزی که همین حالا می‌توانی خرج کنی.",
+       "placeholder": "۲۶٬۰۰۰"
+      },
+      "supplier_increase_pct": {
+       "label": "تأمین‌کننده چقدر قیمت را بالا برده؟",
+       "hint": "به‌صورت درصدی از چیزی که بابت جنس می‌دهی.",
+       "placeholder": "۲۵"
+      },
+      "low_margin_share_pct": {
+       "label": "چند درصد سفارش‌ها کالاهایی است که سود کمی دارد؟",
+       "hint": "تقریبی. حدس هم کافی است — به‌عنوان فرض بررسی می‌شود.",
+       "placeholder": "۲۰"
+      },
+      "name": {
+       "label": "اسم فروشگاهت چیست؟",
+       "hint": "فقط روی همین صفحه استفاده می‌شود.",
+       "placeholder": "فروشگاه نه"
+      }
+     },
+     "sweep_labels": {
+      "price_sensitivity": "حساسیت مشتری به قیمت",
+      "cogs_pass_through": "چقدر از گرانی به هزینه‌ات می‌رسد",
+      "supplier_increase_pct": "گرانی تأمین‌کننده واقعاً چقدر است",
+      "reduction_points": "حذف کالاهای کم‌سود واقعاً چقدر صرفه‌جویی دارد",
+      "demand_adjustment_speed": "سرعت واکنش مشتری"
+     },
+     "assumptions": {
+      "monthly_revenue": {
+       "label": "فروش ماهانهٔ فعلی"
+      },
+      "daily_orders": {
+       "label": "فروش در روز"
+      },
+      "monthly_cogs": {
+       "label": "بهای تمام‌شدهٔ کالای ماهانه"
+      },
+      "monthly_fixed_costs": {
+       "label": "هزینه‌های ثابت ماهانه (با حقوق)"
+      },
+      "cash_on_hand": {
+       "label": "پول نقد موجود امروز"
+      },
+      "supplier_increase_pct": {
+       "label": "میزان گرانی تأمین‌کننده"
+      },
+      "low_margin_share_pct": {
+       "label": "سهم فروش‌های کم‌سود"
+      },
+      "price_sensitivity": {
+       "label": "حساسیت مشتری به قیمت"
+      },
+      "cogs_pass_through": {
+       "label": "چقدر از گرانی به بهای تمام‌شده‌ات می‌رسد"
+      },
+      "inventory_lag": {
+       "label": "فاصله تا اثر گرانی روی هزینه‌ات",
+       "text": "حدود ۲۰ روز (موجودی انبار)"
+      },
+      "demand_adjustment_speed": {
+       "label": "سرعت واکنش مشتری به تغییر قیمت",
+       "map": {
+        "slow": "حدود دو هفته و نیم تا نصف واکنش",
+        "central": "حدود هشت روز تا نصف واکنش",
+        "fast": "حدود چهار روز تا نصف واکنش"
+       }
+      },
+      "trim_effectiveness": {
+       "label": "صرفه‌جویی از کنارگذاشتن اقلام کم‌سود",
+       "text": "{reduction:g} واحد کاهش در میانگین بهای تمام‌شده ({trim_effectiveness:.3f} به ازای هر واحد سهم کم‌سود)"
+      },
+      "trim_demand_cost": {
+       "label": "فروش‌های از‌دست‌رفته با کنارگذاشتن آن اقلام",
+       "text": "{demand_cost:.1f}٪ از فروش‌ها"
+      },
+      "price_rises": {
+       "label": "افزایش قیمت‌های مقایسه‌شده",
+       "text": "ب: +۸٪   پ: +۴٪"
+      },
+      "horizon": {
+       "label": "بازهٔ مقایسه",
+       "text": "۹۰ روز"
+      },
+      "average_order_value": {
+       "label": "میانگین مبلغ هر خرید"
+      },
+      "cogs_per_order": {
+       "label": "بهای تمام‌شدهٔ هر خرید"
+      }
+     }
+    },
+    "all_wedges": {
+     "cafe": {
+      "business": "کافه / رستوران",
+      "business_short": "کافه",
+      "icon": "☕"
+     },
+     "shop": {
+      "business": "فروشگاه / آنلاین‌شاپ",
+      "business_short": "فروشگاه",
+      "icon": "🛍"
+     },
+     "salon": {
+      "business": "سالن / کسب‌وکار خدماتی",
+      "business_short": "سالن",
+      "icon": "✂"
+     }
+    }
+   }
+  }
+ },
  "module_id": "shop_cost_shock_v1",
  "module_semantic_hash": "a6b32acba109259c8af4a44304b80dbfb866355ed879fcd366bcd1cf2080f7fe",
  "shared_fingerprint": "0f9c06c5cb5d23000b69eb23961c8dd84223f1104428225de006ef25baf50bb5",

@@ -76,6 +76,8 @@ if ($wedgeId === '' || !in_array($wedgeId, $available, true)) {
     header('Content-Type: text/html; charset=utf-8');
     header('Cache-Control: public, max-age=300');
     $chooser = (string) file_get_contents(__DIR__ . '/assets/chooser.html');
+    $chooser = str_replace('__I18N__',
+        json_encode($catalogue['i18n'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $chooser);
     // The static chooser links to files; here each card is a query on this one entry point.
     foreach ($catalogue['chooser'] as $entry) {
         $chooser = str_replace("{$entry['id']}/{$entry['id']}_decision_report.html",
@@ -155,19 +157,26 @@ if ($wantsForm) {
 $baseline = new Baseline($input, $wedge);
 $templatePath = __DIR__ . '/assets/decision_report.html';
 $langStamp = $translation !== null ? ($lang . '|' . ($translation['generated'] ?? '')) : 'en';
+// The code that builds the page is part of what the page is. Leaving it out of the key means a
+// maintainer who updates lib/ keeps being served the version from before the update.
+$libStamp = '';
+foreach (glob(__DIR__ . '/lib/*.php') ?: [] as $lib) {
+    $libStamp .= basename($lib) . ':' . filemtime($lib) . ';';
+}
 $cacheKey = hash('sha256', $wedgeId . '|' . json_encode($baseline->toDict()) . '|' . $langStamp
-    . '|' . filemtime(__DIR__ . "/assets/{$wedgeId}.json") . '|' . filemtime($templatePath));
+    . '|' . filemtime(__DIR__ . "/assets/{$wedgeId}.json") . '|' . filemtime($templatePath)
+    . '|' . $libStamp);
 $cacheFile = __DIR__ . '/data/cache/' . $cacheKey . '.html.gz';
 
 $gzipped = is_file($cacheFile) ? (string) file_get_contents($cacheFile) : '';
 if ($gzipped === '') {
     $template = (string) file_get_contents($templatePath);
-    if ($translation !== null) {
-        // Translate the template FIRST; the data payload goes in afterwards, so no figure,
-        // ranking or fingerprint is ever in reach of a substitution.
-        [$template, , ] = i18n_apply($template, $translation);
-    }
     $bundle = build_bundle(new Slice($wedge['slice']), $wedge, $baseline, true);
+    if ($translation !== null) {
+        // A generated language is one more block of copy inside the bundle. It sits beside the
+        // figures rather than anywhere near them, so nothing it contains can change a number.
+        [$bundle, , ] = i18n_merge($bundle, $translation);
+    }
     $html = str_replace('__DATA__',
         str_replace('</', '<\\/', (string) json_encode($bundle,
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION)),

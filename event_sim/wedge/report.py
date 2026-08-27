@@ -25,6 +25,7 @@ from typing import Any
 
 from event_sim.wedge.compare import Comparison, run_comparison
 from event_sim.wedge.evidence import class_counts
+from event_sim.wedge.i18n import bundle_for
 from event_sim.wedge.sensitivity import SensitivityResult, run_sensitivity
 from event_sim.wedge.spec import WedgeSpec
 
@@ -111,7 +112,10 @@ def build_bundle(
             "question": wedge.question,
             "module_id": wedge.module_id,
         },
+        # Structure only — which field plays which role, which grid key, which settings a
+        # study backs. Every customer-facing string lives in `i18n`, in every language.
         "copy": {k: v for k, v in wedge.copy.items() if not callable(v)},
+        "i18n": bundle_for(wedge.id),
         "generated_for": baseline.name,
         "is_demo": baseline.is_demo,
         "baseline": summarise(wedge, baseline),

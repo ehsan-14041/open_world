@@ -26,6 +26,7 @@ from event_sim.engine import SimulationConfig  # noqa: E402
 from event_sim.freeze import module_hash  # noqa: E402
 from event_sim.wedge.accounting import DAYS_PER_MONTH  # noqa: E402
 from event_sim.wedge.compare import _trajectory_slice, shared_fingerprint, wedge_slice  # noqa: E402
+from event_sim.wedge.i18n import bundle_for, chooser_bundle  # noqa: E402
 from event_sim.wedge.registry import CHOOSER, WEDGES  # noqa: E402
 from event_sim.wedge.spec import WedgeSpec  # noqa: E402
 
@@ -79,6 +80,9 @@ def freeze(wedge: WedgeSpec) -> dict:
         "wedge": {"id": wedge.id, "business": wedge.business, "question": wedge.question,
                   "module_id": wedge.module_id},
         "copy": {k: v for k, v in wedge.copy.items() if not callable(v)},
+        # Every language travels with the instrument, so the host never translates anything at
+        # request time and a language switch cannot reach the arithmetic.
+        "i18n": bundle_for(wedge.id),
         "module_id": wedge.module_id,
         "module_semantic_hash": module_hash(wedge.module_id),
         "shared_fingerprint": shared_fingerprint(s, cfg),
@@ -154,7 +158,9 @@ def freeze(wedge: WedgeSpec) -> dict:
 
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "wedges.json").write_text(json.dumps({"chooser": CHOOSER}, indent=1), encoding="utf-8")
+    (OUT / "wedges.json").write_text(
+        json.dumps({"chooser": CHOOSER, "i18n": chooser_bundle()}, indent=1, ensure_ascii=False),
+        encoding="utf-8")
 
     for wedge_id, wedge in WEDGES.items():
         data = freeze(wedge)

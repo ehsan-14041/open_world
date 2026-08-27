@@ -283,6 +283,36 @@ function render_value(array $kind, array $ctx): string
     throw new RuntimeException('unknown registry value kind ' . $kind['kind']);
 }
 
+/**
+ * The figures a row's value was built from, under the names its spec uses.
+ *
+ * Mirrors value_context() in event_sim/wedge/evidence.py. The page re-renders a value in
+ * whichever language is on, so it needs the numbers as numbers — not the English sentence they
+ * were first written into.
+ */
+function value_context(array $kind, array $ctx): array
+{
+    switch ($kind['kind']) {
+        case 'money':
+        case 'g':
+        case 'fixed':
+            return [$kind['field'] => $ctx[$kind['field']]];
+        case 'money_with_pct':
+            return [$kind['field'] => $ctx[$kind['field']], $kind['pct_of'] => $ctx[$kind['pct_of']]];
+        case 'axis':
+            return ['setting' => $ctx['axis_settings'][$kind['axis']] ?? 'central'];
+        case 'template':
+            $out = [];
+            if (preg_match_all('/\{(\w+)(?::[^}]*)?\}/', (string) $kind['text'], $m)) {
+                foreach ($m[1] as $name) {
+                    $out[$name] = $ctx[$name];
+                }
+            }
+            return $out;
+    }
+    return [];
+}
+
 /** The `{name:spec}` subset Python's str.format uses in the registry specs. */
 function render_template(string $text, array $ctx): string
 {
@@ -350,6 +380,8 @@ function evidence_registry(Baseline $b, array $wedge, array $axisSettings, float
             'klass' => $klass, 'swept' => (bool) ($row['swept'] ?? false),
             'note' => $row['note'] ?? '', 'source' => $source,
             'ladder_status' => LADDER[$klass],
+            'value_spec' => $row['value'],
+            'value_ctx' => (object) value_context($row['value'], $ctx),
         ];
     }
     return $out;
@@ -460,6 +492,7 @@ function build_bundle(Slice $slice, array $wedge, Baseline $baseline, bool $incl
     $bundle = [
         'wedge' => $wedge['wedge'],
         'copy' => $wedge['copy'],
+        'i18n' => $wedge['i18n'],
         'generated_for' => $baseline->name,
         'is_demo' => $baseline->is_demo,
         'baseline' => $baseline->summary($wedge),

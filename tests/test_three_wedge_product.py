@@ -180,12 +180,86 @@ def test_the_chooser_offers_exactly_the_three_wedges():
                    "simulation", "engine", "intervention"):
         assert jargon not in visible.lower(), f"chooser screen uses {jargon!r}"
     assert not overclaims(visible), f"chooser screen overclaims: {overclaims(visible)}"
-    assert "not a prediction" in visible, "the chooser must say what this is not"
+    # The home screen is bilingual, so its copy is in the catalogue rather than the markup.
+    from event_sim.wedge.i18n import LANGUAGES, catalogue
+    assert "not a prediction" in catalogue("en")["ui"]["home_footer"] \
+        or "not a prediction" in catalogue("en")["ui"]["not_a_prediction"]
+    for lang in LANGUAGES:
+        assert catalogue(lang)["ui"]["not_a_prediction"].strip(), \
+            f"{lang}: the chooser must say what this is not"
 
 
 def test_the_page_never_turns_a_count_into_odds():
+    """
+    A census is reported as a count of tested cases, never as odds — in every language.
+
+    The count is the number of grid points at which an option ranked first. Calling that a
+    probability would claim the grid is a distribution over futures, which it is not.
+    """
+    from event_sim.wedge.i18n import LANGUAGES, catalogue
+
     html = TEMPLATE.read_text(encoding="utf-8")
-    assert "This is a sensitivity count, not a probability." in html
-    assert "ranked first in" in html
     for banned in ("% chance", "probability of", "likelihood", "we predict", "will be worth"):
         assert banned not in html.lower()
+
+    en = catalogue("en")["ui"]
+    assert "not probabilities" in en["tested_cases_tooltip"]
+    assert "Ranked first in {n} of {total} tested cases" == en["ranked_first_cases"]
+    for lang in LANGUAGES:
+        ui = catalogue(lang)["ui"]
+        for key in ("ranked_first", "ranked_first_cases", "ranked_first_central",
+                    "tested_cases_tooltip"):
+            assert ui[key].strip(), f"{lang}: {key} is missing"
+        # The count keeps its slots, or the page would state a number it did not compute.
+        assert "{n}" in ui["ranked_first_cases"] and "{total}" in ui["ranked_first_cases"]
+
+
+# ---- the page has to finish drawing, or say that it did not -----------------------------------
+
+def test_the_page_never_rewrites_a_container_holding_an_id_it_reads_later():
+    """
+    Writing `innerHTML` destroys whatever ids were inside, including ones the page reads again.
+
+    This is how a half-drawn page happens: the second render reaches for an element the first
+    render threw away, throws, and leaves everything after it describing the previous business
+    while the cards above show the new one. Nothing looks broken, which is the problem.
+    """
+    html = TEMPLATE.read_text(encoding="utf-8")
+    body = html.split("<body>", 1)[1].split("<script", 1)[0]
+
+    # Which static ids live inside which other static id.
+    nested: dict[str, str] = {}
+    stack: list[str] = []
+    for tag in re.finditer(r"<(/?)([a-zA-Z][\w-]*)([^>]*)>", body):
+        closing, name, attrs = tag.groups()
+        if name in ("br", "hr", "img", "input", "meta", "link"):
+            continue
+        if closing:
+            if stack:
+                stack.pop()
+            continue
+        if attrs.rstrip().endswith("/"):
+            continue
+        found = re.search(r'\bid="([^"]+)"', attrs)
+        this_id = found.group(1) if found else None
+        if this_id and stack:
+            nested[this_id] = stack[-1]
+        stack.append(this_id or "")
+
+    rewritten = set(re.findall(r"getElementById\('([^']+)'\)\.innerHTML\s*=", html))
+    read = set(re.findall(r"getElementById\('([^']+)'\)", html))
+
+    doomed = [child for child, parent in nested.items()
+              if parent in rewritten and child in read]
+    assert not doomed, (
+        "these ids sit inside a container the page rewrites, so reading them again will throw: "
+        f"{doomed}")
+
+
+def test_a_failed_render_is_announced_rather_than_left_half_drawn():
+    html = TEMPLATE.read_text(encoding="utf-8")
+    assert "guardRender" in html, "render must be wrapped so a failure surfaces"
+    assert "fail(t('render_failed'))" in html
+    for lang in ("en", "fa"):
+        from event_sim.wedge.i18n import catalogue
+        assert catalogue(lang)["ui"]["render_failed"].strip()

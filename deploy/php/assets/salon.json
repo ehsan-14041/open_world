@@ -179,6 +179,685 @@
    }
   ]
  },
+ "i18n": {
+  "languages": [
+   {
+    "code": "en",
+    "label": "English",
+    "dir": "ltr"
+   },
+   {
+    "code": "fa",
+    "label": "فارسی",
+    "dir": "rtl"
+   }
+  ],
+  "default": "en",
+  "strings": {
+   "en": {
+    "dir": "ltr",
+    "label": "English",
+    "numerals": "latn",
+    "ui": {
+     "product": "Decision Compare",
+     "tagline": "See the trade-offs before you decide.",
+     "principle_1": "Same business.",
+     "principle_2": "Same assumptions.",
+     "principle_3": "Different decision.",
+     "home_question": "What kind of business do you run?",
+     "home_lede": "Pick the one closest to yours. You will compare a few versions of one real decision — with your own figures.",
+     "home_pick": "Compare the options",
+     "home_footer": "Each report compares three versions of one decision on the same model, so the differences come from the decision rather than from different guesses. It is a scenario comparison under stated assumptions — not a prediction, and not advice.",
+     "journey_1": "Your business",
+     "journey_2": "What changed",
+     "journey_3": "Compare your choices",
+     "journey_4": "The money and the trade-offs",
+     "journey_5": "What could change the answer",
+     "journey_6": "Assumptions",
+     "switch_business": "Change business type",
+     "language": "Language",
+     "demo_badge": "Demo — fictional {noun}",
+     "back_home": "All business types",
+     "decision_eyebrow": "The decision",
+     "your_options": "Your three choices",
+     "ranked_first": "Ranked first",
+     "ranked_first_cases": "Ranked first in {n} of {total} tested cases",
+     "ranked_first_central": "Ranks first under the current assumptions",
+     "per_month": "per month",
+     "per_month_after": "once things have settled",
+     "today": "today",
+     "cash_at_90": "cash after 90 days",
+     "cash_runs_out": "cash runs out on day {day}",
+     "orders_change": "{unit}",
+     "not_a_prediction": "A scenario comparison under stated assumptions — not a prediction.",
+     "tested_cases_tooltip": "These are tested assumption combinations, not probabilities.",
+     "why_title": "Why does {option} come out ahead?",
+     "why_tie": "Why is it this close?",
+     "why_lose_units": "You lose about {pct} of your {unit},",
+     "why_gain": "but under the current assumptions the higher price more than makes up for it.",
+     "why_gain_capacity": "but your diary was already full, so most of those were people you were turning away anyway.",
+     "why_cost": "and the saving on {cost} more than makes up for it.",
+     "why_vs_a": "Against {other}, that is {amount} more cash after 90 days.",
+     "why_gap": "{lead} is {amount} ahead of {second}.",
+     "chart_eyebrow": "The next 90 days",
+     "chart_title": "Cash in the bank under each choice",
+     "chart_alt": "Cash over 90 days for the three choices. {summary}",
+     "chart_today": "today",
+     "cash_zero": "cash = 0",
+     "day": "Day {n}",
+     "cash_derived": "Cash is calculated from the simulated business activity. It is not directly simulated by the engine.",
+     "compare_table": "Side by side",
+     "row_cash_30": "Cash after 30 days",
+     "row_cash_90": "Cash after 90 days",
+     "row_net": "Net per month once settled",
+     "row_utilisation": "How full you end up",
+     "row_turned_away": "Turned away per day",
+     "unknown_eyebrow": "The biggest unknown",
+     "unknown_what": "What we don't know",
+     "unknown_why": "Why it matters",
+     "unknown_could": "Could it change the decision?",
+     "unknown_could_yes": "Yes. It is the one assumption that changes which choice ranks first.",
+     "unknown_could_yes_multi": "Yes. It is one of {n} assumptions that can change which choice ranks first.",
+     "unknown_could_no": "Not within the range we tested. It changes the size of the gap, not the order.",
+     "unknown_how": "How you could find out",
+     "change_eyebrow": "What could change the answer?",
+     "change_title": "Which assumptions actually move the decision",
+     "influence_high": "High",
+     "influence_medium": "Medium",
+     "influence_low": "Low",
+     "changes_ranking": "changes which ranks first",
+     "changes_size": "changes the size of the gap",
+     "only_one_flips": "Only one assumption changed which option ranked first: {name}.",
+     "several_flip": "{n} assumptions changed which option ranked first: {names}.",
+     "none_flips": "Nothing we tested changed which option ranked first.",
+     "try_it": "Try it",
+     "decision_changed": "The decision changed.",
+     "decision_changed_detail": "At this setting, {option} now ranks first.",
+     "decision_unchanged": "{option} still ranks first at this setting.",
+     "other_assumptions": "Other assumptions you can change",
+     "evidence_eyebrow": "Where the numbers come from",
+     "group_yours": "Your numbers",
+     "group_research": "External research",
+     "group_assumptions": "Model assumptions",
+     "group_calculated": "Calculated results",
+     "no_research": "Nothing here is set from a published study at the setting you have chosen.",
+     "no_research_ever": "No published study covers this trade closely enough to use. Every setting here is our judgement.",
+     "does_title": "What this does — and doesn't do",
+     "does": "This does",
+     "does_not": "This does not",
+     "does_1": "Compare several decisions consistently.",
+     "does_2": "Show the financial trade-offs.",
+     "does_3": "Show which assumptions matter.",
+     "does_4": "Show what could change the ranking.",
+     "cta_eyebrow": "Your turn",
+     "cta_demo": "Try it with your business",
+     "cta_again": "Compare another decision",
+     "cta_lede": "Your figures stay in this page. Nothing is sent anywhere.",
+     "cta_run": "Compare my choices",
+     "cta_reset": "Back to the demo",
+     "cta_done": "Done — this page now uses your numbers.",
+     "group_about": "About your business",
+     "group_costs": "Your costs",
+     "group_capacity": "Your capacity",
+     "group_changed": "What changed",
+     "group_mix": "What you sell",
+     "err_numbers": "Please fill in every number.",
+     "err_cost_high": "We can't compare these options with these numbers yet.",
+     "err_cost_high_why": "Your costs are the same as or higher than your sales, so there is no margin to compare. Check the cost figure.",
+     "err_positive": "These need to be more than zero: {names}.",
+     "err_utilisation": "How full the diary is should be between 1% and 100%.",
+     "err_failed": "Something went wrong while comparing. No numbers are shown, because half-finished ones would be worse than none.",
+     "how_title": "How this was calculated",
+     "how_open": "Method, sources and reproducibility",
+     "advanced": "Advanced",
+     "currency_note": "All figures are in whatever currency you entered.",
+     "klass_labels": {
+      "Customer input": "Your numbers",
+      "External research": "External research",
+      "Assumption": "Model assumption",
+      "Derived": "Calculated"
+     },
+     "setting_labels": {
+      "low": "Low",
+      "central": "Middle",
+      "high": "High",
+      "slow": "Slow",
+      "fast": "Fast"
+     },
+     "value_of_sales": "{v} ({p}% of sales)",
+     "pct_sign": "%",
+     "per_day": "a day",
+     "whoami_cash": "in cash",
+     "whoami_capacity": "of capacity a day",
+     "elasticity_plain": "≈{v}% of {unit} per 1% rise",
+     "render_failed": "Something went wrong drawing this page. The figures shown may be out of date — please reload.",
+     "why_demand_grows": "Demand is still growing at this price,",
+     "why_demand_holds": "Demand barely moves at this price,",
+     "why_capacity_full": "and you were already at capacity, so the gain comes from the price rather than from more work.",
+     "why_price_through": "and the higher price carries almost straight through to what you keep."
+    },
+    "wedge": {
+     "business": "Salon / Service Business",
+     "business_short": "Salon",
+     "noun": "salon",
+     "icon": "✂",
+     "question": "My schedule is filling up. Is it time to raise prices?",
+     "page_title": "Salon pricing decision — three choices compared",
+     "headline": "Your diary is {shock}% busier. Is it time to raise prices?",
+     "hero_lede": "Three ways to respond, compared on the same model of your salon and the same assumptions. Only the decision changes between them.",
+     "what_changed": "Demand for appointments is up {shock}%, and your diary has a ceiling.",
+     "unit_word": "appointments",
+     "unit_word_singular": "appointment",
+     "cost_word": "cost per appointment",
+     "world_names": {
+      "A": "Keep prices, serve more",
+      "B": "Raise prices 10%",
+      "C": "Raise prices 5% + shift the mix"
+     },
+     "world_short": {
+      "A": "Keep prices",
+      "B": "Raise 10%",
+      "C": "Raise 5% + shift mix"
+     },
+     "world_verdict_labels": {
+      "A": "Keeping prices and serving more",
+      "B": "Raising prices 10%",
+      "C": "A 5% rise plus shifting the mix"
+     },
+     "uncertainty_title": "How price-sensitive are your clients?",
+     "unknown_why": "There is no published figure for how salon clients respond to a price rise — not a weak one, none we could use honestly. Every setting on this control is our judgement, so your own test is worth more here than in any other trade.",
+     "unknown_how": "Raise the price of one service, or for new clients only, and count rebookings over six weeks.",
+     "sens_help": {
+      "low": "A loyal client base who book with you personally.",
+      "central": "Our judgement for an appointment business with real switching costs.",
+      "high": "Stress case: clients who treat it as a commodity and shop on price."
+     },
+     "capacity_note": "Your diary has a ceiling, so some of the {unit} a price rise costs you were being turned away anyway. That is why raising prices costs less here than the price sensitivity alone suggests.",
+     "c_card_note": "Depends on how much shifting the mix cuts your cost per appointment (about {red} points here), how much it lifts the average ticket, and how many {unit} leave with the discounts ({loss}%). None is measured from your salon.",
+     "chart_lede": "Clients on a six-week cycle only meet a new price at their next visit, so the reaction arrives over a couple of weeks rather than at once.",
+     "sources_note": "We found no published figure for personal-care services that could be used honestly. Every setting on the price control is our judgement. The retail studies listed are only the reference points our range was positioned against.",
+     "limits_does_not": [
+      "Predict your future bookings.",
+      "Know how your individual clients will behave.",
+      "Model hiring, longer hours or a second chair.",
+      "Model competitors, word of mouth or reputation."
+     ],
+     "intake": {
+      "monthly_revenue": {
+       "label": "About how much do you take in a month?",
+       "hint": "A typical month right now.",
+       "placeholder": "24,000"
+      },
+      "appointments_per_day": {
+       "label": "About how many appointments a day?",
+       "hint": "On an average working day.",
+       "placeholder": "12"
+      },
+      "utilisation_pct": {
+       "label": "How full is the diary?",
+       "hint": "Roughly what share of your slots get booked. 100% means completely full.",
+       "placeholder": "85"
+      },
+      "monthly_variable_costs": {
+       "label": "What do products cost you a month?",
+       "hint": "Colour, product, consumables. NOT wages and NOT rent.",
+       "placeholder": "2,880"
+      },
+      "monthly_fixed_costs": {
+       "label": "Rent, wages and bills a month?",
+       "hint": "Everything that will not change in the next 90 days.",
+       "placeholder": "17,000"
+      },
+      "cash_on_hand": {
+       "label": "How much cash is in the account today?",
+       "hint": "What you could spend right now.",
+       "placeholder": "9,000"
+      },
+      "demand_growth_pct": {
+       "label": "How much busier have you got?",
+       "hint": "More enquiries, requests, a waiting list — roughly how much more.",
+       "placeholder": "25"
+      },
+      "low_margin_share_pct": {
+       "label": "What share of appointments are discounted or earn least?",
+       "hint": "Roughly. A guess is fine — it is tested as an assumption.",
+       "placeholder": "25"
+      },
+      "name": {
+       "label": "What is your salon called?",
+       "hint": "Only used on this page.",
+       "placeholder": "Studio Nine"
+      }
+     },
+     "sweep_labels": {
+      "price_sensitivity": "How price-sensitive your clients are",
+      "utilisation_pct": "How full the diary really is",
+      "demand_growth_pct": "How much busier you have really got",
+      "reduction_points": "How much shifting the mix really saves",
+      "demand_adjustment_speed": "How quickly clients react"
+     },
+     "assumptions": {
+      "monthly_revenue": {
+       "label": "Current monthly sales"
+      },
+      "appointments_per_day": {
+       "label": "Appointments per day"
+      },
+      "utilisation_pct": {
+       "label": "How full the diary is today"
+      },
+      "demand_growth_pct": {
+       "label": "How much busier it has become"
+      },
+      "monthly_variable_costs": {
+       "label": "Monthly product cost"
+      },
+      "monthly_fixed_costs": {
+       "label": "Monthly fixed costs (incl. wages)"
+      },
+      "cash_on_hand": {
+       "label": "Cash available today"
+      },
+      "low_margin_share_pct": {
+       "label": "Share of appointments on discounted / low-margin services"
+      },
+      "price_sensitivity": {
+       "label": "Price sensitivity of clients"
+      },
+      "capacity_per_day": {
+       "label": "Appointment slots available per day"
+      },
+      "capacity_rule": {
+       "label": "What happens when demand exceeds the slots",
+       "text": "appointments served = the smaller of wanted and available"
+      },
+      "demand_adjustment_speed": {
+       "label": "How quickly clients react to a price change",
+       "map": {
+        "slow": "about three weeks to half-react",
+        "central": "about eleven days to half-react",
+        "fast": "about five days to half-react"
+       }
+      },
+      "mix_effectiveness": {
+       "label": "Cost saving from shifting the service mix",
+       "text": "{reduction:g} points off cost per appointment ({mix_effectiveness:.2f} per point of low-margin share)"
+      },
+      "mix_price_gain": {
+       "label": "Price gain from a richer mix",
+       "text": "+{price_gain:.1f}% on the average ticket"
+      },
+      "mix_demand_cost": {
+       "label": "Appointments lost from cutting discounts",
+       "text": "{demand_cost:.1f}% of appointments wanted"
+      },
+      "price_rises": {
+       "label": "Price rises compared",
+       "text": "B: +10%   C: +5%"
+      },
+      "horizon": {
+       "label": "Comparison horizon",
+       "text": "90 days"
+      },
+      "average_ticket": {
+       "label": "Average price per appointment"
+      },
+      "cost_per_appointment": {
+       "label": "Product cost per appointment"
+      }
+     }
+    },
+    "all_wedges": {
+     "cafe": {
+      "business": "Cafe / Restaurant",
+      "business_short": "Cafe",
+      "icon": "☕"
+     },
+     "shop": {
+      "business": "Shop / Online Store",
+      "business_short": "Shop",
+      "icon": "🛍"
+     },
+     "salon": {
+      "business": "Salon / Service Business",
+      "business_short": "Salon",
+      "icon": "✂"
+     }
+    }
+   },
+   "fa": {
+    "dir": "rtl",
+    "label": "فارسی",
+    "numerals": "arabext",
+    "ui": {
+     "product": "مقایسهٔ تصمیم",
+     "tagline": "قبل از تصمیم، پیامد انتخاب‌هایت را ببین.",
+     "principle_1": "همان کسب‌وکار.",
+     "principle_2": "همان فرض‌ها.",
+     "principle_3": "تصمیم متفاوت.",
+     "home_question": "چه کسب‌وکاری داری؟",
+     "home_lede": "نزدیک‌ترین را انتخاب کن. قرار است چند حالت از یک تصمیم واقعی را با عددهای خودت مقایسه کنی.",
+     "home_pick": "انتخاب‌ها را مقایسه کن",
+     "home_footer": "هر گزارش سه حالت از یک تصمیم را روی یک مدل مقایسه می‌کند، تا تفاوت‌ها از خودِ تصمیم بیاید نه از حدس‌های متفاوت. این یک مقایسهٔ سناریو با فرض‌های مشخص است؛ نه پیش‌بینی، نه توصیه.",
+     "journey_1": "کسب‌وکار تو",
+     "journey_2": "چه چیزی تغییر کرده",
+     "journey_3": "انتخاب‌ها را مقایسه کن",
+     "journey_4": "اثر مالی و بده‌بستان‌ها",
+     "journey_5": "چه چیزی می‌تواند جواب را عوض کند",
+     "journey_6": "فرض‌ها",
+     "switch_business": "تغییر نوع کسب‌وکار",
+     "language": "زبان",
+     "demo_badge": "نمونه — {noun} فرضی",
+     "back_home": "همهٔ کسب‌وکارها",
+     "decision_eyebrow": "تصمیم",
+     "your_options": "سه انتخاب تو",
+     "ranked_first": "انتخاب اول",
+     "ranked_first_cases": "انتخاب اول در {n} حالت از {total} حالت بررسی‌شده",
+     "ranked_first_central": "با فرض‌های فعلی، اول است",
+     "per_month": "در ماه",
+     "per_month_after": "بعد از اینکه اوضاع آرام گرفت",
+     "today": "الان",
+     "cash_at_90": "موجودی بعد از ۹۰ روز",
+     "cash_runs_out": "پول روز {day} تمام می‌شود",
+     "orders_change": "{unit}",
+     "not_a_prediction": "مقایسهٔ سناریو با فرض‌های مشخص — نه پیش‌بینی.",
+     "tested_cases_tooltip": "این عدد احتمال موفقیت نیست؛ تعداد حالت‌های مختلفی است که بررسی شده‌اند.",
+     "why_title": "چرا {option} جلو می‌افتد؟",
+     "why_tie": "چرا این‌قدر نزدیک است؟",
+     "why_lose_units": "حدود {pct} از {unit} کم می‌شود،",
+     "why_gain": "اما با فرض‌های فعلی، افزایش قیمت بیشتر از این افت را جبران می‌کند.",
+     "why_gain_capacity": "اما وقت‌هایت از قبل پر بود، پس بیشترشان کسانی بودند که به‌هرحال جا نمی‌شدند.",
+     "why_cost": "و صرفه‌جویی در {cost} بیشتر از این افت را جبران می‌کند.",
+     "why_vs_a": "در مقایسه با {other}، بعد از ۹۰ روز {amount} پول بیشتری در حساب می‌ماند.",
+     "why_gap": "{lead} به اندازهٔ {amount} از {second} جلوتر است.",
+     "chart_eyebrow": "۹۰ روز آینده",
+     "chart_title": "موجودی حساب با هر انتخاب",
+     "chart_alt": "موجودی نقدی در ۹۰ روز برای سه انتخاب. {summary}",
+     "chart_today": "الان",
+     "cash_zero": "صفر",
+     "day": "روز {n}",
+     "cash_derived": "مسیر نقدینگی از نتایج فعالیت کسب‌وکار محاسبه می‌شود؛ خودِ موتور مستقیماً پول نقد را شبیه‌سازی نمی‌کند.",
+     "compare_table": "کنار هم",
+     "row_cash_30": "موجودی بعد از ۳۰ روز",
+     "row_cash_90": "موجودی بعد از ۹۰ روز",
+     "row_net": "سود ماهانه بعد از آرام‌شدن",
+     "row_utilisation": "در پایان چقدر پر می‌شوی",
+     "row_turned_away": "روزانه چند نفر جا نمی‌شوند",
+     "unknown_eyebrow": "مهم‌ترین چیزی که هنوز نمی‌دانیم",
+     "unknown_what": "چه چیزی را نمی‌دانیم",
+     "unknown_why": "چرا مهم است",
+     "unknown_could": "می‌تواند تصمیم را عوض کند؟",
+     "unknown_could_yes": "بله. تنها فرضی است که انتخاب اول را عوض می‌کند.",
+     "unknown_could_yes_multi": "بله. یکی از {n} فرضی است که می‌توانند انتخاب اول را عوض کنند.",
+     "unknown_could_no": "در بازه‌ای که بررسی کردیم، نه. فاصله را کم و زیاد می‌کند، ولی ترتیب را نه.",
+     "unknown_how": "چطور می‌توانی بفهمی",
+     "change_eyebrow": "چه چیزی می‌تواند نتیجه را عوض کند؟",
+     "change_title": "کدام فرض‌ها واقعاً تصمیم را جابه‌جا می‌کنند",
+     "influence_high": "زیاد",
+     "influence_medium": "متوسط",
+     "influence_low": "کم",
+     "changes_ranking": "ترتیب را عوض می‌کند",
+     "changes_size": "فقط فاصله را کم و زیاد می‌کند",
+     "only_one_flips": "فقط یک فرض توانست انتخاب اول را عوض کند: {name}.",
+     "several_flip": "{n} فرض توانستند انتخاب اول را عوض کنند: {names}.",
+     "none_flips": "هیچ‌کدام از چیزهایی که بررسی کردیم انتخاب اول را عوض نکرد.",
+     "try_it": "امتحان کن",
+     "decision_changed": "انتخاب اول عوض شد.",
+     "decision_changed_detail": "با این تنظیم، حالا {option} جلو می‌افتد.",
+     "decision_unchanged": "با این تنظیم هم {option} اول می‌ماند.",
+     "other_assumptions": "فرض‌های دیگری که می‌توانی عوض کنی",
+     "evidence_eyebrow": "این عددها از کجا آمده‌اند",
+     "group_yours": "عددهای کسب‌وکار شما",
+     "group_research": "اطلاعات پژوهشی",
+     "group_assumptions": "فرض‌های مدل",
+     "group_calculated": "نتایج محاسبه‌شده",
+     "no_research": "با تنظیمی که انتخاب کرده‌ای، هیچ عددی اینجا از یک پژوهش منتشرشده نیامده.",
+     "no_research_ever": "هیچ پژوهش منتشرشده‌ای این صنف را به‌اندازهٔ کافی پوشش نمی‌دهد. همهٔ تنظیم‌های اینجا قضاوت ماست.",
+     "does_title": "این ابزار چه کاری می‌کند و چه کاری نمی‌کند",
+     "does": "این کار را می‌کند",
+     "does_not": "این کار را نمی‌کند",
+     "does_1": "چند تصمیم را با یک معیار مقایسه می‌کند.",
+     "does_2": "بده‌بستان مالی هر کدام را نشان می‌دهد.",
+     "does_3": "نشان می‌دهد کدام فرض‌ها مهم‌اند.",
+     "does_4": "نشان می‌دهد چه چیزی می‌تواند ترتیب را عوض کند.",
+     "cta_eyebrow": "نوبت توست",
+     "cta_demo": "با کسب‌وکار خودت امتحان کن",
+     "cta_again": "یک تصمیم دیگر را مقایسه کن",
+     "cta_lede": "عددهایت در همین صفحه می‌ماند. هیچ‌جا فرستاده نمی‌شود.",
+     "cta_run": "انتخاب‌هایم را مقایسه کن",
+     "cta_reset": "برگرد به نمونه",
+     "cta_done": "انجام شد — این صفحه حالا با عددهای توست.",
+     "group_about": "دربارهٔ کسب‌وکارت",
+     "group_costs": "هزینه‌هایت",
+     "group_capacity": "ظرفیتت",
+     "group_changed": "چه چیزی تغییر کرده",
+     "group_mix": "چه چیزی می‌فروشی",
+     "err_numbers": "لطفاً همهٔ عددها را پر کن.",
+     "err_cost_high": "با این عددها هنوز نمی‌توانیم گزینه‌ها را درست مقایسه کنیم.",
+     "err_cost_high_why": "هزینه‌ات برابر یا بیشتر از فروشت است، پس حاشیه‌ای نمی‌ماند که مقایسه شود. عدد هزینه را یک بار دیگر ببین.",
+     "err_positive": "این‌ها باید بیشتر از صفر باشند: {names}.",
+     "err_utilisation": "پر بودن وقت‌ها باید بین ۱٪ تا ۱۰۰٪ باشد.",
+     "err_failed": "در مقایسه مشکلی پیش آمد. هیچ عددی نشان نمی‌دهیم، چون عدد نصفه‌ونیمه از هیچ بدتر است.",
+     "how_title": "این محاسبه چطور انجام شده؟",
+     "how_open": "روش، منابع و قابلیت بازتولید",
+     "advanced": "پیشرفته",
+     "currency_note": "همهٔ عددها به همان واحد پولی است که خودت وارد کرده‌ای.",
+     "klass_labels": {
+      "Customer input": "عددهای خودت",
+      "External research": "پژوهش بیرونی",
+      "Assumption": "فرض مدل",
+      "Derived": "محاسبه‌شده"
+     },
+     "setting_labels": {
+      "low": "کم",
+      "central": "متوسط",
+      "high": "زیاد",
+      "slow": "کند",
+      "fast": "سریع"
+     },
+     "value_of_sales": "{v} ({p}٪ از فروش)",
+     "pct_sign": "٪",
+     "per_day": "در روز",
+     "whoami_cash": "پول نقد",
+     "whoami_capacity": "ظرفیت در روز",
+     "elasticity_plain": "حدود {v}٪ از {unit} به ازای هر ۱٪ گرانی",
+     "render_failed": "در ترسیم این صفحه خطایی رخ داد. ممکن است عددهای نمایش‌داده‌شده به‌روز نباشند — صفحه را دوباره باز کن.",
+     "why_demand_grows": "تقاضا با این قیمت همچنان رشد می‌کند،",
+     "why_demand_holds": "تقاضا با این قیمت تقریباً ثابت می‌ماند،",
+     "why_capacity_full": "و ظرفیتت از قبل پر بود، پس سود از قیمت می‌آید نه از کار بیشتر.",
+     "why_price_through": "و افزایش قیمت تقریباً مستقیم به چیزی که برایت می‌ماند اضافه می‌شود."
+    },
+    "wedge": {
+     "business": "سالن / کسب‌وکار خدماتی",
+     "business_short": "سالن",
+     "noun": "سالن",
+     "icon": "✂",
+     "question": "وقت‌هایم دارد پر می‌شود. وقت افزایش قیمت است؟",
+     "page_title": "تصمیم قیمت در سالن — مقایسهٔ سه انتخاب",
+     "headline": "وقت‌هایت {shock}٪ شلوغ‌تر شده. وقتش است قیمت را بالا ببری؟",
+     "hero_lede": "سه راه واکنش، روی یک مدل از سالن خودت و با همان فرض‌ها مقایسه شده‌اند. تنها چیزی که بینشان فرق می‌کند، خودِ تصمیم است.",
+     "what_changed": "تقاضا برای نوبت {shock}٪ بیشتر شده، و وقت‌های تو سقف دارد.",
+     "unit_word": "نوبت",
+     "unit_word_singular": "نوبت",
+     "cost_word": "هزینهٔ هر نوبت",
+     "world_names": {
+      "A": "قیمت را نگه دار، بیشتر کار بگیر",
+      "B": "قیمت را ۱۰٪ بالا ببر",
+      "C": "قیمت ۵٪ بالا + تغییر ترکیب خدمات"
+     },
+     "world_short": {
+      "A": "نگه‌داشتن قیمت",
+      "B": "۱۰٪ بالا",
+      "C": "۵٪ بالا + تغییر ترکیب"
+     },
+     "world_verdict_labels": {
+      "A": "نگه‌داشتن قیمت و کار گرفتن بیشتر",
+      "B": "۱۰٪ بالا بردن قیمت",
+      "C": "۵٪ بالا بردن قیمت همراه با تغییر ترکیب خدمات"
+     },
+     "uncertainty_title": "مشتری‌های تو چقدر به قیمت حساس‌اند؟",
+     "unknown_why": "هیچ عدد منتشرشده‌ای دربارهٔ واکنش مشتری سالن به گران‌شدن وجود ندارد — نه عدد ضعیف، اصلاً چیزی که بشود صادقانه استفاده کرد. همهٔ تنظیم‌های این کنترل قضاوت ماست، پس آزمایش خودت اینجا از هر صنف دیگری ارزشمندتر است.",
+     "unknown_how": "قیمت یک خدمت را، یا فقط برای مشتری‌های تازه، بالا ببر و شش هفته ببین چند نفر دوباره نوبت می‌گیرند.",
+     "sens_help": {
+      "low": "مشتری‌های وفادار که با خودِ تو قرار می‌گذارند.",
+      "central": "قضاوت ما برای کسب‌وکار نوبتی که عوض‌کردنش برای مشتری هزینه دارد.",
+      "high": "بدترین حالت: مشتری‌هایی که فقط قیمت برایشان مهم است."
+     },
+     "capacity_note": "وقت‌های تو سقف دارد، پس بخشی از {unit}هایی که با گران‌شدن از دست می‌دهی، کسانی بودند که به‌هرحال جا نمی‌شدند. برای همین گران‌کردن اینجا کمتر از چیزی که حساسیت قیمتی نشان می‌دهد هزینه دارد.",
+     "c_card_note": "به این بستگی دارد که تغییر ترکیب خدمات چقدر از هزینهٔ هر نوبت کم می‌کند (اینجا حدود {red} واحد)، چقدر میانگین فاکتور را بالا می‌برد، و چند {unit} همراه تخفیف‌ها می‌رود ({loss}٪). هیچ‌کدام از سالن تو اندازه‌گیری نشده.",
+     "chart_lede": "مشتری‌ای که هر شش هفته می‌آید، قیمت جدید را تازه در نوبت بعدی می‌بیند؛ برای همین واکنش در طول چند هفته می‌رسد، نه یک‌باره.",
+     "sources_note": "هیچ عدد منتشرشده‌ای برای خدمات زیبایی و مراقبت پیدا نکردیم که بشود صادقانه استفاده کرد. همهٔ تنظیم‌های کنترل قیمت قضاوت ماست. پژوهش‌های خرده‌فروشی فقط نقطهٔ مرجعی هستند که بازهٔ ما نسبت به آن‌ها جانمایی شده.",
+     "limits_does_not": [
+      "نوبت‌های آیندهٔ تو را پیش‌بینی کند.",
+      "بداند تک‌تک مشتری‌هایت چه می‌کنند.",
+      "استخدام، ساعت کاری بیشتر یا صندلی دوم را مدل کند.",
+      "رقبا، تبلیغ دهان‌به‌دهان یا اعتبار تو را مدل کند."
+     ],
+     "intake": {
+      "monthly_revenue": {
+       "label": "تقریباً ماهی چقدر درآمد داری؟",
+       "hint": "یک ماه معمولی در همین روزها.",
+       "placeholder": "۲۴٬۰۰۰"
+      },
+      "appointments_per_day": {
+       "label": "روزی تقریباً چند نوبت داری؟",
+       "hint": "در یک روز کاری معمولی.",
+       "placeholder": "۱۲"
+      },
+      "utilisation_pct": {
+       "label": "وقت‌هایت چقدر پر است؟",
+       "hint": "تقریباً چند درصد از وقت‌های خالی‌ات رزرو می‌شود. ۱۰۰٪ یعنی کاملاً پر.",
+       "placeholder": "۸۵"
+      },
+      "monthly_variable_costs": {
+       "label": "مواد مصرفی ماهی چقدر خرج برمی‌دارد؟",
+       "hint": "رنگ، مواد و لوازم مصرفی. نه حقوق و نه اجاره.",
+       "placeholder": "۲٬۸۸۰"
+      },
+      "monthly_fixed_costs": {
+       "label": "اجاره و حقوق و قبض‌ها ماهی چقدر است؟",
+       "hint": "هر چیزی که در ۹۰ روز آینده تغییر نمی‌کند.",
+       "placeholder": "۱۷٬۰۰۰"
+      },
+      "cash_on_hand": {
+       "label": "الان چقدر پول نقد داری؟",
+       "hint": "چیزی که همین حالا می‌توانی خرج کنی.",
+       "placeholder": "۹٬۰۰۰"
+      },
+      "demand_growth_pct": {
+       "label": "چقدر شلوغ‌تر شده‌ای؟",
+       "hint": "تماس بیشتر، درخواست بیشتر، لیست انتظار — تقریباً چقدر بیشتر.",
+       "placeholder": "۲۵"
+      },
+      "low_margin_share_pct": {
+       "label": "چند درصد نوبت‌ها تخفیف‌دار یا کم‌سود است؟",
+       "hint": "تقریبی. حدس هم کافی است — به‌عنوان فرض بررسی می‌شود.",
+       "placeholder": "۲۵"
+      },
+      "name": {
+       "label": "اسم سالنت چیست؟",
+       "hint": "فقط روی همین صفحه استفاده می‌شود.",
+       "placeholder": "استودیو نه"
+      }
+     },
+     "sweep_labels": {
+      "price_sensitivity": "حساسیت مشتری به قیمت",
+      "utilisation_pct": "وقت‌ها واقعاً چقدر پر است",
+      "demand_growth_pct": "واقعاً چقدر شلوغ‌تر شده‌ای",
+      "reduction_points": "تغییر ترکیب خدمات واقعاً چقدر صرفه‌جویی دارد",
+      "demand_adjustment_speed": "سرعت واکنش مشتری"
+     },
+     "assumptions": {
+      "monthly_revenue": {
+       "label": "فروش ماهانهٔ فعلی"
+      },
+      "appointments_per_day": {
+       "label": "نوبت در روز"
+      },
+      "utilisation_pct": {
+       "label": "امروز دفتر نوبت چقدر پر است"
+      },
+      "demand_growth_pct": {
+       "label": "چقدر شلوغ‌تر شده"
+      },
+      "monthly_variable_costs": {
+       "label": "هزینهٔ ماهانهٔ مواد مصرفی"
+      },
+      "monthly_fixed_costs": {
+       "label": "هزینه‌های ثابت ماهانه (با حقوق)"
+      },
+      "cash_on_hand": {
+       "label": "پول نقد موجود امروز"
+      },
+      "low_margin_share_pct": {
+       "label": "سهم نوبت‌های تخفیف‌دار یا کم‌سود"
+      },
+      "price_sensitivity": {
+       "label": "حساسیت مشتری به قیمت"
+      },
+      "capacity_per_day": {
+       "label": "نوبت‌های قابل ارائه در روز"
+      },
+      "capacity_rule": {
+       "label": "وقتی تقاضا از ظرفیت بیشتر شود چه می‌شود",
+       "text": "نوبت‌های انجام‌شده = کمترینِ تقاضا و ظرفیت"
+      },
+      "demand_adjustment_speed": {
+       "label": "سرعت واکنش مشتری به تغییر قیمت",
+       "map": {
+        "slow": "حدود سه هفته تا نصف واکنش",
+        "central": "حدود یازده روز تا نصف واکنش",
+        "fast": "حدود پنج روز تا نصف واکنش"
+       }
+      },
+      "mix_effectiveness": {
+       "label": "صرفه‌جویی از تغییر ترکیب خدمات",
+       "text": "{reduction:g} واحد کاهش در هزینهٔ هر نوبت ({mix_effectiveness:.2f} به ازای هر واحد سهم کم‌سود)"
+      },
+      "mix_price_gain": {
+       "label": "افزایش درآمد از ترکیب پُرسودتر",
+       "text": "+{price_gain:.1f}٪ روی میانگین مبلغ هر نوبت"
+      },
+      "mix_demand_cost": {
+       "label": "نوبت‌های از‌دست‌رفته با حذف تخفیف‌ها",
+       "text": "{demand_cost:.1f}٪ از نوبت‌های درخواستی"
+      },
+      "price_rises": {
+       "label": "افزایش قیمت‌های مقایسه‌شده",
+       "text": "ب: +۱۰٪   پ: +۵٪"
+      },
+      "horizon": {
+       "label": "بازهٔ مقایسه",
+       "text": "۹۰ روز"
+      },
+      "average_ticket": {
+       "label": "میانگین مبلغ هر نوبت"
+      },
+      "cost_per_appointment": {
+       "label": "هزینهٔ مواد مصرفی هر نوبت"
+      }
+     }
+    },
+    "all_wedges": {
+     "cafe": {
+      "business": "کافه / رستوران",
+      "business_short": "کافه",
+      "icon": "☕"
+     },
+     "shop": {
+      "business": "فروشگاه / آنلاین‌شاپ",
+      "business_short": "فروشگاه",
+      "icon": "🛍"
+     },
+     "salon": {
+      "business": "سالن / کسب‌وکار خدماتی",
+      "business_short": "سالن",
+      "icon": "✂"
+     }
+    }
+   }
+  }
+ },
  "module_id": "salon_capacity_pricing_v1",
  "module_semantic_hash": "048d5f683ef14f4c211fe05e7d1bd6522eb4e3f2eb2162a3eacce45249a3c475",
  "shared_fingerprint": "a96b478a7981ee621206327d536847c68590ab0e96f6395b2924459d19d6bb47",

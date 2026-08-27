@@ -1,689 +1,1019 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Decision Comparison</title>
+<title>Decision Compare</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  --paper:#F7F6F1; --paper-2:#EFEEE7; --ink:#1E2A30; --muted:#5B6B72; --rule:#DFE2DB; --grid:#E8EAE4;
-  --a:#6B7B84; --b:#1F7A5C; --c:#A97A12; --crit:#B5463A;
-  --b-soft:rgba(31,122,92,.09); --c-soft:rgba(169,122,18,.10); --a-soft:rgba(107,123,132,.10);
-  --card:#FFFFFF; --focus:#1F7A5C; --shadow:0 1px 2px rgba(30,42,48,.06),0 8px 24px -12px rgba(30,42,48,.12);
+  --paper:#F7F5F0; --raised:#FFFFFF; --sunk:#EFEDE6; --ink:#1D2A2F; --muted:#5D6E75; --rule:#E0DED5;
+  --grid:#E9E7DF; --a:#7A8A91; --b:#1E7A5E; --c:#B07C1E; --crit:#B4453B; --focus:#1E7A5E;
+  --a-soft:rgba(122,138,145,.10); --b-soft:rgba(30,122,94,.09); --c-soft:rgba(176,124,30,.10);
+  --shadow-1:0 1px 2px rgba(29,42,47,.05);
+  --shadow-2:0 1px 2px rgba(29,42,47,.05),0 10px 30px -14px rgba(29,42,47,.16);
+  --shadow-3:0 2px 4px rgba(29,42,47,.06),0 20px 44px -18px rgba(29,42,47,.22);
   --display:"Fraunces",Georgia,"Times New Roman",serif;
   --body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r-sm:10px; --r-md:14px; --r-lg:20px;
 }
-@media (prefers-color-scheme: dark){
+html[dir="rtl"]{
+  --display:"Vazirmatn","Segoe UI",system-ui,sans-serif;
+  --body:"Vazirmatn","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --paper:#15191B; --paper-2:#1C2124; --ink:#E8EAE4; --muted:#9AA6AB; --rule:#2B3236; --grid:#242B2F;
-    --a:#8E9CA4; --b:#4FB58E; --c:#D3A230; --crit:#E07A6E;
-    --b-soft:rgba(79,181,142,.13); --c-soft:rgba(211,162,48,.14); --a-soft:rgba(142,156,164,.14);
-    --card:#1C2124; --focus:#4FB58E; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+    --paper:#14181A; --raised:#1B2022; --sunk:#222829; --ink:#E9EAE5; --muted:#9BA7AC; --rule:#2A3134;
+    --grid:#232A2C; --a:#8FA0A7; --b:#4FB58E; --c:#D6A536; --crit:#E07A6E; --focus:#4FB58E;
+    --a-soft:rgba(143,160,167,.14); --b-soft:rgba(79,181,142,.13); --c-soft:rgba(214,165,54,.14);
+    --shadow-1:0 1px 2px rgba(0,0,0,.3);
+    --shadow-2:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+    --shadow-3:0 2px 4px rgba(0,0,0,.35),0 20px 44px -18px rgba(0,0,0,.7);
   }
 }
 :root[data-theme="dark"]{
-  --paper:#15191B; --paper-2:#1C2124; --ink:#E8EAE4; --muted:#9AA6AB; --rule:#2B3236; --grid:#242B2F;
-  --a:#8E9CA4; --b:#4FB58E; --c:#D3A230; --crit:#E07A6E;
-  --b-soft:rgba(79,181,142,.13); --c-soft:rgba(211,162,48,.14); --a-soft:rgba(142,156,164,.14);
-  --card:#1C2124; --focus:#4FB58E; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+  --paper:#14181A; --raised:#1B2022; --sunk:#222829; --ink:#E9EAE5; --muted:#9BA7AC; --rule:#2A3134;
+  --grid:#232A2C; --a:#8FA0A7; --b:#4FB58E; --c:#D6A536; --crit:#E07A6E; --focus:#4FB58E;
+  --a-soft:rgba(143,160,167,.14); --b-soft:rgba(79,181,142,.13); --c-soft:rgba(214,165,54,.14);
+  --shadow-1:0 1px 2px rgba(0,0,0,.3);
+  --shadow-2:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+  --shadow-3:0 2px 4px rgba(0,0,0,.35),0 20px 44px -18px rgba(0,0,0,.7);
 }
 *{box-sizing:border-box}
-.options>*,.groups>*,.cond>*,.limits>*,.stab>*,.fields>*,.grp li>*{min-width:0}
-html{scroll-behavior:smooth}
+.options>*,.groups>*,.limits>*,.fields>*,.grp li>*,.unknown-grid>*,.influence li>*{min-width:0}
 html,body{overflow-x:hidden}
-@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important}}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;font-variant-numeric:tabular-nums}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;
+     line-height:1.55;font-variant-numeric:tabular-nums;-webkit-text-size-adjust:100%}
+html[dir="rtl"] body{font-size:16.5px;line-height:1.85}
 a{color:inherit}
-.wrap{max-width:960px;margin:0 auto;padding:0 24px}
-@media (max-width:600px){.wrap{padding:0 18px}}
-p{max-width:62ch;margin:0}
-h1,h2,h3{text-wrap:balance;margin:0}
-h1{font-family:var(--display);font-weight:500;font-size:clamp(34px,5vw,56px);line-height:1.06;letter-spacing:-.015em}
-h2{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.2vw,36px);line-height:1.15;letter-spacing:-.01em}
+p{margin:0;max-width:64ch}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(31px,5vw,52px);line-height:1.07;letter-spacing:-.015em}
+html[dir="rtl"] h1{font-weight:700;letter-spacing:0;line-height:1.4}
+h2{font-family:var(--display);font-weight:500;font-size:clamp(23px,3.1vw,33px);line-height:1.18;letter-spacing:-.01em}
+html[dir="rtl"] h2{font-weight:700;letter-spacing:0;line-height:1.5}
 h3{font-size:17px;font-weight:600}
-.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+@media (max-width:600px){.wrap{padding:0 16px}}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+html[dir="rtl"] .eyebrow{letter-spacing:0;font-size:13px;text-transform:none}
 .muted{color:var(--muted)} .small{font-size:14px} .neg{color:var(--crit)}
 button,select,input{font:inherit;color:inherit}
-button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-.wA{--wc:var(--a);--ws:var(--a-soft)} .wB{--wc:var(--b);--ws:var(--b-soft)} .wC{--wc:var(--c);--ws:var(--c-soft)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
+.wA{--wc:var(--a)} .wB{--wc:var(--b)} .wC{--wc:var(--c)}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
-/* top bar */
-.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
-.top .wrap{display:flex;align-items:center;gap:12px;min-height:54px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
-.brand{font-weight:700;letter-spacing:.01em}
-.badge{font-size:12px;font-weight:600;color:var(--c);border:1px solid currentColor;border-radius:999px;padding:2px 10px;white-space:nowrap}
-.top .cta{margin-left:auto;text-decoration:none;font-size:14px;font-weight:600;background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:999px;white-space:nowrap}
+.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--paper) 88%,transparent);
+     backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:10px;min-height:58px;flex-wrap:wrap;padding-block:8px}
+.mark{font-weight:700;white-space:nowrap}
+.mark a{text-decoration:none}
+.bizpick{display:flex;align-items:center;background:var(--sunk);border:1px solid var(--rule);border-radius:999px}
+.bizpick select{background:transparent;border:0;padding:10px 14px;border-radius:999px;font-size:14px;font-weight:600;min-height:44px}
+.badge{font-size:12px;font-weight:600;color:var(--c);border:1px solid currentColor;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.spacer{margin-inline-start:auto}
+.langs{display:flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden;background:var(--sunk)}
+.langs button{border:0;background:transparent;padding:10px 15px;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted);min-height:44px}
+.langs button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 
-/* sections */
-section{padding:56px 0}
+section{padding:52px 0}
 section+section{border-top:1px solid var(--rule)}
-.sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:26px}
+.sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
 .lede{font-size:19px;color:var(--muted)}
-@media (max-width:600px){section{padding:40px 0}}
+@media (max-width:600px){section{padding:38px 0}.lede{font-size:17px}}
 
-/* hero */
-#decision{padding-top:64px}
-#decision .lede{margin-top:12px;font-size:20px;max-width:54ch}
-.cafe-name{margin-top:18px;font-size:14px;color:var(--muted)}
+#decision{padding-top:42px}
+.changed{display:inline-flex;align-items:center;gap:9px;background:var(--c-soft);border-radius:999px;
+         padding:7px 15px;font-size:14.5px;font-weight:600;margin-bottom:18px;max-width:100%}
+.changed .dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:0 0 auto}
+#decision .lede{margin-top:14px;max-width:56ch}
+.whoami{margin-top:16px;font-size:14px;color:var(--muted)}
 
-/* option cards */
 .options{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
-@media (max-width:820px){.options{grid-template-columns:1fr}}
-.opt{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:22px 22px 20px;display:flex;flex-direction:column;gap:14px;position:relative;box-shadow:var(--shadow)}
-.opt.lead{border-color:var(--wc);box-shadow:0 0 0 2px var(--wc) inset,var(--shadow)}
-.opt .letter{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;background:var(--wc);font-size:15px}
-.opt .name{font-size:20px;font-weight:600;line-height:1.2;margin-top:2px;min-height:2.4em}
-.opt .lead-tag{position:absolute;top:-12px;left:18px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:var(--wc);padding:4px 10px;border-radius:999px}
-.opt .impact{margin-top:6px}
-.opt .impact .v{font-size:38px;font-weight:600;line-height:1;letter-spacing:-.01em}
-.opt .impact .l{font-size:13px;color:var(--muted);margin-top:6px}
-.opt .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;border-top:1px solid var(--rule);padding-top:14px}
-.opt .facts div span{display:block}
-.opt .facts .v{font-size:20px;font-weight:600;line-height:1.1}
-.opt .facts .l{font-size:12px;color:var(--muted);margin-top:3px}
-.opt .note{font-size:13px;color:var(--muted);border-top:1px solid var(--rule);padding-top:12px;line-height:1.4}
-.opt .note b{color:var(--c)}
-.lead-line{margin-top:20px;font-size:18px;max-width:64ch}
-.lead-line b{color:var(--b)}
-.scenario{margin-top:12px;font-size:14px;color:var(--muted)}
+@media (max-width:860px){.options{grid-template-columns:1fr;gap:16px}}
+.opt{position:relative;background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-lg);
+     padding:26px 22px 22px;display:flex;flex-direction:column;gap:15px;box-shadow:var(--shadow-2)}
+.opt.lead{border-color:var(--wc);box-shadow:0 0 0 2px var(--wc) inset,var(--shadow-3)}
+.opt-head{display:flex;align-items:center;gap:11px}
+.letter{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;
+        color:#fff;background:var(--wc);font-size:15px;flex:0 0 auto;font-family:"Source Sans 3",sans-serif}
+.opt .name{font-size:19.5px;font-weight:600;line-height:1.3}
+html[dir="rtl"] .opt .name{font-size:18px;line-height:1.6}
+/* Room for two lines whether or not this card needs them, so every card's figures sit on
+   the same line as its neighbours' and the three can be read across. */
+.opt-head{min-height:calc(2 * 1.3 * 19.5px)}
+html[dir="rtl"] .opt-head{min-height:calc(2 * 1.6 * 18px)}
+@media (max-width:720px){.opt-head{min-height:0}}
+.lead-tag{position:absolute;top:-13px;inset-inline-start:20px;font-size:11px;font-weight:700;
+          letter-spacing:.07em;text-transform:uppercase;color:#fff;background:var(--wc);
+          padding:5px 12px;border-radius:999px;box-shadow:var(--shadow-1)}
+html[dir="rtl"] .lead-tag{letter-spacing:0;font-size:12px;text-transform:none}
+.money{font-size:clamp(31px,4.2vw,39px);font-weight:600;line-height:1;letter-spacing:-.015em}
+html[dir="rtl"] .money{letter-spacing:0}
+.money-l{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.45}
+.rowline{display:flex;align-items:baseline;gap:8px;border-top:1px solid var(--rule);padding-top:13px;flex-wrap:wrap}
+.rowline .v{font-size:20px;font-weight:600} .rowline .l{font-size:13.5px;color:var(--muted)}
+.robust{font-size:13.5px;color:var(--muted);line-height:1.5;border-top:1px solid var(--rule);padding-top:13px}
+.robust b{color:var(--wc);font-weight:700}
+.opt details summary{font-size:13.5px;color:var(--muted);cursor:pointer;font-weight:600;list-style:none}
+.opt details summary::-webkit-details-marker{display:none}
+.opt details summary::after{content:" +"} .opt details[open] summary::after{content:" −"}
+.opt details .inner{font-size:13.5px;color:var(--muted);margin-top:9px;line-height:1.55}
 
-/* stability */
-.stab{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
-@media (max-width:820px){.stab{grid-template-columns:1fr}}
-.count{font-family:var(--display);font-size:clamp(56px,8vw,84px);font-weight:500;line-height:1;letter-spacing:-.02em;color:var(--b)}
-.count small{font-size:.42em;color:var(--muted);font-family:var(--body);font-weight:600;letter-spacing:0}
-.count-l{font-size:17px;margin-top:8px;max-width:40ch}
-.not-prob{display:inline-block;margin-top:14px;font-size:13px;font-weight:600;color:var(--ink);background:var(--paper-2);border-radius:999px;padding:5px 12px}
-.uncert{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:22px;box-shadow:var(--shadow)}
-.uncert .eyebrow{color:var(--c)}
-.uncert h3{font-size:22px;font-family:var(--display);font-weight:500;margin-top:6px;line-height:1.2}
-.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:18px;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--paper-2)}
-.seg button{border:0;background:transparent;padding:12px 8px;font-weight:600;font-size:15px;cursor:pointer;color:var(--muted);min-height:48px}
-.seg button.on{background:var(--ink);color:var(--paper)}
-.seg button+button{border-left:1px solid var(--rule)}
-.seg-help{font-size:14px;color:var(--muted);margin-top:10px;min-height:42px}
-.seg-effect{margin-top:14px;font-size:16px;padding:12px 14px;border-radius:10px;background:var(--paper-2)}
-.seg-effect b{color:var(--c)}
-.seg-effect.steady b{color:var(--b)}
+.why{margin-top:32px;background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);
+     padding:22px 24px;box-shadow:var(--shadow-1);max-width:76ch}
+.why h3{font-family:var(--display);font-weight:500;font-size:21px;margin-bottom:9px}
+html[dir="rtl"] .why h3{font-weight:700}
+.why p{font-size:17px;max-width:none}
+.scenario{margin-top:16px;font-size:13.5px;color:var(--muted)}
 
-/* what could change */
-.cond{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
-@media (max-width:720px){.cond{grid-template-columns:1fr}}
-.cond>div{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
-.cond .k{font-size:13px;color:var(--muted);font-weight:600}
-.cond .r{font-size:19px;margin-top:6px;line-height:1.3}
-.cond .r b{color:var(--wc)}
-.next{margin-top:18px;padding:18px 20px;border-left:3px solid var(--c);background:var(--c-soft);border-radius:0 10px 10px 0;max-width:70ch}
-.next .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
-.next p{margin-top:6px}
-.others{margin-top:20px;font-size:14px;color:var(--muted);max-width:70ch}
-details.adv{margin-top:14px;border:1px solid var(--rule);border-radius:12px;background:var(--card)}
-details.adv summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:15px}
-details.adv .inner{padding:4px 16px 16px}
-.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.chart-wrap{background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);
+            padding:18px 14px 10px;position:relative;box-shadow:var(--shadow-1)}
+.chart-wrap svg{width:100%;height:auto;display:block;touch-action:pan-y;direction:ltr}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;
+     padding:9px 11px;border-radius:var(--r-sm);display:none;min-width:160px;box-shadow:var(--shadow-2);z-index:2}
+.tip b{display:block;margin-bottom:5px}
+.tip span{display:flex;justify-content:space-between;gap:12px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin-top:10px;padding:0 4px}
+.legend span::before{content:"";display:inline-block;width:15px;height:3px;border-radius:2px;
+                     margin-inline-end:7px;vertical-align:middle;background:var(--wc)}
+.note{font-size:13.5px;color:var(--muted);margin-top:14px;max-width:72ch}
+.mini{margin-top:24px;border:1px solid var(--rule);border-radius:var(--r-md);overflow:hidden;background:var(--raised)}
+.mini table{width:100%;border-collapse:collapse;font-size:15px}
+.mini th,.mini td{padding:12px 14px;text-align:start;border-bottom:1px solid var(--rule)}
+.mini tr:last-child th,.mini tr:last-child td{border-bottom:0}
+.mini thead th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--sunk)}
+/* A column header sits over its own figures, and follows them when the writing direction
+   flips the figures but not the table. */
+.mini thead th:not(:first-child){text-align:end}
+html[dir="rtl"] .mini thead th:not(:first-child){text-align:start}
+html[dir="rtl"] .mini thead th{letter-spacing:0;text-transform:none}
+.mini td{text-align:end;font-weight:600}
+.mini th[scope="row"]{font-weight:400;color:var(--muted)}
+@media (max-width:600px){.mini table{font-size:14px}.mini th,.mini td{padding:10px 8px}}
+
+.unknown{background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-lg);
+         box-shadow:var(--shadow-2);overflow:hidden}
+.unknown-top{padding:26px 26px 22px;border-bottom:1px solid var(--rule);background:var(--c-soft)}
+.unknown-top .eyebrow{color:var(--c)}
+.unknown-top h2{margin-top:8px;font-size:clamp(21px,2.6vw,28px)}
+.unknown-grid{display:grid;grid-template-columns:1fr 1fr}
+@media (max-width:720px){.unknown-grid{grid-template-columns:1fr}}
+.unknown-grid>div{padding:22px 26px;border-bottom:1px solid var(--rule)}
+.unknown-grid>div:nth-child(odd){border-inline-end:1px solid var(--rule)}
+@media (max-width:720px){.unknown-grid>div:nth-child(odd){border-inline-end:0}}
+.unknown-grid .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+html[dir="rtl"] .unknown-grid .k{letter-spacing:0;font-size:13px;text-transform:none}
+.unknown-grid p{font-size:15.5px;max-width:none}
+.unknown-cta{padding:20px 26px}
+
+.influence{list-style:none;margin:0;padding:0;border:1px solid var(--rule);border-radius:var(--r-md);
+           overflow:hidden;background:var(--raised)}
+.influence li{display:flex;align-items:center;gap:14px;padding:15px 18px;border-bottom:1px solid var(--rule)}
+.influence li:last-child{border-bottom:0}
+.influence .nm{flex:1;font-size:15.5px}
+.influence .eff{font-size:12.5px;color:var(--muted);display:block;margin-top:3px}
+.pill{font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;white-space:nowrap;background:var(--sunk);color:var(--muted)}
+.pill.high{background:var(--c-soft);color:var(--c)} .pill.med{background:var(--a-soft);color:var(--muted)}
+.flipline{margin-top:20px;font-size:17px;max-width:72ch}
+.control{margin-top:26px;background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);
+         padding:22px;box-shadow:var(--shadow-1)}
+.control h3{font-size:17.5px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;border:1px solid var(--rule);
+     border-radius:var(--r-sm);overflow:hidden;background:var(--sunk)}
+.seg button{border:0;background:transparent;padding:13px 8px;font-weight:600;font-size:15px;cursor:pointer;color:var(--muted);min-height:50px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button+button{border-inline-start:1px solid var(--rule)}
+.seg-help{font-size:14px;color:var(--muted);margin-top:11px;min-height:2.8em}
+.effect{margin-top:14px;font-size:16px;padding:13px 15px;border-radius:var(--r-sm);background:var(--sunk)}
+.effect.changed-now{background:var(--c-soft);border-inline-start:3px solid var(--c)}
+details.adv{margin-top:16px;border:1px solid var(--rule);border-radius:var(--r-md);background:var(--raised)}
+details.adv summary{cursor:pointer;padding:14px 18px;font-weight:600;font-size:15px}
+details.adv .inner{padding:2px 18px 18px}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
 .ctl label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:5px}
-.ctl select{width:100%;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);min-height:44px}
-.snap{font-size:13px;color:var(--muted);margin-top:10px}
+.ctl select{width:100%;padding:11px 12px;border:1px solid var(--rule);border-radius:var(--r-sm);background:var(--paper);min-height:46px}
 
-/* chart */
-.chart-wrap{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 18px 12px;position:relative;box-shadow:var(--shadow)}
-.chart-wrap svg{width:100%;height:auto;display:block;touch-action:pan-y}
-.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:8px 10px;border-radius:8px;display:none;min-width:150px;box-shadow:var(--shadow);z-index:2}
-.tip b{display:block;margin-bottom:4px}
-.tip span{display:flex;justify-content:space-between;gap:10px}
-.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin-top:8px;padding:0 4px}
-.legend span::before{content:"";display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:7px;vertical-align:middle;background:var(--wc)}
-.chart-note{font-size:14px;color:var(--muted);margin-top:14px;max-width:70ch}
-.mini{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:0;margin-top:22px;font-size:15px}
-.mini div{padding:10px 8px;border-bottom:1px solid var(--rule)}
-.mini .h{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.mini .n{text-align:right;font-weight:600}
-@media (max-width:600px){.mini{font-size:14px} .mini div{padding:9px 4px}}
-.horizon{font-size:14px;color:var(--muted);margin-top:16px;max-width:70ch}
-
-/* sources */
-.groups{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.groups{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 @media (max-width:720px){.groups{grid-template-columns:1fr}}
-.grp{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
-.grp .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.grp{background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-1)}
+.grp .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+html[dir="rtl"] .grp .k{letter-spacing:0;font-size:13px;text-transform:none}
 .grp.yours .k{color:var(--b)} .grp.research .k{color:#2F5DA8} .grp.assume .k{color:var(--c)} .grp.calc .k{color:var(--muted)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .grp.research .k{color:#7FA7E6}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .grp.research .k{color:#7FA7E6}}
 :root[data-theme="dark"] .grp.research .k{color:#7FA7E6}
 .grp ul{list-style:none;margin:0;padding:0}
-.grp li{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-top:1px solid var(--rule);font-size:15px}
+.grp li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;padding:9px 0;border-top:1px solid var(--rule);font-size:15px}
 .grp li:first-child{border-top:0}
-.grp li>div{flex:1 1 auto}
-.grp li .v{font-weight:600;text-align:right;flex:0 0 auto;max-width:55%;overflow-wrap:anywhere}
-.grp li .s{display:block;font-size:13px;color:var(--muted);margin-top:2px}
-.grp .flag{font-size:13px;color:var(--c);margin-top:10px}
-.src-note{font-size:14px;color:var(--muted);margin-top:16px;max-width:70ch}
+.grp li>div{flex:1 1 60%;min-width:0}
+.grp li .v{font-weight:600;text-align:end;flex:0 1 auto;max-width:100%;overflow-wrap:anywhere}
+.grp li .s{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.grp .flag{font-size:13px;color:var(--muted);margin-top:12px}
+.grp .none{font-size:14px;color:var(--muted);margin:0}
 
-/* limits */
 .limits{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:720px){.limits{grid-template-columns:1fr}}
-.limits div{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 20px}
-.limits h3{margin-bottom:8px}
-.limits ul{margin:0;padding-left:20px} .limits li{margin:5px 0}
+.limits>div{background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px}
+.limits h3{margin-bottom:10px}
+.limits ul{margin:0;padding-inline-start:20px} .limits li{margin:6px 0}
 
-/* intake */
-.form{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
-.fgroup{margin-top:22px} .fgroup:first-child{margin-top:0}
-.fgroup .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.field label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
-.field .in{display:flex;align-items:center;border:1px solid var(--rule);border-radius:10px;background:var(--paper);overflow:hidden}
-.field .in .u{padding:0 12px;color:var(--muted);font-size:14px;border-right:1px solid var(--rule);min-height:46px;display:grid;place-items:center}
-.field .in .u.r{border-right:0;border-left:1px solid var(--rule)}
-.field input{flex:1;min-width:0;border:0;background:transparent;padding:11px 12px;font-size:17px;min-height:46px}
-.field .hint{font-size:13px;color:var(--muted);margin-top:5px}
-.btnrow{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;align-items:center}
-.btn{border:1px solid var(--rule);background:var(--paper-2);padding:12px 18px;border-radius:999px;font-weight:600;cursor:pointer;min-height:46px}
-.btn.primary{background:var(--b);border-color:var(--b);color:#fff;font-size:16px}
+.form{background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-lg);padding:26px;box-shadow:var(--shadow-2)}
+.fgroup{margin-top:26px} .fgroup:first-child{margin-top:0}
+.fgroup .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+html[dir="rtl"] .fgroup .k{letter-spacing:0;font-size:13px;text-transform:none}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.field label{display:block;font-size:15px;font-weight:600;margin-bottom:7px;line-height:1.45}
+.field .in{display:flex;align-items:center;border:1px solid var(--rule);border-radius:var(--r-sm);background:var(--paper);overflow:hidden}
+.field .in:focus-within{border-color:var(--focus);box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 18%,transparent)}
+.field .in .u{padding:0 12px;color:var(--muted);font-size:14px;min-height:48px;display:grid;place-items:center;border-inline-start:1px solid var(--rule)}
+.field input{flex:1;min-width:0;border:0;background:transparent;padding:12px;font-size:17px;min-height:48px}
+.field .hint{font-size:13px;color:var(--muted);margin-top:6px}
+.btnrow{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--rule);background:var(--sunk);padding:13px 20px;border-radius:999px;font-weight:600;cursor:pointer;min-height:50px}
+.btn.primary{background:var(--b);border-color:var(--b);color:#fff;font-size:16.5px;padding-inline:26px}
 .msg{font-size:14px;color:var(--muted)}
+.errbox{border-inline-start:3px solid var(--crit);background:rgba(180,69,59,.09);padding:15px 18px;border-radius:var(--r-sm);margin-bottom:16px}
+.errbox strong{display:block;margin-bottom:5px}
 
-/* technical */
-details.tech{border:1px solid var(--rule);border-radius:12px;background:var(--card);margin-top:8px}
-details.tech summary{cursor:pointer;padding:14px 18px;font-weight:600}
-details.tech .inner{padding:0 18px 18px;font-size:14px}
-details.tech .inner p{max-width:72ch;margin-top:10px}
-code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;background:var(--paper-2);padding:1px 5px;border-radius:4px}
-table.tech{border-collapse:collapse;width:100%;font-size:13px;margin-top:10px}
-table.tech th,table.tech td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
+details.tech{border:1px solid var(--rule);border-radius:var(--r-md);background:var(--raised)}
+details.tech summary{cursor:pointer;padding:16px 20px;font-weight:600}
+details.tech .inner{padding:0 20px 20px;font-size:14.5px}
+details.tech .inner p{max-width:76ch;margin-top:12px}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;background:var(--sunk);padding:2px 6px;border-radius:4px;direction:ltr;unicode-bidi:isolate}
+table.tech{border-collapse:collapse;width:100%;font-size:13px;margin-top:12px}
+table.tech th,table.tech td{text-align:start;padding:7px 9px;border-bottom:1px solid var(--rule);vertical-align:top}
 .tbl-wrap{overflow-x:auto}
-.foot{padding:24px 0 56px;font-size:13px;color:var(--muted)}
-.banner{background:var(--crit);color:#fff;padding:10px 0;font-weight:600;display:none}
+.foot{padding:26px 0 60px;font-size:13px;color:var(--muted)}
+.banner{background:var(--crit);color:#fff;padding:14px 0;font-weight:600;display:none}
 .banner.on{display:block}
+
+/* In RTL the text flows right-to-left, but figures, the chart and the A/B/C letters do not:
+   their order is arithmetic, not language, and a reversed number is a wrong number. */
+html[dir="rtl"] .money,html[dir="rtl"] .rowline .v,html[dir="rtl"] .letter,
+html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v,html[dir="rtl"] .field .in{direction:ltr;unicode-bidi:isolate}
+html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
 </style>
 </head>
 <body>
-<div class="banner" id="banner"></div>
-<header class="top"><div class="wrap">
-  <div class="brand">Decision Comparison</div>
-  <span class="badge" id="demoflag" hidden>Demo — fictional business</span>
-  <a class="cta" href="#try">Try your business</a>
-</div></header>
+<div class="banner" id="banner" role="alert"></div>
 
-<main class="wrap">
-
-<section id="decision">
-  <div class="eyebrow">The decision</div>
-  <h1 id="headline">Ingredient costs are up 30%. What should you do?</h1>
-  <p class="lede">We compared three decisions using the same model of your cafe and the same assumptions. Only the decision changes between them — so the differences come from the decision, not from different guesses.</p>
-  <div class="cafe-name" id="cafe-name"></div>
-  <div class="options" id="options"></div>
-  <p class="lead-line" id="lead-line"></p>
-  <p class="scenario" id="scenario-note"></p>
-</section>
-
-<section id="stability">
-  <div class="sec-head"><div class="eyebrow">How stable is this result?</div><h2 id="stab-title">Does the ranking survive different assumptions?</h2></div>
-  <div class="stab">
-    <div>
-      <div class="count" id="count"></div>
-      <div class="count-l" id="count-l"></div>
-      <div class="not-prob">This is a sensitivity count, not a probability.</div>
-      <p class="small muted" style="margin-top:14px;max-width:46ch" id="count-note"></p>
+<header class="top">
+  <div class="wrap">
+    <div class="mark"><a href="./" id="home-link">·</a></div>
+    <div class="bizpick">
+      <label class="sr" for="bizsel" id="bizsel-label">business</label>
+      <select id="bizsel"></select>
     </div>
-    <div class="uncert" id="uncert">
-      <div class="eyebrow">The biggest uncertainty</div>
-      <h3 id="uncert-title">How price-sensitive are your customers?</h3>
-      <div class="seg" id="seg" role="group" aria-label="Customer price sensitivity">
-        <button data-v="low">Low</button><button data-v="central" class="on">Medium</button><button data-v="high">High</button>
+    <span class="badge" id="demoflag" hidden></span>
+    <div class="spacer"></div>
+    <div class="langs" id="langs" role="group" aria-label="Language"></div>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <section id="decision">
+    <p class="changed"><span class="dot"></span><span id="changed-t"></span></p>
+    <h1 id="headline"></h1>
+    <p class="lede" id="hero-lede"></p>
+    <p class="whoami" id="whoami"></p>
+    <h2 class="sr" id="options-h"></h2>
+    <div class="options" id="options"></div>
+    <div class="why"><h3 id="why-h"></h3><p id="why-p"></p></div>
+    <p class="scenario" id="scenario"></p>
+  </section>
+
+  <section id="money">
+    <div class="sec-head">
+      <div class="eyebrow" id="chart-eyebrow"></div>
+      <h2 id="chart-title"></h2>
+      <p class="lede" id="chart-lede"></p>
+    </div>
+    <div class="chart-wrap">
+      <svg id="chart" viewBox="0 0 960 380" role="img" aria-labelledby="chart-alt"></svg>
+      <p class="sr" id="chart-alt"></p>
+      <div class="tip" id="tip"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <p class="note" id="cash-note"></p>
+    <div class="mini"><table id="mini"></table></div>
+  </section>
+
+  <section id="unknown">
+    <div class="unknown">
+      <div class="unknown-top">
+        <div class="eyebrow" id="unknown-eyebrow"></div>
+        <h2 id="unknown-title"></h2>
       </div>
-      <div class="seg-help" id="seg-help"></div>
-      <div class="seg-effect" id="seg-effect"></div>
+      <div class="unknown-grid">
+        <div><div class="k" id="uk-what-k"></div><p id="uk-what"></p></div>
+        <div><div class="k" id="uk-why-k"></div><p id="uk-why"></p></div>
+        <div><div class="k" id="uk-could-k"></div><p id="uk-could"></p></div>
+        <div><div class="k" id="uk-how-k"></div><p id="uk-how"></p></div>
+      </div>
+      <div class="unknown-cta"><button class="btn" id="uk-try"></button></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="change">
-  <div class="sec-head"><div class="eyebrow">What could change the answer?</div><h2 id="change-title">Two settings of one assumption, two different leaders</h2></div>
-  <div class="cond" id="cond"></div>
-  <div class="next"><div class="k">How could you reduce this uncertainty?</div><p id="next-p"></p></div>
-  <p class="others" id="others"></p>
-  <details class="adv"><summary>Other assumptions you can change</summary><div class="inner"><div class="controls" id="controls"></div><div class="snap" id="snapnote"></div></div></details>
-</section>
+  <section id="change">
+    <div class="sec-head">
+      <div class="eyebrow" id="change-eyebrow"></div>
+      <h2 id="change-title"></h2>
+    </div>
+    <ul class="influence" id="influence"></ul>
+    <p class="flipline" id="flipline"></p>
+    <div class="control">
+      <h3 id="ctrl-title"></h3>
+      <div class="seg" id="seg" role="group" aria-labelledby="ctrl-title"></div>
+      <div class="seg-help" id="seg-help"></div>
+      <div class="effect" id="effect" role="status" aria-live="polite"></div>
+    </div>
+    <details class="adv"><summary id="adv-sum"></summary><div class="inner"><div class="controls" id="controls"></div></div></details>
+  </section>
 
-<section id="consequences">
-  <div class="sec-head"><div class="eyebrow">The next 90 days</div><h2>Cash in the bank under each decision</h2><p class="lede">Costs take about a week to rise — you are still using stock bought at the old price. Customers take a couple of weeks to react to a new price.</p></div>
-  <div class="chart-wrap">
-    <svg id="chart" viewBox="0 0 960 380" role="img" aria-label="Cash position over 90 days for the three decisions"></svg>
-    <div class="tip" id="tip"></div>
-    <div class="legend" id="legend"></div>
-  </div>
-  <p class="chart-note">Cash is calculated from the model's daily orders, price and ingredient-cost outputs, using your sales, costs and cash figures below. Cash itself is not simulated directly.</p>
-  <div class="mini" id="mini"></div>
-  <p class="horizon" id="horizon"></p>
-</section>
+  <section id="evidence">
+    <div class="sec-head"><div class="eyebrow" id="ev-eyebrow"></div><h2 id="ev-title"></h2></div>
+    <div class="groups" id="groups"></div>
+  </section>
 
-<section id="sources">
-  <div class="sec-head"><div class="eyebrow">Where did these numbers come from?</div><h2>Four kinds of number</h2></div>
-  <div class="groups" id="groups"></div>
-  <p class="src-note">On price sensitivity: external research gives a reference range for eating out as a whole. Your actual customers may be more or less price-sensitive than that, and the High setting is a stress assumption rather than a research finding.</p>
-</section>
+  <section id="limits">
+    <div class="sec-head"><h2 id="limits-title"></h2></div>
+    <div class="limits">
+      <div><h3 id="does-h"></h3><ul id="does"></ul></div>
+      <div><h3 id="doesnot-h"></h3><ul id="doesnot"></ul></div>
+    </div>
+  </section>
 
-<section id="limits">
-  <div class="sec-head"><div class="eyebrow">Limitations</div><h2>What this does — and doesn't do</h2></div>
-  <div class="limits">
-    <div><h3>This does</h3><ul><li>Compare three decisions under the same assumptions.</li><li>Show how the result changes when an important assumption changes.</li><li>Make every assumption behind the comparison visible.</li></ul></div>
-    <div><h3>This does not</h3><ul><li>Predict the future or guarantee an outcome.</li><li>Model how competitors react.</li><li>Model the wider economy, seasons or new customers.</li><li>Know your customers' price sensitivity — unless you bring evidence.</li></ul></div>
-  </div>
-</section>
+  <section id="try">
+    <div class="sec-head">
+      <div class="eyebrow" id="cta-eyebrow"></div>
+      <h2 id="cta-title"></h2>
+      <p class="lede" id="cta-lede"></p>
+    </div>
+    <div id="errs"></div>
+    <div class="form" id="form"></div>
+    <p class="note" id="currency-note"></p>
+  </section>
 
-<section id="try">
-  <div class="sec-head"><div class="eyebrow">Try your business</div><h2>Eight figures from your books</h2><p class="lede">The comparison stays the same. Only your starting position changes. Nothing leaves this page.</p></div>
-  <div class="form" id="form"></div>
-</section>
-
-<section id="how">
-  <div class="sec-head"><div class="eyebrow">For the curious</div><h2>How this was calculated</h2></div>
-  <details class="tech"><summary>Method, sources and reproducibility</summary><div class="inner" id="how-body"></div></details>
-</section>
-
+  <section id="how">
+    <div class="sec-head"><h2 id="how-title"></h2></div>
+    <details class="tech"><summary id="how-open"></summary><div class="inner" id="how-body"></div></details>
+  </section>
 </main>
 <footer class="foot"><div class="wrap" id="foot"></div></footer>
 
 <script id="data" type="application/json">__DATA__</script>
 <script>
 (function(){
-const qt = new URLSearchParams(location.search).get('theme'); if(qt==='light'||qt==='dark') document.documentElement.dataset.theme = qt;
-const D = JSON.parse(document.getElementById('data').textContent);
-const C = D.copy;                        // wedge-specific wording; never arithmetic
-const F = C.fields;                      // which baseline field plays which role
-const DPM = 365/12, H = D.reproducibility.horizon_days || 90;
-const WID = ['A','B','C'];
-const NAMES = C.world_names, SHORT = C.world_short;
-const CLS = {A:'wA',B:'wB',C:'wC'};
-if(C.page_title) document.title = C.page_title;
-const money = v => (v<0?'−':'') + Math.abs(Math.round(v)).toLocaleString();
-const signed = v => (v<0?'−':'+') + Math.abs(Math.round(v)).toLocaleString();
-const pct = (v,d=1) => (v>0?'+':'') + v.toFixed(d) + '%';
-const fill = (s,vals) => s.replace(/\{(\w+)\}/g, (m,k) => (k in vals) ? vals[k] : m);
+"use strict";
+var D = JSON.parse(document.getElementById('data').textContent);
+var P = new URLSearchParams(location.search);
+var qt = P.get('theme'); if(qt==='light'||qt==='dark') document.documentElement.dataset.theme = qt;
 
-// ---- state ------------------------------------------------------------------------------
-let base = Object.assign({}, D.baseline_raw);
-// The page's selection is exactly the set of keys the grid was built on, so any wedge's grid
-// is selectable without the page knowing what those keys mean.
-const GRID_KEYS = Object.keys(D.grid[0].key);
-const GRID_VALS = {};
-GRID_KEYS.forEach(k => { GRID_VALS[k] = [...new Set(D.grid.map(g=>g.key[k]))]
-    .sort((a,b)=> (typeof a==='number') ? a-b : String(a).localeCompare(String(b))); });
-const PRIMARY = C.primary_axis;
-const CENTRE = {};
-GRID_KEYS.forEach(k => { const v = GRID_VALS[k]; CENTRE[k] = v.includes('central') ? 'central' : v[Math.floor(v.length/2)]; });
-let sel = Object.assign({}, CENTRE);
+var I = D.i18n, LANGS = I.languages.map(function(l){return l.code;});
+var lang = (function(){
+  var q = P.get('lang'); if(LANGS.indexOf(q)>=0) return q;
+  try { var s = localStorage.getItem('dc_lang'); if(LANGS.indexOf(s)>=0) return s; } catch(e){}
+  var nav = (navigator.languages||[navigator.language||'']);
+  for(var i=0;i<nav.length;i++){ var n = String(nav[i]).slice(0,2); if(LANGS.indexOf(n)>=0) return n; }
+  return I.default;
+})();
+var L = I.strings[lang];
 
-// The shock and the low-margin share come from the owner's own figures, so the grid point is
-// chosen by snapping those to the nearest tested value — and the page says so.
-const SHOCK_KEY = GRID_KEYS.find(k => k.endsWith('_pct') && k !== 'utilisation_pct') || null;
-const REDUCTION_KEY = GRID_KEYS.includes('reduction_points') ? 'reduction_points' : null;
+function fill(s,v){ return String(s).replace(/\{(\w+)\}/g, function(m,k){ return (k in v) ? v[k] : m; }); }
+function t(k,v){ return fill(L.ui[k]!==undefined ? L.ui[k] : k, v||{}); }
+function w(k){ return L.wedge[k]; }
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
-function capacity(b){
-  // Only a wedge with a capacity ceiling declares a utilisation field.
-  if(!F.utilisation) return null;
-  const u = b[F.utilisation];
-  return (u > 0) ? b[F.units_per_day] / (u/100) : null;
+var NF, NF1;
+function setFormatters(){
+  var loc = L.numerals === 'arabext' ? 'fa-IR' : 'en-US';
+  NF  = new Intl.NumberFormat(loc, {maximumFractionDigits:0});
+  NF1 = new Intl.NumberFormat(loc, {minimumFractionDigits:1, maximumFractionDigits:1});
 }
-function derived(b){
-  const units = b[F.units_per_day];
-  return {aov: b[F.revenue]/(units*DPM), cpo: b[F.unit_cost_total]/(units*DPM), fixedDay: b[F.fixed]/DPM};
-}
-function ledger(b, w){
-  const {aov,cpo,fixedDay} = derived(b);
-  const cap = capacity(b);
-  const n = Math.min(w.demand.length, w.cogs.length, w.price.length);
-  const L = {orders:[],price:[],revenue:[],cogs:[],gp:[],gm:[],net:[],cash:[],demanded:[],away:[],util:[]};
-  let cash = b[F.cash];
-  for(let d=0; d<n; d++){
-    const wanted = b[F.units_per_day]*w.demand[d]/100;
-    const o = (cap===null) ? wanted : Math.min(wanted, cap);
-    if(cap!==null){ L.demanded.push(wanted); L.away.push(Math.max(0,wanted-o)); L.util.push(cap>0?100*o/cap:0); }
-    const p = aov*w.price[d]/100, r = o*p, c = o*cpo*w.cogs[d]/100, gp=r-c, net=gp-fixedDay;
+function num(v,d){ return (d?NF1:NF).format(v); }
+function money(v){ return (v<0?'−':'') + NF.format(Math.abs(Math.round(v))); }
+function signed(v){ return (v<0?'−':'+') + NF.format(Math.abs(Math.round(v))); }
+/* Persian writes its own percent sign, so it travels with the language like the numerals do. */
+function PS(){ return L.ui.pct_sign || '%'; }
+function pct(v,d){ return (v>0?'+':v<0?'−':'') + num(Math.abs(v), d) + PS(); }
+/* A setting whose value is a bare number is still a number in Persian. */
+function localDigits(x){
+  if(L.numerals !== 'arabext') return String(x);
+  return String(x).replace(/[0-9]/g, function(d){ return String.fromCharCode(0x06F0 + (+d)); })
+                  .replace(/\./g, '٫').replace(/%/g, '٪'); }
+
+var DPM = 365/12, H = D.reproducibility.horizon_days || 90;
+var WID = ['A','B','C'], CLS = {A:'wA',B:'wB',C:'wC'};
+var C = D.copy, F = C.fields;
+
+var base = Object.assign({}, D.baseline_raw);
+var GRID_KEYS = Object.keys(D.grid[0].key), GRID_VALS = {};
+GRID_KEYS.forEach(function(k){
+  GRID_VALS[k] = Array.from(new Set(D.grid.map(function(g){return g.key[k];})))
+    .sort(function(a,b){ return (typeof a==='number') ? a-b : String(a).localeCompare(String(b)); });
+});
+var PRIMARY = C.primary_axis, CENTRE = {};
+GRID_KEYS.forEach(function(k){ var v = GRID_VALS[k];
+  CENTRE[k] = v.indexOf('central')>=0 ? 'central' : v[Math.floor(v.length/2)]; });
+var sel = Object.assign({}, CENTRE);
+var SHOCK_KEY = GRID_KEYS.filter(function(k){ return /_pct$/.test(k) && k!=='utilisation_pct'; })[0] || null;
+var REDUCTION_KEY = GRID_KEYS.indexOf('reduction_points')>=0 ? 'reduction_points' : null;
+
+/* ---- the arithmetic. Unchanged, and checked against the generated report below. ---------- */
+function capacity(b){ if(!F.utilisation) return null; var u = b[F.utilisation];
+  return (u>0) ? b[F.units_per_day]/(u/100) : null; }
+function derived(b){ var units = b[F.units_per_day];
+  return {aov: b[F.revenue]/(units*DPM), cpo: b[F.unit_cost_total]/(units*DPM), fixedDay: b[F.fixed]/DPM}; }
+function ledger(b, world){
+  var d0 = derived(b), cap = capacity(b);
+  var n = Math.min(world.demand.length, world.cogs.length, world.price.length);
+  var Lg = {orders:[],price:[],revenue:[],cogs:[],gp:[],gm:[],net:[],cash:[],demanded:[],away:[],util:[]};
+  var cash = b[F.cash];
+  for(var d=0; d<n; d++){
+    var wanted = b[F.units_per_day]*world.demand[d]/100;
+    var o = (cap===null) ? wanted : Math.min(wanted, cap);
+    if(cap!==null){ Lg.demanded.push(wanted); Lg.away.push(Math.max(0,wanted-o));
+                    Lg.util.push(cap>0?100*o/cap:0); }
+    var p = d0.aov*world.price[d]/100, r = o*p, c = o*d0.cpo*world.cogs[d]/100, gp = r-c, net = gp-d0.fixedDay;
     if(d>0) cash += net;
-    L.orders.push(o); L.price.push(p); L.revenue.push(r); L.cogs.push(c); L.gp.push(gp);
-    L.gm.push(r>0?100*gp/r:0); L.net.push(net); L.cash.push(cash);
+    Lg.orders.push(o); Lg.price.push(p); Lg.revenue.push(r); Lg.cogs.push(c); Lg.gp.push(gp);
+    Lg.gm.push(r>0?100*gp/r:0); Lg.net.push(net); Lg.cash.push(cash);
   }
-  return L;
+  return Lg;
 }
-function metrics(L, b){
-  const last = Math.min(H, L.cash.length-1), ts = Math.max(1,last-29), td = last-ts+1, sc = DPM/td;
-  const sum = (a,s,e)=>a.slice(s,e+1).reduce((x,y)=>x+y,0);
-  const mrev = sum(L.revenue,ts,last)*sc, mgp = sum(L.gp,ts,last)*sc, mnet = sum(L.net,ts,last)*sc;
-  let worst=1; for(let d=1; d<=last; d++) if(L.gm[d]<L.gm[worst]) worst=d;
-  let minc=0; for(let d=0; d<=last; d++) if(L.cash[d]<L.cash[minc]) minc=d;
-  const m = {mrev, mgp, mnet, gm_end:L.gm[last], gm_worst:L.gm[worst], worst_day:worst,
-    orders_change:100*(L.orders[last]/L.orders[0]-1),
-    rev_change:100*(mrev/b[F.revenue]-1),
-    cash30:L.cash[Math.min(30,last)], cash90:L.cash[last], cash_change:L.cash[last]-L.cash[0],
-    min_cash:L.cash[minc], min_day:minc, negative: L.cash.slice(0,last+1).some(c=>c<0),
-    first_negative_day: (()=>{ for(let d=0; d<=last; d++) if(L.cash[d]<0) return d; return null; })(),
-    runway: mnet>=0 ? null : (L.cash[last]<=0 ? 0 : L.cash[last]/(-mnet))};
-  if(L.util.length){
-    m.util_end = L.util[last]; m.away_end = L.away[last];
-    m.wanted_change = 100*(L.demanded[last]/L.demanded[0]-1);
-  }
+function metrics(Lg, b){
+  var last = Math.min(H, Lg.cash.length-1), ts = Math.max(1,last-29), td = last-ts+1, sc = DPM/td;
+  function sum(a,s,e){ return a.slice(s,e+1).reduce(function(x,y){return x+y;},0); }
+  var mnet = sum(Lg.net,ts,last)*sc;
+  var m = {mnet: mnet, orders_change: 100*(Lg.orders[last]/Lg.orders[0]-1),
+    cash30: Lg.cash[Math.min(30,last)], cash90: Lg.cash[last],
+    first_negative_day: (function(){ for(var d=0; d<=last; d++) if(Lg.cash[d]<0) return d; return null; })()};
+  if(Lg.util.length){ m.util_end = Lg.util[last]; m.away_end = Lg.away[last]; }
   return m;
 }
-
-// ---- grid lookup -----------------------------------------------------------------------
-const nearest = (arr,v)=>arr.reduce((p,c)=>Math.abs(c-v)<Math.abs(p-v)?c:p);
-function snapped(){
-  const want = Object.assign({}, sel);
+function nearest(arr,v){ return arr.reduce(function(p,c){ return Math.abs(c-v)<Math.abs(p-v)?c:p; }); }
+function snapped(){ var want = Object.assign({}, sel);
   if(SHOCK_KEY && typeof base[F.shock] === 'number') want[SHOCK_KEY] = nearest(GRID_VALS[SHOCK_KEY], base[F.shock]);
-  return want;
-}
-function pick(){
-  const want = snapped();
-  const g = D.grid.find(g => GRID_KEYS.every(k => g.key[k] === want[k]));
-  return {g, want};
-}
+  return want; }
+function pick(){ var want = snapped();
+  return D.grid.filter(function(g){ return GRID_KEYS.every(function(k){ return g.key[k]===want[k]; }); })[0]; }
 
-// ---- self-check against the generated report --------------------------------------------
 (function check(){
-  const centralWant = Object.assign({}, CENTRE);
-  if(SHOCK_KEY) centralWant[SHOCK_KEY] = nearest(GRID_VALS[SHOCK_KEY], D.baseline_raw[F.shock]);
-  const central = D.grid.find(g => GRID_KEYS.every(k => g.key[k] === centralWant[k]));
+  var cw = Object.assign({}, CENTRE);
+  if(SHOCK_KEY) cw[SHOCK_KEY] = nearest(GRID_VALS[SHOCK_KEY], D.baseline_raw[F.shock]);
+  var central = D.grid.filter(function(g){ return GRID_KEYS.every(function(k){ return g.key[k]===cw[k]; }); })[0];
   if(!central){ fail('Could not find the central case in the embedded data.'); return; }
-  for(const w of D.worlds){
-    const m = metrics(ledger(D.baseline_raw, central.worlds[w.id]), D.baseline_raw);
-    if(Math.abs(m.cash90 - w.metrics.cash_day_90) > 1){ fail('Page arithmetic does not match the generated report ('+w.id+': '+m.cash90.toFixed(0)+' vs '+w.metrics.cash_day_90.toFixed(0)+'). Numbers withheld.'); return; }
+  for(var i=0;i<D.worlds.length;i++){
+    var world = D.worlds[i];
+    var m = metrics(ledger(D.baseline_raw, central.worlds[world.id]), D.baseline_raw);
+    if(Math.abs(m.cash90 - world.metrics.cash_day_90) > 1){
+      fail('Page arithmetic does not match the generated report ('+world.id+'). Numbers withheld.'); return; }
   }
 })();
-function fail(msg){ const b=document.getElementById('banner'); b.textContent=msg; b.classList.add('on'); throw new Error(msg); }
+function fail(msg){ var b = document.getElementById('banner'); b.textContent = msg; b.classList.add('on');
+  document.getElementById('main').style.display = 'none'; throw new Error(msg); }
 
-// ---- census over the whole tested grid for the CURRENT business --------------------------
-let _censusKey = null, _census = null;
+var _cKey = null, _cVal = null;
 function census(){
-  const key = JSON.stringify(Object.values(F).map(f=>base[f]));
-  if(_censusKey===key) return _census;
-  const pts = D.grid.map(g=>{ const m={}; for(const id of WID) m[id]=metrics(ledger(base, g.worlds[id]), base).cash90;
-                              const rank=[...WID].sort((a,b)=>m[b]-m[a]); return {key:g.key, rank, m}; });
-  const wins={A:0,B:0,C:0}; pts.forEach(p=>wins[p.rank[0]]++); wins.n=pts.length;
-  const centre = snapped();
-  const find = s => pts.find(p=>GRID_KEYS.every(k=>p.key[k]===s[k]));
-  const oat = GRID_KEYS.map(k=>{ const tops=[], spread=[];
-      for(const v of GRID_VALS[k]){ const q=find(Object.assign({},centre,{[k]:v})); if(!q) continue;
-                                    tops.push(q.rank[0]); spread.push(q.m.B-q.m.C); }
-      return {k, tops, flips:new Set(tops).size>1, influence: spread.length?Math.max(...spread)-Math.min(...spread):0}; });
-  oat.sort((a,b)=>(b.flips-a.flips)||(b.influence-a.influence));
-  const c0 = find(centre);
-  _censusKey=key; _census={wins, oat, pts, centreTop: c0?c0.rank[0]:null, find, centre};
-  return _census;
+  var key = JSON.stringify(Object.keys(F).map(function(r){ return base[F[r]]; }));
+  if(_cKey===key) return _cVal;
+  var pts = D.grid.map(function(g){
+    var m = {}; WID.forEach(function(id){ m[id] = metrics(ledger(base, g.worlds[id]), base).cash90; });
+    var rank = WID.slice().sort(function(a,b){ return m[b]-m[a]; });
+    return {key:g.key, rank:rank, m:m};
+  });
+  var wins = {A:0,B:0,C:0}; pts.forEach(function(p){ wins[p.rank[0]]++; }); wins.n = pts.length;
+  var centre = snapped();
+  function find(s){ return pts.filter(function(p){ return GRID_KEYS.every(function(k){ return p.key[k]===s[k]; }); })[0]; }
+  var oat = GRID_KEYS.map(function(k){
+    var tops = [], spread = [];
+    GRID_VALS[k].forEach(function(v){ var q = find(Object.assign({}, centre, (function(){var o={};o[k]=v;return o;})()));
+      if(q){ tops.push(q.rank[0]); spread.push(q.m.B - q.m.C); } });
+    return {k:k, flips: new Set(tops).size > 1,
+            influence: spread.length ? Math.max.apply(null,spread)-Math.min.apply(null,spread) : 0};
+  });
+  oat.sort(function(a,b){ return (b.flips-a.flips) || (b.influence-a.influence); });
+  var c0 = find(centre);
+  _cKey = key; _cVal = {wins:wins, oat:oat, centreTop: c0 ? c0.rank[0] : null, find:find, centre:centre};
+  return _cVal;
 }
-const AXIS_LABELS = D.sensitivity.sweep_labels;
+function niceStep(span,n){ var raw = span/n, mag = Math.pow(10,Math.floor(Math.log10(raw))), f = raw/mag;
+  return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*mag; }
+/* A registry row carries how its value was built and the figures it was built from, so the
+   same value can be written in either language without anything being recomputed. Only the
+   words move; the numbers are the ones the model produced. */
+function fmtSpec(v, spec){
+  if(typeof v !== 'number') return String(v);
+  if(spec === 'g') return num(v, (v % 1) ? 1 : 0);
+  var m = /^\.(\d)f$/.exec(spec || '');
+  if(m) return new Intl.NumberFormat(L.numerals === 'arabext' ? 'fa-IR' : 'en-US',
+    {minimumFractionDigits:+m[1], maximumFractionDigits:+m[1]}).format(v);
+  return num(v);
+}
+function fillSpec(tpl, ctx){
+  return String(tpl).replace(/\{(\w+)(?::([^}]*))?\}/g, function(mm, k, spec){
+    return (k in ctx) ? fmtSpec(ctx[k], spec) : mm; });
+}
+function assumptionCopy(a){ var A = w('assumptions'); return (A && A[a.key]) || {}; }
+function assumptionLabel(a){ return assumptionCopy(a).label || a.label; }
+function assumptionValue(a){
+  var sp = a.value_spec, cx = a.value_ctx || {}, tr = assumptionCopy(a);
+  if(!sp) return a.value;
+  if(sp.kind === 'literal' || sp.kind === 'template') return fillSpec(tr.text || sp.text, cx);
+  if(sp.kind === 'axis') return tr.map ? String(tr.map[cx.setting])
+                                     : localDigits(sp.map[cx.setting]);
+  if(sp.kind === 'money') return sp.dp
+    ? fmtSpec(cx[sp.field], '.' + sp.dp + 'f') : money(cx[sp.field]);
+  if(sp.kind === 'money_with_pct')
+    return t('value_of_sales', {v: money(cx[sp.field]), p: num(Math.round(cx[sp.pct_of]))});
+  if(sp.kind === 'g') return (sp.prefix || '') + fmtSpec(cx[sp.field], 'g') + (sp.suffix === '%' ? PS() : (sp.suffix || ''));
+  if(sp.kind === 'fixed') return (sp.prefix || '') + fmtSpec(cx[sp.field], '.' + (sp.dp === undefined ? 1 : sp.dp) + 'f') + (sp.suffix === '%' ? PS() : (sp.suffix || ''));
+  return a.value;
+}
+/* "low" / "central" / "fast" are settings, not English: they are named in whichever
+   language is on, and the ones that are plain numbers stay numbers. */
+function settingLabel(k, o){
+  if(typeof o === 'number') return /_pct$/.test(k) ? num(o) + PS() : num(o, 1);
+  var m = L.ui.setting_labels; return (m && m[o]) || String(o);
+}
 function axisLabel(k){
-  if(AXIS_LABELS[k]) return AXIS_LABELS[k].charAt(0).toLowerCase()+AXIS_LABELS[k].slice(1);
-  if(k==='reduction_points') return 'how much the change to what you sell really saves';
-  return k.replace(/_/g,' ');
+  var s = D.sensitivity.sweep_labels[k];
+  var wl = w('sweep_labels');
+  if(wl && wl[k]) return wl[k];
+  if(k === REDUCTION_KEY) return w('cost_word');
+  return s || String(k).replace(/_/g,' ');
 }
-function niceStep(span, n){ const raw=span/n, mag=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/mag; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*mag; }
-
-// ---- compute current state ---------------------------------------------------------------
 function compute(){
-  const {g, want} = pick();
-  const out = {};
-  for(const id of WID){ const L = ledger(base, g.worlds[id]); out[id] = {L, m: metrics(L, base)}; }
-  const rank = [...WID].sort((a,b)=>out[b].m.cash90-out[a].m.cash90);
-  return {out, rank, want, red: REDUCTION_KEY ? g.key[REDUCTION_KEY] : null,
+  var g = pick(), out = {};
+  WID.forEach(function(id){ var Lg = ledger(base, g.worlds[id]); out[id] = {L:Lg, m:metrics(Lg, base)}; });
+  var rank = WID.slice().sort(function(a,b){ return out[b].m.cash90 - out[a].m.cash90; });
+  return {out:out, rank:rank, red: REDUCTION_KEY ? g.key[REDUCTION_KEY] : null,
           shock: SHOCK_KEY ? g.key[SHOCK_KEY] : base[F.shock]};
 }
-let current = null;
 
-// ---- render ------------------------------------------------------------------------------
-function render(){
-  current = compute();
-  const {out, rank, red, shock} = current;
-  const lead = rank[0], second = rank[1];
-  const d0 = derived(base);
-  const preNet = base[F.revenue] - base[F.unit_cost_total] - base[F.fixed];
-  const {wins, oat} = census();
-  const cap = capacity(base);
+/* ---- render ------------------------------------------------------------------------------ */
+var previousLead = null;
+function render(langChanged){
+  var r = compute(), out = r.out, rank = r.rank, red = r.red, shock = r.shock;
+  var lead = rank[0], second = rank[1];
+  var NAMES = w('world_names'), SHORT = w('world_short');
+  var cs = census(), wins = cs.wins, oat = cs.oat, cTop = cs.centreTop || lead;
+  var cap = capacity(base);
+  var preNet = base[F.revenue] - base[F.unit_cost_total] - base[F.fixed];
 
-  const flag = document.getElementById('demoflag');
-  flag.hidden = !base.is_demo;
-  flag.textContent = 'Demo — fictional ' + (C.demo_noun || 'business');
-  document.getElementById('headline').textContent = fill(C.headline, {shock: (+shock).toLocaleString()});
-  document.querySelector('#decision .lede').textContent = C.hero_lede;
-  const who = base.is_demo ? `Shown for a fictional demo business: ` : `${base.name}: `;
-  document.getElementById('cafe-name').textContent = who +
-    `${money(base[F.revenue])} a month in sales, ${Math.round(base[F.units_per_day])} ${C.unit_word} a day, ` +
-    `${money(base[F.cash])} in the bank` + (cap ? `, about ${cap.toFixed(1)} ${C.unit_word} of space a day.` : '.');
+  document.title = w('page_title');
+  var hl = document.getElementById('home-link');
+  hl.textContent = t('product'); hl.title = t('back_home');
+  document.getElementById('bizsel-label').textContent = t('switch_business');
+  var flag = document.getElementById('demoflag');
+  flag.hidden = !base.is_demo; flag.textContent = t('demo_badge', {noun: w('noun')});
 
-  // cards
-  document.getElementById('options').innerHTML = WID.map(id=>{
-    const m = out[id].m;
-    const cashLine = m.first_negative_day!==null
-      ? `<span class="v neg">Day ${m.first_negative_day}</span><span class="l">cash runs out</span>`
-      : `<span class="v ${m.cash90<0?'neg':''}">${money(m.cash90)}</span><span class="l">cash at day 90</span>`;
-    const note = (id==='C' && C.c_card_note && red!==null)
-      ? `<div class="note"><b>Depends on our assumptions:</b> ${fill(C.c_card_note.replace(/^Depends on[^:]*:\s*/,''),
-          {red: (+red).toFixed(1), loss: (0.33*red).toFixed(1), unit: C.unit_word, cost: C.cost_word})}</div>` : '';
-    const unitsLine = (m.util_end!==undefined)
-      ? `<div><span class="v">${pct(m.orders_change,0)}</span><span class="l">${C.unit_word} served</span></div>`
-      : `<div><span class="v">${pct(m.orders_change,0)}</span><span class="l">${C.unit_word}</span></div>`;
-    return `<div class="opt ${CLS[id]} ${id===lead?'lead':''}">
-      <div class="letter">${id}</div>
-      ${id===lead?`<div class="lead-tag">Ranks first under current assumptions</div>`:''}
-      <div class="name">${NAMES[id]}</div>
-      <div class="impact"><div class="v ${m.mnet<0?'neg':''}">${signed(m.mnet)}</div><div class="l">per month, once things have settled · today ${signed(preNet)}</div></div>
-      <div class="facts">${unitsLine}<div>${cashLine}</div></div>
-      ${note}
-    </div>`;
+  document.getElementById('changed-t').textContent = fill(w('what_changed'), {shock: num(shock)});
+  document.getElementById('headline').textContent = fill(w('headline'), {shock: num(shock)});
+  document.getElementById('hero-lede').textContent = w('hero_lede');
+  document.getElementById('options-h').textContent = t('your_options');
+  document.getElementById('whoami').textContent = whoami(cap);
+  document.getElementById('scenario').textContent = t('not_a_prediction');
+
+  document.getElementById('options').innerHTML = WID.map(function(id){
+    var m = out[id].m, isLead = (id === lead);
+    var cashLine = (m.first_negative_day !== null)
+      ? '<span class="v neg">' + t('cash_runs_out', {day:num(m.first_negative_day)}) + '</span>'
+      : '<span class="v' + (m.cash90<0?' neg':'') + '">' + money(m.cash90) + '</span>'
+        + '<span class="l">' + t('cash_at_90') + '</span>';
+    var robust = '<div class="robust">' + fill(t('ranked_first_cases'),
+        {n:'<b>'+num(wins[id])+'</b>', total:num(wins.n)}) + '</div>';
+    var note = (id === 'C' && w('c_card_note') && red !== null)
+      ? '<details><summary>' + t('advanced') + '</summary><div class="inner">'
+        + esc(fill(w('c_card_note'), {red:num(red,1), loss:num(0.33*red,1),
+              unit:w('unit_word'), cost:w('cost_word')})) + '</div></details>' : '';
+    return '<article class="opt ' + CLS[id] + (isLead ? ' lead' : '') + '">'
+      + (isLead ? '<div class="lead-tag">' + t('ranked_first') + '</div>' : '')
+      + '<div class="opt-head"><span class="letter" aria-hidden="true">' + id + '</span>'
+      + '<h3 class="name">' + esc(NAMES[id]) + '</h3></div>'
+      + '<div><div class="money' + (m.mnet<0?' neg':'') + '">' + signed(m.mnet) + '</div>'
+      + '<div class="money-l">' + t('per_month') + ' · ' + t('per_month_after')
+      + ' · ' + t('today') + ' ' + signed(preNet) + '</div></div>'
+      + '<div class="rowline"><span class="v">' + pct(m.orders_change) + '</span>'
+      + '<span class="l">' + esc(w('unit_word')) + '</span></div>'
+      + '<div class="rowline">' + cashLine + '</div>' + robust + note + '</article>';
   }).join('');
 
-  const gap = out[lead].m.cash90 - out[second].m.cash90;
-  document.getElementById('lead-line').innerHTML =
-    `Under the current assumptions, <b>${SHORT[lead]}</b> leaves you ${money(out[lead].m.cash90 - out.A.m.cash90)} more cash at day 90 than ${SHORT.A.toLowerCase()}, and ${money(gap)} ahead of ${SHORT[second].toLowerCase()}.`;
-  document.getElementById('scenario-note').textContent = 'This is a scenario comparison under stated assumptions, not a prediction.';
+  var gap = out[lead].m.cash90 - out[second].m.cash90;
+  var close = Math.abs(gap) < 0.02 * Math.max(1, Math.abs(out[lead].m.cash90));
+  document.getElementById('why-h').textContent = close ? t('why_tie') : fill(t('why_title'), {option: SHORT[lead]});
+  document.getElementById('why-p').textContent = whyText(out, rank, cap);
 
-  // stability
-  const cTop = census().centreTop || lead;
-  document.getElementById('count').innerHTML = `${wins[cTop]}<small> of ${wins.n}</small>`;
-  document.getElementById('count-l').innerHTML = `<b>${SHORT[cTop]}</b> ranked first in ${wins[cTop]} of the ${wins.n} assumption combinations we tested for your business.`;
-  const flips = oat.filter(r=>r.flips);
-  document.getElementById('count-note').textContent = flips.length
-    ? `Only ${flips.length===1?'one':flips.length} of the ${oat.length} assumptions tested can change which decision ranks first when moved on its own.`
-    : `None of the ${oat.length} assumptions tested changes which decision ranks first when moved on its own.`;
-
-  // the one interactive assumption
-  document.getElementById('uncert-title').textContent = C.uncertainty_title;
-  document.querySelector('#uncert .eyebrow').textContent = C.uncertainty_eyebrow;
-  document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on', b.dataset.v===sel[PRIMARY]));
-  document.getElementById('seg-help').textContent = C.sens_help[sel[PRIMARY]];
-  const eff = document.getElementById('seg-effect');
-  if(lead===cTop){ eff.className='seg-effect steady'; eff.innerHTML = `At this setting <b>${SHORT[lead]}</b> still ranks first.`; }
-  else { eff.className='seg-effect'; eff.innerHTML = `At this setting the ranking changes: <b>${SHORT[lead]}</b> moves ahead of ${SHORT[cTop].toLowerCase()}.`; }
-
-  // what could change
-  const {find, centre} = census();
-  const lo = find(Object.assign({},centre,{[PRIMARY]:'low'})), hi = find(Object.assign({},centre,{[PRIMARY]:'high'})), mid = find(centre);
-  const w2 = p => p ? `<b class="${CLS[p.rank[0]]}">${SHORT[p.rank[0]]}</b>` : '—';
-  document.getElementById('change-title').textContent = (lo&&hi&&lo.rank[0]!==hi.rank[0])
-    ? 'Two settings of one assumption, two different leaders' : 'The same leader at every setting we tested';
-  document.getElementById('cond').innerHTML = `
-    <div class="${lo?CLS[lo.rank[0]]:''}"><div class="k">If they are not very price-sensitive</div><div class="r">${w2(lo)} tends to rank first.</div></div>
-    <div class="${hi?CLS[hi.rank[0]]:''}"><div class="k">If they are highly price-sensitive</div><div class="r">${w2(hi)} ${hi&&mid&&hi.rank[0]!==mid.rank[0]?'moves ahead':'still ranks first'}.</div></div>`;
-  document.getElementById('next-p').textContent = C.next_measurement;
-  const steady = oat.filter(r=>!r.flips).map(r=>axisLabel(r.k));
-  document.getElementById('others').textContent = steady.length
-    ? `We also tested ${steady.join(', ')}. None of them changes which decision ranks first on its own — they change the size of the gap, not the order.` : '';
-
+  document.getElementById('chart-eyebrow').textContent = t('chart_eyebrow');
+  document.getElementById('chart-title').textContent = t('chart_title');
+  document.getElementById('chart-lede').textContent = w('chart_lede');
+  document.getElementById('cash-note').textContent = t('cash_derived');
   drawChart(out, lead);
-  document.querySelector('#consequences h2').textContent = C.chart_title;
-  document.querySelector('#consequences .lede').textContent = C.chart_lede;
-  document.getElementById('legend').innerHTML = WID.map(id=>`<span class="${CLS[id]}">${id} · ${SHORT[id]}</span>`).join('');
+  document.getElementById('chart-alt').textContent = fill(t('chart_alt'), {summary:
+    WID.map(function(id){ return SHORT[id] + ': ' + money(out[id].m.cash90); }).join('; ')});
+  document.getElementById('legend').innerHTML = WID.map(function(id){
+    return '<span class="' + CLS[id] + '">' + id + ' · ' + esc(SHORT[id]) + '</span>'; }).join('');
+  renderTable(out);
 
-  const rows = [['Cash at day 30', m=>money(m.cash30)],['Cash at day 90', m=>money(m.cash90)],
-                ['Net per month once settled', m=>signed(m.mnet)]];
-  if(out.A.m.util_end!==undefined){
-    rows.push([`How full you end up`, m=>m.util_end.toFixed(0)+'%']);
-    rows.push([`${C.unit_word.charAt(0).toUpperCase()+C.unit_word.slice(1)} turned away a day`, m=>m.away_end.toFixed(1)]);
+  var flips = oat.filter(function(x){ return x.flips; });
+  document.getElementById('unknown-eyebrow').textContent = t('unknown_eyebrow');
+  document.getElementById('unknown-title').textContent = w('uncertainty_title');
+  document.getElementById('uk-what-k').textContent = t('unknown_what');
+  document.getElementById('uk-what').textContent = axisLabel(oat[0].k);
+  document.getElementById('uk-why-k').textContent = t('unknown_why');
+  document.getElementById('uk-why').textContent = w('unknown_why');
+  document.getElementById('uk-could-k').textContent = t('unknown_could');
+  document.getElementById('uk-could').textContent = !flips.length ? t('unknown_could_no')
+    : (flips.length === 1 ? t('unknown_could_yes') : t('unknown_could_yes_multi', {n:num(flips.length)}));
+  document.getElementById('uk-how-k').textContent = t('unknown_how');
+  document.getElementById('uk-how').textContent = w('unknown_how');
+  var ukTry = document.getElementById('uk-try');
+  ukTry.textContent = t('try_it');
+  ukTry.onclick = function(){
+    document.getElementById('change').scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(function(){ var b = document.querySelector('#seg button:last-child'); if(b) b.focus(); }, 420);
+  };
+
+  document.getElementById('change-eyebrow').textContent = t('change_eyebrow');
+  document.getElementById('change-title').textContent = t('change_title');
+  var maxInf = Math.max.apply(null, oat.map(function(x){ return x.influence; }).concat([1]));
+  document.getElementById('influence').innerHTML = oat.map(function(x){
+    var share = x.influence / maxInf;
+    var level = x.flips ? 'high' : (share > 0.34 ? 'med' : 'low');
+    var label = x.flips ? t('influence_high') : (share > 0.34 ? t('influence_medium') : t('influence_low'));
+    return '<li><span class="nm">' + esc(axisLabel(x.k))
+      + '<span class="eff">' + (x.flips ? t('changes_ranking') : t('changes_size')) + '</span></span>'
+      + '<span class="pill ' + level + '">' + label + '</span></li>';
+  }).join('');
+  var sep = (lang === 'fa') ? '، ' : ', ';
+  document.getElementById('flipline').innerHTML = !flips.length ? t('none_flips')
+    : (flips.length === 1
+        ? fill(t('only_one_flips'), {name:'<b>' + esc(axisLabel(flips[0].k)) + '</b>'})
+        : fill(t('several_flip'), {n:num(flips.length),
+            names: flips.map(function(x){ return '<b>' + esc(axisLabel(x.k)) + '</b>'; }).join(sep)}));
+
+  document.getElementById('ctrl-title').textContent = w('uncertainty_title');
+  document.getElementById('seg').innerHTML = ['low','central','high'].map(function(v){
+    var lbl = v === 'low' ? t('influence_low') : v === 'central' ? t('influence_medium') : t('influence_high');
+    return '<button type="button" data-v="' + v + '" aria-pressed="' + (sel[PRIMARY]===v) + '">' + lbl + '</button>';
+  }).join('');
+  document.getElementById('seg-help').textContent = w('sens_help')[sel[PRIMARY]];
+  var eff = document.getElementById('effect');
+  var flipped = previousLead && previousLead !== lead && !langChanged;
+  if(flipped || lead !== cTop){
+    eff.className = 'effect changed-now';
+    eff.innerHTML = '<b>' + t('decision_changed') + '</b> '
+      + fill(t('decision_changed_detail'), {option:'<b>' + esc(SHORT[lead]) + '</b>'});
+  } else {
+    eff.className = 'effect';
+    eff.innerHTML = fill(t('decision_unchanged'), {option:'<b>' + esc(SHORT[lead]) + '</b>'});
   }
-  document.getElementById('mini').innerHTML = `<div class="h"></div>${WID.map(id=>`<div class="h n">${id}</div>`).join('')}` +
-    rows.map(([l,f])=>`<div>${l}</div>${WID.map(id=>`<div class="n ${String(f(out[id].m)).startsWith('−')?'neg':''}">${f(out[id].m)}</div>`).join('')}`).join('');
+  previousLead = lead;
+  document.getElementById('adv-sum').textContent = t('other_assumptions');
+  renderAdvanced();
 
-  const byNet = [...WID].sort((a,b)=>out[b].m.mnet-out[a].m.mnet);
-  let horizon = '';
-  if(byNet[0]!==rank[0]) horizon += `Note: by cash at day 90, ${SHORT[rank[0]]} is ahead; by what each decision earns per month once things have settled, ${SHORT[byNet[0]]} is ahead. `;
-  if(out.A.m.util_end!==undefined && C.capacity_note)
-    horizon += fill(C.capacity_note, {unit: C.unit_word}) + ' ';
-  horizon += 'The comparison stops at 90 days because that is as far as wages and rent can honestly be treated as fixed — not because the effects stop there.';
-  document.getElementById('horizon').textContent = horizon;
+  document.getElementById('ev-eyebrow').textContent = t('evidence_eyebrow');
+  document.getElementById('ev-title').textContent = t('evidence_eyebrow');
+  renderSources(red, shock, cap, out, cTop);
 
-  renderSources(red, shock, d0, cap);
-  renderLimits();
+  document.getElementById('limits-title').textContent = t('does_title');
+  document.getElementById('does-h').textContent = t('does');
+  document.getElementById('doesnot-h').textContent = t('does_not');
+  document.getElementById('does').innerHTML = [1,2,3,4].map(function(i){
+    return '<li>' + esc(t('does_' + i)) + '</li>'; }).join('');
+  document.getElementById('doesnot').innerHTML = w('limits_does_not').map(function(x){
+    return '<li>' + esc(x) + '</li>'; }).join('');
+
+  document.getElementById('cta-eyebrow').textContent = t('cta_eyebrow');
+  document.getElementById('cta-title').textContent = base.is_demo ? t('cta_demo') : t('cta_again');
+  document.getElementById('cta-lede').textContent = t('cta_lede');
+  document.getElementById('currency-note').textContent = t('currency_note');
+  renderIntake();
+
+  document.getElementById('how-title').textContent = t('how_title');
+  document.getElementById('how-open').textContent = t('how_open');
   renderHow();
-  document.getElementById('snapnote').textContent = 'Tested at the nearest values to your own figures on the grid above.';
-  document.getElementById('foot').textContent = `${base.is_demo?'Demo values are fictional and for illustration only. ':''}Prepared for ${base.name}.`;
+  document.getElementById('foot').textContent = t('product') + ' · '
+    + t('principle_1') + ' ' + t('principle_2') + ' ' + t('principle_3');
+}
+
+function whoami(cap){
+  var bits = [money(base[F.revenue]) + ' ' + t('per_month'),
+              num(Math.round(base[F.units_per_day])) + ' ' + w('unit_word') + ' ' + t('per_day'),
+              money(base[F.cash]) + ' ' + t('whoami_cash')];
+  if(cap) bits.push(num(cap,1) + ' ' + t('whoami_capacity'));
+  return (base.is_demo ? '' : base.name + ' — ') + bits.join(' · ');
+}
+
+/* The explanation comes from this run's own figures, so a different winner explains itself. */
+function whyText(out, rank, cap){
+  var lead = rank[0], second = rank[1], SHORT = w('world_short'), m = out[lead].m, parts = [];
+  /* The second clause continues the first, so it has to know what the first one said. When
+     demand is not falling there is no loss to answer, and "but ... makes up for it" would be
+     answering a sentence nobody wrote. */
+  var full = cap && m.util_end !== undefined && m.util_end > 99;
+  if(m.orders_change < -0.05){
+    parts.push(fill(t('why_lose_units'), {pct: num(Math.abs(m.orders_change)) + PS(), unit: w('unit_word')}));
+    if(full) parts.push(t('why_gain_capacity'));
+    else if(out[lead].m.mnet > out.A.m.mnet && lead === 'B') parts.push(t('why_gain'));
+    else parts.push(fill(t('why_cost'), {cost: w('cost_word')}));
+  } else {
+    parts.push(m.orders_change > 0.05 ? t('why_demand_grows') : t('why_demand_holds'));
+    if(full) parts.push(t('why_capacity_full'));
+    else if(lead === 'B') parts.push(t('why_price_through'));
+    else parts.push(fill(t('why_cost'), {cost: w('cost_word')}));
+  }
+  if(lead !== 'A') parts.push(fill(t('why_vs_a'),
+    {other: SHORT.A, amount: money(out[lead].m.cash90 - out.A.m.cash90)}));
+  parts.push(fill(t('why_gap'), {lead: SHORT[lead], second: SHORT[second],
+    amount: money(out[lead].m.cash90 - out[second].m.cash90)}));
+  return parts.join(' ');
+}
+
+function renderTable(out){
+  var rows = [[t('row_cash_30'), function(m){ return money(m.cash30); }],
+              [t('row_cash_90'), function(m){ return money(m.cash90); }],
+              [t('row_net'),     function(m){ return signed(m.mnet); }]];
+  if(out.A.m.util_end !== undefined){
+    rows.push([t('row_utilisation'), function(m){ return num(Math.round(m.util_end)) + PS(); }]);
+    rows.push([t('row_turned_away'), function(m){ return num(m.away_end, 1); }]);
+  }
+  document.getElementById('mini').innerHTML =
+    '<caption class="sr">' + esc(t('compare_table')) + '</caption>'
+    + '<thead><tr><th scope="col"></th>' + WID.map(function(id){ return '<th scope="col">' + id + '</th>'; }).join('')
+    + '</tr></thead><tbody>' + rows.map(function(row){
+        return '<tr><th scope="row">' + esc(row[0]) + '</th>' + WID.map(function(id){
+          var v = row[1](out[id].m);
+          return '<td' + (String(v).charAt(0)==='−' ? ' class="neg"' : '') + '>' + v + '</td>';
+        }).join('') + '</tr>';
+      }).join('') + '</tbody>';
 }
 
 function drawChart(out, lead){
-  const svg = document.getElementById('chart'); const W=960, Hh=380, pl=64, pr=96, pt=24, pb=36;
-  const all = WID.flatMap(id=>out[id].L.cash.slice(0,H+1));
-  const mn = Math.min(...all), mx = Math.max(...all);
-  const threatened = mn < 0.25*mx;
-  let lo = threatened ? Math.min(0, mn) : mn, hi = mx;
-  const step = niceStep(hi-lo, 4);
-  lo = Math.floor(lo/step)*step; hi = Math.ceil(hi/step)*step; if(hi===lo) hi=lo+step;
-  const x = d => pl + d*(W-pl-pr)/H, y = v => pt + (hi-v)*(Hh-pt-pb)/(hi-lo);
-  let s = '';
-  for(let v=lo; v<=hi+1e-9; v+=step){ s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="12" fill="var(--muted)">${money(v)}</text>`; }
-  [0,30,60,90].forEach(d=> s+=`<text x="${x(d)}" y="${Hh-10}" text-anchor="middle" font-size="12" fill="var(--muted)">Day ${d}</text>`);
-  if(lo<=0 && hi>0) s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(0)}" y2="${y(0)}" stroke="var(--crit)" stroke-width="1.5" stroke-dasharray="4 4"/><text x="${W-pr+6}" y="${y(0)+4}" font-size="12" fill="var(--crit)">cash = 0</text>`;
-  const bl = out[lead].L.cash; let area = `M${x(0)},${y(bl[0])}`; for(let d=1; d<=H; d++) area+=` L${x(d)},${y(bl[d])}`; area+=` L${x(H)},${y(lo)} L${x(0)},${y(lo)} Z`;
-  s+=`<path d="${area}" fill="var(--${lead.toLowerCase()}-soft)"/>`;
-  const ends = WID.map(id=>({id, ty:y(out[id].L.cash[H])})).sort((a,b)=>a.ty-b.ty);
-  for(let i=1;i<ends.length;i++) if(ends[i].ty-ends[i-1].ty<16) ends[i].ty=ends[i-1].ty+16;
-  for(const id of WID){
-    const c = out[id].L.cash; let p=`M${x(0)},${y(c[0])}`; for(let d=1; d<=H; d++) p+=` L${x(d)},${y(c[d])}`;
-    s+=`<path d="${p}" fill="none" stroke="var(--${id.toLowerCase()})" stroke-width="${id===lead?3.5:2}" stroke-linejoin="round" stroke-linecap="round"/>`;
-    const e = ends.find(z=>z.id===id);
-    s+=`<circle cx="${x(H)}" cy="${y(c[H])}" r="4" fill="var(--${id.toLowerCase()})"/><text x="${x(H)+8}" y="${e.ty+4}" font-size="13" font-weight="600" fill="var(--${id.toLowerCase()})">${id} ${money(c[H])}</text>`;
-  }
-  s+=`<circle cx="${x(0)}" cy="${y(out.A.L.cash[0])}" r="3.5" fill="var(--ink)"/><text x="${x(0)}" y="${y(out.A.L.cash[0])+20}" font-size="12" fill="var(--muted)">today ${money(out.A.L.cash[0])}</text>`;
-  s+=`<g id="hover" style="display:none"><line id="hl" y1="${pt}" y2="${Hh-pb}" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3"/>${WID.map(id=>`<circle id="hc${id}" r="4.5" fill="var(--${id.toLowerCase()})" stroke="var(--card)" stroke-width="2"/>`).join('')}</g>`;
+  var svg = document.getElementById('chart'), W=960, Hh=380, pl=74, pr=104, pt=24, pb=38;
+  var all = []; WID.forEach(function(id){ all = all.concat(out[id].L.cash.slice(0,H+1)); });
+  var mn = Math.min.apply(null,all), mx = Math.max.apply(null,all);
+  var lo = (mn < 0.25*mx) ? Math.min(0, mn) : mn, hi = mx;
+  var step = niceStep(hi-lo, 4);
+  lo = Math.floor(lo/step)*step; hi = Math.ceil(hi/step)*step; if(hi===lo) hi = lo+step;
+  function x(d){ return pl + d*(W-pl-pr)/H; }
+  function y(v){ return pt + (hi-v)*(Hh-pt-pb)/(hi-lo); }
+  var s = '';
+  for(var v=lo; v<=hi+1e-9; v+=step)
+    s += '<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--grid)"/>'
+       + '<text x="'+(pl-9)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="12" fill="var(--muted)">'+money(v)+'</text>';
+  [0,30,60,90].forEach(function(d){
+    s += '<text x="'+x(d)+'" y="'+(Hh-10)+'" text-anchor="middle" font-size="12" fill="var(--muted)">'
+       + t('day',{n:num(d)}) + '</text>'; });
+  if(lo<=0 && hi>0)
+    s += '<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="var(--crit)" stroke-width="1.5" stroke-dasharray="4 4"/>'
+       + '<text x="'+(W-pr+7)+'" y="'+(y(0)+4)+'" font-size="12" fill="var(--crit)">'+t('cash_zero')+'</text>';
+  var bl = out[lead].L.cash, area = 'M'+x(0)+','+y(bl[0]);
+  for(var d1=1; d1<=H; d1++) area += ' L'+x(d1)+','+y(bl[d1]);
+  area += ' L'+x(H)+','+y(lo)+' L'+x(0)+','+y(lo)+' Z';
+  s += '<path d="'+area+'" fill="var(--'+lead.toLowerCase()+')" opacity=".08"/>';
+  var ends = WID.map(function(id){ return {id:id, ty:y(out[id].L.cash[H])}; })
+                .sort(function(a,b){ return a.ty-b.ty; });
+  for(var i=1;i<ends.length;i++) if(ends[i].ty-ends[i-1].ty < 17) ends[i].ty = ends[i-1].ty + 17;
+  WID.forEach(function(id){
+    var c = out[id].L.cash, p = 'M'+x(0)+','+y(c[0]);
+    for(var d2=1; d2<=H; d2++) p += ' L'+x(d2)+','+y(c[d2]);
+    s += '<path d="'+p+'" fill="none" stroke="var(--'+id.toLowerCase()+')" stroke-width="'+(id===lead?3.5:2)
+       + '" stroke-linejoin="round" stroke-linecap="round"/>';
+    var e = ends.filter(function(z){ return z.id===id; })[0];
+    s += '<circle cx="'+x(H)+'" cy="'+y(c[H])+'" r="4" fill="var(--'+id.toLowerCase()+')"/>'
+       + '<text x="'+(x(H)+8)+'" y="'+(e.ty+4)+'" font-size="13" font-weight="600" fill="var(--'
+       + id.toLowerCase()+')">'+id+' '+money(c[H])+'</text>';
+  });
+  s += '<circle cx="'+x(0)+'" cy="'+y(out.A.L.cash[0])+'" r="3.5" fill="var(--ink)"/>'
+     + '<text x="'+x(0)+'" y="'+(y(out.A.L.cash[0])+20)+'" font-size="12" fill="var(--muted)">'
+     + t('chart_today')+' '+money(out.A.L.cash[0])+'</text>';
+  s += '<g id="hover" style="display:none"><line id="hl" y1="'+pt+'" y2="'+(Hh-pb)
+     + '" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3"/>'
+     + WID.map(function(id){ return '<circle id="hc'+id+'" r="4.5" fill="var(--'+id.toLowerCase()
+         +')" stroke="var(--raised)" stroke-width="2"/>'; }).join('') + '</g>';
   svg.innerHTML = s;
-  const tip = document.getElementById('tip'), hov = svg.querySelector('#hover');
-  const show = ev => {
-    const r = svg.getBoundingClientRect(); if(!r.width) return; const px = (ev.clientX - r.left) * (W / r.width);
-    const d = Math.max(0, Math.min(H, Math.round((px - pl) * H / (W - pl - pr))));
-    if(px < pl - 10 || px > W - pr + 10){ hide(); return; }
-    hov.style.display=''; svg.querySelector('#hl').setAttribute('x1', x(d)); svg.querySelector('#hl').setAttribute('x2', x(d));
-    WID.forEach(id=>{ const c=svg.querySelector('#hc'+id); c.setAttribute('cx',x(d)); c.setAttribute('cy',y(out[id].L.cash[d])); });
-    tip.innerHTML = `<b>Day ${d}</b>` + WID.map(id=>`<span><span>${id} · ${SHORT[id]}</span><span>${money(out[id].L.cash[d])}</span></span>`).join('');
-    tip.style.display='block';
-    const wrapR = svg.parentElement.getBoundingClientRect(); let left = ev.clientX - wrapR.left + 14; if(left + 190 > wrapR.width) left = ev.clientX - wrapR.left - 200;
-    tip.style.left = Math.max(8,left)+'px'; tip.style.top = Math.max(8, ev.clientY - wrapR.top - 70)+'px';
-  };
-  const hide = ()=>{ hov.style.display='none'; tip.style.display='none'; };
+
+  var tip = document.getElementById('tip'), hov = svg.querySelector('#hover'), SHORT = w('world_short');
+  function show(ev){
+    var rect = svg.getBoundingClientRect(); if(!rect.width) return;
+    var px = (ev.clientX - rect.left) * (W / rect.width);
+    var d = Math.max(0, Math.min(H, Math.round((px - pl) * H / (W - pl - pr))));
+    if(px < pl-10 || px > W-pr+10){ hide(); return; }
+    hov.style.display = '';
+    svg.querySelector('#hl').setAttribute('x1', x(d)); svg.querySelector('#hl').setAttribute('x2', x(d));
+    WID.forEach(function(id){ var c = svg.querySelector('#hc'+id);
+      c.setAttribute('cx', x(d)); c.setAttribute('cy', y(out[id].L.cash[d])); });
+    tip.innerHTML = '<b>'+t('day',{n:num(d)})+'</b>' + WID.map(function(id){
+      return '<span><span>'+id+' · '+esc(SHORT[id])+'</span><span>'+money(out[id].L.cash[d])+'</span></span>';
+    }).join('');
+    tip.style.display = 'block';
+    var wr = svg.parentElement.getBoundingClientRect();
+    var left = ev.clientX - wr.left + 14; if(left + 200 > wr.width) left = ev.clientX - wr.left - 210;
+    tip.style.left = Math.max(8,left)+'px'; tip.style.top = Math.max(8, ev.clientY - wr.top - 72)+'px';
+  }
+  function hide(){ hov.style.display = 'none'; tip.style.display = 'none'; }
   svg.onpointermove = show; svg.onpointerdown = show; svg.onpointerleave = hide;
 }
 
-function renderSources(red, shock, d, cap){
-  const yours = [['Monthly sales', money(base[F.revenue])],
-                 [C.unit_word.charAt(0).toUpperCase()+C.unit_word.slice(1)+' per day', Math.round(base[F.units_per_day])],
-                 ['Monthly '+C.cost_word, `${money(base[F.unit_cost_total])} · ${(100*base[F.unit_cost_total]/base[F.revenue]).toFixed(0)}% of sales`],
-                 ['Monthly fixed costs', money(base[F.fixed])],
-                 ['Cash available', money(base[F.cash])]];
-  if(F.utilisation) yours.push(['How full the diary is', base[F.utilisation]+'%']);
-  yours.push([SHOCK_KEY==='demand_growth_pct' ? 'How much busier' : 'Cost increase', `+${(+shock).toLocaleString()}%`]);
-  if(F.low_margin) yours.push(['Share on low-margin '+C.unit_word, `${base[F.low_margin]}%`]);
+function elasticityPlain(){
+  return t('elasticity_plain', {v: localDigits(C.sens_values[sel[PRIMARY]]), unit: w('unit_word')});
+}
+function renderSources(red, shock, cap, out, cTop){
+  var IF = w('intake');
+  function label(k){ return (IF[k] && IF[k].label) || k; }
+  var yours = [
+    [label(F.revenue), money(base[F.revenue])],
+    [label(F.units_per_day), num(Math.round(base[F.units_per_day]))],
+    [label(F.unit_cost_total), money(base[F.unit_cost_total]) + ' · '
+      + num(Math.round(100*base[F.unit_cost_total]/base[F.revenue])) + PS()],
+    [label(F.fixed), money(base[F.fixed])],
+    [label(F.cash), money(base[F.cash])]
+  ];
+  if(F.utilisation) yours.push([label(F.utilisation), num(base[F.utilisation]) + PS()]);
+  yours.push([label(F.shock), pct(shock)]);
+  if(F.low_margin) yours.push([label(F.low_margin), num(base[F.low_margin]) + PS()]);
 
-  // Only claim "research" where a published figure actually backs the setting in use. For the
-  // shop that is the high setting alone; for the salon there is no usable published figure at
-  // any setting, and the card says so rather than sitting empty.
-  const sv = C.sens_values[sel[PRIMARY]];
-  const backed = (C.research_settings || []).includes(sel[PRIMARY]);
-  const research = backed
-    ? [['Price sensitivity of customers', sv, C.sources_note]]
-    : [];
+  var backed = (C.research_settings || []).indexOf(sel[PRIMARY]) >= 0;
+  var research = backed ? [[w('uncertainty_title'), elasticityPlain(), w('sources_note')]] : [];
+  var assume = [];
+  if(!backed) assume.push([w('uncertainty_title'), elasticityPlain(), w('sens_help')[sel[PRIMARY]]]);
+  if(red !== null) assume.push([axisLabel(REDUCTION_KEY), num(red,1)]);
+  if(cap) assume.push([t('row_utilisation'), num(cap,1) + ' ' + w('unit_word')]);
+  D.assumptions.filter(function(a){ return a.klass === 'Assumption'; }).slice(0,3)
+    .forEach(function(a){ assume.push([assumptionLabel(a), assumptionValue(a)]); });
+  var calc = [[t('row_net'), signed(out[cTop] ? out[cTop].m.mnet : out.A.m.mnet)],
+              [t('row_cash_90'), money(out[cTop] ? out[cTop].m.cash90 : out.A.m.cash90)]];
 
-  const assume = [];
-  if(!backed) assume.push(['Price sensitivity of customers', sv, 'Our judgement, not a published figure. Tested across low, medium and high.']);
-  if(red!==null) assume.push(['Saving from changing what you sell', `${(+red).toFixed(1)} points off ${C.cost_word}`, 'Tested at half and one-and-a-half times this.']);
-  if(cap) assume.push(['Space available per day', cap.toFixed(1)+' '+C.unit_word, 'Fixed for 90 days: hiring or longer hours is a different decision.']);
-  D.assumptions.filter(a=>a.klass==='Assumption').slice(0,4).forEach(a=>assume.push([a.label, a.value, a.note||'']));
-
-  const calc = [['Average '+(F.utilisation?'ticket':'order value'), d.aov.toFixed(2)],
-                [C.cost_word.charAt(0).toUpperCase()+C.cost_word.slice(1)+' per '+C.unit_word_singular, d.cpo.toFixed(2)],
-                ['Net per month for each decision','from the last 30 simulated days'],
-                ['Cash at day 30 and day 90',"yesterday's cash + gross profit − fixed costs, every day"],
-                ['Which decision ranks first','by cash at day 90']];
-  if(cap) calc.push([C.unit_word.charAt(0).toUpperCase()+C.unit_word.slice(1)+' served', 'the smaller of wanted and available']);
-
-  const li = rows => rows.map(r=>`<li><div><span>${r[0]}</span>${r[2]?`<span class="s">${r[2]}</span>`:''}</div><span class="v">${r[1]}</span></li>`).join('');
-  document.getElementById('groups').innerHTML = `
-    <div class="grp yours"><div class="k">Your numbers</div><ul>${li(yours)}</ul></div>
-    <div class="grp research"><div class="k">External research</div>${research.length
-      ? `<ul>${li(research)}</ul>`
-      : `<p class="s" style="font-size:14px;color:var(--muted);margin:0">Nothing in this comparison is set from a published study at the setting you have chosen. ${(C.research_settings||[]).length ? 'Move the price-sensitivity control to the setting a study supports and it will appear here.' : 'The studies listed under &ldquo;How this was calculated&rdquo; are reference points our range was positioned against, not measurements of this trade.'}</p>`}</div>
-    <div class="grp assume"><div class="k">Model assumptions</div><ul>${li(assume)}</ul><div class="flag">These are our judgement, not measured from your business, and every one of them is tested across a range.</div></div>
-    <div class="grp calc"><div class="k">Calculated results</div><ul>${li(calc)}</ul></div>`;
-  document.querySelector('.src-note').textContent = C.sources_note;
+  function li(rows){ return rows.map(function(r){
+    return '<li><div><span>' + esc(r[0]) + '</span>'
+      + (r[2] ? '<span class="s">' + esc(r[2]) + '</span>' : '')
+      + '</div><span class="v">' + esc(String(r[1])) + '</span></li>'; }).join(''); }
+  var none = (C.research_settings || []).length ? t('no_research') : t('no_research_ever');
+  document.getElementById('groups').innerHTML =
+      '<div class="grp yours"><div class="k">' + t('group_yours') + '</div><ul>' + li(yours) + '</ul></div>'
+    + '<div class="grp research"><div class="k">' + t('group_research') + '</div>'
+      + (research.length ? '<ul>' + li(research) + '</ul>' : '<p class="none">' + esc(none) + '</p>') + '</div>'
+    + '<div class="grp assume"><div class="k">' + t('group_assumptions') + '</div><ul>' + li(assume) + '</ul>'
+      + '<div class="flag">' + esc(w('sources_note')) + '</div></div>'
+    + '<div class="grp calc"><div class="k">' + t('group_calculated') + '</div><ul>' + li(calc) + '</ul>'
+      + '<div class="flag">' + esc(t('cash_derived')) + '</div></div>';
 }
 
-function renderLimits(){
-  document.querySelector('#limits .limits div:last-child ul').innerHTML =
-    C.limits_does_not.map(x=>`<li>${x}</li>`).join('');
+function renderAdvanced(){
+  var c = document.getElementById('controls'); c.innerHTML = '';
+  GRID_KEYS.filter(function(k){ return k !== PRIMARY && k !== SHOCK_KEY; }).forEach(function(k){
+    var d = document.createElement('div'); d.className = 'ctl';
+    d.innerHTML = '<label for="c_'+k+'">' + esc(axisLabel(k)) + '</label>'
+      + '<select id="c_'+k+'" data-k="'+k+'">' + GRID_VALS[k].map(function(o){
+          return '<option value="'+o+'"' + (String(o)===String(sel[k]) ? ' selected' : '') + '>'
+               + esc(settingLabel(k, o)) + '</option>'; }).join('') + '</select>';
+    c.appendChild(d);
+  });
+}
+
+var GROUP_KEY = {'Your business':'group_about','Your costs':'group_costs','The shock':'group_changed',
+                 'Your menu':'group_mix','Your range':'group_mix','Your services':'group_mix',
+                 'Your diary':'group_capacity'};
+function renderIntake(){
+  var f = document.getElementById('form'), IF = w('intake');
+  function field(k){
+    var meta = IF[k]; if(!meta) return '';
+    var isPct = /_pct$/.test(k), isName = (k === 'name');
+    return '<div class="field"><label for="f_'+k+'">' + esc(meta.label) + '</label><div class="in">'
+      + '<input id="f_'+k+'" data-k="'+k+'" '
+      + (isName ? 'type="text"' : 'type="number" inputmode="decimal" step="any"')
+      + ' placeholder="' + esc(meta.placeholder || '') + '" value="' + esc(String(base[k])) + '">'
+      + (isPct ? '<span class="u">%</span>' : '') + '</div>'
+      + (meta.hint ? '<div class="hint">' + esc(meta.hint) + '</div>' : '') + '</div>';
+  }
+  f.innerHTML = C.intake_groups.map(function(g){
+      return '<div class="fgroup"><div class="k">' + esc(t(GROUP_KEY[g.label] || 'group_about'))
+        + '</div><div class="fields">' + g.fields.map(field).join('') + '</div></div>';
+    }).join('')
+    + '<div class="btnrow"><button class="btn primary" id="apply">' + t('cta_run') + '</button>'
+    + '<button class="btn" id="reset">' + t('cta_reset') + '</button>'
+    + '<span class="msg" id="intake-msg"></span></div>';
+  document.getElementById('apply').onclick = applyInputs;
+  document.getElementById('reset').onclick = function(){
+    base = Object.assign({}, D.baseline_raw);
+    document.getElementById('errs').innerHTML = ''; render(); window.scrollTo({top:0}); };
+}
+
+function applyInputs(){
+  var f = document.getElementById('form'), nb = Object.assign({}, base), bad = [], IF = w('intake');
+  Array.prototype.forEach.call(f.querySelectorAll('input'), function(i){
+    var k = i.dataset.k;
+    if(k === 'name'){ nb[k] = i.value || base.name; return; }
+    var raw = String(i.value).replace(/[,\s٬،]/g,'')
+      .replace(/[۰-۹]/g, function(ch){ return String(ch.charCodeAt(0)-0x06F0); })
+      .replace(/[٠-٩]/g, function(ch){ return String(ch.charCodeAt(0)-0x0660); });
+    var v = parseFloat(raw);
+    if(!isFinite(v)) bad.push((IF[k] && IF[k].label) || k); else nb[k] = v;
+  });
+  var errs = [], sepc = (lang === 'fa') ? '، ' : ', ';
+  if(bad.length) errs.push([t('err_numbers'), bad.join(sepc)]);
+  else {
+    var zero = [];
+    [F.revenue, F.units_per_day, F.unit_cost_total].forEach(function(k){
+      if(!(nb[k] > 0)) zero.push((IF[k] && IF[k].label) || k); });
+    if(zero.length) errs.push([fill(t('err_positive'), {names: zero.join(sepc)}), '']);
+    else if(nb[F.unit_cost_total] >= nb[F.revenue]) errs.push([t('err_cost_high'), t('err_cost_high_why')]);
+    if(F.utilisation && !(nb[F.utilisation] > 0 && nb[F.utilisation] <= 100)) errs.push([t('err_utilisation'), '']);
+    if(nb[F.fixed] < 0 || nb[F.cash] < 0)
+      errs.push([fill(t('err_positive'), {names: (IF[F.fixed] && IF[F.fixed].label) || F.fixed}), '']);
+  }
+  var box = document.getElementById('errs');
+  if(errs.length){
+    box.innerHTML = errs.map(function(e){
+      return '<div class="errbox"><strong>' + esc(e[0]) + '</strong>'
+        + (e[1] ? '<div class="small">' + esc(e[1]) + '</div>' : '') + '</div>'; }).join('');
+    box.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  box.innerHTML = '';
+  nb.is_demo = false;
+  base = nb;
+  render();
+  document.getElementById('intake-msg').textContent = t('cta_done');
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
 function renderHow(){
-  const R = D.reproducibility;
-  const ladder = D.assumptions.map(a=>`<tr><td>${a.label}</td><td>${a.value}</td><td>${a.klass}</td><td><code>${a.ladder_status}</code></td></tr>`).join('');
-  const capLine = F.utilisation
-    ? ' Appointments served is the smaller of appointments wanted and the slots available — an identity about slots, applied after the model, never simulated.' : '';
-  document.getElementById('how-body').innerHTML = `
-    <p>Two layers. A small causal model produces how ${C.cost_word}, price and ${C.unit_word} move over ${H} days, including the lags. Revenue, gross profit and cash are then accounting identities over those trajectories — revenue = ${C.unit_word} × price; cost = ${C.unit_word} × cost each; gross profit = revenue − cost; cash = yesterday's cash + gross profit − fixed costs.${capLine} Nothing in the comparison is produced by a language model.</p>
-    <p>The three decisions share one model, one set of coefficients, one horizon and one set of assumptions; only the decision differs. Model <code>${R.module_id}</code>, semantic hash <code>${R.module_semantic_hash.slice(0,16)}</code>; shared-configuration fingerprint <code>${R.shared_fingerprint.slice(0,16)}</code>; engine fingerprints ${R.worlds.map(w=>`${w.spec.id} <code>${w.engine_fingerprint.slice(0,12)}</code>`).join(' · ')}. Every run is reproducible from the record stored with this report.</p>
-    <p>Sensitivity: ${Object.keys(D.sensitivity.sweep).length} assumptions were varied across pre-set ranges (${Object.values(D.sensitivity.sweep_labels).map(s=>s.toLowerCase()).join('; ')}), giving ${D.sensitivity.n} combinations, each re-run for all three decisions. The count shown above is how many of those combinations each decision ranked first in, for this business's own numbers. No combination is weighted as more likely than another.</p>
-    <p><b>Sources.</b> ${D.sources.map(s=>`${s.citation} — ${s.estimate}. ${s.transfer}`).join('<br><br>')}</p>
-    <div class="tbl-wrap"><table class="tech"><thead><tr><th>Assumption</th><th>Value</th><th>Kind</th><th>Internal status</th></tr></thead><tbody>${ladder}</tbody></table></div>`;
+  var R = D.reproducibility;
+  var ladder = D.assumptions.map(function(a){
+    var kl = L.ui.klass_labels || {};
+    return '<tr><td>' + esc(assumptionLabel(a)) + '</td><td>' + esc(assumptionValue(a))
+      + '</td><td>' + esc(kl[a.klass] || a.klass)
+      + '</td><td><code>' + esc(a.ladder_status) + '</code></td></tr>'; }).join('');
+  document.getElementById('how-body').innerHTML =
+      '<p>' + esc(t('cash_derived')) + '</p>'
+    + '<p><code>' + esc(R.module_id) + '</code> · <code>' + R.module_semantic_hash.slice(0,16) + '</code> · <code>'
+    + R.shared_fingerprint.slice(0,16) + '</code> · '
+    + R.worlds.map(function(x){
+        /* Both fingerprints: the engine one moves when the build does, the trajectory one
+           does not, so together they say whether a rerun differed in code or in result. */
+        return x.spec.id + ' <code>' + x.engine_fingerprint.slice(0,12) + '</code>/<code>'
+             + x.trajectory_fingerprint.slice(0,12) + '</code>'; }).join(' · ')
+    + '</p><p>' + num(D.sensitivity.n) + ' — '
+    + esc(GRID_KEYS.map(axisLabel).join('; ')) + '</p>'
+    + '<p>' + D.sources.map(function(s){
+        return esc(s.citation) + ' — ' + esc(s.estimate) + '. ' + esc(s.transfer); }).join('<br><br>')
+    + '</p><div class="tbl-wrap"><table class="tech"><tbody>' + ladder + '</tbody></table></div>';
 }
 
-// ---- controls ----------------------------------------------------------------------------
-document.getElementById('seg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; sel[PRIMARY]=b.dataset.v; render(); });
-(function advanced(){
-  const c = document.getElementById('controls');
-  GRID_KEYS.filter(k=>k!==PRIMARY && k!==SHOCK_KEY).forEach(k=>{
-    const opts = GRID_VALS[k];
-    const label = AXIS_LABELS[k] || (k==='reduction_points' ? 'How much changing what you sell saves' : k.replace(/_/g,' '));
-    const fmt = o => (typeof o==='number') ? (k.endsWith('_pct') ? o+'%' : o+' points') : o;
-    const d=document.createElement('div'); d.className='ctl';
-    d.innerHTML=`<label>${label}</label><select data-k="${k}">${opts.map(o=>`<option value="${o}" ${String(o)===String(sel[k])?'selected':''}>${fmt(o)}</option>`).join('')}</select>`;
-    c.appendChild(d);
-  });
-  c.addEventListener('change',e=>{ const k=e.target.dataset.k; const v=e.target.value;
-    sel[k] = isNaN(parseFloat(v)) ? v : parseFloat(v); render(); });
-})();
-
-// ---- intake ------------------------------------------------------------------------------
-(function intake(){
-  const f = document.getElementById('form');
-  const byKey = {}; D.intake_fields.forEach(x=>byKey[x.key]=x);
-  const unitOf = x => x.unit==='currency' ? '$' : (x.unit==='%' ? '%' : '');
-  const field = k => { const x = byKey[k]; if(!x) return '';
-    const u = unitOf(x), right = u==='%';
-    return `<div class="field"><label for="f_${k}">${x.label}</label><div class="in">${u&&!right?`<span class="u">${u}</span>`:''}<input id="f_${k}" data-k="${k}" ${k==='name'?'type="text"':'type="number" inputmode="decimal" step="any"'} value="${base[k]}">${u&&right?`<span class="u r">${u}</span>`:''}</div>${x.hint?`<div class="hint">${x.hint}</div>`:''}</div>`; };
-  f.innerHTML = C.intake_groups.map(g=>
-      `<div class="fgroup"><div class="k">${g.label}</div><div class="fields">${g.fields.map(field).join('')}</div></div>`).join('') +
-    `<div class="btnrow"><button class="btn primary" id="apply">Run my comparison</button><button class="btn" id="reset">Back to the demo</button><span class="msg" id="intake-msg"></span></div>`;
-  document.getElementById('apply').onclick = ()=>{
-    const nb = Object.assign({}, base); let bad=[];
-    f.querySelectorAll('input').forEach(i=>{ const k=i.dataset.k; nb[k] = k==='name'? (i.value||'Your business') : parseFloat(i.value); if(k!=='name' && !isFinite(nb[k])) bad.push(k); });
-    const msg = document.getElementById('intake-msg');
-    if(bad.length){ msg.textContent='Please fill in every number.'; return; }
-    if(!(nb[F.revenue]>0 && nb[F.units_per_day]>0 && nb[F.unit_cost_total]>0 && nb[F.unit_cost_total]<nb[F.revenue] && nb[F.fixed]>=0 && nb[F.cash]>=0)){
-      msg.textContent='Costs must be below sales; the other figures must be positive.'; return; }
-    if(F.utilisation && !(nb[F.utilisation]>0 && nb[F.utilisation]<=100)){ msg.textContent='How full the diary is must be between 1% and 100%.'; return; }
-    nb.is_demo=false; base = nb;
-    msg.textContent='Done — the page now uses your numbers.'; render(); window.scrollTo({top:0});
+/* ---- switching: language and business, both presentation only ---------------------------- */
+function applyLanguage(code, push){
+  lang = code; L = I.strings[lang]; setFormatters();
+  document.documentElement.lang = lang;
+  document.documentElement.dir = L.dir;
+  try { localStorage.setItem('dc_lang', lang); } catch(e){}
+  document.getElementById('langs').innerHTML = I.languages.map(function(l){
+    return '<button type="button" data-l="' + l.code + '" lang="' + l.code + '" aria-pressed="'
+      + (l.code === lang) + '">' + esc(l.label) + '</button>'; }).join('');
+  renderBiz();
+  if(push){ var u = new URL(location.href); u.searchParams.set('lang', lang); history.replaceState(null,'',u); }
+  render(true);
+}
+function renderBiz(){
+  var s = document.getElementById('bizsel'), here = D.wedge.id, all = L.all_wedges;
+  s.innerHTML = Object.keys(all).map(function(id){
+    return '<option value="'+id+'"' + (id===here ? ' selected' : '') + '>'
+      + esc(all[id].icon + '  ' + all[id].business_short) + '</option>'; }).join('');
+  s.onchange = function(){
+    var u = new URL(location.href);
+    if(u.searchParams.has('w')){
+      u.searchParams.set('w', s.value); u.searchParams.set('lang', lang); location.href = u.toString();
+    } else {
+      location.href = '../' + s.value + '/' + s.value + '_decision_report.html?lang=' + lang;
+    }
   };
-  document.getElementById('reset').onclick = ()=>{ base=Object.assign({},D.baseline_raw); f.querySelectorAll('input').forEach(i=>i.value=base[i.dataset.k]); document.getElementById('intake-msg').textContent=''; render(); };
+}
+document.getElementById('langs').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(b) applyLanguage(b.dataset.l, true); });
+document.getElementById('seg').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return; sel[PRIMARY] = b.dataset.v; render(); });
+document.getElementById('controls').addEventListener('change', function(e){
+  var k = e.target.dataset.k; if(!k) return;
+  var v = e.target.value; sel[k] = isNaN(parseFloat(v)) ? v : parseFloat(v); render(); });
+
+/* A render that dies part-way is the dangerous kind of failure: the top of the page shows the
+   new figures while the bottom still describes the previous ones, and nothing looks wrong. The
+   page would rather say it is broken than quietly show a customer someone else's numbers. */
+(function guardRender(){
+  var inner = render;
+  render = function(langChanged){
+    try { inner(langChanged); }
+    catch(err){ fail(t('render_failed')); throw err; }
+  };
 })();
 
-render();
+applyLanguage(lang, false);
 })();
 </script>
 </body>

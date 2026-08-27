@@ -16,6 +16,77 @@
    "low_margin": "low_margin_share_pct"
   },
   "primary_axis": "price_sensitivity",
+  "summary_fields": [
+   [
+    "monthly_revenue",
+    "monthly_revenue",
+    2
+   ],
+   [
+    "daily_orders",
+    "daily_orders",
+    1
+   ],
+   [
+    "average_order_value",
+    "average_ticket",
+    2
+   ],
+   [
+    "monthly_cogs",
+    "unit_cost_total",
+    2
+   ],
+   [
+    "cogs_pct",
+    "cost_pct",
+    1
+   ],
+   [
+    "gross_margin_pct",
+    "gross_margin_pct",
+    1
+   ],
+   [
+    "monthly_fixed_costs",
+    "fixed",
+    2
+   ],
+   [
+    "monthly_net",
+    "monthly_net",
+    2
+   ],
+   [
+    "net_margin_pct",
+    "net_margin_pct",
+    1
+   ],
+   [
+    "cash_on_hand",
+    "cash",
+    2
+   ],
+   [
+    "supplier_increase_pct",
+    "supplier_increase_pct",
+    null
+   ],
+   [
+    "low_margin_share_pct",
+    "low_margin_share_pct",
+    null
+   ]
+  ],
+  "grid_key_fields": {
+   "price_sensitivity": "price_sensitivity",
+   "cogs_pass_through": "cogs_pass_through",
+   "supplier_increase_pct": {
+    "float": "supplier_increase_pct"
+   },
+   "reduction_points": "reduction",
+   "demand_adjustment_speed": "demand_adjustment_speed"
+  },
   "demo_noun": "shop",
   "page_title": "Shop cost decision \u2014 three options compared",
   "research_settings": [
@@ -94,6 +165,659 @@
     ]
    }
   ]
+ },
+ "i18n": {
+  "languages": [
+   {
+    "code": "en",
+    "label": "English",
+    "dir": "ltr"
+   },
+   {
+    "code": "fa",
+    "label": "\u0641\u0627\u0631\u0633\u06cc",
+    "dir": "rtl"
+   }
+  ],
+  "default": "en",
+  "strings": {
+   "en": {
+    "dir": "ltr",
+    "label": "English",
+    "numerals": "latn",
+    "ui": {
+     "product": "Decision Compare",
+     "tagline": "See the trade-offs before you decide.",
+     "principle_1": "Same business.",
+     "principle_2": "Same assumptions.",
+     "principle_3": "Different decision.",
+     "home_question": "What kind of business do you run?",
+     "home_lede": "Pick the one closest to yours. You will compare a few versions of one real decision \u2014 with your own figures.",
+     "home_pick": "Compare the options",
+     "home_footer": "Each report compares three versions of one decision on the same model, so the differences come from the decision rather than from different guesses. It is a scenario comparison under stated assumptions \u2014 not a prediction, and not advice.",
+     "journey_1": "Your business",
+     "journey_2": "What changed",
+     "journey_3": "Compare your choices",
+     "journey_4": "The money and the trade-offs",
+     "journey_5": "What could change the answer",
+     "journey_6": "Assumptions",
+     "switch_business": "Change business type",
+     "language": "Language",
+     "demo_badge": "Demo \u2014 fictional {noun}",
+     "back_home": "All business types",
+     "decision_eyebrow": "The decision",
+     "your_options": "Your three choices",
+     "ranked_first": "Ranked first",
+     "ranked_first_cases": "Ranked first in {n} of {total} tested cases",
+     "ranked_first_central": "Ranks first under the current assumptions",
+     "per_month": "per month",
+     "per_month_after": "once things have settled",
+     "today": "today",
+     "cash_at_90": "cash after 90 days",
+     "cash_runs_out": "cash runs out on day {day}",
+     "orders_change": "{unit}",
+     "not_a_prediction": "A scenario comparison under stated assumptions \u2014 not a prediction.",
+     "tested_cases_tooltip": "These are tested assumption combinations, not probabilities.",
+     "why_title": "Why does {option} come out ahead?",
+     "why_tie": "Why is it this close?",
+     "why_lose_units": "You lose about {pct} of your {unit},",
+     "why_gain": "but under the current assumptions the higher price more than makes up for it.",
+     "why_gain_capacity": "but your diary was already full, so most of those were people you were turning away anyway.",
+     "why_cost": "and the saving on {cost} more than makes up for it.",
+     "why_vs_a": "Against {other}, that is {amount} more cash after 90 days.",
+     "why_gap": "{lead} is {amount} ahead of {second}.",
+     "chart_eyebrow": "The next 90 days",
+     "chart_title": "Cash in the bank under each choice",
+     "chart_alt": "Cash over 90 days for the three choices. {summary}",
+     "chart_today": "today",
+     "cash_zero": "cash = 0",
+     "day": "Day {n}",
+     "cash_derived": "Cash is calculated from the simulated business activity. It is not directly simulated by the engine.",
+     "compare_table": "Side by side",
+     "row_cash_30": "Cash after 30 days",
+     "row_cash_90": "Cash after 90 days",
+     "row_net": "Net per month once settled",
+     "row_utilisation": "How full you end up",
+     "row_turned_away": "Turned away per day",
+     "unknown_eyebrow": "The biggest unknown",
+     "unknown_what": "What we don't know",
+     "unknown_why": "Why it matters",
+     "unknown_could": "Could it change the decision?",
+     "unknown_could_yes": "Yes. It is the one assumption that changes which choice ranks first.",
+     "unknown_could_yes_multi": "Yes. It is one of {n} assumptions that can change which choice ranks first.",
+     "unknown_could_no": "Not within the range we tested. It changes the size of the gap, not the order.",
+     "unknown_how": "How you could find out",
+     "change_eyebrow": "What could change the answer?",
+     "change_title": "Which assumptions actually move the decision",
+     "influence_high": "High",
+     "influence_medium": "Medium",
+     "influence_low": "Low",
+     "changes_ranking": "changes which ranks first",
+     "changes_size": "changes the size of the gap",
+     "only_one_flips": "Only one assumption changed which option ranked first: {name}.",
+     "several_flip": "{n} assumptions changed which option ranked first: {names}.",
+     "none_flips": "Nothing we tested changed which option ranked first.",
+     "try_it": "Try it",
+     "decision_changed": "The decision changed.",
+     "decision_changed_detail": "At this setting, {option} now ranks first.",
+     "decision_unchanged": "{option} still ranks first at this setting.",
+     "other_assumptions": "Other assumptions you can change",
+     "evidence_eyebrow": "Where the numbers come from",
+     "group_yours": "Your numbers",
+     "group_research": "External research",
+     "group_assumptions": "Model assumptions",
+     "group_calculated": "Calculated results",
+     "no_research": "Nothing here is set from a published study at the setting you have chosen.",
+     "no_research_ever": "No published study covers this trade closely enough to use. Every setting here is our judgement.",
+     "does_title": "What this does \u2014 and doesn't do",
+     "does": "This does",
+     "does_not": "This does not",
+     "does_1": "Compare several decisions consistently.",
+     "does_2": "Show the financial trade-offs.",
+     "does_3": "Show which assumptions matter.",
+     "does_4": "Show what could change the ranking.",
+     "cta_eyebrow": "Your turn",
+     "cta_demo": "Try it with your business",
+     "cta_again": "Compare another decision",
+     "cta_lede": "Your figures stay in this page. Nothing is sent anywhere.",
+     "cta_run": "Compare my choices",
+     "cta_reset": "Back to the demo",
+     "cta_done": "Done \u2014 this page now uses your numbers.",
+     "group_about": "About your business",
+     "group_costs": "Your costs",
+     "group_capacity": "Your capacity",
+     "group_changed": "What changed",
+     "group_mix": "What you sell",
+     "err_numbers": "Please fill in every number.",
+     "err_cost_high": "We can't compare these options with these numbers yet.",
+     "err_cost_high_why": "Your costs are the same as or higher than your sales, so there is no margin to compare. Check the cost figure.",
+     "err_positive": "These need to be more than zero: {names}.",
+     "err_utilisation": "How full the diary is should be between 1% and 100%.",
+     "err_failed": "Something went wrong while comparing. No numbers are shown, because half-finished ones would be worse than none.",
+     "how_title": "How this was calculated",
+     "how_open": "Method, sources and reproducibility",
+     "advanced": "Advanced",
+     "currency_note": "All figures are in whatever currency you entered.",
+     "klass_labels": {
+      "Customer input": "Your numbers",
+      "External research": "External research",
+      "Assumption": "Model assumption",
+      "Derived": "Calculated"
+     },
+     "setting_labels": {
+      "low": "Low",
+      "central": "Middle",
+      "high": "High",
+      "slow": "Slow",
+      "fast": "Fast"
+     },
+     "value_of_sales": "{v} ({p}% of sales)",
+     "pct_sign": "%",
+     "per_day": "a day",
+     "whoami_cash": "in cash",
+     "whoami_capacity": "of capacity a day",
+     "elasticity_plain": "\u2248{v}% of {unit} per 1% rise",
+     "render_failed": "Something went wrong drawing this page. The figures shown may be out of date \u2014 please reload.",
+     "why_demand_grows": "Demand is still growing at this price,",
+     "why_demand_holds": "Demand barely moves at this price,",
+     "why_capacity_full": "and you were already at capacity, so the gain comes from the price rather than from more work.",
+     "why_price_through": "and the higher price carries almost straight through to what you keep."
+    },
+    "wedge": {
+     "business": "Shop / Online Store",
+     "business_short": "Shop",
+     "noun": "shop",
+     "icon": "\ud83d\udecd",
+     "question": "My supplier raised prices. Should I pass it on?",
+     "page_title": "Shop cost decision \u2014 three choices compared",
+     "headline": "Your supplier put prices up {shock}%. Should you pass it on?",
+     "hero_lede": "Three ways to respond, compared on the same model of your shop and the same assumptions. Only the decision changes between them.",
+     "what_changed": "Your supplier put wholesale prices up {shock}%.",
+     "unit_word": "orders",
+     "unit_word_singular": "order",
+     "cost_word": "cost of goods",
+     "world_names": {
+      "A": "Hold prices",
+      "B": "Raise prices 8%",
+      "C": "Raise prices 4% + drop low-margin lines"
+     },
+     "world_short": {
+      "A": "Hold prices",
+      "B": "Raise 8%",
+      "C": "Raise 4% + drop lines"
+     },
+     "world_verdict_labels": {
+      "A": "Holding prices",
+      "B": "Raising prices 8%",
+      "C": "A 4% rise plus dropping low-margin lines"
+     },
+     "uncertainty_title": "How price-sensitive are your customers?",
+     "unknown_why": "A shop's customers can often buy the same item elsewhere, so a price rise costs more orders here than in a trade where people come for you specifically. How much more is the thing nobody has measured for your shop.",
+     "unknown_how": "Put prices up on a handful of lines for two weeks and watch what happens to those lines against the rest. Your own numbers from the last time you raised prices work too.",
+     "sens_help": {
+      "low": "Loyal customers, an awkward shop to replace, or competitors raising prices too.",
+      "central": "Our judgement: customers who could shop elsewhere, with some effort.",
+      "high": "The research figure for customers who can buy the identical item elsewhere."
+     },
+     "c_card_note": "Depends on how much dropping low-margin lines cuts your cost of goods (about {red} points here) and how many {unit} leave with those lines ({loss}%). Neither is measured from your shop.",
+     "chart_lede": "Costs take about three weeks to rise \u2014 the stock on your shelves was bought at the old price. Customers react to a new price within a week or two.",
+     "sources_note": "The research quoted measures customers switching between brands on the same shelf, which is easier than switching shops. It sets the top of the range rather than the middle.",
+     "limits_does_not": [
+      "Predict your future sales.",
+      "Know how your individual customers will behave.",
+      "Model competitors, marketplaces or search ranking.",
+      "Model advertising or promotions."
+     ],
+     "intake": {
+      "monthly_revenue": {
+       "label": "About how much do you sell in a month?",
+       "hint": "A typical month, before the increase.",
+       "placeholder": "92,000"
+      },
+      "daily_orders": {
+       "label": "About how many orders a day?",
+       "hint": "In store and online together.",
+       "placeholder": "90"
+      },
+      "monthly_cogs": {
+       "label": "What do the goods cost you a month?",
+       "hint": "What you pay suppliers for what you sell. Not wages, not rent.",
+       "placeholder": "53,360"
+      },
+      "monthly_fixed_costs": {
+       "label": "Rent, wages and bills a month?",
+       "hint": "Everything that will not change in the next 90 days.",
+       "placeholder": "33,000"
+      },
+      "cash_on_hand": {
+       "label": "How much cash is in the account today?",
+       "hint": "What you could spend right now.",
+       "placeholder": "26,000"
+      },
+      "supplier_increase_pct": {
+       "label": "How much did your supplier put prices up?",
+       "hint": "As a percentage of what you pay for goods.",
+       "placeholder": "25"
+      },
+      "low_margin_share_pct": {
+       "label": "What share of orders are lines that earn you little?",
+       "hint": "Roughly. A guess is fine \u2014 it is tested as an assumption.",
+       "placeholder": "20"
+      },
+      "name": {
+       "label": "What is your shop called?",
+       "hint": "Only used on this page.",
+       "placeholder": "Nine Yards"
+      }
+     },
+     "sweep_labels": {
+      "price_sensitivity": "How price-sensitive your customers are",
+      "cogs_pass_through": "How much of the increase reaches your costs",
+      "supplier_increase_pct": "How big the supplier increase really is",
+      "reduction_points": "How much dropping low-margin lines really saves",
+      "demand_adjustment_speed": "How quickly customers react"
+     },
+     "assumptions": {
+      "monthly_revenue": {
+       "label": "Current monthly sales"
+      },
+      "daily_orders": {
+       "label": "Orders per day"
+      },
+      "monthly_cogs": {
+       "label": "Monthly cost of goods"
+      },
+      "monthly_fixed_costs": {
+       "label": "Monthly fixed costs (incl. wages)"
+      },
+      "cash_on_hand": {
+       "label": "Cash available today"
+      },
+      "supplier_increase_pct": {
+       "label": "Supplier cost increase"
+      },
+      "low_margin_share_pct": {
+       "label": "Share of orders on low-margin lines"
+      },
+      "price_sensitivity": {
+       "label": "Price sensitivity of customers"
+      },
+      "cogs_pass_through": {
+       "label": "Share of supplier increase reaching your cost of goods"
+      },
+      "inventory_lag": {
+       "label": "Delay before higher supplier prices reach your costs",
+       "text": "about 20 days (stock on hand)"
+      },
+      "demand_adjustment_speed": {
+       "label": "How quickly customers react to a price change",
+       "map": {
+        "slow": "about two and a half weeks to half-react",
+        "central": "about eight days to half-react",
+        "fast": "about four days to half-react"
+       }
+      },
+      "trim_effectiveness": {
+       "label": "Cost saving from dropping low-margin lines",
+       "text": "{reduction:g} points off average cost of goods ({trim_effectiveness:.3f} per point of low-margin share)"
+      },
+      "trim_demand_cost": {
+       "label": "Orders lost from dropping those lines",
+       "text": "{demand_cost:.1f}% of orders"
+      },
+      "price_rises": {
+       "label": "Price rises compared",
+       "text": "B: +8%   C: +4%"
+      },
+      "horizon": {
+       "label": "Comparison horizon",
+       "text": "90 days"
+      },
+      "average_order_value": {
+       "label": "Average order value"
+      },
+      "cogs_per_order": {
+       "label": "Cost of goods per order"
+      }
+     }
+    },
+    "all_wedges": {
+     "cafe": {
+      "business": "Cafe / Restaurant",
+      "business_short": "Cafe",
+      "icon": "\u2615"
+     },
+     "shop": {
+      "business": "Shop / Online Store",
+      "business_short": "Shop",
+      "icon": "\ud83d\udecd"
+     },
+     "salon": {
+      "business": "Salon / Service Business",
+      "business_short": "Salon",
+      "icon": "\u2702"
+     }
+    }
+   },
+   "fa": {
+    "dir": "rtl",
+    "label": "\u0641\u0627\u0631\u0633\u06cc",
+    "numerals": "arabext",
+    "ui": {
+     "product": "\u0645\u0642\u0627\u06cc\u0633\u0647\u0654 \u062a\u0635\u0645\u06cc\u0645",
+     "tagline": "\u0642\u0628\u0644 \u0627\u0632 \u062a\u0635\u0645\u06cc\u0645\u060c \u067e\u06cc\u0627\u0645\u062f \u0627\u0646\u062a\u062e\u0627\u0628\u200c\u0647\u0627\u06cc\u062a \u0631\u0627 \u0628\u0628\u06cc\u0646.",
+     "principle_1": "\u0647\u0645\u0627\u0646 \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631.",
+     "principle_2": "\u0647\u0645\u0627\u0646 \u0641\u0631\u0636\u200c\u0647\u0627.",
+     "principle_3": "\u062a\u0635\u0645\u06cc\u0645 \u0645\u062a\u0641\u0627\u0648\u062a.",
+     "home_question": "\u0686\u0647 \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631\u06cc \u062f\u0627\u0631\u06cc\u061f",
+     "home_lede": "\u0646\u0632\u062f\u06cc\u06a9\u200c\u062a\u0631\u06cc\u0646 \u0631\u0627 \u0627\u0646\u062a\u062e\u0627\u0628 \u06a9\u0646. \u0642\u0631\u0627\u0631 \u0627\u0633\u062a \u0686\u0646\u062f \u062d\u0627\u0644\u062a \u0627\u0632 \u06cc\u06a9 \u062a\u0635\u0645\u06cc\u0645 \u0648\u0627\u0642\u0639\u06cc \u0631\u0627 \u0628\u0627 \u0639\u062f\u062f\u0647\u0627\u06cc \u062e\u0648\u062f\u062a \u0645\u0642\u0627\u06cc\u0633\u0647 \u06a9\u0646\u06cc.",
+     "home_pick": "\u0627\u0646\u062a\u062e\u0627\u0628\u200c\u0647\u0627 \u0631\u0627 \u0645\u0642\u0627\u06cc\u0633\u0647 \u06a9\u0646",
+     "home_footer": "\u0647\u0631 \u06af\u0632\u0627\u0631\u0634 \u0633\u0647 \u062d\u0627\u0644\u062a \u0627\u0632 \u06cc\u06a9 \u062a\u0635\u0645\u06cc\u0645 \u0631\u0627 \u0631\u0648\u06cc \u06cc\u06a9 \u0645\u062f\u0644 \u0645\u0642\u0627\u06cc\u0633\u0647 \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u062a\u0627 \u062a\u0641\u0627\u0648\u062a\u200c\u0647\u0627 \u0627\u0632 \u062e\u0648\u062f\u0650 \u062a\u0635\u0645\u06cc\u0645 \u0628\u06cc\u0627\u06cc\u062f \u0646\u0647 \u0627\u0632 \u062d\u062f\u0633\u200c\u0647\u0627\u06cc \u0645\u062a\u0641\u0627\u0648\u062a. \u0627\u06cc\u0646 \u06cc\u06a9 \u0645\u0642\u0627\u06cc\u0633\u0647\u0654 \u0633\u0646\u0627\u0631\u06cc\u0648 \u0628\u0627 \u0641\u0631\u0636\u200c\u0647\u0627\u06cc \u0645\u0634\u062e\u0635 \u0627\u0633\u062a\u061b \u0646\u0647 \u067e\u06cc\u0634\u200c\u0628\u06cc\u0646\u06cc\u060c \u0646\u0647 \u062a\u0648\u0635\u06cc\u0647.",
+     "journey_1": "\u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631 \u062a\u0648",
+     "journey_2": "\u0686\u0647 \u0686\u06cc\u0632\u06cc \u062a\u063a\u06cc\u06cc\u0631 \u06a9\u0631\u062f\u0647",
+     "journey_3": "\u0627\u0646\u062a\u062e\u0627\u0628\u200c\u0647\u0627 \u0631\u0627 \u0645\u0642\u0627\u06cc\u0633\u0647 \u06a9\u0646",
+     "journey_4": "\u0627\u062b\u0631 \u0645\u0627\u0644\u06cc \u0648 \u0628\u062f\u0647\u200c\u0628\u0633\u062a\u0627\u0646\u200c\u0647\u0627",
+     "journey_5": "\u0686\u0647 \u0686\u06cc\u0632\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u062c\u0648\u0627\u0628 \u0631\u0627 \u0639\u0648\u0636 \u06a9\u0646\u062f",
+     "journey_6": "\u0641\u0631\u0636\u200c\u0647\u0627",
+     "switch_business": "\u062a\u063a\u06cc\u06cc\u0631 \u0646\u0648\u0639 \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631",
+     "language": "\u0632\u0628\u0627\u0646",
+     "demo_badge": "\u0646\u0645\u0648\u0646\u0647 \u2014 {noun} \u0641\u0631\u0636\u06cc",
+     "back_home": "\u0647\u0645\u0647\u0654 \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631\u0647\u0627",
+     "decision_eyebrow": "\u062a\u0635\u0645\u06cc\u0645",
+     "your_options": "\u0633\u0647 \u0627\u0646\u062a\u062e\u0627\u0628 \u062a\u0648",
+     "ranked_first": "\u0627\u0646\u062a\u062e\u0627\u0628 \u0627\u0648\u0644",
+     "ranked_first_cases": "\u0627\u0646\u062a\u062e\u0627\u0628 \u0627\u0648\u0644 \u062f\u0631 {n} \u062d\u0627\u0644\u062a \u0627\u0632 {total} \u062d\u0627\u0644\u062a \u0628\u0631\u0631\u0633\u06cc\u200c\u0634\u062f\u0647",
+     "ranked_first_central": "\u0628\u0627 \u0641\u0631\u0636\u200c\u0647\u0627\u06cc \u0641\u0639\u0644\u06cc\u060c \u0627\u0648\u0644 \u0627\u0633\u062a",
+     "per_month": "\u062f\u0631 \u0645\u0627\u0647",
+     "per_month_after": "\u0628\u0639\u062f \u0627\u0632 \u0627\u06cc\u0646\u06a9\u0647 \u0627\u0648\u0636\u0627\u0639 \u0622\u0631\u0627\u0645 \u06af\u0631\u0641\u062a",
+     "today": "\u0627\u0644\u0627\u0646",
+     "cash_at_90": "\u0645\u0648\u062c\u0648\u062f\u06cc \u0628\u0639\u062f \u0627\u0632 \u06f9\u06f0 \u0631\u0648\u0632",
+     "cash_runs_out": "\u067e\u0648\u0644 \u0631\u0648\u0632 {day} \u062a\u0645\u0627\u0645 \u0645\u06cc\u200c\u0634\u0648\u062f",
+     "orders_change": "{unit}",
+     "not_a_prediction": "\u0645\u0642\u0627\u06cc\u0633\u0647\u0654 \u0633\u0646\u0627\u0631\u06cc\u0648 \u0628\u0627 \u0641\u0631\u0636\u200c\u0647\u0627\u06cc \u0645\u0634\u062e\u0635 \u2014 \u0646\u0647 \u067e\u06cc\u0634\u200c\u0628\u06cc\u0646\u06cc.",
+     "tested_cases_tooltip": "\u0627\u06cc\u0646 \u0639\u062f\u062f \u0627\u062d\u062a\u0645\u0627\u0644 \u0645\u0648\u0641\u0642\u06cc\u062a \u0646\u06cc\u0633\u062a\u061b \u062a\u0639\u062f\u0627\u062f \u062d\u0627\u0644\u062a\u200c\u0647\u0627\u06cc \u0645\u062e\u062a\u0644\u0641\u06cc \u0627\u0633\u062a \u06a9\u0647 \u0628\u0631\u0631\u0633\u06cc \u0634\u062f\u0647\u200c\u0627\u0646\u062f.",
+     "why_title": "\u0686\u0631\u0627 {option} \u062c\u0644\u0648 \u0645\u06cc\u200c\u0627\u0641\u062a\u062f\u061f",
+     "why_tie": "\u0686\u0631\u0627 \u0627\u06cc\u0646\u200c\u0642\u062f\u0631 \u0646\u0632\u062f\u06cc\u06a9 \u0627\u0633\u062a\u061f",
+     "why_lose_units": "\u062d\u062f\u0648\u062f {pct} \u0627\u0632 {unit} \u06a9\u0645 \u0645\u06cc\u200c\u0634\u0648\u062f\u060c",
+     "why_gain": "\u0627\u0645\u0627 \u0628\u0627 \u0641\u0631\u0636\u200c\u0647\u0627\u06cc \u0641\u0639\u0644\u06cc\u060c \u0627\u0641\u0632\u0627\u06cc\u0634 \u0642\u06cc\u0645\u062a \u0628\u06cc\u0634\u062a\u0631 \u0627\u0632 \u0627\u06cc\u0646 \u0627\u0641\u062a \u0631\u0627 \u062c\u0628\u0631\u0627\u0646 \u0645\u06cc\u200c\u06a9\u0646\u062f.",
+     "why_gain_capacity": "\u0627\u0645\u0627 \u0648\u0642\u062a\u200c\u0647\u0627\u06cc\u062a \u0627\u0632 \u0642\u0628\u0644 \u067e\u0631 \u0628\u0648\u062f\u060c \u067e\u0633 \u0628\u06cc\u0634\u062a\u0631\u0634\u0627\u0646 \u06a9\u0633\u0627\u0646\u06cc \u0628\u0648\u062f\u0646\u062f \u06a9\u0647 \u0628\u0647\u200c\u0647\u0631\u062d\u0627\u0644 \u062c\u0627 \u0646\u0645\u06cc\u200c\u0634\u062f\u0646\u062f.",
+     "why_cost": "\u0648 \u0635\u0631\u0641\u0647\u200c\u062c\u0648\u06cc\u06cc \u062f\u0631 {cost} \u0628\u06cc\u0634\u062a\u0631 \u0627\u0632 \u0627\u06cc\u0646 \u0627\u0641\u062a \u0631\u0627 \u062c\u0628\u0631\u0627\u0646 \u0645\u06cc\u200c\u06a9\u0646\u062f.",
+     "why_vs_a": "\u062f\u0631 \u0645\u0642\u0627\u06cc\u0633\u0647 \u0628\u0627 {other}\u060c \u0628\u0639\u062f \u0627\u0632 \u06f9\u06f0 \u0631\u0648\u0632 {amount} \u067e\u0648\u0644 \u0628\u06cc\u0634\u062a\u0631\u06cc \u062f\u0631 \u062d\u0633\u0627\u0628 \u0645\u06cc\u200c\u0645\u0627\u0646\u062f.",
+     "why_gap": "{lead} \u0628\u0647 \u0627\u0646\u062f\u0627\u0632\u0647\u0654 {amount} \u0627\u0632 {second} \u062c\u0644\u0648\u062a\u0631 \u0627\u0633\u062a.",
+     "chart_eyebrow": "\u06f9\u06f0 \u0631\u0648\u0632 \u0622\u06cc\u0646\u062f\u0647",
+     "chart_title": "\u0645\u0648\u062c\u0648\u062f\u06cc \u062d\u0633\u0627\u0628 \u0628\u0627 \u0647\u0631 \u0627\u0646\u062a\u062e\u0627\u0628",
+     "chart_alt": "\u0645\u0648\u062c\u0648\u062f\u06cc \u0646\u0642\u062f\u06cc \u062f\u0631 \u06f9\u06f0 \u0631\u0648\u0632 \u0628\u0631\u0627\u06cc \u0633\u0647 \u0627\u0646\u062a\u062e\u0627\u0628. {summary}",
+     "chart_today": "\u0627\u0644\u0627\u0646",
+     "cash_zero": "\u0635\u0641\u0631",
+     "day": "\u0631\u0648\u0632 {n}",
+     "cash_derived": "\u0645\u0633\u06cc\u0631 \u0646\u0642\u062f\u06cc\u0646\u06af\u06cc \u0627\u0632 \u0646\u062a\u0627\u06cc\u062c \u0641\u0639\u0627\u0644\u06cc\u062a \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631 \u0645\u062d\u0627\u0633\u0628\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f\u061b \u062e\u0648\u062f\u0650 \u0645\u0648\u062a\u0648\u0631 \u0645\u0633\u062a\u0642\u06cc\u0645\u0627\u064b \u067e\u0648\u0644 \u0646\u0642\u062f \u0631\u0627 \u0634\u0628\u06cc\u0647\u200c\u0633\u0627\u0632\u06cc \u0646\u0645\u06cc\u200c\u06a9\u0646\u062f.",
+     "compare_table": "\u06a9\u0646\u0627\u0631 \u0647\u0645",
+     "row_cash_30": "\u0645\u0648\u062c\u0648\u062f\u06cc \u0628\u0639\u062f \u0627\u0632 \u06f3\u06f0 \u0631\u0648\u0632",
+     "row_cash_90": "\u0645\u0648\u062c\u0648\u062f\u06cc \u0628\u0639\u062f \u0627\u0632 \u06f9\u06f0 \u0631\u0648\u0632",
+     "row_net": "\u0633\u0648\u062f \u0645\u0627\u0647\u0627\u0646\u0647 \u0628\u0639\u062f \u0627\u0632 \u0622\u0631\u0627\u0645\u200c\u0634\u062f\u0646",
+     "row_utilisation": "\u062f\u0631 \u067e\u0627\u06cc\u0627\u0646 \u0686\u0642\u062f\u0631 \u067e\u0631 \u0645\u06cc\u200c\u0634\u0648\u06cc",
+     "row_turned_away": "\u0631\u0648\u0632\u0627\u0646\u0647 \u0686\u0646\u062f \u0646\u0641\u0631 \u062c\u0627 \u0646\u0645\u06cc\u200c\u0634\u0648\u0646\u062f",
+     "unknown_eyebrow": "\u0645\u0647\u0645\u200c\u062a\u0631\u06cc\u0646 \u0686\u06cc\u0632\u06cc \u06a9\u0647 \u0647\u0646\u0648\u0632 \u0646\u0645\u06cc\u200c\u062f\u0627\u0646\u06cc\u0645",
+     "unknown_what": "\u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0646\u0645\u06cc\u200c\u062f\u0627\u0646\u06cc\u0645",
+     "unknown_why": "\u0686\u0631\u0627 \u0645\u0647\u0645 \u0627\u0633\u062a",
+     "unknown_could": "\u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u062a\u0635\u0645\u06cc\u0645 \u0631\u0627 \u0639\u0648\u0636 \u06a9\u0646\u062f\u061f",
+     "unknown_could_yes": "\u0628\u0644\u0647. \u062a\u0646\u0647\u0627 \u0641\u0631\u0636\u06cc \u0627\u0633\u062a \u06a9\u0647 \u0627\u0646\u062a\u062e\u0627\u0628 \u0627\u0648\u0644 \u0631\u0627 \u0639\u0648\u0636 \u0645\u06cc\u200c\u06a9\u0646\u062f.",
+     "unknown_could_yes_multi": "\u0628\u0644\u0647. \u06cc\u06a9\u06cc \u0627\u0632 {n} \u0641\u0631\u0636\u06cc \u0627\u0633\u062a \u06a9\u0647 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u0646\u062f \u0627\u0646\u062a\u062e\u0627\u0628 \u0627\u0648\u0644 \u0631\u0627 \u0639\u0648\u0636 \u06a9\u0646\u0646\u062f.",
+     "unknown_could_no": "\u062f\u0631 \u0628\u0627\u0632\u0647\u200c\u0627\u06cc \u06a9\u0647 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0631\u062f\u06cc\u0645\u060c \u0646\u0647. \u0641\u0627\u0635\u0644\u0647 \u0631\u0627 \u06a9\u0645 \u0648 \u0632\u06cc\u0627\u062f \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u0648\u0644\u06cc \u062a\u0631\u062a\u06cc\u0628 \u0631\u0627 \u0646\u0647.",
+     "unknown_how": "\u0686\u0637\u0648\u0631 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u06cc \u0628\u0641\u0647\u0645\u06cc",
+     "change_eyebrow": "\u0686\u0647 \u0686\u06cc\u0632\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u0646\u062a\u06cc\u062c\u0647 \u0631\u0627 \u0639\u0648\u0636 \u06a9\u0646\u062f\u061f",
+     "change_title": "\u06a9\u062f\u0627\u0645 \u0641\u0631\u0636\u200c\u0647\u0627 \u0648\u0627\u0642\u0639\u0627\u064b \u062a\u0635\u0645\u06cc\u0645 \u0631\u0627 \u062c\u0627\u0628\u0647\u200c\u062c\u0627 \u0645\u06cc\u200c\u06a9\u0646\u0646\u062f",
+     "influence_high": "\u0632\u06cc\u0627\u062f",
+     "influence_medium": "\u0645\u062a\u0648\u0633\u0637",
+     "influence_low": "\u06a9\u0645",
+     "changes_ranking": "\u062a\u0631\u062a\u06cc\u0628 \u0631\u0627 \u0639\u0648\u0636 \u0645\u06cc\u200c\u06a9\u0646\u062f",
+     "changes_size": "\u0641\u0642\u0637 \u0641\u0627\u0635\u0644\u0647 \u0631\u0627 \u06a9\u0645 \u0648 \u0632\u06cc\u0627\u062f \u0645\u06cc\u200c\u06a9\u0646\u062f",
+     "only_one_flips": "\u0641\u0642\u0637 \u06cc\u06a9 \u0641\u0631\u0636 \u062a\u0648\u0627\u0646\u0633\u062a \u0627\u0646\u062a\u062e\u0627\u0628 \u0627\u0648\u0644 \u0631\u0627 \u0639\u0648\u0636 \u06a9\u0646\u062f: {name}.",
+     "several_flip": "{n} \u0641\u0631\u0636 \u062a\u0648\u0627\u0646\u0633\u062a\u0646\u062f \u0627\u0646\u062a\u062e\u0627\u0628 \u0627\u0648\u0644 \u0631\u0627 \u0639\u0648\u0636 \u06a9\u0646\u0646\u062f: {names}.",
+     "none_flips": "\u0647\u06cc\u0686\u200c\u06a9\u062f\u0627\u0645 \u0627\u0632 \u0686\u06cc\u0632\u0647\u0627\u06cc\u06cc \u06a9\u0647 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0631\u062f\u06cc\u0645 \u0627\u0646\u062a\u062e\u0627\u0628 \u0627\u0648\u0644 \u0631\u0627 \u0639\u0648\u0636 \u0646\u06a9\u0631\u062f.",
+     "try_it": "\u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0646",
+     "decision_changed": "\u0627\u0646\u062a\u062e\u0627\u0628 \u0627\u0648\u0644 \u0639\u0648\u0636 \u0634\u062f.",
+     "decision_changed_detail": "\u0628\u0627 \u0627\u06cc\u0646 \u062a\u0646\u0638\u06cc\u0645\u060c \u062d\u0627\u0644\u0627 {option} \u062c\u0644\u0648 \u0645\u06cc\u200c\u0627\u0641\u062a\u062f.",
+     "decision_unchanged": "\u0628\u0627 \u0627\u06cc\u0646 \u062a\u0646\u0638\u06cc\u0645 \u0647\u0645 {option} \u0627\u0648\u0644 \u0645\u06cc\u200c\u0645\u0627\u0646\u062f.",
+     "other_assumptions": "\u0641\u0631\u0636\u200c\u0647\u0627\u06cc \u062f\u06cc\u06af\u0631\u06cc \u06a9\u0647 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u06cc \u0639\u0648\u0636 \u06a9\u0646\u06cc",
+     "evidence_eyebrow": "\u0627\u06cc\u0646 \u0639\u062f\u062f\u0647\u0627 \u0627\u0632 \u06a9\u062c\u0627 \u0622\u0645\u062f\u0647\u200c\u0627\u0646\u062f",
+     "group_yours": "\u0639\u062f\u062f\u0647\u0627\u06cc \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631 \u0634\u0645\u0627",
+     "group_research": "\u0627\u0637\u0644\u0627\u0639\u0627\u062a \u067e\u0698\u0648\u0647\u0634\u06cc",
+     "group_assumptions": "\u0641\u0631\u0636\u200c\u0647\u0627\u06cc \u0645\u062f\u0644",
+     "group_calculated": "\u0646\u062a\u0627\u06cc\u062c \u0645\u062d\u0627\u0633\u0628\u0647\u200c\u0634\u062f\u0647",
+     "no_research": "\u0628\u0627 \u062a\u0646\u0638\u06cc\u0645\u06cc \u06a9\u0647 \u0627\u0646\u062a\u062e\u0627\u0628 \u06a9\u0631\u062f\u0647\u200c\u0627\u06cc\u060c \u0647\u06cc\u0686 \u0639\u062f\u062f\u06cc \u0627\u06cc\u0646\u062c\u0627 \u0627\u0632 \u06cc\u06a9 \u067e\u0698\u0648\u0647\u0634 \u0645\u0646\u062a\u0634\u0631\u0634\u062f\u0647 \u0646\u06cc\u0627\u0645\u062f\u0647.",
+     "no_research_ever": "\u0647\u06cc\u0686 \u067e\u0698\u0648\u0647\u0634 \u0645\u0646\u062a\u0634\u0631\u0634\u062f\u0647\u200c\u0627\u06cc \u0627\u06cc\u0646 \u0635\u0646\u0641 \u0631\u0627 \u0628\u0647\u200c\u0627\u0646\u062f\u0627\u0632\u0647\u0654 \u06a9\u0627\u0641\u06cc \u067e\u0648\u0634\u0634 \u0646\u0645\u06cc\u200c\u062f\u0647\u062f. \u0647\u0645\u0647\u0654 \u062a\u0646\u0638\u06cc\u0645\u200c\u0647\u0627\u06cc \u0627\u06cc\u0646\u062c\u0627 \u0642\u0636\u0627\u0648\u062a \u0645\u0627\u0633\u062a.",
+     "does_title": "\u0627\u06cc\u0646 \u0627\u0628\u0632\u0627\u0631 \u0686\u0647 \u06a9\u0627\u0631\u06cc \u0645\u06cc\u200c\u06a9\u0646\u062f \u0648 \u0686\u0647 \u06a9\u0627\u0631\u06cc \u0646\u0645\u06cc\u200c\u06a9\u0646\u062f",
+     "does": "\u0627\u06cc\u0646 \u06a9\u0627\u0631 \u0631\u0627 \u0645\u06cc\u200c\u06a9\u0646\u062f",
+     "does_not": "\u0627\u06cc\u0646 \u06a9\u0627\u0631 \u0631\u0627 \u0646\u0645\u06cc\u200c\u06a9\u0646\u062f",
+     "does_1": "\u0686\u0646\u062f \u062a\u0635\u0645\u06cc\u0645 \u0631\u0627 \u0628\u0627 \u06cc\u06a9 \u0645\u0639\u06cc\u0627\u0631 \u0645\u0642\u0627\u06cc\u0633\u0647 \u0645\u06cc\u200c\u06a9\u0646\u062f.",
+     "does_2": "\u0628\u062f\u0647\u200c\u0628\u0633\u062a\u0627\u0646 \u0645\u0627\u0644\u06cc \u0647\u0631 \u06a9\u062f\u0627\u0645 \u0631\u0627 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f.",
+     "does_3": "\u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f \u06a9\u062f\u0627\u0645 \u0641\u0631\u0636\u200c\u0647\u0627 \u0645\u0647\u0645\u200c\u0627\u0646\u062f.",
+     "does_4": "\u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u062a\u0631\u062a\u06cc\u0628 \u0631\u0627 \u0639\u0648\u0636 \u06a9\u0646\u062f.",
+     "cta_eyebrow": "\u0646\u0648\u0628\u062a \u062a\u0648\u0633\u062a",
+     "cta_demo": "\u0628\u0627 \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631 \u062e\u0648\u062f\u062a \u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0646",
+     "cta_again": "\u06cc\u06a9 \u062a\u0635\u0645\u06cc\u0645 \u062f\u06cc\u06af\u0631 \u0631\u0627 \u0645\u0642\u0627\u06cc\u0633\u0647 \u06a9\u0646",
+     "cta_lede": "\u0639\u062f\u062f\u0647\u0627\u06cc\u062a \u062f\u0631 \u0647\u0645\u06cc\u0646 \u0635\u0641\u062d\u0647 \u0645\u06cc\u200c\u0645\u0627\u0646\u062f. \u0647\u06cc\u0686\u200c\u062c\u0627 \u0641\u0631\u0633\u062a\u0627\u062f\u0647 \u0646\u0645\u06cc\u200c\u0634\u0648\u062f.",
+     "cta_run": "\u0627\u0646\u062a\u062e\u0627\u0628\u200c\u0647\u0627\u06cc\u0645 \u0631\u0627 \u0645\u0642\u0627\u06cc\u0633\u0647 \u06a9\u0646",
+     "cta_reset": "\u0628\u0631\u06af\u0631\u062f \u0628\u0647 \u0646\u0645\u0648\u0646\u0647",
+     "cta_done": "\u0627\u0646\u062c\u0627\u0645 \u0634\u062f \u2014 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647 \u062d\u0627\u0644\u0627 \u0628\u0627 \u0639\u062f\u062f\u0647\u0627\u06cc \u062a\u0648\u0633\u062a.",
+     "group_about": "\u062f\u0631\u0628\u0627\u0631\u0647\u0654 \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631\u062a",
+     "group_costs": "\u0647\u0632\u06cc\u0646\u0647\u200c\u0647\u0627\u06cc\u062a",
+     "group_capacity": "\u0638\u0631\u0641\u06cc\u062a\u062a",
+     "group_changed": "\u0686\u0647 \u0686\u06cc\u0632\u06cc \u062a\u063a\u06cc\u06cc\u0631 \u06a9\u0631\u062f\u0647",
+     "group_mix": "\u0686\u0647 \u0686\u06cc\u0632\u06cc \u0645\u06cc\u200c\u0641\u0631\u0648\u0634\u06cc",
+     "err_numbers": "\u0644\u0637\u0641\u0627\u064b \u0647\u0645\u0647\u0654 \u0639\u062f\u062f\u0647\u0627 \u0631\u0627 \u067e\u0631 \u06a9\u0646.",
+     "err_cost_high": "\u0628\u0627 \u0627\u06cc\u0646 \u0639\u062f\u062f\u0647\u0627 \u0647\u0646\u0648\u0632 \u0646\u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u06cc\u0645 \u06af\u0632\u06cc\u0646\u0647\u200c\u0647\u0627 \u0631\u0627 \u062f\u0631\u0633\u062a \u0645\u0642\u0627\u06cc\u0633\u0647 \u06a9\u0646\u06cc\u0645.",
+     "err_cost_high_why": "\u0647\u0632\u06cc\u0646\u0647\u200c\u0627\u062a \u0628\u0631\u0627\u0628\u0631 \u06cc\u0627 \u0628\u06cc\u0634\u062a\u0631 \u0627\u0632 \u0641\u0631\u0648\u0634\u062a \u0627\u0633\u062a\u060c \u067e\u0633 \u062d\u0627\u0634\u06cc\u0647\u200c\u0627\u06cc \u0646\u0645\u06cc\u200c\u0645\u0627\u0646\u062f \u06a9\u0647 \u0645\u0642\u0627\u06cc\u0633\u0647 \u0634\u0648\u062f. \u0639\u062f\u062f \u0647\u0632\u06cc\u0646\u0647 \u0631\u0627 \u06cc\u06a9 \u0628\u0627\u0631 \u062f\u06cc\u06af\u0631 \u0628\u0628\u06cc\u0646.",
+     "err_positive": "\u0627\u06cc\u0646\u200c\u0647\u0627 \u0628\u0627\u06cc\u062f \u0628\u06cc\u0634\u062a\u0631 \u0627\u0632 \u0635\u0641\u0631 \u0628\u0627\u0634\u0646\u062f: {names}.",
+     "err_utilisation": "\u067e\u0631 \u0628\u0648\u062f\u0646 \u0648\u0642\u062a\u200c\u0647\u0627 \u0628\u0627\u06cc\u062f \u0628\u06cc\u0646 \u06f1\u066a \u062a\u0627 \u06f1\u06f0\u06f0\u066a \u0628\u0627\u0634\u062f.",
+     "err_failed": "\u062f\u0631 \u0645\u0642\u0627\u06cc\u0633\u0647 \u0645\u0634\u06a9\u0644\u06cc \u067e\u06cc\u0634 \u0622\u0645\u062f. \u0647\u06cc\u0686 \u0639\u062f\u062f\u06cc \u0646\u0634\u0627\u0646 \u0646\u0645\u06cc\u200c\u062f\u0647\u06cc\u0645\u060c \u0686\u0648\u0646 \u0639\u062f\u062f \u0646\u0635\u0641\u0647\u200c\u0648\u0646\u06cc\u0645\u0647 \u0627\u0632 \u0647\u06cc\u0686 \u0628\u062f\u062a\u0631 \u0627\u0633\u062a.",
+     "how_title": "\u0627\u06cc\u0646 \u0645\u062d\u0627\u0633\u0628\u0647 \u0686\u0637\u0648\u0631 \u0627\u0646\u062c\u0627\u0645 \u0634\u062f\u0647\u061f",
+     "how_open": "\u0631\u0648\u0634\u060c \u0645\u0646\u0627\u0628\u0639 \u0648 \u0642\u0627\u0628\u0644\u06cc\u062a \u0628\u0627\u0632\u062a\u0648\u0644\u06cc\u062f",
+     "advanced": "\u067e\u06cc\u0634\u0631\u0641\u062a\u0647",
+     "currency_note": "\u0647\u0645\u0647\u0654 \u0639\u062f\u062f\u0647\u0627 \u0628\u0647 \u0647\u0645\u0627\u0646 \u0648\u0627\u062d\u062f \u067e\u0648\u0644\u06cc \u0627\u0633\u062a \u06a9\u0647 \u062e\u0648\u062f\u062a \u0648\u0627\u0631\u062f \u06a9\u0631\u062f\u0647\u200c\u0627\u06cc.",
+     "klass_labels": {
+      "Customer input": "\u0639\u062f\u062f\u0647\u0627\u06cc \u062e\u0648\u062f\u062a",
+      "External research": "\u067e\u0698\u0648\u0647\u0634 \u0628\u06cc\u0631\u0648\u0646\u06cc",
+      "Assumption": "\u0641\u0631\u0636 \u0645\u062f\u0644",
+      "Derived": "\u0645\u062d\u0627\u0633\u0628\u0647\u200c\u0634\u062f\u0647"
+     },
+     "setting_labels": {
+      "low": "\u06a9\u0645",
+      "central": "\u0645\u062a\u0648\u0633\u0637",
+      "high": "\u0632\u06cc\u0627\u062f",
+      "slow": "\u06a9\u0646\u062f",
+      "fast": "\u0633\u0631\u06cc\u0639"
+     },
+     "value_of_sales": "{v} ({p}\u066a \u0627\u0632 \u0641\u0631\u0648\u0634)",
+     "pct_sign": "\u066a",
+     "per_day": "\u062f\u0631 \u0631\u0648\u0632",
+     "whoami_cash": "\u067e\u0648\u0644 \u0646\u0642\u062f",
+     "whoami_capacity": "\u0638\u0631\u0641\u06cc\u062a \u062f\u0631 \u0631\u0648\u0632",
+     "elasticity_plain": "\u062d\u062f\u0648\u062f {v}\u066a \u0627\u0632 {unit} \u0628\u0647 \u0627\u0632\u0627\u06cc \u0647\u0631 \u06f1\u066a \u06af\u0631\u0627\u0646\u06cc",
+     "render_failed": "\u062f\u0631 \u062a\u0631\u0633\u06cc\u0645 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647 \u062e\u0637\u0627\u06cc\u06cc \u0631\u062e \u062f\u0627\u062f. \u0645\u0645\u06a9\u0646 \u0627\u0633\u062a \u0639\u062f\u062f\u0647\u0627\u06cc \u0646\u0645\u0627\u06cc\u0634\u200c\u062f\u0627\u062f\u0647\u200c\u0634\u062f\u0647 \u0628\u0647\u200c\u0631\u0648\u0632 \u0646\u0628\u0627\u0634\u0646\u062f \u2014 \u0635\u0641\u062d\u0647 \u0631\u0627 \u062f\u0648\u0628\u0627\u0631\u0647 \u0628\u0627\u0632 \u06a9\u0646.",
+     "why_demand_grows": "\u062a\u0642\u0627\u0636\u0627 \u0628\u0627 \u0627\u06cc\u0646 \u0642\u06cc\u0645\u062a \u0647\u0645\u0686\u0646\u0627\u0646 \u0631\u0634\u062f \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c",
+     "why_demand_holds": "\u062a\u0642\u0627\u0636\u0627 \u0628\u0627 \u0627\u06cc\u0646 \u0642\u06cc\u0645\u062a \u062a\u0642\u0631\u06cc\u0628\u0627\u064b \u062b\u0627\u0628\u062a \u0645\u06cc\u200c\u0645\u0627\u0646\u062f\u060c",
+     "why_capacity_full": "\u0648 \u0638\u0631\u0641\u06cc\u062a\u062a \u0627\u0632 \u0642\u0628\u0644 \u067e\u0631 \u0628\u0648\u062f\u060c \u067e\u0633 \u0633\u0648\u062f \u0627\u0632 \u0642\u06cc\u0645\u062a \u0645\u06cc\u200c\u0622\u06cc\u062f \u0646\u0647 \u0627\u0632 \u06a9\u0627\u0631 \u0628\u06cc\u0634\u062a\u0631.",
+     "why_price_through": "\u0648 \u0627\u0641\u0632\u0627\u06cc\u0634 \u0642\u06cc\u0645\u062a \u062a\u0642\u0631\u06cc\u0628\u0627\u064b \u0645\u0633\u062a\u0642\u06cc\u0645 \u0628\u0647 \u0686\u06cc\u0632\u06cc \u06a9\u0647 \u0628\u0631\u0627\u06cc\u062a \u0645\u06cc\u200c\u0645\u0627\u0646\u062f \u0627\u0636\u0627\u0641\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f."
+    },
+    "wedge": {
+     "business": "\u0641\u0631\u0648\u0634\u06af\u0627\u0647 / \u0622\u0646\u0644\u0627\u06cc\u0646\u200c\u0634\u0627\u067e",
+     "business_short": "\u0641\u0631\u0648\u0634\u06af\u0627\u0647",
+     "noun": "\u0641\u0631\u0648\u0634\u06af\u0627\u0647",
+     "icon": "\ud83d\udecd",
+     "question": "\u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u0647 \u0642\u06cc\u0645\u062a \u0631\u0627 \u0628\u0627\u0644\u0627 \u0628\u0631\u062f\u0647. \u0645\u0646 \u0647\u0645 \u0642\u06cc\u0645\u062a \u0631\u0627 \u0628\u0627\u0644\u0627 \u0628\u0628\u0631\u0645\u061f",
+     "page_title": "\u062a\u0635\u0645\u06cc\u0645 \u0647\u0632\u06cc\u0646\u0647 \u062f\u0631 \u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u2014 \u0645\u0642\u0627\u06cc\u0633\u0647\u0654 \u0633\u0647 \u0627\u0646\u062a\u062e\u0627\u0628",
+     "headline": "\u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u0647 \u0642\u06cc\u0645\u062a \u0631\u0627 {shock}\u066a \u0628\u0627\u0644\u0627 \u0628\u0631\u062f\u0647. \u062a\u0648 \u0647\u0645 \u0628\u0627\u0644\u0627 \u0628\u0628\u0631\u06cc\u061f",
+     "hero_lede": "\u0633\u0647 \u0631\u0627\u0647 \u0648\u0627\u06a9\u0646\u0634\u060c \u0631\u0648\u06cc \u06cc\u06a9 \u0645\u062f\u0644 \u0627\u0632 \u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u062e\u0648\u062f\u062a \u0648 \u0628\u0627 \u0647\u0645\u0627\u0646 \u0641\u0631\u0636\u200c\u0647\u0627 \u0645\u0642\u0627\u06cc\u0633\u0647 \u0634\u062f\u0647\u200c\u0627\u0646\u062f. \u062a\u0646\u0647\u0627 \u0686\u06cc\u0632\u06cc \u06a9\u0647 \u0628\u06cc\u0646\u0634\u0627\u0646 \u0641\u0631\u0642 \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u062e\u0648\u062f\u0650 \u062a\u0635\u0645\u06cc\u0645 \u0627\u0633\u062a.",
+     "what_changed": "\u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u0647 \u0642\u06cc\u0645\u062a \u0639\u0645\u062f\u0647 \u0631\u0627 {shock}\u066a \u0628\u0627\u0644\u0627 \u0628\u0631\u062f\u0647.",
+     "unit_word": "\u0633\u0641\u0627\u0631\u0634",
+     "unit_word_singular": "\u0633\u0641\u0627\u0631\u0634",
+     "cost_word": "\u0642\u06cc\u0645\u062a \u062a\u0645\u0627\u0645\u200c\u0634\u062f\u0647\u0654 \u06a9\u0627\u0644\u0627",
+     "world_names": {
+      "A": "\u0642\u06cc\u0645\u062a \u0631\u0627 \u0646\u06af\u0647 \u062f\u0627\u0631",
+      "B": "\u0642\u06cc\u0645\u062a \u0631\u0627 \u06f8\u066a \u0628\u0627\u0644\u0627 \u0628\u0628\u0631",
+      "C": "\u0642\u06cc\u0645\u062a \u06f4\u066a \u0628\u0627\u0644\u0627 + \u062d\u0630\u0641 \u06a9\u0627\u0644\u0627\u0647\u0627\u06cc \u06a9\u0645\u200c\u0633\u0648\u062f"
+     },
+     "world_short": {
+      "A": "\u0646\u06af\u0647\u200c\u062f\u0627\u0634\u062a\u0646 \u0642\u06cc\u0645\u062a",
+      "B": "\u06f8\u066a \u0628\u0627\u0644\u0627",
+      "C": "\u06f4\u066a \u0628\u0627\u0644\u0627 + \u062d\u0630\u0641 \u06a9\u0645\u200c\u0633\u0648\u062f\u0647\u0627"
+     },
+     "world_verdict_labels": {
+      "A": "\u0646\u06af\u0647\u200c\u062f\u0627\u0634\u062a\u0646 \u0642\u06cc\u0645\u062a",
+      "B": "\u06f8\u066a \u0628\u0627\u0644\u0627 \u0628\u0631\u062f\u0646 \u0642\u06cc\u0645\u062a",
+      "C": "\u06f4\u066a \u0628\u0627\u0644\u0627 \u0628\u0631\u062f\u0646 \u0642\u06cc\u0645\u062a \u0647\u0645\u0631\u0627\u0647 \u0628\u0627 \u062d\u0630\u0641 \u06a9\u0627\u0644\u0627\u0647\u0627\u06cc \u06a9\u0645\u200c\u0633\u0648\u062f"
+     },
+     "uncertainty_title": "\u0645\u0634\u062a\u0631\u06cc\u200c\u0647\u0627\u06cc \u062a\u0648 \u0686\u0642\u062f\u0631 \u0628\u0647 \u0642\u06cc\u0645\u062a \u062d\u0633\u0627\u0633\u200c\u0627\u0646\u062f\u061f",
+     "unknown_why": "\u0645\u0634\u062a\u0631\u06cc \u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u0645\u0639\u0645\u0648\u0644\u0627\u064b \u0647\u0645\u0627\u0646 \u062c\u0646\u0633 \u0631\u0627 \u062c\u0627\u06cc \u062f\u06cc\u06af\u0631\u06cc \u0647\u0645 \u067e\u06cc\u062f\u0627 \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u067e\u0633 \u0628\u0627\u0644\u0627 \u0628\u0631\u062f\u0646 \u0642\u06cc\u0645\u062a \u0627\u06cc\u0646\u062c\u0627 \u0628\u06cc\u0634\u062a\u0631 \u0627\u0632 \u0635\u0646\u0641\u200c\u0647\u0627\u06cc\u06cc \u06a9\u0647 \u0645\u0634\u062a\u0631\u06cc \u0628\u0631\u0627\u06cc \u062e\u0648\u062f\u0650 \u062a\u0648 \u0645\u06cc\u200c\u0622\u06cc\u062f \u0633\u0641\u0627\u0631\u0634 \u0645\u06cc\u200c\u0628\u0631\u062f. \u0627\u06cc\u0646\u06a9\u0647 \u0686\u0642\u062f\u0631 \u0628\u06cc\u0634\u062a\u0631\u060c \u0628\u0631\u0627\u06cc \u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u062a\u0648 \u0627\u0646\u062f\u0627\u0632\u0647\u200c\u06af\u06cc\u0631\u06cc \u0646\u0634\u062f\u0647.",
+     "unknown_how": "\u0642\u06cc\u0645\u062a \u0686\u0646\u062f \u0642\u0644\u0645 \u0631\u0627 \u062f\u0648 \u0647\u0641\u062a\u0647 \u0628\u0627\u0644\u0627 \u0628\u0628\u0631 \u0648 \u0628\u0628\u06cc\u0646 \u0641\u0631\u0648\u0634 \u0647\u0645\u0627\u0646\u200c\u0647\u0627 \u0646\u0633\u0628\u062a \u0628\u0647 \u0628\u0642\u06cc\u0647 \u0686\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f. \u0639\u062f\u062f\u0647\u0627\u06cc \u062f\u0641\u0639\u0647\u0654 \u0642\u0628\u0644\u06cc \u06a9\u0647 \u0642\u06cc\u0645\u062a \u0631\u0627 \u0628\u0627\u0644\u0627 \u0628\u0631\u062f\u06cc \u0647\u0645 \u06a9\u0627\u0631 \u0645\u06cc\u200c\u06a9\u0646\u062f.",
+     "sens_help": {
+      "low": "\u0645\u0634\u062a\u0631\u06cc \u0648\u0641\u0627\u062f\u0627\u0631\u060c \u0641\u0631\u0648\u0634\u06af\u0627\u0647\u06cc \u06a9\u0647 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u200c\u06a9\u0631\u062f\u0646\u0634 \u0633\u062e\u062a \u0627\u0633\u062a\u060c \u06cc\u0627 \u0631\u0642\u0628\u0627\u06cc\u06cc \u06a9\u0647 \u0622\u0646\u200c\u0647\u0627 \u0647\u0645 \u06af\u0631\u0627\u0646 \u06a9\u0631\u062f\u0647\u200c\u0627\u0646\u062f.",
+      "central": "\u0642\u0636\u0627\u0648\u062a \u0645\u0627: \u0645\u0634\u062a\u0631\u06cc\u200c\u0627\u06cc \u06a9\u0647 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u062c\u0627\u06cc \u062f\u06cc\u06af\u0631\u06cc \u0628\u0631\u0648\u062f\u060c \u0648\u0644\u06cc \u06a9\u0645\u06cc \u0632\u062d\u0645\u062a \u062f\u0627\u0631\u062f.",
+      "high": "\u0639\u062f\u062f \u067e\u0698\u0648\u0647\u0634\u06cc \u0628\u0631\u0627\u06cc \u0645\u0634\u062a\u0631\u06cc\u200c\u0627\u06cc \u06a9\u0647 \u062f\u0642\u06cc\u0642\u0627\u064b \u0647\u0645\u0627\u0646 \u062c\u0646\u0633 \u0631\u0627 \u062c\u0627\u06cc \u062f\u06cc\u06af\u0631 \u0645\u06cc\u200c\u062e\u0631\u062f."
+     },
+     "c_card_note": "\u0628\u0647 \u0627\u06cc\u0646 \u0628\u0633\u062a\u06af\u06cc \u062f\u0627\u0631\u062f \u06a9\u0647 \u062d\u0630\u0641 \u06a9\u0627\u0644\u0627\u0647\u0627\u06cc \u06a9\u0645\u200c\u0633\u0648\u062f \u0686\u0642\u062f\u0631 \u0627\u0632 \u0642\u06cc\u0645\u062a \u062a\u0645\u0627\u0645\u200c\u0634\u062f\u0647 \u06a9\u0645 \u0645\u06cc\u200c\u06a9\u0646\u062f (\u0627\u06cc\u0646\u062c\u0627 \u062d\u062f\u0648\u062f {red} \u0648\u0627\u062d\u062f) \u0648 \u0686\u0646\u062f {unit} \u0647\u0645\u0631\u0627\u0647 \u0622\u0646 \u06a9\u0627\u0644\u0627\u0647\u0627 \u0645\u06cc\u200c\u0631\u0648\u062f ({loss}\u066a). \u0647\u06cc\u0686\u200c\u06a9\u062f\u0627\u0645 \u0627\u0632 \u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u062a\u0648 \u0627\u0646\u062f\u0627\u0632\u0647\u200c\u06af\u06cc\u0631\u06cc \u0646\u0634\u062f\u0647.",
+     "chart_lede": "\u0647\u0632\u06cc\u0646\u0647\u200c\u0647\u0627 \u062d\u062f\u0648\u062f \u0633\u0647 \u0647\u0641\u062a\u0647 \u0637\u0648\u0644 \u0645\u06cc\u200c\u06a9\u0634\u062f \u062a\u0627 \u0628\u0627\u0644\u0627 \u0628\u06cc\u0627\u06cc\u062f \u2014 \u062c\u0646\u0633\u06cc \u06a9\u0647 \u0631\u0648\u06cc \u0642\u0641\u0633\u0647 \u0627\u0633\u062a \u0628\u0627 \u0642\u06cc\u0645\u062a \u0642\u0628\u0644\u06cc \u062e\u0631\u06cc\u062f\u0647 \u0634\u062f\u0647. \u0645\u0634\u062a\u0631\u06cc\u200c\u0647\u0627 \u06cc\u06a9\u06cc \u062f\u0648 \u0647\u0641\u062a\u0647\u200c\u0627\u06cc \u0648\u0627\u06a9\u0646\u0634 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u0646\u062f.",
+     "sources_note": "\u067e\u0698\u0648\u0647\u0634\u06cc \u06a9\u0647 \u0646\u0642\u0644 \u0634\u062f\u0647\u060c \u062c\u0627\u0628\u0647\u200c\u062c\u0627 \u0634\u062f\u0646 \u0645\u0634\u062a\u0631\u06cc \u0628\u06cc\u0646 \u0628\u0631\u0646\u062f\u0647\u0627\u06cc \u0631\u0648\u06cc \u06cc\u06a9 \u0642\u0641\u0633\u0647 \u0631\u0627 \u0645\u06cc\u200c\u0633\u0646\u062c\u062f\u060c \u06a9\u0647 \u0627\u0632 \u0639\u0648\u0636\u200c\u06a9\u0631\u062f\u0646 \u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u0631\u0627\u062d\u062a\u200c\u062a\u0631 \u0627\u0633\u062a. \u067e\u0633 \u0633\u0642\u0641 \u0628\u0627\u0632\u0647 \u0631\u0627 \u062a\u0639\u06cc\u06cc\u0646 \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u0646\u0647 \u0648\u0633\u0637 \u0622\u0646 \u0631\u0627.",
+     "limits_does_not": [
+      "\u0641\u0631\u0648\u0634 \u0622\u06cc\u0646\u062f\u0647\u0654 \u062a\u0648 \u0631\u0627 \u067e\u06cc\u0634\u200c\u0628\u06cc\u0646\u06cc \u06a9\u0646\u062f.",
+      "\u0628\u062f\u0627\u0646\u062f \u062a\u06a9\u200c\u062a\u06a9 \u0645\u0634\u062a\u0631\u06cc\u200c\u0647\u0627\u06cc\u062a \u0686\u0647 \u0645\u06cc\u200c\u06a9\u0646\u0646\u062f.",
+      "\u0631\u0642\u0628\u0627\u060c \u0645\u0627\u0631\u06a9\u062a\u200c\u067e\u0644\u06cc\u0633\u200c\u0647\u0627 \u06cc\u0627 \u0631\u062a\u0628\u0647\u0654 \u062c\u0633\u062a\u200c\u0648\u062c\u0648 \u0631\u0627 \u0645\u062f\u0644 \u06a9\u0646\u062f.",
+      "\u062a\u0628\u0644\u06cc\u063a\u0627\u062a \u06cc\u0627 \u06a9\u0645\u067e\u06cc\u0646\u200c\u0647\u0627 \u0631\u0627 \u0645\u062f\u0644 \u06a9\u0646\u062f."
+     ],
+     "intake": {
+      "monthly_revenue": {
+       "label": "\u062a\u0642\u0631\u06cc\u0628\u0627\u064b \u0645\u0627\u0647\u06cc \u0686\u0642\u062f\u0631 \u0641\u0631\u0648\u0634 \u062f\u0627\u0631\u06cc\u061f",
+       "hint": "\u06cc\u06a9 \u0645\u0627\u0647 \u0645\u0639\u0645\u0648\u0644\u06cc\u060c \u0642\u0628\u0644 \u0627\u0632 \u06af\u0631\u0627\u0646\u200c\u0634\u062f\u0646.",
+       "placeholder": "\u06f9\u06f2\u066c\u06f0\u06f0\u06f0"
+      },
+      "daily_orders": {
+       "label": "\u0631\u0648\u0632\u06cc \u062a\u0642\u0631\u06cc\u0628\u0627\u064b \u0686\u0646\u062f \u0633\u0641\u0627\u0631\u0634 \u062f\u0627\u0631\u06cc\u061f",
+       "hint": "\u062d\u0636\u0648\u0631\u06cc \u0648 \u0622\u0646\u0644\u0627\u06cc\u0646 \u0628\u0627 \u0647\u0645.",
+       "placeholder": "\u06f9\u06f0"
+      },
+      "monthly_cogs": {
+       "label": "\u062e\u0648\u062f\u0650 \u062c\u0646\u0633 \u0645\u0627\u0647\u06cc \u0686\u0642\u062f\u0631 \u0628\u0631\u0627\u06cc\u062a \u062e\u0631\u062c \u0628\u0631\u0645\u06cc\u200c\u062f\u0627\u0631\u062f\u061f",
+       "hint": "\u0686\u06cc\u0632\u06cc \u06a9\u0647 \u0628\u0627\u0628\u062a \u062c\u0646\u0633\u06cc \u06a9\u0647 \u0645\u06cc\u200c\u0641\u0631\u0648\u0634\u06cc \u0628\u0647 \u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u0647 \u0645\u06cc\u200c\u062f\u0647\u06cc. \u0646\u0647 \u062d\u0642\u0648\u0642\u060c \u0646\u0647 \u0627\u062c\u0627\u0631\u0647.",
+       "placeholder": "\u06f5\u06f3\u066c\u06f3\u06f6\u06f0"
+      },
+      "monthly_fixed_costs": {
+       "label": "\u0627\u062c\u0627\u0631\u0647 \u0648 \u062d\u0642\u0648\u0642 \u0648 \u0642\u0628\u0636\u200c\u0647\u0627 \u0645\u0627\u0647\u06cc \u0686\u0642\u062f\u0631 \u0627\u0633\u062a\u061f",
+       "hint": "\u0647\u0631 \u0686\u06cc\u0632\u06cc \u06a9\u0647 \u062f\u0631 \u06f9\u06f0 \u0631\u0648\u0632 \u0622\u06cc\u0646\u062f\u0647 \u062a\u063a\u06cc\u06cc\u0631 \u0646\u0645\u06cc\u200c\u06a9\u0646\u062f.",
+       "placeholder": "\u06f3\u06f3\u066c\u06f0\u06f0\u06f0"
+      },
+      "cash_on_hand": {
+       "label": "\u0627\u0644\u0627\u0646 \u0686\u0642\u062f\u0631 \u067e\u0648\u0644 \u0646\u0642\u062f \u062f\u0627\u0631\u06cc\u061f",
+       "hint": "\u0686\u06cc\u0632\u06cc \u06a9\u0647 \u0647\u0645\u06cc\u0646 \u062d\u0627\u0644\u0627 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u06cc \u062e\u0631\u062c \u06a9\u0646\u06cc.",
+       "placeholder": "\u06f2\u06f6\u066c\u06f0\u06f0\u06f0"
+      },
+      "supplier_increase_pct": {
+       "label": "\u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u0647 \u0686\u0642\u062f\u0631 \u0642\u06cc\u0645\u062a \u0631\u0627 \u0628\u0627\u0644\u0627 \u0628\u0631\u062f\u0647\u061f",
+       "hint": "\u0628\u0647\u200c\u0635\u0648\u0631\u062a \u062f\u0631\u0635\u062f\u06cc \u0627\u0632 \u0686\u06cc\u0632\u06cc \u06a9\u0647 \u0628\u0627\u0628\u062a \u062c\u0646\u0633 \u0645\u06cc\u200c\u062f\u0647\u06cc.",
+       "placeholder": "\u06f2\u06f5"
+      },
+      "low_margin_share_pct": {
+       "label": "\u0686\u0646\u062f \u062f\u0631\u0635\u062f \u0633\u0641\u0627\u0631\u0634\u200c\u0647\u0627 \u06a9\u0627\u0644\u0627\u0647\u0627\u06cc\u06cc \u0627\u0633\u062a \u06a9\u0647 \u0633\u0648\u062f \u06a9\u0645\u06cc \u062f\u0627\u0631\u062f\u061f",
+       "hint": "\u062a\u0642\u0631\u06cc\u0628\u06cc. \u062d\u062f\u0633 \u0647\u0645 \u06a9\u0627\u0641\u06cc \u0627\u0633\u062a \u2014 \u0628\u0647\u200c\u0639\u0646\u0648\u0627\u0646 \u0641\u0631\u0636 \u0628\u0631\u0631\u0633\u06cc \u0645\u06cc\u200c\u0634\u0648\u062f.",
+       "placeholder": "\u06f2\u06f0"
+      },
+      "name": {
+       "label": "\u0627\u0633\u0645 \u0641\u0631\u0648\u0634\u06af\u0627\u0647\u062a \u0686\u06cc\u0633\u062a\u061f",
+       "hint": "\u0641\u0642\u0637 \u0631\u0648\u06cc \u0647\u0645\u06cc\u0646 \u0635\u0641\u062d\u0647 \u0627\u0633\u062a\u0641\u0627\u062f\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f.",
+       "placeholder": "\u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u0646\u0647"
+      }
+     },
+     "sweep_labels": {
+      "price_sensitivity": "\u062d\u0633\u0627\u0633\u06cc\u062a \u0645\u0634\u062a\u0631\u06cc \u0628\u0647 \u0642\u06cc\u0645\u062a",
+      "cogs_pass_through": "\u0686\u0642\u062f\u0631 \u0627\u0632 \u06af\u0631\u0627\u0646\u06cc \u0628\u0647 \u0647\u0632\u06cc\u0646\u0647\u200c\u0627\u062a \u0645\u06cc\u200c\u0631\u0633\u062f",
+      "supplier_increase_pct": "\u06af\u0631\u0627\u0646\u06cc \u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u0647 \u0648\u0627\u0642\u0639\u0627\u064b \u0686\u0642\u062f\u0631 \u0627\u0633\u062a",
+      "reduction_points": "\u062d\u0630\u0641 \u06a9\u0627\u0644\u0627\u0647\u0627\u06cc \u06a9\u0645\u200c\u0633\u0648\u062f \u0648\u0627\u0642\u0639\u0627\u064b \u0686\u0642\u062f\u0631 \u0635\u0631\u0641\u0647\u200c\u062c\u0648\u06cc\u06cc \u062f\u0627\u0631\u062f",
+      "demand_adjustment_speed": "\u0633\u0631\u0639\u062a \u0648\u0627\u06a9\u0646\u0634 \u0645\u0634\u062a\u0631\u06cc"
+     },
+     "assumptions": {
+      "monthly_revenue": {
+       "label": "\u0641\u0631\u0648\u0634 \u0645\u0627\u0647\u0627\u0646\u0647\u0654 \u0641\u0639\u0644\u06cc"
+      },
+      "daily_orders": {
+       "label": "\u0641\u0631\u0648\u0634 \u062f\u0631 \u0631\u0648\u0632"
+      },
+      "monthly_cogs": {
+       "label": "\u0628\u0647\u0627\u06cc \u062a\u0645\u0627\u0645\u200c\u0634\u062f\u0647\u0654 \u06a9\u0627\u0644\u0627\u06cc \u0645\u0627\u0647\u0627\u0646\u0647"
+      },
+      "monthly_fixed_costs": {
+       "label": "\u0647\u0632\u06cc\u0646\u0647\u200c\u0647\u0627\u06cc \u062b\u0627\u0628\u062a \u0645\u0627\u0647\u0627\u0646\u0647 (\u0628\u0627 \u062d\u0642\u0648\u0642)"
+      },
+      "cash_on_hand": {
+       "label": "\u067e\u0648\u0644 \u0646\u0642\u062f \u0645\u0648\u062c\u0648\u062f \u0627\u0645\u0631\u0648\u0632"
+      },
+      "supplier_increase_pct": {
+       "label": "\u0645\u06cc\u0632\u0627\u0646 \u06af\u0631\u0627\u0646\u06cc \u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u0647"
+      },
+      "low_margin_share_pct": {
+       "label": "\u0633\u0647\u0645 \u0641\u0631\u0648\u0634\u200c\u0647\u0627\u06cc \u06a9\u0645\u200c\u0633\u0648\u062f"
+      },
+      "price_sensitivity": {
+       "label": "\u062d\u0633\u0627\u0633\u06cc\u062a \u0645\u0634\u062a\u0631\u06cc \u0628\u0647 \u0642\u06cc\u0645\u062a"
+      },
+      "cogs_pass_through": {
+       "label": "\u0686\u0642\u062f\u0631 \u0627\u0632 \u06af\u0631\u0627\u0646\u06cc \u0628\u0647 \u0628\u0647\u0627\u06cc \u062a\u0645\u0627\u0645\u200c\u0634\u062f\u0647\u200c\u0627\u062a \u0645\u06cc\u200c\u0631\u0633\u062f"
+      },
+      "inventory_lag": {
+       "label": "\u0641\u0627\u0635\u0644\u0647 \u062a\u0627 \u0627\u062b\u0631 \u06af\u0631\u0627\u0646\u06cc \u0631\u0648\u06cc \u0647\u0632\u06cc\u0646\u0647\u200c\u0627\u062a",
+       "text": "\u062d\u062f\u0648\u062f \u06f2\u06f0 \u0631\u0648\u0632 (\u0645\u0648\u062c\u0648\u062f\u06cc \u0627\u0646\u0628\u0627\u0631)"
+      },
+      "demand_adjustment_speed": {
+       "label": "\u0633\u0631\u0639\u062a \u0648\u0627\u06a9\u0646\u0634 \u0645\u0634\u062a\u0631\u06cc \u0628\u0647 \u062a\u063a\u06cc\u06cc\u0631 \u0642\u06cc\u0645\u062a",
+       "map": {
+        "slow": "\u062d\u062f\u0648\u062f \u062f\u0648 \u0647\u0641\u062a\u0647 \u0648 \u0646\u06cc\u0645 \u062a\u0627 \u0646\u0635\u0641 \u0648\u0627\u06a9\u0646\u0634",
+        "central": "\u062d\u062f\u0648\u062f \u0647\u0634\u062a \u0631\u0648\u0632 \u062a\u0627 \u0646\u0635\u0641 \u0648\u0627\u06a9\u0646\u0634",
+        "fast": "\u062d\u062f\u0648\u062f \u0686\u0647\u0627\u0631 \u0631\u0648\u0632 \u062a\u0627 \u0646\u0635\u0641 \u0648\u0627\u06a9\u0646\u0634"
+       }
+      },
+      "trim_effectiveness": {
+       "label": "\u0635\u0631\u0641\u0647\u200c\u062c\u0648\u06cc\u06cc \u0627\u0632 \u06a9\u0646\u0627\u0631\u06af\u0630\u0627\u0634\u062a\u0646 \u0627\u0642\u0644\u0627\u0645 \u06a9\u0645\u200c\u0633\u0648\u062f",
+       "text": "{reduction:g} \u0648\u0627\u062d\u062f \u06a9\u0627\u0647\u0634 \u062f\u0631 \u0645\u06cc\u0627\u0646\u06af\u06cc\u0646 \u0628\u0647\u0627\u06cc \u062a\u0645\u0627\u0645\u200c\u0634\u062f\u0647 ({trim_effectiveness:.3f} \u0628\u0647 \u0627\u0632\u0627\u06cc \u0647\u0631 \u0648\u0627\u062d\u062f \u0633\u0647\u0645 \u06a9\u0645\u200c\u0633\u0648\u062f)"
+      },
+      "trim_demand_cost": {
+       "label": "\u0641\u0631\u0648\u0634\u200c\u0647\u0627\u06cc \u0627\u0632\u200c\u062f\u0633\u062a\u200c\u0631\u0641\u062a\u0647 \u0628\u0627 \u06a9\u0646\u0627\u0631\u06af\u0630\u0627\u0634\u062a\u0646 \u0622\u0646 \u0627\u0642\u0644\u0627\u0645",
+       "text": "{demand_cost:.1f}\u066a \u0627\u0632 \u0641\u0631\u0648\u0634\u200c\u0647\u0627"
+      },
+      "price_rises": {
+       "label": "\u0627\u0641\u0632\u0627\u06cc\u0634 \u0642\u06cc\u0645\u062a\u200c\u0647\u0627\u06cc \u0645\u0642\u0627\u06cc\u0633\u0647\u200c\u0634\u062f\u0647",
+       "text": "\u0628: +\u06f8\u066a   \u067e: +\u06f4\u066a"
+      },
+      "horizon": {
+       "label": "\u0628\u0627\u0632\u0647\u0654 \u0645\u0642\u0627\u06cc\u0633\u0647",
+       "text": "\u06f9\u06f0 \u0631\u0648\u0632"
+      },
+      "average_order_value": {
+       "label": "\u0645\u06cc\u0627\u0646\u06af\u06cc\u0646 \u0645\u0628\u0644\u063a \u0647\u0631 \u062e\u0631\u06cc\u062f"
+      },
+      "cogs_per_order": {
+       "label": "\u0628\u0647\u0627\u06cc \u062a\u0645\u0627\u0645\u200c\u0634\u062f\u0647\u0654 \u0647\u0631 \u062e\u0631\u06cc\u062f"
+      }
+     }
+    },
+    "all_wedges": {
+     "cafe": {
+      "business": "\u06a9\u0627\u0641\u0647 / \u0631\u0633\u062a\u0648\u0631\u0627\u0646",
+      "business_short": "\u06a9\u0627\u0641\u0647",
+      "icon": "\u2615"
+     },
+     "shop": {
+      "business": "\u0641\u0631\u0648\u0634\u06af\u0627\u0647 / \u0622\u0646\u0644\u0627\u06cc\u0646\u200c\u0634\u0627\u067e",
+      "business_short": "\u0641\u0631\u0648\u0634\u06af\u0627\u0647",
+      "icon": "\ud83d\udecd"
+     },
+     "salon": {
+      "business": "\u0633\u0627\u0644\u0646 / \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631 \u062e\u062f\u0645\u0627\u062a\u06cc",
+      "business_short": "\u0633\u0627\u0644\u0646",
+      "icon": "\u2702"
+     }
+    }
+   }
+  }
  },
  "generated_for": "Demo shop (fictional)",
  "is_demo": true,
@@ -5767,6 +6491,13 @@
    "swept": false,
    "note": "",
    "source": "",
+   "value_spec": {
+    "kind": "money",
+    "field": "monthly_revenue"
+   },
+   "value_ctx": {
+    "monthly_revenue": 92000.0
+   },
    "ladder_status": "user_assumption"
   },
   {
@@ -5777,6 +6508,13 @@
    "swept": false,
    "note": "",
    "source": "",
+   "value_spec": {
+    "kind": "money",
+    "field": "daily_orders"
+   },
+   "value_ctx": {
+    "daily_orders": 90.0
+   },
    "ladder_status": "user_assumption"
   },
   {
@@ -5787,6 +6525,15 @@
    "swept": false,
    "note": "",
    "source": "",
+   "value_spec": {
+    "kind": "money_with_pct",
+    "field": "monthly_cogs",
+    "pct_of": "cogs_pct"
+   },
+   "value_ctx": {
+    "monthly_cogs": 53360.0,
+    "cogs_pct": 58.0
+   },
    "ladder_status": "user_assumption"
   },
   {
@@ -5797,6 +6544,13 @@
    "swept": false,
    "note": "Treated as unchanged over 90 days.",
    "source": "",
+   "value_spec": {
+    "kind": "money",
+    "field": "monthly_fixed_costs"
+   },
+   "value_ctx": {
+    "monthly_fixed_costs": 33000.0
+   },
    "ladder_status": "user_assumption"
   },
   {
@@ -5807,6 +6561,13 @@
    "swept": false,
    "note": "",
    "source": "",
+   "value_spec": {
+    "kind": "money",
+    "field": "cash_on_hand"
+   },
+   "value_ctx": {
+    "cash_on_hand": 26000.0
+   },
    "ladder_status": "user_assumption"
   },
   {
@@ -5817,6 +6578,15 @@
    "swept": true,
    "note": "Tested at 15%, 25% and 35%.",
    "source": "",
+   "value_spec": {
+    "kind": "g",
+    "field": "supplier_increase_pct",
+    "prefix": "+",
+    "suffix": "%"
+   },
+   "value_ctx": {
+    "supplier_increase_pct": 25.0
+   },
    "ladder_status": "user_assumption"
   },
   {
@@ -5827,6 +6597,14 @@
    "swept": false,
    "note": "",
    "source": "",
+   "value_spec": {
+    "kind": "g",
+    "field": "low_margin_share_pct",
+    "suffix": "%"
+   },
+   "value_ctx": {
+    "low_margin_share_pct": 20.0
+   },
    "ladder_status": "user_assumption"
   },
   {
@@ -5835,8 +6613,20 @@
    "value": "1.30",
    "klass": "Assumption",
    "swept": true,
-   "note": "A 1% price rise eventually reduces orders by this percentage. Low 0.70 / central 1.30 / high 2.60. Only the high setting is a published figure \u2014 it is the brand-level meta-analytic mean, i.e. customers who can buy the identical item elsewhere. The central and low settings are our judgement, set below brand level because changing shop is harder than changing brand. This is the assumption most likely to change the decision.",
-   "source": "bijmolt2005 (high setting); tellis1988 (second reference point)",
+   "note": "A 1% price rise eventually reduces orders by this percentage. Low 0.70 / central 1.30 / high 2.60. Only the high setting is a published figure \u2014 the brand-level meta-analytic mean, i.e. customers who can buy the identical item elsewhere. The central and low settings are our judgement, set below brand level because changing shop is harder than changing brand. This is the assumption most likely to change the decision.",
+   "source": "No study supports this setting. bijmolt2005 and tellis1988 measure brand switching inside a shop and set the top of the range, not its middle.",
+   "value_spec": {
+    "kind": "axis",
+    "axis": "price_sensitivity",
+    "map": {
+     "low": "0.70",
+     "central": "1.30",
+     "high": "2.60"
+    }
+   },
+   "value_ctx": {
+    "setting": "central"
+   },
    "ladder_status": "expert_assumption"
   },
   {
@@ -5847,6 +6637,18 @@
    "swept": true,
    "note": "100% by definition unless you can substitute cheaper lines, renegotiate, or hold fixed-price contracts (tested at 70%).",
    "source": "",
+   "value_spec": {
+    "kind": "axis",
+    "axis": "cogs_pass_through",
+    "map": {
+     "low": "70%",
+     "central": "100%",
+     "high": "100%"
+    }
+   },
+   "value_ctx": {
+    "setting": "central"
+   },
    "ladder_status": "expert_assumption"
   },
   {
@@ -5857,6 +6659,11 @@
    "swept": false,
    "note": "Stock already on the shelf was bought at the old price. Tested over a 10-30 day range; the comparison uses the midpoint. A shop holding more stock than that sees the increase later than this shows.",
    "source": "",
+   "value_spec": {
+    "kind": "literal",
+    "text": "about 20 days (stock on hand)"
+   },
+   "value_ctx": {},
    "ladder_status": "expert_assumption"
   },
   {
@@ -5867,6 +6674,18 @@
    "swept": true,
    "note": "",
    "source": "",
+   "value_spec": {
+    "kind": "axis",
+    "axis": "demand_adjustment_speed",
+    "map": {
+     "slow": "about two and a half weeks to half-react",
+     "central": "about eight days to half-react",
+     "fast": "about four days to half-react"
+    }
+   },
+   "value_ctx": {
+    "setting": "central"
+   },
    "ladder_status": "expert_assumption"
   },
   {
@@ -5877,6 +6696,14 @@
    "swept": true,
    "note": "Assumes low-margin lines carry roughly 2.9x the average cost share, which is close to what makes them low-margin. Tested at half and one-and-a-half times this rate.",
    "source": "",
+   "value_spec": {
+    "kind": "template",
+    "text": "{reduction:g} points off average cost of goods ({trim_effectiveness:.3f} per point of low-margin share)"
+   },
+   "value_ctx": {
+    "reduction": 7.5,
+    "trim_effectiveness": 0.375
+   },
    "ladder_status": "expert_assumption"
   },
   {
@@ -5887,6 +6714,13 @@
    "swept": false,
    "note": "0.45 of the cost saving, in points of orders: customers who came for the removed lines and do not substitute. Higher than the cafe's ratio because a shopper who cannot find a specific product is more likely to leave.",
    "source": "",
+   "value_spec": {
+    "kind": "template",
+    "text": "{demand_cost:.1f}% of orders"
+   },
+   "value_ctx": {
+    "demand_cost": 3.375
+   },
    "ladder_status": "expert_assumption"
   },
   {
@@ -5897,6 +6731,11 @@
    "swept": false,
    "note": "The decisions being compared; fixed by the question.",
    "source": "",
+   "value_spec": {
+    "kind": "literal",
+    "text": "B: +8%   C: +4%"
+   },
+   "value_ctx": {},
    "ladder_status": "user_assumption"
   },
   {
@@ -5907,6 +6746,11 @@
    "swept": false,
    "note": "Long enough for the stock to turn over at the new cost and for most of the customer reaction to land; short enough that rent and wages can be treated as fixed.",
    "source": "",
+   "value_spec": {
+    "kind": "literal",
+    "text": "90 days"
+   },
+   "value_ctx": {},
    "ladder_status": "expert_assumption"
   },
   {
@@ -5917,6 +6761,14 @@
    "swept": false,
    "note": "Monthly sales divided by monthly orders.",
    "source": "",
+   "value_spec": {
+    "kind": "money",
+    "field": "average_order_value",
+    "dp": 2
+   },
+   "value_ctx": {
+    "average_order_value": 33.60730593607306
+   },
    "ladder_status": "derived"
   },
   {
@@ -5927,6 +6779,14 @@
    "swept": false,
    "note": "",
    "source": "",
+   "value_spec": {
+    "kind": "money",
+    "field": "cogs_per_order",
+    "dp": 2
+   },
+   "value_ctx": {
+    "cogs_per_order": 19.492237442922374
+   },
    "ladder_status": "derived"
   }
  ],

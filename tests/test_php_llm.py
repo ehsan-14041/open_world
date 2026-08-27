@@ -4,10 +4,10 @@ The LLM layer must not be able to reach a number.
 The product's claim to a customer is that its figures are not produced by a language model, and
 the page says so on screen. These tests hold the boundary that makes the claim true:
 
-  * translation runs on the template, before the data payload exists, so a translated report
-    carries a byte-identical payload to the English one;
-  * a translation that damages a `${...}` placeholder or the inline markup is rejected rather
-    than shipped, so a broken substitution cannot reach a page;
+  * a translation becomes one more block of copy inside the bundle, so a translated report
+    carries byte-identical figures to the English one — there is nothing else it can touch;
+  * a translation that damages a `{...}` slot or the inline markup is rejected rather than
+    shipped, so a broken substitution cannot reach a page;
   * with no configuration, every entry point declines and the product is unchanged.
 
 They run against the PHP source directly and need no network and no API key.
@@ -46,7 +46,7 @@ def catalogue() -> list[dict]:
 
 
 def test_a_translation_cannot_reach_the_data_payload():
-    """The payload is injected after substitution, so the two languages must agree exactly."""
+    """A generated language may add copy to the bundle and may change nothing else."""
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "pair.json"
         entries = catalogue()
@@ -59,31 +59,69 @@ require '{PHP_ROOT.as_posix()}/lib/i18n.php';
 require '{PHP_ROOT.as_posix()}/lib/report.php';
 $wedge = json_decode(file_get_contents('{PHP_ROOT.as_posix()}/assets/cafe.json'), true);
 $bundle = build_bundle(new Slice($wedge['slice']), $wedge, new Baseline($wedge['demo'], $wedge), false);
-$data = str_replace('</', '<\\\\/', json_encode($bundle, JSON_PRESERVE_ZERO_FRACTION));
-$template = file_get_contents('{PHP_ROOT.as_posix()}/assets/decision_report.html');
 $translation = json_decode(file_get_contents('{Path(tmp).as_posix()}/t.json'), true);
-list($translated, $applied, $skipped) = i18n_apply($template, $translation);
+list($merged, $applied, $skipped) = i18n_merge($bundle, $translation);
 file_put_contents('{out.as_posix()}', json_encode([
-    'english' => str_replace('__DATA__', $data, $template),
-    'other'   => str_replace('__DATA__', $data, $translated),
+    'english' => $bundle,
+    'other'   => $merged,
     'applied' => $applied,
+    'skipped' => $skipped,
 ]));
 """)
         pair = json.loads(out.read_text(encoding="utf-8"))
 
-    assert pair["applied"] > 50, "the catalogue should mostly apply"
-    marker = '<script id="data" type="application/json">'
+    assert pair["applied"] > 50, f"the catalogue should mostly apply (skipped {pair['skipped']})"
+    english, other = pair["english"], pair["other"]
 
-    def payload(html: str) -> str:
-        return html.split(marker, 1)[1].split("</script>", 1)[0]
+    # Everything that is not copy is the same object, key for key and byte for byte.
+    assert set(english) == set(other)
+    for key in english:
+        if key != "i18n":
+            assert english[key] == other[key], f"a translation reached {key}"
 
-    assert payload(pair["english"]) == payload(pair["other"])
-    assert "TRANSLATED" not in payload(pair["other"])
-    assert 'dir="rtl"' in pair["other"]
-    # The copy really was replaced — both in the markup and in the script that renders it.
-    assert "TRANSLATED" in pair["other"].split(marker, 1)[0]
-    after_payload = pair["other"].split(marker, 1)[1].split("</script>", 1)[1]
-    assert "TRANSLATED" in after_payload
+    # The English copy is untouched, and the new language really is translated.
+    assert other["i18n"]["strings"]["en"] == english["i18n"]["strings"]["en"]
+    block = other["i18n"]["strings"]["xx"]
+    assert block["dir"] == "rtl"
+    assert block["ui"]["home_lede"].startswith("TRANSLATED")
+    assert block["wedge"]["headline"].startswith("TRANSLATED")
+    assert {"code": "xx", "label": "Test", "dir": "rtl"} in other["i18n"]["languages"]
+    assert other["i18n"]["default"] == "xx"
+
+
+def test_a_translation_that_has_drifted_from_the_build_is_not_applied():
+    """
+    An id whose English no longer matches the build is skipped, not written.
+
+    A maintainer's translation outlives the copy it was generated from. Writing a stale string
+    into a page that has since changed would put an answer next to the wrong question.
+    """
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "r.json"
+        stale = {"code": "xx", "label": "Test", "dir": "ltr", "strings": {
+            "ui.home_lede": "fine",
+            "ui.no_such_key_at_all": "invented",
+            "wedges.cafe.no_such_key": "invented",
+        }}
+        (Path(tmp) / "t.json").write_text(json.dumps(stale), encoding="utf-8")
+        run_php(f"""
+require '{PHP_ROOT.as_posix()}/lib/i18n.php';
+require '{PHP_ROOT.as_posix()}/lib/report.php';
+$wedge = json_decode(file_get_contents('{PHP_ROOT.as_posix()}/assets/cafe.json'), true);
+$bundle = build_bundle(new Slice($wedge['slice']), $wedge, new Baseline($wedge['demo'], $wedge), false);
+$t = json_decode(file_get_contents('{Path(tmp).as_posix()}/t.json'), true);
+list($merged, $applied, $skipped) = i18n_merge($bundle, $t);
+file_put_contents('{out.as_posix()}', json_encode([
+    'applied' => $applied, 'skipped' => $skipped,
+    'lede' => $merged['i18n']['strings']['xx']['ui']['home_lede'],
+    'keys' => array_keys($merged['i18n']['strings']['xx']['ui']),
+]));
+""")
+        r = json.loads(out.read_text(encoding="utf-8"))
+
+    assert r["applied"] == 1 and r["skipped"] == 2
+    assert r["lede"] == "fine"
+    assert "no_such_key_at_all" not in r["keys"], "a translation invented a string"
 
 
 @pytest.mark.parametrize("corruption,expect_rejected", [
@@ -96,9 +134,11 @@ file_put_contents('{out.as_posix()}', json_encode([
     ("empty", True),
 ])
 def test_a_damaged_translation_is_rejected(corruption, expect_rejected):
-    entries = catalogue()
-    with_ph = next(e for e in entries if e["placeholders"])
-    with_tag = next(e for e in entries if e["tags"])
+    # Whether the shipped copy happens to contain inline markup is a copy decision; the
+    # rejection rule has to hold either way, so the specimen is built rather than found.
+    with_ph = next(e for e in catalogue() if e["placeholders"])
+    with_tag = {"id": "specimen", "text": "Ranked first in <b>130</b> of 162 tested cases",
+                "placeholders": [], "tags": ["<b>", "</b>"]}
     entry = with_tag if corruption.startswith("tag") else with_ph
 
     payload = json.dumps({"entry": entry, "corruption": corruption})
@@ -111,8 +151,8 @@ $entry = $in['entry'];
 $text = $entry['text'];
 switch ($in['corruption']) {{
     case 'faithful':               $candidate = 'XX ' . $text; break;
-    case 'placeholder_removed':    $candidate = preg_replace('/\\$\\{{[^}}]*\\}}/', 'N', $text); break;
-    case 'placeholder_added':      $candidate = $text . ' ${{money(1)}}'; break;
+    case 'placeholder_removed':    $candidate = preg_replace('/\\{{\\w+(?::[^}}]*)?\\}}/', 'N', $text); break;
+    case 'placeholder_added':      $candidate = $text . ' {{money}}'; break;
     case 'placeholder_duplicated': $candidate = $text . ' ' . $entry['placeholders'][0]; break;
     case 'tag_removed':            $candidate = strip_tags($text); break;
     case 'tag_added':              $candidate = '<b>' . $text . '</b>'; break;
@@ -159,13 +199,34 @@ echo json_encode([
 
 
 def test_the_catalogue_holds_copy_and_not_code():
+    """The catalogue is the authored copy, addressed by path — not text scraped off a page."""
+    from event_sim.wedge.i18n import DEFAULT_LANGUAGE, catalogue as authored
+
     entries = catalogue()
     assert len(entries) > 50
+    ids = [e["id"] for e in entries]
+    assert len(ids) == len(set(ids)), "a path must address exactly one string"
+
+    source = authored(DEFAULT_LANGUAGE)
     for e in entries:
-        text = e["text"]
-        assert "=>" not in text and "document." not in text and "textContent" not in text
-        assert text[0].isalpha() or text.startswith("<")
-    # Every catalogued string must appear exactly once in the template, or substitution is unsafe.
-    template = (ROOT / "event_sim" / "cafe" / "templates" / "decision_report.html").read_text(encoding="utf-8")
-    for e in entries:
-        assert template.count(e["text"]) == 1, e["id"]
+        assert "=>" not in e["text"] and "document." not in e["text"]
+        node = source
+        for part in e["id"].split("."):
+            assert isinstance(node, dict) and part in node, f"{e['id']} is not in the catalogue"
+            node = node[part]
+        assert node == e["text"], f"{e['id']} has drifted from the authored copy"
+
+
+def test_the_catalogue_offers_no_way_to_translate_a_setting():
+    """
+    Some strings are read by the page, not by a person.
+
+    A writing direction, a numeral system or a language tag decides how the page behaves. A
+    model asked to "translate" one would return something the page cannot act on, so they are
+    never offered.
+    """
+    machine = {"ltr", "rtl", "latn", "arabext", "en", "fa"}
+    for e in catalogue():
+        leaf = e["id"].rsplit(".", 1)[-1]
+        assert leaf not in ("dir", "numerals", "lang"), f"{e['id']} is a setting, not copy"
+        assert e["text"] not in machine, f"{e['id']} carries a machine value"

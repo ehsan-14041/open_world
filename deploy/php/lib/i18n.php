@@ -2,14 +2,16 @@
 /**
  * Translating the report's copy — never its numbers.
  *
- * The substitution runs on the TEMPLATE, before the data payload is injected. That ordering is
- * the guarantee: a translation cannot reach a figure, a ranking, a count or a fingerprint,
- * because none of them are in the template yet. What it can reach is the copy around them.
+ * A report bundle carries its languages inside it: one set of figures, computed once, and a
+ * block of copy per language. A generated translation becomes another such block and nothing
+ * else. That is the guarantee — not an ordering that has to be preserved by whoever edits the
+ * page next, but the shape of the thing itself. No figure, ranking, count or fingerprint lives
+ * under `i18n`, so a translation has nothing to reach.
  *
- * Each catalogued string carries its `${...}` placeholders and its inline tags. A translation
- * that drops one, invents one, or reorders the tag structure is rejected and the English is
- * kept for that string — a page in two languages is a smaller failure than a page with a
- * broken number or unclosed markup.
+ * Each catalogued string is addressed by its path in the catalogue and carries its `{...}`
+ * slots and its inline tags. A translation that drops one, invents one, or reorders the tag
+ * structure is rejected and the English is kept for that string — a page in two languages is a
+ * smaller failure than a page with a broken number or unclosed markup.
  */
 declare(strict_types=1);
 
@@ -17,6 +19,8 @@ require_once __DIR__ . '/llm.php';
 
 const I18N_DIR = __DIR__ . '/../data/i18n';
 const CATALOGUE = __DIR__ . '/../assets/strings.json';
+/** The language the catalogue is written in, and the base every translation starts from. */
+const I18N_SOURCE = 'en';
 
 /** Languages the maintainer has generated a translation for. */
 function i18n_available(): array
@@ -78,7 +82,7 @@ function i18n_reject_reason(array $entry, string $translated): string
             return 'placeholder ' . $p . ' lost or duplicated';
         }
     }
-    if (preg_match_all('/\$\{[^}]*\}/', $translated, $found)) {
+    if (preg_match_all('/\{\w+(?::[^}]*)?\}/', $translated, $found)) {
         if (count($found[0]) !== count($placeholders)) {
             return 'invented a placeholder';
         }
@@ -98,73 +102,89 @@ function i18n_reject_reason(array $entry, string $translated): string
     return '';
 }
 
-/** Apply a stored translation to the template. Returns [html, applied, skipped]. */
-function i18n_apply(string $template, array $translation): array
+/**
+ * Fold a stored translation into the bundle as one more language.
+ *
+ * Every string starts as its English original, so a partly-translated language is a readable
+ * page rather than a page with holes. Only `$bundle['i18n']` is touched.
+ *
+ * @return array{0:array, 1:int, 2:int} [bundle, applied, skipped]
+ */
+function i18n_merge(array $bundle, array $translation): array
 {
-    $applied = 0;
-    $skipped = 0;
+    if (!isset($bundle['i18n']['strings'][I18N_SOURCE])) {
+        return [$bundle, 0, 0];
+    }
+    $code = preg_replace('/[^a-z0-9-]/i', '', (string) ($translation['code'] ?? ''));
+    if ($code === '' || $code === I18N_SOURCE) {
+        return [$bundle, 0, 0];
+    }
+    $dir = ($translation['dir'] ?? 'ltr') === 'rtl' ? 'rtl' : 'ltr';
+    $label = (string) ($translation['label'] ?? $code);
+
+    $block = $bundle['i18n']['strings'][I18N_SOURCE];
+    $block['dir'] = $dir;
+    $block['label'] = $label;
+
     $byId = [];
     foreach (i18n_catalogue() as $entry) {
         $byId[$entry['id']] = $entry;
     }
-    // Longest first: a short string can be a substring of a longer one, and replacing the
-    // long one first keeps the short replacement from cutting into it.
-    $ids = array_keys($translation['strings'] ?? []);
-    usort($ids, function ($a, $b) use ($byId) {
-        return strlen($byId[$b]['text'] ?? '') <=> strlen($byId[$a]['text'] ?? '');
-    });
-
-    foreach ($ids as $id) {
+    $applied = 0;
+    $skipped = 0;
+    foreach (($translation['strings'] ?? []) as $id => $translated) {
         $entry = $byId[$id] ?? null;
-        if ($entry === null) {
+        if ($entry === null || !is_string($translated)) {
+            $skipped++;
             continue;                                     // catalogue changed since generation
         }
-        $translated = (string) $translation['strings'][$id];
-        if (i18n_reject_reason($entry, $translated) !== '' || strpos($template, $entry['text']) === false) {
+        if (i18n_reject_reason($entry, $translated) !== '') {
             $skipped++;
             continue;
         }
-        $template = str_replace($entry['text'], $translated, $template);
-        $applied++;
+        if (i18n_set_path($block, (string) $id, $translated, $entry['text'])) {
+            $applied++;
+        } else {
+            $skipped++;
+        }
     }
 
-    $dir = ($translation['dir'] ?? 'ltr') === 'rtl' ? 'rtl' : 'ltr';
-    $lang = preg_replace('/[^a-z0-9-]/i', '', (string) ($translation['code'] ?? 'en'));
-    $template = str_replace('<html lang="en">', '<html lang="' . $lang . '" dir="' . $dir . '">', $template);
-    if ($dir === 'rtl') {
-        $template = str_replace('</head>', i18n_rtl_css() . "\n</head>", $template);
-    }
-    return [$template, $applied, $skipped];
+    $bundle['i18n']['strings'][$code] = $block;
+    $bundle['i18n']['languages'][] = ['code' => $code, 'label' => $label, 'dir' => $dir];
+    $bundle['i18n']['default'] = $code;
+    return [$bundle, $applied, $skipped];
 }
 
 /**
- * Right-to-left corrections.
+ * Write one translated string at its catalogue path.
  *
- * `dir="rtl"` on the root flips the layout for free. What it must not flip is anything whose
- * order carries meaning rather than language: figures, the chart, and the A/B/C option letters
- * stay left-to-right so a number never reads backwards.
+ * The path is followed into the copy the page actually reads, and the write only happens where
+ * the English original is still sitting. A catalogue that has drifted from the build therefore
+ * skips the string instead of overwriting something else with it.
  */
-function i18n_rtl_css(): string
+function i18n_set_path(array &$block, string $path, string $value, string $expected): bool
 {
-    return '<style>
-:root[dir="rtl"] .count,
-:root[dir="rtl"] .opt .impact .v,
-:root[dir="rtl"] .opt .facts .v,
-:root[dir="rtl"] .opt .letter,
-:root[dir="rtl"] .mini .n,
-:root[dir="rtl"] .grp li .v,
-:root[dir="rtl"] .field .in,
-:root[dir="rtl"] code,
-:root[dir="rtl"] table.tech td:nth-child(2){direction:ltr;unicode-bidi:isolate}
-:root[dir="rtl"] .opt .facts .v,
-:root[dir="rtl"] .grp li .v{text-align:left}
-:root[dir="rtl"] .mini .n{text-align:left}
-:root[dir="rtl"] .next{border-left:0;border-right:3px solid var(--c);border-radius:10px 0 0 10px}
-:root[dir="rtl"] .top .cta{margin-left:0;margin-right:auto}
-:root[dir="rtl"] .limits ul{padding-left:0;padding-right:20px}
-:root[dir="rtl"] #chart{direction:ltr}
-:root[dir="rtl"] .tip span{flex-direction:row-reverse}
-</style>';
+    $parts = explode('.', $path);
+    // The catalogue is rooted at the language; a bundle nests a wedge's copy under `wedge`.
+    if (($parts[0] ?? '') === 'wedges') {
+        if (count($parts) < 3 || !isset($block['wedge'])) {
+            return false;
+        }
+        array_splice($parts, 0, 2, ['wedge']);
+    }
+    $node = &$block;
+    $last = array_pop($parts);
+    foreach ($parts as $part) {
+        if (!is_array($node) || !array_key_exists($part, $node)) {
+            return false;
+        }
+        $node = &$node[$part];
+    }
+    if (!is_array($node) || !array_key_exists($last, $node) || $node[$last] !== $expected) {
+        return false;
+    }
+    $node[$last] = $value;
+    return true;
 }
 
 // ---- generation ----------------------------------------------------------------------------
