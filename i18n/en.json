@@ -14,12 +14,6 @@
     "home_lede": "Pick the one closest to yours. You will compare a few versions of one real decision — with your own figures.",
     "home_pick": "Compare the options",
     "home_footer": "Each report compares three versions of one decision on the same model, so the differences come from the decision rather than from different guesses. It is a scenario comparison under stated assumptions — not a prediction, and not advice.",
-    "journey_1": "Your business",
-    "journey_2": "What changed",
-    "journey_3": "Compare your choices",
-    "journey_4": "The money and the trade-offs",
-    "journey_5": "What could change the answer",
-    "journey_6": "Assumptions",
     "switch_business": "Change business type",
     "language": "Language",
     "demo_badge": "Demo — fictional {noun}",
@@ -140,7 +134,24 @@
     "why_demand_grows": "Demand is still growing at this price,",
     "why_demand_holds": "Demand barely moves at this price,",
     "why_capacity_full": "and you were already at capacity, so the gain comes from the price rather than from more work.",
-    "why_price_through": "and the higher price carries almost straight through to what you keep."
+    "why_price_through": "and the higher price carries almost straight through to what you keep.",
+    "verdict": "{option} leaves you with the most cash after 90 days — under these assumptions.",
+    "verdict_close": "{lead} and {second} finish within {amount} of each other after 90 days — under these assumptions.",
+    "best_badge": "Best under current assumptions",
+    "use_your_numbers": "Use your own numbers",
+    "answer_changed_banner": "The answer changed — this is the assumption that matters most.",
+    "home_flow": "Pick your business → see three choices → test your numbers.",
+    "credibility": "Every figure on the page comes from one model, and every assumption behind it is named, sourced and testable here.",
+    "chart_shock": "the increase starts",
+    "chart_axis_unit": "cash",
+    "sum_yours": "{n} of your numbers",
+    "sum_research": "{n} from research",
+    "sum_model": "{n} model defaults",
+    "sum_calc": "{n} calculated",
+    "currency_pick": "Show figures in",
+    "currency_none": "no symbol",
+    "print_view": "Print or save as PDF",
+    "print_hint": "Verdict, chart and assumptions. Everything else is left out."
   },
   "wedges": {
     "cafe": {
@@ -299,7 +310,8 @@
         "cogs_per_order": {
           "label": "Ingredient cost per order"
         }
-      }
+      },
+      "chart_turn": "old stock runs out around here"
     },
     "shop": {
       "business": "Shop / Online Store",
@@ -457,7 +469,8 @@
         "cogs_per_order": {
           "label": "Cost of goods per order"
         }
-      }
+      },
+      "chart_turn": "old stock runs out around here"
     },
     "salon": {
       "business": "Salon / Service Business",
@@ -628,7 +641,8 @@
         "cost_per_appointment": {
           "label": "Product cost per appointment"
         }
-      }
+      },
+      "chart_turn": "holding your price stops paying here"
     }
   }
 }

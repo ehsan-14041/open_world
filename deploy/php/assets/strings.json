@@ -68,42 +68,6 @@
    "tags": []
   },
   {
-   "id": "ui.journey_1",
-   "text": "Your business",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.journey_2",
-   "text": "What changed",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.journey_3",
-   "text": "Compare your choices",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.journey_4",
-   "text": "The money and the trade-offs",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.journey_5",
-   "text": "What could change the answer",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.journey_6",
-   "text": "Assumptions",
-   "placeholders": [],
-   "tags": []
-  },
-  {
    "id": "ui.switch_business",
    "text": "Change business type",
    "placeholders": [],
@@ -852,6 +816,122 @@
    "tags": []
   },
   {
+   "id": "ui.verdict",
+   "text": "{option} leaves you with the most cash after 90 days — under these assumptions.",
+   "placeholders": [
+    "{option}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.verdict_close",
+   "text": "{lead} and {second} finish within {amount} of each other after 90 days — under these assumptions.",
+   "placeholders": [
+    "{lead}",
+    "{second}",
+    "{amount}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.best_badge",
+   "text": "Best under current assumptions",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.use_your_numbers",
+   "text": "Use your own numbers",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.answer_changed_banner",
+   "text": "The answer changed — this is the assumption that matters most.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.home_flow",
+   "text": "Pick your business → see three choices → test your numbers.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.credibility",
+   "text": "Every figure on the page comes from one model, and every assumption behind it is named, sourced and testable here.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.chart_shock",
+   "text": "the increase starts",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.chart_axis_unit",
+   "text": "cash",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sum_yours",
+   "text": "{n} of your numbers",
+   "placeholders": [
+    "{n}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.sum_research",
+   "text": "{n} from research",
+   "placeholders": [
+    "{n}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.sum_model",
+   "text": "{n} model defaults",
+   "placeholders": [
+    "{n}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.sum_calc",
+   "text": "{n} calculated",
+   "placeholders": [
+    "{n}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.currency_pick",
+   "text": "Show figures in",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.currency_none",
+   "text": "no symbol",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.print_view",
+   "text": "Print or save as PDF",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.print_hint",
+   "text": "Verdict, chart and assumptions. Everything else is left out.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
    "id": "wedges.cafe.business",
    "text": "Cafe / Restaurant",
    "placeholders": [],
@@ -1363,6 +1443,12 @@
    "tags": []
   },
   {
+   "id": "wedges.cafe.chart_turn",
+   "text": "old stock runs out around here",
+   "placeholders": [],
+   "tags": []
+  },
+  {
    "id": "wedges.shop.business",
    "text": "Shop / Online Store",
    "placeholders": [],
@@ -1870,6 +1956,12 @@
   {
    "id": "wedges.shop.assumptions.cogs_per_order.label",
    "text": "Cost of goods per order",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.shop.chart_turn",
+   "text": "old stock runs out around here",
    "placeholders": [],
    "tags": []
   },
@@ -2427,6 +2519,12 @@
   {
    "id": "wedges.salon.assumptions.cost_per_appointment.label",
    "text": "Product cost per appointment",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.salon.chart_turn",
+   "text": "holding your price stops paying here",
    "placeholders": [],
    "tags": []
   }

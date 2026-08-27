@@ -11,6 +11,7 @@
 :root{
   --paper:#F7F5F0; --raised:#FFFFFF; --sunk:#EFEDE6; --ink:#1D2A2F; --muted:#5D6E75; --rule:#E0DED5;
   --grid:#E9E7DF; --a:#7A8A91; --b:#1E7A5E; --c:#B07C1E; --crit:#B4453B; --focus:#1E7A5E;
+  --win:#2E3F46; --win-ink:#FFFFFF; --win-soft:rgba(46,63,70,.07);
   --a-soft:rgba(122,138,145,.10); --b-soft:rgba(30,122,94,.09); --c-soft:rgba(176,124,30,.10);
   --shadow-1:0 1px 2px rgba(29,42,47,.05);
   --shadow-2:0 1px 2px rgba(29,42,47,.05),0 10px 30px -14px rgba(29,42,47,.16);
@@ -27,6 +28,8 @@ html[dir="rtl"]{
   :root:not([data-theme="light"]){
     --paper:#14181A; --raised:#1B2022; --sunk:#222829; --ink:#E9EAE5; --muted:#9BA7AC; --rule:#2A3134;
     --grid:#232A2C; --a:#8FA0A7; --b:#4FB58E; --c:#D6A536; --crit:#E07A6E; --focus:#4FB58E;
+  --win:#D8DEE0; --win-ink:#14181A; --win-soft:rgba(216,222,224,.08);
+    --win:#D8DEE0; --win-ink:#14181A; --win-soft:rgba(216,222,224,.08);
     --a-soft:rgba(143,160,167,.14); --b-soft:rgba(79,181,142,.13); --c-soft:rgba(214,165,54,.14);
     --shadow-1:0 1px 2px rgba(0,0,0,.3);
     --shadow-2:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
@@ -83,6 +86,9 @@ button,select,input{font:inherit;color:inherit}
 section{padding:52px 0}
 section+section{border-top:1px solid var(--rule)}
 .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.sec-head.tight{margin-bottom:14px}
+.sec-head.tight h2{font-size:clamp(21px,2.6vw,27px)}
+#money{padding-top:10px}
 .lede{font-size:19px;color:var(--muted)}
 @media (max-width:600px){section{padding:38px 0}.lede{font-size:17px}}
 
@@ -92,12 +98,38 @@ section+section{border-top:1px solid var(--rule)}
 .changed .dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:0 0 auto}
 #decision .lede{margin-top:14px;max-width:56ch}
 .whoami{margin-top:16px;font-size:14px;color:var(--muted)}
+/* Sized to be read before the cards are, and to survive being the only thing a reader takes in. */
+.verdict{margin:22px 0 0;font-family:var(--display);font-weight:600;font-size:clamp(19px,2.3vw,25px);
+         line-height:1.32;letter-spacing:-.01em;max-width:30ch;text-wrap:balance}
+html[dir="rtl"] .verdict{font-weight:700;letter-spacing:0;line-height:1.7;max-width:34ch}
+.verdict b{border-bottom:2px solid var(--win);padding-bottom:1px}
+/* The decision arrives rather than appearing, once, on first paint only. Anything the reader
+   triggers themselves is not animated — they already know they did it. */
+@media (prefers-reduced-motion:no-preference){
+  .intro-1,.intro-2,.intro-3{animation:rise .28s cubic-bezier(.32,.72,0,1) both}
+  .intro-2{animation-delay:.05s}
+  .intro-3{animation-delay:.1s}
+}
+@keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
 
-.options{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
-@media (max-width:860px){.options{grid-template-columns:1fr;gap:16px}}
+/* Six named rows, and every card lays its parts on the same ones, so the per-month figure,
+   the demand change and the 90-day cash all sit at the same height across the three. Browsers
+   without subgrid fall back to the reserved-height rules further down, which get close. */
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px;
+         grid-template-rows:auto auto auto auto auto auto}
+.opt{grid-row:span 6}
+@supports (grid-template-rows:subgrid){
+  .opt{display:grid;grid-template-rows:subgrid;gap:15px}
+}
+@media (max-width:860px){
+  .options{grid-template-columns:1fr;gap:16px;grid-template-rows:none}
+  .opt{grid-row:auto}
+  @supports (grid-template-rows:subgrid){.opt{grid-template-rows:auto}}
+}
 .opt{position:relative;background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-lg);
      padding:26px 22px 22px;display:flex;flex-direction:column;gap:15px;box-shadow:var(--shadow-2)}
-.opt.lead{border-color:var(--wc);box-shadow:0 0 0 2px var(--wc) inset,var(--shadow-3)}
+.opt.lead{border-color:var(--win);box-shadow:0 0 0 2px var(--win) inset,var(--shadow-3);
+          background:linear-gradient(var(--win-soft),var(--win-soft)),var(--raised)}
 .opt-head{display:flex;align-items:center;gap:11px}
 .letter{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;
         color:#fff;background:var(--wc);font-size:15px;flex:0 0 auto;font-family:"Source Sans 3",sans-serif}
@@ -108,12 +140,27 @@ html[dir="rtl"] .opt .name{font-size:18px;line-height:1.6}
 .opt-head{min-height:calc(2 * 1.3 * 19.5px)}
 html[dir="rtl"] .opt-head{min-height:calc(2 * 1.6 * 18px)}
 @media (max-width:720px){.opt-head{min-height:0}}
-.lead-tag{position:absolute;top:-13px;inset-inline-start:20px;font-size:11px;font-weight:700;
-          letter-spacing:.07em;text-transform:uppercase;color:#fff;background:var(--wc);
-          padding:5px 12px;border-radius:999px;box-shadow:var(--shadow-1)}
+.lead-tag{position:absolute;top:-14px;inset-inline-start:18px;font-size:12px;font-weight:700;
+          letter-spacing:.02em;color:var(--win-ink);background:var(--win);
+          padding:7px 14px;border-radius:999px;box-shadow:var(--shadow-2);
+          display:inline-flex;align-items:center;gap:7px;white-space:nowrap;max-width:calc(100% - 36px)}
+.lead-tag::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:0 0 auto}
+@media (max-width:400px){.lead-tag{font-size:11px;padding:6px 11px}}
 html[dir="rtl"] .lead-tag{letter-spacing:0;font-size:12px;text-transform:none}
 .money{font-size:clamp(31px,4.2vw,39px);font-weight:600;line-height:1;letter-spacing:-.015em}
 html[dir="rtl"] .money{letter-spacing:0}
+/* Persian sits lower on the line and carries marks above and below it, so headings need room
+   they do not need in Latin — otherwise a zir or a hamze is shaved off by the line box. */
+html[dir="rtl"] h1,html[dir="rtl"] h2,html[dir="rtl"] h3{padding-block:.06em}
+html[dir="rtl"] .lead-tag,html[dir="rtl"] .pill,html[dir="rtl"] .badge{line-height:1.75}
+html[dir="rtl"] .seg button{line-height:1.7}
+/* Columns of figures only line up if every digit is the same width. */
+.money,.rowline .v,.mini td,.mini th,.grp li .v,.influence .pill,.opt .robust b,.verdict b,
+#chart text,.sticky-t{font-variant-numeric:tabular-nums}
+/* A figure or a Latin name inside a Persian sentence keeps its own direction, and does not
+   drag the punctuation around it to the wrong end of the line. */
+html[dir="rtl"] .verdict b,html[dir="rtl"] .flipline b,html[dir="rtl"] .effect b,
+html[dir="rtl"] #why-p,html[dir="rtl"] .robust b{unicode-bidi:isolate}
 .money-l{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.45}
 .rowline{display:flex;align-items:baseline;gap:8px;border-top:1px solid var(--rule);padding-top:13px;flex-wrap:wrap}
 .rowline .v{font-size:20px;font-weight:600} .rowline .l{font-size:13.5px;color:var(--muted)}
@@ -121,7 +168,7 @@ html[dir="rtl"] .money{letter-spacing:0}
 .robust b{color:var(--wc);font-weight:700}
 .opt details summary{font-size:13.5px;color:var(--muted);cursor:pointer;font-weight:600;list-style:none}
 .opt details summary::-webkit-details-marker{display:none}
-.opt details summary::after{content:" +"} .opt details[open] summary::after{content:" −"}
+.opt details summary::after{content:"+"} .opt details[open] summary::after{content:"−"}
 .opt details .inner{font-size:13.5px;color:var(--muted);margin-top:9px;line-height:1.55}
 
 .why{margin-top:32px;background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);
@@ -183,14 +230,41 @@ html[dir="rtl"] .unknown-grid .k{letter-spacing:0;font-size:13px;text-transform:
 .control{margin-top:26px;background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);
          padding:22px;box-shadow:var(--shadow-1)}
 .control h3{font-size:17.5px}
-.seg{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;border:1px solid var(--rule);
-     border-radius:var(--r-sm);overflow:hidden;background:var(--sunk)}
-.seg button{border:0;background:transparent;padding:13px 8px;font-weight:600;font-size:15px;cursor:pointer;color:var(--muted);min-height:50px}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.seg button+button{border-inline-start:1px solid var(--rule)}
+/* A track with a thumb that slides between three stops. The thumb is one element that moves,
+   so the eye follows the setting from where it was to where it now is instead of watching one
+   box light up and another go dark. */
+.seg{position:relative;display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;
+     border:1px solid var(--rule);border-radius:999px;background:var(--sunk);padding:4px;isolation:isolate}
+.seg::before{content:"";position:absolute;z-index:0;top:4px;bottom:4px;width:calc((100% - 8px)/3);
+     inset-inline-start:4px;border-radius:999px;background:var(--ink);box-shadow:var(--shadow-1);
+     transform:translateX(calc(var(--seg-i,0) * 100% * var(--seg-dir,1)));
+     transition:transform .26s cubic-bezier(.32,.72,0,1)}
+html[dir="rtl"] .seg{--seg-dir:-1}
+.seg button{position:relative;z-index:1;border:0;background:transparent;padding:12px 8px;
+     font-weight:600;font-size:15px;cursor:pointer;color:var(--muted);min-height:48px;
+     border-radius:999px;transition:color .2s ease}
+.seg button[aria-pressed="true"]{color:var(--paper)}
+@media (prefers-reduced-motion:reduce){.seg::before{transition:none}.seg button{transition:none}}
 .seg-help{font-size:14px;color:var(--muted);margin-top:11px;min-height:2.8em}
 .effect{margin-top:14px;font-size:16px;padding:13px 15px;border-radius:var(--r-sm);background:var(--sunk)}
 .effect.changed-now{background:var(--c-soft);border-inline-start:3px solid var(--c)}
+/* The flip is the thing this page exists to teach, so it gets its own line above the result
+   and a moment of movement to earn a second look. */
+.flipbanner{margin-top:16px;display:none;align-items:flex-start;gap:11px;padding:14px 16px;
+     border-radius:var(--r-sm);background:var(--c-soft);border:1px solid var(--c);
+     font-size:16px;font-weight:600;line-height:1.45}
+.flipbanner.on{display:flex;animation:flipin .34s cubic-bezier(.32,.72,0,1)}
+.flipbanner .m{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--c);margin-top:7px}
+@keyframes flipin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+/* The card that just took the lead is worth a glance, so its border pulses once. */
+.opt.just-won{animation:justwon .7s ease-out}
+@keyframes justwon{0%{box-shadow:0 0 0 2px var(--win) inset,0 0 0 0 var(--win-soft)}
+                   45%{box-shadow:0 0 0 2px var(--win) inset,0 0 0 12px var(--win-soft)}
+                   100%{box-shadow:0 0 0 2px var(--win) inset,var(--shadow-3)}}
+.opt{transition:border-color .28s ease,box-shadow .28s ease,background .28s ease}
+@media (prefers-reduced-motion:reduce){
+  .flipbanner.on{animation:none}.opt.just-won{animation:none}.opt{transition:none}
+}
 details.adv{margin-top:16px;border:1px solid var(--rule);border-radius:var(--r-md);background:var(--raised)}
 details.adv summary{cursor:pointer;padding:14px 18px;font-weight:600;font-size:15px}
 details.adv .inner{padding:2px 18px 18px}
@@ -200,8 +274,20 @@ details.adv .inner{padding:2px 18px 18px}
 
 .groups{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 @media (max-width:720px){.groups{grid-template-columns:1fr}}
-.grp{background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-1)}
-.grp .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.grp{background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);box-shadow:var(--shadow-1)}
+.grp>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;
+     padding:18px 20px;min-height:56px;border-radius:var(--r-md)}
+.grp>summary::-webkit-details-marker{display:none}
+.grp>summary::after{content:"";margin-inline-start:auto;width:9px;height:9px;flex:0 0 auto;
+     border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
+     transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s ease}
+.grp[open]>summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
+.grp>summary .n{font-size:13px;font-weight:700;color:var(--muted);background:var(--sunk);
+     border-radius:999px;padding:3px 10px;font-variant-numeric:tabular-nums}
+.grp .grp-body{padding:0 20px 20px}
+.ev-summary{font-size:15px;color:var(--muted);margin:2px 0 0}
+@media (prefers-reduced-motion:reduce){.grp>summary::after{transition:none}}
+.grp .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 html[dir="rtl"] .grp .k{letter-spacing:0;font-size:13px;text-transform:none}
 .grp.yours .k{color:var(--b)} .grp.research .k{color:#2F5DA8} .grp.assume .k{color:var(--c)} .grp.calc .k{color:var(--muted)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .grp.research .k{color:#7FA7E6}}
@@ -235,6 +321,57 @@ html[dir="rtl"] .fgroup .k{letter-spacing:0;font-size:13px;text-transform:none}
 .btnrow{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;align-items:center}
 .btn{border:1px solid var(--rule);background:var(--sunk);padding:13px 20px;border-radius:999px;font-weight:600;cursor:pointer;min-height:50px}
 .btn.primary{background:var(--b);border-color:var(--b);color:#fff;font-size:16.5px;padding-inline:26px}
+/* Sits above the page, never on top of it: the body reserves its height so the last section is
+   still reachable, and it hides itself once the form it points at is on screen. */
+.sticky{position:fixed;inset-inline:0;bottom:0;z-index:40;background:var(--raised);
+        border-top:1px solid var(--rule);box-shadow:0 -6px 24px -12px rgba(0,0,0,.35);
+        padding:10px 20px calc(10px + env(safe-area-inset-bottom,0px))}
+.sticky[hidden]{display:none}
+.sticky-in{display:flex;align-items:center;gap:14px;justify-content:space-between}
+.sticky-t{font-size:14.5px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sticky .btn{min-height:46px;padding:11px 20px;font-size:15.5px}
+@media (max-width:560px){.sticky-t{display:none}.sticky .btn{width:100%}}
+body.has-sticky{padding-bottom:84px}
+.count-note{margin:14px 0 0;font-size:13.5px;color:var(--muted)}
+/* Everything a finger is meant to land on clears the comfortable minimum, including the ones
+   that are only incidentally interactive. */
+.mark a{display:inline-flex;align-items:center;min-height:44px}
+/* A flex row collapses the space the marker used to sit after, so the gap is stated. */
+.opt details summary,.adv summary{min-height:44px;display:flex;align-items:center;gap:5px}
+.field .in select{min-height:48px;width:100%;border:0;background:transparent;padding:0 12px;font:inherit;color:inherit}
+.printrow{margin-top:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+@media (max-width:560px){.print-hint{display:none}}
+.btn.ghost{background:transparent;min-height:44px;padding:10px 17px;font-size:14.5px}
+.print-hint{font-size:13.5px;color:var(--muted)}
+
+/* ---- printed / saved as PDF -------------------------------------------------------------
+   One page that carries the decision: the verdict, the three options, the chart and where the
+   numbers came from. The controls, the form and the standing call to action are interaction,
+   and interaction does not print. */
+@media print{
+  @page{margin:14mm}
+  :root{--paper:#fff;--raised:#fff;--sunk:#fff;--ink:#000;--muted:#444;--rule:#bbb;--grid:#ddd;
+        --win:#000;--win-ink:#fff;--win-soft:transparent}
+  body{background:#fff;color:#000;padding:0;font-size:11.5pt}
+  body.has-sticky{padding-bottom:0}
+  .top,.sticky,.printrow,#change .ctrl,#change .adv,#try,.unknown-cta,.langs,.bizpick,
+  #how,.legend,.tip{display:none !important}
+  section{padding:14px 0;break-inside:avoid}
+  #decision{padding-top:0}
+  h1{font-size:20pt}
+  h2{font-size:14pt}
+  .verdict{font-size:14pt;max-width:none}
+  .options{grid-template-columns:repeat(3,1fr) !important;gap:10px}
+  .opt{grid-row:auto;box-shadow:none;border:1px solid #999;padding:12px}
+  .opt.lead{box-shadow:none;border:2px solid #000;background:#fff}
+  .lead-tag{position:static;box-shadow:none;margin-bottom:8px;display:inline-flex}
+  .chart-wrap{break-inside:avoid}
+  .grp{box-shadow:none;break-inside:avoid}
+  .grp>summary::after{display:none}
+  .grp:not([open])>.grp-body{display:block}   /* a collapsed group still prints its evidence */
+  .intro-1,.intro-2,.intro-3{animation:none !important}
+  a[href]::after{content:""}
+}
 .msg{font-size:14px;color:var(--muted)}
 .errbox{border-inline-start:3px solid var(--crit);background:rgba(180,69,59,.09);padding:15px 18px;border-radius:var(--r-sm);margin-bottom:16px}
 .errbox strong{display:block;margin-bottom:5px}
@@ -280,19 +417,25 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     <h1 id="headline"></h1>
     <p class="lede" id="hero-lede"></p>
     <p class="whoami" id="whoami"></p>
+    <!-- The answer in one sentence, before the cards that justify it. A reader who stops
+         here should still have left with the right conclusion. -->
+    <p class="verdict intro-1" id="verdict"></p>
     <h2 class="sr" id="options-h"></h2>
-    <div class="options" id="options"></div>
-    <div class="why"><h3 id="why-h"></h3><p id="why-p"></p></div>
-    <p class="scenario" id="scenario"></p>
+    <div class="options intro-2" id="options"></div>
+    <p class="count-note" id="count-note"></p>
+    <!-- Below the cards: keeping a copy is something you decide after reading them, not before. -->
+    <p class="printrow"><button class="btn ghost" id="printbtn"></button>
+       <span class="print-hint" id="print-hint"></span></p>
   </section>
 
+  <!-- The chart follows the cards directly: it is what makes the difference between them felt
+       rather than merely read. -->
   <section id="money">
-    <div class="sec-head">
-      <div class="eyebrow" id="chart-eyebrow"></div>
+    <div class="sec-head tight">
       <h2 id="chart-title"></h2>
       <p class="lede" id="chart-lede"></p>
     </div>
-    <div class="chart-wrap">
+    <div class="chart-wrap intro-3">
       <svg id="chart" viewBox="0 0 960 380" role="img" aria-labelledby="chart-alt"></svg>
       <p class="sr" id="chart-alt"></p>
       <div class="tip" id="tip"></div>
@@ -300,6 +443,8 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     </div>
     <p class="note" id="cash-note"></p>
     <div class="mini"><table id="mini"></table></div>
+    <div class="why"><h3 id="why-h"></h3><p id="why-p"></p></div>
+    <p class="scenario" id="scenario"></p>
   </section>
 
   <section id="unknown">
@@ -329,13 +474,15 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
       <h3 id="ctrl-title"></h3>
       <div class="seg" id="seg" role="group" aria-labelledby="ctrl-title"></div>
       <div class="seg-help" id="seg-help"></div>
+      <p class="flipbanner" id="flipbanner" role="status" aria-live="assertive"><span class="m"></span><span id="flipbanner-t"></span></p>
       <div class="effect" id="effect" role="status" aria-live="polite"></div>
     </div>
     <details class="adv"><summary id="adv-sum"></summary><div class="inner"><div class="controls" id="controls"></div></div></details>
   </section>
 
   <section id="evidence">
-    <div class="sec-head"><div class="eyebrow" id="ev-eyebrow"></div><h2 id="ev-title"></h2></div>
+    <div class="sec-head"><div class="eyebrow" id="ev-eyebrow"></div><h2 id="ev-title"></h2>
+      <p class="ev-summary" id="ev-summary"></p></div>
     <div class="groups" id="groups"></div>
   </section>
 
@@ -363,6 +510,14 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     <details class="tech"><summary id="how-open"></summary><div class="inner" id="how-body"></div></details>
   </section>
 </main>
+
+<!-- Follows the reader down the page and steps aside once the form itself is on screen. -->
+<div class="sticky" id="sticky" hidden>
+  <div class="wrap sticky-in">
+    <span class="sticky-t" id="sticky-t"></span>
+    <button class="btn primary" id="sticky-go"></button>
+  </div>
+</div>
 <footer class="foot"><div class="wrap" id="foot"></div></footer>
 
 <script id="data" type="application/json">__DATA__</script>
@@ -396,8 +551,25 @@ function setFormatters(){
   NF1 = new Intl.NumberFormat(loc, {minimumFractionDigits:1, maximumFractionDigits:1});
 }
 function num(v,d){ return (d?NF1:NF).format(v); }
-function money(v){ return (v<0?'−':'') + NF.format(Math.abs(Math.round(v))); }
-function signed(v){ return (v<0?'−':'+') + NF.format(Math.abs(Math.round(v))); }
+/* Symbols a small business is likely to want, plus none at all. Anything the list does not
+   cover the owner can type. The choice is presentation: it is attached after the number is
+   formatted and never reaches the arithmetic. */
+var CURRENCIES = ['', '$', '€', '£', '₺', '₹', '¥', 'A$', 'C$', 'R$', 'ر.س', 'د.إ', 'تومان', 'ریال'];
+var cur = (function(){
+  try { var v = localStorage.getItem('dc_cur'); if(v !== null) return v; } catch(e){}
+  return '';
+})();
+/* A one- or two-character symbol leads the number in English and follows it in Persian; a word
+   always follows it, in either language, because "تومان ۲۴٬۵۲۲" is not how anyone writes it. */
+function curIsWord(){ return cur.length > 2; }
+function unit(digits){
+  if(!cur) return digits;
+  var isWord = curIsWord();
+  if(!isWord && L.numerals !== 'arabext') return cur + digits;
+  return digits + '\u00A0' + cur;
+}
+function money(v){ return (v<0?'−':'') + unit(NF.format(Math.abs(Math.round(v)))); }
+function signed(v){ return (v<0?'−':'+') + unit(NF.format(Math.abs(Math.round(v)))); }
 /* Persian writes its own percent sign, so it travels with the language like the numerals do. */
 function PS(){ return L.ui.pct_sign || '%'; }
 function pct(v,d){ return (v>0?'+':v<0?'−':'') + num(Math.abs(v), d) + PS(); }
@@ -475,6 +647,9 @@ function pick(){ var want = snapped();
       fail('Page arithmetic does not match the generated report ('+world.id+'). Numbers withheld.'); return; }
   }
 })();
+function motionOK(){
+  return !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
 function fail(msg){ var b = document.getElementById('banner'); b.textContent = msg; b.classList.add('on');
   document.getElementById('main').style.display = 'none'; throw new Error(msg); }
 
@@ -586,14 +761,15 @@ function render(langChanged){
       ? '<span class="v neg">' + t('cash_runs_out', {day:num(m.first_negative_day)}) + '</span>'
       : '<span class="v' + (m.cash90<0?' neg':'') + '">' + money(m.cash90) + '</span>'
         + '<span class="l">' + t('cash_at_90') + '</span>';
-    var robust = '<div class="robust">' + fill(t('ranked_first_cases'),
+    var robust = '<div class="robust" title="' + esc(t('tested_cases_tooltip')) + '">'
+      + fill(t('ranked_first_cases'),
         {n:'<b>'+num(wins[id])+'</b>', total:num(wins.n)}) + '</div>';
     var note = (id === 'C' && w('c_card_note') && red !== null)
       ? '<details><summary>' + t('advanced') + '</summary><div class="inner">'
         + esc(fill(w('c_card_note'), {red:num(red,1), loss:num(0.33*red,1),
               unit:w('unit_word'), cost:w('cost_word')})) + '</div></details>' : '';
     return '<article class="opt ' + CLS[id] + (isLead ? ' lead' : '') + '">'
-      + (isLead ? '<div class="lead-tag">' + t('ranked_first') + '</div>' : '')
+      + (isLead ? '<div class="lead-tag">' + esc(t('best_badge')) + '</div>' : '')
       + '<div class="opt-head"><span class="letter" aria-hidden="true">' + id + '</span>'
       + '<h3 class="name">' + esc(NAMES[id]) + '</h3></div>'
       + '<div><div class="money' + (m.mnet<0?' neg':'') + '">' + signed(m.mnet) + '</div>'
@@ -604,12 +780,18 @@ function render(langChanged){
       + '<div class="rowline">' + cashLine + '</div>' + robust + note + '</article>';
   }).join('');
 
+  document.getElementById('count-note').textContent = t('tested_cases_tooltip');
+
   var gap = out[lead].m.cash90 - out[second].m.cash90;
   var close = Math.abs(gap) < 0.02 * Math.max(1, Math.abs(out[lead].m.cash90));
+  /* One sentence, from this run's own ranking — so a different winner states itself. */
+  document.getElementById('verdict').innerHTML = close
+    ? fill(t('verdict_close'), {lead: '<b>' + esc(SHORT[lead]) + '</b>',
+        second: '<b>' + esc(SHORT[second]) + '</b>', amount: money(Math.abs(gap))})
+    : fill(t('verdict'), {option: '<b>' + esc(SHORT[lead]) + '</b>'});
   document.getElementById('why-h').textContent = close ? t('why_tie') : fill(t('why_title'), {option: SHORT[lead]});
   document.getElementById('why-p').textContent = whyText(out, rank, cap);
 
-  document.getElementById('chart-eyebrow').textContent = t('chart_eyebrow');
   document.getElementById('chart-title').textContent = t('chart_title');
   document.getElementById('chart-lede').textContent = w('chart_lede');
   document.getElementById('cash-note').textContent = t('cash_derived');
@@ -663,8 +845,20 @@ function render(langChanged){
     return '<button type="button" data-v="' + v + '" aria-pressed="' + (sel[PRIMARY]===v) + '">' + lbl + '</button>';
   }).join('');
   document.getElementById('seg-help').textContent = w('sens_help')[sel[PRIMARY]];
+  document.getElementById('seg').style.setProperty('--seg-i', ['low','central','high'].indexOf(sel[PRIMARY]));
   var eff = document.getElementById('effect');
   var flipped = previousLead && previousLead !== lead && !langChanged;
+  /* Only on a real flip: the reader changed one assumption and the answer moved. Re-rendering
+     for any other reason must not cry wolf. */
+  var fb = document.getElementById('flipbanner');
+  document.getElementById('flipbanner-t').textContent = t('answer_changed_banner');
+  fb.classList.remove('on');
+  if(flipped){
+    void fb.offsetWidth;                       // restart the animation rather than skip it
+    fb.classList.add('on');
+    var won = document.querySelector('.opt.lead');
+    if(won && motionOK()){ won.classList.remove('just-won'); void won.offsetWidth; won.classList.add('just-won'); }
+  }
   if(flipped || lead !== cTop){
     eff.className = 'effect changed-now';
     eff.innerHTML = '<b>' + t('decision_changed') + '</b> '
@@ -698,6 +892,10 @@ function render(langChanged){
   document.getElementById('how-title').textContent = t('how_title');
   document.getElementById('how-open').textContent = t('how_open');
   renderHow();
+  document.getElementById('printbtn').textContent = t('print_view');
+  document.getElementById('print-hint').textContent = t('print_hint');
+  document.getElementById('sticky-t').textContent = t('cta_lede');
+  document.getElementById('sticky-go').textContent = t('use_your_numbers');
   document.getElementById('foot').textContent = t('product') + ' · '
     + t('principle_1') + ' ' + t('principle_2') + ' ' + t('principle_3');
 }
@@ -754,8 +952,45 @@ function renderTable(out){
       }).join('') + '</tbody>';
 }
 
+/* The day the modelled event begins, read off the scenario rather than assumed. */
+function shockStart(){
+  try {
+    var evs = D.reproducibility.worlds[0].spec.events || [];
+    if(!evs.length) return null;
+    var d = evs[0].start_turn;
+    return (typeof d === 'number' && isFinite(d)) ? d : null;
+  } catch(e){ return null; }
+}
+
+/* The day a cash curve stops rising and starts giving it back, or null if it never does.
+   A curve that drifts down by a rounding error has not turned over, so the fall has to be
+   worth naming before the chart names it. */
+function turnDay(cash){
+  var best = 0;
+  for(var i=1;i<=H;i++) if(cash[i] > cash[best]) best = i;
+  if(best === 0 || best >= H) return null;
+  var fall = cash[best] - cash[H];
+  if(fall < Math.abs(cash[best]) * 0.005) return null;
+  return best;
+}
+
+/* Axis figures carry a short symbol but not a word — see the caption for the word. */
+function axisMoney(v){
+  return curIsWord() ? (v<0?'−':'') + NF.format(Math.abs(Math.round(v))) : money(v);
+}
+
 function drawChart(out, lead){
-  var svg = document.getElementById('chart'), W=960, Hh=380, pl=74, pr=104, pt=24, pb=38;
+  var svg = document.getElementById('chart');
+  // The svg's own width, so one unit in the drawing is one pixel on the glass and a 12px
+  // label is 12px. Falls back to the wrapper before first layout.
+  var own = svg.getBoundingClientRect().width;
+  var W = Math.max(300, Math.round(own || svg.parentElement.getBoundingClientRect().width || 960));
+  var narrow = W < 560;
+  var Hh = narrow ? 300 : 380;
+  // On a narrow chart the right margin held the end-of-line figures. They move to the table
+  // directly below rather than being squeezed into a margin that is no longer there.
+  var pl = narrow ? 54 : 74, pr = narrow ? 16 : 104, pt = narrow ? 30 : 24, pb = 38;
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + Hh);
   var all = []; WID.forEach(function(id){ all = all.concat(out[id].L.cash.slice(0,H+1)); });
   var mn = Math.min.apply(null,all), mx = Math.max.apply(null,all);
   var lo = (mn < 0.25*mx) ? Math.min(0, mn) : mn, hi = mx;
@@ -766,9 +1001,14 @@ function drawChart(out, lead){
   var s = '';
   for(var v=lo; v<=hi+1e-9; v+=step)
     s += '<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--grid)"/>'
-       + '<text x="'+(pl-9)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="12" fill="var(--muted)">'+money(v)+'</text>';
-  [0,30,60,90].forEach(function(d){
-    s += '<text x="'+x(d)+'" y="'+(Hh-10)+'" text-anchor="middle" font-size="12" fill="var(--muted)">'
+       + '<text x="'+(pl-9)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="12" fill="var(--muted)"'
+       + ' direction="ltr">'+axisMoney(v)+'</text>';
+  var axisCap = t('chart_axis_unit') + (cur ? ' · ' + cur : '');
+  s += '<text x="'+(pl-44>0?pl-44:2)+'" y="'+(pt-10)+'" font-size="11.5" fill="var(--muted)"'
+     + ' letter-spacing=".06em">'+esc(axisCap)+'</text>';
+  (narrow ? [0,45,90] : [0,30,60,90]).forEach(function(d){
+    var anchor = d === 0 ? 'start' : (d === H ? 'end' : 'middle');
+    s += '<text x="'+x(d)+'" y="'+(Hh-10)+'" text-anchor="'+anchor+'" font-size="12" fill="var(--muted)">'
        + t('day',{n:num(d)}) + '</text>'; });
   if(lo<=0 && hi>0)
     s += '<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="var(--crit)" stroke-width="1.5" stroke-dasharray="4 4"/>'
@@ -786,13 +1026,47 @@ function drawChart(out, lead){
     s += '<path d="'+p+'" fill="none" stroke="var(--'+id.toLowerCase()+')" stroke-width="'+(id===lead?3.5:2)
        + '" stroke-linejoin="round" stroke-linecap="round"/>';
     var e = ends.filter(function(z){ return z.id===id; })[0];
-    s += '<circle cx="'+x(H)+'" cy="'+y(c[H])+'" r="4" fill="var(--'+id.toLowerCase()+')"/>'
-       + '<text x="'+(x(H)+8)+'" y="'+(e.ty+4)+'" font-size="13" font-weight="600" fill="var(--'
-       + id.toLowerCase()+')">'+id+' '+money(c[H])+'</text>';
+    s += '<circle cx="'+x(H)+'" cy="'+y(c[H])+'" r="4" fill="var(--'+id.toLowerCase()+')"/>';
+    if(!narrow)
+      s += '<text x="'+(x(H)+8)+'" y="'+(e.ty+4)+'" font-size="13" font-weight="600" fill="var(--'
+         + id.toLowerCase()+')" direction="ltr">'+id+' '+money(c[H])+'</text>';
   });
   s += '<circle cx="'+x(0)+'" cy="'+y(out.A.L.cash[0])+'" r="3.5" fill="var(--ink)"/>'
      + '<text x="'+x(0)+'" y="'+(y(out.A.L.cash[0])+20)+'" font-size="12" fill="var(--muted)">'
      + t('chart_today')+' '+money(out.A.L.cash[0])+'</text>';
+
+  /* Where the increase lands. It is day one here, so the rule is drawn thin and labelled at the
+     top, clear of the "today" figure sitting on the axis. */
+  var shockDay = shockStart();
+  if(shockDay !== null && shockDay >= 0 && shockDay < H){
+    var sl = t('chart_shock');
+    s += '<line x1="'+x(shockDay)+'" x2="'+x(shockDay)+'" y1="'+pt+'" y2="'+(Hh-pb)
+       + '" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/>';
+    if(x(shockDay) + 6 + sl.length * 6 <= W - pr)
+      s += '<text x="'+(x(shockDay)+6)+'" y="'+(pt-14 < 0 ? pt+12 : pt-14)+'" font-size="12"'
+         + ' fill="var(--muted)">' + esc(sl) + '</text>';
+  }
+
+  /* Where doing nothing stops working: the day A's cash peaks before falling away. Taken from
+     the trajectory itself, so it is only drawn when the curve really does turn over — a wedge
+     whose A never declines gets no annotation rather than a made-up one. */
+  var turn = turnDay(out.A.L.cash);
+  if(turn !== null){
+    var tx = x(turn), ty = y(out.A.L.cash[turn]);
+    var label = w('chart_turn');
+    // No text metrics inside an SVG string, so the width is estimated and the label is placed
+    // on whichever side it fits — and if it fits on neither, it is not drawn at all rather
+    // than drawn off the edge.
+    var est = label.length * 6.3, x0 = pl, x1 = W - pr;
+    var anchor = 'start', at = tx + 8;
+    if(at + est > x1){ anchor = 'end'; at = tx - 8; }
+    var fits = (anchor === 'start') ? (at + est <= x1) : (at - est >= x0);
+    s += '<circle cx="'+tx+'" cy="'+ty+'" r="4.5" fill="none" stroke="var(--a)" stroke-width="2"/>'
+       + '<line x1="'+tx+'" x2="'+tx+'" y1="'+(ty-9)+'" y2="'+(ty-26)+'" stroke="var(--a)" stroke-width="1"/>';
+    if(fits)
+      s += '<text x="'+at+'" y="'+(ty-30)+'" font-size="12.5" fill="var(--a)" text-anchor="'+anchor+'">'
+         + esc(label) + '</text>';
+  }
   s += '<g id="hover" style="display:none"><line id="hl" y1="'+pt+'" y2="'+(Hh-pb)
      + '" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3"/>'
      + WID.map(function(id){ return '<circle id="hc'+id+'" r="4.5" fill="var(--'+id.toLowerCase()
@@ -855,14 +1129,33 @@ function renderSources(red, shock, cap, out, cTop){
       + (r[2] ? '<span class="s">' + esc(r[2]) + '</span>' : '')
       + '</div><span class="v">' + esc(String(r[1])) + '</span></li>'; }).join(''); }
   var none = (C.research_settings || []).length ? t('no_research') : t('no_research_ever');
+
+  /* Where the numbers come from, countable before it is readable. On a phone the four groups
+     are a long scroll, so each one opens on demand; on a wide screen there is room to leave
+     them open and they stay open. Either way every row is in the page. */
+  var openByDefault = window.matchMedia && window.matchMedia('(min-width: 861px)').matches;
+  function grp(cls, key, rows, body, count){
+    return '<details class="grp ' + cls + '"' + (openByDefault ? ' open' : '') + '>'
+      + '<summary><span class="k">' + esc(t(key)) + '</span>'
+      + '<span class="n">' + esc(num(count)) + '</span></summary>'
+      + '<div class="grp-body">' + (rows !== null ? '<ul>' + li(rows) + '</ul>' : '') + (body || '') + '</div>'
+      + '</details>';
+  }
   document.getElementById('groups').innerHTML =
-      '<div class="grp yours"><div class="k">' + t('group_yours') + '</div><ul>' + li(yours) + '</ul></div>'
-    + '<div class="grp research"><div class="k">' + t('group_research') + '</div>'
-      + (research.length ? '<ul>' + li(research) + '</ul>' : '<p class="none">' + esc(none) + '</p>') + '</div>'
-    + '<div class="grp assume"><div class="k">' + t('group_assumptions') + '</div><ul>' + li(assume) + '</ul>'
-      + '<div class="flag">' + esc(w('sources_note')) + '</div></div>'
-    + '<div class="grp calc"><div class="k">' + t('group_calculated') + '</div><ul>' + li(calc) + '</ul>'
-      + '<div class="flag">' + esc(t('cash_derived')) + '</div></div>';
+      grp('yours', 'group_yours', yours, '', yours.length)
+    + grp('research', 'group_research', research.length ? research : null,
+          research.length ? '' : '<p class="none">' + esc(none) + '</p>', research.length)
+    + grp('assume', 'group_assumptions', assume,
+          '<div class="flag">' + esc(w('sources_note')) + '</div>', assume.length)
+    + grp('calc', 'group_calculated', calc,
+          '<div class="flag">' + esc(t('cash_derived')) + '</div>', calc.length);
+
+  document.getElementById('ev-summary').textContent = [
+    fill(t('sum_yours'), {n: num(yours.length)}),
+    fill(t('sum_research'), {n: num(research.length)}),
+    fill(t('sum_model'), {n: num(assume.length)}),
+    fill(t('sum_calc'), {n: num(calc.length)})
+  ].join(' · ');
 }
 
 function renderAdvanced(){
@@ -896,10 +1189,22 @@ function renderIntake(){
       return '<div class="fgroup"><div class="k">' + esc(t(GROUP_KEY[g.label] || 'group_about'))
         + '</div><div class="fields">' + g.fields.map(field).join('') + '</div></div>';
     }).join('')
+    + '<div class="fgroup"><div class="k">' + esc(t('currency_pick')) + '</div>'
+    + '<div class="fields"><div class="field"><label class="sr" for="cursel">'
+    + esc(t('currency_pick')) + '</label><div class="in"><select id="cursel">'
+    + CURRENCIES.map(function(c){
+        return '<option value="' + esc(c) + '"' + (c === cur ? ' selected' : '') + '>'
+             + esc(c || t('currency_none')) + '</option>'; }).join('')
+    + '</select></div><div class="hint">' + esc(t('currency_note')) + '</div></div></div></div>'
     + '<div class="btnrow"><button class="btn primary" id="apply">' + t('cta_run') + '</button>'
     + '<button class="btn" id="reset">' + t('cta_reset') + '</button>'
     + '<span class="msg" id="intake-msg"></span></div>';
   document.getElementById('apply').onclick = applyInputs;
+  document.getElementById('cursel').onchange = function(){
+    cur = this.value;
+    try { localStorage.setItem('dc_cur', cur); } catch(e){}
+    render();                                  // presentation only: nothing is recomputed
+  };
   document.getElementById('reset').onclick = function(){
     base = Object.assign({}, D.baseline_raw);
     document.getElementById('errs').innerHTML = ''; render(); window.scrollTo({top:0}); };
@@ -1011,6 +1316,54 @@ document.getElementById('controls').addEventListener('change', function(e){
     try { inner(langChanged); }
     catch(err){ fail(t('render_failed')); throw err; }
   };
+})();
+
+/* The offer to use your own figures follows the reader, and steps aside once the form is on
+   screen so it never sits on top of the thing it is pointing at. */
+document.getElementById('printbtn').addEventListener('click', function(){
+  /* The print rules below decide what survives; nothing is rebuilt for the printer, so what
+     comes out is the page the reader was looking at. */
+  window.print();
+});
+
+(function stickyCta(){
+  var bar = document.getElementById('sticky'), go = document.getElementById('sticky-go');
+  var target = document.getElementById('try'), cards = document.getElementById('options');
+  go.addEventListener('click', function(){
+    target.scrollIntoView({behavior: motionOK() ? 'smooth' : 'auto', block: 'start'});
+    setTimeout(function(){ var f = document.querySelector('#form input'); if(f) f.focus(); }, 500);
+  });
+  /* Offered once the decision has been read and withdrawn once the form is on screen, so it is
+     never covering the thing it points at. Measured from the elements themselves rather than
+     from a scroll threshold, which would have to be re-guessed at every breakpoint. */
+  var shown = null;
+  function update(){
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var past = cards.getBoundingClientRect().bottom < 0;
+    var formInView = target.getBoundingClientRect().top < vh - 80;
+    var want = past && !formInView;
+    if(want === shown) return;
+    shown = want;
+    bar.hidden = !want;
+    document.body.classList.toggle('has-sticky', want);
+  }
+  var queued = false;
+  function onScroll(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(function(){ queued = false; update(); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  /* The chart is drawn for one width, so a changed width needs a new one. Rendering is cheap
+     and reads no new numbers — it re-draws what has already been computed. */
+  var rt = null;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ render(true); }, 160);
+  });
+  update();
+  window.__stickyUpdate = update;      // so the state can be checked without a real scroll
 })();
 
 applyLanguage(lang, false);
