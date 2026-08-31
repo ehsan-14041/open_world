@@ -255,3 +255,56 @@ def test_the_demo_says_it_is_a_demo(wedge_id, lang):
     assert flag, f"{wedge_id}/{lang}: no demo flag"
     assert "hidden" not in flag.group(1), "the demo report must admit it is a demo"
     assert html_mod.unescape(flag.group(2)).strip(), "the demo flag is empty"
+
+
+# ---- the five beats, and the discipline that keeps them readable ------------------------------
+
+#: The most words a beat may put in front of a reader. The numbers were set from the shipped
+#: copy plus headroom; the point is that growing a beat past its budget is a decision someone
+#: has to make in a diff, not something that accretes.
+BEAT_BUDGET = {"b-now": 95, "b-options": 175, "b-race": 155, "b-solid": 130, "b-monday": 65}
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_each_beat_stays_inside_its_word_budget(wedge_id, lang):
+    dom = rendered(wedge_id, lang)
+    # The experiment plan is behind a button and hidden by default; the budget measures what a
+    # reader sees before they ask for more.
+    hidden_testplan = re.search(r'id="testplan"[^>]*\bhidden', dom)
+    for beat, cap in BEAT_BUDGET.items():
+        words = len(inner(dom, beat).split())
+        if beat == "b-monday" and hidden_testplan:
+            words -= len(inner(dom, "testplan").split())
+        assert 0 < words <= cap, f"{wedge_id}/{lang}: {beat} has {words} words (budget {cap})"
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_the_census_is_drawn_one_dot_per_tested_case(wedge_id, lang):
+    """
+    "Ranked first in 130 of 162" is a claim; the dots are the receipt. Every tested case must
+    be on screen, and the block captions must add up to the census the engine ran.
+    """
+    dom = rendered(wedge_id, lang)
+    dots = len(re.findall(r'<i style="--dc:var\(--[abc]\)">', dom))
+    blocks = re.findall(r'class="cblock[^"]*"', dom)
+    assert len(blocks) == 3, f"{wedge_id}/{lang}: {len(blocks)} census blocks"
+    assert dots == 162, f"{wedge_id}/{lang}: {dots} dots for 162 tested cases"
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_the_page_opens_by_asking_not_reporting(wedge_id, lang):
+    """Without the worked-example route, the first screen is a question, not a result."""
+    page = SITE / wedge_id / f"{wedge_id}_decision_report.html"
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=9000", "--dump-dom", page.as_uri() + f"?lang={lang}"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
+    )
+    dom = re.sub(r"<script.*?</script>", " ", proc.stdout, flags=re.S)
+    ask = re.search(r'<section[^>]*id="ask"([^>]*)>', dom)
+    result = re.search(r'<div[^>]*id="result"([^>]*)>', dom)
+    assert ask and "hidden" not in ask.group(1), f"{wedge_id}/{lang}: the questions are hidden"
+    assert result and "hidden" in result.group(1), f"{wedge_id}/{lang}: the result shows unasked"
+    q = catalogue(lang)["wedges"][wedge_id]["flow_q"]
+    first = html_mod.unescape(re.search(r'id="ask-q"[^>]*>(.*?)</h1>', dom, re.S).group(1)).strip()
+    assert first in q.values(), f"{wedge_id}/{lang}: opening question {first!r} is not from the flow"

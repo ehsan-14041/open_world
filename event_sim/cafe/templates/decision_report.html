@@ -333,6 +333,49 @@ html[dir="rtl"] .fgroup .k{letter-spacing:0;font-size:13px;text-transform:none}
 @media (max-width:560px){.sticky-t{display:none}.sticky .btn{width:100%}}
 body.has-sticky{padding-bottom:84px}
 .count-note{margin:14px 0 0;font-size:13.5px;color:var(--muted)}
+/* ================= the five beats =============================================================
+   Each beat is one idea with air around it. The rule between beats is the only chrome. */
+.beat{padding:58px 0;border-bottom:1px solid var(--rule)}
+.beat:first-of-type{padding-top:34px}
+.beat-t{font-family:var(--display);font-weight:600;font-size:clamp(23px,3vw,32px);
+        letter-spacing:-.012em;margin:0 0 16px}
+html[dir="rtl"] .beat-t{font-weight:700;letter-spacing:0;line-height:1.5}
+.beat-cap{font-size:17px;font-weight:600;margin:14px 0 0;font-variant-numeric:tabular-nums}
+#b-now .beat-t{margin-top:34px}
+.chart-wrap.solo{margin-top:6px}
+
+/* ================= the census =================================================================
+   162 dots, three blocks, one per setting of the assumption that decides. The active block is
+   the current setting; tapping a block IS setting it. */
+.census{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.cblock{border:1px solid var(--rule);border-radius:var(--r-md);padding:16px 14px 13px;cursor:pointer;
+        background:var(--raised);opacity:.45;text-align:start;color:inherit;font:inherit;
+        transition:opacity .22s ease,border-color .22s ease,box-shadow .22s ease}
+.cblock.on{opacity:1;border-color:var(--win);box-shadow:0 0 0 2px var(--win) inset}
+.cblock:hover,.cblock:focus-visible{opacity:1;outline:none}
+.cblock .ch{display:block;font-size:13.5px;font-weight:700;margin-bottom:11px}
+.cdots{display:grid;grid-template-columns:repeat(9,1fr);gap:4px}
+.cdots i{display:block;aspect-ratio:1/1;border-radius:50%;background:var(--dc,var(--muted))}
+.cblock .cc{display:block;margin-top:11px;font-size:13px;color:var(--muted);
+            font-variant-numeric:tabular-nums}
+@media (max-width:640px){
+  .census{grid-template-columns:1fr;gap:10px}
+  .cdots{grid-template-columns:repeat(18,1fr)}
+  .cblock{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:center}
+  .cblock .ch{margin:0}
+  .cblock .cdots{grid-column:1 / -1}
+  .cblock .cc{margin:0;grid-column:1 / -1}
+}
+@media (prefers-reduced-motion:reduce){.cblock{transition:none}}
+
+/* ================= the currency row inside the assumptions =================================== */
+.curr-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:30px;
+          padding-top:20px;border-top:1px solid var(--rule)}
+.curr-row label{font-weight:600;font-size:15px}
+.curr-row select{min-height:48px;border:1px solid var(--rule);border-radius:var(--r-sm);
+          background:var(--paper);color:inherit;padding:0 12px;font:inherit}
+.curr-row .note{margin:0;flex:1 1 100%}
+
 /* ================= asking =====================================================================
    One question to a screen, at a size that says it is the only thing being asked. The page is
    quiet here: no navigation, no summary, nothing to read past. */
@@ -395,9 +438,9 @@ html[dir="rtl"] .money-k{letter-spacing:0;text-transform:none;font-size:13.5px}
 .unknown-lead{font-family:var(--display);font-weight:600;font-size:clamp(19px,2.4vw,26px);
               margin:0 0 20px;line-height:1.3;text-wrap:balance}
 html[dir="rtl"] .unknown-lead{font-weight:700;line-height:1.6}
-#unknown .unknown{padding:26px 24px}
-#unknown .seg{margin-top:6px}
-#unknown .seg button{font-size:16.5px;min-height:56px}
+#b-solid .unknown{padding:26px 24px}
+#b-solid .seg{margin-top:14px}
+#b-solid .seg button{font-size:16.5px;min-height:56px}
 .unsure{margin-top:28px;border:1px solid var(--rule);border-radius:var(--r-md);
         padding:22px 24px;background:var(--raised)}
 .unsure h3{margin:0 0 6px;font-size:19px}
@@ -448,8 +491,11 @@ html[dir="rtl"] .unknown-lead{font-weight:700;line-height:1.6}
         --win:#000;--win-ink:#fff;--win-soft:transparent}
   body{background:#fff;color:#000;padding:0;font-size:11.5pt}
   body.has-sticky{padding-bottom:0}
-  .top,.sticky,.printrow,#change .ctrl,#change .adv,#try,.unknown-cta,.langs,.bizpick,
-  #how,.legend,.tip{display:none !important}
+  .top,.sticky,.printrow,#ask,.unsure,.adv,.langs,.bizpick,#how,.tip,
+  .reveal>summary .rb{display:none !important}
+  .beat{border-bottom:0}
+  .reveal:not([open])>.reveal-body{display:block}   /* assumptions print even when closed */
+  .cblock{opacity:1;box-shadow:none;border:1px solid #999}
   section{padding:14px 0;break-inside:avoid}
   #decision{padding-top:0}
   h1{font-size:20pt}
@@ -524,49 +570,64 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
       <button type="button" class="btn" id="ask-back"></button>
       <button type="button" class="btn primary" id="ask-next"></button>
     </div>
-    <p class="askalt"><button type="button" class="linkish" id="ask-example"></button></p>
+    <p class="askalt"><button type="button" class="linkish" id="ask-example"></button>
+       <button type="button" class="linkish" id="ask-restart"></button></p>
   </section>
 
-  <!-- ================= the answer ==================================================== -->
+  <!-- ================= the answer: five beats ========================================
+       One idea to a screenful, in the order an owner actually thinks: what happens if I sit
+       still → what could I do → watch them race → how solid is that → what do I do next.
+       Everything else is behind one "show the assumptions" at the end. -->
   <div id="result" hidden>
 
-  <section id="decision">
+  <section class="beat" id="b-now">
     <p class="changed"><span class="dot"></span><span id="changed-t"></span></p>
     <h1 id="headline"></h1>
     <p class="whoami" id="whoami"></p>
-    <p class="result-intro" id="result-intro"></p>
-    <!-- The answer in one sentence, before the cards that justify it. A reader who stops
-         here should still have left with the right conclusion. -->
+    <h2 class="beat-t" id="b-now-t"></h2>
+    <div class="chart-wrap solo">
+      <svg id="chart-now" role="img" aria-labelledby="b-now-cap"></svg>
+    </div>
+    <p class="beat-cap" id="b-now-cap"></p>
+  </section>
+
+  <section class="beat" id="b-options">
+    <h2 class="beat-t" id="b-options-t"></h2>
     <p class="verdict intro-1" id="verdict"></p>
-    <h2 class="sr" id="options-h"></h2>
     <div class="options intro-2" id="options"></div>
     <div class="why"><h3 id="why-h"></h3><p id="why-p"></p></div>
     <p class="scenario" id="scenario"></p>
   </section>
 
-  <!-- ================= the moment the product exists for ============================
-       One assumption, three settings, and the answer moving in front of the reader. This
-       is promoted above the chart and the evidence because experiencing the flip teaches
-       more than any amount of prose about sensitivity. -->
-  <section id="unknown">
+  <section class="beat" id="b-race">
+    <h2 class="beat-t" id="b-race-t"></h2>
+    <p class="lede" id="chart-lede"></p>
+    <div class="chart-wrap">
+      <svg id="chart" viewBox="0 0 960 380" role="img" aria-labelledby="chart-alt"></svg>
+      <p class="sr" id="chart-alt"></p>
+      <div class="tip" id="tip"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <p class="note" id="cash-note"></p>
+  </section>
+
+  <section class="beat" id="b-solid">
     <p class="unknown-lead" id="unknown-lead"></p>
     <div class="unknown">
-      <div class="unknown-top">
-        <div class="eyebrow" id="unknown-eyebrow"></div>
-        <h2 id="unknown-title"></h2>
-      </div>
+      <h2 id="unknown-title"></h2>
       <div class="seg" id="seg" role="group" aria-labelledby="unknown-title"></div>
       <div class="seg-help" id="seg-help"></div>
       <p class="flipbanner" id="flipbanner" role="status" aria-live="assertive"><span class="m"></span><span id="flipbanner-t"></span></p>
       <div class="effect" id="effect" role="status" aria-live="polite"></div>
+      <!-- The census, visible: every tested case is a dot, coloured by its winner. The flip
+           stops being a sentence and becomes structure you can see. -->
+      <div class="census" id="census"></div>
       <p class="count-note" id="count-note"></p>
-      <div class="unknown-grid">
-        <div><div class="k" id="uk-why-k"></div><p id="uk-why"></p></div>
-        <div><div class="k" id="uk-could-k"></div><p id="uk-could"></p></div>
-      </div>
     </div>
+  </section>
 
-    <!-- Uncertainty stops being a disclaimer the moment it comes with a way to settle it. -->
+  <section class="beat" id="b-monday">
+    <h2 class="beat-t" id="b-monday-t"></h2>
     <div class="unsure">
       <h3 id="unsure-q"></h3>
       <p id="unsure-lead"></p>
@@ -575,34 +636,15 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
         <p id="test-what"></p>
         <div class="k" id="test-reading"></div>
         <ul class="readings" id="test-readings"></ul>
-        <p class="note" id="uk-how"></p>
       </div>
     </div>
   </section>
 
-  <!-- ================= evidence, on request ==========================================
-       Everything below here is secondary. The default experience is complete without any
-       of it being opened. -->
-  <details class="reveal" id="chart-disc">
-    <summary><span class="rq" id="chart-reveal-q"></span><span class="rb" id="chart-reveal-btn"></span></summary>
-    <div class="reveal-body">
-      <div class="sec-head tight"><h2 id="chart-title"></h2><p class="lede" id="chart-lede"></p></div>
-      <div class="chart-wrap">
-        <svg id="chart" viewBox="0 0 960 380" role="img" aria-labelledby="chart-alt"></svg>
-        <p class="sr" id="chart-alt"></p>
-        <div class="tip" id="tip"></div>
-        <div class="legend" id="legend"></div>
-      </div>
-      <p class="note" id="cash-note"></p>
-      <div class="mini"><table id="mini"></table></div>
-    </div>
-  </details>
-
   <details class="reveal" id="assume-disc">
     <summary><span class="rq" id="assume-reveal-q"></span><span class="rb" id="assume-reveal-btn"></span></summary>
     <div class="reveal-body">
-      <p class="ev-summary" id="ev-summary"></p>
       <div class="groups" id="groups"></div>
+      <div class="mini"><table id="mini"></table></div>
 
       <div class="sec-head sub"><h3 id="change-title"></h3></div>
       <ul class="influence" id="influence"></ul>
@@ -615,22 +657,14 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
         <div><h4 id="doesnot-h"></h4><ul id="doesnot"></ul></div>
       </div>
 
+      <div class="curr-row"><label for="cursel" id="curr-l"></label>
+        <select id="cursel"></select><span class="note" id="currency-note"></span></div>
+
       <details class="tech" id="how"><summary id="how-open"></summary><div class="inner" id="how-body"></div></details>
       <p class="printrow"><button class="btn ghost" id="printbtn"></button>
          <span class="print-hint" id="print-hint"></span></p>
     </div>
   </details>
-
-  <section id="try">
-    <div class="sec-head">
-      <div class="eyebrow" id="cta-eyebrow"></div>
-      <h2 id="cta-title"></h2>
-      <p class="lede" id="cta-lede"></p>
-    </div>
-    <div id="errs"></div>
-    <div class="form" id="form"></div>
-    <p class="note" id="currency-note"></p>
-  </section>
 
   </div><!-- /#result -->
 </main>
@@ -804,7 +838,8 @@ function census(){
   });
   oat.sort(function(a,b){ return (b.flips-a.flips) || (b.influence-a.influence); });
   var c0 = find(centre);
-  _cKey = key; _cVal = {wins:wins, oat:oat, centreTop: c0 ? c0.rank[0] : null, find:find, centre:centre};
+  _cKey = key; _cVal = {wins:wins, oat:oat, centreTop: c0 ? c0.rank[0] : null, find:find,
+                        centre:centre, pts:pts};
   return _cVal;
 }
 function niceStep(span,n){ var raw = span/n, mag = Math.pow(10,Math.floor(Math.log10(raw))), f = raw/mag;
@@ -879,11 +914,16 @@ function render(langChanged){
   flag.hidden = !base.is_demo; flag.textContent = t('demo_badge', {noun: w('noun')});
 
   document.getElementById('changed-t').textContent = fill(w('what_changed'), {shock: num(shock)});
-  document.getElementById('result-intro').textContent = t('result_intro');
   document.getElementById('unknown-lead').textContent = t('unknown_lead');
+  document.getElementById('b-now-t').textContent = t('beat_now');
+  document.getElementById('b-options-t').textContent = t('beat_options');
+  document.getElementById('b-race-t').textContent = t('beat_race');
+  document.getElementById('b-monday-t').textContent = t('beat_monday');
+  document.getElementById('curr-l').textContent = t('currency_pick');
+  document.getElementById('cursel').innerHTML = CURRENCIES.map(function(cx){
+    return '<option value="' + esc(cx) + '"' + (cx === cur ? ' selected' : '') + '>'
+         + esc(cx || t('currency_none')) + '</option>'; }).join('');
   document.getElementById('unknown-title').textContent = w('uncertainty_title');
-  document.getElementById('chart-reveal-q').textContent = t('chart_reveal_q');
-  document.getElementById('chart-reveal-btn').textContent = t('chart_reveal_btn');
   document.getElementById('assume-reveal-q').textContent = t('assume_reveal_q');
   document.getElementById('assume-reveal-btn').textContent = t('assume_reveal_btn');
   document.getElementById('unsure-q').textContent = t('unsure_q');
@@ -891,7 +931,6 @@ function render(langChanged){
   document.getElementById('uk-try').textContent = t('give_me_test');
   document.getElementById('test-reading').textContent = t('test_reading');
   document.getElementById('headline').textContent = fill(w('headline'), {shock: num(shock)});
-  document.getElementById('options-h').textContent = t('your_options');
   document.getElementById('whoami').textContent = whoami(cap);
   document.getElementById('scenario').textContent = t('not_a_prediction');
 
@@ -926,10 +965,15 @@ function render(langChanged){
   document.getElementById('why-h').textContent = close ? t('why_tie') : fill(t('why_title'), {option: SHORT[lead]});
   document.getElementById('why-p').textContent = whyText(out, rank, cap);
 
-  document.getElementById('chart-title').textContent = t('chart_title');
   document.getElementById('chart-lede').textContent = w('chart_lede');
   document.getElementById('cash-note').textContent = t('cash_derived');
+  var capNow = fill(t('beat_now_cap'), {mnet: signed(out.A.m.mnet), cash: money(out.A.m.cash90)});
+  if(out.A.m.away_end !== undefined && out.A.m.away_end > 0.5)
+    capNow += ' · ' + fill(t('capacity_full_note'), {n: num(out.A.m.away_end, 1)});
+  document.getElementById('b-now-cap').textContent = capNow;
+  drawSolo(out);
   drawChart(out, lead);
+  drawCensus(cs, lead);
   document.getElementById('chart-alt').textContent = fill(t('chart_alt'), {summary:
     WID.map(function(id){ return SHORT[id] + ': ' + money(out[id].m.cash90); }).join('; ')});
   document.getElementById('legend').innerHTML = WID.map(function(id){
@@ -938,12 +982,6 @@ function render(langChanged){
 
   var flips = oat.filter(function(x){ return x.flips; });
   document.getElementById('unknown-title').textContent = w('uncertainty_title');
-  document.getElementById('uk-why-k').textContent = t('unknown_why');
-  document.getElementById('uk-why').textContent = w('unknown_why');
-  document.getElementById('uk-could-k').textContent = t('unknown_could');
-  document.getElementById('uk-could').textContent = !flips.length ? t('unknown_could_no')
-    : (flips.length === 1 ? t('unknown_could_yes') : t('unknown_could_yes_multi', {n:num(flips.length)}));
-  document.getElementById('uk-how').textContent = w('unknown_how');
   /* The three readings are the wedge's own elasticity settings turned into what the owner
      would actually see on the till: a 10% rise times each setting. Nothing new is assumed —
      it is the same three numbers the control below is switching between, read backwards. */
@@ -1017,12 +1055,7 @@ function render(langChanged){
   document.getElementById('doesnot').innerHTML = w('limits_does_not').map(function(x){
     return '<li>' + esc(x) + '</li>'; }).join('');
 
-  document.getElementById('cta-eyebrow').textContent = t('cta_eyebrow');
-  document.getElementById('cta-title').textContent =
-      base.is_demo ? t('cta_demo') : t('flow_change');
-  document.getElementById('cta-lede').textContent = t('cta_lede');
   document.getElementById('currency-note').textContent = t('currency_note');
-  renderIntake();
 
   document.getElementById('how-open').textContent = t('method_btn');
   renderHow();
@@ -1114,14 +1147,114 @@ function axisMoney(v){
   return curIsWord() ? (v<0?'−':'') + NF.format(Math.abs(Math.round(v))) : money(v);
 }
 
+/* "If you do nothing", on its own. One line, drawn at the size it is seen at, annotated
+   from its own trajectory: where the increase lands, where holding still stops paying, and
+   where it ends up. For a business whose problem is a full diary, the marker is the day the
+   diary fills instead. Nothing here is computed — it is the ledger the engine already made,
+   read out loud. */
+function drawSolo(out){
+  var svg = document.getElementById('chart-now');
+  var own = svg.getBoundingClientRect().width;
+  var W = Math.round(own || svg.parentElement.getBoundingClientRect().width || 0);
+  if(W < 100) W = 960;                    // hidden or unlaid-out: draw for the common case
+  W = Math.max(300, W);
+  var narrow = W < 560;
+  var Hh = narrow ? 240 : 300, pl = narrow ? 54 : 70, pr = 18, pt = 26, pb = 34;
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + Hh);
+  svg.dataset.w = W;
+  var c = out.A.L.cash, mn = Math.min.apply(null, c.slice(0, H + 1)),
+      mx = Math.max.apply(null, c.slice(0, H + 1));
+  var lo = Math.min(mn, c[0]), hi = Math.max(mx, c[0]);
+  var step = niceStep(Math.max(1, hi - lo), 3);
+  lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step; if(hi === lo) hi = lo + step;
+  function x(d){ return pl + d * (W - pl - pr) / H; }
+  function y(v){ return pt + (hi - v) * (Hh - pt - pb) / (hi - lo); }
+  var m = '';
+  for(var v = lo; v <= hi + 1e-9; v += step)
+    m += '<line x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(v) + '" y2="' + y(v)
+       + '" stroke="var(--grid)"/>'
+       + '<text x="' + (pl - 9) + '" y="' + (y(v) + 4) + '" text-anchor="end" font-size="12"'
+       + ' fill="var(--muted)" direction="ltr">' + axisMoney(v) + '</text>';
+  (narrow ? [0, 45, 90] : [0, 30, 60, 90]).forEach(function(d){
+    var anchor = d === 0 ? 'start' : (d === H ? 'end' : 'middle');
+    m += '<text x="' + x(d) + '" y="' + (Hh - 8) + '" text-anchor="' + anchor
+       + '" font-size="12" fill="var(--muted)">' + t('day', {n: num(d)}) + '</text>'; });
+  var path = 'M' + x(0) + ',' + y(c[0]);
+  for(var d = 1; d <= H; d++) path += ' L' + x(d) + ',' + y(c[d]);
+  m += '<path d="' + path + ' L' + x(H) + ',' + y(lo) + ' L' + x(0) + ',' + y(lo)
+     + ' Z" fill="var(--a)" opacity=".08"/>'
+     + '<path d="' + path + '" fill="none" stroke="var(--a)" stroke-width="3"'
+     + ' stroke-linejoin="round" stroke-linecap="round"/>';
+  var shockDay = shockStart();
+  if(shockDay !== null && shockDay >= 0 && shockDay < H){
+    var sl = t('chart_shock');
+    m += '<line x1="' + x(shockDay) + '" x2="' + x(shockDay) + '" y1="' + pt + '" y2="' + (Hh - pb)
+       + '" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/>';
+    if(x(shockDay) + 6 + sl.length * 6 <= W - pr)
+      m += '<text x="' + (x(shockDay) + 6) + '" y="' + (pt - 8 < 10 ? pt + 12 : pt - 8)
+         + '" font-size="12" fill="var(--muted)">' + esc(sl) + '</text>';
+  }
+  var turn = turnDay(c);
+  if(turn !== null){
+    var label = w('chart_turn'), tx = x(turn), ty = y(c[turn]);
+    var est = label.length * 6.3, anchor = 'start', at = tx + 8;
+    if(at + est > W - pr){ anchor = 'end'; at = tx - 8; }
+    var fits = (anchor === 'start') ? (at + est <= W - pr) : (at - est >= pl);
+    m += '<circle cx="' + tx + '" cy="' + ty + '" r="4.5" fill="none" stroke="var(--a)"'
+       + ' stroke-width="2"/>';
+    if(fits)
+      m += '<text x="' + at + '" y="' + (ty - 12) + '" font-size="12.5" fill="var(--a)"'
+         + ' text-anchor="' + anchor + '">' + esc(label) + '</text>';
+  }
+  // A diary that fills up is this wedge's version of "doing nothing stops working".
+  if(out.A.L.util && out.A.L.util.length){
+    for(var sd = 1; sd <= H; sd++) if(out.A.L.util[sd] >= 99.5){
+      m += '<circle cx="' + x(sd) + '" cy="' + y(c[sd]) + '" r="4.5" fill="none"'
+         + ' stroke="var(--c)" stroke-width="2"/>';
+      break;
+    }
+  }
+  m += '<circle cx="' + x(H) + '" cy="' + y(c[H]) + '" r="4" fill="var(--a)"/>'
+     + '<text x="' + (x(H) - 8) + '" y="' + (y(c[H]) - 10) + '" font-size="13" font-weight="600"'
+     + ' fill="var(--a)" text-anchor="end" direction="ltr">' + money(c[H]) + '</text>';
+  svg.innerHTML = m;
+}
+
+/* The census, as a picture: one dot per tested case, coloured by its winner, grouped by the
+   assumption that decides. 130 of 162 stops being a sentence — you can see where the answer
+   holds and where it turns. Clicking a group is the same act as the control above it. */
+function drawCensus(cs, lead){
+  var el = document.getElementById('census');
+  var order = ['low', 'central', 'high'].filter(function(v){
+    return GRID_VALS[PRIMARY].indexOf(v) >= 0; });
+  var LBL = {low: t('influence_low'), central: t('influence_medium'), high: t('influence_high')};
+  el.innerHTML = order.map(function(v){
+    var pts = cs.pts.filter(function(pp){ return pp.key[PRIMARY] === v; });
+    var cnt = {A: 0, B: 0, C: 0};
+    pts.forEach(function(pp){ cnt[pp.rank[0]]++; });
+    var top = WID.slice().sort(function(a, b){ return cnt[b] - cnt[a]; })[0];
+    return '<button type="button" class="cblock' + (sel[PRIMARY] === v ? ' on' : '')
+      + '" data-v="' + v + '" aria-pressed="' + (sel[PRIMARY] === v) + '">'
+      + '<span class="ch">' + esc(LBL[v]) + '</span>'
+      + '<span class="cdots">' + pts.map(function(pp){
+          return '<i style="--dc:var(--' + pp.rank[0].toLowerCase() + ')"></i>'; }).join('')
+      + '</span><span class="cc">' + fill(t('census_block'),
+          {opt: esc(w('world_short')[top]), n: num(cnt[top]), total: num(pts.length)})
+      + '</span></button>';
+  }).join('');
+}
+
 function drawChart(out, lead){
   var svg = document.getElementById('chart');
   // The svg's own width, so one unit in the drawing is one pixel on the glass and a 12px
   // label is 12px. Falls back to the wrapper before first layout.
   var own = svg.getBoundingClientRect().width;
-  var W = Math.max(300, Math.round(own || svg.parentElement.getBoundingClientRect().width || 960));
+  var W = Math.round(own || svg.parentElement.getBoundingClientRect().width || 0);
+  if(W < 100) W = 960;                    // hidden or unlaid-out: draw for the common case
+  W = Math.max(300, W);
   var narrow = W < 560;
   var Hh = narrow ? 300 : 380;
+  svg.dataset.w = W;
   // On a narrow chart the right margin held the end-of-line figures. They move to the table
   // directly below rather than being squeezed into a margin that is no longer there.
   var pl = narrow ? 54 : 74, pr = narrow ? 16 : 104, pt = narrow ? 30 : 24, pb = 38;
@@ -1185,6 +1318,32 @@ function drawChart(out, lead){
   /* Where doing nothing stops working: the day A's cash peaks before falling away. Taken from
      the trajectory itself, so it is only drawn when the curve really does turn over — a wedge
      whose A never declines gets no annotation rather than a made-up one. */
+  /* The day the leader pulls away from doing nothing. Everything starts from the same cash,
+     so the day the gap first becomes real is the day the decision starts paying. */
+  if(lead !== 'A'){
+    var la = out.lead === undefined ? out[lead].L.cash : out[lead].L.cash, aa = out.A.L.cash;
+    var thr = Math.max(1, Math.abs(aa[0]) * 0.005), od = null, wasBehind = false;
+    for(var dd = 1; dd <= H; dd++){
+      if(la[dd] < aa[dd] - thr) wasBehind = true;
+      else if(wasBehind && la[dd] - aa[dd] > thr){ od = dd; break; }
+    }
+    // Only a real crossover is worth a label: the leader fell behind first (lost orders bite
+    // before the higher price pays) and then came back past. A line that led from day one
+    // has no overtaking day, and saying "from day 2" would be noise dressed as insight.
+    if(od !== null){
+      var ol = fill(t('overtake'), {d: num(od), b: w('world_short')[lead], a: w('world_short').A});
+      var oy = y(out[lead].L.cash[od]);
+      s += '<circle cx="' + x(od) + '" cy="' + oy + '" r="4.5" fill="none"'
+         + ' stroke="var(--' + lead.toLowerCase() + ')" stroke-width="2"/>';
+      var oEst = ol.length * 6.3, oAnchor = 'start', oAt = x(od) + 8;
+      if(oAt + oEst > W - pr){ oAnchor = 'end'; oAt = x(od) - 8; }
+      if((oAnchor === 'start' ? oAt + oEst <= W - pr : oAt - oEst >= pl))
+        s += '<text x="' + oAt + '" y="' + (oy + 22) + '" font-size="12.5"'
+           + ' fill="var(--' + lead.toLowerCase() + ')" text-anchor="' + oAnchor + '">'
+           + esc(ol) + '</text>';
+    }
+  }
+
   var turn = turnDay(out.A.L.cash);
   if(turn !== null){
     var tx = x(turn), ty = y(out.A.L.cash[turn]);
@@ -1285,12 +1444,6 @@ function renderSources(red, shock, cap, out, cTop){
     + grp('calc', 'group_calculated', calc,
           '<div class="flag">' + esc(t('cash_derived')) + '</div>', calc.length);
 
-  document.getElementById('ev-summary').textContent = [
-    fill(t('sum_yours'), {n: num(yours.length)}),
-    fill(t('sum_research'), {n: num(research.length)}),
-    fill(t('sum_model'), {n: num(assume.length)}),
-    fill(t('sum_calc'), {n: num(calc.length)})
-  ].join(' · ');
 }
 
 function renderAdvanced(){
@@ -1303,46 +1456,6 @@ function renderAdvanced(){
                + esc(settingLabel(k, o)) + '</option>'; }).join('') + '</select>';
     c.appendChild(d);
   });
-}
-
-var GROUP_KEY = {'Your business':'group_about','Your costs':'group_costs','The shock':'group_changed',
-                 'Your menu':'group_mix','Your range':'group_mix','Your services':'group_mix',
-                 'Your diary':'group_capacity'};
-function renderIntake(){
-  var f = document.getElementById('form'), IF = w('intake');
-  function field(k){
-    var meta = IF[k]; if(!meta) return '';
-    var isPct = /_pct$/.test(k), isName = (k === 'name');
-    return '<div class="field"><label for="f_'+k+'">' + esc(meta.label) + '</label><div class="in">'
-      + '<input id="f_'+k+'" data-k="'+k+'" '
-      + (isName ? 'type="text"' : 'type="number" inputmode="decimal" step="any"')
-      + ' placeholder="' + esc(meta.placeholder || '') + '" value="' + esc(String(base[k])) + '">'
-      + (isPct ? '<span class="u">%</span>' : '') + '</div>'
-      + (meta.hint ? '<div class="hint">' + esc(meta.hint) + '</div>' : '') + '</div>';
-  }
-  f.innerHTML = C.intake_groups.map(function(g){
-      return '<div class="fgroup"><div class="k">' + esc(t(GROUP_KEY[g.label] || 'group_about'))
-        + '</div><div class="fields">' + g.fields.map(field).join('') + '</div></div>';
-    }).join('')
-    + '<div class="fgroup"><div class="k">' + esc(t('currency_pick')) + '</div>'
-    + '<div class="fields"><div class="field"><label class="sr" for="cursel">'
-    + esc(t('currency_pick')) + '</label><div class="in"><select id="cursel">'
-    + CURRENCIES.map(function(c){
-        return '<option value="' + esc(c) + '"' + (c === cur ? ' selected' : '') + '>'
-             + esc(c || t('currency_none')) + '</option>'; }).join('')
-    + '</select></div><div class="hint">' + esc(t('currency_note')) + '</div></div></div></div>'
-    + '<div class="btnrow"><button class="btn primary" id="apply">' + t('cta_run') + '</button>'
-    + '<button class="btn" id="reset">' + t('cta_reset') + '</button>'
-    + '<span class="msg" id="intake-msg"></span></div>';
-  document.getElementById('apply').onclick = applyInputs;
-  document.getElementById('cursel').onchange = function(){
-    cur = this.value;
-    try { localStorage.setItem('dc_cur', cur); } catch(e){}
-    render();                                  // presentation only: nothing is recomputed
-  };
-  document.getElementById('reset').onclick = function(){
-    base = Object.assign({}, D.baseline_raw);
-    document.getElementById('errs').innerHTML = ''; render(); window.scrollTo({top:0}); };
 }
 
 /* One set of rules about what makes a usable baseline, used by the flow and by the full form
@@ -1358,45 +1471,6 @@ function validate(nb){
   if(nb[F.fixed] < 0 || nb[F.cash] < 0)
     errs.push(fill(t('err_positive'), {names: (IF[F.fixed] && IF[F.fixed].label) || F.fixed}));
   return errs;
-}
-
-function applyInputs(){
-  var f = document.getElementById('form'), nb = Object.assign({}, base), bad = [], IF = w('intake');
-  Array.prototype.forEach.call(f.querySelectorAll('input'), function(i){
-    var k = i.dataset.k;
-    if(k === 'name'){ nb[k] = i.value || base.name; return; }
-    var raw = String(i.value).replace(/[,\s٬،]/g,'')
-      .replace(/[۰-۹]/g, function(ch){ return String(ch.charCodeAt(0)-0x06F0); })
-      .replace(/[٠-٩]/g, function(ch){ return String(ch.charCodeAt(0)-0x0660); });
-    var v = parseFloat(raw);
-    if(!isFinite(v)) bad.push((IF[k] && IF[k].label) || k); else nb[k] = v;
-  });
-  var errs = [], sepc = (lang === 'fa') ? '، ' : ', ';
-  if(bad.length) errs.push([t('err_numbers'), bad.join(sepc)]);
-  else {
-    var zero = [];
-    [F.revenue, F.units_per_day, F.unit_cost_total].forEach(function(k){
-      if(!(nb[k] > 0)) zero.push((IF[k] && IF[k].label) || k); });
-    if(zero.length) errs.push([fill(t('err_positive'), {names: zero.join(sepc)}), '']);
-    else if(nb[F.unit_cost_total] >= nb[F.revenue]) errs.push([t('err_cost_high'), t('err_cost_high_why')]);
-    if(F.utilisation && !(nb[F.utilisation] > 0 && nb[F.utilisation] <= 100)) errs.push([t('err_utilisation'), '']);
-    if(nb[F.fixed] < 0 || nb[F.cash] < 0)
-      errs.push([fill(t('err_positive'), {names: (IF[F.fixed] && IF[F.fixed].label) || F.fixed}), '']);
-  }
-  var box = document.getElementById('errs');
-  if(errs.length){
-    box.innerHTML = errs.map(function(e){
-      return '<div class="errbox"><strong>' + esc(e[0]) + '</strong>'
-        + (e[1] ? '<div class="small">' + esc(e[1]) + '</div>' : '') + '</div>'; }).join('');
-    box.scrollIntoView({behavior:'smooth', block:'center'});
-    return;
-  }
-  box.innerHTML = '';
-  nb.is_demo = false;
-  base = nb;
-  render();
-  document.getElementById('intake-msg').textContent = t('cta_done');
-  window.scrollTo({top:0, behavior:'smooth'});
 }
 
 function renderHow(){
@@ -1451,6 +1525,12 @@ function renderBiz(){
 }
 document.getElementById('langs').addEventListener('click', function(e){
   var b = e.target.closest('button'); if(b) applyLanguage(b.dataset.l, true); });
+/* A census block and the control above it are the same dial. */
+document.getElementById('census').addEventListener('click', function(e){
+  var b = e.target.closest('.cblock'); if(!b) return;
+  sel[PRIMARY] = b.dataset.v;
+  render();
+});
 document.getElementById('seg').addEventListener('click', function(e){
   var b = e.target.closest('button'); if(!b) return; sel[PRIMARY] = b.dataset.v; render(); });
 document.getElementById('controls').addEventListener('change', function(e){
@@ -1483,20 +1563,17 @@ document.getElementById('printbtn').addEventListener('click', function(){
 
 (function stickyCta(){
   var bar = document.getElementById('sticky'), go = document.getElementById('sticky-go');
-  var target = document.getElementById('try'), cards = document.getElementById('options');
+  var cards = document.getElementById('options');
   go.addEventListener('click', function(){
-    target.scrollIntoView({behavior: motionOK() ? 'smooth' : 'auto', block: 'start'});
-    setTimeout(function(){ var f = document.querySelector('#form input'); if(f) f.focus(); }, 500);
+    // Back into the questions, with the previous answers still filled in.
+    showScreen('ask');
+    askAt = 0;
+    renderAsk();
+    window.scrollTo({top: 0, behavior: motionOK() ? 'smooth' : 'auto'});
   });
-  /* Offered once the decision has been read and withdrawn once the form is on screen, so it is
-     never covering the thing it points at. Measured from the elements themselves rather than
-     from a scroll threshold, which would have to be re-guessed at every breakpoint. */
   var shown = null;
   function update(){
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    var past = cards.getBoundingClientRect().bottom < 0;
-    var formInView = target.getBoundingClientRect().top < vh - 80;
-    var want = past && !formInView;
+    var want = showing === 'result' && cards.getBoundingClientRect().bottom < 0;
     if(want === shown) return;
     shown = want;
     bar.hidden = !want;
@@ -1510,15 +1587,28 @@ document.getElementById('printbtn').addEventListener('click', function(){
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   window.addEventListener('resize', onScroll);
-  /* The chart is drawn for one width, so a changed width needs a new one. Rendering is cheap
-     and reads no new numbers — it re-draws what has already been computed. */
+  update();
+  window.__stickyUpdate = update;      // so the state can be checked without a real scroll
+
+  /* The charts are drawn for one width, so a changed width needs a redraw — and "changed"
+     includes gaining a width at all: a tab opened in the background lays out at zero and
+     only later becomes real. Resize covers the first case; the observer covers the second. */
   var rt = null;
   window.addEventListener('resize', function(){
     clearTimeout(rt);
-    rt = setTimeout(function(){ render(true); }, 160);
+    rt = setTimeout(function(){ if(showing === 'result') render(true); }, 160);
   });
-  update();
-  window.__stickyUpdate = update;      // so the state can be checked without a real scroll
+  if('IntersectionObserver' in window){
+    var watch = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting || showing !== 'result') return;
+        var el = en.target, wNow = Math.round(el.getBoundingClientRect().width);
+        if(wNow > 100 && Math.abs(wNow - (parseInt(el.dataset.w, 10) || 0)) > 40) render(true);
+      });
+    }, {threshold: 0.05});
+    watch.observe(document.getElementById('chart'));
+    watch.observe(document.getElementById('chart-now'));
+  }
 })();
 
 
@@ -1541,6 +1631,7 @@ function showScreen(which){
   document.getElementById('ask').hidden = (which !== 'ask');
   document.getElementById('result').hidden = (which !== 'result');
   document.body.classList.toggle('asking', which === 'ask');
+  if(window.__stickyUpdate) window.__stickyUpdate();
 }
 
 function renderAsk(){
@@ -1581,6 +1672,7 @@ function renderAsk(){
   document.getElementById('ask-next').textContent =
       askAt === FLOW.length - 1 ? t('flow_see') : t('flow_next');
   document.getElementById('ask-example').textContent = t('flow_example');
+  document.getElementById('ask-restart').textContent = t('start_over');
   var first = body.querySelector('input');
   if(first && motionOK()) setTimeout(function(){ first.focus(); }, 60);
 }
@@ -1601,11 +1693,19 @@ function readStep(){
   return bad;
 }
 
+var STORE_KEY = 'dc_ans_' + D.wedge.id;
 function finishAsk(isDemo){
   draft.is_demo = !!isDemo;
   if(!isDemo) draft.name = '';           // these are your figures, not the fictional cafe's
+  if(!isDemo){
+    // A tool remembers. Only the answers travel — never the demo's stand-ins.
+    try {
+      var keep = {};
+      FLOW.forEach(function(st){ st.fields.forEach(function(f){ keep[f] = draft[f]; }); });
+      localStorage.setItem(STORE_KEY, JSON.stringify(keep));
+    } catch(e){}
+  }
   base = draft;
-  document.getElementById('errs').innerHTML = '';
   render();
   showScreen('result');
   window.scrollTo({top: 0, behavior: motionOK() ? 'smooth' : 'auto'});
@@ -1667,13 +1767,17 @@ document.getElementById('ask-example').addEventListener('click', function(){
   draft = Object.assign({}, D.baseline_raw);
   finishAsk(true);
 });
+document.getElementById('ask-restart').addEventListener('click', function(){
+  try { localStorage.removeItem(STORE_KEY); } catch(e){}
+  draft = Object.assign({}, D.baseline_raw);
+  answered = {};
+  askAt = 0;
+  renderAsk();
+});
 
 /* ---- the reveals ----------------------------------------------------------------------------
    The chart is drawn for a width, and inside a closed <details> it has none. It is drawn when
    the reader opens it, and again if they resize afterwards. */
-document.getElementById('chart-disc').addEventListener('toggle', function(){
-  if(this.open && showing === 'result') render(true);
-});
 document.getElementById('uk-try').addEventListener('click', function(){
   var tp = document.getElementById('testplan');
   tp.hidden = !tp.hidden;
@@ -1685,8 +1789,27 @@ applyLanguage(lang, false);
 /* A page that opens on the report is a page that answered a question nobody asked yet. The
    only way in that skips the questions is the explicit worked-example link. */
 (function boot(){
-  if(P.get('demo') === '1' || !FLOW.length){ finishAsk(true); }
-  else { showScreen('ask'); renderAsk(); }
+  document.getElementById('cursel').addEventListener('change', function(){
+    cur = this.value;
+    try { localStorage.setItem('dc_cur', cur); } catch(e){}
+    render();                                  // presentation only: nothing is recomputed
+  });
+  if(P.get('demo') === '1' || !FLOW.length){ finishAsk(true); return; }
+  // Answers from last time mean last time's result, straight away.
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+    if(saved){
+      var complete = FLOW.every(function(st){
+        return st.fields.every(function(f){ return isFinite(parseFloat(saved[f])); }); });
+      if(complete){
+        FLOW.forEach(function(st){ st.fields.forEach(function(f){
+          draft[f] = parseFloat(saved[f]); answered[f] = true; }); });
+        if(!validate(draft).length){ finishAsk(false); return; }
+      }
+    }
+  } catch(e){}
+  showScreen('ask');
+  renderAsk();
 })();
 })();
 </script>

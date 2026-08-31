@@ -329,12 +329,6 @@
    "tags": []
   },
   {
-   "id": "ui.unknown_what",
-   "text": "What we don't know",
-   "placeholders": [],
-   "tags": []
-  },
-  {
    "id": "ui.unknown_why",
    "text": "Why it matters",
    "placeholders": [],
@@ -343,26 +337,6 @@
   {
    "id": "ui.unknown_could",
    "text": "Could it change the decision?",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.unknown_could_yes",
-   "text": "Yes. It is the one assumption that changes which choice ranks first.",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.unknown_could_yes_multi",
-   "text": "Yes. It is one of {n} assumptions that can change which choice ranks first.",
-   "placeholders": [
-    "{n}"
-   ],
-   "tags": []
-  },
-  {
-   "id": "ui.unknown_could_no",
-   "text": "Not within the range we tested. It changes the size of the gap, not the order.",
    "placeholders": [],
    "tags": []
   },
@@ -441,28 +415,6 @@
    "id": "ui.try_it",
    "text": "Try it",
    "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.decision_changed",
-   "text": "The decision changed.",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.decision_changed_detail",
-   "text": "At this setting, {option} now ranks first.",
-   "placeholders": [
-    "{option}"
-   ],
-   "tags": []
-  },
-  {
-   "id": "ui.decision_unchanged",
-   "text": "{option} still ranks first at this setting.",
-   "placeholders": [
-    "{option}"
-   ],
    "tags": []
   },
   {
@@ -552,24 +504,6 @@
   {
    "id": "ui.does_4",
    "text": "Show what could change the ranking.",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.cta_eyebrow",
-   "text": "Your turn",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.cta_demo",
-   "text": "Try it with your business",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.cta_again",
-   "text": "Compare another decision",
    "placeholders": [],
    "tags": []
   },
@@ -870,38 +804,6 @@
    "tags": []
   },
   {
-   "id": "ui.sum_yours",
-   "text": "{n} of your numbers",
-   "placeholders": [
-    "{n}"
-   ],
-   "tags": []
-  },
-  {
-   "id": "ui.sum_research",
-   "text": "{n} from research",
-   "placeholders": [
-    "{n}"
-   ],
-   "tags": []
-  },
-  {
-   "id": "ui.sum_model",
-   "text": "{n} model defaults",
-   "placeholders": [
-    "{n}"
-   ],
-   "tags": []
-  },
-  {
-   "id": "ui.sum_calc",
-   "text": "{n} calculated",
-   "placeholders": [
-    "{n}"
-   ],
-   "tags": []
-  },
-  {
    "id": "ui.currency_pick",
    "text": "Show figures in",
    "placeholders": [],
@@ -973,12 +875,6 @@
   {
    "id": "ui.flow_change",
    "text": "Change your numbers",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.result_intro",
-   "text": "I compared three ways to respond.",
    "placeholders": [],
    "tags": []
   },
@@ -1080,18 +976,6 @@
    "tags": []
   },
   {
-   "id": "ui.chart_reveal_q",
-   "text": "Want to see how the next 90 days play out?",
-   "placeholders": [],
-   "tags": []
-  },
-  {
-   "id": "ui.chart_reveal_btn",
-   "text": "Show the chart",
-   "placeholders": [],
-   "tags": []
-  },
-  {
    "id": "ui.assume_reveal_q",
    "text": "What is this answer built on?",
    "placeholders": [],
@@ -1142,6 +1026,79 @@
   {
    "id": "ui.noscript",
    "text": "This page needs JavaScript to work.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.beat_now",
+   "text": "If you do nothing",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.beat_now_cap",
+   "text": "{mnet} a month · {cash} in the bank after 90 days",
+   "placeholders": [
+    "{mnet}",
+    "{cash}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.beat_options",
+   "text": "Three things you can do",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.beat_race",
+   "text": "The 90-day race",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.overtake",
+   "text": "From day {d}, {b} moves ahead of {a}",
+   "placeholders": [
+    "{d}",
+    "{b}",
+    "{a}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.beat_monday",
+   "text": "Your next step: a two-week test",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.census_block",
+   "text": "{opt} in {n} of {total}",
+   "placeholders": [
+    "{opt}",
+    "{n}",
+    "{total}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.capacity_full_note",
+   "text": "Your diary is full — turning away about {n} appointments a day",
+   "placeholders": [
+    "{n}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.resume_note",
+   "text": "Your numbers from last time",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.start_over",
+   "text": "Start over",
    "placeholders": [],
    "tags": []
   },
