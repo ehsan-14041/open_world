@@ -219,21 +219,39 @@
       "business_short": "Cafe",
       "noun": "cafe",
       "icon": "☕",
-      "question": "Ingredient costs jumped. What should I change?"
+      "question": "Ingredient costs jumped. What should I change?",
+      "world_names": {
+       "A": "Hold prices",
+       "B": "Raise prices 10%",
+       "C": "Raise prices 5% + simplify the menu"
+      },
+      "problem": "Ingredient costs went up"
      },
      "shop": {
       "business": "Shop / Online Store",
       "business_short": "Shop",
       "noun": "shop",
       "icon": "🛍",
-      "question": "My supplier raised prices. Should I pass it on?"
+      "question": "My supplier raised prices. Should I pass it on?",
+      "world_names": {
+       "A": "Hold prices",
+       "B": "Raise prices 8%",
+       "C": "Raise prices 4% + drop low-margin lines"
+      },
+      "problem": "My supplier raised prices"
      },
      "salon": {
       "business": "Salon / Service Business",
       "business_short": "Salon",
       "noun": "salon",
       "icon": "✂",
-      "question": "My schedule is filling up. Is it time to raise prices?"
+      "question": "My schedule is filling up. Is it time to raise prices?",
+      "world_names": {
+       "A": "Keep prices, serve more",
+       "B": "Raise prices 10%",
+       "C": "Raise prices 5% + shift the mix"
+      },
+      "problem": "My schedule is filling up"
      }
     }
    },
@@ -422,21 +440,39 @@
       "business_short": "کافه",
       "noun": "کافه",
       "icon": "☕",
-      "question": "هزینهٔ مواد اولیه بالا رفته. چه چیزی را تغییر بدهم؟"
+      "question": "هزینهٔ مواد اولیه بالا رفته. چه چیزی را تغییر بدهم؟",
+      "world_names": {
+       "A": "قیمت را نگه دار",
+       "B": "قیمت را ۱۰٪ بالا ببر",
+       "C": "قیمت ۵٪ بالا + سبک‌کردن منو"
+      },
+      "problem": "مواد اولیه گرون شده"
      },
      "shop": {
       "business": "فروشگاه / آنلاین‌شاپ",
       "business_short": "فروشگاه",
       "noun": "فروشگاه",
       "icon": "🛍",
-      "question": "تأمین‌کننده قیمت را بالا برده. من هم قیمت را بالا ببرم؟"
+      "question": "تأمین‌کننده قیمت را بالا برده. من هم قیمت را بالا ببرم؟",
+      "world_names": {
+       "A": "قیمت را نگه دار",
+       "B": "قیمت را ۸٪ بالا ببر",
+       "C": "قیمت ۴٪ بالا + حذف کالاهای کم‌سود"
+      },
+      "problem": "تأمین‌کننده قیمت رو بالا برده"
      },
      "salon": {
       "business": "سالن / کسب‌وکار خدماتی",
       "business_short": "سالن",
       "noun": "سالن",
       "icon": "✂",
-      "question": "وقت‌هایم دارد پر می‌شود. وقت افزایش قیمت است؟"
+      "question": "وقت‌هایم دارد پر می‌شود. وقت افزایش قیمت است؟",
+      "world_names": {
+       "A": "قیمت را نگه دار، بیشتر کار بگیر",
+       "B": "قیمت را ۱۰٪ بالا ببر",
+       "C": "قیمت ۵٪ بالا + تغییر ترکیب خدمات"
+      },
+      "problem": "وقت‌هام داره پر میشه"
      }
     }
    }

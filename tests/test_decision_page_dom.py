@@ -308,3 +308,44 @@ def test_the_page_opens_by_asking_not_reporting(wedge_id, lang):
     q = catalogue(lang)["wedges"][wedge_id]["flow_q"]
     first = html_mod.unescape(re.search(r'id="ask-q"[^>]*>(.*?)</h1>', dom, re.S).group(1)).strip()
     assert first in q.values(), f"{wedge_id}/{lang}: opening question {first!r} is not from the flow"
+
+
+# ---- the home screen, as rendered -------------------------------------------------------------
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_the_rendered_home_screen_is_whole(lang):
+    """
+    "undefined" in page text means a string was asked for that the bundle does not carry — and
+    worse, the render that hit it died there, leaving everything after it empty. Both failures
+    are invisible to catalogue tests, because the catalogue is fine; it is the bundle that lost
+    a key. So the home screen is rendered and read like a visitor would.
+    """
+    page = SITE / "index.html"
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=7000", "--dump-dom", page.as_uri() + f"?lang={lang}"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
+    )
+    dom = re.sub(r"<script.*?</script>", " ", proc.stdout, flags=re.S)
+    body = text_of(dom)
+    assert "undefined" not in body, f"{lang}: the home screen shows 'undefined'"
+    ui = catalogue(lang)["ui"]
+    # The parts a mid-render failure would silently blank out.
+    for eid, key in (("hero", "home_hero"), ("problem-q", "home_problem_q"),
+                     ("flow", "home_flow"), ("credibility", "credibility"),
+                     ("ex-lead", "home_example_lead"), ("footer", "home_footer")):
+        got = inner(dom, eid)
+        assert got, f"{lang}: #{eid} is empty — the render died before reaching it"
+        if key in ("home_hero", "home_problem_q", "home_flow"):
+            assert got == " ".join(ui[key].split()), f"{lang}: #{eid} shows the wrong string"
+    # Each card leads with the problem, in this language.
+    for wid in sorted(WEDGES):
+        problem = catalogue(lang)["wedges"][wid]["problem"]
+        assert " ".join(problem.split()) in " ".join(body.split()), \
+            f"{lang}: the {wid} card lost its problem line"
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_no_rendered_page_ever_says_undefined(wedge_id, lang):
+    body = text_of(rendered(wedge_id, lang))
+    assert "undefined" not in body, f"{wedge_id}/{lang}: 'undefined' reached the page"

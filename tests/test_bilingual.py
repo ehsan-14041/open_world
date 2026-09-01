@@ -242,6 +242,10 @@ def test_the_home_screen_offers_all_three_businesses_in_both_languages():
         assert set(wedges) == set(WEDGES)
         for wid, x in wedges.items():
             assert x["business"].strip() and x["question"].strip() and x["icon"].strip()
+            # The card leads with the owner's problem, and the worked example promises the
+            # three decisions the next page actually offers.
+            assert x["problem"].strip(), f"{lang}/{wid}: no problem line for the card"
+            assert set(x["world_names"]) == {"A", "B", "C"}, f"{lang}/{wid}: example lost its options"
             assert x["question"].rstrip().endswith("?") or x["question"].rstrip().endswith("؟"), (
                 f"{lang}/{wid}: the chooser should ask a question")
 

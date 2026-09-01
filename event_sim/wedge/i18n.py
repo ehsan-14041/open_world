@@ -101,8 +101,11 @@ def chooser_bundle() -> dict[str, Any]:
             "label": cat["label"],
             "numerals": cat.get("numerals", "latn"),
             "ui": cat["ui"],
+            # `problem` names the situation on each card; `world_names` lets the worked
+            # example promise exactly the three decisions the next page delivers.
             "wedges": {wid: {k: v for k, v in w.items()
-                             if k in ("business", "business_short", "question", "icon", "noun")}
+                             if k in ("business", "business_short", "question", "icon", "noun",
+                                      "problem", "world_names")}
                        for wid, w in cat["wedges"].items()},
         }
     return out
