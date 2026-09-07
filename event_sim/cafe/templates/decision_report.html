@@ -333,6 +333,85 @@ html[dir="rtl"] .fgroup .k{letter-spacing:0;font-size:13px;text-transform:none}
 @media (max-width:560px){.sticky-t{display:none}.sticky .btn{width:100%}}
 body.has-sticky{padding-bottom:84px}
 .count-note{margin:14px 0 0;font-size:13.5px;color:var(--muted)}
+/* ================= choosing one ===============================================================
+   Three large targets carrying the same three names and figures the cards did, so committing
+   is recognisably the same act as reading. */
+.decide-lead{color:var(--muted);margin:0 0 20px;max-width:60ch}
+.picks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:860px){.picks{grid-template-columns:1fr}}
+.pick{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"l n" "l m" "g g";
+      gap:4px 12px;text-align:start;background:var(--raised);border:1px solid var(--rule);
+      border-radius:var(--r-lg);padding:20px;cursor:pointer;color:inherit;font:inherit;
+      min-height:132px;box-shadow:var(--shadow-1);
+      transition:border-color .16s ease,transform .16s ease,box-shadow .16s ease}
+.pick:hover,.pick:focus-visible{border-color:var(--win);outline:none;transform:translateY(-2px);
+      box-shadow:var(--shadow-2)}
+.pick .pl{grid-area:l;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+      background:var(--wc);color:#fff;font-weight:700;font-size:14px;
+      font-family:"Source Sans 3",sans-serif}
+.pick .pn{grid-area:n;font-weight:600;font-size:17px;line-height:1.35}
+.pick .pm{grid-area:m;font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.pick .pgo{grid-area:g;margin-top:10px;font-size:14px;font-weight:700;color:var(--win)}
+@media (prefers-reduced-motion:reduce){.pick{transition:none}.pick:hover{transform:none}}
+
+/* ================= the sheet ==================================================================
+   A document: narrower measure, ruled sections, a signature line. It should look like something
+   printed rather than like another screen of the app. */
+#sheet{max-width:660px;margin:0 auto;padding:44px 0 80px}
+#sheet[hidden]{display:none}
+body.on-sheet .top .bizpick,body.on-sheet .top .badge{display:none}
+.sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+      flex-wrap:wrap;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+.sheet-brand{font-family:var(--display);font-size:27px;font-weight:600}
+html[dir="rtl"] .sheet-brand{font-weight:700}
+.sheet-meta{display:flex;gap:26px;margin:0}
+.sheet-meta div{display:flex;flex-direction:column;gap:2px}
+.sheet-meta dt{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+html[dir="rtl"] .sheet-meta dt{letter-spacing:0;text-transform:none;font-size:12.5px}
+.sheet-meta dd{margin:0;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+#sheet-id{direction:ltr;unicode-bidi:isolate}
+.sheet-who{color:var(--muted);font-size:14px;margin:14px 0 0}
+.sheet-sec{margin-top:30px}
+.sheet-sec h2{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+      font-weight:700;margin:0 0 10px;font-family:var(--body)}
+html[dir="rtl"] .sheet-sec h2{letter-spacing:0;text-transform:none;font-size:14px}
+.sheet-sec p{margin:0}
+.sheet-decision{background:var(--sunk);border-radius:var(--r-md);padding:20px 22px}
+.sheet-choice{font-family:var(--display);font-size:clamp(24px,3.4vw,32px);font-weight:600;
+      line-height:1.3;margin:0 0 8px !important}
+html[dir="rtl"] .sheet-choice{font-weight:700;line-height:1.55}
+.sheet-because{color:var(--muted);font-size:15.5px}
+.sheet-tbl{width:100%;border-collapse:collapse;font-size:15px}
+.sheet-tbl td{padding:11px 0;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.6}
+.sheet-tbl tr:last-child td{border-bottom:0}
+.sheet-tbl .c-n{font-weight:600}
+.sheet-tbl .c-m{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600;
+      text-align:end;padding-inline:14px}
+.sheet-tbl .c-u{font-weight:400;color:var(--muted);font-size:13px}
+.sheet-tbl .c-k{text-align:end;white-space:nowrap}
+.sheet-tbl .is-pick td{background:var(--win-soft)}
+.mk{font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 9px;white-space:nowrap;
+      display:inline-block;margin-inline-start:5px}
+.mk.chosen{background:var(--win);color:var(--win-ink)}
+.mk.ahead{background:var(--sunk);color:var(--muted)}
+.sheet-tbl .r-k{color:var(--muted);width:44%}
+.sheet-tbl .r-v{font-weight:600}
+#sheet .readings{margin-top:12px}
+#sheet .readings li{background:var(--sunk);padding:10px 13px}
+.sheet-note{font-size:13px;color:var(--muted);margin:18px 0 0;line-height:1.7}
+.sheet-sign{margin-top:34px;padding-top:14px;display:flex;align-items:flex-end;gap:14px}
+.sheet-sign span{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.sheet-sign i{flex:1;border-bottom:1px solid var(--rule);height:34px}
+.sheet-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:34px;
+      padding-top:22px;border-top:1px solid var(--rule)}
+@media (max-width:560px){
+  #sheet{padding-top:28px}
+  .sheet-head{gap:12px}
+  .sheet-actions .btn{width:100%}
+  .sheet-tbl td{padding:10px 0}
+  .sheet-tbl .c-k{text-align:start}
+}
+
 /* ================= the five beats =============================================================
    Each beat is one idea with air around it. The rule between beats is the only chrome. */
 .beat{padding:58px 0;border-bottom:1px solid var(--rule)}
@@ -492,7 +571,15 @@ html[dir="rtl"] .unknown-lead{font-weight:700;line-height:1.6}
   body{background:#fff;color:#000;padding:0;font-size:11.5pt}
   body.has-sticky{padding-bottom:0}
   .top,.sticky,.printrow,#ask,.unsure,.adv,.langs,.bizpick,#how,.tip,
-  .reveal>summary .rb{display:none !important}
+  .reveal>summary .rb,.sheet-actions,#b-decide{display:none !important}
+  /* A sheet prints as itself: nothing else on the page comes with it. */
+  body.on-sheet #result{display:none !important}
+  #sheet{max-width:none;padding:0}
+  .sheet-decision{background:transparent;border:1px solid #999;padding:14px 16px}
+  .sheet-tbl .is-pick td{background:transparent}
+  .mk.chosen{background:#000;color:#fff}
+  .mk.ahead{background:transparent;border:1px solid #999;color:#444}
+  .sheet-sec{break-inside:avoid}
   .beat{border-bottom:0}
   .reveal:not([open])>.reveal-body{display:block}   /* assumptions print even when closed */
   .cblock{opacity:1;box-shadow:none;border:1px solid #999}
@@ -640,6 +727,12 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     </div>
   </section>
 
+  <section class="beat" id="b-decide">
+    <h2 class="beat-t" id="b-decide-t"></h2>
+    <p class="decide-lead" id="decide-lead"></p>
+    <div class="picks" id="picks"></div>
+  </section>
+
   <details class="reveal" id="assume-disc">
     <summary><span class="rq" id="assume-reveal-q"></span><span class="rb" id="assume-reveal-btn"></span></summary>
     <div class="reveal-body">
@@ -667,6 +760,59 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
   </details>
 
   </div><!-- /#result -->
+
+  <!-- The sheet carries no stored figures. Everything on it is recomputed from the numbers
+       encoded in the link, so a sheet cannot drift from the model that produced it, and two
+       people opening the same link are looking at the same arithmetic. -->
+  <article id="sheet" hidden>
+    <header class="sheet-head">
+      <div class="sheet-brand"><span id="sheet-title"></span></div>
+      <dl class="sheet-meta">
+        <div><dt id="sheet-date-k"></dt><dd id="sheet-date"></dd></div>
+        <div><dt id="sheet-id-k"></dt><dd id="sheet-id"></dd></div>
+      </dl>
+    </header>
+
+    <p class="sheet-who" id="sheet-who"></p>
+
+    <section class="sheet-sec">
+      <h2 id="sheet-sit-k"></h2>
+      <p id="sheet-sit"></p>
+    </section>
+
+    <section class="sheet-sec sheet-decision">
+      <h2 id="sheet-dec-k"></h2>
+      <p class="sheet-choice" id="sheet-choice"></p>
+      <p class="sheet-because" id="sheet-because"></p>
+    </section>
+
+    <section class="sheet-sec">
+      <h2 id="sheet-cmp-k"></h2>
+      <div class="tbl-wrap"><table class="sheet-tbl" id="sheet-cmp"></table></div>
+    </section>
+
+    <section class="sheet-sec">
+      <h2 id="sheet-rests-k"></h2>
+      <div class="tbl-wrap"><table class="sheet-tbl" id="sheet-rests"></table></div>
+    </section>
+
+    <section class="sheet-sec">
+      <h2 id="sheet-will-k"></h2>
+      <p id="sheet-will"></p>
+      <ul class="readings" id="sheet-readings"></ul>
+    </section>
+
+    <p class="sheet-note" id="sheet-scenario"></p>
+    <p class="sheet-note" id="sheet-reproduce"></p>
+
+    <div class="sheet-sign"><span id="sheet-sign-k"></span><i></i></div>
+
+    <div class="sheet-actions">
+      <button type="button" class="btn primary" id="sheet-print"></button>
+      <button type="button" class="btn" id="sheet-copy"></button>
+      <button type="button" class="linkish" id="sheet-back"></button>
+    </div>
+  </article>
 </main>
 
 <!-- The one message the catalogue cannot deliver: if the script never runs, nothing can
@@ -919,6 +1065,15 @@ function render(langChanged){
   document.getElementById('b-options-t').textContent = t('beat_options');
   document.getElementById('b-race-t').textContent = t('beat_race');
   document.getElementById('b-monday-t').textContent = t('beat_monday');
+  document.getElementById('b-decide-t').textContent = t('decide_t');
+  document.getElementById('decide-lead').textContent = t('decide_lead');
+  document.getElementById('picks').innerHTML = WID.map(function(id){
+    return '<button type="button" class="pick ' + CLS[id] + '" data-p="' + id + '">'
+      + '<span class="pl" aria-hidden="true">' + id + '</span>'
+      + '<span class="pn">' + esc(NAMES[id]) + '</span>'
+      + '<span class="pm">' + signed(out[id].m.mnet) + '</span>'
+      + '<span class="pgo">' + esc(t('decide_pick')) + '</span></button>';
+  }).join('');
   document.getElementById('curr-l').textContent = t('currency_pick');
   document.getElementById('cursel').innerHTML = CURRENCIES.map(function(cx){
     return '<option value="' + esc(cx) + '"' + (cx === cur ? ' selected' : '') + '>'
@@ -1543,7 +1698,7 @@ document.getElementById('controls').addEventListener('change', function(e){
 (function guardRender(){
   var inner = render;
   render = function(langChanged){
-    try { inner(langChanged); }
+    try { inner(langChanged); if(showing === 'sheet') renderSheet(); }
     catch(err){
       // fail() raises its own error to stop the page, so the original cause is logged
       // first — otherwise the only thing left is the message shown to the reader.
@@ -1630,7 +1785,9 @@ function showScreen(which){
   showing = which;
   document.getElementById('ask').hidden = (which !== 'ask');
   document.getElementById('result').hidden = (which !== 'result');
+  document.getElementById('sheet').hidden = (which !== 'sheet');
   document.body.classList.toggle('asking', which === 'ask');
+  document.body.classList.toggle('on-sheet', which === 'sheet');
   if(window.__stickyUpdate) window.__stickyUpdate();
 }
 
@@ -1775,6 +1932,195 @@ document.getElementById('ask-restart').addEventListener('click', function(){
   renderAsk();
 });
 
+
+/* ---- the decision sheet ---------------------------------------------------------------------
+   What an owner keeps after the comparison: one page with the choice they made, the three they
+   compared, what it rests on, and what they are going to measure.
+
+   It stores nothing. The figures travel inside the link and the page recomputes them, so a
+   sheet cannot drift away from the model that produced it, two people opening the same link are
+   reading the same arithmetic, and the reference at the top is a hash of that link — the same
+   decision always has the same reference. */
+var sheetState = null;
+var FLOW_FIELDS = FLOW.reduce(function(a, st){ return a.concat(st.fields); }, []);
+
+function b64url(str){
+  return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function unb64url(str){
+  var t = String(str).replace(/-/g, '+').replace(/_/g, '/');
+  while(t.length % 4) t += '=';
+  return atob(t);
+}
+
+function packSheet(choice, iso){
+  return b64url(JSON.stringify([1, iso, choice,
+    GRID_KEYS.map(function(k){ return sel[k]; }),
+    FLOW_FIELDS.map(function(f){ return base[f]; })]));
+}
+
+/* Read a link back into the page's state. Anything malformed returns null rather than half-
+   applying — a sheet built from a truncated link would be a document with someone else's
+   numbers on it. */
+function applySheet(packed){
+  var a;
+  try { a = JSON.parse(unb64url(packed)); } catch(e){ return null; }
+  if(!a || a.length < 5 || a[0] !== 1) return null;
+  var settings = a[3], values = a[4];
+  if(!settings || settings.length !== GRID_KEYS.length) return null;
+  if(!values || values.length !== FLOW_FIELDS.length) return null;
+  var nb = Object.assign({}, D.baseline_raw), ok = true;
+  FLOW_FIELDS.forEach(function(f, i){
+    var v = parseFloat(values[i]);
+    if(!isFinite(v)) ok = false; else nb[f] = v;
+  });
+  if(!ok || validate(nb).length) return null;
+  if(['A','B','C'].indexOf(a[2]) < 0) return null;
+  base = nb;
+  GRID_KEYS.forEach(function(k, i){ sel[k] = settings[i]; });
+  return {date: String(a[1]), choice: a[2], packed: packed};
+}
+
+function sheetRef(packed){
+  var h = 0x811c9dc5;
+  for(var i = 0; i < packed.length; i++){
+    h ^= packed.charCodeAt(i);
+    h = (h * 0x01000193) >>> 0;
+  }
+  var out = h.toString(36).toUpperCase();
+  while(out.length < 6) out = '0' + out;
+  return out.slice(0, 6);
+}
+
+/* Stored unambiguously, shown the way the reader writes dates. */
+function sheetDate(iso){
+  var parts = String(iso).split('-');
+  var d = new Date(+parts[0], (+parts[1] || 1) - 1, +parts[2] || 1);
+  if(isNaN(d.getTime())) return iso;
+  try {
+    return new Intl.DateTimeFormat(L.numerals === 'arabext' ? 'fa-IR' : 'en-GB',
+      {year: 'numeric', month: 'long', day: 'numeric'}).format(d);
+  } catch(e){ return iso; }
+}
+
+function pad2(n){ return (n < 10 ? '0' : '') + n; }
+
+function makeSheet(choice){
+  var d = new Date();
+  var iso = d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  var packed = packSheet(choice, iso);
+  sheetState = {date: iso, choice: choice, packed: packed};
+  try {
+    var u = new URL(location.href);
+    u.searchParams.set('sheet', packed);
+    history.replaceState(null, '', u);
+  } catch(e){}
+  showScreen('sheet');
+  renderSheet();
+  window.scrollTo({top: 0, behavior: motionOK() ? 'smooth' : 'auto'});
+}
+
+function renderSheet(){
+  if(!sheetState) return;
+  var r = compute(), out = r.out, rank = r.rank, shock = r.shock;
+  var cs = census(), wins = cs.wins;
+  var NAMES = w('world_names'), SHORT = w('world_short'), TRADE = w('tradeoff');
+  var pick = sheetState.choice, lead = rank[0];
+
+  document.getElementById('sheet-title').textContent = t('sheet_title');
+  document.getElementById('sheet-date-k').textContent = t('sheet_date');
+  document.getElementById('sheet-date').textContent = sheetDate(sheetState.date);
+  document.getElementById('sheet-id-k').textContent = t('sheet_id');
+  document.getElementById('sheet-id').textContent = sheetRef(sheetState.packed);
+  document.getElementById('sheet-who').textContent = whoami(capacity(base));
+
+  document.getElementById('sheet-sit-k').textContent = t('sheet_situation');
+  document.getElementById('sheet-sit').textContent = fill(w('what_changed'), {shock: num(shock)});
+
+  document.getElementById('sheet-dec-k').textContent = t('sheet_decision');
+  document.getElementById('sheet-choice').textContent = NAMES[pick];
+  /* The trade the owner accepted, in the same words the card used. */
+  var tr = TRADE[pick] || {good: '', bad: ''};
+  document.getElementById('sheet-because').textContent =
+      tr.good + (tr.bad ? ' — ' + fill(tr.bad, {pct: num(Math.abs(out[pick].m.orders_change)) + PS()}) : '');
+
+  /* The comparison, with two marks that are allowed to disagree: what was chosen, and what
+     came out ahead. A sheet that quietly implied they were the same thing would be the one
+     dishonest document this product produces. */
+  document.getElementById('sheet-cmp-k').textContent = t('sheet_compared');
+  document.getElementById('sheet-cmp').innerHTML =
+      '<tbody>' + WID.map(function(id){
+        var marks = [];
+        if(id === pick) marks.push('<b class="mk chosen">' + esc(t('sheet_chosen')) + '</b>');
+        if(id === lead) marks.push('<b class="mk ahead">' + esc(t('ahead_now')) + '</b>');
+        return '<tr' + (id === pick ? ' class="is-pick"' : '') + '>'
+          + '<td class="c-n">' + esc(NAMES[id]) + '</td>'
+          + '<td class="c-m">' + signed(out[id].m.mnet) + ' <span class="c-u">'
+            + esc(t('sheet_month')) + '</span></td>'
+          + '<td class="c-k">' + marks.join(' ') + '</td></tr>';
+      }).join('') + '</tbody>';
+
+  document.getElementById('sheet-rests-k').textContent = t('sheet_rests');
+  var rests = [
+    [w('uncertainty_title'),
+     L.ui.setting_labels[sel[PRIMARY]] + ' — ' + elasticityPlain()],
+    [t('rest_shock'), fill(w('what_changed'), {shock: num(shock)})],
+    [t('rest_horizon'), fill(t('rest_horizon_v'), {n: num(H)})],
+    [t('rest_stability'), fill(t('rest_stability_v'), {n: num(wins[pick]), total: num(wins.n)})]
+  ];
+  document.getElementById('sheet-rests').innerHTML = '<tbody>' + rests.map(function(row){
+    return '<tr><td class="r-k">' + esc(row[0]) + '</td><td class="r-v">' + esc(row[1]) + '</td></tr>';
+  }).join('') + '</tbody>';
+
+  document.getElementById('sheet-will-k').textContent = t('sheet_will_do');
+  var TEST_RISE = 10;
+  document.getElementById('sheet-will').textContent = fill(w('experiment'), {rise: pct(TEST_RISE)});
+  document.getElementById('sheet-readings').innerHTML = ['low','central','high'].map(function(k){
+    var e = parseFloat(C.sens_values[k]);
+    var key = k === 'low' ? 'test_low' : (k === 'central' ? 'test_mid' : 'test_high');
+    return '<li><span class="r-n">'
+      + esc(fill(t(key), {n: num(Math.abs(e) * TEST_RISE, 1) + PS()})) + '</span></li>';
+  }).join('');
+
+  document.getElementById('sheet-scenario').textContent = t('not_a_prediction');
+  document.getElementById('sheet-reproduce').textContent = t('sheet_reproduce');
+  document.getElementById('sheet-sign-k').textContent = t('sheet_sign');
+  document.getElementById('sheet-print').textContent = t('print_view');
+  document.getElementById('sheet-copy').textContent = t('sheet_copy');
+  document.getElementById('sheet-back').textContent = t('sheet_back');
+  document.title = t('sheet_title') + ' · ' + sheetRef(sheetState.packed);
+}
+
+document.getElementById('picks').addEventListener('click', function(e){
+  var b = e.target.closest('.pick'); if(!b) return;
+  makeSheet(b.dataset.p);
+});
+document.getElementById('sheet-print').addEventListener('click', function(){ window.print(); });
+document.getElementById('sheet-back').addEventListener('click', function(){
+  try {
+    var u = new URL(location.href);
+    u.searchParams.delete('sheet');
+    history.replaceState(null, '', u);
+  } catch(e){}
+  showScreen('result');
+  render();
+});
+document.getElementById('sheet-copy').addEventListener('click', function(){
+  var btn = this, done = function(){
+    btn.textContent = t('sheet_copied');
+    setTimeout(function(){ btn.textContent = t('sheet_copy'); }, 1800);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText)
+    navigator.clipboard.writeText(location.href).then(done, function(){});
+  else {
+    var ta = document.createElement('textarea');
+    ta.value = location.href;
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){}
+    ta.remove();
+  }
+});
+
 /* ---- the reveals ----------------------------------------------------------------------------
    The chart is drawn for a width, and inside a closed <details> it has none. It is drawn when
    the reader opens it, and again if they resize afterwards. */
@@ -1794,6 +2140,19 @@ applyLanguage(lang, false);
     try { localStorage.setItem('dc_cur', cur); } catch(e){}
     render();                                  // presentation only: nothing is recomputed
   });
+  /* A shared link is a document someone was handed. It opens as that document, with its own
+     figures, whatever this browser remembers about its owner's last visit. */
+  var packedIn = P.get('sheet');
+  if(packedIn){
+    var st = applySheet(packedIn);
+    if(st){
+      sheetState = st;
+      render();
+      showScreen('sheet');
+      renderSheet();
+      return;
+    }
+  }
   if(P.get('demo') === '1' || !FLOW.length){ finishAsk(true); return; }
   // Answers from last time mean last time's result, straight away.
   try {

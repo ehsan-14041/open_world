@@ -1103,6 +1103,149 @@
    "tags": []
   },
   {
+   "id": "ui.decide_t",
+   "text": "Which one are you going with?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.decide_lead",
+   "text": "Record your choice and I'll make you a sheet you can keep, print, or show someone.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.decide_pick",
+   "text": "I'm going with this",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_title",
+   "text": "Decision sheet",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_id",
+   "text": "Reference",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_date",
+   "text": "Date",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_situation",
+   "text": "The situation",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_decision",
+   "text": "My decision",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_compared",
+   "text": "The three I compared",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_chosen",
+   "text": "chosen",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_month",
+   "text": "monthly",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_rests",
+   "text": "What this decision rests on",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_will_do",
+   "text": "And this is what I'll measure",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_sign",
+   "text": "Signed and dated",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_reproduce",
+   "text": "None of these figures is stored anywhere; they are recalculated from the link itself. Anyone who opens it sees exactly these numbers.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_copy",
+   "text": "Copy link",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_copied",
+   "text": "Copied",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_back",
+   "text": "Back to the comparison",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.rest_shock",
+   "text": "What changed",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.rest_horizon",
+   "text": "Compared over",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.rest_horizon_v",
+   "text": "{n} days",
+   "placeholders": [
+    "{n}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.rest_stability",
+   "text": "How stable this choice is",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.rest_stability_v",
+   "text": "first in {n} of {total} tested cases",
+   "placeholders": [
+    "{n}",
+    "{total}"
+   ],
+   "tags": []
+  },
+  {
    "id": "wedges.cafe.business",
    "text": "Cafe / Restaurant",
    "placeholders": [],

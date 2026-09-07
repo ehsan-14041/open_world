@@ -14,6 +14,7 @@ the page that a redesign is most likely to quietly tidy away, so it is the part 
 from __future__ import annotations
 
 import html as html_mod
+import json
 import re
 import shutil
 import subprocess
@@ -262,7 +263,8 @@ def test_the_demo_says_it_is_a_demo(wedge_id, lang):
 #: The most words a beat may put in front of a reader. The numbers were set from the shipped
 #: copy plus headroom; the point is that growing a beat past its budget is a decision someone
 #: has to make in a diff, not something that accretes.
-BEAT_BUDGET = {"b-now": 95, "b-options": 175, "b-race": 155, "b-solid": 130, "b-monday": 65}
+BEAT_BUDGET = {"b-now": 95, "b-options": 175, "b-race": 155, "b-solid": 130,
+               "b-monday": 65, "b-decide": 75}
 
 
 @pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
@@ -349,3 +351,130 @@ def test_the_rendered_home_screen_is_whole(lang):
 def test_no_rendered_page_ever_says_undefined(wedge_id, lang):
     body = text_of(rendered(wedge_id, lang))
     assert "undefined" not in body, f"{wedge_id}/{lang}: 'undefined' reached the page"
+
+
+# ---- the decision sheet -----------------------------------------------------------------------
+
+def _sheet_dom(wedge_id: str, lang: str, packed: str) -> str:
+    """The sheet a shared link opens to, rendered."""
+    page = SITE / wedge_id / f"{wedge_id}_decision_report.html"
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=9000", "--dump-dom",
+         page.as_uri() + f"?lang={lang}&sheet={packed}"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False,
+    )
+    assert proc.returncode == 0, proc.stderr[-500:]
+    dom = re.sub(r"<script.*?</script>", " ", proc.stdout, flags=re.S)
+    return re.sub(r"<style.*?</style>", " ", dom, flags=re.S)
+
+
+def _packed(wedge_id: str, choice: str = "B", date: str = "2026-09-01") -> str:
+    """A link built the way the page builds one, from that wedge's own demo figures."""
+    import base64
+    import json as _json
+
+    from event_sim.wedge.registry import WEDGES as _W
+    wedge = _W[wedge_id]
+    baseline = wedge.demo_factory().to_dict()
+    fields = [f for step in wedge.copy["flow"] for f in step["fields"]]
+    report = _json.loads((SITE / wedge_id / f"{wedge_id}_decision_report.json").read_text("utf-8"))
+    grid_keys = list(report["grid"][0]["key"].keys())
+    settings = []
+    for k in grid_keys:
+        vals = sorted({g["key"][k] for g in report["grid"]},
+                      key=lambda v: (isinstance(v, str), v))
+        settings.append("central" if "central" in vals else vals[len(vals) // 2])
+    payload = _json.dumps([1, date, choice, settings, [baseline[f] for f in fields]],
+                          separators=(",", ":"))
+    return base64.urlsafe_b64encode(payload.encode()).decode().rstrip("=")
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_a_shared_link_opens_as_its_own_sheet(wedge_id, lang):
+    """
+    The link is the document. Opening it shows the sheet — not the questions, not the report —
+    and the figures on it are recomputed from the link rather than read from anywhere.
+    """
+    dom = _sheet_dom(wedge_id, lang, _packed(wedge_id))
+    sheet = re.search(r'<article[^>]*\bid="sheet"([^>]*)>', dom)
+    assert sheet and "hidden" not in sheet.group(1), f"{wedge_id}/{lang}: the sheet did not open"
+    for other, label in (("ask", "the questions"), ("result", "the comparison")):
+        m = re.search(rf'<(?:section|div)[^>]*\bid="{other}"([^>]*)>', dom)
+        assert m and "hidden" in m.group(1), f"{wedge_id}/{lang}: {label} showed alongside the sheet"
+    assert "undefined" not in text_of(dom), f"{wedge_id}/{lang}: the sheet shows 'undefined'"
+    ui = catalogue(lang)["ui"]
+    assert inner(dom, "sheet-id"), "the sheet has no reference"
+    assert inner(dom, "sheet-date"), "the sheet has no date"
+    for eid, key in (("sheet-title", "sheet_title"), ("sheet-dec-k", "sheet_decision"),
+                     ("sheet-rests-k", "sheet_rests"), ("sheet-will-k", "sheet_will_do")):
+        assert inner(dom, eid) == " ".join(ui[key].split()), f"{wedge_id}/{lang}: {eid} is wrong"
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_the_sheet_names_the_option_that_was_chosen(wedge_id):
+    """Whatever the model ranks first, the sheet's decision is the one the owner picked."""
+    for choice in ("A", "B", "C"):
+        dom = _sheet_dom(wedge_id, "en", _packed(wedge_id, choice))
+        names = catalogue("en")["wedges"][wedge_id]["world_names"]
+        assert inner(dom, "sheet-choice") == " ".join(names[choice].split()), \
+            f"{wedge_id}: a sheet for {choice} does not say {choice}"
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_the_sheet_distinguishes_what_was_chosen_from_what_leads(wedge_id):
+    """
+    An owner may pick the option that is not ahead — that is their right, and the sheet has to
+    say so rather than quietly implying the choice was the winner. Both marks appear, and on a
+    deliberately unpopular choice they sit on different rows.
+    """
+    ui = catalogue("en")["ui"]
+    report = json.loads((SITE / wedge_id / f"{wedge_id}_decision_report.json").read_text("utf-8"))
+    counts = report["sensitivity"]["win_counts"]
+    trailing = min(("A", "B", "C"), key=lambda k: counts[k])
+
+    dom = _sheet_dom(wedge_id, "en", _packed(wedge_id, trailing))
+    body = " ".join(text_of(dom).split())
+    assert ui["sheet_chosen"] in body, f"{wedge_id}: no chosen mark"
+    assert ui["ahead_now"] in body, f"{wedge_id}: the sheet hides which option leads"
+
+    rows = re.findall(r"<tr([^>]*)>(.*?)</tr>", dom, re.S)
+    chosen_rows = [r for r in rows if ui["sheet_chosen"] in r[1]]
+    ahead_rows = [r for r in rows if ui["ahead_now"] in r[1]]
+    assert len(chosen_rows) == 1 and len(ahead_rows) == 1
+    assert chosen_rows[0] is not ahead_rows[0], \
+        f"{wedge_id}: chosen and leading collapsed onto one row for a trailing choice"
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_the_sheet_carries_the_honesty_copy_and_says_it_stores_nothing(wedge_id):
+    dom = _sheet_dom(wedge_id, "fa", _packed(wedge_id))
+    body = " ".join(text_of(dom).split())
+    ui = catalogue("fa")["ui"]
+    for key in ("not_a_prediction", "sheet_reproduce"):
+        assert " ".join(ui[key].split()) in body, f"{wedge_id}: the sheet dropped {key}"
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_a_damaged_link_does_not_produce_a_sheet(wedge_id):
+    """
+    A truncated or edited link must fall back to the questions, never to a document with
+    half-applied figures on it. A sheet is something someone may act on.
+    """
+    good = _packed(wedge_id)
+    for bad in (good[:-6], "not-base64-at-all", good[:8]):
+        dom = _sheet_dom(wedge_id, "en", bad)
+        sheet = re.search(r'<article[^>]*\bid="sheet"([^>]*)>', dom)
+        assert sheet and "hidden" in sheet.group(1), \
+            f"{wedge_id}: a damaged link ({bad[:12]}...) still opened a sheet"
+        ask = re.search(r'<section[^>]*\bid="ask"([^>]*)>', dom)
+        assert ask and "hidden" not in ask.group(1), f"{wedge_id}: damaged link left no way forward"
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_the_same_link_always_carries_the_same_reference(wedge_id):
+    a = _sheet_dom(wedge_id, "en", _packed(wedge_id))
+    b = _sheet_dom(wedge_id, "fa", _packed(wedge_id))
+    ref_a, ref_b = inner(a, "sheet-id"), inner(b, "sheet-id")
+    assert ref_a and ref_a == ref_b, \
+        f"{wedge_id}: the reference changed with the language ({ref_a!r} vs {ref_b!r})"
