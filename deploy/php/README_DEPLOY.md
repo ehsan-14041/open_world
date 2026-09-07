@@ -124,10 +124,35 @@ ignore `.htaccess` entirely**, so on those add:
 location ~ ^/decision/(lib|assets|data)/ { deny all; }
 ```
 
-Nothing under those paths is a secret — `assets/frozen.json` is the published model, and
-`data/cache/` holds pages the visitor is allowed to see anyway — but a cached report for one
-cafe should not be reachable by someone who knows only another cafe's URL. The cache filename
-is a hash of the inputs, so it is not guessable.
+Most of what is under those paths is not a secret — `assets/frozen.json` is the published
+model, and `data/cache/` holds pages the visitor is allowed to see anyway — but two things there
+do need the rule. A cached report for one cafe should not be reachable by someone who knows only
+another cafe's URL (the filename is a hash of the inputs, so it is not guessable), and
+`data/contrib/` holds measurements owners chose to share. Those carry no figures about anyone's
+business, but they were given to you, not published.
+
+## Measurements owners choose to share
+
+When an owner runs the two-week price test and reports what it said, the page offers — once,
+next to the number, with the exact row on screen — to send that measurement. If they accept,
+one line is appended to `data/contrib/measurements.jsonl`:
+
+```json
+{"at":"2026-09-07","wedge":"cafe","variant":"bakery","e":0.31,"rise":8,"anon":"zz99aa88bb77"}
+```
+
+That is the whole row. The date is the day, not the moment. `anon` is a random id the browser
+made up, so a second send from the same browser can be recognised rather than counted as a
+second business. No revenue, no cash, no order counts, no name, no address, no IP address: none
+of those reach the request, and the row is built from a fixed list of fields rather than from
+whatever the client posts.
+
+Why bother: the elasticity this product starts from is borrowed from a 2010 study of eating out
+in the United States. It is the weakest number in the model and the page says so. Enough real
+measurements and it can be replaced with something measured where your customers actually are.
+
+**To not receive any of this, delete `contribute.php`.** The offer disappears from the page —
+it is only shown when the endpoint exists — and nothing else changes.
 
 ## Things worth knowing
 

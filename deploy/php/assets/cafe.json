@@ -457,7 +457,22 @@
      "measured_row": "Price sensitivity you measured yourself",
      "sheet_measured": "What you measured",
      "flow_kind_q": "What kind of place is it?",
-     "flow_kind_hint": "Same model either way — the words and the starting estimate differ."
+     "flow_kind_hint": "Same model either way — the words and the starting estimate differ.",
+     "share_q": "Share this number with the others?",
+     "share_why": "The estimate this page starts from comes from a 2010 American study of eating out. Every real measurement makes the next starting estimate better for businesses here.",
+     "share_what": "What gets sent?",
+     "share_list_e": "the number you measured",
+     "share_list_rise": "how much you put the price up",
+     "share_list_kind": "the kind of business",
+     "share_list_date": "the date (the day, not the time)",
+     "share_list_anon": "a random id your browser made up",
+     "share_not": "Your sales, your cash, your order counts, your name and your address are not sent. They stay on this page.",
+     "share_go": "Send it",
+     "share_no": "No thanks",
+     "share_done": "Sent. Thank you.",
+     "share_fail": "It didn't send. No matter — your measurement is still here.",
+     "sheet_yours_q": "Facing a decision like this yourself?",
+     "sheet_yours_go": "See your own three choices"
     },
     "wedge": {
      "business": "Cafe / Restaurant",
@@ -736,7 +751,8 @@
        },
        "sources_note": "On price sensitivity: research gives a reference range for eating out as a whole. Fast food usually has easier substitutes close by, so customers may move faster than this figure suggests. The two-week test measures it for you."
       }
-     }
+     },
+     "business_covers": "Cafe / Restaurant · Bakery · Fast food"
     },
     "all_wedges": {
      "cafe": {
@@ -978,7 +994,22 @@
      "measured_row": "کشش قیمتی که خودت اندازه گرفتی",
      "sheet_measured": "اندازه‌گیری خودت",
      "flow_kind_q": "چه‌جور کسب‌وکاری داری؟",
-     "flow_kind_hint": "مدل یکی است؛ فقط واژه‌ها و حدس اولیه فرق می‌کنند."
+     "flow_kind_hint": "مدل یکی است؛ فقط واژه‌ها و حدس اولیه فرق می‌کنند.",
+     "share_q": "این عدد را با بقیه در میان می‌گذاری؟",
+     "share_why": "حدس اولیهٔ این صفحه از یک پژوهش آمریکایی سال ۲۰۱۰ دربارهٔ بیرون‌غذاخوردن می‌آید. هر اندازه‌گیری واقعی، حدس بعدی را برای کسب‌وکارهای اینجا بهتر می‌کند.",
+     "share_what": "چه چیزی فرستاده می‌شود؟",
+     "share_list_e": "عددی که اندازه گرفتی",
+     "share_list_rise": "چند درصد گران کردی",
+     "share_list_kind": "نوع کسب‌وکار",
+     "share_list_date": "تاریخ (فقط روز)",
+     "share_list_anon": "یک شناسهٔ تصادفی که مرورگرت ساخته",
+     "share_not": "فروش، پول نقد، تعداد سفارش، اسم و نشانی‌ات فرستاده نمی‌شود. اینها روی همین صفحه می‌مانند.",
+     "share_go": "بفرست",
+     "share_no": "نه، ممنون",
+     "share_done": "فرستاده شد. ممنون.",
+     "share_fail": "فرستاده نشد. اشکالی ندارد — اندازه‌گیری‌ات سر جایش است.",
+     "sheet_yours_q": "تو هم چنین تصمیمی داری؟",
+     "sheet_yours_go": "سه‌راهی خودت را ببین"
     },
     "wedge": {
      "business": "کافه / رستوران",
@@ -1257,7 +1288,8 @@
        },
        "sources_note": "دربارهٔ حساسیت به قیمت: پژوهش یک بازهٔ مرجع برای بیرون‌غذاخوردن می‌دهد. فست‌فود معمولاً جایگزین آسان‌تری دارد، پس واکنش مشتری می‌تواند تندتر از این عدد باشد. آزمایش دوهفته‌ای همین را برای خودت اندازه می‌گیرد."
       }
-     }
+     },
+     "business_covers": "کافه / رستوران · نانوایی / قنادی · فست‌فود"
     },
     "all_wedges": {
      "cafe": {

@@ -365,6 +365,26 @@ html[dir="rtl"] .m-v{font-weight:700;line-height:1.65}
 .m-f{margin-top:14px !important;display:flex;gap:14px;align-items:center;flex-wrap:wrap;
   font-size:13px;color:var(--muted)}
 .m-f .linkish{font-size:13px;padding:6px 0;min-height:0}
+
+/* The offer to share reads as a question, not as a banner: it sits inside the measurement it is
+   about, and the exact row is one tap away. */
+.share{margin-top:18px;padding-top:18px;border-top:1px solid var(--rule)}
+.share[hidden]{display:none}
+.share h4{margin:0 0 6px;font-size:16.5px}
+.s-why{color:var(--muted);font-size:14.5px;line-height:1.7;margin:0 0 12px !important}
+.s-what{margin-bottom:4px}
+.s-what>summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--win);
+  list-style:none;padding:8px 0;min-height:40px;display:flex;align-items:center}
+.s-what>summary::-webkit-details-marker{display:none}
+.s-list{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);border-radius:var(--r-sm);overflow:hidden}
+.s-list li{display:flex;justify-content:space-between;gap:14px;background:var(--sunk);
+  padding:9px 12px;font-size:14px}
+.s-list .s-k{color:var(--muted)}
+.s-list .s-v{font-weight:600;font-variant-numeric:tabular-nums;text-align:end;
+  overflow-wrap:anywhere}
+.s-not{font-size:13.5px;color:var(--muted);line-height:1.7;margin:12px 0 0 !important}
+.s-msg{font-size:14px;font-weight:600;margin-top:12px !important;min-height:1.2em}
 .picks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media (max-width:860px){.picks{grid-template-columns:1fr}}
 .pick{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"l n" "l m" "g g";
@@ -430,6 +450,11 @@ html[dir="rtl"] .sheet-choice{font-weight:700;line-height:1.55}
 .sheet-sign{margin-top:34px;padding-top:14px;display:flex;align-items:flex-end;gap:14px}
 .sheet-sign span{font-size:12.5px;color:var(--muted);white-space:nowrap}
 .sheet-sign i{flex:1;border-bottom:1px solid var(--rule);height:34px}
+.sheet-yours{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:30px;
+      padding:18px 20px;background:var(--sunk);border-radius:var(--r-md);font-size:15.5px}
+.sheet-yours[hidden]{display:none}
+.sheet-yours span{flex:1;min-width:0;font-weight:600}
+@media (max-width:560px){.sheet-yours .btn{width:100%}}
 .sheet-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:34px;
       padding-top:22px;border-top:1px solid var(--rule)}
 @media (max-width:560px){
@@ -599,7 +624,7 @@ html[dir="rtl"] .unknown-lead{font-weight:700;line-height:1.6}
   body{background:#fff;color:#000;padding:0;font-size:11.5pt}
   body.has-sticky{padding-bottom:0}
   .top,.sticky,.printrow,#ask,.unsure,.adv,.langs,.bizpick,#how,.tip,
-  .reveal>summary .rb,.sheet-actions,#b-decide{display:none !important}
+  .reveal>summary .rb,.sheet-actions,#b-decide,.sheet-yours,.share{display:none !important}
   /* A sheet prints as itself: nothing else on the page comes with it. */
   body.on-sheet #result{display:none !important}
   #sheet{max-width:none;padding:0}
@@ -733,6 +758,21 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
       <p class="m-b" id="m-band"></p>
       <p class="m-c" id="m-caveat"></p>
       <p class="m-f"><span id="m-on"></span><button type="button" class="linkish" id="m-clear"></button></p>
+      <!-- Offered, never assumed: the row is shown in full before anything leaves the page. -->
+      <div class="share" id="share" hidden>
+        <h4 id="share-q"></h4>
+        <p class="s-why" id="share-why"></p>
+        <details class="s-what">
+          <summary id="share-what"></summary>
+          <ul class="s-list" id="share-list"></ul>
+          <p class="s-not" id="share-not"></p>
+        </details>
+        <div class="tf-row">
+          <button type="button" class="btn primary" id="share-go"></button>
+          <button type="button" class="linkish" id="share-no"></button>
+        </div>
+        <p class="s-msg" id="share-msg" role="status"></p>
+      </div>
     </div>
     <div class="unknown">
       <h2 id="unknown-title"></h2>
@@ -864,6 +904,13 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     <p class="sheet-note" id="sheet-reproduce"></p>
 
     <div class="sheet-sign"><span id="sheet-sign-k"></span><i></i></div>
+
+    <!-- A sheet is usually being read by someone it was sent to. They came for this
+         decision; the way on is to their own. -->
+    <div class="sheet-yours" id="sheet-yours" hidden>
+      <span id="sheet-yours-q"></span>
+      <button type="button" class="btn" id="sheet-yours-go"></button>
+    </div>
 
     <div class="sheet-actions">
       <button type="button" class="btn primary" id="sheet-print"></button>
@@ -1979,6 +2026,7 @@ function finishAsk(isDemo){
       var keep = {};
       FLOW.forEach(function(st){ st.fields.forEach(function(f){ keep[f] = draft[f]; }); });
       localStorage.setItem(STORE_KEY, JSON.stringify(keep));
+      arrivedWithAnswers = true;
     } catch(e){}
   }
   base = draft;
@@ -2139,6 +2187,7 @@ function renderLoop(){
   }
   document.getElementById('unknown-lead').textContent =
       measure ? t('measured_lead') : t('unknown_lead');
+  renderShare();
 }
 
 document.getElementById('testrun').addEventListener('click', function(e){
@@ -2188,9 +2237,102 @@ document.getElementById('testform').addEventListener('submit', function(e){
                                                      block: 'start'});
 });
 
+
+/* ---- sharing one measurement ------------------------------------------------------------------
+   The estimate this page starts from is borrowed from a 2010 study of eating out in the United
+   States. The only way it ever gets better for the businesses actually using this is if owners
+   who run the test are willing to say what it said.
+
+   So it is asked for, once, next to the number it is about, with the exact row on screen before
+   anything is sent — and the row is the measurement and nothing else. What an owner typed about
+   their takings stays in their browser; there is no code path that puts it in a request. The
+   offer only appears where a host can receive it, which the static build cannot. */
+var SHARE_KEY = 'dc_shared_' + D.wedge.id;
+var ANON_KEY = 'dc_anon';
+
+function anonId(){
+  var v = null;
+  try { v = localStorage.getItem(ANON_KEY); } catch(e){}
+  if(!/^[a-z0-9]{8,32}$/.test(v || '')){
+    v = '';
+    // Random per browser, tied to nothing. It exists so a second send can be recognised as the
+    // same browser rather than counted as a second business.
+    for(var i = 0; i < 16; i++) v += 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)];
+    try { localStorage.setItem(ANON_KEY, v); } catch(e){}
+  }
+  return v;
+}
+
+function shareRow(){
+  return {wedge: D.wedge.id, variant: variant || null,
+          e: Math.round(measure.e * 10000) / 10000, rise: measure.rise, anon: anonId()};
+}
+
+function shareState(){
+  try { return localStorage.getItem(SHARE_KEY) || ''; } catch(e){ return ''; }
+}
+
+function renderShare(){
+  var box = document.getElementById('share');
+  // Only where there is somewhere to send it, only once there is something to send, and only
+  // until the owner has answered the question one way or the other.
+  var offer = !!(D.contrib && measure && !shareState());
+  box.hidden = !offer;
+  if(!offer){
+    var msg = document.getElementById('share-msg');
+    msg.textContent = shareState() === 'sent' ? t('share_done') : '';
+    return;
+  }
+  document.getElementById('share-q').textContent = t('share_q');
+  document.getElementById('share-why').textContent = t('share_why');
+  document.getElementById('share-what').textContent = t('share_what');
+  var row = shareRow();
+  document.getElementById('share-list').innerHTML = [
+    [t('share_list_e'), num(row.e, 2)],
+    [t('share_list_rise'), pct(row.rise)],
+    [t('share_list_kind'), w('business')],
+    [t('share_list_date'), sheetDate(measure.date)],
+    [t('share_list_anon'), row.anon]
+  ].map(function(pair){
+    return '<li><span class="s-k">' + esc(pair[0]) + '</span><span class="s-v">'
+         + esc(String(pair[1])) + '</span></li>'; }).join('');
+  document.getElementById('share-not').textContent = t('share_not');
+  document.getElementById('share-go').textContent = t('share_go');
+  document.getElementById('share-no').textContent = t('share_no');
+  document.getElementById('share-msg').textContent = '';
+}
+
+document.getElementById('share-no').addEventListener('click', function(){
+  try { localStorage.setItem(SHARE_KEY, 'declined'); } catch(e){}
+  renderShare();
+});
+
+document.getElementById('share-go').addEventListener('click', function(){
+  var btn = this, msg = document.getElementById('share-msg');
+  btn.disabled = true;
+  fetch('contribute.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(shareRow())
+  }).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
+    if(j && j.ok){
+      try { localStorage.setItem(SHARE_KEY, 'sent'); } catch(e){}
+      renderShare();
+      msg.textContent = t('share_done');
+    } else {
+      btn.disabled = false;
+      msg.textContent = t('share_fail');
+    }
+  }).catch(function(){
+    btn.disabled = false;
+    msg.textContent = t('share_fail');
+  });
+});
+
 document.getElementById('m-clear').addEventListener('click', function(){
   measure = null;
   saveMeasure();
+  try { localStorage.removeItem(SHARE_KEY); } catch(e){}
   sel[PRIMARY] = CENTRE[PRIMARY];
   render();
 });
@@ -2204,6 +2346,7 @@ document.getElementById('m-clear').addEventListener('click', function(){
    reading the same arithmetic, and the reference at the top is a hash of that link — the same
    decision always has the same reference. */
 var sheetState = null;
+var arrivedWithAnswers = false;    // this browser has been through the flow itself
 var FLOW_FIELDS = FLOW.reduce(function(a, st){ return a.concat(st.fields); }, []);
 
 function b64url(str){
@@ -2369,6 +2512,14 @@ function renderSheet(){
   document.getElementById('sheet-print').textContent = t('print_view');
   document.getElementById('sheet-copy').textContent = t('sheet_copy');
   document.getElementById('sheet-back').textContent = t('sheet_back');
+  /* Shown to a reader who arrived on someone else's link, not to the owner who just made it:
+     they have no answers of their own in this browser yet. */
+  var visiting = !arrivedWithAnswers;
+  document.getElementById('sheet-yours').hidden = !visiting;
+  if(visiting){
+    document.getElementById('sheet-yours-q').textContent = t('sheet_yours_q');
+    document.getElementById('sheet-yours-go').textContent = t('sheet_yours_go');
+  }
   document.title = t('sheet_title') + ' · ' + sheetRef(sheetState.packed);
 }
 
@@ -2377,6 +2528,20 @@ document.getElementById('picks').addEventListener('click', function(e){
   makeSheet(b.dataset.p);
 });
 document.getElementById('sheet-print').addEventListener('click', function(){ window.print(); });
+document.getElementById('sheet-yours-go').addEventListener('click', function(){
+  /* Their decision, not the one they were shown: the flow starts clean. */
+  try {
+    var u = new URL(location.href);
+    u.searchParams.delete('sheet');
+    history.replaceState(null, '', u);
+  } catch(e){}
+  draft = Object.assign({}, D.baseline_raw);
+  answered = {};
+  askAt = 0;
+  showScreen('ask');
+  renderAsk();
+  window.scrollTo({top: 0, behavior: motionOK() ? 'smooth' : 'auto'});
+});
 document.getElementById('sheet-back').addEventListener('click', function(){
   try {
     var u = new URL(location.href);
@@ -2448,6 +2613,7 @@ applyLanguage(lang, false);
       var complete = FLOW.every(function(st){
         return st.fields.every(function(f){ return isFinite(parseFloat(saved[f])); }); });
       if(complete){
+        arrivedWithAnswers = true;
         FLOW.forEach(function(st){ st.fields.forEach(function(f){
           draft[f] = parseFloat(saved[f]); answered[f] = true; }); });
         if(!validate(draft).length){ finishAsk(false); return; }

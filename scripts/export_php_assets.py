@@ -28,6 +28,7 @@ from event_sim.wedge.accounting import DAYS_PER_MONTH  # noqa: E402
 from event_sim.wedge.compare import _trajectory_slice, shared_fingerprint, wedge_slice  # noqa: E402
 from event_sim.wedge.i18n import bundle_for, chooser_bundle  # noqa: E402
 from event_sim.wedge.registry import CHOOSER, WEDGES  # noqa: E402
+from event_sim.wedge.variants import VARIANTS  # noqa: E402
 from event_sim.wedge.spec import WedgeSpec  # noqa: E402
 
 OUT = ROOT / "deploy" / "php" / "assets"
@@ -160,6 +161,13 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "wedges.json").write_text(
         json.dumps({"chooser": CHOOSER, "i18n": chooser_bundle()}, indent=1, ensure_ascii=False),
+        encoding="utf-8")
+
+    # What the contribution endpoint is allowed to accept. Written out rather than inferred from
+    # the translation bundles, so the host validates against this build's own list of trades.
+    (OUT / "trades.json").write_text(
+        json.dumps({"wedges": sorted(WEDGES), "variants": sorted(VARIANTS)},
+                   indent=1, ensure_ascii=False),
         encoding="utf-8")
 
     for wedge_id, wedge in WEDGES.items():

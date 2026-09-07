@@ -493,6 +493,9 @@ function build_bundle(Slice $slice, array $wedge, Baseline $baseline, bool $incl
         'wedge' => $wedge['wedge'],
         'copy' => $wedge['copy'],
         'i18n' => $wedge['i18n'],
+        // Whether this host can take a measurement the owner chooses to share. The
+        // static build has no such endpoint, so the offer never appears there.
+        'contrib' => is_file(__DIR__ . '/../contribute.php'),
         'generated_for' => $baseline->name,
         'is_demo' => $baseline->is_demo,
         'baseline' => $baseline->summary($wedge),

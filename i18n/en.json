@@ -222,7 +222,22 @@
     "measured_row": "Price sensitivity you measured yourself",
     "sheet_measured": "What you measured",
     "flow_kind_q": "What kind of place is it?",
-    "flow_kind_hint": "Same model either way — the words and the starting estimate differ."
+    "flow_kind_hint": "Same model either way — the words and the starting estimate differ.",
+    "share_q": "Share this number with the others?",
+    "share_why": "The estimate this page starts from comes from a 2010 American study of eating out. Every real measurement makes the next starting estimate better for businesses here.",
+    "share_what": "What gets sent?",
+    "share_list_e": "the number you measured",
+    "share_list_rise": "how much you put the price up",
+    "share_list_kind": "the kind of business",
+    "share_list_date": "the date (the day, not the time)",
+    "share_list_anon": "a random id your browser made up",
+    "share_not": "Your sales, your cash, your order counts, your name and your address are not sent. They stay on this page.",
+    "share_go": "Send it",
+    "share_no": "No thanks",
+    "share_done": "Sent. Thank you.",
+    "share_fail": "It didn't send. No matter — your measurement is still here.",
+    "sheet_yours_q": "Facing a decision like this yourself?",
+    "sheet_yours_go": "See your own three choices"
   },
   "wedges": {
     "cafe": {
@@ -502,7 +517,8 @@
           },
           "sources_note": "On price sensitivity: research gives a reference range for eating out as a whole. Fast food usually has easier substitutes close by, so customers may move faster than this figure suggests. The two-week test measures it for you."
         }
-      }
+      },
+      "business_covers": "Cafe / Restaurant · Bakery · Fast food"
     },
     "shop": {
       "business": "Shop / Online Store",

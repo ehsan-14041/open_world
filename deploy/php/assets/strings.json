@@ -1394,6 +1394,96 @@
    "tags": []
   },
   {
+   "id": "ui.share_q",
+   "text": "Share this number with the others?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_why",
+   "text": "The estimate this page starts from comes from a 2010 American study of eating out. Every real measurement makes the next starting estimate better for businesses here.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_what",
+   "text": "What gets sent?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_list_e",
+   "text": "the number you measured",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_list_rise",
+   "text": "how much you put the price up",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_list_kind",
+   "text": "the kind of business",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_list_date",
+   "text": "the date (the day, not the time)",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_list_anon",
+   "text": "a random id your browser made up",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_not",
+   "text": "Your sales, your cash, your order counts, your name and your address are not sent. They stay on this page.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_go",
+   "text": "Send it",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_no",
+   "text": "No thanks",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_done",
+   "text": "Sent. Thank you.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.share_fail",
+   "text": "It didn't send. No matter — your measurement is still here.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_yours_q",
+   "text": "Facing a decision like this yourself?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_yours_go",
+   "text": "See your own three choices",
+   "placeholders": [],
+   "tags": []
+  },
+  {
    "id": "wedges.cafe.business",
    "text": "Cafe / Restaurant",
    "placeholders": [],
@@ -2361,6 +2451,12 @@
   {
    "id": "wedges.cafe.variants.fastfood.sources_note",
    "text": "On price sensitivity: research gives a reference range for eating out as a whole. Fast food usually has easier substitutes close by, so customers may move faster than this figure suggests. The two-week test measures it for you.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.business_covers",
+   "text": "Cafe / Restaurant · Bakery · Fast food",
    "placeholders": [],
    "tags": []
   },

@@ -105,7 +105,7 @@ def chooser_bundle() -> dict[str, Any]:
             # example promise exactly the three decisions the next page delivers.
             "wedges": {wid: {k: v for k, v in w.items()
                              if k in ("business", "business_short", "question", "icon", "noun",
-                                      "problem", "world_names")}
+                                      "problem", "world_names", "business_covers")}
                        for wid, w in cat["wedges"].items()},
         }
     return out
