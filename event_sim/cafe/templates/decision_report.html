@@ -337,6 +337,34 @@ body.has-sticky{padding-bottom:84px}
    Three large targets carrying the same three names and figures the cards did, so committing
    is recognisably the same act as reading. */
 .decide-lead{color:var(--muted);margin:0 0 20px;max-width:60ch}
+
+/* ================= the experiment, and what it measured =======================================
+   Starting the test and reporting it are one row of actions, not a form the page opens with. */
+.testrun{margin-top:18px}
+.ts-wrap{display:flex;flex-direction:column;gap:2px;margin-bottom:14px}
+.ts{font-weight:600;font-size:15px}
+.ts-s{font-size:14px;color:var(--muted)}
+.tf-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.testform{margin-top:20px;border-top:1px solid var(--rule);padding-top:20px}
+.testform[hidden]{display:none}
+.testform h4{margin:0 0 16px;font-size:17px}
+.tf-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:640px){.tf-fields{grid-template-columns:1fr}.tf-row .btn{width:100%}}
+.tf-fields .askfield input{font-size:22px;min-height:58px;padding:14px 16px}
+.tf-err{color:var(--crit);font-size:14.5px;min-height:1.2em;margin-top:10px}
+
+/* A measured number gets the standing the estimate never had: its own panel, above the dial. */
+.measured{background:var(--raised);border:1px solid var(--win);border-radius:var(--r-md);
+  padding:20px 22px;margin-bottom:22px}
+.measured[hidden]{display:none}
+.measured p{margin:0}
+.m-v{font-family:var(--display);font-size:clamp(19px,2.3vw,25px);font-weight:600;line-height:1.35}
+html[dir="rtl"] .m-v{font-weight:700;line-height:1.65}
+.m-b{margin-top:10px !important;font-size:15.5px}
+.m-c{margin-top:10px !important;font-size:14px;color:var(--muted);line-height:1.7}
+.m-f{margin-top:14px !important;display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+  font-size:13px;color:var(--muted)}
+.m-f .linkish{font-size:13px;padding:6px 0;min-height:0}
 .picks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media (max-width:860px){.picks{grid-template-columns:1fr}}
 .pick{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"l n" "l m" "g g";
@@ -700,6 +728,12 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
 
   <section class="beat" id="b-solid">
     <p class="unknown-lead" id="unknown-lead"></p>
+    <div class="measured" id="measured" hidden>
+      <p class="m-v" id="m-value"></p>
+      <p class="m-b" id="m-band"></p>
+      <p class="m-c" id="m-caveat"></p>
+      <p class="m-f"><span id="m-on"></span><button type="button" class="linkish" id="m-clear"></button></p>
+    </div>
     <div class="unknown">
       <h2 id="unknown-title"></h2>
       <div class="seg" id="seg" role="group" aria-labelledby="unknown-title"></div>
@@ -724,6 +758,25 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
         <div class="k" id="test-reading"></div>
         <ul class="readings" id="test-readings"></ul>
       </div>
+      <!-- Running the test is the point; recording what it said is what makes the model this
+           owner's rather than the literature's. -->
+      <div class="testrun" id="testrun"></div>
+      <form class="testform" id="testform" hidden>
+        <h4 id="test-form-t"></h4>
+        <div class="tf-fields">
+          <label class="askfield"><span class="afl" id="tf-rise-l"></span>
+            <span class="in"><input id="tf-rise" type="number" inputmode="decimal" step="any" value="10"><span class="u" id="tf-rise-u"></span></span></label>
+          <label class="askfield"><span class="afl" id="tf-before-l"></span>
+            <span class="in"><input id="tf-before" type="number" inputmode="decimal" step="any"></span></label>
+          <label class="askfield"><span class="afl" id="tf-after-l"></span>
+            <span class="in"><input id="tf-after" type="number" inputmode="decimal" step="any"></span></label>
+        </div>
+        <div class="tf-err" id="tf-err" role="alert"></div>
+        <div class="tf-row">
+          <button type="submit" class="btn primary" id="tf-save"></button>
+          <button type="button" class="linkish" id="tf-cancel"></button>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -794,6 +847,11 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     <section class="sheet-sec">
       <h2 id="sheet-rests-k"></h2>
       <div class="tbl-wrap"><table class="sheet-tbl" id="sheet-rests"></table></div>
+    </section>
+
+    <section class="sheet-sec" id="sheet-meas-sec" hidden>
+      <h2 id="sheet-meas-k"></h2>
+      <p id="sheet-meas"></p>
     </section>
 
     <section class="sheet-sec">
@@ -1085,6 +1143,13 @@ function render(langChanged){
   document.getElementById('unsure-lead').textContent = t('unsure_lead');
   document.getElementById('uk-try').textContent = t('give_me_test');
   document.getElementById('test-reading').textContent = t('test_reading');
+  document.getElementById('test-form-t').textContent = t('test_form_t');
+  document.getElementById('tf-rise-l').textContent = t('test_rise_l');
+  document.getElementById('tf-rise-u').textContent = PS();
+  document.getElementById('tf-before-l').textContent = fill(t('test_before_l'), {unit: w('unit_word')});
+  document.getElementById('tf-after-l').textContent = fill(t('test_after_l'), {unit: w('unit_word')});
+  document.getElementById('tf-save').textContent = t('test_calc');
+  document.getElementById('tf-cancel').textContent = t('test_cancel');
   document.getElementById('headline').textContent = fill(w('headline'), {shock: num(shock)});
   document.getElementById('whoami').textContent = whoami(cap);
   document.getElementById('scenario').textContent = t('not_a_prediction');
@@ -1173,6 +1238,7 @@ function render(langChanged){
     return '<button type="button" data-v="' + v + '" aria-pressed="' + (sel[PRIMARY]===v) + '">' + lbl + '</button>';
   }).join('');
   document.getElementById('seg-help').textContent = w('sens_help')[sel[PRIMARY]];
+  renderLoop();
   document.getElementById('seg').style.setProperty('--seg-i', ['low','central','high'].indexOf(sel[PRIMARY]));
   var eff = document.getElementById('effect');
   var flipped = previousLead && previousLead !== lead && !langChanged;
@@ -1562,10 +1628,17 @@ function renderSources(red, shock, cap, out, cTop){
   yours.push([label(F.shock), pct(shock)]);
   if(F.low_margin) yours.push([label(F.low_margin), num(base[F.low_margin]) + PS()]);
 
-  var backed = (C.research_settings || []).indexOf(sel[PRIMARY]) >= 0;
+  var backed = !measure && (C.research_settings || []).indexOf(sel[PRIMARY]) >= 0;
   var research = backed ? [[w('uncertainty_title'), elasticityPlain(), w('sources_note')]] : [];
   var assume = [];
-  if(!backed) assume.push([w('uncertainty_title'), elasticityPlain(), w('sens_help')[sel[PRIMARY]]]);
+  if(measure){
+    /* Measured on their own till: the engine calls that customer input, and so does the page. */
+    yours.push([t('measured_row'),
+      fill(t('elasticity_plain'), {v: localDigits(num(measure.e, 2)), unit: w('unit_word')}),
+      fill(t('measured_on'), {date: sheetDate(measure.date)})]);
+  } else if(!backed) {
+    assume.push([w('uncertainty_title'), elasticityPlain(), w('sens_help')[sel[PRIMARY]]]);
+  }
   if(red !== null) assume.push([axisLabel(REDUCTION_KEY), num(red,1)]);
   if(cap) assume.push([t('row_utilisation'), num(cap,1) + ' ' + w('unit_word')]);
   D.assumptions.filter(function(a){ return a.klass === 'Assumption'; }).slice(0,3)
@@ -1933,6 +2006,142 @@ document.getElementById('ask-restart').addEventListener('click', function(){
 });
 
 
+
+/* ---- the experiment loop ---------------------------------------------------------------------
+   The comparison hangs on one number nobody knows: how much demand this owner's own customers
+   give up when the price moves. The page suggests a two-week test to find out; this is where
+   the answer comes back in.
+
+   What the measurement can and cannot do is worth being exact about. It CAN replace a
+   literature estimate with this business's own figure, which is the whole point — and the
+   engine already classes a supplied elasticity as the customer's own number rather than a
+   model assumption. It CANNOT be simulated at its exact value in the browser: the page carries
+   162 precomputed worlds at three settings, not the engine. So the measured number is shown
+   exactly, and the comparison runs at the nearest setting that was actually tested. Claiming
+   otherwise would be inventing a run that never happened. */
+var MEASURE_KEY = 'dc_meas_' + D.wedge.id;
+var TEST_KEY = 'dc_test_' + D.wedge.id;
+var measure = null;                 // {e, rise, before, after, date}
+var testStarted = null;             // iso date, or null
+
+function loadLoop(){
+  try {
+    var m = JSON.parse(localStorage.getItem(MEASURE_KEY) || 'null');
+    if(m && isFinite(m.e) && m.e >= 0) measure = m;
+    testStarted = localStorage.getItem(TEST_KEY) || null;
+  } catch(e){}
+}
+function saveMeasure(){
+  try {
+    if(measure) localStorage.setItem(MEASURE_KEY, JSON.stringify(measure));
+    else localStorage.removeItem(MEASURE_KEY);
+  } catch(e){}
+}
+
+/* Elasticity as the owner would work it out on paper: the share of custom lost, over the share
+   the price moved. Demand that did not fall is a real result — it reads as zero, not as an
+   error, and certainly not as a negative elasticity to be explained away. */
+function elasticityFrom(before, after, risePct){
+  if(!(before > 0) || !(after > 0) || !(risePct > 0)) return null;
+  var lost = (before - after) / before;
+  return Math.max(0, lost / (risePct / 100));
+}
+
+/* Which of the settings the page actually ran is closest to what was measured. */
+function bandFor(e){
+  var keys = ['low', 'central', 'high'].filter(function(k){
+    return GRID_VALS[PRIMARY].indexOf(k) >= 0 && C.sens_values[k] !== undefined; });
+  var best = keys[0], bd = Infinity;
+  keys.forEach(function(k){
+    var d = Math.abs(parseFloat(C.sens_values[k]) - e);
+    if(d < bd){ bd = d; best = k; }
+  });
+  return best;
+}
+
+function renderLoop(){
+  var run = document.getElementById('testrun');
+  var startedLine = testStarted
+    ? '<span class="ts">' + esc(fill(t('test_started_on'), {date: sheetDate(testStarted)}))
+      + '</span><span class="ts-s">' + esc(t('test_come_back')) + '</span>'
+    : '';
+  run.innerHTML = (testStarted ? '<div class="ts-wrap">' + startedLine + '</div>' : '')
+    + '<div class="tf-row">'
+    + (testStarted ? '' : '<button type="button" class="btn" id="test-start">'
+        + esc(t('test_start')) + '</button>')
+    + '<button type="button" class="btn primary" id="test-enter">' + esc(t('test_enter'))
+    + '</button></div>';
+
+  var box = document.getElementById('measured');
+  box.hidden = !measure;
+  if(measure){
+    document.getElementById('m-value').textContent = measure.e > 0
+      ? fill(t('measured_value'), {v: num(measure.e, 2), unit: w('unit_word')})
+      : fill(t('measured_none'), {rise: pct(measure.rise), unit: w('unit_word')});
+    document.getElementById('m-band').textContent =
+      fill(t('measured_band'), {band: L.ui.setting_labels[bandFor(measure.e)]});
+    document.getElementById('m-caveat').textContent = t('measured_caveat');
+    document.getElementById('m-on').textContent = fill(t('measured_on'), {date: sheetDate(measure.date)});
+    document.getElementById('m-clear').textContent = t('measured_clear');
+  }
+  document.getElementById('unknown-lead').textContent =
+      measure ? t('measured_lead') : t('unknown_lead');
+}
+
+document.getElementById('testrun').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return;
+  if(b.id === 'test-start'){
+    var d = new Date();
+    testStarted = d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+    try { localStorage.setItem(TEST_KEY, testStarted); } catch(err){}
+    renderLoop();
+    return;
+  }
+  if(b.id === 'test-enter'){
+    var f = document.getElementById('testform');
+    f.hidden = false;
+    document.getElementById('tf-err').textContent = '';
+    var first = document.getElementById('tf-before');
+    if(first && motionOK()) first.focus();
+  }
+});
+
+document.getElementById('tf-cancel').addEventListener('click', function(){
+  document.getElementById('testform').hidden = true;
+});
+
+document.getElementById('testform').addEventListener('submit', function(e){
+  e.preventDefault();
+  function readNum(id){
+    var raw = String(document.getElementById(id).value).replace(/[,\s٬،]/g, '')
+      .replace(/[۰-۹]/g, function(ch){ return String(ch.charCodeAt(0) - 0x06F0); })
+      .replace(/[٠-٩]/g, function(ch){ return String(ch.charCodeAt(0) - 0x0660); });
+    return parseFloat(raw);
+  }
+  var rise = readNum('tf-rise'), before = readNum('tf-before'), after = readNum('tf-after');
+  var e2 = elasticityFrom(before, after, rise);
+  if(e2 === null){
+    document.getElementById('tf-err').textContent = t('test_bad');
+    return;
+  }
+  var d = new Date();
+  measure = {e: e2, rise: rise, before: before, after: after,
+             date: d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())};
+  saveMeasure();
+  sel[PRIMARY] = bandFor(e2);            // the comparison runs where the page actually ran
+  document.getElementById('testform').hidden = true;
+  render();
+  document.getElementById('b-solid').scrollIntoView({behavior: motionOK() ? 'smooth' : 'auto',
+                                                     block: 'start'});
+});
+
+document.getElementById('m-clear').addEventListener('click', function(){
+  measure = null;
+  saveMeasure();
+  sel[PRIMARY] = CENTRE[PRIMARY];
+  render();
+});
+
 /* ---- the decision sheet ---------------------------------------------------------------------
    What an owner keeps after the comparison: one page with the choice they made, the three they
    compared, what it rests on, and what they are going to measure.
@@ -1954,9 +2163,11 @@ function unb64url(str){
 }
 
 function packSheet(choice, iso){
-  return b64url(JSON.stringify([1, iso, choice,
+  var a = [1, iso, choice,
     GRID_KEYS.map(function(k){ return sel[k]; }),
-    FLOW_FIELDS.map(function(f){ return base[f]; })]));
+    FLOW_FIELDS.map(function(f){ return base[f]; })];
+  if(measure) a.push([measure.e, measure.rise, measure.date]);
+  return b64url(JSON.stringify(a));
 }
 
 /* Read a link back into the page's state. Anything malformed returns null rather than half-
@@ -1978,7 +2189,10 @@ function applySheet(packed){
   if(['A','B','C'].indexOf(a[2]) < 0) return null;
   base = nb;
   GRID_KEYS.forEach(function(k, i){ sel[k] = settings[i]; });
-  return {date: String(a[1]), choice: a[2], packed: packed};
+  var m = null;
+  if(a[5] && isFinite(parseFloat(a[5][0])))
+    m = {e: parseFloat(a[5][0]), rise: parseFloat(a[5][1]) || 0, date: String(a[5][2] || '')};
+  return {date: String(a[1]), choice: a[2], packed: packed, measure: m};
 }
 
 function sheetRef(packed){
@@ -2009,7 +2223,7 @@ function makeSheet(choice){
   var d = new Date();
   var iso = d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
   var packed = packSheet(choice, iso);
-  sheetState = {date: iso, choice: choice, packed: packed};
+  sheetState = {date: iso, choice: choice, packed: packed, measure: measure};
   try {
     var u = new URL(location.href);
     u.searchParams.set('sheet', packed);
@@ -2072,6 +2286,16 @@ function renderSheet(){
     return '<tr><td class="r-k">' + esc(row[0]) + '</td><td class="r-v">' + esc(row[1]) + '</td></tr>';
   }).join('') + '</tbody>';
 
+  var msec = document.getElementById('sheet-meas-sec');
+  msec.hidden = !sheetState.measure;
+  if(sheetState.measure){
+    var sm = sheetState.measure;
+    document.getElementById('sheet-meas-k').textContent = t('sheet_measured');
+    document.getElementById('sheet-meas').textContent =
+      (sm.e > 0 ? fill(t('measured_value'), {v: num(sm.e, 2), unit: w('unit_word')})
+                : fill(t('measured_none'), {rise: pct(sm.rise), unit: w('unit_word')}))
+      + ' ' + fill(t('measured_on'), {date: sheetDate(sm.date)});
+  }
   document.getElementById('sheet-will-k').textContent = t('sheet_will_do');
   var TEST_RISE = 10;
   document.getElementById('sheet-will').textContent = fill(w('experiment'), {rise: pct(TEST_RISE)});
@@ -2135,6 +2359,8 @@ applyLanguage(lang, false);
 /* A page that opens on the report is a page that answered a question nobody asked yet. The
    only way in that skips the questions is the explicit worked-example link. */
 (function boot(){
+  loadLoop();
+  if(measure) sel[PRIMARY] = bandFor(measure.e);
   document.getElementById('cursel').addEventListener('change', function(){
     cur = this.value;
     try { localStorage.setItem('dc_cur', cur); } catch(e){}

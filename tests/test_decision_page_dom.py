@@ -27,6 +27,7 @@ from event_sim.wedge.registry import WEDGES
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "reports" / "demo_site"
+TEMPLATE = ROOT / "event_sim" / "cafe" / "templates" / "decision_report.html"
 
 CHROME_CANDIDATES = (
     r"C:\Program Files\Google\Chrome\Application\chrome.exe",
@@ -478,3 +479,99 @@ def test_the_same_link_always_carries_the_same_reference(wedge_id):
     ref_a, ref_b = inner(a, "sheet-id"), inner(b, "sheet-id")
     assert ref_a and ref_a == ref_b, \
         f"{wedge_id}: the reference changed with the language ({ref_a!r} vs {ref_b!r})"
+
+
+# ---- the experiment loop ----------------------------------------------------------------------
+
+def _packed_measured(wedge_id: str, e: float, choice: str = "B",
+                     band: str = "low", date: str = "2026-09-07") -> str:
+    """A link from an owner who ran the test and reported what it said."""
+    import base64
+    import json as _json
+
+    from event_sim.wedge.registry import WEDGES as _W
+    wedge = _W[wedge_id]
+    baseline = wedge.demo_factory().to_dict()
+    fields = [f for step in wedge.copy["flow"] for f in step["fields"]]
+    report = _json.loads((SITE / wedge_id / f"{wedge_id}_decision_report.json").read_text("utf-8"))
+    grid_keys = list(report["grid"][0]["key"].keys())
+    primary = report["copy"]["primary_axis"]
+    settings = []
+    for k in grid_keys:
+        if k == primary:
+            settings.append(band)
+            continue
+        vals = sorted({g["key"][k] for g in report["grid"]},
+                      key=lambda v: (isinstance(v, str), v))
+        settings.append("central" if "central" in vals else vals[len(vals) // 2])
+    payload = _json.dumps([1, date, choice, settings, [baseline[f] for f in fields],
+                           [e, 10, date]], separators=(",", ":"))
+    return base64.urlsafe_b64encode(payload.encode()).decode().rstrip("=")
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_a_measured_sheet_records_what_the_owner_measured(wedge_id, lang):
+    dom = _sheet_dom(wedge_id, lang, _packed_measured(wedge_id, 0.5))
+    ui = catalogue(lang)["ui"]
+    sec = re.search(r'<section[^>]*\bid="sheet-meas-sec"([^>]*)>', dom)
+    assert sec and "hidden" not in sec.group(1), f"{wedge_id}/{lang}: the sheet hides the measurement"
+    assert inner(dom, "sheet-meas-k") == " ".join(ui["sheet_measured"].split())
+    assert inner(dom, "sheet-meas"), "the measurement line is empty"
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_a_sheet_without_a_measurement_does_not_claim_one(wedge_id):
+    dom = _sheet_dom(wedge_id, "en", _packed(wedge_id))
+    sec = re.search(r'<section[^>]*\bid="sheet-meas-sec"([^>]*)>', dom)
+    assert sec and "hidden" in sec.group(1), f"{wedge_id}: an unmeasured sheet shows a measurement"
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_the_page_never_claims_to_have_simulated_the_exact_measurement(wedge_id):
+    """
+    The browser carries 162 precomputed worlds at three settings, not the engine. A measured
+    elasticity is shown exactly and the comparison is run at the nearest setting that was
+    actually tested — and the page has to say which one, or it is implying a run that never
+    happened.
+    """
+    html = TEMPLATE.read_text(encoding="utf-8")
+    assert "function bandFor" in html, "nothing maps a measurement onto the tested settings"
+    for lang in LANGUAGES:
+        band = catalogue(lang)["ui"]["measured_band"]
+        assert "{band}" in band, f"{lang}: the page does not name the setting it ran"
+        caveat = catalogue(lang)["ui"]["measured_caveat"]
+        assert caveat.strip(), f"{lang}: the measurement carries no caveat about what it covers"
+
+
+def test_the_measurement_is_arithmetic_the_owner_could_check():
+    """
+    Share of custom lost over share the price moved — nothing else. Demand that did not fall
+    reads as zero rather than as a negative elasticity, because "they did not leave" is a real
+    outcome of the test and not an error in it.
+    """
+    html = TEMPLATE.read_text(encoding="utf-8")
+    body = html[html.index("function elasticityFrom"):]
+    body = body[:body.index("\n}")]
+    assert "(before - after) / before" in body, "the formula is not the one the owner would use"
+    assert "risePct / 100" in body
+    assert "Math.max(0," in body, "a test where nobody left must read as zero, not as a negative"
+
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_a_measurement_is_the_owners_number_not_a_model_assumption(lang):
+    """
+    The engine reclassifies a supplied elasticity as customer input rather than expert
+    assumption (render_registry in event_sim/wedge/evidence.py). The page has to agree with it
+    about whose number it is, or the evidence table would credit the model for the owner's work.
+    """
+    from event_sim.wedge.evidence import CUSTOMER, render_registry
+    import inspect
+    src = inspect.getsource(render_registry)
+    assert "custom_elasticity is not None" in src, "the engine no longer accepts a supplied elasticity"
+    assert "klass = CUSTOMER" in src, "the engine no longer reclassifies a supplied elasticity"
+    assert CUSTOMER == "Customer input"
+
+    html = TEMPLATE.read_text(encoding="utf-8")
+    assert "yours.push([t('measured_row')" in html, \
+        "a measured elasticity is not filed under the owner's own numbers"
+    assert catalogue(lang)["ui"]["measured_row"].strip()

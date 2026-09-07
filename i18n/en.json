@@ -200,7 +200,27 @@
     "rest_horizon": "Compared over",
     "rest_horizon_v": "{n} days",
     "rest_stability": "How stable this choice is",
-    "rest_stability_v": "first in {n} of {total} tested cases"
+    "rest_stability_v": "first in {n} of {total} tested cases",
+    "test_start": "I've started the test",
+    "test_started_on": "Started {date}",
+    "test_come_back": "Come back in two weeks and tell me what happened.",
+    "test_enter": "Enter the result",
+    "test_cancel": "Never mind",
+    "test_form_t": "Two weeks on — what happened?",
+    "test_rise_l": "How much did you put the price up?",
+    "test_before_l": "Before: how many {unit} a day?",
+    "test_after_l": "After: how many {unit} a day?",
+    "test_calc": "Work it out",
+    "test_bad": "All three numbers need to be above zero.",
+    "measured_lead": "This one isn't a guess any more — you measured it.",
+    "measured_value": "Every 1% on the price cost you about {v}% of your {unit}.",
+    "measured_none": "Putting the price up {rise} did not cost you any {unit}.",
+    "measured_band": "The nearest setting we actually tested is “{band}”, and the comparison is run there.",
+    "measured_caveat": "You measured this on a few items over two weeks. Treating it as the whole business is still a judgement, not a measurement.",
+    "measured_on": "Measured {date}",
+    "measured_clear": "Clear it and go back to the estimate",
+    "measured_row": "Price sensitivity you measured yourself",
+    "sheet_measured": "What you measured"
   },
   "wedges": {
     "cafe": {

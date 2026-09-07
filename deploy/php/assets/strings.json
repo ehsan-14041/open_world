@@ -1246,6 +1246,142 @@
    "tags": []
   },
   {
+   "id": "ui.test_start",
+   "text": "I've started the test",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.test_started_on",
+   "text": "Started {date}",
+   "placeholders": [
+    "{date}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.test_come_back",
+   "text": "Come back in two weeks and tell me what happened.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.test_enter",
+   "text": "Enter the result",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.test_cancel",
+   "text": "Never mind",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.test_form_t",
+   "text": "Two weeks on — what happened?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.test_rise_l",
+   "text": "How much did you put the price up?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.test_before_l",
+   "text": "Before: how many {unit} a day?",
+   "placeholders": [
+    "{unit}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.test_after_l",
+   "text": "After: how many {unit} a day?",
+   "placeholders": [
+    "{unit}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.test_calc",
+   "text": "Work it out",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.test_bad",
+   "text": "All three numbers need to be above zero.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.measured_lead",
+   "text": "This one isn't a guess any more — you measured it.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.measured_value",
+   "text": "Every 1% on the price cost you about {v}% of your {unit}.",
+   "placeholders": [
+    "{v}",
+    "{unit}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.measured_none",
+   "text": "Putting the price up {rise} did not cost you any {unit}.",
+   "placeholders": [
+    "{rise}",
+    "{unit}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.measured_band",
+   "text": "The nearest setting we actually tested is “{band}”, and the comparison is run there.",
+   "placeholders": [
+    "{band}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.measured_caveat",
+   "text": "You measured this on a few items over two weeks. Treating it as the whole business is still a judgement, not a measurement.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.measured_on",
+   "text": "Measured {date}",
+   "placeholders": [
+    "{date}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.measured_clear",
+   "text": "Clear it and go back to the estimate",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.measured_row",
+   "text": "Price sensitivity you measured yourself",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.sheet_measured",
+   "text": "What you measured",
+   "placeholders": [],
+   "tags": []
+  },
+  {
    "id": "wedges.cafe.business",
    "text": "Cafe / Restaurant",
    "placeholders": [],
