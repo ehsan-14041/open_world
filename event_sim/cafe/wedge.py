@@ -131,7 +131,10 @@ COPY: dict[str, Any] = {
         "Model the wider economy, seasons or new customers.",
         "Know your customers' price sensitivity — unless you bring evidence.",
     ],
-    "flow": [{"key": "shock", "fields": ["supplier_increase_pct"], "choices": [10, 20, 30], "other": True}, {"key": "sales", "fields": ["monthly_revenue", "daily_orders"]}, {"key": "costs", "fields": ["monthly_cogs", "monthly_fixed_costs"]}, {"key": "cash", "fields": ["cash_on_hand"]}, {"key": "mix", "fields": ["low_margin_share_pct"], "choices": [10, 20, 30]}],
+    #: Trades that share this wedge's model. The words live in the catalogues; only the
+    #: glyph is here, because a glyph is the same in every language.
+    "variant_icons": {"bakery": "🥖", "fastfood": "🍔"},
+    "flow": [{"key": "kind", "fields": [], "variants": True}, {"key": "shock", "fields": ["supplier_increase_pct"], "choices": [10, 20, 30], "other": True}, {"key": "sales", "fields": ["monthly_revenue", "daily_orders"]}, {"key": "costs", "fields": ["monthly_cogs", "monthly_fixed_costs"]}, {"key": "cash", "fields": ["cash_on_hand"]}, {"key": "mix", "fields": ["low_margin_share_pct"], "choices": [10, 20, 30]}],
     "intake_groups": [
         {"label": "Your business", "fields": ["monthly_revenue", "daily_orders", "cash_on_hand"]},
         {"label": "Your costs", "fields": ["monthly_cogs", "monthly_fixed_costs"]},

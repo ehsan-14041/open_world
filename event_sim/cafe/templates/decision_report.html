@@ -908,7 +908,27 @@ var L = I.strings[lang];
 
 function fill(s,v){ return String(s).replace(/\{(\w+)\}/g, function(m,k){ return (k in v) ? v[k] : m; }); }
 function t(k,v){ return fill(L.ui[k]!==undefined ? L.ui[k] : k, v||{}); }
-function w(k){ return L.wedge[k]; }
+var variant = null;
+var VARIANT_KEY = 'dc_var_' + D.wedge.id;
+var VARIANT_ICONS = (D.copy.variant_icons || {});
+function variantIds(){ return Object.keys((L.wedge && L.wedge.variants) || {}); }
+/* Rebuilt whenever the language or the trade changes; `w()` reads nothing else. */
+var _wedgeCopy = null;
+function wedgeCopy(){
+  if(_wedgeCopy) return _wedgeCopy;
+  var over = variant && L.wedge.variants ? L.wedge.variants[variant] : null;
+  _wedgeCopy = over ? Object.assign({}, L.wedge, over) : L.wedge;
+  return _wedgeCopy;
+}
+function setVariant(v){
+  variant = v || null;
+  _wedgeCopy = null;
+  try {
+    if(variant) localStorage.setItem(VARIANT_KEY, variant);
+    else localStorage.removeItem(VARIANT_KEY);
+  } catch(e){}
+}
+function w(k){ return wedgeCopy()[k]; }
 function esc(s){ return String(s).replace(/[&<>"']/g, function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
@@ -1726,7 +1746,7 @@ function renderHow(){
 
 /* ---- switching: language and business, both presentation only ---------------------------- */
 function applyLanguage(code, push){
-  lang = code; L = I.strings[lang]; setFormatters();
+  lang = code; L = I.strings[lang]; _wedgeCopy = null; setFormatters();
   document.documentElement.lang = lang;
   document.documentElement.dir = L.dir;
   try { localStorage.setItem('dc_lang', lang); } catch(e){}
@@ -1739,9 +1759,12 @@ function applyLanguage(code, push){
 }
 function renderBiz(){
   var s = document.getElementById('bizsel'), here = D.wedge.id, all = L.all_wedges;
+  /* The switcher names the trade the owner picked, not the wedge whose model it borrows. */
   s.innerHTML = Object.keys(all).map(function(id){
+    var mine = (id === here && variant);
     return '<option value="'+id+'"' + (id===here ? ' selected' : '') + '>'
-      + esc(all[id].icon + '  ' + all[id].business_short) + '</option>'; }).join('');
+      + esc((mine ? (VARIANT_ICONS[variant] || all[id].icon) : all[id].icon) + '  '
+            + (mine ? w('business_short') : all[id].business_short)) + '</option>'; }).join('');
   s.onchange = function(){
     var u = new URL(location.href);
     if(u.searchParams.has('w')){
@@ -1872,6 +1895,29 @@ function renderAsk(){
   document.getElementById('ask-bar').style.width = ((askAt + 1) / FLOW.length * 100) + '%';
   document.getElementById('ask-q').textContent = stepQ(step);
   document.getElementById('ask-err').textContent = '';
+  if(step.variants){ /* filled below, where the trade choices are built */ }
+
+  /* One step asks which trade rather than for a figure. It writes no model input — it only
+     decides which words the rest of the flow is asked in. */
+  if(step.variants){
+    var ids = variantIds();
+    body.innerHTML = '<div class="choices">'
+      + '<button type="button" class="choice' + (!variant ? ' on' : '') + '" data-var="">'
+      + esc(L.wedge.business) + '</button>'
+      + ids.map(function(v){
+          return '<button type="button" class="choice' + (variant === v ? ' on' : '')
+               + '" data-var="' + esc(v) + '">' + esc(L.wedge.variants[v].business) + '</button>';
+        }).join('') + '</div>';
+    document.getElementById('ask-hint').textContent = t('flow_kind_hint');
+    document.getElementById('ask-q').textContent = t('flow_kind_q');
+    document.getElementById('ask-back').textContent = t('flow_back');
+    document.getElementById('ask-back').style.visibility = askAt === 0 ? 'hidden' : '';
+    document.getElementById('ask-next').textContent =
+        askAt === FLOW.length - 1 ? t('flow_see') : t('flow_next');
+    document.getElementById('ask-example').textContent = t('flow_example');
+    document.getElementById('ask-restart').textContent = t('start_over');
+    return;
+  }
 
   var choices = stepChoices(step);
   var hint = '';
@@ -1943,6 +1989,13 @@ function finishAsk(isDemo){
 
 document.getElementById('ask-body').addEventListener('click', function(e){
   var b = e.target.closest('button'); if(!b) return;
+  if(b.dataset.var !== undefined){
+    setVariant(b.dataset.var);
+    Array.prototype.forEach.call(document.querySelectorAll('#ask-body .choice'),
+      function(c){ c.classList.toggle('on', c === b); });
+    setTimeout(nextStep, 140);
+    return;
+  }
   if(b.dataset.other !== undefined){
     var wrap = document.getElementById('otherwrap');
     wrap.hidden = false;
@@ -2167,6 +2220,8 @@ function packSheet(choice, iso){
     GRID_KEYS.map(function(k){ return sel[k]; }),
     FLOW_FIELDS.map(function(f){ return base[f]; })];
   if(measure) a.push([measure.e, measure.rise, measure.date]);
+  else if(variant) a.push(null);
+  if(variant) a.push(variant);
   return b64url(JSON.stringify(a));
 }
 
@@ -2192,6 +2247,7 @@ function applySheet(packed){
   var m = null;
   if(a[5] && isFinite(parseFloat(a[5][0])))
     m = {e: parseFloat(a[5][0]), rise: parseFloat(a[5][1]) || 0, date: String(a[5][2] || '')};
+  setVariant(variantIds().indexOf(a[6]) >= 0 ? a[6] : null);
   return {date: String(a[1]), choice: a[2], packed: packed, measure: m};
 }
 
@@ -2246,7 +2302,8 @@ function renderSheet(){
   document.getElementById('sheet-date').textContent = sheetDate(sheetState.date);
   document.getElementById('sheet-id-k').textContent = t('sheet_id');
   document.getElementById('sheet-id').textContent = sheetRef(sheetState.packed);
-  document.getElementById('sheet-who').textContent = whoami(capacity(base));
+  var who = whoami(capacity(base));
+  document.getElementById('sheet-who').textContent = w('business') + (who ? ' · ' + who : '');
 
   document.getElementById('sheet-sit-k').textContent = t('sheet_situation');
   document.getElementById('sheet-sit').textContent = fill(w('what_changed'), {shock: num(shock)});
@@ -2359,6 +2416,10 @@ applyLanguage(lang, false);
 /* A page that opens on the report is a page that answered a question nobody asked yet. The
    only way in that skips the questions is the explicit worked-example link. */
 (function boot(){
+  try {
+    var savedVar = localStorage.getItem(VARIANT_KEY);
+    if(variantIds().indexOf(savedVar) >= 0) setVariant(savedVar);
+  } catch(e){}
   loadLoop();
   if(measure) sel[PRIMARY] = bandFor(measure.e);
   document.getElementById('cursel').addEventListener('change', function(){

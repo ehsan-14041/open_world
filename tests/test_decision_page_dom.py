@@ -310,7 +310,9 @@ def test_the_page_opens_by_asking_not_reporting(wedge_id, lang):
     assert result and "hidden" in result.group(1), f"{wedge_id}/{lang}: the result shows unasked"
     q = catalogue(lang)["wedges"][wedge_id]["flow_q"]
     first = html_mod.unescape(re.search(r'id="ask-q"[^>]*>(.*?)</h1>', dom, re.S).group(1)).strip()
-    assert first in q.values(), f"{wedge_id}/{lang}: opening question {first!r} is not from the flow"
+    # A wedge with trades sharing its model opens by asking which one; the rest open on a figure.
+    opening = set(q.values()) | {catalogue(lang)["ui"]["flow_kind_q"]}
+    assert first in opening, f"{wedge_id}/{lang}: opening question {first!r} is not from the flow"
 
 
 # ---- the home screen, as rendered -------------------------------------------------------------
@@ -575,3 +577,89 @@ def test_a_measurement_is_the_owners_number_not_a_model_assumption(lang):
     assert "yours.push([t('measured_row')" in html, \
         "a measured elasticity is not filed under the owner's own numbers"
     assert catalogue(lang)["ui"]["measured_row"].strip()
+
+
+# ---- trades that share a model ----------------------------------------------------------------
+
+def _packed_variant(wedge_id: str, variant: str | None, choice: str = "B") -> str:
+    """A link identical in every figure, differing only in which trade it is written for."""
+    import base64
+    import json as _json
+
+    from event_sim.wedge.registry import WEDGES as _W
+    wedge = _W[wedge_id]
+    baseline = wedge.demo_factory().to_dict()
+    fields = [f for step in wedge.copy["flow"] for f in step["fields"]]
+    report = _json.loads((SITE / wedge_id / f"{wedge_id}_decision_report.json").read_text("utf-8"))
+    grid_keys = list(report["grid"][0]["key"].keys())
+    settings = []
+    for k in grid_keys:
+        vals = sorted({g["key"][k] for g in report["grid"]},
+                      key=lambda v: (isinstance(v, str), v))
+        settings.append("central" if "central" in vals else vals[len(vals) // 2])
+    body = [1, "2026-09-07", choice, settings, [baseline[f] for f in fields]]
+    if variant:
+        body.append(None)          # no measurement
+        body.append(variant)
+    payload = _json.dumps(body, separators=(",", ":"))
+    return base64.urlsafe_b64encode(payload.encode()).decode().rstrip("=")
+
+
+VARIANT_CASES = [(v, lang) for v in ("bakery", "fastfood") for lang in LANGUAGES]
+VARIANT_IDS = [f"{v}-{lang}" for v, lang in VARIANT_CASES]
+
+
+@pytest.mark.parametrize("variant,lang", VARIANT_CASES, ids=VARIANT_IDS)
+def test_a_variant_changes_the_words_and_not_one_figure(variant, lang):
+    """
+    A bakery and a cafe facing the same input-cost rise are the same question in different
+    words. The variant carries no numbers, and this is what says so: two sheets built from
+    identical figures, one written for the trade and one not, must agree on every number on
+    the page and disagree on what the business is called.
+    """
+    plain = _sheet_dom("cafe", lang, _packed_variant("cafe", None))
+    var = _sheet_dom("cafe", lang, _packed_variant("cafe", variant))
+
+    def figures(dom):
+        return re.findall(r"[-−+]?[\d٠-٩۰-۹][\d٠-٩۰-۹,،٬.٫]*", inner(dom, "sheet-cmp"))
+
+    assert figures(plain) == figures(var), f"{variant}/{lang}: a variant moved a figure"
+
+    names = catalogue(lang)["wedges"]["cafe"]
+    over = names["variants"][variant]
+    assert " ".join(over["business"].split()) in " ".join(text_of(var).split()), \
+        f"{variant}/{lang}: the sheet does not name the trade"
+    if "world_names" in over:
+        assert inner(var, "sheet-choice") == " ".join(over["world_names"]["B"].split())
+    else:
+        assert inner(var, "sheet-choice") == " ".join(names["world_names"]["B"].split())
+
+
+@pytest.mark.parametrize("variant,lang", VARIANT_CASES, ids=VARIANT_IDS)
+def test_a_variant_says_how_far_the_research_had_to_travel(variant, lang):
+    """
+    The elasticity is borrowed from research on eating out. For a bakery selling a staple, and
+    for a fast-food shop with a substitute on the next corner, that borrowing is a longer reach
+    than it is for a cafe — and each variant has to say so in its own words rather than inherit
+    a note written about somewhere else.
+    """
+    over = catalogue(lang)["wedges"]["cafe"]["variants"][variant]
+    base_note = catalogue(lang)["wedges"]["cafe"]["sources_note"]
+    assert "sources_note" in over, f"{variant}/{lang}: inherits the cafe's transfer note"
+    assert over["sources_note"].strip() != base_note.strip()
+    # And it is the variant's own note that the page would show, not the cafe's.
+    assert over["sources_note"].strip(), f"{variant}/{lang}: empty transfer note"
+
+
+@pytest.mark.parametrize("variant", ["bakery", "fastfood"])
+def test_the_flow_asks_which_trade_before_anything_else(variant):
+    """The trade is chosen in the flow, so a bakery owner never has to know a URL parameter."""
+    from event_sim.wedge.registry import WEDGES as _W
+    flow = _W["cafe"].copy["flow"]
+    assert flow[0].get("variants") is True, "the cafe flow does not open by asking the trade"
+    assert flow[0]["fields"] == [], "the trade question must not write a model input"
+    html = TEMPLATE.read_text(encoding="utf-8")
+    assert "data-var=" in html, "the flow offers no way to pick a trade"
+    for lang in LANGUAGES:
+        assert catalogue(lang)["ui"]["flow_kind_q"].strip()
+        assert variant in catalogue(lang)["wedges"]["cafe"]["variants"]

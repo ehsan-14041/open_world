@@ -220,7 +220,9 @@
     "measured_on": "Measured {date}",
     "measured_clear": "Clear it and go back to the estimate",
     "measured_row": "Price sensitivity you measured yourself",
-    "sheet_measured": "What you measured"
+    "sheet_measured": "What you measured",
+    "flow_kind_q": "What kind of place is it?",
+    "flow_kind_hint": "Same model either way — the words and the starting estimate differ."
   },
   "wedges": {
     "cafe": {
@@ -415,7 +417,92 @@
           "bad": "but it leans more on your menu mix"
         }
       },
-      "experiment": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily order count. Compare it with the week before."
+      "experiment": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily order count. Compare it with the week before.",
+      "variants": {
+        "bakery": {
+          "business": "Bakery",
+          "business_short": "Bakery",
+          "noun": "bakery",
+          "problem": "Flour and ingredients went up",
+          "question": "Flour and ingredients jumped. What should I change?",
+          "page_title": "Bakery cost decision — three choices compared",
+          "headline": "Flour and ingredients are up {shock}%. What should you do?",
+          "what_changed": "Your suppliers put flour and ingredient prices up {shock}%.",
+          "unit_word": "sales",
+          "unit_word_singular": "sale",
+          "cost_word": "ingredient cost",
+          "world_names": {
+            "A": "Hold prices",
+            "B": "Raise prices 10%",
+            "C": "Raise prices 5% + drop low-margin lines"
+          },
+          "world_short": {
+            "A": "Hold prices",
+            "B": "Raise 10%",
+            "C": "Raise 5% + drop lines"
+          },
+          "tradeoff": {
+            "A": {
+              "good": "Nothing changes for your customers",
+              "bad": "but your margin takes the hit"
+            },
+            "B": {
+              "good": "You keep more of the money",
+              "bad": "but sales drop by about {pct}"
+            },
+            "C": {
+              "good": "Smaller drop in sales",
+              "bad": "but it leans more on what you bake"
+            }
+          },
+          "c_card_note": "Depends on how much dropping low-margin lines cuts ingredient cost (about {red} points here) and how many {unit} leave with them ({loss}%). Neither is measured from your bakery.",
+          "flow_q": {
+            "shock": "How much did flour and ingredients go up?",
+            "sales": "How busy is the bakery?",
+            "costs": "What do you spend in a month?",
+            "cash": "How much cash have you got set aside for the business?",
+            "mix": "How many of your sales are low-margin?"
+          },
+          "experiment": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily sales count. Compare it with the week before.",
+          "sens_help": {
+            "low": "Regulars from the neighbourhood, or your competitors are raising prices too.",
+            "central": "The typical response research finds for eating out — bread sits further from that, being an everyday staple.",
+            "high": "Stress case: another bakery is close by and customers switch easily."
+          },
+          "sources_note": "On price sensitivity: the figure here comes from research on eating out, not on bread. Bread is an everyday staple and customers usually move less on its price, so this number probably overstates the drop. The two-week test measures it for your own bakery.",
+          "limits_does_not": [
+            "Predict your future sales.",
+            "Know how your individual customers will behave.",
+            "Model how the other bakeries nearby react.",
+            "Know how far bread differs from eating out — until you measure it."
+          ]
+        },
+        "fastfood": {
+          "business": "Fast food",
+          "business_short": "Fast food",
+          "noun": "fast-food shop",
+          "problem": "Ingredient costs went up",
+          "question": "Ingredient costs jumped. What should I change?",
+          "page_title": "Fast-food cost decision — three choices compared",
+          "headline": "Ingredient costs are up {shock}%. What should you do?",
+          "unit_word": "orders",
+          "unit_word_singular": "order",
+          "flow_q": {
+            "shock": "How much did your ingredient costs go up?",
+            "sales": "How busy is the shop?",
+            "costs": "What do you spend in a month?",
+            "cash": "How much cash have you got set aside for the business?",
+            "mix": "How many of your orders are low-margin?"
+          },
+          "c_card_note": "Depends on how much simplifying the menu cuts ingredient cost (about {red} points here) and how many {unit} leave with the removed items ({loss}%). Neither is measured from your shop.",
+          "sens_help": {
+            "low": "Regulars, or your competitors are raising prices too.",
+            "central": "The typical response found in research on eating out.",
+            "high": "Stress case: a few other options are right nearby and customers switch easily."
+          },
+          "sources_note": "On price sensitivity: research gives a reference range for eating out as a whole. Fast food usually has easier substitutes close by, so customers may move faster than this figure suggests. The two-week test measures it for you."
+        }
+      }
     },
     "shop": {
       "business": "Shop / Online Store",

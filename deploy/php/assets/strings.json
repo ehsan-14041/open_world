@@ -1382,6 +1382,18 @@
    "tags": []
   },
   {
+   "id": "ui.flow_kind_q",
+   "text": "What kind of place is it?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.flow_kind_hint",
+   "text": "Same model either way — the words and the starting estimate differ.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
    "id": "wedges.cafe.business",
    "text": "Cafe / Restaurant",
    "placeholders": [],
@@ -2014,6 +2026,342 @@
    "placeholders": [
     "{rise}"
    ],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.business",
+   "text": "Bakery",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.business_short",
+   "text": "Bakery",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.noun",
+   "text": "bakery",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.problem",
+   "text": "Flour and ingredients went up",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.question",
+   "text": "Flour and ingredients jumped. What should I change?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.page_title",
+   "text": "Bakery cost decision — three choices compared",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.headline",
+   "text": "Flour and ingredients are up {shock}%. What should you do?",
+   "placeholders": [
+    "{shock}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.what_changed",
+   "text": "Your suppliers put flour and ingredient prices up {shock}%.",
+   "placeholders": [
+    "{shock}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.unit_word",
+   "text": "sales",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.unit_word_singular",
+   "text": "sale",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.cost_word",
+   "text": "ingredient cost",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.world_names.A",
+   "text": "Hold prices",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.world_names.B",
+   "text": "Raise prices 10%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.world_names.C",
+   "text": "Raise prices 5% + drop low-margin lines",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.world_short.A",
+   "text": "Hold prices",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.world_short.B",
+   "text": "Raise 10%",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.world_short.C",
+   "text": "Raise 5% + drop lines",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.tradeoff.A.good",
+   "text": "Nothing changes for your customers",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.tradeoff.A.bad",
+   "text": "but your margin takes the hit",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.tradeoff.B.good",
+   "text": "You keep more of the money",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.tradeoff.B.bad",
+   "text": "but sales drop by about {pct}",
+   "placeholders": [
+    "{pct}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.tradeoff.C.good",
+   "text": "Smaller drop in sales",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.tradeoff.C.bad",
+   "text": "but it leans more on what you bake",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.c_card_note",
+   "text": "Depends on how much dropping low-margin lines cuts ingredient cost (about {red} points here) and how many {unit} leave with them ({loss}%). Neither is measured from your bakery.",
+   "placeholders": [
+    "{red}",
+    "{unit}",
+    "{loss}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.flow_q.shock",
+   "text": "How much did flour and ingredients go up?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.flow_q.sales",
+   "text": "How busy is the bakery?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.flow_q.costs",
+   "text": "What do you spend in a month?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.flow_q.cash",
+   "text": "How much cash have you got set aside for the business?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.flow_q.mix",
+   "text": "How many of your sales are low-margin?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.experiment",
+   "text": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily sales count. Compare it with the week before.",
+   "placeholders": [
+    "{rise}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.sens_help.low",
+   "text": "Regulars from the neighbourhood, or your competitors are raising prices too.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.sens_help.central",
+   "text": "The typical response research finds for eating out — bread sits further from that, being an everyday staple.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.sens_help.high",
+   "text": "Stress case: another bakery is close by and customers switch easily.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.bakery.sources_note",
+   "text": "On price sensitivity: the figure here comes from research on eating out, not on bread. Bread is an everyday staple and customers usually move less on its price, so this number probably overstates the drop. The two-week test measures it for your own bakery.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.business",
+   "text": "Fast food",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.business_short",
+   "text": "Fast food",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.noun",
+   "text": "fast-food shop",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.problem",
+   "text": "Ingredient costs went up",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.question",
+   "text": "Ingredient costs jumped. What should I change?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.page_title",
+   "text": "Fast-food cost decision — three choices compared",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.headline",
+   "text": "Ingredient costs are up {shock}%. What should you do?",
+   "placeholders": [
+    "{shock}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.unit_word",
+   "text": "orders",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.unit_word_singular",
+   "text": "order",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.flow_q.shock",
+   "text": "How much did your ingredient costs go up?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.flow_q.sales",
+   "text": "How busy is the shop?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.flow_q.costs",
+   "text": "What do you spend in a month?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.flow_q.cash",
+   "text": "How much cash have you got set aside for the business?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.flow_q.mix",
+   "text": "How many of your orders are low-margin?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.c_card_note",
+   "text": "Depends on how much simplifying the menu cuts ingredient cost (about {red} points here) and how many {unit} leave with the removed items ({loss}%). Neither is measured from your shop.",
+   "placeholders": [
+    "{red}",
+    "{unit}",
+    "{loss}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.sens_help.low",
+   "text": "Regulars, or your competitors are raising prices too.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.sens_help.central",
+   "text": "The typical response found in research on eating out.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.sens_help.high",
+   "text": "Stress case: a few other options are right nearby and customers switch easily.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "wedges.cafe.variants.fastfood.sources_note",
+   "text": "On price sensitivity: research gives a reference range for eating out as a whole. Fast food usually has easier substitutes close by, so customers may move faster than this figure suggests. The two-week test measures it for you.",
+   "placeholders": [],
    "tags": []
   },
   {

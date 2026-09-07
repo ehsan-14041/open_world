@@ -404,3 +404,84 @@ def test_the_page_picks_an_opening_clause_for_every_way_demand_can_move():
     why = why[:why.index("\n}")]
     for key in ("why_lose_units", "why_demand_grows", "why_demand_holds"):
         assert key in why, f"whyText never uses {key}"
+
+
+# ---- variants ---------------------------------------------------------------------------------
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_every_variant_overrides_only_keys_its_base_wedge_has(lang):
+    """
+    A variant is a set of replacements laid over a wedge's copy. A key that exists in neither
+    place would be a string the page never reads — and, worse, a key it does read spelled
+    slightly wrong would silently fall back to the cafe's word for it.
+    """
+    from event_sim.wedge.variants import VARIANTS
+    for vid, meta in VARIANTS.items():
+        base = catalogue(lang)["wedges"][meta["base"]]
+        over = base.get("variants", {}).get(vid)
+        assert over, f"{lang}: no copy for the {vid} variant"
+        stray = sorted(set(over) - set(base))
+        assert not stray, f"{lang}/{vid}: overrides keys the wedge does not have: {stray}"
+
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_a_variant_replaces_a_group_whole_or_not_at_all(lang):
+    """
+    Merging is one level deep, so a variant that supplies two of the three option names would
+    leave the third reading in the cafe's words on a bakery's page.
+    """
+    from event_sim.wedge.variants import VARIANTS
+    for vid, meta in VARIANTS.items():
+        base = catalogue(lang)["wedges"][meta["base"]]
+        for key, value in base["variants"][vid].items():
+            if isinstance(value, dict):
+                assert set(value) == set(base[key]), \
+                    f"{lang}/{vid}.{key}: replaces part of a group ({set(value) ^ set(base[key])})"
+            if isinstance(value, list):
+                assert len(value) == len(base[key]), f"{lang}/{vid}.{key}: different length"
+
+
+def test_variants_carry_no_model_values():
+    """
+    A variant is vocabulary. If one of them stated a different figure, two owners running the
+    same numbers would read different arithmetic off the same model.
+    """
+    from event_sim.wedge.variants import VARIANTS
+    for vid, meta in VARIANTS.items():
+        for lang in LANGUAGES:
+            over = catalogue(lang)["wedges"][meta["base"]]["variants"][vid]
+            for key in ("sens_values", "fields", "grid_key_fields", "summary_fields",
+                        "research_settings", "primary_axis", "flow", "intake_groups"):
+                assert key not in over, f"{lang}/{vid}: a variant overrides {key}"
+
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_every_variant_is_named_and_leads_with_a_problem(lang):
+    from event_sim.wedge.variants import VARIANTS
+    for vid, meta in VARIANTS.items():
+        over = catalogue(lang)["wedges"][meta["base"]]["variants"][vid]
+        for key in ("business", "business_short", "problem", "flow_q", "sources_note"):
+            assert key in over and str(over[key]).strip(), f"{lang}/{vid}: missing {key}"
+
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_the_persian_variants_do_not_leak_english(lang):
+    if lang != "fa":
+        return
+    from event_sim.wedge.variants import VARIANTS
+    leaks = []
+    for vid, meta in VARIANTS.items():
+        over = catalogue("fa")["wedges"][meta["base"]]["variants"][vid]
+
+        def walk(node, path):
+            if isinstance(node, dict):
+                for k, v in node.items():
+                    walk(v, f"{path}.{k}")
+            elif isinstance(node, list):
+                for i, v in enumerate(node):
+                    walk(v, f"{path}[{i}]")
+            elif isinstance(node, str) and LEAKED_ENGLISH.search(prose(node)):
+                leaks.append(f"{path}: {node[:60]}")
+
+        walk(over, vid)
+    assert not leaks, "untranslated English in a Persian variant:\n  " + "\n  ".join(leaks)
