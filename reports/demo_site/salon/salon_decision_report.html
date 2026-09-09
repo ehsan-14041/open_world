@@ -545,6 +545,10 @@ html[dir="rtl"] .choice{font-size:18px}
 .askfield .u{padding-inline-end:20px;color:var(--muted);font-weight:600}
 .otherwrap{margin-top:12px}
 .askerr{color:var(--crit);font-size:15px;margin-top:14px;min-height:1.2em}
+.askerr .e-msg{display:block;font-weight:600}
+/* The rule alone tells a reader they are stuck; the reason tells them what to change. */
+.askerr .e-why{display:block;margin-top:6px;font-weight:400;line-height:1.65;color:var(--muted)}
+.askfield input.bad{border-color:var(--crit);box-shadow:0 0 0 2px color-mix(in srgb,var(--crit) 22%,transparent)}
 .askfoot{display:flex;gap:12px;align-items:center;margin-top:30px}
 .askfoot .btn.primary{margin-inline-start:auto;min-height:56px;font-size:17px;padding-inline:32px}
 .askalt{margin-top:26px}
@@ -1768,6 +1772,40 @@ function validate(nb){
   return errs;
 }
 
+/* The same rules validate() applies at the end, but asked of what has been answered so far and
+   carrying the fields they are about. A figure that cannot be right is then caught on the screen
+   where it was typed, with the number still in front of the reader, instead of three screens
+   later on a step that has nothing to do with it. */
+function askProblems(){
+  var out = [];
+  function known(k){ return !!k && answered[k] && isFinite(draft[k]); }
+  if(known(F.unit_cost_total) && known(F.revenue) && draft[F.unit_cost_total] >= draft[F.revenue])
+    out.push({msg: t('err_cost_high'), why: t('err_cost_high_why'),
+              fields: [F.unit_cost_total, F.revenue]});
+  if(known(F.utilisation) && !(draft[F.utilisation] > 0 && draft[F.utilisation] <= 100))
+    out.push({msg: t('err_utilisation'), why: '', fields: [F.utilisation]});
+  return out;
+}
+
+/* Which screen owns a figure, so the flow can go back to it rather than one step back. */
+function stepOf(field){
+  for(var i = 0; i < FLOW.length; i++)
+    if(FLOW[i].fields.indexOf(field) !== -1) return i;
+  return -1;
+}
+
+function showAskErr(prob){
+  var box = document.getElementById('ask-err');
+  box.innerHTML = '<span class="e-msg">' + esc(prob.msg) + '</span>'
+    + (prob.why ? '<span class="e-why">' + esc(prob.why) + '</span>' : '');
+  (prob.fields || []).forEach(function(f){
+    var i = document.getElementById('a_' + f);
+    if(i){ i.classList.add('bad'); i.setAttribute('aria-invalid', 'true'); }
+  });
+  var firstBad = document.querySelector('#ask-body input.bad');
+  if(firstBad && motionOK()) firstBad.focus();
+}
+
 function renderHow(){
   var R = D.reproducibility;
   var ladder = D.assumptions.map(function(a){
@@ -2077,6 +2115,16 @@ function nextStep(){
   if(bad.length){
     document.getElementById('ask-err').textContent =
       fill(t('err_positive'), {names: bad.join(lang === 'fa' ? '، ' : ', ')});
+    return;
+  }
+  // Checked every step, so the answer that cannot work is refused where it was given.
+  var probs = askProblems();
+  if(probs.length){
+    var prob = probs[0], home = stepOf(prob.fields[0]);
+    // If the figure belongs to an earlier screen, go to it: "back" one step would land on a
+    // question that has nothing to do with what is wrong.
+    if(home !== -1 && home !== askAt){ askAt = home; renderAsk(); }
+    showAskErr(prob);
     return;
   }
   if(askAt < FLOW.length - 1){ askAt++; renderAsk(); }

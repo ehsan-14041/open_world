@@ -663,3 +663,98 @@ def test_the_flow_asks_which_trade_before_anything_else(variant):
     for lang in LANGUAGES:
         assert catalogue(lang)["ui"]["flow_kind_q"].strip()
         assert variant in catalogue(lang)["wedges"]["cafe"]["variants"]
+
+
+# ---- a figure that cannot be right, caught where it was typed ---------------------------------
+
+DRIVER = """
+<script>
+/* Types an answer into every step and taps the first choice on the rest, then reports where the
+   flow ended up. It is the only way to test the flow: the questions are the page's own script. */
+setTimeout(function(){
+  var vals = __VALS__, n = 0;
+  var iv = setInterval(function(){
+    n++;
+    if(n > 12 || !document.getElementById('result').hidden){
+      clearInterval(iv);
+      var d = document.createElement('div');
+      d.id = 'probe';
+      d.setAttribute('data-result', document.getElementById('result').hidden ? 'no' : 'yes');
+      d.setAttribute('data-err', document.getElementById('ask-err').textContent);
+      d.setAttribute('data-bad', String(document.querySelectorAll('#ask-body input.bad').length));
+      d.setAttribute('data-on', String(document.querySelectorAll('#ask-body input[data-k]').length
+        ? document.querySelector('#ask-body input[data-k]').dataset.k : ''));
+      document.body.appendChild(d);
+      return;
+    }
+    var body = document.getElementById('ask-body');
+    var ins = body.querySelectorAll('input[data-k]');
+    if(ins.length){
+      Array.prototype.forEach.call(ins, function(i){
+        if(vals[i.dataset.k] !== undefined) i.value = vals[i.dataset.k]; });
+      document.getElementById('ask-next').click();
+    } else {
+      var c = body.querySelector('.choice');
+      if(c) c.click();
+    }
+  }, 250);
+}, 400);
+</script>
+"""
+
+
+def driven(wedge_id: str, lang: str, vals: dict, tmp_path) -> dict:
+    """Run the page's own flow, answering with `vals`, and read the probe it leaves behind."""
+    page = SITE / wedge_id / f"{wedge_id}_decision_report.html"
+    copy = tmp_path / "driven.html"
+    body = page.read_text(encoding="utf-8")
+    copy.write_text(
+        body.replace("</body>", DRIVER.replace("__VALS__", json.dumps(vals)) + "</body>"),
+        encoding="utf-8")
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=12000", "--dump-dom", copy.as_uri() + f"?lang={lang}"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
+    assert proc.returncode == 0, proc.stderr[-800:]
+    m = re.search(r'<div id="probe"([^>]*)>', proc.stdout)
+    assert m, "the flow never settled"
+    return dict(re.findall(r'data-(\w+)="([^"]*)"', m.group(1)))
+
+
+def _fields(wedge_id):
+    return WEDGES[wedge_id].copy["fields"]
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_costs_above_sales_are_refused_on_the_screen_they_were_typed_on(wedge_id, lang, tmp_path):
+    """
+    Someone who enters a cost larger than their sales has made a mistake the page can name —
+    most likely one of the two is not a monthly figure. Refusing at the last question, with a
+    sentence that names neither number, leaves them with nowhere to go: "back" lands on a
+    question that has nothing to do with what is wrong. So the refusal happens on the costs
+    screen, with the figure still on it, and it says why.
+    """
+    F = _fields(wedge_id)
+    vals = {F["revenue"]: 80000000, F["units_per_day"]: 60, F["unit_cost_total"]: 90000000,
+            F["fixed"]: 20000000, F["cash"]: 15000000,
+            F.get("low_margin", "_"): 20, F.get("utilisation", "_"): 70}
+    probe = driven(wedge_id, lang, vals, tmp_path)
+    ui = catalogue(lang)["ui"]
+    assert probe["result"] == "no", "a comparison was drawn from figures that cannot be right"
+    assert probe["on"] == F["unit_cost_total"], \
+        f"stopped on {probe['on']!r}, not the screen the cost was typed on"
+    assert ui["err_cost_high"].strip() in probe["err"], "the refusal does not state the rule"
+    assert ui["err_cost_high_why"].strip() in probe["err"], \
+        "the refusal does not say what to change"
+    assert int(probe["bad"]) >= 1, "the figure at fault is not marked"
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_figures_that_hold_together_reach_the_comparison(wedge_id, lang, tmp_path):
+    """The same drive with a cost below sales must not be stopped by the new check."""
+    F = _fields(wedge_id)
+    vals = {F["revenue"]: 80000000, F["units_per_day"]: 60, F["unit_cost_total"]: 30000000,
+            F["fixed"]: 20000000, F["cash"]: 15000000,
+            F.get("low_margin", "_"): 20, F.get("utilisation", "_"): 70}
+    probe = driven(wedge_id, lang, vals, tmp_path)
+    assert probe["result"] == "yes", f"the flow refused good figures: {probe['err']!r}"
