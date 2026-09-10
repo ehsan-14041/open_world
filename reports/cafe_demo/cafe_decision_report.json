@@ -472,7 +472,57 @@
      "share_done": "Sent. Thank you.",
      "share_fail": "It didn't send. No matter \u2014 your measurement is still here.",
      "sheet_yours_q": "Facing a decision like this yourself?",
-     "sheet_yours_go": "See your own three choices"
+     "sheet_yours_go": "See your own three choices",
+     "own_t": "Or build your own option",
+     "own_lead": "The same model, with the levers set by you: raise prices by as much as you like, and add \u201c{reduce}\u201d if you want.",
+     "own_p_l": "How much would you raise prices?",
+     "own_r_l": "Also: {reduce}",
+     "own_name_p": "Raise prices {p}",
+     "own_name_pr": "Raise prices {p} + {reduce}",
+     "own_name_r": "Hold prices + {reduce}",
+     "own_name_0": "Hold prices, change nothing",
+     "own_label": "Your option",
+     "own_same": "This is option \u201c{x}\u201d \u2014 and the model gives back exactly the same figure.",
+     "own_vs_more": "{amount} a month better than \u201c{lead}\u201d, the best of the three.",
+     "own_vs_less": "{amount} a month less than \u201c{lead}\u201d, the best of the three.",
+     "own_vs_equal": "About the same as \u201c{lead}\u201d, the best of the three.",
+     "own_census": "In {n} of {total} tested cases it does at least as well as the best of the three.",
+     "own_units_down": "About {pct} fewer {unit}",
+     "own_units_up": "About {pct} more {unit}",
+     "own_units_flat": "The number of {unit} stays about the same",
+     "own_how": "This option was worked out just now in your own browser, by the same model that produced the three. Before it was allowed to, your browser rebuilt all {n} precomputed cases on this page and checked them against the originals. Your business\u2019s figures do not leave this page.",
+     "own_good": "The mix you set yourself",
+     "own_stability_v": "at least as good as the best of the three in {n} of {total} cases",
+     "ask_t": "Ask your own question",
+     "ask_lead": "Write it the way you would ask it yourself. If it is one this tool can answer with numbers, it takes you straight there; if not, it says plainly that it cannot yet.",
+     "ask_ph": "For example: my supplier put prices up 25% \u2014 should I raise mine 7%, or drop the low-margin lines?",
+     "ask_keep": "Keep my question",
+     "ask_keep_why": "So it becomes clear what owners actually ask, and what this tool should learn next. The text is kept as you wrote it, with the day (not the time) and a random id your browser made. Phone numbers, emails and web addresses are removed before it is stored. Don\u2019t write names or anything private.",
+     "ask_route_note": "To understand your question, its text is sent to the AI service the person running this site has chosen. It only sorts the question; no figure in this tool comes from it.",
+     "ask_noroute_note": "This site does not read questions automatically right now. If you allow it, your question is kept so it can be read.",
+     "ask_go": "Ask",
+     "ask_busy": "Reading\u2026",
+     "ask_fit_exact": "This one I can answer with numbers:",
+     "ask_fit_near": "Not exactly this. The nearest question I can answer with numbers is:",
+     "ask_fit_none": "I can\u2019t answer this one with numbers yet ({topic}). Guessing is not what this tool does.",
+     "ask_unrouted": "This site does not read questions automatically right now. These are the questions I can answer today:",
+     "ask_kept": "Your question was kept. Thank you.",
+     "ask_open": "Take me there",
+     "ask_restate_own": "your own option: {own}",
+     "ask_size_next": "the size of the change is asked next",
+     "ask_err": "Something went wrong; your question was not sent.",
+     "ask_empty": "Write your question first.",
+     "ask_need_keep": "This site is not reading questions right now; to send it, tick \u201cKeep my question\u201d.",
+     "ask_topics": {
+      "hiring": "hiring",
+      "hours": "opening hours",
+      "delivery": "delivery",
+      "rent_move": "rent or moving",
+      "marketing": "marketing",
+      "range": "range or menu",
+      "loan_cash": "loans and cash",
+      "other": "another topic"
+     }
     },
     "wedge": {
      "business": "Cafe / Restaurant",
@@ -724,7 +774,8 @@
         "Know how your individual customers will behave.",
         "Model how the other bakeries nearby react.",
         "Know how far bread differs from eating out \u2014 until you measure it."
-       ]
+       ],
+       "own_reduce": "drop low-margin lines"
       },
       "fastfood": {
        "business": "Fast food",
@@ -752,7 +803,8 @@
        "sources_note": "On price sensitivity: research gives a reference range for eating out as a whole. Fast food usually has easier substitutes close by, so customers may move faster than this figure suggests. The two-week test measures it for you."
       }
      },
-     "business_covers": "Cafe / Restaurant \u00b7 Bakery \u00b7 Fast food"
+     "business_covers": "Cafe / Restaurant \u00b7 Bakery \u00b7 Fast food",
+     "own_reduce": "simplify the menu"
     },
     "all_wedges": {
      "cafe": {
@@ -1009,7 +1061,57 @@
      "share_done": "\u0641\u0631\u0633\u062a\u0627\u062f\u0647 \u0634\u062f. \u0645\u0645\u0646\u0648\u0646.",
      "share_fail": "\u0641\u0631\u0633\u062a\u0627\u062f\u0647 \u0646\u0634\u062f. \u0627\u0634\u06a9\u0627\u0644\u06cc \u0646\u062f\u0627\u0631\u062f \u2014 \u0627\u0646\u062f\u0627\u0632\u0647\u200c\u06af\u06cc\u0631\u06cc\u200c\u0627\u062a \u0633\u0631 \u062c\u0627\u06cc\u0634 \u0627\u0633\u062a.",
      "sheet_yours_q": "\u062a\u0648 \u0647\u0645 \u0686\u0646\u06cc\u0646 \u062a\u0635\u0645\u06cc\u0645\u06cc \u062f\u0627\u0631\u06cc\u061f",
-     "sheet_yours_go": "\u0633\u0647\u200c\u0631\u0627\u0647\u06cc \u062e\u0648\u062f\u062a \u0631\u0627 \u0628\u0628\u06cc\u0646"
+     "sheet_yours_go": "\u0633\u0647\u200c\u0631\u0627\u0647\u06cc \u062e\u0648\u062f\u062a \u0631\u0627 \u0628\u0628\u06cc\u0646",
+     "own_t": "\u06cc\u0627 \u06af\u0632\u06cc\u0646\u0647\u0654 \u062e\u0648\u062f\u062a \u0631\u0627 \u0628\u0633\u0627\u0632",
+     "own_lead": "\u0647\u0645\u0627\u0646 \u0645\u062f\u0644\u060c \u0628\u0627 \u0627\u0647\u0631\u0645\u200c\u0647\u0627\u06cc\u06cc \u06a9\u0647 \u062e\u0648\u062f\u062a \u062a\u0646\u0638\u06cc\u0645 \u0645\u06cc\u200c\u06a9\u0646\u06cc: \u0642\u06cc\u0645\u062a \u0631\u0627 \u0647\u0631 \u0642\u062f\u0631 \u062e\u0648\u0627\u0633\u062a\u06cc \u0628\u0627\u0644\u0627 \u0628\u0628\u0631 \u0648 \u0627\u06af\u0631 \u062e\u0648\u0627\u0633\u062a\u06cc {reduce} \u0631\u0627 \u0647\u0645 \u06a9\u0646\u0627\u0631\u0634 \u0628\u06af\u0630\u0627\u0631.",
+     "own_p_l": "\u0686\u0646\u062f \u062f\u0631\u0635\u062f \u0642\u06cc\u0645\u062a \u0631\u0627 \u0628\u0627\u0644\u0627 \u0645\u06cc\u200c\u0628\u0631\u06cc\u061f",
+     "own_r_l": "\u0647\u0645\u0631\u0627\u0647 \u0628\u0627 {reduce}",
+     "own_name_p": "\u0642\u06cc\u0645\u062a {p} \u0628\u0627\u0644\u0627",
+     "own_name_pr": "\u0642\u06cc\u0645\u062a {p} \u0628\u0627\u0644\u0627 + {reduce}",
+     "own_name_r": "\u0642\u06cc\u0645\u062a \u062b\u0627\u0628\u062a + {reduce}",
+     "own_name_0": "\u0642\u06cc\u0645\u062a \u062b\u0627\u0628\u062a\u060c \u0628\u06cc\u200c\u0647\u06cc\u0686 \u062a\u063a\u06cc\u06cc\u0631",
+     "own_label": "\u06af\u0632\u06cc\u0646\u0647\u0654 \u062a\u0648",
+     "own_same": "\u0627\u06cc\u0646 \u0647\u0645\u0627\u0646 \u06af\u0632\u06cc\u0646\u0647\u0654 \u00ab{x}\u00bb \u0627\u0633\u062a \u2014 \u0648 \u0645\u062f\u0644 \u0647\u0645 \u062f\u0642\u06cc\u0642\u0627\u064b \u0647\u0645\u0627\u0646 \u0639\u062f\u062f \u0631\u0627 \u0628\u0631\u0645\u06cc\u200c\u06af\u0631\u062f\u0627\u0646\u062f.",
+     "own_vs_more": "\u0645\u0627\u0647\u06cc {amount} \u0628\u0647\u062a\u0631 \u0627\u0632 \u00ab{lead}\u00bb\u060c \u0628\u0647\u062a\u0631\u06cc\u0646\u0650 \u0622\u0646 \u0633\u0647.",
+     "own_vs_less": "\u0645\u0627\u0647\u06cc {amount} \u06a9\u0645\u062a\u0631 \u0627\u0632 \u00ab{lead}\u00bb\u060c \u0628\u0647\u062a\u0631\u06cc\u0646\u0650 \u0622\u0646 \u0633\u0647.",
+     "own_vs_equal": "\u062a\u0642\u0631\u06cc\u0628\u0627\u064b \u0647\u0645\u200c\u0627\u0646\u062f\u0627\u0632\u0647\u0654 \u00ab{lead}\u00bb\u060c \u0628\u0647\u062a\u0631\u06cc\u0646\u0650 \u0622\u0646 \u0633\u0647.",
+     "own_census": "\u062f\u0631 {n} \u0627\u0632 {total} \u062d\u0627\u0644\u062a\u0650 \u0622\u0632\u0645\u0648\u062f\u0647\u060c \u062f\u0633\u062a\u200c\u06a9\u0645 \u0628\u0647 \u062e\u0648\u0628\u06cc\u0650 \u0628\u0647\u062a\u0631\u06cc\u0646\u0650 \u0622\u0646 \u0633\u0647 \u0627\u0633\u062a.",
+     "own_units_down": "\u062a\u0639\u062f\u0627\u062f {unit} \u062d\u062f\u0648\u062f {pct} \u06a9\u0645 \u0645\u06cc\u200c\u0634\u0648\u062f",
+     "own_units_up": "\u062a\u0639\u062f\u0627\u062f {unit} \u062d\u062f\u0648\u062f {pct} \u0628\u06cc\u0634\u062a\u0631 \u0645\u06cc\u200c\u0634\u0648\u062f",
+     "own_units_flat": "\u062a\u0639\u062f\u0627\u062f {unit} \u062a\u0642\u0631\u06cc\u0628\u0627\u064b \u062b\u0627\u0628\u062a \u0645\u06cc\u200c\u0645\u0627\u0646\u062f",
+     "own_how": "\u0627\u06cc\u0646 \u06af\u0632\u06cc\u0646\u0647 \u0647\u0645\u06cc\u0646 \u062d\u0627\u0644\u0627 \u062f\u0631 \u0645\u0631\u0648\u0631\u06af\u0631 \u062e\u0648\u062f\u062a \u062d\u0633\u0627\u0628 \u0634\u062f\u060c \u0628\u0627 \u0647\u0645\u0627\u0646 \u0645\u062f\u0644\u06cc \u06a9\u0647 \u0622\u0646 \u0633\u0647 \u0631\u0627 \u0633\u0627\u062e\u062a. \u067e\u06cc\u0634 \u0627\u0632 \u0622\u0646\u060c \u0645\u0631\u0648\u0631\u06af\u0631\u062a \u0647\u0631 {n} \u062d\u0627\u0644\u062a\u0650 \u0627\u0632\u067e\u06cc\u0634\u200c\u062d\u0633\u0627\u0628\u200c\u0634\u062f\u0647\u0654 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647 \u0631\u0627 \u0627\u0632 \u0646\u0648 \u0633\u0627\u062e\u062a \u0648 \u0628\u0627 \u0646\u0633\u062e\u0647\u0654 \u0627\u0635\u0644\u06cc \u0645\u0642\u0627\u06cc\u0633\u0647 \u06a9\u0631\u062f. \u0639\u062f\u062f\u0647\u0627\u06cc \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631\u062a \u0627\u0632 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647 \u0628\u06cc\u0631\u0648\u0646 \u0646\u0645\u06cc\u200c\u0631\u0648\u0646\u062f.",
+     "own_good": "\u062a\u0631\u06a9\u06cc\u0628\u06cc \u06a9\u0647 \u062e\u0648\u062f\u062a \u062a\u0646\u0638\u06cc\u0645 \u06a9\u0631\u062f\u06cc",
+     "own_stability_v": "\u062f\u0631 {n} \u0627\u0632 {total} \u062d\u0627\u0644\u062a\u060c \u062f\u0633\u062a\u200c\u06a9\u0645 \u0628\u0647 \u062e\u0648\u0628\u06cc\u0650 \u0628\u0647\u062a\u0631\u06cc\u0646\u0650 \u0622\u0646 \u0633\u0647",
+     "ask_t": "\u0633\u0624\u0627\u0644\u0650 \u062e\u0648\u062f\u062a \u0631\u0627 \u0628\u067e\u0631\u0633",
+     "ask_lead": "\u0647\u0645\u0627\u0646\u200c\u0637\u0648\u0631 \u06a9\u0647 \u0628\u0631\u0627\u06cc \u062e\u0648\u062f\u062a \u0645\u06cc\u200c\u067e\u0631\u0633\u06cc \u0628\u0646\u0648\u06cc\u0633. \u0627\u06af\u0631 \u0627\u0632 \u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc\u06cc \u0628\u0627\u0634\u062f \u06a9\u0647 \u0627\u06cc\u0646 \u0627\u0628\u0632\u0627\u0631 \u0628\u0627 \u0639\u062f\u062f \u062c\u0648\u0627\u0628 \u0645\u06cc\u200c\u062f\u0647\u062f\u060c \u0645\u0633\u062a\u0642\u06cc\u0645 \u0645\u06cc\u200c\u0628\u064e\u0631\u064e\u062f\u062a \u0633\u0631\u0650 \u0647\u0645\u0627\u0646\u061b \u0627\u06af\u0631 \u0646\u0628\u0627\u0634\u062f\u060c \u0631\u0627\u0633\u062a\u0634 \u0631\u0627 \u0645\u06cc\u200c\u06af\u0648\u06cc\u062f \u06a9\u0647 \u0647\u0646\u0648\u0632 \u0646\u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f.",
+     "ask_ph": "\u0645\u062b\u0644\u0627\u064b: \u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u0647 \u06f2\u06f5\u066a \u06af\u0631\u0627\u0646 \u06a9\u0631\u062f\u0647\u061b \u0642\u06cc\u0645\u062a\u200c\u0647\u0627 \u0631\u0627 \u06f7\u066a \u0628\u0627\u0644\u0627 \u0628\u0628\u0631\u0645 \u06cc\u0627 \u06a9\u0627\u0644\u0627\u0647\u0627\u06cc \u06a9\u0645\u200c\u0633\u0648\u062f \u0631\u0627 \u062d\u0630\u0641 \u06a9\u0646\u0645\u061f",
+     "ask_keep": "\u0633\u0624\u0627\u0644\u0645 \u0631\u0627 \u0646\u06af\u0647 \u062f\u0627\u0631\u06cc\u062f",
+     "ask_keep_why": "\u062a\u0627 \u0645\u0639\u0644\u0648\u0645 \u0634\u0648\u062f \u0635\u0627\u062d\u0628\u0627\u0646 \u06a9\u0633\u0628\u200c\u0648\u06a9\u0627\u0631 \u0648\u0627\u0642\u0639\u0627\u064b \u0686\u0647 \u0645\u06cc\u200c\u067e\u0631\u0633\u0646\u062f \u0648 \u0627\u06cc\u0646 \u0627\u0628\u0632\u0627\u0631 \u0628\u0639\u062f \u0627\u0632 \u0627\u06cc\u0646 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u06cc\u0627\u062f \u0628\u06af\u06cc\u0631\u062f. \u0645\u062a\u0646 \u0647\u0645\u0627\u0646\u200c\u0637\u0648\u0631 \u06a9\u0647 \u0646\u0648\u0634\u062a\u06cc \u0646\u06af\u0647 \u062f\u0627\u0634\u062a\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f\u060c \u0628\u0627 \u0631\u0648\u0632\u0650 \u062b\u0628\u062a (\u0646\u0647 \u0633\u0627\u0639\u062a) \u0648 \u0634\u0646\u0627\u0633\u0647\u200c\u0627\u06cc \u062a\u0635\u0627\u062f\u0641\u06cc \u06a9\u0647 \u0645\u0631\u0648\u0631\u06af\u0631\u062a \u0633\u0627\u062e\u062a\u0647. \u0634\u0645\u0627\u0631\u0647 \u062a\u0644\u0641\u0646\u060c \u0627\u06cc\u0645\u06cc\u0644 \u0648 \u0646\u0634\u0627\u0646\u06cc \u0633\u0627\u06cc\u062a \u067e\u06cc\u0634 \u0627\u0632 \u0630\u062e\u06cc\u0631\u0647 \u067e\u0627\u06a9 \u0645\u06cc\u200c\u0634\u0648\u0646\u062f. \u0627\u0633\u0645 \u06cc\u0627 \u0686\u06cc\u0632\u0650 \u062e\u0635\u0648\u0635\u06cc \u0646\u0646\u0648\u06cc\u0633.",
+     "ask_route_note": "\u0628\u0631\u0627\u06cc \u0641\u0647\u0645\u06cc\u062f\u0646 \u0633\u0624\u0627\u0644\u062a\u060c \u0645\u062a\u0646\u0634 \u0628\u0647 \u0633\u0631\u0648\u06cc\u0633 \u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc\u200c\u0627\u06cc \u0641\u0631\u0633\u062a\u0627\u062f\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f \u06a9\u0647 \u06af\u0631\u062f\u0627\u0646\u0646\u062f\u0647\u0654 \u0627\u06cc\u0646 \u0633\u0627\u06cc\u062a \u0627\u0646\u062a\u062e\u0627\u0628 \u06a9\u0631\u062f\u0647. \u0622\u0646 \u0633\u0631\u0648\u06cc\u0633 \u0641\u0642\u0637 \u0633\u0624\u0627\u0644 \u0631\u0627 \u062f\u0633\u062a\u0647\u200c\u0628\u0646\u062f\u06cc \u0645\u06cc\u200c\u06a9\u0646\u062f\u061b \u0647\u06cc\u0686 \u0639\u062f\u062f\u06cc \u062f\u0631 \u0627\u06cc\u0646 \u0627\u0628\u0632\u0627\u0631 \u0627\u0632 \u0622\u0646 \u0646\u0645\u06cc\u200c\u0622\u06cc\u062f.",
+     "ask_noroute_note": "\u0627\u06cc\u0646 \u0633\u0627\u06cc\u062a \u0641\u0639\u0644\u0627\u064b \u0633\u0624\u0627\u0644\u200c\u0647\u0627 \u0631\u0627 \u062e\u0648\u062f\u06a9\u0627\u0631 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u0646\u062f. \u0627\u06af\u0631 \u0627\u062c\u0627\u0632\u0647 \u0628\u062f\u0647\u06cc \u0646\u06af\u0647\u0634 \u0645\u06cc\u200c\u062f\u0627\u0631\u06cc\u0645 \u062a\u0627 \u062e\u0648\u0627\u0646\u062f\u0647 \u0634\u0648\u062f.",
+     "ask_go": "\u0628\u067e\u0631\u0633",
+     "ask_busy": "\u062f\u0627\u0631\u0645 \u0645\u06cc\u200c\u062e\u0648\u0627\u0646\u0645\u2026",
+     "ask_fit_exact": "\u0627\u06cc\u0646 \u0631\u0627 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u0645 \u0628\u0627 \u0639\u062f\u062f \u062c\u0648\u0627\u0628 \u0628\u062f\u0647\u0645:",
+     "ask_fit_near": "\u062f\u0642\u06cc\u0642\u0627\u064b \u0627\u06cc\u0646 \u0631\u0627 \u0646\u0647. \u0646\u0632\u062f\u06cc\u06a9\u200c\u062a\u0631\u06cc\u0646 \u0633\u0624\u0627\u0644\u06cc \u06a9\u0647 \u0628\u0627 \u0639\u062f\u062f \u062c\u0648\u0627\u0628\u0634 \u0631\u0627 \u062f\u0627\u0631\u0645 \u0627\u06cc\u0646 \u0627\u0633\u062a:",
+     "ask_fit_none": "\u0627\u06cc\u0646 \u06cc\u06a9\u06cc \u0631\u0627 \u0647\u0646\u0648\u0632 \u0646\u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u0645 \u0628\u0627 \u0639\u062f\u062f \u062c\u0648\u0627\u0628 \u0628\u062f\u0647\u0645 ({topic}). \u062d\u062f\u0633 \u0632\u062f\u0646 \u06a9\u0627\u0631\u0650 \u0627\u06cc\u0646 \u0627\u0628\u0632\u0627\u0631 \u0646\u06cc\u0633\u062a.",
+     "ask_unrouted": "\u0627\u06cc\u0646 \u0633\u0627\u06cc\u062a \u0641\u0639\u0644\u0627\u064b \u0633\u0624\u0627\u0644\u200c\u0647\u0627 \u0631\u0627 \u062e\u0648\u062f\u06a9\u0627\u0631 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u0646\u062f. \u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc\u06cc \u06a9\u0647 \u0647\u0645\u06cc\u0646 \u062d\u0627\u0644\u0627 \u062c\u0648\u0627\u0628\u0634\u0627\u0646 \u0631\u0627 \u062f\u0627\u0631\u0645 \u0627\u06cc\u0646\u200c\u0647\u0627\u0633\u062a:",
+     "ask_kept": "\u0633\u0624\u0627\u0644\u062a \u0646\u06af\u0647 \u062f\u0627\u0634\u062a\u0647 \u0634\u062f. \u0645\u0645\u0646\u0648\u0646.",
+     "ask_open": "\u0628\u0631\u0648 \u0633\u0631\u0650 \u0647\u0645\u06cc\u0646",
+     "ask_restate_own": "\u06af\u0632\u06cc\u0646\u0647\u0654 \u062e\u0648\u062f\u062a: {own}",
+     "ask_size_next": "\u0627\u0646\u062f\u0627\u0632\u0647\u0654 \u062a\u063a\u06cc\u06cc\u0631 \u0631\u0627 \u062f\u0631 \u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc \u0628\u0639\u062f\u06cc \u0645\u06cc\u200c\u067e\u0631\u0633\u0645",
+     "ask_err": "\u0686\u06cc\u0632\u06cc \u062e\u0631\u0627\u0628 \u0634\u062f\u061b \u0633\u0624\u0627\u0644\u062a \u0641\u0631\u0633\u062a\u0627\u062f\u0647 \u0646\u0634\u062f.",
+     "ask_empty": "\u0627\u0648\u0644 \u0633\u0624\u0627\u0644\u062a \u0631\u0627 \u0628\u0646\u0648\u06cc\u0633.",
+     "ask_need_keep": "\u0627\u06cc\u0646 \u0633\u0627\u06cc\u062a \u0641\u0639\u0644\u0627\u064b \u0633\u0624\u0627\u0644\u200c\u0647\u0627 \u0631\u0627 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u0646\u062f\u061b \u0628\u0631\u0627\u06cc \u0641\u0631\u0633\u062a\u0627\u062f\u0646\u060c \u00ab\u0633\u0624\u0627\u0644\u0645 \u0631\u0627 \u0646\u06af\u0647 \u062f\u0627\u0631\u06cc\u062f\u00bb \u0631\u0627 \u0628\u0632\u0646.",
+     "ask_topics": {
+      "hiring": "\u0627\u0633\u062a\u062e\u062f\u0627\u0645",
+      "hours": "\u0633\u0627\u0639\u062a \u06a9\u0627\u0631\u06cc",
+      "delivery": "\u067e\u06cc\u06a9 \u0648 \u0627\u0631\u0633\u0627\u0644",
+      "rent_move": "\u0627\u062c\u0627\u0631\u0647 \u06cc\u0627 \u062c\u0627\u0628\u0647\u200c\u062c\u0627\u06cc\u06cc",
+      "marketing": "\u062a\u0628\u0644\u06cc\u063a",
+      "range": "\u062a\u0646\u0648\u0639 \u06a9\u0627\u0644\u0627 \u06cc\u0627 \u0645\u0646\u0648",
+      "loan_cash": "\u0648\u0627\u0645 \u0648 \u0646\u0642\u062f\u06cc\u0646\u06af\u06cc",
+      "other": "\u0645\u0648\u0636\u0648\u0639\u06cc \u062f\u06cc\u06af\u0631"
+     }
     },
     "wedge": {
      "business": "\u06a9\u0627\u0641\u0647 / \u0631\u0633\u062a\u0648\u0631\u0627\u0646",
@@ -1261,7 +1363,8 @@
         "\u0628\u062f\u0627\u0646\u062f \u062a\u06a9\u200c\u062a\u06a9 \u0645\u0634\u062a\u0631\u06cc\u200c\u0647\u0627\u06cc\u062a \u0686\u0647 \u0645\u06cc\u200c\u06a9\u0646\u0646\u062f.",
         "\u0648\u0627\u06a9\u0646\u0634 \u0646\u0627\u0646\u0648\u0627\u06cc\u06cc\u200c\u0647\u0627\u06cc \u062f\u06cc\u06af\u0631 \u0645\u062d\u0644 \u0631\u0627 \u0645\u062f\u0644 \u06a9\u0646\u062f.",
         "\u0628\u062f\u0627\u0646\u062f \u0646\u0627\u0646 \u0686\u0642\u062f\u0631 \u0628\u0627 \u063a\u0630\u0627\u06cc \u0628\u06cc\u0631\u0648\u0646 \u0641\u0631\u0642 \u062f\u0627\u0631\u062f \u2014 \u062a\u0627 \u0648\u0642\u062a\u06cc \u062e\u0648\u062f\u062a \u0627\u0646\u062f\u0627\u0632\u0647 \u0646\u06af\u06cc\u0631\u06cc."
-       ]
+       ],
+       "own_reduce": "\u06a9\u0646\u0627\u0631\u06af\u0630\u0627\u0634\u062a\u0646 \u0627\u0642\u0644\u0627\u0645 \u06a9\u0645\u200c\u0633\u0648\u062f"
       },
       "fastfood": {
        "business": "\u0641\u0633\u062a\u200c\u0641\u0648\u062f",
@@ -1289,7 +1392,8 @@
        "sources_note": "\u062f\u0631\u0628\u0627\u0631\u0647\u0654 \u062d\u0633\u0627\u0633\u06cc\u062a \u0628\u0647 \u0642\u06cc\u0645\u062a: \u067e\u0698\u0648\u0647\u0634 \u06cc\u06a9 \u0628\u0627\u0632\u0647\u0654 \u0645\u0631\u062c\u0639 \u0628\u0631\u0627\u06cc \u0628\u06cc\u0631\u0648\u0646\u200c\u063a\u0630\u0627\u062e\u0648\u0631\u062f\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f. \u0641\u0633\u062a\u200c\u0641\u0648\u062f \u0645\u0639\u0645\u0648\u0644\u0627\u064b \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646 \u0622\u0633\u0627\u0646\u200c\u062a\u0631\u06cc \u062f\u0627\u0631\u062f\u060c \u067e\u0633 \u0648\u0627\u06a9\u0646\u0634 \u0645\u0634\u062a\u0631\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u062a\u0646\u062f\u062a\u0631 \u0627\u0632 \u0627\u06cc\u0646 \u0639\u062f\u062f \u0628\u0627\u0634\u062f. \u0622\u0632\u0645\u0627\u06cc\u0634 \u062f\u0648\u0647\u0641\u062a\u0647\u200c\u0627\u06cc \u0647\u0645\u06cc\u0646 \u0631\u0627 \u0628\u0631\u0627\u06cc \u062e\u0648\u062f\u062a \u0627\u0646\u062f\u0627\u0632\u0647 \u0645\u06cc\u200c\u06af\u06cc\u0631\u062f."
       }
      },
-     "business_covers": "\u06a9\u0627\u0641\u0647 / \u0631\u0633\u062a\u0648\u0631\u0627\u0646 \u00b7 \u0646\u0627\u0646\u0648\u0627\u06cc\u06cc / \u0642\u0646\u0627\u062f\u06cc \u00b7 \u0641\u0633\u062a\u200c\u0641\u0648\u062f"
+     "business_covers": "\u06a9\u0627\u0641\u0647 / \u0631\u0633\u062a\u0648\u0631\u0627\u0646 \u00b7 \u0646\u0627\u0646\u0648\u0627\u06cc\u06cc / \u0642\u0646\u0627\u062f\u06cc \u00b7 \u0641\u0633\u062a\u200c\u0641\u0648\u062f",
+     "own_reduce": "\u0633\u0628\u06a9\u200c\u06a9\u0631\u062f\u0646 \u0645\u0646\u0648"
     },
     "all_wedges": {
      "cafe": {
@@ -1394,6 +1498,201 @@
    "hint": "Roughly what share of orders are items you could drop or reformulate. A guess is fine; it is tested as an assumption."
   }
  ],
+ "slice": {
+  "variables": [
+   {
+    "id": "input_cost",
+    "label": "Supplier / ingredient price level",
+    "unit": "index (100 = pre-shock)",
+    "baseline": 100.0,
+    "scale": 100.0,
+    "min": 0.0,
+    "max": 300.0,
+    "response": 1.0,
+    "kind": "relaxation",
+    "axis": null
+   },
+   {
+    "id": "cogs_per_order",
+    "label": "Ingredient cost per order",
+    "unit": "index (100 = pre-shock)",
+    "baseline": 100.0,
+    "scale": 100.0,
+    "min": 0.0,
+    "max": 300.0,
+    "response": 0.25,
+    "kind": "relaxation",
+    "axis": "cogs_pass_through"
+   },
+   {
+    "id": "menu_price",
+    "label": "Average menu price",
+    "unit": "index (100 = pre-shock)",
+    "baseline": 100.0,
+    "scale": 100.0,
+    "min": 50.0,
+    "max": 200.0,
+    "response": 1.0,
+    "kind": "relaxation",
+    "axis": null
+   },
+   {
+    "id": "demand",
+    "label": "Customer orders",
+    "unit": "index (100 = pre-shock daily orders)",
+    "baseline": 100.0,
+    "scale": 100.0,
+    "min": 0.0,
+    "max": 200.0,
+    "response": 0.05,
+    "kind": "relaxation",
+    "axis": "demand_adjustment_speed"
+   }
+  ],
+  "edges": [
+   {
+    "id": "input_cost->cogs_per_order",
+    "source": "input_cost",
+    "target": "cogs_per_order",
+    "polarity": "positive",
+    "mechanism_type": "linear",
+    "axis": "cogs_pass_through",
+    "effect": {
+     "low": 0.7,
+     "central": 1.0,
+     "high": 1.0
+    },
+    "lag": 7
+   },
+   {
+    "id": "menu_price->demand",
+    "source": "menu_price",
+    "target": "demand",
+    "polarity": "negative",
+    "mechanism_type": "linear",
+    "axis": "price_sensitivity",
+    "effect": {
+     "low": 0.5,
+     "central": 0.81,
+     "high": 1.6
+    },
+    "lag": 0
+   }
+  ],
+  "axes": [
+   {
+    "id": "price_sensitivity",
+    "settings": [
+     "low",
+     "central",
+     "high"
+    ],
+    "applies_to": [
+     "menu_price->demand"
+    ],
+    "mapping": {
+     "low": {
+      "effect_setting": "low"
+     },
+     "central": {
+      "effect_setting": "central"
+     },
+     "high": {
+      "effect_setting": "high"
+     }
+    },
+    "default_setting": "central"
+   },
+   {
+    "id": "cogs_pass_through",
+    "settings": [
+     "low",
+     "central",
+     "high"
+    ],
+    "applies_to": [
+     "input_cost->cogs_per_order"
+    ],
+    "mapping": {
+     "low": {
+      "effect_setting": "low"
+     },
+     "central": {
+      "effect_setting": "central"
+     },
+     "high": {
+      "effect_setting": "high"
+     }
+    },
+    "default_setting": "central"
+   },
+   {
+    "id": "demand_adjustment_speed",
+    "settings": [
+     "slow",
+     "central",
+     "fast"
+    ],
+    "applies_to": [
+     "demand"
+    ],
+    "mapping": {
+     "slow": {
+      "response_multiplier": 0.5
+     },
+     "central": {
+      "response_multiplier": 1.0
+     },
+     "fast": {
+      "response_multiplier": 2.0
+     }
+    },
+    "default_setting": "central"
+   }
+  ],
+  "interventions": [
+   {
+    "id": "raise_prices",
+    "label": "Raise average menu prices",
+    "description": "Adds the given number of percentage points to the average menu price for the whole horizon. Magnitude is the price increase in percent.",
+    "status": "user_assumption",
+    "magnitude_label": "price increase, percent",
+    "default_magnitude": 10.0,
+    "default_start_turn": 1,
+    "default_duration": 90,
+    "effects_per_unit": {
+     "menu_price": 1.0
+    },
+    "module": "cafe_cost_shock_v1"
+   },
+   {
+    "id": "reformulate_menu",
+    "label": "Remove or reformulate low-margin items",
+    "description": "Lowers average ingredient cost per order by the given number of percentage points of the pre-shock COGS, and costs a small share of orders from customers who came for the removed items. Magnitude is the COGS reduction in percentage points; the demand cost is a fixed ratio of it (expert assumption, see evidence registry).",
+    "status": "expert_assumption",
+    "magnitude_label": "COGS reduction, percentage points",
+    "default_magnitude": 6.0,
+    "default_start_turn": 1,
+    "default_duration": 90,
+    "effects_per_unit": {
+     "cogs_per_order": -1.0,
+     "demand": -0.33
+    },
+    "module": "cafe_cost_shock_v1"
+   }
+  ]
+ },
+ "roles": {
+  "demand_var": "demand",
+  "price_var": "menu_price",
+  "unit_cost_var": "cogs_per_order",
+  "index_vars": [
+   "input_cost",
+   "cogs_per_order",
+   "menu_price",
+   "demand"
+  ]
+ },
  "worlds": [
   {
    "id": "A",

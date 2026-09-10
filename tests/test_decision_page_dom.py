@@ -264,7 +264,8 @@ def test_the_demo_says_it_is_a_demo(wedge_id, lang):
 #: The most words a beat may put in front of a reader. The numbers were set from the shipped
 #: copy plus headroom; the point is that growing a beat past its budget is a decision someone
 #: has to make in a diff, not something that accretes.
-BEAT_BUDGET = {"b-now": 95, "b-options": 175, "b-race": 155, "b-solid": 130,
+#: b-own was measured at 136 words at most (shop, English, an option none of the three uses).
+BEAT_BUDGET = {"b-now": 95, "b-options": 175, "b-own": 155, "b-race": 155, "b-solid": 130,
                "b-monday": 65, "b-decide": 75}
 
 
@@ -758,3 +759,217 @@ def test_figures_that_hold_together_reach_the_comparison(wedge_id, lang, tmp_pat
             F.get("low_margin", "_"): 20, F.get("utilisation", "_"): 70}
     probe = driven(wedge_id, lang, vals, tmp_path)
     assert probe["result"] == "yes", f"the flow refused good figures: {probe['err']!r}"
+
+
+# ---- the owner's own option ----------------------------------------------------------------------
+
+def page_with(wedge_id: str, lang: str, query: str) -> str:
+    """The page opened on a URL of its own, scripts and styles stripped as in `rendered`."""
+    page = SITE / wedge_id / f"{wedge_id}_decision_report.html"
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=12000", "--dump-dom", page.as_uri() + f"?lang={lang}&{query}"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
+    assert proc.returncode == 0, proc.stderr[-800:]
+    dom = re.sub(r"<script.*?</script>", " ", proc.stdout, flags=re.S)
+    return re.sub(r"<style.*?</style>", " ", dom, flags=re.S)
+
+
+def _grid_size(wedge_id: str) -> int:
+    data = json.loads((SITE / wedge_id / f"{wedge_id}_decision_report.json").read_text("utf-8"))
+    return int(data.get("sensitivity", {}).get("n", 162))
+
+
+def _card_money(dom: str, letter: str) -> str:
+    m = re.search(r'<article class="opt w' + letter + r'\b[^"]*".*?<div class="money(?: neg)?"[^>]*>(.*?)</div>',
+                  dom, re.S)
+    assert m, f"no card for option {letter}"
+    return " ".join(html_mod.unescape(re.sub(r"<[^>]+>", " ", m.group(1))).split())
+
+
+def _price_rise(wedge_id: str, letter: str) -> float:
+    assets = json.loads((ROOT / "deploy" / "php" / "assets" / f"{wedge_id}.json").read_text("utf-8"))
+    return next(float(o["price_rise_pct"]) for o in assets["worlds"]["options"] if o["id"] == letter)
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_the_browser_rebuilds_every_precomputed_case_before_it_runs_one_of_its_own(wedge_id, lang):
+    """
+    The own option runs on a copy of the model in the reader's browser. It is only allowed to
+    because that copy first rebuilt all three options at every tested case on the page and
+    matched them — and the page states the result on its root for anyone to check.
+    """
+    dom = rendered(wedge_id, lang)
+    root = re.search(r"<html\b[^>]*>", dom).group(0)
+    assert 'data-engine="ok"' in root, f"{wedge_id}/{lang}: the browser model failed its check: {root}"
+    checked = int(re.search(r'data-engine-checked="(\d+)"', root).group(1))
+    assert checked == 3 * _grid_size(wedge_id), f"only {checked} cases were rebuilt"
+    worst = float(re.search(r'data-engine-worst="([^"]+)"', root).group(1))
+    assert worst <= 0.0101, f"worst disagreement {worst}"
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_the_own_option_set_to_an_options_levers_gives_that_options_figure(wedge_id, lang):
+    """It opens on the second option's lever, so the first thing it shows is the model agreeing
+    with itself — and it only says "exactly the same" because the figure is."""
+    dom = rendered(wedge_id, lang)
+    assert not re.search(r'id="b-own"[^>]*\bhidden', dom), "the own-option beat is hidden"
+    assert inner(dom, "own-money") == _card_money(dom, "B")
+    short_b = catalogue(lang)["wedges"][wedge_id]["world_short"]["B"]
+    assert catalogue(lang)["ui"]["own_same"].replace("{x}", short_b) in inner(dom, "own-vs")
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_the_own_option_with_the_third_options_levers_gives_its_figure(wedge_id):
+    c = _price_rise(wedge_id, "C")
+    dom = page_with(wedge_id, "en", f"demo=1&own={c:g},1")
+    assert inner(dom, "own-money") == _card_money(dom, "C")
+    assert 'id="own-line"' in dom, "the owner's option is not drawn in the race"
+    assert 'data-p="D"' in dom, "the owner's option cannot be chosen"
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_an_own_option_none_of_the_three_uses_is_worked_out_and_named(wedge_id, lang):
+    dom = page_with(wedge_id, lang, "demo=1&own=13,0")
+    text = text_of(dom)
+    assert "undefined" not in text and "NaN" not in text
+    vs = inner(dom, "own-vs")
+    same_prefix = catalogue(lang)["ui"]["own_same"].split("{x}")[0].strip()
+    assert vs and same_prefix not in vs, "a lever none of the three uses was called one of them"
+    assert inner(dom, "own-money") not in {_card_money(dom, k) for k in "ABC"}
+    assert re.search(r"[0-9۰-۹]", inner(dom, "own-census")), "no count of tested cases"
+
+
+SHEET_DRIVER = """
+<script>
+setTimeout(function(){
+  var b = document.querySelector('.pick[data-p="D"]');
+  if(b) b.click();
+  setTimeout(function(){
+    var d = document.createElement('div');
+    d.id = 'probe';
+    d.setAttribute('data-sheet', document.getElementById('sheet').hidden ? 'no' : 'yes');
+    d.setAttribute('data-rows', String(document.querySelectorAll('#sheet-cmp tr').length));
+    d.setAttribute('data-choice', document.getElementById('sheet-choice').textContent);
+    d.setAttribute('data-url', location.search);
+    document.body.appendChild(d);
+  }, 700);
+}, 1500);
+</script>
+"""
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_an_own_option_can_be_the_decision_and_the_link_keeps_it(wedge_id, tmp_path):
+    """The sheet names the owner's own option and compares it with the three; the link alone —
+    without the page's memory — opens the same sheet."""
+    page = SITE / wedge_id / f"{wedge_id}_decision_report.html"
+    copy = tmp_path / "sheet.html"
+    copy.write_text(page.read_text("utf-8").replace("</body>", SHEET_DRIVER + "</body>"),
+                    encoding="utf-8")
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=12000", "--dump-dom", copy.as_uri() + "?lang=en&demo=1&own=13,1"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
+    m = re.search(r'<div id="probe"([^>]*)>', proc.stdout)
+    assert m, "the sheet was never made"
+    probe = {k: html_mod.unescape(v) for k, v in re.findall(r'data-(\w+)="([^"]*)"', m.group(1))}
+    assert probe["sheet"] == "yes" and probe["rows"] == "4", probe
+    assert "13" in probe["choice"]
+    packed = re.search(r"sheet=([A-Za-z0-9_-]+)", probe["url"]).group(1)
+    again = page_with(wedge_id, "en", f"sheet={packed}")
+    assert not re.search(r'id="sheet"[^>]*\bhidden', again), "the link did not open as a sheet"
+    assert inner(again, "sheet-choice") == probe["choice"]
+
+
+def test_a_size_of_change_that_came_with_a_question_is_shown_on_its_step():
+    """A routed question can carry the size of the change. It is shown filled in on its own
+    step — in the "other" box when it is not one of the offered choices — never skipped."""
+    dom = page_with("shop", "en", "shock=22")
+    assert not re.search(r'<section id="ask"[^>]*\bhidden', dom), "the flow did not open"
+    other = re.search(r'<div class="otherwrap" id="otherwrap"([^>]*)>(.*?)</div>', dom, re.S)
+    assert other and "hidden" not in other.group(1), "the figure was not shown"
+    assert 'value="22"' in other.group(2)
+    assert re.search(r'class="choice other on"', dom)
+
+
+# ---- the question box on the home screen -----------------------------------------------------------
+
+HOME = SITE / "index.html"
+FAKE_FETCH = """<script>window.fetch = function(){ return Promise.resolve({ok: true,
+  json: function(){ return Promise.resolve(__REPLY__); }}); };</script>"""
+HOME_DRIVER = """
+<script>
+setTimeout(function(){
+  document.getElementById('ask-q').value = 'supplier up 25%, raise 7% and drop the low-margin lines?';
+  document.getElementById('ask-keep').checked = true;
+  document.getElementById('ask-go').click();
+}, 400);
+</script>
+"""
+
+
+def home(lang: str, tmp_path, cfg=None, reply=None) -> str:
+    body = HOME.read_text("utf-8")
+    if cfg is not None:
+        body, n = re.subn(r'(<script id="ask-cfg" type="application/json">).*?(</script>)',
+                          lambda m: m.group(1) + json.dumps(cfg) + m.group(2), body, count=1,
+                          flags=re.S)
+        assert n == 1, "the home screen has no question-box switch"
+    if reply is not None:
+        body = body.replace("<head>", "<head>" + FAKE_FETCH.replace("__REPLY__", json.dumps(reply)), 1)
+        body = body.replace("</body>", HOME_DRIVER + "</body>")
+    copy = tmp_path / f"home_{lang}.html"
+    copy.write_text(body, encoding="utf-8")
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=6000", "--dump-dom", copy.as_uri() + f"?lang={lang}"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
+    assert proc.returncode == 0, proc.stderr[-800:]
+    dom = re.sub(r"<script.*?</script>", " ", proc.stdout, flags=re.S)
+    return re.sub(r"<style.*?</style>", " ", dom, flags=re.S)
+
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_the_static_home_does_not_offer_a_box_it_cannot_send(lang, tmp_path):
+    dom = home(lang, tmp_path)
+    assert re.search(r'id="askbox"[^>]*\bhidden', dom), "a box with nowhere to send to is shown"
+
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_where_the_host_takes_questions_the_box_says_what_happens_to_them(lang, tmp_path):
+    ui = catalogue(lang)["ui"]
+    dom = home(lang, tmp_path, cfg={"on": True, "route": True})
+    assert not re.search(r'id="askbox"[^>]*\bhidden', dom)
+    assert inner(dom, "ask-route-note") == " ".join(ui["ask_route_note"].split())
+    assert inner(dom, "ask-keep-why") == " ".join(ui["ask_keep_why"].split())
+    assert "undefined" not in text_of(dom)
+    # Kept is never the default.
+    assert not re.search(r'id="ask-keep"[^>]*\bchecked', dom)
+
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_a_sorted_question_leads_to_the_page_that_answers_it(lang, tmp_path):
+    reply = {"ok": True, "routed": True, "fit": "exact", "wedge": "shop", "variant": None,
+             "shock": 25, "price": 7, "reduce": True, "topic": "pricing", "kept": True}
+    dom = home(lang, tmp_path, cfg={"on": True, "route": True}, reply=reply)
+    link = re.search(r'<a class="ask-link shop" id="ask-link" href="([^"]+)"', dom)
+    assert link, "no way on to the page that answers it"
+    href = html_mod.unescape(link.group(1))
+    assert "shop" in href and "shock=25" in href and "own=7%2C1" in href
+    shock = "۲۵" if lang == "fa" else "25"
+    situation = catalogue(lang)["wedges"]["shop"]["what_changed"].replace("{shock}", shock).rstrip(" .۔")
+    assert " ".join(situation.split()) in inner(dom, "ask-link")
+    assert catalogue(lang)["ui"]["ask_kept"] in text_of(dom)
+    assert "undefined" not in text_of(dom)
+
+
+@pytest.mark.parametrize("lang", LANGUAGES)
+def test_a_question_it_cannot_answer_says_so_and_names_the_topic(lang, tmp_path):
+    reply = {"ok": True, "routed": True, "fit": "none", "wedge": None, "variant": None,
+             "shock": None, "price": None, "reduce": False, "topic": "hiring", "kept": False}
+    dom = home(lang, tmp_path, cfg={"on": True, "route": True}, reply=reply)
+    ui = catalogue(lang)["ui"]
+    expected = ui["ask_fit_none"].replace("{topic}", ui["ask_topics"]["hiring"])
+    assert " ".join(expected.split()) in " ".join(text_of(dom).split())
+    assert 'id="ask-link"' not in dom, "offered a way on for a question it cannot answer"

@@ -87,6 +87,34 @@ html[dir="rtl"] .flow{font-size:15px}
 .credibility{margin-top:18px;font-size:13.5px;color:var(--muted);max-width:66ch;line-height:1.65}
 .foot{margin-top:40px;padding-top:24px;border-top:1px solid var(--rule);color:var(--muted);font-size:15px;max-width:66ch}
 .foot b{color:var(--ink);font-weight:600;display:block;margin-bottom:6px}
+/* A question in the owner's own words, for whoever does not see theirs among the three. */
+.ask{margin-top:34px;background:var(--raised);border:1px solid var(--rule);border-radius:20px;
+     padding:24px 24px 20px;box-shadow:var(--shadow-2);max-width:720px}
+.ask[hidden]{display:none}
+.ask h2{font-family:var(--display);font-weight:600;font-size:clamp(19px,2.4vw,23px);margin:0 0 6px}
+html[dir="rtl"] .ask h2{font-weight:700;line-height:1.6}
+.ask-lead{margin:0 0 14px;color:var(--muted);font-size:15.5px;line-height:1.7}
+.ask textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--rule);border-radius:12px;
+     background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);padding:12px 14px}
+.ask-keep{display:flex;align-items:center;gap:10px;margin-top:12px;min-height:44px;font-weight:600;cursor:pointer}
+.ask-keep input{width:22px;height:22px;flex:none;accent-color:var(--cafe)}
+.ask-note{margin:4px 0 0;font-size:13.5px;color:var(--muted);line-height:1.7}
+.ask-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px}
+#ask-go{min-height:48px;padding:0 26px;border:0;border-radius:999px;background:var(--ink);color:var(--paper);
+     font:700 16px/1 var(--body);cursor:pointer}
+#ask-go[disabled]{opacity:.6;cursor:progress}
+.ask-msg{font-size:14px;color:var(--muted)}
+.ask-out{margin-top:16px}
+.ask-out:empty{display:none}
+.ask-fit{margin:0 0 10px;font-weight:600;line-height:1.7}
+a.ask-link{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;
+     border:1px solid var(--accent);border-radius:14px;padding:16px 18px;background:var(--paper)}
+a.ask-link:hover,a.ask-link:focus-visible{box-shadow:0 0 0 2px var(--accent) inset;outline:none}
+.ask-re{font-size:17px;font-weight:600;line-height:1.6}
+.ask-list{margin:0;padding-inline-start:20px;display:grid;gap:6px}
+.ask-list a{color:var(--ink)}
+.ask-kept{margin:12px 0 0;font-size:14px;color:var(--cafe);font-weight:600}
+.ask-bad{color:#B4453B;font-weight:600;margin:0}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
 </style>
 </head>
@@ -104,6 +132,21 @@ html[dir="rtl"] .flow{font-size:15px}
   <h2 class="pq" id="problem-q"></h2>
   <div class="cards" id="cards"></div>
 
+  <!-- A question in the owner's own words. Shown only where the host can take one; sorted, if
+       the host has switched that on, and never answered by anything but the model and the
+       owner's own figures. -->
+  <section class="ask" id="askbox" hidden>
+    <h2 id="ask-t"></h2>
+    <p class="ask-lead" id="ask-lead"></p>
+    <textarea id="ask-q" rows="3" maxlength="600" dir="auto"></textarea>
+    <label class="ask-keep"><input type="checkbox" id="ask-keep"><span id="ask-keep-l"></span></label>
+    <p class="ask-note" id="ask-keep-why"></p>
+    <p class="ask-note" id="ask-route-note"></p>
+    <div class="ask-row"><button type="button" id="ask-go"></button>
+      <span class="ask-msg" id="ask-msg" role="status"></span></div>
+    <div class="ask-out" id="ask-out" role="status" aria-live="polite"></div>
+  </section>
+
   <!-- Showing one comparison is a better explanation of the product than a paragraph about
        what the product does. -->
   <section class="example" id="example">
@@ -117,6 +160,7 @@ html[dir="rtl"] .flow{font-size:15px}
   <p class="credibility" id="credibility"></p>
 </div>
 
+<script id="ask-cfg" type="application/json">__ASK__</script>
 <script id="i18n" type="application/json">__I18N__</script>
 <script>
 (function(){
@@ -139,6 +183,94 @@ function esc(s){ return String(s).replace(/[&<>"']/g, function(c){
    Where the app serves everything from one entry point the href is rewritten server-side. */
 var HREF = {cafe:'cafe/cafe_decision_report.html', shop:'shop/shop_decision_report.html',
             salon:'salon/salon_decision_report.html'};
+
+/* ---- a question in the owner's own words -------------------------------------------------------
+   What the page says about an answer is built here, from fields the host checked: the service
+   that sorts the question never writes a word or a number the reader sees. */
+var ASK = {};
+try { ASK = JSON.parse(document.getElementById('ask-cfg').textContent) || {}; } catch(e){ ASK = {}; }
+var lastAsk = null;
+function nf(v){
+  try {
+    return new Intl.NumberFormat(I.strings[lang].numerals === 'arabext' ? 'fa-IR' : 'en-US',
+      {maximumFractionDigits: 1}).format(v);
+  } catch(e){ return String(v); }
+}
+function fillS(s, v){ return String(s).replace(/\{(\w+)\}/g, function(m, k){ return (k in v) ? v[k] : m; }); }
+function anonQ(){
+  // Its own id, not the one a shared measurement carries, so the two files cannot be joined.
+  var v = null;
+  try { v = localStorage.getItem('dc_anon_q'); } catch(e){}
+  if(!/^[a-z0-9]{8,32}$/.test(v || '')){
+    v = '';
+    for(var i = 0; i < 16; i++) v += 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)];
+    try { localStorage.setItem('dc_anon_q', v); } catch(e){}
+  }
+  return v;
+}
+function hasOwn(r){ return (r.price !== null && r.price !== undefined) || !!r.reduce; }
+function askHref(r){
+  var h = HREF[r.wedge];
+  h += (h.indexOf('?') >= 0 ? '&' : '?') + 'lang=' + encodeURIComponent(lang);
+  if(r.variant) h += '&variant=' + encodeURIComponent(r.variant);
+  if(r.shock) h += '&shock=' + encodeURIComponent(r.shock);
+  if(hasOwn(r)) h += '&own=' + encodeURIComponent((r.price || 0) + ',' + (r.reduce ? 1 : 0));
+  return h;
+}
+/* The question the tool will actually answer, in the report's own words for it. */
+function restate(r, L, U){
+  var x = L.wedges[r.wedge] || {};
+  var biz = (r.variant && x.variant_names && x.variant_names[r.variant]) || x.business || '';
+  // Joined with a middle dot, so the situation line gives up its closing full stop.
+  var sit = r.shock ? fillS(x.what_changed || '', {shock: nf(r.shock)}).replace(/[.۔]\s*$/, '')
+                    : U.ask_size_next;
+  var parts = [biz, sit];
+  if(hasOwn(r)){
+    var p = r.price || 0, pv = nf(p) + (U.pct_sign || '%'), red = x.own_reduce || '';
+    var own = p === 0 ? (r.reduce ? fillS(U.own_name_r, {reduce: red}) : U.own_name_0)
+            : (r.reduce ? fillS(U.own_name_pr, {p: pv, reduce: red}) : fillS(U.own_name_p, {p: pv}));
+    parts.push(fillS(U.ask_restate_own, {own: own}));
+  }
+  return parts.join(' · ');
+}
+function renderAskOut(L, U){
+  var out = document.getElementById('ask-out'), r = lastAsk;
+  if(!r){ out.innerHTML = ''; return; }
+  if(r.error){ out.innerHTML = '<p class="ask-bad">' + esc(U.ask_err) + '</p>'; return; }
+  var ARROW = L.dir === 'rtl' ? '←' : '→', html;
+  if((r.fit === 'exact' || r.fit === 'near') && HREF[r.wedge]){
+    html = '<p class="ask-fit">' + esc(r.fit === 'exact' ? U.ask_fit_exact : U.ask_fit_near) + '</p>'
+      + '<a class="ask-link ' + esc(r.wedge) + '" id="ask-link" href="' + esc(askHref(r)) + '">'
+      + '<span class="ask-re">' + esc(restate(r, L, U)) + '</span>'
+      + '<span class="go">' + esc(U.ask_open) + ' ' + ARROW + '</span></a>';
+  } else if(r.fit === 'none' || r.fit === 'exact' || r.fit === 'near'){
+    var topics = U.ask_topics || {};
+    html = '<p class="ask-fit">'
+      + esc(fillS(U.ask_fit_none, {topic: topics[r.topic] || topics.other || ''})) + '</p>';
+  } else {
+    html = '<p class="ask-fit">' + esc(U.ask_unrouted) + '</p><ul class="ask-list">'
+      + ['cafe','shop','salon'].map(function(id){
+          var h = HREF[id] + (HREF[id].indexOf('?') >= 0 ? '&' : '?') + 'lang=' + lang;
+          return '<li><a href="' + esc(h) + '">' + esc(L.wedges[id].question) + '</a></li>'; }).join('')
+      + '</ul>';
+  }
+  if(r.kept) html += '<p class="ask-kept">' + esc(U.ask_kept) + '</p>';
+  out.innerHTML = html;
+}
+function renderAskBox(L, U){
+  var box = document.getElementById('askbox');
+  box.hidden = !ASK.on;
+  if(!ASK.on) return;
+  document.getElementById('ask-t').textContent = U.ask_t;
+  document.getElementById('ask-lead').textContent = U.ask_lead;
+  document.getElementById('ask-q').placeholder = U.ask_ph;
+  document.getElementById('ask-keep-l').textContent = U.ask_keep;
+  document.getElementById('ask-keep-why').textContent = U.ask_keep_why;
+  document.getElementById('ask-route-note').textContent = ASK.route ? U.ask_route_note : U.ask_noroute_note;
+  var go = document.getElementById('ask-go');
+  if(!go.disabled) go.textContent = U.ask_go;
+  renderAskOut(L, U);
+}
 
 function render(){
   var L = I.strings[lang], U = L.ui;
@@ -177,6 +309,7 @@ function render(){
   document.getElementById('principle').textContent =
     U.principle_1 + ' ' + U.principle_2 + ' ' + U.principle_3;
   document.getElementById('footer').textContent = U.home_footer;
+  renderAskBox(L, U);
   try { localStorage.setItem('dc_lang', lang); } catch(e){}
 }
 document.getElementById('langs').addEventListener('click', function(e){
@@ -184,6 +317,27 @@ document.getElementById('langs').addEventListener('click', function(e){
   lang = b.dataset.l;
   var u = new URL(location.href); u.searchParams.set('lang', lang); history.replaceState(null,'',u);
   render();
+});
+document.getElementById('ask-go').addEventListener('click', function(){
+  var U = I.strings[lang].ui, btn = this, msg = document.getElementById('ask-msg');
+  var q = document.getElementById('ask-q').value.replace(/\s+/g, ' ').trim();
+  var keep = document.getElementById('ask-keep').checked;
+  msg.textContent = '';
+  if(q.length < 3){ msg.textContent = U.ask_empty; return; }
+  if(!ASK.route && !keep){ msg.textContent = U.ask_need_keep; return; }
+  btn.disabled = true;
+  btn.textContent = U.ask_busy;
+  var done = function(r){
+    btn.disabled = false;
+    btn.textContent = I.strings[lang].ui.ask_go;
+    lastAsk = r;
+    renderAskOut(I.strings[lang], I.strings[lang].ui);
+  };
+  fetch('ask.php', {method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({q: q, lang: lang, keep: keep, anon: keep ? anonQ() : ''})})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){ done(j && j.ok ? j : {error: true}); })
+    .catch(function(){ done({error: true}); });
 });
 render();
 })();

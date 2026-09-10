@@ -271,7 +271,57 @@
      "share_done": "Sent. Thank you.",
      "share_fail": "It didn't send. No matter — your measurement is still here.",
      "sheet_yours_q": "Facing a decision like this yourself?",
-     "sheet_yours_go": "See your own three choices"
+     "sheet_yours_go": "See your own three choices",
+     "own_t": "Or build your own option",
+     "own_lead": "The same model, with the levers set by you: raise prices by as much as you like, and add “{reduce}” if you want.",
+     "own_p_l": "How much would you raise prices?",
+     "own_r_l": "Also: {reduce}",
+     "own_name_p": "Raise prices {p}",
+     "own_name_pr": "Raise prices {p} + {reduce}",
+     "own_name_r": "Hold prices + {reduce}",
+     "own_name_0": "Hold prices, change nothing",
+     "own_label": "Your option",
+     "own_same": "This is option “{x}” — and the model gives back exactly the same figure.",
+     "own_vs_more": "{amount} a month better than “{lead}”, the best of the three.",
+     "own_vs_less": "{amount} a month less than “{lead}”, the best of the three.",
+     "own_vs_equal": "About the same as “{lead}”, the best of the three.",
+     "own_census": "In {n} of {total} tested cases it does at least as well as the best of the three.",
+     "own_units_down": "About {pct} fewer {unit}",
+     "own_units_up": "About {pct} more {unit}",
+     "own_units_flat": "The number of {unit} stays about the same",
+     "own_how": "This option was worked out just now in your own browser, by the same model that produced the three. Before it was allowed to, your browser rebuilt all {n} precomputed cases on this page and checked them against the originals. Your business’s figures do not leave this page.",
+     "own_good": "The mix you set yourself",
+     "own_stability_v": "at least as good as the best of the three in {n} of {total} cases",
+     "ask_t": "Ask your own question",
+     "ask_lead": "Write it the way you would ask it yourself. If it is one this tool can answer with numbers, it takes you straight there; if not, it says plainly that it cannot yet.",
+     "ask_ph": "For example: my supplier put prices up 25% — should I raise mine 7%, or drop the low-margin lines?",
+     "ask_keep": "Keep my question",
+     "ask_keep_why": "So it becomes clear what owners actually ask, and what this tool should learn next. The text is kept as you wrote it, with the day (not the time) and a random id your browser made. Phone numbers, emails and web addresses are removed before it is stored. Don’t write names or anything private.",
+     "ask_route_note": "To understand your question, its text is sent to the AI service the person running this site has chosen. It only sorts the question; no figure in this tool comes from it.",
+     "ask_noroute_note": "This site does not read questions automatically right now. If you allow it, your question is kept so it can be read.",
+     "ask_go": "Ask",
+     "ask_busy": "Reading…",
+     "ask_fit_exact": "This one I can answer with numbers:",
+     "ask_fit_near": "Not exactly this. The nearest question I can answer with numbers is:",
+     "ask_fit_none": "I can’t answer this one with numbers yet ({topic}). Guessing is not what this tool does.",
+     "ask_unrouted": "This site does not read questions automatically right now. These are the questions I can answer today:",
+     "ask_kept": "Your question was kept. Thank you.",
+     "ask_open": "Take me there",
+     "ask_restate_own": "your own option: {own}",
+     "ask_size_next": "the size of the change is asked next",
+     "ask_err": "Something went wrong; your question was not sent.",
+     "ask_empty": "Write your question first.",
+     "ask_need_keep": "This site is not reading questions right now; to send it, tick “Keep my question”.",
+     "ask_topics": {
+      "hiring": "hiring",
+      "hours": "opening hours",
+      "delivery": "delivery",
+      "rent_move": "rent or moving",
+      "marketing": "marketing",
+      "range": "range or menu",
+      "loan_cash": "loans and cash",
+      "other": "another topic"
+     }
     },
     "wedges": {
      "cafe": {
@@ -280,13 +330,19 @@
       "noun": "cafe",
       "icon": "☕",
       "question": "Ingredient costs jumped. What should I change?",
+      "what_changed": "Your suppliers put ingredient prices up {shock}%.",
       "world_names": {
        "A": "Hold prices",
        "B": "Raise prices 10%",
        "C": "Raise prices 5% + simplify the menu"
       },
       "problem": "Ingredient costs went up",
-      "business_covers": "Cafe / Restaurant · Bakery · Fast food"
+      "business_covers": "Cafe / Restaurant · Bakery · Fast food",
+      "own_reduce": "simplify the menu",
+      "variant_names": {
+       "bakery": "Bakery",
+       "fastfood": "Fast food"
+      }
      },
      "shop": {
       "business": "Shop / Online Store",
@@ -294,12 +350,15 @@
       "noun": "shop",
       "icon": "🛍",
       "question": "My supplier raised prices. Should I pass it on?",
+      "what_changed": "Your supplier put wholesale prices up {shock}%.",
       "world_names": {
        "A": "Hold prices",
        "B": "Raise prices 8%",
        "C": "Raise prices 4% + drop low-margin lines"
       },
-      "problem": "My supplier raised prices"
+      "problem": "My supplier raised prices",
+      "own_reduce": "drop low-margin lines",
+      "variant_names": {}
      },
      "salon": {
       "business": "Salon / Service Business",
@@ -307,12 +366,15 @@
       "noun": "salon",
       "icon": "✂",
       "question": "My schedule is filling up. Is it time to raise prices?",
+      "what_changed": "Demand for appointments is up {shock}%, and your diary has a ceiling.",
       "world_names": {
        "A": "Keep prices, serve more",
        "B": "Raise prices 10%",
        "C": "Raise prices 5% + shift the mix"
       },
-      "problem": "My schedule is filling up"
+      "problem": "My schedule is filling up",
+      "own_reduce": "shift the mix",
+      "variant_names": {}
      }
     }
    },
@@ -553,7 +615,57 @@
      "share_done": "فرستاده شد. ممنون.",
      "share_fail": "فرستاده نشد. اشکالی ندارد — اندازه‌گیری‌ات سر جایش است.",
      "sheet_yours_q": "تو هم چنین تصمیمی داری؟",
-     "sheet_yours_go": "سه‌راهی خودت را ببین"
+     "sheet_yours_go": "سه‌راهی خودت را ببین",
+     "own_t": "یا گزینهٔ خودت را بساز",
+     "own_lead": "همان مدل، با اهرم‌هایی که خودت تنظیم می‌کنی: قیمت را هر قدر خواستی بالا ببر و اگر خواستی {reduce} را هم کنارش بگذار.",
+     "own_p_l": "چند درصد قیمت را بالا می‌بری؟",
+     "own_r_l": "همراه با {reduce}",
+     "own_name_p": "قیمت {p} بالا",
+     "own_name_pr": "قیمت {p} بالا + {reduce}",
+     "own_name_r": "قیمت ثابت + {reduce}",
+     "own_name_0": "قیمت ثابت، بی‌هیچ تغییر",
+     "own_label": "گزینهٔ تو",
+     "own_same": "این همان گزینهٔ «{x}» است — و مدل هم دقیقاً همان عدد را برمی‌گرداند.",
+     "own_vs_more": "ماهی {amount} بهتر از «{lead}»، بهترینِ آن سه.",
+     "own_vs_less": "ماهی {amount} کمتر از «{lead}»، بهترینِ آن سه.",
+     "own_vs_equal": "تقریباً هم‌اندازهٔ «{lead}»، بهترینِ آن سه.",
+     "own_census": "در {n} از {total} حالتِ آزموده، دست‌کم به خوبیِ بهترینِ آن سه است.",
+     "own_units_down": "تعداد {unit} حدود {pct} کم می‌شود",
+     "own_units_up": "تعداد {unit} حدود {pct} بیشتر می‌شود",
+     "own_units_flat": "تعداد {unit} تقریباً ثابت می‌ماند",
+     "own_how": "این گزینه همین حالا در مرورگر خودت حساب شد، با همان مدلی که آن سه را ساخت. پیش از آن، مرورگرت هر {n} حالتِ ازپیش‌حساب‌شدهٔ این صفحه را از نو ساخت و با نسخهٔ اصلی مقایسه کرد. عددهای کسب‌وکارت از این صفحه بیرون نمی‌روند.",
+     "own_good": "ترکیبی که خودت تنظیم کردی",
+     "own_stability_v": "در {n} از {total} حالت، دست‌کم به خوبیِ بهترینِ آن سه",
+     "ask_t": "سؤالِ خودت را بپرس",
+     "ask_lead": "همان‌طور که برای خودت می‌پرسی بنویس. اگر از سؤال‌هایی باشد که این ابزار با عدد جواب می‌دهد، مستقیم می‌بَرَدت سرِ همان؛ اگر نباشد، راستش را می‌گوید که هنوز نمی‌تواند.",
+     "ask_ph": "مثلاً: تأمین‌کننده ۲۵٪ گران کرده؛ قیمت‌ها را ۷٪ بالا ببرم یا کالاهای کم‌سود را حذف کنم؟",
+     "ask_keep": "سؤالم را نگه دارید",
+     "ask_keep_why": "تا معلوم شود صاحبان کسب‌وکار واقعاً چه می‌پرسند و این ابزار بعد از این چه چیزی را یاد بگیرد. متن همان‌طور که نوشتی نگه داشته می‌شود، با روزِ ثبت (نه ساعت) و شناسه‌ای تصادفی که مرورگرت ساخته. شماره تلفن، ایمیل و نشانی سایت پیش از ذخیره پاک می‌شوند. اسم یا چیزِ خصوصی ننویس.",
+     "ask_route_note": "برای فهمیدن سؤالت، متنش به سرویس هوش مصنوعی‌ای فرستاده می‌شود که گردانندهٔ این سایت انتخاب کرده. آن سرویس فقط سؤال را دسته‌بندی می‌کند؛ هیچ عددی در این ابزار از آن نمی‌آید.",
+     "ask_noroute_note": "این سایت فعلاً سؤال‌ها را خودکار نمی‌خواند. اگر اجازه بدهی نگهش می‌داریم تا خوانده شود.",
+     "ask_go": "بپرس",
+     "ask_busy": "دارم می‌خوانم…",
+     "ask_fit_exact": "این را می‌توانم با عدد جواب بدهم:",
+     "ask_fit_near": "دقیقاً این را نه. نزدیک‌ترین سؤالی که با عدد جوابش را دارم این است:",
+     "ask_fit_none": "این یکی را هنوز نمی‌توانم با عدد جواب بدهم ({topic}). حدس زدن کارِ این ابزار نیست.",
+     "ask_unrouted": "این سایت فعلاً سؤال‌ها را خودکار نمی‌خواند. سؤال‌هایی که همین حالا جوابشان را دارم این‌هاست:",
+     "ask_kept": "سؤالت نگه داشته شد. ممنون.",
+     "ask_open": "برو سرِ همین",
+     "ask_restate_own": "گزینهٔ خودت: {own}",
+     "ask_size_next": "اندازهٔ تغییر را در سؤال‌های بعدی می‌پرسم",
+     "ask_err": "چیزی خراب شد؛ سؤالت فرستاده نشد.",
+     "ask_empty": "اول سؤالت را بنویس.",
+     "ask_need_keep": "این سایت فعلاً سؤال‌ها را نمی‌خواند؛ برای فرستادن، «سؤالم را نگه دارید» را بزن.",
+     "ask_topics": {
+      "hiring": "استخدام",
+      "hours": "ساعت کاری",
+      "delivery": "پیک و ارسال",
+      "rent_move": "اجاره یا جابه‌جایی",
+      "marketing": "تبلیغ",
+      "range": "تنوع کالا یا منو",
+      "loan_cash": "وام و نقدینگی",
+      "other": "موضوعی دیگر"
+     }
     },
     "wedges": {
      "cafe": {
@@ -562,13 +674,19 @@
       "noun": "کافه",
       "icon": "☕",
       "question": "هزینهٔ مواد اولیه بالا رفته. چه چیزی را تغییر بدهم؟",
+      "what_changed": "تأمین‌کننده‌ها قیمت مواد اولیه را {shock}٪ بالا برده‌اند.",
       "world_names": {
        "A": "قیمت را نگه دار",
        "B": "قیمت را ۱۰٪ بالا ببر",
        "C": "قیمت ۵٪ بالا + سبک‌کردن منو"
       },
       "problem": "مواد اولیه گرون شده",
-      "business_covers": "کافه / رستوران · نانوایی / قنادی · فست‌فود"
+      "business_covers": "کافه / رستوران · نانوایی / قنادی · فست‌فود",
+      "own_reduce": "سبک‌کردن منو",
+      "variant_names": {
+       "bakery": "نانوایی / قنادی",
+       "fastfood": "فست‌فود"
+      }
      },
      "shop": {
       "business": "فروشگاه / آنلاین‌شاپ",
@@ -576,12 +694,15 @@
       "noun": "فروشگاه",
       "icon": "🛍",
       "question": "تأمین‌کننده قیمت را بالا برده. من هم قیمت را بالا ببرم؟",
+      "what_changed": "تأمین‌کننده قیمت عمده را {shock}٪ بالا برده.",
       "world_names": {
        "A": "قیمت را نگه دار",
        "B": "قیمت را ۸٪ بالا ببر",
        "C": "قیمت ۴٪ بالا + حذف کالاهای کم‌سود"
       },
-      "problem": "تأمین‌کننده قیمت رو بالا برده"
+      "problem": "تأمین‌کننده قیمت رو بالا برده",
+      "own_reduce": "حذف کالاهای کم‌سود",
+      "variant_names": {}
      },
      "salon": {
       "business": "سالن / کسب‌وکار خدماتی",
@@ -589,12 +710,15 @@
       "noun": "سالن",
       "icon": "✂",
       "question": "وقت‌هایم دارد پر می‌شود. وقت افزایش قیمت است؟",
+      "what_changed": "تقاضا برای نوبت {shock}٪ بیشتر شده، و وقت‌های تو سقف دارد.",
       "world_names": {
        "A": "قیمت را نگه دار، بیشتر کار بگیر",
        "B": "قیمت را ۱۰٪ بالا ببر",
        "C": "قیمت ۵٪ بالا + تغییر ترکیب خدمات"
       },
-      "problem": "وقت‌هام داره پر میشه"
+      "problem": "وقت‌هام داره پر میشه",
+      "own_reduce": "تغییر ترکیب خدمات",
+      "variant_names": {}
      }
     }
    }

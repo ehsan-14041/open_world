@@ -30,7 +30,7 @@ PHP_ROOT = ROOT / "deploy" / "php"
 MIN_PHP = "7.1.0"
 
 #: Entry points a visitor can hit directly. Each must guard before anything modern is parsed.
-ENTRY_POINTS = ("index.php", "admin.php")
+ENTRY_POINTS = ("index.php", "admin.php", "ask.php")
 
 #: Syntax newer than the floor, with the version that introduced it.
 TOO_NEW = [

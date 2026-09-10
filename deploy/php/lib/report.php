@@ -501,6 +501,9 @@ function build_bundle(Slice $slice, array $wedge, Baseline $baseline, bool $incl
         'baseline' => $baseline->summary($wedge),
         'baseline_raw' => $baseline->toDict(),
         'intake_fields' => $wedge['intake_fields'],
+        // The model itself, so an option the owner makes up can be run in their browser.
+        'slice' => $wedge['slice'],
+        'roles' => $wedge['roles'],
         'worlds' => $worlds,
         'central_ranking' => ranking($comp),
         'net_benefit_vs_a' => $netBenefit,

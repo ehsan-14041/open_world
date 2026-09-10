@@ -26,6 +26,7 @@ from event_sim.engine import SimulationConfig  # noqa: E402
 from event_sim.freeze import module_hash  # noqa: E402
 from event_sim.wedge.accounting import DAYS_PER_MONTH  # noqa: E402
 from event_sim.wedge.compare import _trajectory_slice, shared_fingerprint, wedge_slice  # noqa: E402
+from event_sim.wedge.report import frozen_slice, wedge_roles  # noqa: E402
 from event_sim.wedge.i18n import bundle_for, chooser_bundle  # noqa: E402
 from event_sim.wedge.registry import CHOOSER, WEDGES  # noqa: E402
 from event_sim.wedge.variants import VARIANTS  # noqa: E402
@@ -95,34 +96,8 @@ def freeze(wedge: WedgeSpec) -> dict:
             "trajectory_slice": json.dumps(_trajectory_slice(s), sort_keys=True, default=str),
             "config": json.dumps(cfg.to_dict(), sort_keys=True, default=str),
         },
-        "slice": {
-            "variables": [
-                {"id": v.id, "label": v.label, "unit": v.unit, "baseline": v.baseline,
-                 "scale": v.scale, "min": v.minimum, "max": v.maximum,
-                 "response": v.response, "kind": v.kind, "axis": v.axis}
-                for v in s.variables
-            ],
-            "edges": [
-                {"id": e.id, "source": e.source, "target": e.target, "polarity": e.polarity,
-                 "mechanism_type": e.mechanism_type, "axis": e.axis,
-                 "effect": {k: e.effect.value_for(k) for k in ("low", "central", "high")},
-                 "lag": e.lag.effective("central")}
-                for e in s.edges
-            ],
-            "axes": [
-                {"id": a.id, "settings": list(a.settings), "applies_to": list(a.applies_to),
-                 "mapping": {k: dict(v) for k, v in a.mapping.items()},
-                 "default_setting": a.default_setting()}
-                for a in s.axes
-            ],
-            "interventions": [dict(i) for i in s.interventions],
-        },
-        "roles": {
-            "demand_var": wedge.demand_var,
-            "price_var": wedge.price_var,
-            "unit_cost_var": wedge.unit_cost_var,
-            "index_vars": list(wedge.index_vars),
-        },
+        "slice": frozen_slice(wedge),
+        "roles": wedge_roles(wedge),
         "defaults": {
             "horizon_days": wedge.horizon_days,
             "days_per_month": DAYS_PER_MONTH,
@@ -166,7 +141,8 @@ def main() -> int:
     # What the contribution endpoint is allowed to accept. Written out rather than inferred from
     # the translation bundles, so the host validates against this build's own list of trades.
     (OUT / "trades.json").write_text(
-        json.dumps({"wedges": sorted(WEDGES), "variants": sorted(VARIANTS)},
+        json.dumps({"wedges": sorted(WEDGES), "variants": sorted(VARIANTS),
+                    "variant_base": {v: VARIANTS[v]["base"] for v in sorted(VARIANTS)}},
                    indent=1, ensure_ascii=False),
         encoding="utf-8")
 

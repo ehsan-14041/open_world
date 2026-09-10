@@ -23,7 +23,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from event_sim.wedge.compare import Comparison, run_comparison
+from event_sim.wedge.compare import Comparison, run_comparison, wedge_slice
 from event_sim.wedge.evidence import class_counts
 from event_sim.wedge.i18n import bundle_for
 from event_sim.wedge.sensitivity import SensitivityResult, run_sensitivity
@@ -63,6 +63,49 @@ def summarise(wedge: WedgeSpec, baseline: Any) -> dict[str, Any]:
 
 def _round_series(values: Any, nd: int = 3) -> list[float]:
     return [round(float(x), nd) for x in values]
+
+
+def frozen_slice(wedge: WedgeSpec) -> dict[str, Any]:
+    """
+    The causal slice as plain data: variables, edges, the assumption axes and the two levers.
+
+    It is the same block the PHP host is shipped, and it travels inside every report so the
+    browser can run an option nobody precomputed. The page only lets it do that after it has
+    rebuilt every precomputed case from this block and matched the originals.
+    """
+    s = wedge_slice(wedge, None)
+    return {
+        "variables": [
+            {"id": v.id, "label": v.label, "unit": v.unit, "baseline": v.baseline,
+             "scale": v.scale, "min": v.minimum, "max": v.maximum,
+             "response": v.response, "kind": v.kind, "axis": v.axis}
+            for v in s.variables
+        ],
+        "edges": [
+            {"id": e.id, "source": e.source, "target": e.target, "polarity": e.polarity,
+             "mechanism_type": e.mechanism_type, "axis": e.axis,
+             "effect": {k: e.effect.value_for(k) for k in ("low", "central", "high")},
+             "lag": e.lag.effective("central")}
+            for e in s.edges
+        ],
+        "axes": [
+            {"id": a.id, "settings": list(a.settings), "applies_to": list(a.applies_to),
+             "mapping": {k: dict(v) for k, v in a.mapping.items()},
+             "default_setting": a.default_setting()}
+            for a in s.axes
+        ],
+        "interventions": [dict(i) for i in s.interventions],
+    }
+
+
+def wedge_roles(wedge: WedgeSpec) -> dict[str, Any]:
+    """Which slice variable is demand, price and unit cost — the three the ledger reads."""
+    return {
+        "demand_var": wedge.demand_var,
+        "price_var": wedge.price_var,
+        "unit_cost_var": wedge.unit_cost_var,
+        "index_vars": list(wedge.index_vars),
+    }
 
 
 def _grid(wedge: WedgeSpec, baseline: Any, sens: SensitivityResult) -> list[dict[str, Any]]:
@@ -121,6 +164,9 @@ def build_bundle(
         "baseline": summarise(wedge, baseline),
         "baseline_raw": baseline.to_dict(),
         "intake_fields": wedge.intake_fields,
+        # The model itself, so an option the owner makes up can be run in their browser.
+        "slice": frozen_slice(wedge),
+        "roles": wedge_roles(wedge),
         "worlds": [
             {
                 "id": w.spec.id, "label": w.spec.label, "headline": w.spec.headline,

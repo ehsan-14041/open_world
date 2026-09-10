@@ -237,7 +237,57 @@
     "share_done": "Sent. Thank you.",
     "share_fail": "It didn't send. No matter — your measurement is still here.",
     "sheet_yours_q": "Facing a decision like this yourself?",
-    "sheet_yours_go": "See your own three choices"
+    "sheet_yours_go": "See your own three choices",
+    "own_t": "Or build your own option",
+    "own_lead": "The same model, with the levers set by you: raise prices by as much as you like, and add “{reduce}” if you want.",
+    "own_p_l": "How much would you raise prices?",
+    "own_r_l": "Also: {reduce}",
+    "own_name_p": "Raise prices {p}",
+    "own_name_pr": "Raise prices {p} + {reduce}",
+    "own_name_r": "Hold prices + {reduce}",
+    "own_name_0": "Hold prices, change nothing",
+    "own_label": "Your option",
+    "own_same": "This is option “{x}” — and the model gives back exactly the same figure.",
+    "own_vs_more": "{amount} a month better than “{lead}”, the best of the three.",
+    "own_vs_less": "{amount} a month less than “{lead}”, the best of the three.",
+    "own_vs_equal": "About the same as “{lead}”, the best of the three.",
+    "own_census": "In {n} of {total} tested cases it does at least as well as the best of the three.",
+    "own_units_down": "About {pct} fewer {unit}",
+    "own_units_up": "About {pct} more {unit}",
+    "own_units_flat": "The number of {unit} stays about the same",
+    "own_how": "This option was worked out just now in your own browser, by the same model that produced the three. Before it was allowed to, your browser rebuilt all {n} precomputed cases on this page and checked them against the originals. Your business’s figures do not leave this page.",
+    "own_good": "The mix you set yourself",
+    "own_stability_v": "at least as good as the best of the three in {n} of {total} cases",
+    "ask_t": "Ask your own question",
+    "ask_lead": "Write it the way you would ask it yourself. If it is one this tool can answer with numbers, it takes you straight there; if not, it says plainly that it cannot yet.",
+    "ask_ph": "For example: my supplier put prices up 25% — should I raise mine 7%, or drop the low-margin lines?",
+    "ask_keep": "Keep my question",
+    "ask_keep_why": "So it becomes clear what owners actually ask, and what this tool should learn next. The text is kept as you wrote it, with the day (not the time) and a random id your browser made. Phone numbers, emails and web addresses are removed before it is stored. Don’t write names or anything private.",
+    "ask_route_note": "To understand your question, its text is sent to the AI service the person running this site has chosen. It only sorts the question; no figure in this tool comes from it.",
+    "ask_noroute_note": "This site does not read questions automatically right now. If you allow it, your question is kept so it can be read.",
+    "ask_go": "Ask",
+    "ask_busy": "Reading…",
+    "ask_fit_exact": "This one I can answer with numbers:",
+    "ask_fit_near": "Not exactly this. The nearest question I can answer with numbers is:",
+    "ask_fit_none": "I can’t answer this one with numbers yet ({topic}). Guessing is not what this tool does.",
+    "ask_unrouted": "This site does not read questions automatically right now. These are the questions I can answer today:",
+    "ask_kept": "Your question was kept. Thank you.",
+    "ask_open": "Take me there",
+    "ask_restate_own": "your own option: {own}",
+    "ask_size_next": "the size of the change is asked next",
+    "ask_err": "Something went wrong; your question was not sent.",
+    "ask_empty": "Write your question first.",
+    "ask_need_keep": "This site is not reading questions right now; to send it, tick “Keep my question”.",
+    "ask_topics": {
+      "hiring": "hiring",
+      "hours": "opening hours",
+      "delivery": "delivery",
+      "rent_move": "rent or moving",
+      "marketing": "marketing",
+      "range": "range or menu",
+      "loan_cash": "loans and cash",
+      "other": "another topic"
+    }
   },
   "wedges": {
     "cafe": {
@@ -490,7 +540,8 @@
             "Know how your individual customers will behave.",
             "Model how the other bakeries nearby react.",
             "Know how far bread differs from eating out — until you measure it."
-          ]
+          ],
+          "own_reduce": "drop low-margin lines"
         },
         "fastfood": {
           "business": "Fast food",
@@ -518,7 +569,8 @@
           "sources_note": "On price sensitivity: research gives a reference range for eating out as a whole. Fast food usually has easier substitutes close by, so customers may move faster than this figure suggests. The two-week test measures it for you."
         }
       },
-      "business_covers": "Cafe / Restaurant · Bakery · Fast food"
+      "business_covers": "Cafe / Restaurant · Bakery · Fast food",
+      "own_reduce": "simplify the menu"
     },
     "shop": {
       "business": "Shop / Online Store",
@@ -712,7 +764,8 @@
           "bad": "but it depends on what dropping low-margin lines really saves"
         }
       },
-      "experiment": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily sales count. Compare it with the week before."
+      "experiment": "Put the price of three to five best-sellers up {rise} for two weeks and write down the daily sales count. Compare it with the week before.",
+      "own_reduce": "drop low-margin lines"
     },
     "salon": {
       "business": "Salon / Service Business",
@@ -919,7 +972,8 @@
           "bad": "but it depends on how well the mix shift actually works"
         }
       },
-      "experiment": "Put the price of one or two in-demand services up {rise} for two weeks and write down how many people ask for them. Compare with the fortnight before."
+      "experiment": "Put the price of one or two in-demand services up {rise} for two weeks and write down how many people ask for them. Compare with the fortnight before.",
+      "own_reduce": "shift the mix"
     }
   }
 }

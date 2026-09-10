@@ -5,8 +5,10 @@
  * Deliberate boundaries, because the product's claim is that its numbers are not produced by a
  * language model and the page says so to the customer:
  *
- *   - the model NEVER produces, adjusts or ranks a number. It translates copy and it reads a
- *     free-text description into form fields the owner then confirms. Nothing else.
+ *   - the model NEVER produces, adjusts or ranks a number. It translates copy, it reads a
+ *     free-text description into form fields the owner then confirms, and it sorts a typed
+ *     question into one of the questions the tool can answer (fields only — the page writes
+ *     every word the owner reads). Nothing else.
  *   - the API key lives in a file the web server is told not to serve, and is never rendered
  *     into a page, never sent to a browser, never written to the usage log.
  *   - a visitor's page view never calls the API. Translation is generated once by the
@@ -30,7 +32,7 @@ const LLM_DEFAULTS = [
     'timeout_seconds' => 60,
     'max_output_tokens' => 4000,
     'monthly_call_cap' => 200,
-    'features' => ['translation' => true, 'intake_assistant' => false],
+    'features' => ['translation' => true, 'intake_assistant' => false, 'question_router' => false],
 ];
 
 function llm_settings(array $config = []): array

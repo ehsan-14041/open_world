@@ -56,6 +56,8 @@ def main() -> int:
     # The home screen carries both languages too, so switching there never reloads either.
     chooser = CHOOSER_TEMPLATE.read_text(encoding="utf-8")
     chooser = chooser.replace("__I18N__", json.dumps(chooser_bundle(), ensure_ascii=False))
+    # No host behind a static site, so nowhere to send a question: the box stays hidden.
+    chooser = chooser.replace("__ASK__", json.dumps({"on": False, "route": False}))
     (OUT / "index.html").write_text(chooser, encoding="utf-8")
     print(f"\n  index  {(OUT / 'index.html').stat().st_size:>10,} bytes")
     print(f"\nOpen {OUT / 'index.html'}")

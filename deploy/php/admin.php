@@ -11,6 +11,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/lib/compat.php';
 require_once __DIR__ . '/lib/llm.php';
 require_once __DIR__ . '/lib/i18n.php';
+require_once __DIR__ . '/lib/router.php';
 
 $config = is_file(__DIR__ . '/config.php') ? (require __DIR__ . '/config.php') : [];
 $adminPassword = (string) ($config['admin_password'] ?? '');
@@ -67,6 +68,7 @@ if ($action === 'save') {
     $llm['features'] = [
         'translation' => !empty($_POST['feature_translation']),
         'intake_assistant' => !empty($_POST['feature_intake_assistant']),
+        'question_router' => !empty($_POST['feature_question_router']),
     ];
     // An empty key field means "leave it alone", so saving other settings cannot wipe the key.
     $typedKey = trim((string) ($_POST['api_key'] ?? ''));
@@ -270,6 +272,13 @@ details summary{cursor:pointer;font-weight:600;font-size:14px;margin-top:12px}
       <span><strong>Intake assistant.</strong> Turns a typed description into draft form fields.
       This one <em>does</em> send what the visitor types to your provider, so the form says so plainly.
       Off by default.</span></label>
+    <label class="check"><input type="checkbox" name="feature_question_router" value="1"
+      <?= !empty($llm['features']['question_router']) ? 'checked' : '' ?>>
+      <span><strong>Question router.</strong> Sorts a question typed into the home-screen box into one
+      this tool can answer with numbers, or a topic it cannot. It sends the question text — after
+      phone numbers, emails and web addresses are removed — to your provider, and the box says so.
+      The provider returns fields only; it never writes what the visitor reads. One call per question,
+      counted against the monthly cap. Off by default.</span></label>
 
     <?php if ($modelList !== null): ?>
       <div class="msg <?= $modelList['ok'] ? 'ok' : 'warn' ?>">
@@ -383,6 +392,35 @@ details summary{cursor:pointer;font-weight:600;font-size:14px;margin-top:12px}
       <button class="danger" type="submit"><?= count(glob(__DIR__ . '/data/cache/*.gz') ?: []) ?> cached — delete them</button>
     </div>
   </form>
+
+  <?php $asked = router_read_questions(60); ?>
+  <div class="card">
+    <h2>Questions owners asked</h2>
+    <p class="sub">Only questions a visitor chose to keep, from <code>data/questions/questions.jsonl</code>.
+       This is the list of what people actually want to decide — read it before building anything new.
+       To stop receiving questions, delete <code>ask.php</code>.</p>
+    <?php if ($asked['total'] === 0): ?>
+      <p class="note">None yet.</p>
+    <?php else: ?>
+      <p class="note"><?= (int) $asked['total'] ?> kept.
+        <?php foreach ($asked['by_fit'] as $k => $n): ?>
+          <code><?= htmlspecialchars((string) $k, ENT_QUOTES) ?></code> <?= (int) $n ?> ·
+        <?php endforeach; ?>
+        topics:
+        <?php foreach ($asked['by_topic'] as $k => $n): ?>
+          <code><?= htmlspecialchars((string) $k, ENT_QUOTES) ?></code> <?= (int) $n ?>
+        <?php endforeach; ?></p>
+      <table>
+        <tr><th>Day</th><th>Sorted as</th><th>Business</th><th>Question</th></tr>
+        <?php foreach ($asked['rows'] as $row): ?>
+          <tr><td><code><?= htmlspecialchars((string) ($row['at'] ?? ''), ENT_QUOTES) ?></code></td>
+              <td><?= htmlspecialchars((string) ($row['fit'] ?? '') . ' / ' . (string) ($row['topic'] ?? '-'), ENT_QUOTES) ?></td>
+              <td><?= htmlspecialchars(trim((string) ($row['wedge'] ?? '') . ' ' . (string) ($row['variant'] ?? '')), ENT_QUOTES) ?></td>
+              <td dir="auto"><?= htmlspecialchars((string) ($row['q'] ?? ''), ENT_QUOTES) ?></td></tr>
+        <?php endforeach; ?>
+      </table>
+    <?php endif; ?>
+  </div>
 
   <div class="card">
     <h2>Usage</h2>

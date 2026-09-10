@@ -36,6 +36,10 @@ file_put_contents($argv[3], json_encode($bundle, JSON_PRESERVE_ZERO_FRACTION));
 """
 
 
+#: Bundle keys only the PHP host can fill in.
+HOST_ONLY = ("contrib",)
+
+
 def compare(py: object, php: object) -> tuple[list[str], float]:
     """Field-by-field diff. Returns (differences, worst absolute numeric difference)."""
     diffs: list[str] = []
@@ -126,6 +130,10 @@ def main(argv: list[str] | None = None) -> int:
         # lists, and comparing the in-memory object would report that as a difference.
         py_bundle = json.loads(json.dumps(build_bundle(wedge, baseline)))
 
+        # Facts about the host rather than the instrument: whether this host accepts a shared
+        # measurement. The Python pipeline has no host to ask, so it carries no such key.
+        for key in HOST_ONLY:
+            php_bundle.pop(key, None)
         diffs, worst = compare(py_bundle, php_bundle)
         worst_overall = max(worst_overall, worst)
         fps_match = all(a["engine_fingerprint"] == b["engine_fingerprint"]

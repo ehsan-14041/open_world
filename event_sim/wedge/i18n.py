@@ -103,9 +103,14 @@ def chooser_bundle() -> dict[str, Any]:
             "ui": cat["ui"],
             # `problem` names the situation on each card; `world_names` lets the worked
             # example promise exactly the three decisions the next page delivers.
-            "wedges": {wid: {k: v for k, v in w.items()
-                             if k in ("business", "business_short", "question", "icon", "noun",
-                                      "problem", "world_names", "business_covers")}
+            # `what_changed` and `own_reduce` let the question box restate a routed question
+            # in the same words the report will use; `variant_names` names the trades.
+            "wedges": {wid: dict({k: v for k, v in w.items()
+                                  if k in ("business", "business_short", "question", "icon",
+                                           "noun", "problem", "world_names", "business_covers",
+                                           "what_changed", "own_reduce")},
+                                 variant_names={vid: o["business"]
+                                                for vid, o in w.get("variants", {}).items()})
                        for wid, w in cat["wedges"].items()},
         }
     return out

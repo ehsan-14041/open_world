@@ -78,6 +78,12 @@ if ($wedgeId === '' || !in_array($wedgeId, $available, true)) {
     $chooser = (string) file_get_contents(__DIR__ . '/assets/chooser.html');
     $chooser = str_replace('__I18N__',
         json_encode($catalogue['i18n'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $chooser);
+    // The question box appears only where this host can take a question, and says whether a
+    // provider will read it.
+    $chooser = str_replace('__ASK__', (string) json_encode([
+        'on' => is_file(__DIR__ . '/ask.php'),
+        'route' => llm_feature_on($llm, 'question_router'),
+    ]), $chooser);
     // The static chooser links to files; here each card is a query on this one entry point.
     foreach ($catalogue['chooser'] as $entry) {
         $chooser = str_replace("{$entry['id']}/{$entry['id']}_decision_report.html",

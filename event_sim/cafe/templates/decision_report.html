@@ -67,7 +67,7 @@ html[dir="rtl"] .eyebrow{letter-spacing:0;font-size:13px;text-transform:none}
 .muted{color:var(--muted)} .small{font-size:14px} .neg{color:var(--crit)}
 button,select,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
-.wA{--wc:var(--a)} .wB{--wc:var(--b)} .wC{--wc:var(--c)}
+.wA{--wc:var(--a)} .wB{--wc:var(--b)} .wC{--wc:var(--c)} .wD{--wc:var(--ink)}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
 .top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--paper) 88%,transparent);
@@ -544,6 +544,34 @@ html[dir="rtl"] .choice{font-size:18px}
 .askfield input:focus{outline:none}
 .askfield .u{padding-inline-end:20px;color:var(--muted);font-weight:600}
 .otherwrap{margin-top:12px}
+/* The owner's own option: the same levers the three are built from, set by hand. It sits under
+   the three and reads as a workbench rather than a fourth card — and it only appears once the
+   browser has shown it can rebuild the three by itself. */
+.own{margin-top:0;background:var(--raised);border:1px dashed var(--ink);border-radius:var(--r-lg);
+  padding:22px 24px}
+.own[hidden]{display:none}
+.own h3{margin:0 0 6px;font-size:19px}
+.own-lead{color:var(--muted);font-size:15px;line-height:1.7;margin:0 0 16px}
+.own-ctl{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+.own-p{display:flex;flex-direction:column;gap:6px;flex:1;min-width:220px;font-weight:600;font-size:15px}
+.own-pv{display:flex;align-items:center;gap:14px}
+.own-pv input[type=range]{flex:1;min-height:44px;accent-color:var(--ink);cursor:pointer}
+.own-pv output{min-width:4.5ch;font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;
+  text-align:center}
+.own-r{display:flex;align-items:center;gap:10px;font-size:15px;min-height:44px;cursor:pointer}
+.own-r input{width:22px;height:22px;accent-color:var(--ink);flex:none}
+.own-card{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 26px;align-items:flex-end;
+  padding-top:16px;border-top:1px solid var(--rule)}
+.own-name{flex-basis:100%;font-weight:600;font-size:17px;line-height:1.4}
+.own-star{margin-inline-end:8px}
+.own-card .money-k{font-size:13px;color:var(--muted)}
+.own-units{margin:0;color:var(--muted);font-size:14.5px}
+.own-vs{margin:14px 0 0;font-weight:600;font-size:15.5px;line-height:1.6}
+.own-census{margin:6px 0 0;font-size:14.5px;line-height:1.6}
+.own-how{margin:12px 0 0;font-size:13px;color:var(--muted);line-height:1.7}
+@media (min-width:561px){.picks.has-own{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.own{padding:18px 16px}}
+
 .askerr{color:var(--crit);font-size:15px;margin-top:14px;min-height:1.2em}
 .askerr .e-msg{display:block;font-weight:600}
 /* The rule alone tells a reader they are stuck; the reason tells them what to change. */
@@ -741,6 +769,26 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     <div class="options intro-2" id="options"></div>
     <div class="why"><h3 id="why-h"></h3><p id="why-p"></p></div>
     <p class="scenario" id="scenario"></p>
+  </section>
+
+  <!-- ================= your own option =============================================
+       The same two levers the three are made of, set by the owner and run in their browser.
+       It sits between the three and the race so a line set here is drawn in the race below.
+       The section is hidden, not just empty, when the browser's model has not passed its check. -->
+  <section class="beat" id="b-own" hidden>
+    <!-- The owner's own option. Hidden unless the browser's copy of the model has rebuilt every
+         precomputed case on this page and matched it. -->
+    <div class="own" id="own">
+      <h3 id="own-t"></h3>
+      <p class="own-lead" id="own-lead"></p>
+      <div class="own-ctl">
+        <label class="own-p" for="own-p"><span id="own-p-l"></span>
+          <span class="own-pv"><input id="own-p" type="range" min="0" max="30" step="1">
+            <output id="own-p-o" for="own-p"></output></span></label>
+        <label class="own-r"><input type="checkbox" id="own-r"><span id="own-r-l"></span></label>
+      </div>
+      <div id="own-res" role="status" aria-live="polite"></div>
+    </div>
   </section>
 
   <section class="beat" id="b-race">
@@ -1172,12 +1220,327 @@ function compute(){
 }
 
 /* ---- render ------------------------------------------------------------------------------ */
+/* ---- the model, in the browser ----------------------------------------------------------------
+   A line-for-line port of the engine this report was built with (event_sim/engine.py, and the
+   PHP port of it), for one purpose: to run an option the owner makes up. It is not trusted to
+   do that until it has rebuilt every case this page already carries — all three options at
+   every tested setting — and matched them. If it cannot, the own-option panel stays hidden and
+   nothing else on the page changes. */
+var OWN_MAX = 30;
+var OWN_OUT = null;
+var ENGINE = (function(){
+  var S = D.slice, R = D.roles;
+  if(!S || !R || !S.variables || !S.edges || !S.axes || !D.grid || !D.grid.length) return null;
+  var INTO = {}, BY = {};
+  S.edges.forEach(function(e){ (INTO[e.target] = INTO[e.target] || []).push(e); });
+  S.variables.forEach(function(v){ BY[v.id] = v; });
+
+  function axisFor(edge){
+    var i;
+    if(edge.axis !== null && edge.axis !== undefined)
+      for(i = 0; i < S.axes.length; i++) if(S.axes[i].id === edge.axis) return S.axes[i];
+    for(i = 0; i < S.axes.length; i++) if(S.axes[i].applies_to.indexOf(edge.id) >= 0) return S.axes[i];
+    return null;
+  }
+  function settingOf(ax, st){ return (st[ax.id] !== undefined) ? st[ax.id] : ax.default_setting; }
+  /* Which point of an edge's evidenced range this world uses. */
+  function effectSetting(edge, st){
+    var ax = axisFor(edge);
+    if(!ax) return 'central';
+    var setting = settingOf(ax, st), m = ax.mapping[setting], v = m ? m.effect : undefined;
+    if(v === 'low' || v === 'central' || v === 'high') return v;
+    return (setting === 'low' || setting === 'central' || setting === 'high') ? setting : 'central';
+  }
+  /* Polarity is authoritative, however the range was written. */
+  function coefficient(edge, setting){
+    var mag = Math.abs(+edge.effect[setting]);
+    return edge.polarity === 'negative' ? -mag : mag;
+  }
+  function response(v, st){
+    var mult = 1;
+    S.axes.forEach(function(ax){
+      if(ax.applies_to.indexOf(v.id) >= 0 || v.axis === ax.id){
+        var m = ax.mapping[settingOf(ax, st)], mm = m ? parseFloat(m.response_multiplier) : NaN;
+        if(isFinite(mm) && mm > 0) mult *= mm;
+      }
+    });
+    return Math.max(0, Math.min(1, (+v.response) * mult));
+  }
+  function active(x, turn){ return turn >= x.start_turn && turn < x.start_turn + Math.max(1, x.duration); }
+
+  /*  pressure(v,t) = Σ coef(e) · dev(source(e), t − lag(e))
+      dev(v,t+1)    = dev(v,t) + response(v) · (pressure − dev(v,t))
+      An event HOLDS a variable at a displacement; an intervention OFFSETS the observed value
+      without entering the endogenous state, so its effect holds steady instead of ratcheting. */
+  function run(st, events, ivs, turns){
+    var vars = S.variables, dev = [{}], endo = [{}], series = {}, resp = {}, coef = {};
+    vars.forEach(function(v){ dev[0][v.id] = 0; endo[0][v.id] = 0; series[v.id] = [+v.baseline];
+                              resp[v.id] = response(v, st); });
+    S.edges.forEach(function(e){ coef[e.id] = coefficient(e, effectSetting(e, st)); });
+    function devAt(id, turn){ return (turn < 0 || turn >= dev.length) ? 0 : (dev[turn][id] || 0); }
+    for(var t = 0; t < turns; t++){
+      var next = t + 1, cur = endo[t], held = {}, holds = {}, raw = {}, offs = {};
+      events.forEach(function(ev){
+        if(!active(ev, next)) return;
+        var dur = Math.max(1, ev.duration);
+        var f = ev.shape === 'pulse' ? (next === ev.start_turn ? 1 : 0)
+              : ev.shape === 'ramp' ? Math.min(1, (next - ev.start_turn + 1) / dur) : 1;
+        if(f === 0) return;
+        Object.keys(ev.targets).forEach(function(id){ held[id] = (+ev.targets[id]) * f; });
+      });
+      Object.keys(held).forEach(function(id){ if(BY[id]) holds[id] = held[id] / (+BY[id].scale); });
+      ivs.forEach(function(iv){
+        if(!active(iv, next)) return;
+        Object.keys(iv.effects_per_unit).forEach(function(id){
+          raw[id] = (raw[id] || 0) + (+iv.effects_per_unit[id]) * (+iv.magnitude); });
+      });
+      Object.keys(raw).forEach(function(id){ if(BY[id]) offs[id] = raw[id] / (+BY[id].scale); });
+      var nd = {}, offBy = {};
+      vars.forEach(function(v){
+        var pressure = 0;
+        (INTO[v.id] || []).forEach(function(e){
+          // A conservation edge is realised by the stock rule, not by a coefficient.
+          if(e.mechanism_type === 'conservation') return;
+          pressure += coef[e.id] * devAt(e.source, t - (+e.lag));
+        });
+        var en = cur[v.id] || 0, relaxed = en + resp[v.id] * (pressure - en);
+        var baseDev = Object.prototype.hasOwnProperty.call(holds, v.id) ? holds[v.id] : relaxed;
+        offBy[v.id] = offs[v.id] || 0;
+        nd[v.id] = baseDev + offBy[v.id];
+      });
+      var fd = {}, fe = {};
+      vars.forEach(function(v){
+        var value = (+v.baseline) + (+v.scale) * nd[v.id], c = value;
+        if(v.min !== null && v.min !== undefined && c < +v.min) c = +v.min;
+        if(v.max !== null && v.max !== undefined && c > +v.max) c = +v.max;
+        fd[v.id] = (c - (+v.baseline)) / (+v.scale);
+        fe[v.id] = fd[v.id] - offBy[v.id];
+        series[v.id].push(c);
+      });
+      dev.push(fd); endo.push(fe);
+    }
+    return series;
+  }
+
+  /* The worlds are built exactly as the report built them: one event, and the two levers the
+     three options are made of, at the magnitudes the owner chooses. */
+  var RW = (D.reproducibility && D.reproducibility.worlds) || [], SPEC = {};
+  RW.forEach(function(x){ SPEC[x.spec.id] = x.spec; });
+  var EV = RW.length && RW[0].spec.events && RW[0].spec.events[0];
+  var PRICE = SPEC.B && SPEC.B.interventions && SPEC.B.interventions[0];
+  var REDUCE = SPEC.C && (SPEC.C.interventions || []).filter(function(iv){
+    return !PRICE || iv.id !== PRICE.id; })[0];
+  if(!EV || !PRICE || !REDUCE) return null;
+  var TARGET = Object.keys(EV.targets)[0];
+  var AX0 = D.reproducibility.axis_settings || {}, GK = C.grid_key_fields || {};
+
+  function pointOf(key){
+    var st = Object.assign({}, AX0), shock = +EV.targets[TARGET], red = 0;
+    Object.keys(GK).forEach(function(name){
+      var src = GK[name];
+      if(src === 'reduction') red = +key[name];
+      else if(src && typeof src === 'object'){ if(name === SHOCK_KEY) shock = +key[name]; }
+      else st[src] = key[name];
+    });
+    return {st: st, shock: shock, red: red};
+  }
+  function lever(spec, magnitude){
+    return {effects_per_unit: spec.effects_per_unit, magnitude: magnitude,
+            start_turn: spec.start_turn, duration: spec.duration};
+  }
+  /* Rounded as the precomputed cases were, so a lever setting equal to one of the three gives
+     back that option's own series. */
+  function rnd(x, n){ var f = Math.pow(10, n), y = Math.round(Math.abs(x) * f) / f; return x < 0 ? -y : y; }
+  function r3(x){ return rnd(x, 3); }
+  function r2(x){ return rnd(x, 2); }
+  function simulate(key, p, useReduce){
+    var pt = pointOf(key), ivs = [];
+    if(p > 0) ivs.push(lever(PRICE, p));
+    if(useReduce) ivs.push(lever(REDUCE, pt.red));
+    var ev = {targets: {}, start_turn: EV.start_turn, duration: EV.duration, shape: EV.shape};
+    ev.targets[TARGET] = pt.shock;
+    var sr = run(pt.st, [ev], ivs, H);
+    return {demand: sr[R.demand_var].map(r3), cogs: sr[R.unit_cost_var].map(r3),
+            price: sr[R.price_var].map(r2)};
+  }
+
+  var state = null, checked = 0, worst = 0;
+  function verify(){
+    var LEV = {};
+    D.worlds.forEach(function(x){ LEV[x.id] = {p: +x.price_rise_pct, r: +x.cogs_reduction_points > 0}; });
+    for(var i = 0; i < D.grid.length; i++){
+      var g = D.grid[i];
+      for(var j = 0; j < WID.length; j++){
+        var id = WID[j], ref = g.worlds[id];
+        if(!LEV[id] || !ref) return false;
+        var sim = simulate(g.key, LEV[id].p, LEV[id].r);
+        var keys = ['demand', 'cogs', 'price'];
+        for(var k = 0; k < keys.length; k++){
+          var a = sim[keys[k]], b = ref[keys[k]], tol = keys[k] === 'price' ? 0.0101 : 0.00101;
+          if(!b || a.length !== b.length) return false;
+          for(var d = 0; d < a.length; d++){
+            var df = Math.abs(a[d] - b[d]);
+            if(df > worst) worst = df;
+            if(!(df <= tol)) return false;
+          }
+        }
+        checked++;
+      }
+    }
+    return true;
+  }
+  return {
+    simulate: simulate,
+    ok: function(){
+      if(state === null){
+        try { state = verify(); } catch(err){ state = false; }
+        // Stated on the page's root, where a reviewer — or a test — can read it.
+        document.documentElement.setAttribute('data-engine', state ? 'ok' : 'off');
+        document.documentElement.setAttribute('data-engine-checked', String(checked));
+        document.documentElement.setAttribute('data-engine-worst', String(worst));
+      }
+      return state;
+    },
+    checked: function(){ return checked; }
+  };
+})();
+
+function engineOK(){ return !!(ENGINE && ENGINE.ok()); }
+
+var own = {p: 0, r: false, on: false};
+var OWN_KEY = 'dc_own_' + D.wedge.id;
+(function(){
+  // It opens on the second option's lever, so the first thing it shows is the model agreeing
+  // with itself.
+  var b = D.worlds.filter(function(x){ return x.id === 'B'; })[0];
+  if(b) own.p = +b.price_rise_pct;
+})();
+function parseOwn(sv){
+  if(!sv) return null;
+  var bits = String(sv).split(','), pv = parseFloat(bits[0]);
+  if(!isFinite(pv) || pv < 0 || pv > OWN_MAX) return null;
+  return {p: Math.round(pv * 10) / 10, r: bits[1] === '1'};
+}
+function loadOwn(){
+  try {
+    var o = JSON.parse(localStorage.getItem(OWN_KEY) || 'null');
+    var ok = o && parseOwn(String(o.p) + ',' + (o.r ? 1 : 0));
+    if(ok){ own.p = ok.p; own.r = ok.r; own.on = true; }
+  } catch(e){}
+}
+function saveOwn(){ try { localStorage.setItem(OWN_KEY, JSON.stringify({p: own.p, r: own.r})); } catch(e){} }
+function ownActive(){ return own.on && engineOK(); }
+
+var _ownSeries = {}, _ownKey = null;
+function ownSeriesAt(i){
+  var k = own.p + '|' + (own.r ? 1 : 0);
+  if(k !== _ownKey){ _ownSeries = {}; _ownKey = k; _ownCensusKey = null; }
+  if(!_ownSeries[i]) _ownSeries[i] = ENGINE.simulate(D.grid[i].key, own.p, own.r);
+  return _ownSeries[i];
+}
+function ownCompute(){
+  var g = pick(), i = D.grid.indexOf(g);
+  var Lg = ledger(base, ownSeriesAt(i));
+  return {L: Lg, m: metrics(Lg, base)};
+}
+/* Across every tested case: how often the owner's option does at least as well as the best of
+   the three there. The same census the three are counted by, with one more line in it. */
+var _ownCensusKey = null, _ownCensusVal = 0;
+function ownCensus(){
+  var cs = census(), key = _ownKey + '#' + _cKey;
+  if(key === _ownCensusKey) return _ownCensusVal;
+  var n = 0;
+  cs.pts.forEach(function(pt, i){
+    var best = Math.max(pt.m.A, pt.m.B, pt.m.C);
+    if(metrics(ledger(base, ownSeriesAt(i)), base).cash90 >= best - 0.5) n++;
+  });
+  _ownCensusKey = _ownKey + '#' + _cKey; _ownCensusVal = n;
+  return n;
+}
+function ownSameAs(){
+  for(var i = 0; i < D.worlds.length; i++){
+    var x = D.worlds[i];
+    if(Math.abs(+x.price_rise_pct - own.p) < 1e-9 && ((+x.cogs_reduction_points > 0) === !!own.r))
+      return x.id;
+  }
+  return null;
+}
+function ownName(){
+  var red = w('own_reduce') || '', pv = num(own.p, own.p % 1 ? 1 : 0) + PS();
+  if(own.p === 0) return own.r ? fill(t('own_name_r'), {reduce: red}) : t('own_name_0');
+  return own.r ? fill(t('own_name_pr'), {p: pv, reduce: red}) : fill(t('own_name_p'), {p: pv});
+}
+function ownUnits(m){
+  var ch = m.orders_change, v = {unit: w('unit_word'), pct: num(Math.abs(ch)) + PS()};
+  if(Math.abs(ch) < 0.5) return fill(t('own_units_flat'), v);
+  return fill(t(ch < 0 ? 'own_units_down' : 'own_units_up'), v);
+}
+
+function renderOwn(out, rank){
+  var box = document.getElementById('b-own');
+  if(!engineOK()){ box.hidden = true; return; }
+  box.hidden = false;
+  var red = w('own_reduce') || '', SHORT = w('world_short');
+  document.getElementById('own-t').textContent = t('own_t');
+  document.getElementById('own-lead').textContent = fill(t('own_lead'), {reduce: red});
+  document.getElementById('own-p-l').textContent = t('own_p_l');
+  document.getElementById('own-r-l').textContent = fill(t('own_r_l'), {reduce: red});
+  var pIn = document.getElementById('own-p');
+  pIn.max = String(OWN_MAX);
+  if(document.activeElement !== pIn) pIn.value = String(own.p);
+  document.getElementById('own-r').checked = !!own.r;
+  document.getElementById('own-p-o').textContent = num(own.p, own.p % 1 ? 1 : 0) + PS();
+
+  var o = ownCompute(), lead = rank[0], same = ownSameAs();
+  // "Exactly the same" is only said when it is: the figure printed here and on that card agree.
+  if(same && Math.round(o.m.mnet) !== Math.round(out[same].m.mnet)) same = null;
+  var gap = o.m.mnet - out[lead].m.mnet;
+  var close = Math.abs(gap) < Math.max(1, 0.005 * Math.abs(out[lead].m.mnet));
+  var vs = same ? fill(t('own_same'), {x: SHORT[same]})
+         : close ? fill(t('own_vs_equal'), {lead: SHORT[lead]})
+         : fill(t(gap > 0 ? 'own_vs_more' : 'own_vs_less'), {amount: money(Math.abs(gap)), lead: SHORT[lead]});
+  document.getElementById('own-res').innerHTML =
+      '<div class="own-card">'
+    + '<div class="own-name"><span class="own-star" aria-hidden="true">★</span>' + esc(ownName()) + '</div>'
+    + '<div class="money-block"><div class="money-k">' + esc(t('per_month_label')) + '</div>'
+    + '<div class="money' + (o.m.mnet < 0 ? ' neg' : '') + '" id="own-money">' + signed(o.m.mnet) + '</div></div>'
+    + '<p class="own-units">' + esc(ownUnits(o.m)) + '</p></div>'
+    + '<p class="own-vs" id="own-vs">' + esc(vs) + '</p>'
+    + '<p class="own-census" id="own-census">'
+    + esc(fill(t('own_census'), {n: num(ownCensus()), total: num(D.grid.length)})) + '</p>'
+    + '<p class="own-how">' + esc(fill(t('own_how'), {n: num(ENGINE.checked())})) + '</p>';
+}
+
+/* Dragging redraws once a frame, not once an event. */
+var _ownFrame = 0;
+function ownChanged(){
+  own.on = true;
+  saveOwn();
+  if(_ownFrame) return;
+  var later = window.requestAnimationFrame || function(f){ return setTimeout(f, 16); };
+  _ownFrame = later(function(){ _ownFrame = 0; render(); });
+}
+document.getElementById('own-p').addEventListener('input', function(){
+  var v = parseFloat(this.value);
+  if(!isFinite(v)) return;
+  own.p = Math.max(0, Math.min(OWN_MAX, v));
+  ownChanged();
+});
+document.getElementById('own-r').addEventListener('change', function(){
+  own.r = this.checked;
+  ownChanged();
+});
+
 var previousLead = null;
 function render(langChanged){
   var r = compute(), out = r.out, rank = r.rank, red = r.red, shock = r.shock;
   var lead = rank[0], second = rank[1];
   var NAMES = w('world_names'), SHORT = w('world_short');
   var cs = census(), wins = cs.wins, oat = cs.oat, cTop = cs.centreTop || lead;
+  // The owner's option joins the chart and the choices only once they have set it. A fault in
+  // it must never take the three down with it.
+  try { OWN_OUT = ownActive() ? ownCompute() : null; }
+  catch(err){ OWN_OUT = null; if(window.console && console.error) console.error(err); }
   var cap = capacity(base);
   var preNet = base[F.revenue] - base[F.unit_cost_total] - base[F.fixed];
 
@@ -1202,7 +1565,12 @@ function render(langChanged){
       + '<span class="pn">' + esc(NAMES[id]) + '</span>'
       + '<span class="pm">' + signed(out[id].m.mnet) + '</span>'
       + '<span class="pgo">' + esc(t('decide_pick')) + '</span></button>';
-  }).join('');
+  }).join('') + (OWN_OUT
+    ? '<button type="button" class="pick wD" data-p="D"><span class="pl" aria-hidden="true">★</span>'
+      + '<span class="pn">' + esc(ownName()) + '</span>'
+      + '<span class="pm">' + signed(OWN_OUT.m.mnet) + '</span>'
+      + '<span class="pgo">' + esc(t('decide_pick')) + '</span></button>' : '');
+  document.getElementById('picks').classList.toggle('has-own', !!OWN_OUT);
   document.getElementById('curr-l').textContent = t('currency_pick');
   document.getElementById('cursel').innerHTML = CURRENCIES.map(function(cx){
     return '<option value="' + esc(cx) + '"' + (cx === cur ? ' selected' : '') + '>'
@@ -1265,10 +1633,16 @@ function render(langChanged){
   drawSolo(out);
   drawChart(out, lead);
   drawCensus(cs, lead);
+  try { renderOwn(out, rank); }
+  catch(err){
+    document.getElementById('b-own').hidden = true;
+    if(window.console && console.error) console.error(err);
+  }
   document.getElementById('chart-alt').textContent = fill(t('chart_alt'), {summary:
     WID.map(function(id){ return SHORT[id] + ': ' + money(out[id].m.cash90); }).join('; ')});
   document.getElementById('legend').innerHTML = WID.map(function(id){
-    return '<span class="' + CLS[id] + '">' + id + ' · ' + esc(SHORT[id]) + '</span>'; }).join('');
+    return '<span class="' + CLS[id] + '">' + id + ' · ' + esc(SHORT[id]) + '</span>'; }).join('')
+    + (OWN_OUT ? '<span class="wD">★ · ' + esc(t('own_label')) + '</span>' : '');
   renderTable(out);
 
   var flips = oat.filter(function(x){ return x.flips; });
@@ -1552,6 +1926,7 @@ function drawChart(out, lead){
   var pl = narrow ? 54 : 74, pr = narrow ? 16 : 104, pt = narrow ? 30 : 24, pb = 38;
   svg.setAttribute('viewBox', '0 0 ' + W + ' ' + Hh);
   var all = []; WID.forEach(function(id){ all = all.concat(out[id].L.cash.slice(0,H+1)); });
+  if(OWN_OUT) all = all.concat(OWN_OUT.L.cash.slice(0,H+1));
   var mn = Math.min.apply(null,all), mx = Math.max.apply(null,all);
   var lo = (mn < 0.25*mx) ? Math.min(0, mn) : mn, hi = mx;
   var step = niceStep(hi-lo, 4);
@@ -1591,6 +1966,13 @@ function drawChart(out, lead){
       s += '<text x="'+(x(H)+8)+'" y="'+(e.ty+4)+'" font-size="13" font-weight="600" fill="var(--'
          + id.toLowerCase()+')" direction="ltr">'+id+' '+money(c[H])+'</text>';
   });
+  if(OWN_OUT){
+    var oc = OWN_OUT.L.cash, op = 'M'+x(0)+','+y(oc[0]);
+    for(var d3=1; d3<=H; d3++) op += ' L'+x(d3)+','+y(oc[d3]);
+    s += '<path id="own-line" d="'+op+'" fill="none" stroke="var(--ink)" stroke-width="2.25"'
+       + ' stroke-dasharray="7 5" stroke-linejoin="round" stroke-linecap="round"/>'
+       + '<circle cx="'+x(H)+'" cy="'+y(oc[H])+'" r="4" fill="var(--ink)"/>';
+  }
   s += '<circle cx="'+x(0)+'" cy="'+y(out.A.L.cash[0])+'" r="3.5" fill="var(--ink)"/>'
      + '<text x="'+x(0)+'" y="'+(y(out.A.L.cash[0])+20)+'" font-size="12" fill="var(--muted)">'
      + t('chart_today')+' '+money(out.A.L.cash[0])+'</text>';
@@ -2015,6 +2397,17 @@ function renderAsk(){
       + (step.other ? '<button type="button" class="choice other" data-other="' + esc(f) + '">'
            + esc(t('flow_other')) + '</button>' : '')
       + '</div><div class="otherwrap" id="otherwrap" hidden></div>';
+    // A figure that arrived with a question may not be one of the offered choices. It is shown
+    // in the "other" box, filled in, rather than silently replaced by the nearest choice.
+    if(step.other && answered[f] && !Object.prototype.hasOwnProperty.call(choices, String(draft[f]))){
+      var ow = document.getElementById('otherwrap');
+      ow.hidden = false;
+      ow.innerHTML = '<label class="askfield"><span class="in"><input id="a_' + f + '" data-k="' + f
+        + '" type="number" inputmode="decimal" step="any" value="' + esc(String(draft[f])) + '">'
+        + '<span class="u">' + PS() + '</span></span></label>';
+      var ob = body.querySelector('.choice.other');
+      if(ob) ob.classList.add('on');
+    }
   } else {
     body.innerHTML = '<div class="askfields">' + step.fields.map(function(f){
         var meta = IF[f] || {}, isPct = /_pct$/.test(f);
@@ -2410,10 +2803,13 @@ function packSheet(choice, iso){
   var a = [1, iso, choice,
     GRID_KEYS.map(function(k){ return sel[k]; }),
     FLOW_FIELDS.map(function(f){ return base[f]; })];
-  if(measure) a.push([measure.e, measure.rise, measure.date]);
-  else if(variant) a.push(null);
-  if(variant) a.push(variant);
-  return b64url(JSON.stringify(a));
+  /* An optional tail, trimmed from the end, so a sheet without the newer parts packs exactly as
+     it always did and every link already handed out still opens. */
+  var tail = [measure ? [measure.e, measure.rise, measure.date] : null,
+              variant || null,
+              choice === 'D' ? [own.p, own.r ? 1 : 0] : null];
+  while(tail.length && tail[tail.length - 1] === null) tail.pop();
+  return b64url(JSON.stringify(a.concat(tail)));
 }
 
 /* Read a link back into the page's state. Anything malformed returns null rather than half-
@@ -2432,13 +2828,20 @@ function applySheet(packed){
     if(!isFinite(v)) ok = false; else nb[f] = v;
   });
   if(!ok || validate(nb).length) return null;
-  if(['A','B','C'].indexOf(a[2]) < 0) return null;
+  if(['A','B','C','D'].indexOf(a[2]) < 0) return null;
+  var ownIn = null;
+  if(a[2] === 'D'){
+    // An own option carries its levers, and needs a browser whose model passed its check.
+    ownIn = a[7] ? parseOwn(String(a[7][0]) + ',' + (a[7][1] ? 1 : 0)) : null;
+    if(!ownIn || !engineOK()) return null;
+  }
   base = nb;
   GRID_KEYS.forEach(function(k, i){ sel[k] = settings[i]; });
   var m = null;
   if(a[5] && isFinite(parseFloat(a[5][0])))
     m = {e: parseFloat(a[5][0]), rise: parseFloat(a[5][1]) || 0, date: String(a[5][2] || '')};
   setVariant(variantIds().indexOf(a[6]) >= 0 ? a[6] : null);
+  if(ownIn){ own.p = ownIn.p; own.r = ownIn.r; own.on = true; }
   return {date: String(a[1]), choice: a[2], packed: packed, measure: m};
 }
 
@@ -2487,6 +2890,11 @@ function renderSheet(){
   var cs = census(), wins = cs.wins;
   var NAMES = w('world_names'), SHORT = w('world_short'), TRADE = w('tradeoff');
   var pick = sheetState.choice, lead = rank[0];
+  /* An own option is compared with the three it was built beside; if it comes out ahead, the
+     sheet says so, as it would of any of them. */
+  var ownS = pick === 'D' ? ownCompute() : null;
+  if(ownS){ out = Object.assign({}, out); out.D = ownS; if(ownS.m.cash90 > out[lead].m.cash90) lead = 'D'; }
+  var ROWS = ownS ? WID.concat(['D']) : WID;
 
   document.getElementById('sheet-title').textContent = t('sheet_title');
   document.getElementById('sheet-date-k').textContent = t('sheet_date');
@@ -2500,9 +2908,10 @@ function renderSheet(){
   document.getElementById('sheet-sit').textContent = fill(w('what_changed'), {shock: num(shock)});
 
   document.getElementById('sheet-dec-k').textContent = t('sheet_decision');
-  document.getElementById('sheet-choice').textContent = NAMES[pick];
+  document.getElementById('sheet-choice').textContent = pick === 'D' ? ownName() : NAMES[pick];
   /* The trade the owner accepted, in the same words the card used. */
-  var tr = TRADE[pick] || {good: '', bad: ''};
+  var tr = pick === 'D' ? {good: t('own_good'), bad: ownUnits(ownS.m)}
+                        : (TRADE[pick] || {good: '', bad: ''});
   document.getElementById('sheet-because').textContent =
       tr.good + (tr.bad ? ' — ' + fill(tr.bad, {pct: num(Math.abs(out[pick].m.orders_change)) + PS()}) : '');
 
@@ -2511,12 +2920,12 @@ function renderSheet(){
      dishonest document this product produces. */
   document.getElementById('sheet-cmp-k').textContent = t('sheet_compared');
   document.getElementById('sheet-cmp').innerHTML =
-      '<tbody>' + WID.map(function(id){
+      '<tbody>' + ROWS.map(function(id){
         var marks = [];
         if(id === pick) marks.push('<b class="mk chosen">' + esc(t('sheet_chosen')) + '</b>');
         if(id === lead) marks.push('<b class="mk ahead">' + esc(t('ahead_now')) + '</b>');
         return '<tr' + (id === pick ? ' class="is-pick"' : '') + '>'
-          + '<td class="c-n">' + esc(NAMES[id]) + '</td>'
+          + '<td class="c-n">' + esc(id === 'D' ? ownName() : NAMES[id]) + '</td>'
           + '<td class="c-m">' + signed(out[id].m.mnet) + ' <span class="c-u">'
             + esc(t('sheet_month')) + '</span></td>'
           + '<td class="c-k">' + marks.join(' ') + '</td></tr>';
@@ -2528,7 +2937,9 @@ function renderSheet(){
      L.ui.setting_labels[sel[PRIMARY]] + ' — ' + elasticityPlain()],
     [t('rest_shock'), fill(w('what_changed'), {shock: num(shock)})],
     [t('rest_horizon'), fill(t('rest_horizon_v'), {n: num(H)})],
-    [t('rest_stability'), fill(t('rest_stability_v'), {n: num(wins[pick]), total: num(wins.n)})]
+    [t('rest_stability'), pick === 'D'
+      ? fill(t('own_stability_v'), {n: num(ownCensus()), total: num(wins.n)})
+      : fill(t('rest_stability_v'), {n: num(wins[pick]), total: num(wins.n)})]
   ];
   document.getElementById('sheet-rests').innerHTML = '<tbody>' + rests.map(function(row){
     return '<tr><td class="r-k">' + esc(row[0]) + '</td><td class="r-v">' + esc(row[1]) + '</td></tr>';
@@ -2635,6 +3046,13 @@ applyLanguage(lang, false);
   } catch(e){}
   loadLoop();
   if(measure) sel[PRIMARY] = bandFor(measure.e);
+  loadOwn();
+  /* A question routed from the home screen can carry an option and a trade. They are proposals
+     the page shows; the owner's own figures are still asked for. */
+  var ownQ = parseOwn(P.get('own'));
+  if(ownQ && engineOK()){ own.p = ownQ.p; own.r = ownQ.r; own.on = true; saveOwn(); }
+  var varQ = P.get('variant');
+  if(varQ && variantIds().indexOf(varQ) >= 0) setVariant(varQ);
   document.getElementById('cursel').addEventListener('change', function(){
     cur = this.value;
     try { localStorage.setItem('dc_cur', cur); } catch(e){}
@@ -2654,6 +3072,9 @@ applyLanguage(lang, false);
     }
   }
   if(P.get('demo') === '1' || !FLOW.length){ finishAsk(true); return; }
+  // The size of the change, when the question named one. It is shown on its step, not skipped.
+  var shockQ = parseFloat(P.get('shock'));
+  var hasShockQ = !!F.shock && isFinite(shockQ) && shockQ > 0 && shockQ <= 100;
   // Answers from last time mean last time's result, straight away.
   try {
     var saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
@@ -2664,10 +3085,12 @@ applyLanguage(lang, false);
         arrivedWithAnswers = true;
         FLOW.forEach(function(st){ st.fields.forEach(function(f){
           draft[f] = parseFloat(saved[f]); answered[f] = true; }); });
-        if(!validate(draft).length){ finishAsk(false); return; }
+        // A new question means last time's answer is not this one's: walk the flow again.
+        if(!hasShockQ && !validate(draft).length){ finishAsk(false); return; }
       }
     }
   } catch(e){}
+  if(hasShockQ){ draft[F.shock] = shockQ; answered[F.shock] = true; }
   showScreen('ask');
   renderAsk();
 })();

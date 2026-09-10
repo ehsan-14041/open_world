@@ -154,6 +154,34 @@ measurements and it can be replaced with something measured where your customers
 **To not receive any of this, delete `contribute.php`.** The offer disappears from the page —
 it is only shown when the endpoint exists — and nothing else changes.
 
+## Questions owners choose to keep
+
+The home screen has a box where an owner can type their own question. What happens to it:
+
+* **Sorting.** If you switch on *Question router* in `admin.php`, the text is sent to the LLM
+  provider configured there — after phone numbers, email addresses and web addresses have been
+  removed — and the provider says which of the three situations the question is about, or which
+  topic it is if none. It returns fields, not prose; every field is checked against this build,
+  and the page writes its own sentence from them. No word or figure the owner reads comes from
+  the provider. Each question is one call, counted against the monthly cap. With the router off,
+  the box says the site does not read questions automatically, and only sends one the owner asks
+  to keep.
+* **Keeping.** Only if the owner ticks "Keep my question". One line is appended to
+  `data/questions/questions.jsonl`:
+
+  ```json
+  {"at":"2026-09-10","lang":"fa","q":"…","fit":"exact","topic":"pricing","wedge":"shop","variant":null,"anon":"k3j9x0aa11bb22cc"}
+  ```
+
+  The text is kept as written, minus the scrubbing above. The date is the day. `anon` is a
+  random id the browser made — a different one from the id a shared measurement carries, so the
+  two files cannot be joined. No IP address, no business figures.
+
+Read them in `admin.php`, under *Questions owners asked*. That list is the best evidence you will
+have of which question this tool should learn to answer next.
+
+**To not receive questions, delete `ask.php`.** The box disappears from the home screen.
+
 ## Things worth knowing
 
 - **A generated report holds the owner's figures.** They are in `data/cache/` on your server
