@@ -88,7 +88,9 @@ assumption that changes the decision.
 3. **Sweep cost.** 162 combinations × 3 worlds × 90 days takes ~2.5 minutes; the full report
    with the in-page grid ~5 minutes. Acceptable for a per-customer report; not for live
    re-simulation in a browser. The demo therefore precomputes the grid and does accounting in
-   the page — every number on screen is still an engine output.
+   the page — every number on screen is still an engine output. *(Later: the page now carries the
+   slice and re-runs it in the browser for an owner's own option, only after rebuilding every
+   precomputed case; see `docs/pilot/EVIDENCE_AUDIT.md`.)*
 
 Nothing in the engine or in the existing port-disruption models was changed. Frozen hashes
 `d4670fb1…` / `324a8bf1…` verify.

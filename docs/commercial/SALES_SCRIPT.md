@@ -1,5 +1,7 @@
 # Showing the cafe comparison to an owner — script and test protocol
 
+> **Superseded for the customer-validation phase by [`docs/pilot/`](../pilot/README.md).** Kept for history. Two statements below have been corrected: a payment is evidence of willingness to pay, not validation of the model; and the price is set by the project owner before sessions — the $99 figure was a placeholder, never a tested price.
+
 Ten to twenty minutes, laptop open, one page. You are not selling software; you are offering
 to compare one real decision they are facing, three ways, on one model, for a fee.
 
@@ -48,7 +50,7 @@ each time and write down what happened.
 | Phase | Who | What you offer |
 |---|---|---|
 | 1 | First 3 owners | A free customised report in exchange for their real eight numbers, one real decision, and 20 minutes of feedback |
-| 2 | Owners 4 onward | The same report at a real price: **$99** (or local equivalent). Do not optimise pricing yet. |
+| 2 | Owners 4 onward | The same report at a real price **set by the project owner in advance**. Do not optimise pricing yet. |
 
 Quote the price before you generate the report, not after.
 
@@ -109,7 +111,7 @@ it, run it for them as a custom assumption, and do not change the default.
 | 1 | Provides real business data | Meaningful |
 | 2 | Provides a real upcoming decision | Strong |
 | 3 | Requests a rerun / changes an assumption | Very strong |
-| 4 | Pays | Actual validation |
+| 4 | Pays | Willingness-to-pay evidence (not validation of the model) |
 
 ## The provisional bar
 

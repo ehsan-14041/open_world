@@ -1,5 +1,7 @@
 # Three wedges: the first-customer protocol
 
+> **Superseded for the customer-validation phase by [`docs/pilot/`](../pilot/README.md).** Kept for history. Two statements below have been corrected: a payment is evidence of willingness to pay, not validation of the model; and the price is set by the project owner before sessions — the $99 figure was a placeholder, never a tested price.
+
 Three decision products, one instrument:
 
 | | Business | The decision being compared | Where the answer hinges |
@@ -76,7 +78,7 @@ figure at all, so your own price test is worth more here than in any other trade
 | Did it name an uncertainty they agreed mattered? | which |
 | Did they challenge an assumption? | which one, and what did they say the number should be |
 | Did they ask for a rerun? | what changed |
-| Would they pay $99 for this? | yes / no / maybe |
+| Would they pay [the price set by the project owner]? | yes / no / maybe |
 | Would they use it for another decision? | which decision |
 | Would they recommend it to another owner? | yes / no |
 | Their strongest objection, verbatim | |
@@ -107,7 +109,7 @@ tests the standard range, so the "what could change the answer" screen keeps its
 | 1 | Gives real operational figures | Meaningful |
 | 2 | Names a real decision in the next 60 days | Strong |
 | 3 | Challenges an assumption or asks for a rerun | Very strong |
-| 4 | Pays | Actual validation |
+| 4 | Pays | Willingness-to-pay evidence (not validation of the model) |
 
 Compliments about the chart are level 0. So is any praise for the technology.
 

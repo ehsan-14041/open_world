@@ -265,7 +265,10 @@ def test_the_demo_says_it_is_a_demo(wedge_id, lang):
 #: copy plus headroom; the point is that growing a beat past its budget is a decision someone
 #: has to make in a diff, not something that accretes.
 #: b-own was measured at 136 words at most (shop, English, an option none of the three uses).
-BEAT_BUDGET = {"b-now": 95, "b-options": 175, "b-own": 155, "b-race": 155, "b-solid": 130,
+#: b-options rose from 175 to 200 when the ranking measure was stated under the verdict — the
+#: pilot requires that no option is called "ahead" without its measure (measured max 190).
+#: b-solid rose from 130 to 145 for the line saying what the result rests on (measured max 133).
+BEAT_BUDGET = {"b-now": 95, "b-options": 200, "b-own": 155, "b-race": 155, "b-solid": 145,
                "b-monday": 65, "b-decide": 75}
 
 
@@ -279,6 +282,12 @@ def test_each_beat_stays_inside_its_word_budget(wedge_id, lang):
         words = len(inner(dom, beat).split())
         if beat == "b-monday" and hidden_testplan:
             words -= len(inner(dom, "testplan").split())
+        # So is the form a result is entered in, until "Enter the result" is pressed.
+        if beat == "b-monday" and re.search(r'id="testform"[^>]*\bhidden', dom):
+            words -= len(inner(dom, "testform").split())
+        # "How is this counted?" is closed until asked, like the test plan.
+        if beat == "b-solid" and re.search(r'<details[^>]*\bid="census-how"(?![^>]*\bopen)', dom):
+            words -= len(inner(dom, "census-how-a").split())
         assert 0 < words <= cap, f"{wedge_id}/{lang}: {beat} has {words} words (budget {cap})"
 
 
@@ -487,7 +496,8 @@ def test_the_same_link_always_carries_the_same_reference(wedge_id):
 # ---- the experiment loop ----------------------------------------------------------------------
 
 def _packed_measured(wedge_id: str, e: float, choice: str = "B",
-                     band: str = "low", date: str = "2026-09-07") -> str:
+                     band: str = "low", date: str = "2026-09-07",
+                     status: str | None = "supported") -> str:
     """A link from an owner who ran the test and reported what it said."""
     import base64
     import json as _json
@@ -507,8 +517,11 @@ def _packed_measured(wedge_id: str, e: float, choice: str = "B",
         vals = sorted({g["key"][k] for g in report["grid"]},
                       key=lambda v: (isinstance(v, str), v))
         settings.append("central" if "central" in vals else vals[len(vals) // 2])
+    # A link made before results were checked carries three fields; a current one five.
+    measured = [e, 10, date] if status is None else [e, 10, date, status,
+                                                     band if status == "supported" else None]
     payload = _json.dumps([1, date, choice, settings, [baseline[f] for f in fields],
-                           [e, 10, date]], separators=(",", ":"))
+                           measured], separators=(",", ":"))
     return base64.urlsafe_b64encode(payload.encode()).decode().rstrip("=")
 
 
@@ -519,7 +532,9 @@ def test_a_measured_sheet_records_what_the_owner_measured(wedge_id, lang):
     sec = re.search(r'<section[^>]*\bid="sheet-meas-sec"([^>]*)>', dom)
     assert sec and "hidden" not in sec.group(1), f"{wedge_id}/{lang}: the sheet hides the measurement"
     assert inner(dom, "sheet-meas-k") == " ".join(ui["sheet_measured"].split())
-    assert inner(dom, "sheet-meas"), "the measurement line is empty"
+    band = ui["setting_labels"]["low"]
+    expect = ui["sheet_meas_supported"].replace("{band}", band)
+    assert " ".join(expect.split()) in inner(dom, "sheet-meas"), "the sheet misstates the test's result"
 
 
 @pytest.mark.parametrize("wedge_id", sorted(WEDGES))
@@ -529,35 +544,140 @@ def test_a_sheet_without_a_measurement_does_not_claim_one(wedge_id):
     assert sec and "hidden" in sec.group(1), f"{wedge_id}: an unmeasured sheet shows a measurement"
 
 
+def _phi(r: float, a: int, b: int) -> float:
+    """Average share of the eventual reaction visible over days a..b (the model's relaxation)."""
+    return sum(1 - (1 - r) ** t for t in range(a, b + 1)) / (b - a + 1)
+
+
+def _expected_ranges(wedge_id: str, rise: float = 10, days: int = 14, n: int = 7) -> dict:
+    report = json.loads((SITE / wedge_id / f"{wedge_id}_decision_report.json").read_text("utf-8"))
+    S, R = report["slice"], report["roles"]
+    v = next(x for x in S["variables"] if x["id"] == R["demand_var"])
+    rates = [min(1.0, v["response"] * float(m["response_multiplier"]))
+             for ax in S["axes"] if v["id"] in ax["applies_to"] or v.get("axis") == ax["id"]
+             for m in ax["mapping"].values() if "response_multiplier" in m]
+    out = {}
+    for k, e in report["copy"]["sens_values"].items():
+        vals = [float(e) * rise / 100 * _phi(r, days - n + 1, days) for r in rates]
+        out[k] = (min(vals), max(vals))
+    return out
+
+
 @pytest.mark.parametrize("wedge_id", sorted(WEDGES))
-def test_the_page_never_claims_to_have_simulated_the_exact_measurement(wedge_id):
+def test_the_reading_guide_uses_the_models_own_dynamics(wedge_id):
     """
-    The browser carries 162 precomputed worlds at three settings, not the engine. A measured
-    elasticity is shown exactly and the comparison is run at the nearest setting that was
-    actually tested — and the page has to say which one, or it is implying a run that never
-    happened.
+    A two-week count shows only part of the eventual reaction — by the model's own assumptions
+    about how fast customers adjust. The guide used to read it straight against the long-run
+    figure, which would have called a typical cafe insensitive. It now shows, for each setting,
+    the range the model itself expects in the second week, across its own reaction speeds.
     """
-    html = TEMPLATE.read_text(encoding="utf-8")
-    assert "function bandFor" in html, "nothing maps a measurement onto the tested settings"
-    for lang in LANGUAGES:
-        band = catalogue(lang)["ui"]["measured_band"]
-        assert "{band}" in band, f"{lang}: the page does not name the setting it ran"
-        caveat = catalogue(lang)["ui"]["measured_caveat"]
-        assert caveat.strip(), f"{lang}: the measurement carries no caveat about what it covers"
+    dom = page_with(wedge_id, "en", "demo=1")
+    got = inner(dom, "test-readings")
+    labels = catalogue("en")["ui"]["setting_labels"]
+    for k, (lo, hi) in _expected_ranges(wedge_id).items():
+        expect = f"{labels[k]}: about {lo * 100:.1f}% to {hi * 100:.1f}%"
+        assert expect in got, f"{wedge_id}: expected {expect!r} in {got!r}"
+    assert inner(dom, "test-overlap"), "the guide does not say the ranges overlap"
 
 
-def test_the_measurement_is_arithmetic_the_owner_could_check():
-    """
-    Share of custom lost over share the price moved — nothing else. Demand that did not fall
-    reads as zero rather than as a negative elasticity, because "they did not leave" is a real
-    outcome of the test and not an error in it.
-    """
-    html = TEMPLATE.read_text(encoding="utf-8")
-    body = html[html.index("function elasticityFrom"):]
-    body = body[:body.index("\n}")]
-    assert "(before - after) / before" in body, "the formula is not the one the owner would use"
-    assert "risePct / 100" in body
-    assert "Math.max(0," in body, "a test where nobody left must read as zero, not as a negative"
+LOOP_DRIVER = """
+<script>
+setTimeout(function(){
+  var v = __VALS__;
+  Object.keys(v).forEach(function(k){
+    var el = document.getElementById(k);
+    if(el.type === 'checkbox') el.checked = !!v[k]; else el.value = v[k];
+  });
+  document.getElementById('testform').hidden = false;
+  document.getElementById('testform').requestSubmit();
+  setTimeout(function(){
+    var d = document.createElement('div');
+    d.id = 'probe';
+    var on = document.querySelector('#seg button[aria-pressed="true"]');
+    d.setAttribute('data-cls', document.getElementById('m-value').className);
+    d.setAttribute('data-seg', on ? on.dataset.v : '');
+    d.setAttribute('data-err', document.getElementById('tf-err').textContent);
+    d.setAttribute('data-share', document.getElementById('share').hidden ? 'hidden' : 'shown');
+    document.body.appendChild(d);
+  }, 600);
+}, 1500);
+</script>
+"""
+
+ALL_CHECKS = {"tf-c1": 1, "tf-c2": 1, "tf-c3": 1, "tf-c4": 1}
+
+
+def _run_test_form(wedge_id: str, vals: dict, tmp_path) -> dict:
+    page = SITE / wedge_id / f"{wedge_id}_decision_report.html"
+    copy = tmp_path / "loop.html"
+    copy.write_text(page.read_text("utf-8").replace(
+        "</body>", LOOP_DRIVER.replace("__VALS__", json.dumps(vals)) + "</body>"), encoding="utf-8")
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=12000", "--dump-dom", copy.as_uri() + "?lang=en&demo=1"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
+    m = re.search(r'<div id="probe"([^>]*)>', proc.stdout)
+    assert m, "the test form never settled"
+    return {k: html_mod.unescape(v) for k, v in re.findall(r'data-(\w+)="([^"]*)"', m.group(1))}
+
+
+# Large daily counts, so ordinary counting noise is small: a 9% relative drop over the second
+# week after a 10% rise fits only the cafe's "high" setting (3.9–10.9% across speeds).
+CLEAR = {"tf-rise": 10, "tf-days": 14, "tf-n": 7, "tf-before": 4000, "tf-after": 3640,
+         "tf-obefore": 8000, "tf-oafter": 8000}
+
+
+def test_a_result_that_meets_every_condition_sets_the_comparison(tmp_path):
+    probe = _run_test_form("cafe", dict(CLEAR, **ALL_CHECKS), tmp_path)
+    assert "st-supported" in probe["cls"], probe
+    assert probe["seg"] == "high", f"the comparison did not move to the setting the test fits: {probe}"
+
+
+@pytest.mark.parametrize("change,why", [
+    ({"tf-obefore": "", "tf-oafter": ""}, "no unchanged items were counted"),
+    ({"tf-c2": 0}, "a condition was not confirmed"),
+    ({"tf-days": 10}, "fewer than 14 days had passed"),
+], ids=["no-control", "unchecked", "too-soon"])
+def test_a_result_missing_a_condition_is_kept_as_a_note(change, why, tmp_path):
+    """The same clear result, one condition short: provisional, and the comparison is untouched."""
+    vals = dict(CLEAR, **ALL_CHECKS)
+    vals.update(change)
+    probe = _run_test_form("cafe", vals, tmp_path)
+    assert "st-provisional" in probe["cls"], f"{why}: {probe}"
+    assert probe["seg"] == "central", f"{why}: the comparison changed anyway"
+    assert probe["share"] == "hidden", f"{why}: offered to share a provisional result"
+
+
+def test_small_counts_that_fit_several_settings_are_inconclusive(tmp_path):
+    """Café-sized counts over one week rarely separate the settings — and the page says so."""
+    vals = dict(ALL_CHECKS, **{"tf-rise": 10, "tf-days": 14, "tf-n": 7, "tf-before": 20,
+                               "tf-after": 19, "tf-obefore": 40, "tf-oafter": 40})
+    probe = _run_test_form("cafe", vals, tmp_path)
+    assert "st-inconclusive" in probe["cls"], probe
+    assert probe["seg"] == "central"
+
+
+def test_a_result_no_setting_can_produce_changes_nothing(tmp_path):
+    vals = dict(CLEAR, **ALL_CHECKS, **{"tf-after": 4800})   # sales of the repriced items rose 20%
+    probe = _run_test_form("cafe", vals, tmp_path)
+    assert "st-outside" in probe["cls"], probe
+    assert probe["seg"] == "central"
+
+
+def test_a_diary_capped_business_never_updates_automatically(tmp_path):
+    """Fewer bookings may not show while the diary is full, so a salon result stays a note."""
+    vals = dict(ALL_CHECKS, **{"tf-rise": 10, "tf-days": 14, "tf-n": 7, "tf-before": 4000,
+                               "tf-after": 3700, "tf-obefore": 8000, "tf-oafter": 8000})
+    probe = _run_test_form("salon", vals, tmp_path)
+    assert "st-supported" not in probe["cls"], probe
+    assert probe["seg"] == "central"
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_a_link_from_before_results_were_checked_is_shown_as_a_note(wedge_id):
+    dom = _sheet_dom(wedge_id, "en", _packed_measured(wedge_id, 0.5, status=None))
+    ui = catalogue("en")["ui"]
+    assert ui["test_state_legacy"] in " ".join(inner(dom, "sheet-meas").split())
 
 
 @pytest.mark.parametrize("lang", LANGUAGES)
@@ -851,7 +971,9 @@ setTimeout(function(){
     d.setAttribute('data-sheet', document.getElementById('sheet').hidden ? 'no' : 'yes');
     d.setAttribute('data-rows', String(document.querySelectorAll('#sheet-cmp tr').length));
     d.setAttribute('data-choice', document.getElementById('sheet-choice').textContent);
-    d.setAttribute('data-url', location.search);
+    d.setAttribute('data-search', location.search);
+    d.setAttribute('data-hash', location.hash);
+    d.setAttribute('data-note', document.getElementById('sheet-link-note').textContent);
     document.body.appendChild(d);
   }, 700);
 }, 1500);
@@ -876,7 +998,9 @@ def test_an_own_option_can_be_the_decision_and_the_link_keeps_it(wedge_id, tmp_p
     probe = {k: html_mod.unescape(v) for k, v in re.findall(r'data-(\w+)="([^"]*)"', m.group(1))}
     assert probe["sheet"] == "yes" and probe["rows"] == "4", probe
     assert "13" in probe["choice"]
-    packed = re.search(r"sheet=([A-Za-z0-9_-]+)", probe["url"]).group(1)
+    assert "sheet=" not in probe["search"], "the figures went into the part of the link a server sees"
+    assert probe["note"] == catalogue("en")["ui"]["sheet_link_note"], "no warning that the link carries figures"
+    packed = re.search(r"sheet=([A-Za-z0-9_-]+)", probe["hash"]).group(1)
     again = page_with(wedge_id, "en", f"sheet={packed}")
     assert not re.search(r'id="sheet"[^>]*\bhidden', again), "the link did not open as a sheet"
     assert inner(again, "sheet-choice") == probe["choice"]
@@ -973,3 +1097,146 @@ def test_a_question_it_cannot_answer_says_so_and_names_the_topic(lang, tmp_path)
     expected = ui["ask_fit_none"].replace("{topic}", ui["ask_topics"]["hiring"])
     assert " ".join(expected.split()) in " ".join(text_of(dom).split())
     assert 'id="ask-link"' not in dom, "offered a way on for a question it cannot answer"
+
+
+# ---- what the comparison is, and what it rests on --------------------------------------------------
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_the_ranking_measure_is_stated_where_the_ranking_is(wedge_id, lang):
+    """"Ahead" means something only once the measure is named; the cards show a monthly rate
+    while the ranking is by cash at the end of the period, and the page says both."""
+    dom = rendered(wedge_id, lang)
+    days = "۹۰" if lang == "fa" else "90"
+    expect = catalogue(lang)["ui"]["objective_line"].replace("{n}", days)
+    assert inner(dom, "objective") == " ".join(expect.split())
+
+
+@pytest.mark.parametrize("wedge_id,lang", ALL, ids=IDS)
+def test_the_census_says_how_it_is_counted(wedge_id, lang):
+    dom = rendered(wedge_id, lang)
+    how = inner(dom, "census-how-a")
+    tail = catalogue(lang)["ui"]["census_how_a"].split("{facts}")[1].strip(" .—")
+    assert " ".join(tail.split()) in how, f"{wedge_id}/{lang}: the count is not bounded: {how!r}"
+    assert "{" not in how and "undefined" not in how
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_the_selected_setting_says_whether_it_is_published(wedge_id):
+    from event_sim.wedge.registry import WEDGES as _W
+    dom = rendered(wedge_id, "en")
+    ui = catalogue("en")["ui"]
+    research = "central" in _W[wedge_id].copy.get("research_settings", [])
+    expect = ui["setting_is_research"] if research else ui["setting_is_assumption"]
+    assert inner(dom, "seg-help").endswith(expect), inner(dom, "seg-help")
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_an_own_rise_past_the_compared_range_is_marked_rough(wedge_id):
+    top = max(_price_rise(wedge_id, k) for k in "ABC")
+    past = page_with(wedge_id, "en", f"demo=1&own={top + 5:g},0")
+    assert 'id="own-warn"' in past, f"{wedge_id}: no warning {top + 5:g}% past a {top:g}% range"
+    within = page_with(wedge_id, "en", f"demo=1&own={max(1, top - 2):g},0")
+    assert 'id="own-warn"' not in within, f"{wedge_id}: warned inside the compared range"
+
+
+def test_the_home_screen_does_not_claim_every_assumption_is_sourced():
+    for lang in LANGUAGES:
+        text = catalogue(lang)["ui"]["credibility"]
+        assert "sourced" not in text and "مستند" not in text, f"{lang}: {text}"
+
+
+# ---- the owner's own answers reach the numbers ------------------------------------------------------
+
+#: Owners whose answers differ from the report's business in the two inputs the precomputed runs
+#: cannot carry: a supplier increase between the tested sizes, and their own low-margin share.
+OWNER_CASES = [
+    ("cafe", {"low_margin_share_pct": 10.0, "supplier_increase_pct": 25.0}),
+    ("cafe", {"low_margin_share_pct": 30.0}),
+    ("shop", {"low_margin_share_pct": 10.0, "supplier_increase_pct": 20.0}),
+    ("salon", {"utilisation_pct": 40.0, "monthly_variable_costs": 4800.0, "low_margin_share_pct": 10.0}),
+]
+
+
+def _packed_owner(wedge_id: str, over: dict, choice: str = "B") -> str:
+    import base64
+    from event_sim.wedge.registry import WEDGES as _W
+    wedge = _W[wedge_id]
+    baseline = dict(wedge.demo_factory().to_dict(), **over)
+    fields = [f for step in wedge.copy["flow"] for f in step["fields"]]
+    report = json.loads((SITE / wedge_id / f"{wedge_id}_decision_report.json").read_text("utf-8"))
+    settings = []
+    for k in report["grid"][0]["key"]:
+        vals = sorted({g["key"][k] for g in report["grid"]}, key=lambda v: (isinstance(v, str), v))
+        settings.append("central" if "central" in vals else vals[len(vals) // 2])
+    payload = json.dumps([1, "2026-09-11", choice, settings, [baseline[f] for f in fields]],
+                         separators=(",", ":"))
+    return base64.urlsafe_b64encode(payload.encode()).decode().rstrip("=")
+
+
+@pytest.mark.parametrize("wedge_id,over", OWNER_CASES,
+                         ids=[f"{w}-" + "-".join(f"{k.split('_')[0]}{v:g}" for k, v in o.items())
+                              for w, o in OWNER_CASES])
+def test_the_page_computes_with_the_owners_own_figures(wedge_id, over):
+    """
+    The page used to take the nearest tested supplier increase and the report's own low-margin
+    share, so an owner's answer could be shown and not used. Its figures must now be the ones the
+    Python pipeline gives for that owner's own inputs.
+    """
+    from event_sim.wedge.compare import run_comparison
+    from event_sim.wedge.registry import WEDGES as _W
+    wedge = _W[wedge_id]
+    raw = dict(wedge.demo_factory().to_dict(), **over)
+    raw["is_demo"] = False
+    truth = {x.spec.id: x.metrics["cash_day_90"]
+             for x in run_comparison(wedge, wedge.baseline_from_dict(raw)).worlds}
+
+    dom = _sheet_dom(wedge_id, "en", _packed_owner(wedge_id, over))
+    alt = inner(dom, "chart-alt")
+    short = catalogue("en")["wedges"][wedge_id]["world_short"]
+    for k in "ABC":
+        m = re.search(re.escape(short[k]) + r": (−?)\D*?([0-9][0-9,]*)", alt)
+        assert m, f"{wedge_id}: no cash figure for {k} in {alt!r}"
+        shown = float(m.group(2).replace(",", "")) * (-1 if m.group(1) else 1)
+        assert abs(shown - truth[k]) <= max(2.0, 0.001 * abs(truth[k])), \
+            f"{wedge_id} {k}: page {shown} vs pipeline {truth[k]:.2f} for {over}"
+    if "supplier_increase_pct" in over:
+        assert f"{over['supplier_increase_pct']:g}%" in inner(dom, "sheet-sit"), \
+            f"{wedge_id}: the sheet does not state the owner's own increase"
+
+
+
+OFFGRID_DRIVER = r"""<?php
+require $argv[1] . '/lib/report.php';
+$wedge = json_decode(file_get_contents($argv[1] . '/assets/cafe.json'), true);
+$in = $wedge['demo'];
+$in['supplier_increase_pct'] = 25.0;
+$in['is_demo'] = false;
+$in['name'] = 'Between the tested sizes';
+$bundle = build_bundle(new Slice($wedge['slice']), $wedge, new Baseline($in, $wedge), true);
+file_put_contents($argv[2], render_html($bundle, $argv[1] . '/assets/decision_report.html'));
+"""
+
+
+@pytest.mark.skipif(shutil.which("php") is None, reason="php CLI needed to build a host report")
+def test_a_host_built_report_between_tested_increases_still_shows_its_numbers(tmp_path):
+    """
+    The host builds a report for the owner's own supplier increase, but the page carries runs
+    only at the tested sizes (20/30/40% for a cafe). Its self-check compared the two and, for an
+    increase in between, withheld every number. It now checks at the report's own increase.
+    """
+    php_root = ROOT / "deploy" / "php"
+    driver = tmp_path / "offgrid.php"
+    driver.write_text(OFFGRID_DRIVER, encoding="utf-8")
+    page = tmp_path / "offgrid.html"
+    proc = subprocess.run(["php", "-d", "memory_limit=512M", str(driver), str(php_root), str(page)],
+                          capture_output=True, text=True, check=False)
+    assert proc.returncode == 0 and page.is_file(), proc.stdout + proc.stderr
+    dom = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=12000", "--dump-dom", page.as_uri() + "?lang=en&demo=1"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False).stdout
+    banner = re.search(r'id="banner"[^>]*class="([^"]*)"|class="([^"]*)"[^>]*id="banner"', dom)
+    cls = (banner.group(1) or banner.group(2)) if banner else ""
+    assert "on" not in cls.split(), "the page withheld the report's own numbers"
+    assert re.search(r'<html\b[^>]*data-engine="ok"', dom)
+    assert "25%" in inner(dom, "changed-t"), "the page does not state the report's own increase"

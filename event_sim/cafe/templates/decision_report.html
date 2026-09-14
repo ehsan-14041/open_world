@@ -365,6 +365,29 @@ html[dir="rtl"] .m-v{font-weight:700;line-height:1.65}
 .m-f{margin-top:14px !important;display:flex;gap:14px;align-items:center;flex-wrap:wrap;
   font-size:13px;color:var(--muted)}
 .m-f .linkish{font-size:13px;padding:6px 0;min-height:0}
+/* A test result in three parts that are never allowed to blur: what the owner saw, what the
+   model makes of it under its own assumptions, and what is still open. */
+.measured [hidden]{display:none}
+.m-v.st-supported{color:var(--win)}
+.m-obs,.m-inf{margin-top:10px !important;font-size:15px;line-height:1.7}
+.m-open{margin:10px 0 0;padding-inline-start:20px;font-size:14px;color:var(--muted);line-height:1.7}
+.m-open li+li{margin-top:4px}
+.tf-sub{margin:18px 0 6px !important;font-size:14px;font-weight:600;color:var(--muted)}
+.tf-checks{display:grid;gap:4px;margin-top:16px}
+.tf-check{display:flex;gap:10px;align-items:flex-start;font-size:15px;min-height:44px;cursor:pointer;
+  line-height:1.5}
+.tf-check input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--win)}
+.test-need{margin:14px 0 0 !important;font-size:14px;line-height:1.7}
+/* The one measure everything is ranked by, stated where the ranking is. */
+.objective{margin:10px 0 0;font-size:14.5px;color:var(--muted);line-height:1.7;max-width:64ch}
+.classline{margin:14px 0 0;font-size:14.5px;line-height:1.7}
+.classline .linkish{font-size:14.5px;padding:0;min-height:0;margin-inline-start:6px}
+.census-how{margin-top:8px;font-size:13.5px;color:var(--muted)}
+.census-how>summary{cursor:pointer;font-weight:600;min-height:40px;display:inline-flex;align-items:center}
+.census-how p{margin:4px 0 0;line-height:1.7}
+.own-warn{margin:12px 0 0;padding:10px 12px;border-radius:var(--r-sm);background:var(--sunk);
+  font-size:14px;line-height:1.7}
+.sheet-link-note{flex-basis:100%;margin:0 0 4px;font-size:13.5px;color:var(--muted);line-height:1.7}
 
 /* The offer to share reads as a question, not as a banner: it sits inside the measurement it is
    about, and the exact row is one tap away. */
@@ -766,6 +789,8 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
   <section class="beat" id="b-options">
     <h2 class="beat-t" id="b-options-t"></h2>
     <p class="verdict intro-1" id="verdict"></p>
+    <!-- "Ahead" means something only once the measure is named. -->
+    <p class="objective" id="objective"></p>
     <div class="options intro-2" id="options"></div>
     <div class="why"><h3 id="why-h"></h3><p id="why-p"></p></div>
     <p class="scenario" id="scenario"></p>
@@ -807,8 +832,9 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     <p class="unknown-lead" id="unknown-lead"></p>
     <div class="measured" id="measured" hidden>
       <p class="m-v" id="m-value"></p>
-      <p class="m-b" id="m-band"></p>
-      <p class="m-c" id="m-caveat"></p>
+      <p class="m-obs" id="m-obs"></p>
+      <p class="m-inf" id="m-inf"></p>
+      <ul class="m-open" id="m-open"></ul>
       <p class="m-f"><span id="m-on"></span><button type="button" class="linkish" id="m-clear"></button></p>
       <!-- Offered, never assumed: the row is shown in full before anything leaves the page. -->
       <div class="share" id="share" hidden>
@@ -836,6 +862,13 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
            stops being a sentence and becomes structure you can see. -->
       <div class="census" id="census"></div>
       <p class="count-note" id="count-note"></p>
+      <!-- A count over a grid we chose is only as meaningful as its ranges. Said here, one tap
+           away, rather than left for a reader to assume it is a probability. -->
+      <details class="census-how" id="census-how">
+        <summary id="census-how-q"></summary>
+        <p id="census-how-a"></p>
+      </details>
+      <p class="classline"><span id="classline-t"></span><button type="button" class="linkish" id="classline-go"></button></p>
     </div>
   </section>
 
@@ -849,6 +882,8 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
         <p id="test-what"></p>
         <div class="k" id="test-reading"></div>
         <ul class="readings" id="test-readings"></ul>
+        <p class="note" id="test-overlap"></p>
+        <p class="test-need" id="test-need"></p>
       </div>
       <!-- Running the test is the point; recording what it said is what makes the model this
            owner's rather than the literature's. -->
@@ -858,10 +893,31 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
         <div class="tf-fields">
           <label class="askfield"><span class="afl" id="tf-rise-l"></span>
             <span class="in"><input id="tf-rise" type="number" inputmode="decimal" step="any" value="10"><span class="u" id="tf-rise-u"></span></span></label>
+          <label class="askfield"><span class="afl" id="tf-days-l"></span>
+            <span class="in"><input id="tf-days" type="number" inputmode="numeric" step="1" value="14"></span></label>
+          <label class="askfield"><span class="afl" id="tf-n-l"></span>
+            <span class="in"><input id="tf-n" type="number" inputmode="numeric" step="1" value="7"></span></label>
+        </div>
+        <p class="tf-sub" id="tf-rep-h"></p>
+        <div class="tf-fields">
           <label class="askfield"><span class="afl" id="tf-before-l"></span>
             <span class="in"><input id="tf-before" type="number" inputmode="decimal" step="any"></span></label>
           <label class="askfield"><span class="afl" id="tf-after-l"></span>
             <span class="in"><input id="tf-after" type="number" inputmode="decimal" step="any"></span></label>
+        </div>
+        <!-- The unchanged items are what lets a price effect be told apart from a quiet week. -->
+        <p class="tf-sub" id="tf-oth-h"></p>
+        <div class="tf-fields">
+          <label class="askfield"><span class="afl" id="tf-obefore-l"></span>
+            <span class="in"><input id="tf-obefore" type="number" inputmode="decimal" step="any"></span></label>
+          <label class="askfield"><span class="afl" id="tf-oafter-l"></span>
+            <span class="in"><input id="tf-oafter" type="number" inputmode="decimal" step="any"></span></label>
+        </div>
+        <div class="tf-checks">
+          <label class="tf-check"><input type="checkbox" id="tf-c1"><span id="tf-c1-l"></span></label>
+          <label class="tf-check"><input type="checkbox" id="tf-c2"><span id="tf-c2-l"></span></label>
+          <label class="tf-check"><input type="checkbox" id="tf-c3"><span id="tf-c3-l"></span></label>
+          <label class="tf-check"><input type="checkbox" id="tf-c4"><span id="tf-c4-l"></span></label>
         </div>
         <div class="tf-err" id="tf-err" role="alert"></div>
         <div class="tf-row">
@@ -965,6 +1021,7 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
     </div>
 
     <div class="sheet-actions">
+      <p class="sheet-link-note" id="sheet-link-note"></p>
       <button type="button" class="btn primary" id="sheet-print"></button>
       <button type="button" class="btn" id="sheet-copy"></button>
       <button type="button" class="linkish" id="sheet-back"></button>
@@ -1123,6 +1180,10 @@ function pick(){ var want = snapped();
   return D.grid.filter(function(g){ return GRID_KEYS.every(function(k){ return g.key[k]===want[k]; }); })[0]; }
 
 (function check(){
+  // A report built for an increase between the tested sizes has no precomputed run at its own
+  // increase, so this comparison could never pass for it. It is checked further down, once the
+  // page's engine exists, against a run at that increase.
+  if(SHOCK_KEY && GRID_VALS[SHOCK_KEY].indexOf(D.baseline_raw[F.shock]) < 0) return;
   var cw = Object.assign({}, CENTRE);
   if(SHOCK_KEY) cw[SHOCK_KEY] = nearest(GRID_VALS[SHOCK_KEY], D.baseline_raw[F.shock]);
   var central = D.grid.filter(function(g){ return GRID_KEYS.every(function(k){ return g.key[k]===cw[k]; }); })[0];
@@ -1140,12 +1201,38 @@ function motionOK(){
 function fail(msg){ var b = document.getElementById('banner'); b.textContent = msg; b.classList.add('on');
   document.getElementById('main').style.display = 'none'; throw new Error(msg); }
 
+/* The report's census replaces the owner's figure with each swept value of a fact that the
+   arithmetic uses — how full a salon's diary is. The page did not, so the same run was counted
+   once per value of a sweep it ignored. Now both censuses are the same census. */
+function censusBase(key){
+  if(F.utilisation && key[F.utilisation] !== undefined){
+    var b2 = Object.assign({}, base);
+    b2[F.utilisation] = +key[F.utilisation];
+    return b2;
+  }
+  return base;
+}
+
+/* The swept facts, named with their tested values and the owner's own, for the census note. */
+function censusFacts(){
+  var parts = [], sep = lang === 'fa' ? '، ' : ', ';
+  function fmt(k, v){ return /_pct$/.test(k) ? num(v) + PS() : String(v); }
+  [SHOCK_KEY, F.utilisation].forEach(function(k){
+    if(!k || !GRID_VALS[k]) return;
+    var yours = k === SHOCK_KEY ? base[F.shock] : base[k];
+    parts.push(fill(t('census_fact'), {label: axisLabel(k),
+      vals: GRID_VALS[k].map(function(v){ return fmt(k, v); }).join(sep), yours: fmt(k, yours)}));
+  });
+  return parts.join(sep);
+}
+
 var _cKey = null, _cVal = null;
 function census(){
   var key = JSON.stringify(Object.keys(F).map(function(r){ return base[F[r]]; }));
   if(_cKey===key) return _cVal;
   var pts = D.grid.map(function(g){
-    var m = {}; WID.forEach(function(id){ m[id] = metrics(ledger(base, g.worlds[id]), base).cash90; });
+    var bk = censusBase(g.key);
+    var m = {}; WID.forEach(function(id){ m[id] = metrics(ledger(bk, worldSeries(g, id, false)), bk).cash90; });
     var rank = WID.slice().sort(function(a,b){ return m[b]-m[a]; });
     return {key:g.key, rank:rank, m:m};
   });
@@ -1213,10 +1300,12 @@ function axisLabel(k){
 }
 function compute(){
   var g = pick(), out = {};
-  WID.forEach(function(id){ var Lg = ledger(base, g.worlds[id]); out[id] = {L:Lg, m:metrics(Lg, base)}; });
+  WID.forEach(function(id){ var Lg = ledger(base, worldSeries(g, id, true)); out[id] = {L:Lg, m:metrics(Lg, base)}; });
   var rank = WID.slice().sort(function(a,b){ return out[b].m.cash90 - out[a].m.cash90; });
-  return {out:out, rank:rank, red: REDUCTION_KEY ? g.key[REDUCTION_KEY] : null,
-          shock: SHOCK_KEY ? g.key[SHOCK_KEY] : base[F.shock]};
+  var ored = ownerRed(g.key), oshock = ownerShock(g), run = engineOK();
+  return {out:out, rank:rank, g:g,
+          red: REDUCTION_KEY ? (run && ored !== null ? ored : g.key[REDUCTION_KEY]) : null,
+          shock: SHOCK_KEY ? (run && oshock !== null ? oshock : g.key[SHOCK_KEY]) : base[F.shock]};
 }
 
 /* ---- render ------------------------------------------------------------------------------ */
@@ -1353,8 +1442,11 @@ var ENGINE = (function(){
   function rnd(x, n){ var f = Math.pow(10, n), y = Math.round(Math.abs(x) * f) / f; return x < 0 ? -y : y; }
   function r3(x){ return rnd(x, 3); }
   function r2(x){ return rnd(x, 2); }
-  function simulate(key, p, useReduce){
+  function simulate(key, p, useReduce, opts){
     var pt = pointOf(key), ivs = [];
+    // The owner's own values for the two inputs the precomputed runs were built without.
+    if(opts && isFinite(opts.shock)) pt.shock = +opts.shock;
+    if(opts && isFinite(opts.red)) pt.red = +opts.red;
     if(p > 0) ivs.push(lever(PRICE, p));
     if(useReduce) ivs.push(lever(REDUCE, pt.red));
     var ev = {targets: {}, start_turn: EV.start_turn, duration: EV.duration, shape: EV.shape};
@@ -1407,6 +1499,57 @@ var ENGINE = (function(){
 
 function engineOK(){ return !!(ENGINE && ENGINE.ok()); }
 
+/* ---- the owner's own figures, where the precomputed runs cannot carry them ---------------------
+   The runs this page carries were computed for the report's business. Two of an owner's answers
+   change the runs themselves rather than the arithmetic after them: the exact supplier increase
+   (runs exist only at the tested sizes) and the low-margin share behind the trim lever. The page
+   used to take the nearest tested increase and the report's own share — so an answer could be
+   shown and not used. Now the browser's copy of the model, which has just rebuilt every
+   precomputed case, runs those worlds for the owner's own figures. The census keeps the tested
+   increases, as the report's census does, with the owner's own share. */
+var WLEVER = {};
+D.worlds.forEach(function(x){ WLEVER[x.id] = {p: +x.price_rise_pct, r: +x.cogs_reduction_points > 0}; });
+function ownerRed(key){
+  if(!REDUCTION_KEY || !F.low_margin || key[REDUCTION_KEY] === undefined) return null;
+  var rs = +D.baseline_raw[F.low_margin], os = +base[F.low_margin];
+  if(!(rs > 0) || !isFinite(os) || Math.abs(os - rs) < 1e-9) return null;
+  return Math.round(os * (+key[REDUCTION_KEY] / rs) * 1000) / 1000;
+}
+function ownerShock(g){
+  if(!SHOCK_KEY || typeof base[F.shock] !== 'number' || !isFinite(base[F.shock])) return null;
+  return Math.abs(base[F.shock] - (+g.key[SHOCK_KEY])) > 1e-9 ? +base[F.shock] : null;
+}
+var _wCache = {};
+function worldSeries(g, id, exactShock){
+  var red = (WLEVER[id] && WLEVER[id].r) ? ownerRed(g.key) : null;
+  var shock = exactShock ? ownerShock(g) : null;
+  if((red === null && shock === null) || !engineOK()) return g.worlds[id];
+  var ck = D.grid.indexOf(g) + '|' + id + '|' + red + '|' + shock;
+  if(!_wCache[ck]) _wCache[ck] = ENGINE.simulate(g.key, WLEVER[id].p, WLEVER[id].r,
+      {red: red === null ? undefined : red, shock: shock === null ? undefined : shock});
+  return _wCache[ck];
+}
+/* True when what is on screen uses the owner's own figures. */
+function inputsExact(g){ return engineOK() || (ownerShock(g) === null && ownerRed(g.key) === null); }
+
+/* The report's own figures, checked at its own increase when that lies between the tested sizes.
+   If the engine cannot run here, the page cannot check them, and withholds them as before. */
+(function checkOwnIncrease(){
+  if(!SHOCK_KEY || GRID_VALS[SHOCK_KEY].indexOf(D.baseline_raw[F.shock]) >= 0) return;
+  if(!engineOK()){ fail('This page could not recompute its own figures in this browser. Numbers withheld.'); return; }
+  var cw = Object.assign({}, CENTRE);
+  cw[SHOCK_KEY] = nearest(GRID_VALS[SHOCK_KEY], D.baseline_raw[F.shock]);
+  var central = D.grid.filter(function(g){ return GRID_KEYS.every(function(k){ return g.key[k]===cw[k]; }); })[0];
+  if(!central){ fail('Could not find the central case in the embedded data.'); return; }
+  for(var i = 0; i < D.worlds.length; i++){
+    var wd = D.worlds[i], lv = WLEVER[wd.id];
+    var series = ENGINE.simulate(central.key, lv.p, lv.r, {shock: +D.baseline_raw[F.shock]});
+    var mm = metrics(ledger(D.baseline_raw, series), D.baseline_raw);
+    if(Math.abs(mm.cash90 - wd.metrics.cash_day_90) > 1){
+      fail('Page arithmetic does not match the generated report (' + wd.id + '). Numbers withheld.'); return; }
+  }
+})();
+
 var own = {p: 0, r: false, on: false};
 var OWN_KEY = 'dc_own_' + D.wedge.id;
 (function(){
@@ -1433,14 +1576,19 @@ function ownActive(){ return own.on && engineOK(); }
 
 var _ownSeries = {}, _ownKey = null;
 function ownSeriesAt(i){
-  var k = own.p + '|' + (own.r ? 1 : 0);
+  var k = own.p + '|' + (own.r ? 1 : 0) + '|' + (F.low_margin ? base[F.low_margin] : '');
   if(k !== _ownKey){ _ownSeries = {}; _ownKey = k; _ownCensusKey = null; }
-  if(!_ownSeries[i]) _ownSeries[i] = ENGINE.simulate(D.grid[i].key, own.p, own.r);
+  if(!_ownSeries[i]){
+    var rd = ownerRed(D.grid[i].key);
+    _ownSeries[i] = ENGINE.simulate(D.grid[i].key, own.p, own.r, {red: rd === null ? undefined : rd});
+  }
   return _ownSeries[i];
 }
 function ownCompute(){
-  var g = pick(), i = D.grid.indexOf(g);
-  var Lg = ledger(base, ownSeriesAt(i));
+  var g = pick(), sh = ownerShock(g), rd = ownerRed(g.key);
+  var series = sh === null ? ownSeriesAt(D.grid.indexOf(g))
+             : ENGINE.simulate(g.key, own.p, own.r, {shock: sh, red: rd === null ? undefined : rd});
+  var Lg = ledger(base, series);
   return {L: Lg, m: metrics(Lg, base)};
 }
 /* Across every tested case: how often the owner's option does at least as well as the best of
@@ -1452,7 +1600,8 @@ function ownCensus(){
   var n = 0;
   cs.pts.forEach(function(pt, i){
     var best = Math.max(pt.m.A, pt.m.B, pt.m.C);
-    if(metrics(ledger(base, ownSeriesAt(i)), base).cash90 >= best - 0.5) n++;
+    var bk = censusBase(pt.key);
+    if(metrics(ledger(bk, ownSeriesAt(i)), bk).cash90 >= best - 0.5) n++;
   });
   _ownCensusKey = _ownKey + '#' + _cKey; _ownCensusVal = n;
   return n;
@@ -1494,11 +1643,21 @@ function renderOwn(out, rank){
   var o = ownCompute(), lead = rank[0], same = ownSameAs();
   // "Exactly the same" is only said when it is: the figure printed here and on that card agree.
   if(same && Math.round(o.m.mnet) !== Math.round(out[same].m.mnet)) same = null;
-  var gap = o.m.mnet - out[lead].m.mnet;
-  var close = Math.abs(gap) < Math.max(1, 0.005 * Math.abs(out[lead].m.mnet));
+  // Compared on the page's one measure — cash at the end of the period — so "ahead" means here
+  // what it means on the cards.
+  var gap = o.m.cash90 - out[lead].m.cash90;
+  var close = Math.abs(gap) < Math.max(1, 0.005 * Math.abs(out[lead].m.cash90));
   var vs = same ? fill(t('own_same'), {x: SHORT[same]})
-         : close ? fill(t('own_vs_equal'), {lead: SHORT[lead]})
-         : fill(t(gap > 0 ? 'own_vs_more' : 'own_vs_less'), {amount: money(Math.abs(gap)), lead: SHORT[lead]});
+         : close ? fill(t('own_vs_equal'), {lead: SHORT[lead], n: num(H)})
+         : fill(t(gap > 0 ? 'own_vs_more' : 'own_vs_less'),
+                {amount: money(Math.abs(gap)), lead: SHORT[lead], n: num(H)});
+  /* Past the largest rise the three were built around, the answer rests on the demand edge
+     staying a straight line. That boundary is a property of this comparison, not an economic
+     threshold, and the warning says no more than that. */
+  var maxRise = Math.max.apply(null, D.worlds.map(function(x){ return +x.price_rise_pct; }));
+  var warn = own.p > maxRise + 1e-9
+    ? '<p class="own-warn" id="own-warn">' + esc(fill(t('own_warn'), {max: num(maxRise) + PS()})) + '</p>'
+    : '';
   document.getElementById('own-res').innerHTML =
       '<div class="own-card">'
     + '<div class="own-name"><span class="own-star" aria-hidden="true">★</span>' + esc(ownName()) + '</div>'
@@ -1506,6 +1665,7 @@ function renderOwn(out, rank){
     + '<div class="money' + (o.m.mnet < 0 ? ' neg' : '') + '" id="own-money">' + signed(o.m.mnet) + '</div></div>'
     + '<p class="own-units">' + esc(ownUnits(o.m)) + '</p></div>'
     + '<p class="own-vs" id="own-vs">' + esc(vs) + '</p>'
+    + warn
     + '<p class="own-census" id="own-census">'
     + esc(fill(t('own_census'), {n: num(ownCensus()), total: num(D.grid.length)})) + '</p>'
     + '<p class="own-how">' + esc(fill(t('own_how'), {n: num(ENGINE.checked())})) + '</p>';
@@ -1588,6 +1748,14 @@ function render(langChanged){
   document.getElementById('tf-before-l').textContent = fill(t('test_before_l'), {unit: w('unit_word')});
   document.getElementById('tf-after-l').textContent = fill(t('test_after_l'), {unit: w('unit_word')});
   document.getElementById('tf-save').textContent = t('test_calc');
+  document.getElementById('tf-days-l').textContent = t('test_days_l');
+  document.getElementById('tf-n-l').textContent = t('test_n_l');
+  document.getElementById('tf-rep-h').textContent = t('test_rep_h');
+  document.getElementById('tf-oth-h').textContent = t('test_oth_h');
+  document.getElementById('tf-obefore-l').textContent = fill(t('test_obefore_l'), {unit: w('unit_word')});
+  document.getElementById('tf-oafter-l').textContent = fill(t('test_oafter_l'), {unit: w('unit_word')});
+  ['c1', 'c2', 'c3', 'c4'].forEach(function(c){
+    document.getElementById('tf-' + c + '-l').textContent = t('test_' + c); });
   document.getElementById('tf-cancel').textContent = t('test_cancel');
   document.getElementById('headline').textContent = fill(w('headline'), {shock: num(shock)});
   document.getElementById('whoami').textContent = whoami(cap);
@@ -1613,6 +1781,13 @@ function render(langChanged){
   document.getElementById('count-note').innerHTML =
       fill(t('ranked_first_cases'), {n:'<b>'+num(wins[lead])+'</b>', total:num(wins.n)})
       + ' · ' + esc(t('tested_cases_tooltip'));
+  document.getElementById('census-how-q').textContent = t('census_how_q');
+  document.getElementById('census-how-a').textContent = fill(t('census_how_a'), {facts: censusFacts()});
+  var ccount = D.assumption_class_counts || {};
+  document.getElementById('classline-t').textContent = fill(t('class_line'), {
+    c: num(ccount['Customer input'] || 0), r: num(ccount['External research'] || 0),
+    a: num(ccount['Assumption'] || 0), d: num(ccount['Derived'] || 0)});
+  document.getElementById('classline-go').textContent = t('class_line_go');
 
   var gap = out[lead].m.cash90 - out[second].m.cash90;
   var close = Math.abs(gap) < 0.02 * Math.max(1, Math.abs(out[lead].m.cash90));
@@ -1621,6 +1796,9 @@ function render(langChanged){
     ? fill(t('verdict_close'), {lead: '<b>' + esc(SHORT[lead]) + '</b>',
         second: '<b>' + esc(SHORT[second]) + '</b>', amount: money(Math.abs(gap))})
     : fill(t('verdict'), {option: '<b>' + esc(SHORT[lead]) + '</b>'});
+  document.getElementById('objective').textContent = fill(t('objective_line'), {n: num(H)})
+    + (inputsExact(r.g) ? '' : ' ' + fill(t('inputs_nearest'), {shock: pct(r.shock),
+         share: F.low_margin ? num(D.baseline_raw[F.low_margin]) + PS() : ''}));
   document.getElementById('why-h').textContent = close ? t('why_tie') : fill(t('why_title'), {option: SHORT[lead]});
   document.getElementById('why-p').textContent = whyText(out, rank, cap);
 
@@ -1647,19 +1825,24 @@ function render(langChanged){
 
   var flips = oat.filter(function(x){ return x.flips; });
   document.getElementById('unknown-title').textContent = w('uncertainty_title');
-  /* The three readings are the wedge's own elasticity settings turned into what the owner
-     would actually see on the till: a 10% rise times each setting. Nothing new is assumed —
-     it is the same three numbers the control below is switching between, read backwards. */
-  var TEST_RISE = 10;
-  document.getElementById('test-what').textContent =
-      fill(w('experiment'), {rise: pct(TEST_RISE)});
-  document.getElementById('test-readings').innerHTML = ['low','central','high'].map(function(k){
-    var e = parseFloat(C.sens_values[k]);
-    var drop = num(Math.abs(e) * TEST_RISE, 1) + PS();
-    var key = k === 'low' ? 'test_low' : (k === 'central' ? 'test_mid' : 'test_high');
-    return '<li><span class="r-n">' + esc(fill(t(key), {n: drop})) + '</span>'
+  /* What the owner should expect to see, worked out with the same demand dynamics the
+     comparison runs on: each price-sensitivity setting, across the model's own range of
+     reaction speeds, over the second week of the plan. Ranges, because the model does not know
+     the speed either — and where they overlap, a test cannot tell the settings apart. Reading a
+     two-week count straight against the long-run figure would call most customers insensitive,
+     since by the model's own assumptions much of the reaction has not happened yet. */
+  var planR = testPlanRanges();
+  document.getElementById('test-what').textContent = fill(w('experiment'), {rise: pct(PLAN.rise)});
+  document.getElementById('test-reading').textContent = fill(t('test_reading'), {rise: pct(PLAN.rise)});
+  document.getElementById('test-readings').innerHTML = ['low','central','high'].filter(function(k){
+    return planR[k]; }).map(function(k){
+    return '<li><span class="r-n">' + esc(fill(t('test_band_range'), {band: L.ui.setting_labels[k],
+             lo: num(planR[k][0] * 100, 1) + PS(), hi: num(planR[k][1] * 100, 1) + PS(),
+             unit: w('unit_word')})) + '</span>'
          + '<span class="r-s">' + esc(w('sens_help')[k]) + '</span></li>';
   }).join('');
+  document.getElementById('test-overlap').textContent = t('test_overlap');
+  document.getElementById('test-need').textContent = F.utilisation ? t('test_need_capacity') : t('test_need');
 
   document.getElementById('change-title').textContent = t('change_title');
   var maxInf = Math.max.apply(null, oat.map(function(x){ return x.influence; }).concat([1]));
@@ -1682,7 +1865,10 @@ function render(langChanged){
     var lbl = v === 'low' ? t('influence_low') : v === 'central' ? t('influence_medium') : t('influence_high');
     return '<button type="button" data-v="' + v + '" aria-pressed="' + (sel[PRIMARY]===v) + '">' + lbl + '</button>';
   }).join('');
-  document.getElementById('seg-help').textContent = w('sens_help')[sel[PRIMARY]];
+  // Whether the selected setting is a published figure or our own judgement, said every time.
+  document.getElementById('seg-help').textContent = w('sens_help')[sel[PRIMARY]] + ' · '
+    + ((C.research_settings || []).indexOf(sel[PRIMARY]) >= 0 ? t('setting_is_research')
+                                                            : t('setting_is_assumption'));
   renderLoop();
   document.getElementById('seg').style.setProperty('--seg-i', ['low','central','high'].indexOf(sel[PRIMARY]));
   var eff = document.getElementById('effect');
@@ -2081,13 +2267,14 @@ function renderSources(red, shock, cap, out, cTop){
   yours.push([label(F.shock), pct(shock)]);
   if(F.low_margin) yours.push([label(F.low_margin), num(base[F.low_margin]) + PS()]);
 
-  var backed = !measure && (C.research_settings || []).indexOf(sel[PRIMARY]) >= 0;
+  var backed = !measureUsable() && (C.research_settings || []).indexOf(sel[PRIMARY]) >= 0;
   var research = backed ? [[w('uncertainty_title'), elasticityPlain(), w('sources_note')]] : [];
   var assume = [];
-  if(measure){
-    /* Measured on their own till: the engine calls that customer input, and so does the page. */
+  if(measureUsable()){
+    /* Set by the owner's own test: the engine calls that customer input, and so does the page.
+       A provisional or inconclusive result is not listed here — it did not set anything. */
     yours.push([t('measured_row'),
-      fill(t('elasticity_plain'), {v: localDigits(num(measure.e, 2)), unit: w('unit_word')}),
+      L.ui.setting_labels[measure.band] + ' — ' + elasticityPlain(),
       fill(t('measured_on'), {date: sheetDate(measure.date)})]);
   } else if(!backed) {
     assume.push([w('uncertainty_title'), elasticityPlain(), w('sens_help')[sel[PRIMARY]]]);
@@ -2133,8 +2320,14 @@ function renderAdvanced(){
     var d = document.createElement('div'); d.className = 'ctl';
     d.innerHTML = '<label for="c_'+k+'">' + esc(axisLabel(k)) + '</label>'
       + '<select id="c_'+k+'" data-k="'+k+'">' + GRID_VALS[k].map(function(o){
+          var shown = o;
+          if(k === REDUCTION_KEY && engineOK()){
+            var probe = {}; probe[k] = o;
+            var ov = ownerRed(probe);
+            if(ov !== null) shown = ov;
+          }
           return '<option value="'+o+'"' + (String(o)===String(sel[k]) ? ' selected' : '') + '>'
-               + esc(settingLabel(k, o)) + '</option>'; }).join('') + '</select>';
+               + esc(settingLabel(k, shown)) + '</option>'; }).join('') + '</select>';
     c.appendChild(d);
   });
 }
@@ -2550,26 +2743,34 @@ document.getElementById('ask-restart').addEventListener('click', function(){
 
 
 /* ---- the experiment loop ---------------------------------------------------------------------
-   The comparison hangs on one number nobody knows: how much demand this owner's own customers
-   give up when the price moves. The page suggests a two-week test to find out; this is where
-   the answer comes back in.
+   The comparison hangs on one number nobody knows for this business: how much custom its own
+   customers give up when the price moves. The page suggests a small test; this is where its
+   result comes back in.
 
-   What the measurement can and cannot do is worth being exact about. It CAN replace a
-   literature estimate with this business's own figure, which is the whole point — and the
-   engine already classes a supplied elasticity as the customer's own number rather than a
-   model assumption. It CANNOT be simulated at its exact value in the browser: the page carries
-   162 precomputed worlds at three settings, not the engine. So the measured number is shown
-   exactly, and the comparison runs at the nearest setting that was actually tested. Claiming
-   otherwise would be inventing a run that never happened. */
+   A before-and-after count is not a measurement of price sensitivity. A quiet fortnight, a
+   holiday, a stock-out or a new item can move it as much as the price did — and under the
+   model's own assumptions much of the customer reaction has not happened yet after two weeks.
+   So a result is read in three parts that are kept apart: what the owner observed, what the
+   model infers from it under its own assumptions, and what is still open. It changes the
+   comparison only when exactly one tested setting fits it, the owner confirmed every
+   condition, unchanged items were counted alongside the repriced ones, and the business is not
+   capped by a diary. Anything else is kept as a note, and an inconclusive test is reported as
+   the legitimate result it is. */
 var MEASURE_KEY = 'dc_meas_' + D.wedge.id;
 var TEST_KEY = 'dc_test_' + D.wedge.id;
-var measure = null;                 // {e, rise, before, after, date}
-var testStarted = null;             // iso date, or null
+var PLAN = {rise: 10, days: 14, n: 7};      // the suggested test: the second week after a 10% rise
+var measure = null;                         // a readTest() result; older records carry no `v`
+var testStarted = null;                     // iso date, or null
+var TEST_STATES = ['supported', 'provisional', 'inconclusive', 'outside'];
 
 function loadLoop(){
   try {
     var m = JSON.parse(localStorage.getItem(MEASURE_KEY) || 'null');
-    if(m && isFinite(m.e) && m.e >= 0) measure = m;
+    if(m && isFinite(m.e)){
+      // Recorded before the conditions were checked: kept as a note, never used by the comparison.
+      if(m.v !== 2 || TEST_STATES.indexOf(m.status) < 0){ m.status = 'legacy'; m.band = null; }
+      measure = m;
+    }
     testStarted = localStorage.getItem(TEST_KEY) || null;
   } catch(e){}
 }
@@ -2580,25 +2781,118 @@ function saveMeasure(){
   } catch(e){}
 }
 
-/* Elasticity as the owner would work it out on paper: the share of custom lost, over the share
-   the price moved. Demand that did not fall is a real result — it reads as zero, not as an
-   error, and certainly not as a negative elasticity to be explained away. */
-function elasticityFrom(before, after, risePct){
-  if(!(before > 0) || !(after > 0) || !(risePct > 0)) return null;
-  var lost = (before - after) / before;
-  return Math.max(0, lost / (risePct / 100));
+/* How quickly demand reacts at each of the model's speed settings, read from the model itself:
+   the demand variable's daily response times each setting's multiplier. */
+function speedRates(){
+  var S = D.slice, R = D.roles, out = {};
+  if(!S || !R) return out;
+  var v = S.variables.filter(function(x){ return x.id === R.demand_var; })[0];
+  if(!v) return out;
+  S.axes.forEach(function(ax){
+    if(ax.applies_to.indexOf(v.id) < 0 && v.axis !== ax.id) return;
+    Object.keys(ax.mapping).forEach(function(k){
+      var m = parseFloat(ax.mapping[k].response_multiplier);
+      if(isFinite(m) && m > 0) out[k] = Math.min(1, (+v.response) * m);
+    });
+  });
+  if(!Object.keys(out).length) out.central = Math.min(1, +v.response);
+  return out;
+}
+/* The share of the eventual reaction visible, on average, over days `from`..`to` after a step
+   change in price — the model's own relaxation, dev(t) = target·(1 − (1 − r)^t). */
+function visibleShare(r, from, to){
+  var sum = 0;
+  for(var d = from; d <= to; d++) sum += 1 - Math.pow(1 - r, d);
+  return sum / (to - from + 1);
+}
+/* For each price-sensitivity setting: the drop the model expects over that window, lowest and
+   highest across its reaction speeds. */
+function bandRanges(rise, from, to){
+  var rates = speedRates(), out = {};
+  ['low', 'central', 'high'].forEach(function(k){
+    if(C.sens_values[k] === undefined) return;
+    var e = parseFloat(C.sens_values[k]);
+    var vals = Object.keys(rates).map(function(s){ return e * rise / 100 * visibleShare(rates[s], from, to); });
+    if(vals.length) out[k] = [Math.min.apply(null, vals), Math.max.apply(null, vals)];
+  });
+  return out;
+}
+function testPlanRanges(){ return bandRanges(PLAN.rise, PLAN.days - PLAN.n + 1, PLAN.days); }
+
+/* The reading. `x` holds the owner's figures: the rise, how many days have passed, how many
+   days each average covers, the repriced items' daily counts before and in the latest days,
+   and — optionally — the same for unchanged items.
+
+   Observed: the repriced items' change, the unchanged items' change, and the ratio of the two,
+   which takes out whatever moved the whole business. Uncertainty: only the counting noise of
+   daily totals (a Poisson approximation, two standard errors on the log ratio). Real weeks vary
+   more than that, and the page says so; the range is used to decide what the result cannot
+   rule out, never shown as a precise interval. Inferred: which settings, at any of the model's
+   speeds, would produce a drop inside that range. */
+function readTest(x){
+  var ctl = x.ob > 0 && x.oa > 0;
+  var ratio = (x.ta / x.tb) / (ctl ? x.oa / x.ob : 1);
+  var inv = 1 / (x.tb * x.n) + 1 / (x.ta * x.n) + (ctl ? 1 / (x.ob * x.n) + 1 / (x.oa * x.n) : 0);
+  var sd = Math.sqrt(inv);
+  var lo = 1 - ratio * Math.exp(2 * sd), hi = 1 - ratio * Math.exp(-2 * sd);
+  var from = Math.max(1, Math.round(x.days - x.n + 1)), to = Math.max(from, Math.round(x.days));
+  var ranges = bandRanges(x.rise, from, to), fit = [];
+  ['low', 'central', 'high'].forEach(function(k){
+    var r = ranges[k];
+    if(r && r[1] >= lo && r[0] <= hi) fit.push(k);
+  });
+  var checks = x.checksList.every(Boolean), capacity = !!F.utilisation;
+  var status = !fit.length ? 'outside'
+             : fit.length > 1 ? 'inconclusive'
+             : (ctl && checks && x.n >= 7 && x.days >= 14 && !capacity) ? 'supported'
+             : 'provisional';
+  var drop = 1 - ratio;
+  return {status: status, band: fit.length === 1 ? fit[0] : null, fit: fit,
+          drop: drop, lo: lo, hi: hi, octl: ctl, checks: checks, capacity: capacity,
+          tdrop: 1 - x.ta / x.tb, odrop: ctl ? 1 - x.oa / x.ob : null,
+          // What was observed, per 1% of price, in the short run — not a long-run elasticity.
+          e: drop / (x.rise / 100)};
 }
 
-/* Which of the settings the page actually ran is closest to what was measured. */
-function bandFor(e){
-  var keys = ['low', 'central', 'high'].filter(function(k){
-    return GRID_VALS[PRIMARY].indexOf(k) >= 0 && C.sens_values[k] !== undefined; });
-  var best = keys[0], bd = Infinity;
-  keys.forEach(function(k){
-    var d = Math.abs(parseFloat(C.sens_values[k]) - e);
-    if(d < bd){ bd = d; best = k; }
-  });
-  return best;
+/* Only a result that met every condition, and fits one setting the page actually tested, is
+   allowed to set the comparison. */
+function measureUsable(){
+  return !!(measure && measure.status === 'supported' && measure.band
+            && GRID_VALS[PRIMARY].indexOf(measure.band) >= 0);
+}
+
+function changePct(fr){ return pct(-fr * 100, 1); }        // a drop of 0.032 reads "−3.2%"
+
+function measureLines(m){
+  var name = function(k){ return (L.ui.setting_labels || {})[k] || k; };
+  var sep = lang === 'fa' ? '، ' : ', ';
+  var out = {status: '', obs: '', inf: '', open: []};
+  if(m.status === 'legacy'){
+    out.status = t('test_status_legacy');
+    if(m.e > 0) out.obs = fill(t('test_obs_legacy'), {v: num(m.e, 2), rise: pct(m.rise)});
+    out.open.push(t('test_open_legacy'));
+    return out;
+  }
+  var bands = (m.fit || []).map(name).join(sep);
+  out.status = fill(t('test_status_' + m.status), {band: m.band ? name(m.band) : '', bands: bands});
+  out.obs = fill(t(m.octl ? 'test_obs_ctl' : 'test_obs'), {rise: pct(m.rise), days: num(m.days),
+    n: num(m.n), t: changePct(m.tdrop), o: m.octl ? changePct(m.odrop) : '', rel: changePct(m.drop)});
+  out.inf = (m.fit && m.fit.length) ? fill(t('test_inf'), {bands: bands}) : t('test_inf_none');
+  if(!m.octl) out.open.push(t('test_open_noctl'));
+  if(!m.checks) out.open.push(t('test_open_checks'));
+  if(m.n < 7) out.open.push(t('test_open_short_n'));
+  if(m.days < 14) out.open.push(t('test_open_short_days'));
+  if(m.capacity) out.open.push(t('test_open_capacity'));
+  out.open.push(t('test_open_noise'));
+  out.open.push(t('test_open_items'));
+  return out;
+}
+
+/* One line for the sheet, which carries only the result's state and not the counts. */
+function sheetMeasureText(m){
+  if(m.status === 'supported' && m.band)
+    return fill(t('sheet_meas_supported'), {band: (L.ui.setting_labels || {})[m.band] || m.band});
+  return fill(t('sheet_meas_other'), {rise: pct(m.rise), state: t('test_state_' + m.status)});
 }
 
 function renderLoop(){
@@ -2617,17 +2911,20 @@ function renderLoop(){
   var box = document.getElementById('measured');
   box.hidden = !measure;
   if(measure){
-    document.getElementById('m-value').textContent = measure.e > 0
-      ? fill(t('measured_value'), {v: num(measure.e, 2), unit: w('unit_word')})
-      : fill(t('measured_none'), {rise: pct(measure.rise), unit: w('unit_word')});
-    document.getElementById('m-band').textContent =
-      fill(t('measured_band'), {band: L.ui.setting_labels[bandFor(measure.e)]});
-    document.getElementById('m-caveat').textContent = t('measured_caveat');
+    var ml = measureLines(measure);
+    var mv = document.getElementById('m-value');
+    mv.textContent = ml.status;
+    mv.className = 'm-v st-' + measure.status;
+    var mo = document.getElementById('m-obs'), mi = document.getElementById('m-inf');
+    mo.textContent = ml.obs; mo.hidden = !ml.obs;
+    mi.textContent = ml.inf; mi.hidden = !ml.inf;
+    document.getElementById('m-open').innerHTML = ml.open.map(function(x){
+      return '<li>' + esc(x) + '</li>'; }).join('');
     document.getElementById('m-on').textContent = fill(t('measured_on'), {date: sheetDate(measure.date)});
     document.getElementById('m-clear').textContent = t('measured_clear');
   }
   document.getElementById('unknown-lead').textContent =
-      measure ? t('measured_lead') : t('unknown_lead');
+      measureUsable() ? t('measured_lead') : t('unknown_lead');
   renderShare();
 }
 
@@ -2653,25 +2950,40 @@ document.getElementById('tf-cancel').addEventListener('click', function(){
   document.getElementById('testform').hidden = true;
 });
 
+document.getElementById('classline-go').addEventListener('click', function(){
+  var d = document.getElementById('assume-disc');
+  d.open = true;
+  d.scrollIntoView({behavior: motionOK() ? 'smooth' : 'auto', block: 'start'});
+});
+
 document.getElementById('testform').addEventListener('submit', function(e){
   e.preventDefault();
   function readNum(id){
     var raw = String(document.getElementById(id).value).replace(/[,\s٬،]/g, '')
       .replace(/[۰-۹]/g, function(ch){ return String(ch.charCodeAt(0) - 0x06F0); })
       .replace(/[٠-٩]/g, function(ch){ return String(ch.charCodeAt(0) - 0x0660); });
-    return parseFloat(raw);
+    return raw === '' ? NaN : parseFloat(raw);
   }
-  var rise = readNum('tf-rise'), before = readNum('tf-before'), after = readNum('tf-after');
-  var e2 = elasticityFrom(before, after, rise);
-  if(e2 === null){
+  var x = {rise: readNum('tf-rise'), days: readNum('tf-days'), n: readNum('tf-n'),
+           tb: readNum('tf-before'), ta: readNum('tf-after'),
+           ob: readNum('tf-obefore'), oa: readNum('tf-oafter'),
+           checksList: ['c1', 'c2', 'c3', 'c4'].map(function(c){
+             return document.getElementById('tf-' + c).checked; })};
+  var noCtl = isNaN(x.ob) && isNaN(x.oa);
+  var ok = x.rise > 0 && x.rise <= 50 && x.tb > 0 && x.ta > 0 && x.n >= 1 && x.days >= x.n
+        && (noCtl || (x.ob > 0 && x.oa > 0));
+  if(!ok){
     document.getElementById('tf-err').textContent = t('test_bad');
     return;
   }
+  if(noCtl){ x.ob = 0; x.oa = 0; }
   var d = new Date();
-  measure = {e: e2, rise: rise, before: before, after: after,
-             date: d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())};
+  measure = Object.assign({v: 2, date: d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())},
+                          x, readTest(x));
   saveMeasure();
-  sel[PRIMARY] = bandFor(e2);            // the comparison runs where the page actually ran
+  // Otherwise the comparison keeps whatever it used before; the result stays a note.
+  if(measureUsable()) sel[PRIMARY] = measure.band;
+  try { localStorage.removeItem(SHARE_KEY); } catch(err){}
   document.getElementById('testform').hidden = true;
   render();
   document.getElementById('b-solid').scrollIntoView({behavior: motionOK() ? 'smooth' : 'auto',
@@ -2706,7 +3018,7 @@ function anonId(){
 
 function shareRow(){
   return {wedge: D.wedge.id, variant: variant || null,
-          e: Math.round(measure.e * 10000) / 10000, rise: measure.rise, anon: anonId()};
+          e: Math.round(Math.max(0, measure.e) * 10000) / 10000, rise: measure.rise, anon: anonId()};
 }
 
 function shareState(){
@@ -2717,7 +3029,7 @@ function renderShare(){
   var box = document.getElementById('share');
   // Only where there is somewhere to send it, only once there is something to send, and only
   // until the owner has answered the question one way or the other.
-  var offer = !!(D.contrib && measure && !shareState());
+  var offer = !!(D.contrib && measure && measure.status === 'supported' && !shareState());
   box.hidden = !offer;
   if(!offer){
     var msg = document.getElementById('share-msg');
@@ -2805,7 +3117,8 @@ function packSheet(choice, iso){
     FLOW_FIELDS.map(function(f){ return base[f]; })];
   /* An optional tail, trimmed from the end, so a sheet without the newer parts packs exactly as
      it always did and every link already handed out still opens. */
-  var tail = [measure ? [measure.e, measure.rise, measure.date] : null,
+  var tail = [measure ? [Math.round(measure.e * 10000) / 10000, measure.rise, measure.date,
+                         measure.status || 'legacy', measureUsable() ? measure.band : null] : null,
               variant || null,
               choice === 'D' ? [own.p, own.r ? 1 : 0] : null];
   while(tail.length && tail[tail.length - 1] === null) tail.pop();
@@ -2838,8 +3151,13 @@ function applySheet(packed){
   base = nb;
   GRID_KEYS.forEach(function(k, i){ sel[k] = settings[i]; });
   var m = null;
-  if(a[5] && isFinite(parseFloat(a[5][0])))
-    m = {e: parseFloat(a[5][0]), rise: parseFloat(a[5][1]) || 0, date: String(a[5][2] || '')};
+  if(a[5] && isFinite(parseFloat(a[5][0]))){
+    // A link from before results were checked carries no state; it reads as a note.
+    var ms = TEST_STATES.indexOf(a[5][3]) >= 0 ? a[5][3] : 'legacy';
+    m = {v: ms === 'legacy' ? 1 : 2, e: parseFloat(a[5][0]), rise: parseFloat(a[5][1]) || 0,
+         date: String(a[5][2] || ''), status: ms,
+         band: (ms === 'supported' && GRID_VALS[PRIMARY].indexOf(a[5][4]) >= 0) ? a[5][4] : null};
+  }
   setVariant(variantIds().indexOf(a[6]) >= 0 ? a[6] : null);
   if(ownIn){ own.p = ownIn.p; own.r = ownIn.r; own.on = true; }
   return {date: String(a[1]), choice: a[2], packed: packed, measure: m};
@@ -2876,7 +3194,8 @@ function makeSheet(choice){
   sheetState = {date: iso, choice: choice, packed: packed, measure: measure};
   try {
     var u = new URL(location.href);
-    u.searchParams.set('sheet', packed);
+    u.searchParams.delete('sheet');
+    u.hash = 'sheet=' + packed;
     history.replaceState(null, '', u);
   } catch(e){}
   showScreen('sheet');
@@ -2951,24 +3270,23 @@ function renderSheet(){
     var sm = sheetState.measure;
     document.getElementById('sheet-meas-k').textContent = t('sheet_measured');
     document.getElementById('sheet-meas').textContent =
-      (sm.e > 0 ? fill(t('measured_value'), {v: num(sm.e, 2), unit: w('unit_word')})
-                : fill(t('measured_none'), {rise: pct(sm.rise), unit: w('unit_word')}))
-      + ' ' + fill(t('measured_on'), {date: sheetDate(sm.date)});
+      sheetMeasureText(sm) + ' ' + fill(t('measured_on'), {date: sheetDate(sm.date)});
   }
   document.getElementById('sheet-will-k').textContent = t('sheet_will_do');
-  var TEST_RISE = 10;
-  document.getElementById('sheet-will').textContent = fill(w('experiment'), {rise: pct(TEST_RISE)});
-  document.getElementById('sheet-readings').innerHTML = ['low','central','high'].map(function(k){
-    var e = parseFloat(C.sens_values[k]);
-    var key = k === 'low' ? 'test_low' : (k === 'central' ? 'test_mid' : 'test_high');
-    return '<li><span class="r-n">'
-      + esc(fill(t(key), {n: num(Math.abs(e) * TEST_RISE, 1) + PS()})) + '</span></li>';
+  var sheetR = testPlanRanges();
+  document.getElementById('sheet-will').textContent = fill(w('experiment'), {rise: pct(PLAN.rise)});
+  document.getElementById('sheet-readings').innerHTML = ['low','central','high'].filter(function(k){
+    return sheetR[k]; }).map(function(k){
+    return '<li><span class="r-n">' + esc(fill(t('test_band_range'), {band: L.ui.setting_labels[k],
+      lo: num(sheetR[k][0] * 100, 1) + PS(), hi: num(sheetR[k][1] * 100, 1) + PS(),
+      unit: w('unit_word')})) + '</span></li>';
   }).join('');
 
   document.getElementById('sheet-scenario').textContent = t('not_a_prediction');
   document.getElementById('sheet-reproduce').textContent = t('sheet_reproduce');
   document.getElementById('sheet-sign-k').textContent = t('sheet_sign');
   document.getElementById('sheet-print').textContent = t('print_view');
+  document.getElementById('sheet-link-note').textContent = t('sheet_link_note');
   document.getElementById('sheet-copy').textContent = t('sheet_copy');
   document.getElementById('sheet-back').textContent = t('sheet_back');
   /* Shown to a reader who arrived on someone else's link, not to the owner who just made it:
@@ -2992,6 +3310,7 @@ document.getElementById('sheet-yours-go').addEventListener('click', function(){
   try {
     var u = new URL(location.href);
     u.searchParams.delete('sheet');
+    u.hash = '';
     history.replaceState(null, '', u);
   } catch(e){}
   draft = Object.assign({}, D.baseline_raw);
@@ -3005,6 +3324,7 @@ document.getElementById('sheet-back').addEventListener('click', function(){
   try {
     var u = new URL(location.href);
     u.searchParams.delete('sheet');
+    u.hash = '';
     history.replaceState(null, '', u);
   } catch(e){}
   showScreen('result');
@@ -3045,7 +3365,7 @@ applyLanguage(lang, false);
     if(variantIds().indexOf(savedVar) >= 0) setVariant(savedVar);
   } catch(e){}
   loadLoop();
-  if(measure) sel[PRIMARY] = bandFor(measure.e);
+  if(measureUsable()) sel[PRIMARY] = measure.band;
   loadOwn();
   /* A question routed from the home screen can carry an option and a trade. They are proposals
      the page shows; the owner's own figures are still asked for. */
@@ -3060,7 +3380,9 @@ applyLanguage(lang, false);
   });
   /* A shared link is a document someone was handed. It opens as that document, with its own
      figures, whatever this browser remembers about its owner's last visit. */
-  var packedIn = P.get('sheet');
+  var hashed = /(?:^#|&)sheet=([A-Za-z0-9_-]+)/.exec(location.hash || '');
+  // Links made before the figures moved into the fragment still open.
+  var packedIn = (hashed && hashed[1]) || P.get('sheet');
   if(packedIn){
     var st = applySheet(packedIn);
     if(st){

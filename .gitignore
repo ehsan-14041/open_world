@@ -58,3 +58,6 @@ deploy/php/data/settings.json
 deploy/php/data/llm_usage.json
 deploy/php/data/i18n/
 deploy/php/data/cache/*.gz
+
+# Customer-pilot session notes: business figures and personal details. Never committed.
+pilot_sessions/

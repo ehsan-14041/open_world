@@ -182,6 +182,15 @@ have of which question this tool should learn to answer next.
 
 **To not receive questions, delete `ask.php`.** The box disappears from the home screen.
 
+## Decision-sheet links carry the owner's figures
+
+A decision sheet is a link, and the link contains the figures the owner entered — sales,
+costs, cash — so that it can be reopened without a database. Anyone who has the link can
+read them. The figures sit after the `#` in the link, which browsers do not send to the
+server, so opening a sheet does not put them in this host's access logs. The page tells the
+owner this next to the "Copy link" button. Links made before this change carried the
+figures in `?sheet=`; they still open, but those requests may already be in your logs.
+
 ## Things worth knowing
 
 - **A generated report holds the owner's figures.** They are in `data/cache/` on your server
