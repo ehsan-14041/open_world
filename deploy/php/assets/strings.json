@@ -2118,6 +2118,24 @@
    "tags": []
   },
   {
+   "id": "ui.scale_million",
+   "text": "million",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.scale_billion",
+   "text": "billion",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.currency_ask",
+   "text": "What currency are your figures in?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
    "id": "wedges.cafe.business",
    "text": "Cafe / Restaurant",
    "placeholders": [],

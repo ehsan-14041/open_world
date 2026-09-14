@@ -570,7 +570,10 @@
      "test_state_inconclusive": "inconclusive — it fitted more than one setting",
      "test_state_outside": "outside every tested setting",
      "test_state_legacy": "recorded without the condition checks",
-     "inputs_nearest": "This browser could not run the model, so the comparison uses the nearest figures this page carries: a {shock} supplier increase and a low-margin share of {share}."
+     "inputs_nearest": "This browser could not run the model, so the comparison uses the nearest figures this page carries: a {shock} supplier increase and a low-margin share of {share}.",
+     "scale_million": "million",
+     "scale_billion": "billion",
+     "currency_ask": "What currency are your figures in?"
     },
     "wedge": {
      "business": "Salon / Service Business",
@@ -1128,7 +1131,10 @@
      "test_state_inconclusive": "نامشخص — با بیش از یک حالت جور درمی‌آمد",
      "test_state_outside": "خارج از همهٔ حالت‌های آزموده",
      "test_state_legacy": "بدون بررسی شرط‌ها ثبت شده",
-     "inputs_nearest": "این مرورگر نتوانست مدل را اجرا کند، پس مقایسه با نزدیک‌ترین عددهایی انجام شده که این صفحه در خود دارد: افزایش {shock} از طرف تأمین‌کننده و سهم اقلام کم‌سودِ {share}."
+     "inputs_nearest": "این مرورگر نتوانست مدل را اجرا کند، پس مقایسه با نزدیک‌ترین عددهایی انجام شده که این صفحه در خود دارد: افزایش {shock} از طرف تأمین‌کننده و سهم اقلام کم‌سودِ {share}.",
+     "scale_million": "میلیون",
+     "scale_billion": "میلیارد",
+     "currency_ask": "عددها را با چه واحدی وارد می‌کنی؟"
     },
     "wedge": {
      "business": "سالن / کسب‌وکار خدماتی",

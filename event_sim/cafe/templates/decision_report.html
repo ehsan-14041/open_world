@@ -486,6 +486,12 @@ html[dir="rtl"] .sheet-choice{font-weight:700;line-height:1.55}
   .sheet-actions .btn{width:100%}
   .sheet-tbl td{padding:10px 0}
   .sheet-tbl .c-k{text-align:start}
+  /* Ten-digit figures leave a name column three words wide and push the marks off the edge.
+     On a narrow screen each option becomes its own block instead. */
+  #sheet-cmp tr{display:block;padding:10px 0;border-bottom:1px solid var(--rule)}
+  #sheet-cmp tr:last-child{border-bottom:0}
+  #sheet-cmp td{display:block;padding:2px 0;border-bottom:0}
+  #sheet-cmp .c-m{white-space:normal}
 }
 
 /* ================= the five beats =============================================================
@@ -527,6 +533,8 @@ html[dir="rtl"] .beat-t{font-weight:700;letter-spacing:0;line-height:1.5}
 .curr-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:30px;
           padding-top:20px;border-top:1px solid var(--rule)}
 .curr-row label{font-weight:600;font-size:15px}
+.ask-curr{margin-top:18px;font-size:15px}
+.ask-curr select{min-height:44px}
 .curr-row select{min-height:48px;border:1px solid var(--rule);border-radius:var(--r-sm);
           background:var(--paper);color:inherit;padding:0 12px;font:inherit}
 .curr-row .note{margin:0;flex:1 1 100%}
@@ -1099,6 +1107,18 @@ function num(v,d){ return (d?NF1:NF).format(v); }
    cover the owner can type. The choice is presentation: it is attached after the number is
    formatted and never reaches the arithmetic. */
 var CURRENCIES = ['', '$', '€', '£', '₺', '₹', '¥', 'A$', 'C$', 'R$', 'ر.س', 'د.إ', 'تومان', 'ریال'];
+function currencyOptions(){
+  return CURRENCIES.map(function(cx){
+    return '<option value="' + esc(cx) + '"' + (cx === cur ? ' selected' : '') + '>'
+         + esc(cx || t('currency_none')) + '</option>'; }).join('');
+}
+/* Presentation only, wherever it is set from: the symbol is attached after a number is
+   formatted and never reaches the arithmetic. */
+function setCurrency(v){
+  cur = v;
+  try { localStorage.setItem('dc_cur', cur); } catch(e){}
+  render();
+}
 var cur = (function(){
   try { var v = localStorage.getItem('dc_cur'); if(v !== null) return v; } catch(e){}
   return '';
@@ -1732,9 +1752,7 @@ function render(langChanged){
       + '<span class="pgo">' + esc(t('decide_pick')) + '</span></button>' : '');
   document.getElementById('picks').classList.toggle('has-own', !!OWN_OUT);
   document.getElementById('curr-l').textContent = t('currency_pick');
-  document.getElementById('cursel').innerHTML = CURRENCIES.map(function(cx){
-    return '<option value="' + esc(cx) + '"' + (cx === cur ? ' selected' : '') + '>'
-         + esc(cx || t('currency_none')) + '</option>'; }).join('');
+  document.getElementById('cursel').innerHTML = currencyOptions();
   document.getElementById('unknown-title').textContent = w('uncertainty_title');
   document.getElementById('assume-reveal-q').textContent = t('assume_reveal_q');
   document.getElementById('assume-reveal-btn').textContent = t('assume_reveal_btn');
@@ -1995,8 +2013,29 @@ function turnDay(cash){
 }
 
 /* Axis figures carry a short symbol but not a word — see the caption for the word. */
-function axisMoney(v){
-  return curIsWord() ? (v<0?'−':'') + NF.format(Math.abs(Math.round(v))) : money(v);
+/* A currency whose figures run to ten digits — rial, toman, dong — turns a 54-pixel axis
+   margin into a row of clipped numbers. So the whole chart picks one scale, the caption names
+   it, and the ticks stay short. The arithmetic never sees any of this. */
+function moneyScale(top){
+  var a = Math.abs(top);
+  if(a >= 1e9) return {d: 1e9, w: t('scale_billion')};
+  if(a >= 1e6) return {d: 1e6, w: t('scale_million')};
+  // Below a million the full figure is both short enough and more familiar.
+  return {d: 1, w: ''};
+}
+function scaled(v, sc){
+  if(sc.d === 1) return (v < 0 ? '−' : '') + NF.format(Math.abs(Math.round(v)));
+  var x = v / sc.d;
+  return (x < 0 ? '−' : '') + num(Math.abs(x), Math.abs(x) < 100 ? 1 : 0);
+}
+/* The same figure where a word will fit: "480 million". */
+function shortMoney(v, sc){ return scaled(v, sc) + (sc.w ? ' ' + sc.w : ''); }
+/* "cash · million rial" — the unit said once, where the ticks cannot carry it. */
+function axisCaption(sc){
+  var unit = cur ? (curIsWord() ? (sc.w ? sc.w + ' ' + cur : cur)
+                                : (sc.w ? cur + ' ' + sc.w : cur))
+                 : sc.w;
+  return t('chart_axis_unit') + (unit ? ' · ' + unit : '');
 }
 
 /* "If you do nothing", on its own. One line, drawn at the size it is seen at, annotated
@@ -2019,6 +2058,7 @@ function drawSolo(out){
   var lo = Math.min(mn, c[0]), hi = Math.max(mx, c[0]);
   var step = niceStep(Math.max(1, hi - lo), 3);
   lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step; if(hi === lo) hi = lo + step;
+  var SC = moneyScale(Math.max(Math.abs(lo), Math.abs(hi)));
   function x(d){ return pl + d * (W - pl - pr) / H; }
   function y(v){ return pt + (hi - v) * (Hh - pt - pb) / (hi - lo); }
   var m = '';
@@ -2026,7 +2066,10 @@ function drawSolo(out){
     m += '<line x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(v) + '" y2="' + y(v)
        + '" stroke="var(--grid)"/>'
        + '<text x="' + (pl - 9) + '" y="' + (y(v) + 4) + '" text-anchor="end" font-size="12"'
-       + ' fill="var(--muted)" direction="ltr">' + axisMoney(v) + '</text>';
+       + ' fill="var(--muted)" direction="ltr">' + scaled(v, SC) + '</text>';
+  // The scale and the unit, said once where the ticks cannot carry them.
+  m += '<text x="' + (pl - 44 > 0 ? pl - 44 : 2) + '" y="' + (pt - 10) + '" font-size="11.5"'
+     + ' fill="var(--muted)" letter-spacing=".06em">' + esc(axisCaption(SC)) + '</text>';
   (narrow ? [0, 45, 90] : [0, 30, 60, 90]).forEach(function(d){
     var anchor = d === 0 ? 'start' : (d === H ? 'end' : 'middle');
     m += '<text x="' + x(d) + '" y="' + (Hh - 8) + '" text-anchor="' + anchor
@@ -2043,7 +2086,7 @@ function drawSolo(out){
     m += '<line x1="' + x(shockDay) + '" x2="' + x(shockDay) + '" y1="' + pt + '" y2="' + (Hh - pb)
        + '" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/>';
     if(x(shockDay) + 6 + sl.length * 6 <= W - pr)
-      m += '<text x="' + (x(shockDay) + 6) + '" y="' + (pt - 8 < 10 ? pt + 12 : pt - 8)
+      m += '<text x="' + (x(shockDay) + 6) + '" y="' + (Hh - pb - 8)
          + '" font-size="12" fill="var(--muted)">' + esc(sl) + '</text>';
   }
   var turn = turnDay(c);
@@ -2068,7 +2111,7 @@ function drawSolo(out){
   }
   m += '<circle cx="' + x(H) + '" cy="' + y(c[H]) + '" r="4" fill="var(--a)"/>'
      + '<text x="' + (x(H) - 8) + '" y="' + (y(c[H]) - 10) + '" font-size="13" font-weight="600"'
-     + ' fill="var(--a)" text-anchor="end" direction="ltr">' + money(c[H]) + '</text>';
+     + ' fill="var(--a)" text-anchor="end" direction="ltr">' + shortMoney(c[H], SC) + '</text>';
   svg.innerHTML = m;
 }
 
@@ -2117,14 +2160,15 @@ function drawChart(out, lead){
   var lo = (mn < 0.25*mx) ? Math.min(0, mn) : mn, hi = mx;
   var step = niceStep(hi-lo, 4);
   lo = Math.floor(lo/step)*step; hi = Math.ceil(hi/step)*step; if(hi===lo) hi = lo+step;
+  var SC = moneyScale(Math.max(Math.abs(lo), Math.abs(hi)));
   function x(d){ return pl + d*(W-pl-pr)/H; }
   function y(v){ return pt + (hi-v)*(Hh-pt-pb)/(hi-lo); }
   var s = '';
   for(var v=lo; v<=hi+1e-9; v+=step)
     s += '<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--grid)"/>'
        + '<text x="'+(pl-9)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="12" fill="var(--muted)"'
-       + ' direction="ltr">'+axisMoney(v)+'</text>';
-  var axisCap = t('chart_axis_unit') + (cur ? ' · ' + cur : '');
+       + ' direction="ltr">'+scaled(v, SC)+'</text>';
+  var axisCap = axisCaption(SC);
   s += '<text x="'+(pl-44>0?pl-44:2)+'" y="'+(pt-10)+'" font-size="11.5" fill="var(--muted)"'
      + ' letter-spacing=".06em">'+esc(axisCap)+'</text>';
   (narrow ? [0,45,90] : [0,30,60,90]).forEach(function(d){
@@ -2150,7 +2194,7 @@ function drawChart(out, lead){
     s += '<circle cx="'+x(H)+'" cy="'+y(c[H])+'" r="4" fill="var(--'+id.toLowerCase()+')"/>';
     if(!narrow)
       s += '<text x="'+(x(H)+8)+'" y="'+(e.ty+4)+'" font-size="13" font-weight="600" fill="var(--'
-         + id.toLowerCase()+')" direction="ltr">'+id+' '+money(c[H])+'</text>';
+         + id.toLowerCase()+')" direction="ltr">'+id+' '+shortMoney(c[H], SC)+'</text>';
   });
   if(OWN_OUT){
     var oc = OWN_OUT.L.cash, op = 'M'+x(0)+','+y(oc[0]);
@@ -2161,7 +2205,7 @@ function drawChart(out, lead){
   }
   s += '<circle cx="'+x(0)+'" cy="'+y(out.A.L.cash[0])+'" r="3.5" fill="var(--ink)"/>'
      + '<text x="'+x(0)+'" y="'+(y(out.A.L.cash[0])+20)+'" font-size="12" fill="var(--muted)">'
-     + t('chart_today')+' '+money(out.A.L.cash[0])+'</text>';
+     + t('chart_today')+' '+shortMoney(out.A.L.cash[0], SC)+'</text>';
 
   /* Where the increase lands. It is day one here, so the rule is drawn thin and labelled at the
      top, clear of the "today" figure sitting on the axis. */
@@ -2171,7 +2215,7 @@ function drawChart(out, lead){
     s += '<line x1="'+x(shockDay)+'" x2="'+x(shockDay)+'" y1="'+pt+'" y2="'+(Hh-pb)
        + '" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/>';
     if(x(shockDay) + 6 + sl.length * 6 <= W - pr)
-      s += '<text x="'+(x(shockDay)+6)+'" y="'+(pt-14 < 0 ? pt+12 : pt-14)+'" font-size="12"'
+      s += '<text x="'+(x(shockDay)+6)+'" y="'+(Hh-pb-8)+'" font-size="12"'
          + ' fill="var(--muted)">' + esc(sl) + '</text>';
   }
 
@@ -2602,6 +2646,8 @@ function renderAsk(){
       if(ob) ob.classList.add('on');
     }
   } else {
+    // The unit belongs with the first figure, not at the bottom of a disclosure nobody opens.
+    var moneyStep = step.fields.indexOf(F.revenue) >= 0;
     body.innerHTML = '<div class="askfields">' + step.fields.map(function(f){
         var meta = IF[f] || {}, isPct = /_pct$/.test(f);
         hint = hint || meta.hint || '';
@@ -2611,7 +2657,13 @@ function renderAsk(){
           + (answered[f] ? esc(String(draft[f])) : '') + '"'
           + ' placeholder="' + esc(String(D.baseline_raw[f])) + '">'
           + (isPct ? '<span class="u">' + PS() + '</span>' : '') + '</span></label>';
-      }).join('') + '</div>';
+      }).join('') + '</div>'
+      + (moneyStep ? '<div class="curr-row ask-curr"><label for="cur-ask" id="cur-ask-l"></label>'
+           + '<select id="cur-ask"></select></div>' : '');
+    if(moneyStep){
+      document.getElementById('cur-ask-l').textContent = t('currency_ask');
+      document.getElementById('cur-ask').innerHTML = currencyOptions();
+    }
   }
   document.getElementById('ask-hint').textContent = choices ? '' : (hint || t('flow_approx'));
   document.getElementById('ask-back').textContent = t('flow_back');
@@ -3120,7 +3172,9 @@ function packSheet(choice, iso){
   var tail = [measure ? [Math.round(measure.e * 10000) / 10000, measure.rise, measure.date,
                          measure.status || 'legacy', measureUsable() ? measure.band : null] : null,
               variant || null,
-              choice === 'D' ? [own.p, own.r ? 1 : 0] : null];
+              choice === 'D' ? [own.p, own.r ? 1 : 0] : null,
+              // A sheet is read by someone else, on a browser that knows nothing of this owner.
+              cur || null];
   while(tail.length && tail[tail.length - 1] === null) tail.pop();
   return b64url(JSON.stringify(a.concat(tail)));
 }
@@ -3158,6 +3212,8 @@ function applySheet(packed){
          date: String(a[5][2] || ''), status: ms,
          band: (ms === 'supported' && GRID_VALS[PRIMARY].indexOf(a[5][4]) >= 0) ? a[5][4] : null};
   }
+  // The document's own unit, for this view only; the reader's own setting is left alone.
+  if(typeof a[8] === 'string' && CURRENCIES.indexOf(a[8]) >= 0) cur = a[8];
   setVariant(variantIds().indexOf(a[6]) >= 0 ? a[6] : null);
   if(ownIn){ own.p = ownIn.p; own.r = ownIn.r; own.on = true; }
   return {date: String(a[1]), choice: a[2], packed: packed, measure: m};
@@ -3373,10 +3429,10 @@ applyLanguage(lang, false);
   if(ownQ && engineOK()){ own.p = ownQ.p; own.r = ownQ.r; own.on = true; saveOwn(); }
   var varQ = P.get('variant');
   if(varQ && variantIds().indexOf(varQ) >= 0) setVariant(varQ);
-  document.getElementById('cursel').addEventListener('change', function(){
-    cur = this.value;
-    try { localStorage.setItem('dc_cur', cur); } catch(e){}
-    render();                                  // presentation only: nothing is recomputed
+  document.getElementById('cursel').addEventListener('change', function(){ setCurrency(this.value); });
+  // The flow rebuilds its own screen, so the one it shows is reached by delegation.
+  document.getElementById('ask-body').addEventListener('change', function(e){
+    if(e.target && e.target.id === 'cur-ask'){ setCurrency(e.target.value); renderAsk(); }
   });
   /* A shared link is a document someone was handed. It opens as that document, with its own
      figures, whatever this browser remembers about its owner's last visit. */

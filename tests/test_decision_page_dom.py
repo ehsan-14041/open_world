@@ -382,7 +382,8 @@ def _sheet_dom(wedge_id: str, lang: str, packed: str) -> str:
     return re.sub(r"<style.*?</style>", " ", dom, flags=re.S)
 
 
-def _packed(wedge_id: str, choice: str = "B", date: str = "2026-09-01") -> str:
+def _packed(wedge_id: str, choice: str = "B", date: str = "2026-09-01",
+            currency: str | None = None) -> str:
     """A link built the way the page builds one, from that wedge's own demo figures."""
     import base64
     import json as _json
@@ -398,8 +399,10 @@ def _packed(wedge_id: str, choice: str = "B", date: str = "2026-09-01") -> str:
         vals = sorted({g["key"][k] for g in report["grid"]},
                       key=lambda v: (isinstance(v, str), v))
         settings.append("central" if "central" in vals else vals[len(vals) // 2])
-    payload = _json.dumps([1, date, choice, settings, [baseline[f] for f in fields]],
-                          separators=(",", ":"))
+    packed = [1, date, choice, settings, [baseline[f] for f in fields]]
+    if currency is not None:
+        packed += [None, None, None, currency]      # measure, variant, own option, then the unit
+    payload = _json.dumps(packed, separators=(",", ":"))
     return base64.urlsafe_b64encode(payload.encode()).decode().rstrip("=")
 
 
@@ -1240,3 +1243,102 @@ def test_a_host_built_report_between_tested_increases_still_shows_its_numbers(tm
     assert "on" not in cls.split(), "the page withheld the report's own numbers"
     assert re.search(r'<html\b[^>]*data-engine="ok"', dom)
     assert "25%" in inner(dom, "changed-t"), "the page does not state the report's own increase"
+
+
+# ---- currencies whose figures are large ------------------------------------------------------------
+
+def _seeded(wedge_id: str, lang: str, seed: str, query: str, tmp_path) -> str:
+    """The page as a browser that already holds these settings would render it. Keeps the SVG."""
+    page = SITE / wedge_id / f"{wedge_id}_decision_report.html"
+    copy = tmp_path / "seeded.html"
+    copy.write_text(page.read_text("utf-8").replace(
+        "<head>", "<head><script>try{" + seed + "}catch(e){}</script>", 1), encoding="utf-8")
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=12000", "--dump-dom", copy.as_uri() + f"?lang={lang}&{query}"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
+    assert proc.returncode == 0, proc.stderr[-800:]
+    return proc.stdout
+
+
+def _ticks(dom: str, svg_id: str) -> list:
+    """The y-axis tick labels of one chart, in the order they were drawn."""
+    m = re.search(rf'<svg[^>]*id="{svg_id}"[^>]*>(.*?)</svg>', dom, re.S)
+    assert m, f"no chart {svg_id}"
+    return [html_mod.unescape(t) for t in
+            re.findall(r'<text[^>]*text-anchor="end"[^>]*>(.*?)</text>', m.group(1), re.S)]
+
+
+def _big_cafe_seed() -> str:
+    """The demo cafe's money kept in rial rather than dollars: the same business, larger figures."""
+    from event_sim.wedge.registry import WEDGES as _W
+    wedge = _W["cafe"]
+    demo = wedge.demo_factory().to_dict()
+    fields = [f for step in wedge.copy["flow"] for f in step["fields"]]
+    big = dict(demo)
+    for k in ("monthly_revenue", "monthly_cogs", "monthly_fixed_costs", "cash_on_hand"):
+        big[k] = demo[k] * 60000
+    saved = json.dumps({f: big[f] for f in fields})
+    return ("localStorage.setItem('dc_cur','ریال');"
+            f"localStorage.setItem('dc_ans_cafe', JSON.stringify({saved}));")
+
+
+def test_a_large_currency_keeps_the_axis_readable(tmp_path):
+    """
+    A rial figure runs to ten digits, and the axis margin is 54 pixels on a phone: the labels
+    used to be clipped to their last few digits. The chart now picks one scale, names it in the
+    caption with the unit, and keeps every tick short.
+    """
+    dom = _seeded("cafe", "fa", _big_cafe_seed(), "", tmp_path)
+    ui = catalogue("fa")["ui"]
+    for svg_id in ("chart-now", "chart"):
+        ticks = _ticks(dom, svg_id)
+        assert ticks, f"{svg_id}: no ticks"
+        caption = ticks[-1] if ui["scale_billion"] in ticks[-1] else ""
+        assert all(len(t.strip()) <= 8 for t in ticks if t is not caption), \
+            f"{svg_id}: a tick is too long for the margin: {ticks}"
+    body = re.sub(r"<script.*?</script>", " ", dom, flags=re.S)
+    assert f"{ui['chart_axis_unit']} · {ui['scale_billion']} ریال" in body, \
+        "the chart does not say which scale and unit its numbers are in"
+
+
+def test_small_figures_keep_their_full_numbers(tmp_path):
+    """Scaling starts at a million; below that the plain figure is shorter and more familiar."""
+    dom = _seeded("cafe", "en", "localStorage.setItem('dc_cur','$');", "demo=1", tmp_path)
+    ui = catalogue("en")["ui"]
+    ticks = [t for t in _ticks(dom, "chart-now") if re.search(r"\d", t)]
+    assert any("," in t for t in ticks), f"the demo's axis lost its plain figures: {ticks}"
+    assert ui["scale_million"] not in " ".join(ticks)
+    body = re.sub(r"<script.*?</script>", " ", dom, flags=re.S)
+    assert f"{ui['chart_axis_unit']} · $" in body
+
+
+@pytest.mark.parametrize("wedge_id", sorted(WEDGES))
+def test_a_sheet_carries_the_unit_its_figures_are_in(wedge_id, tmp_path):
+    """
+    A sheet is read by someone else, whose browser knows nothing of this owner. Without the unit
+    the figures on it are just numbers — so the link carries it, and shows it to a reader who
+    has never set one.
+    """
+    dom = _seeded(wedge_id, "fa", "localStorage.clear();",
+                  "sheet=" + _packed(wedge_id, currency="ریال"), tmp_path)
+    dom = re.sub(r"<script.*?</script>", " ", dom, flags=re.S)
+    assert "ریال" in inner(dom, "sheet-cmp"), "the sheet's figures arrive without their unit"
+
+
+def test_the_flow_asks_which_currency_the_figures_are_in(tmp_path):
+    """The unit belongs with the first money question, not at the foot of a disclosure."""
+    page = SITE / "shop" / "shop_decision_report.html"
+    copy = tmp_path / "flow.html"
+    copy.write_text(page.read_text("utf-8").replace(
+        "</body>",
+        "<script>setTimeout(function(){document.querySelector('#ask-body .choice').click();}, 900);"
+        "</script></body>"), encoding="utf-8")
+    proc = subprocess.run(
+        [CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+         "--virtual-time-budget=12000", "--dump-dom", copy.as_uri() + "?lang=fa"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
+    dom = proc.stdout
+    assert 'id="cur-ask"' in dom, "the money question does not ask which currency"
+    assert inner(dom, "cur-ask-l") == catalogue("fa")["ui"]["currency_ask"]
+    assert "ریال" in dom and "تومان" in dom, "the list offers no local currencies"
