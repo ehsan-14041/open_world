@@ -12,6 +12,7 @@
   --paper:#F7F5F0; --raised:#FFFFFF; --sunk:#EFEDE6; --ink:#1D2A2F; --muted:#5D6E75; --rule:#E0DED5;
   --grid:#E9E7DF; --a:#7A8A91; --b:#1E7A5E; --c:#B07C1E; --crit:#B4453B; --focus:#1E7A5E;
   --win:#2E3F46; --win-ink:#FFFFFF; --win-soft:rgba(46,63,70,.07);
+  --c-text:#8A5E0F; --on-accent:#FFFFFF;
   --a-soft:rgba(122,138,145,.10); --b-soft:rgba(30,122,94,.09); --c-soft:rgba(176,124,30,.10);
   --shadow-1:0 1px 2px rgba(29,42,47,.05);
   --shadow-2:0 1px 2px rgba(29,42,47,.05),0 10px 30px -14px rgba(29,42,47,.16);
@@ -28,8 +29,8 @@ html[dir="rtl"]{
   :root:not([data-theme="light"]){
     --paper:#14181A; --raised:#1B2022; --sunk:#222829; --ink:#E9EAE5; --muted:#9BA7AC; --rule:#2A3134;
     --grid:#232A2C; --a:#8FA0A7; --b:#4FB58E; --c:#D6A536; --crit:#E07A6E; --focus:#4FB58E;
-  --win:#D8DEE0; --win-ink:#14181A; --win-soft:rgba(216,222,224,.08);
     --win:#D8DEE0; --win-ink:#14181A; --win-soft:rgba(216,222,224,.08);
+    --c-text:#D6A536; --on-accent:#14181A;
     --a-soft:rgba(143,160,167,.14); --b-soft:rgba(79,181,142,.13); --c-soft:rgba(214,165,54,.14);
     --shadow-1:0 1px 2px rgba(0,0,0,.3);
     --shadow-2:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
@@ -39,6 +40,8 @@ html[dir="rtl"]{
 :root[data-theme="dark"]{
   --paper:#14181A; --raised:#1B2022; --sunk:#222829; --ink:#E9EAE5; --muted:#9BA7AC; --rule:#2A3134;
   --grid:#232A2C; --a:#8FA0A7; --b:#4FB58E; --c:#D6A536; --crit:#E07A6E; --focus:#4FB58E;
+  --win:#D8DEE0; --win-ink:#14181A; --win-soft:rgba(216,222,224,.08);
+  --c-text:#D6A536; --on-accent:#14181A;
   --a-soft:rgba(143,160,167,.14); --b-soft:rgba(79,181,142,.13); --c-soft:rgba(214,165,54,.14);
   --shadow-1:0 1px 2px rgba(0,0,0,.3);
   --shadow-2:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
@@ -68,6 +71,9 @@ html[dir="rtl"] .eyebrow{letter-spacing:0;font-size:13px;text-transform:none}
 button,select,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
 .wA{--wc:var(--a)} .wB{--wc:var(--b)} .wC{--wc:var(--c)} .wD{--wc:var(--ink)}
+.wA,.wB,.wC,.wD{--wc-fill:color-mix(in srgb,var(--wc) 76%,#000)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.wA,.wB,.wC,.wD){--wc-fill:var(--wc)}}
+:root[data-theme="dark"] :is(.wA,.wB,.wC,.wD){--wc-fill:var(--wc)}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
 .top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--paper) 88%,transparent);
@@ -77,7 +83,7 @@ button,select,input{font:inherit;color:inherit}
 .mark a{text-decoration:none}
 .bizpick{display:flex;align-items:center;background:var(--sunk);border:1px solid var(--rule);border-radius:999px}
 .bizpick select{background:transparent;border:0;padding:10px 14px;border-radius:999px;font-size:14px;font-weight:600;min-height:44px}
-.badge{font-size:12px;font-weight:600;color:var(--c);border:1px solid currentColor;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.badge{font-size:12px;font-weight:600;color:var(--c-text);border:1px solid currentColor;border-radius:999px;padding:3px 10px;white-space:nowrap}
 .spacer{margin-inline-start:auto}
 .langs{display:flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden;background:var(--sunk)}
 .langs button{border:0;background:transparent;padding:10px 15px;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted);min-height:44px}
@@ -132,7 +138,7 @@ html[dir="rtl"] .verdict{font-weight:700;letter-spacing:0;line-height:1.7;max-wi
           background:linear-gradient(var(--win-soft),var(--win-soft)),var(--raised)}
 .opt-head{display:flex;align-items:center;gap:11px}
 .letter{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;
-        color:#fff;background:var(--wc);font-size:15px;flex:0 0 auto;font-family:"Source Sans 3",sans-serif}
+        color:var(--on-accent);background:var(--wc-fill,var(--wc));font-size:15px;flex:0 0 auto;font-family:"Source Sans 3",sans-serif}
 .opt .name{font-size:19.5px;font-weight:600;line-height:1.3}
 html[dir="rtl"] .opt .name{font-size:18px;line-height:1.6}
 /* Room for two lines whether or not this card needs them, so every card's figures sit on
@@ -206,7 +212,7 @@ html[dir="rtl"] .mini thead th{letter-spacing:0;text-transform:none}
 .unknown{background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-lg);
          box-shadow:var(--shadow-2);overflow:hidden}
 .unknown-top{padding:26px 26px 22px;border-bottom:1px solid var(--rule);background:var(--c-soft)}
-.unknown-top .eyebrow{color:var(--c)}
+.unknown-top .eyebrow{color:var(--c-text)}
 .unknown-top h2{margin-top:8px;font-size:clamp(21px,2.6vw,28px)}
 .unknown-grid{display:grid;grid-template-columns:1fr 1fr}
 @media (max-width:720px){.unknown-grid{grid-template-columns:1fr}}
@@ -225,7 +231,7 @@ html[dir="rtl"] .unknown-grid .k{letter-spacing:0;font-size:13px;text-transform:
 .influence .nm{flex:1;font-size:15.5px}
 .influence .eff{font-size:12.5px;color:var(--muted);display:block;margin-top:3px}
 .pill{font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;white-space:nowrap;background:var(--sunk);color:var(--muted)}
-.pill.high{background:var(--c-soft);color:var(--c)} .pill.med{background:var(--a-soft);color:var(--muted)}
+.pill.high{background:var(--c-soft);color:var(--c-text)} .pill.med{background:var(--a-soft);color:var(--muted)}
 .flipline{margin-top:20px;font-size:17px;max-width:72ch}
 .control{margin-top:26px;background:var(--raised);border:1px solid var(--rule);border-radius:var(--r-md);
          padding:22px;box-shadow:var(--shadow-1)}
@@ -289,7 +295,7 @@ details.adv .inner{padding:2px 18px 18px}
 @media (prefers-reduced-motion:reduce){.grp>summary::after{transition:none}}
 .grp .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 html[dir="rtl"] .grp .k{letter-spacing:0;font-size:13px;text-transform:none}
-.grp.yours .k{color:var(--b)} .grp.research .k{color:#2F5DA8} .grp.assume .k{color:var(--c)} .grp.calc .k{color:var(--muted)}
+.grp.yours .k{color:var(--b)} .grp.research .k{color:#2F5DA8} .grp.assume .k{color:var(--c-text)} .grp.calc .k{color:var(--muted)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .grp.research .k{color:#7FA7E6}}
 :root[data-theme="dark"] .grp.research .k{color:#7FA7E6}
 .grp ul{list-style:none;margin:0;padding:0}
@@ -320,7 +326,7 @@ html[dir="rtl"] .fgroup .k{letter-spacing:0;font-size:13px;text-transform:none}
 .field .hint{font-size:13px;color:var(--muted);margin-top:6px}
 .btnrow{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;align-items:center}
 .btn{border:1px solid var(--rule);background:var(--sunk);padding:13px 20px;border-radius:999px;font-weight:600;cursor:pointer;min-height:50px}
-.btn.primary{background:var(--b);border-color:var(--b);color:#fff;font-size:16.5px;padding-inline:26px}
+.btn.primary{background:var(--b);border-color:var(--b);color:var(--on-accent);font-size:16.5px;padding-inline:26px}
 /* Sits above the page, never on top of it: the body reserves its height so the last section is
    still reachable, and it hides itself once the form it points at is on screen. */
 .sticky{position:fixed;inset-inline:0;bottom:0;z-index:40;background:var(--raised);
@@ -408,6 +414,22 @@ html[dir="rtl"] .m-v{font-weight:700;line-height:1.65}
   overflow-wrap:anywhere}
 .s-not{font-size:13.5px;color:var(--muted);line-height:1.7;margin:12px 0 0 !important}
 .s-msg{font-size:14px;font-weight:600;margin-top:12px !important;min-height:1.2em}
+.fb{margin-top:34px;padding:20px;border:1px solid var(--rule);border-radius:var(--r-md);background:var(--sunk)}
+.fb[hidden],.fb [hidden]{display:none}
+.fb h2{margin:0 0 6px;font-size:18px}
+.fb-q{border:0;margin:16px 0 0;padding:0;min-width:0}
+.fb-q legend,.fb-q>label{display:block;font-weight:600;font-size:15px;margin:0 0 8px;padding:0}
+.fb-opts{display:flex;flex-wrap:wrap;gap:8px}
+.fb-opt{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;
+  border:1px solid var(--rule);border-radius:999px;background:var(--raised);cursor:pointer;font-size:14.5px}
+.fb-opt input{margin:0;accent-color:var(--win)}
+.fb-opt:has(input:checked){border-color:var(--win);box-shadow:inset 0 0 0 1px var(--win)}
+.fb-opt:has(input:focus-visible){outline:3px solid var(--win);outline-offset:2px}
+.fb select,.fb textarea,.fb input[type=text]{display:block;width:100%;max-width:520px;font:inherit;
+  font-size:16px;padding:10px 12px;border:1px solid var(--rule);border-radius:var(--r-sm);
+  background:var(--raised);color:var(--ink)}
+.fb-check{display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:14px;line-height:1.6}
+.fb-check input{margin-top:4px;width:18px;height:18px;flex:none}
 .picks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media (max-width:860px){.picks{grid-template-columns:1fr}}
 .pick{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"l n" "l m" "g g";
@@ -418,7 +440,7 @@ html[dir="rtl"] .m-v{font-weight:700;line-height:1.65}
 .pick:hover,.pick:focus-visible{border-color:var(--win);outline:none;transform:translateY(-2px);
       box-shadow:var(--shadow-2)}
 .pick .pl{grid-area:l;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
-      background:var(--wc);color:#fff;font-weight:700;font-size:14px;
+      background:var(--wc-fill,var(--wc));color:var(--on-accent);font-weight:700;font-size:14px;
       font-family:"Source Sans 3",sans-serif}
 .pick .pn{grid-area:n;font-weight:600;font-size:17px;line-height:1.35}
 .pick .pm{grid-area:m;font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
@@ -552,6 +574,7 @@ body.asking .top .bizpick,body.asking .top .badge{display:none}
 .askq{font-family:var(--display);font-weight:600;font-size:clamp(26px,4.4vw,40px);line-height:1.18;
       letter-spacing:-.015em;margin:0;text-wrap:balance}
 html[dir="rtl"] .askq{font-weight:700;letter-spacing:0;line-height:1.5}
+.askq:focus{outline:none}   /* a focus target for screen readers, not a control */
 .askhint{color:var(--muted);margin:12px 0 0;font-size:16px}
 #ask-body{margin-top:28px}
 .choices{display:grid;gap:12px}
@@ -687,7 +710,7 @@ html[dir="rtl"] .unknown-lead{font-weight:700;line-height:1.6}
   body{background:#fff;color:#000;padding:0;font-size:11.5pt}
   body.has-sticky{padding-bottom:0}
   .top,.sticky,.printrow,#ask,.unsure,.adv,.langs,.bizpick,#how,.tip,
-  .reveal>summary .rb,.sheet-actions,#b-decide,.sheet-yours,.share{display:none !important}
+  .reveal>summary .rb,.sheet-actions,#b-decide,.sheet-yours,.share,.fb{display:none !important}
   /* A sheet prints as itself: nothing else on the page comes with it. */
   body.on-sheet #result{display:none !important}
   #sheet{max-width:none;padding:0}
@@ -765,7 +788,7 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
       <span class="progress" id="ask-progress"></span>
       <div class="progbar"><i id="ask-bar"></i></div>
     </div>
-    <h1 class="askq" id="ask-q"></h1>
+    <h1 class="askq" id="ask-q" tabindex="-1"></h1>
     <p class="askhint" id="ask-hint"></p>
     <div id="ask-body"></div>
     <div id="ask-err" class="askerr" role="alert"></div>
@@ -1034,6 +1057,40 @@ html[dir="rtl"] .mini td,html[dir="rtl"] .grp li .v{text-align:start}
       <button type="button" class="btn" id="sheet-copy"></button>
       <button type="button" class="linkish" id="sheet-back"></button>
     </div>
+
+    <!-- Asked, never observed: nothing about what an owner clicked or how long they stayed is
+         recorded anywhere. Shown only on a host that can take the answers, under a sheet this
+         browser made, and kept only if they press send. The row is listed before it leaves. -->
+    <section class="fb" id="fb" hidden aria-labelledby="fb-t">
+      <h2 id="fb-t"></h2>
+      <div id="fb-form">
+        <p class="s-why" id="fb-why"></p>
+        <div id="fb-radios"></div>
+        <div class="fb-q"><label for="fb-hard" id="fb-hard-l"></label><select id="fb-hard"></select></div>
+        <div class="fb-q"><label for="fb-miss" id="fb-miss-l"></label>
+          <textarea id="fb-miss" rows="3" maxlength="500" dir="auto"></textarea></div>
+        <fieldset class="fb-q" id="fb-offer" hidden>
+          <legend id="fb-offer-l"></legend>
+          <p class="s-why" id="fb-offer-what"></p>
+          <div class="fb-opts" id="fb-offer-o"></div>
+          <div id="fb-contact-w" hidden>
+            <div class="fb-q"><label for="fb-contact" id="fb-contact-l"></label>
+              <input type="text" id="fb-contact" maxlength="120" autocomplete="off" dir="ltr"></div>
+            <label class="fb-check"><input type="checkbox" id="fb-contact-ok"><span id="fb-contact-ok-l"></span></label>
+          </div>
+        </fieldset>
+        <details class="s-what">
+          <summary id="fb-what"></summary>
+          <ul class="s-list" id="fb-list"></ul>
+          <p class="s-not" id="fb-not"></p>
+        </details>
+        <div class="tf-row">
+          <button type="button" class="btn primary" id="fb-go"></button>
+          <button type="button" class="linkish" id="fb-no"></button>
+        </div>
+      </div>
+      <p class="s-msg" id="fb-msg" role="status"></p>
+    </section>
   </article>
 </main>
 
@@ -1271,6 +1328,29 @@ function census(){
   _cKey = key; _cVal = {wins:wins, oat:oat, centreTop: c0 ? c0.rank[0] : null, find:find,
                         centre:centre, pts:pts};
   return _cVal;
+}
+/* The census above sweeps the supplier increase over the tested sizes, so part of its count
+   describes increases the owner never gave. The same count with the increase held at theirs:
+   read off the precomputed runs when theirs is a tested size, run by the page's engine when it
+   lies between them, and left out when neither is possible. */
+var _oKey = null, _oVal = null;
+function censusAtOwn(){
+  if(!SHOCK_KEY || typeof base[F.shock] !== 'number' || !isFinite(base[F.shock])) return null;
+  var s = +base[F.shock];
+  if(GRID_VALS[SHOCK_KEY].length < 2) return null;
+  if(GRID_VALS[SHOCK_KEY].indexOf(s) < 0 && !engineOK()) return null;
+  var key = JSON.stringify(Object.keys(F).map(function(r){ return base[F[r]]; }));
+  if(_oKey === key) return _oVal;
+  var slice = nearest(GRID_VALS[SHOCK_KEY], s), wins = {A:0, B:0, C:0, n:0};
+  D.grid.forEach(function(g){
+    if(g.key[SHOCK_KEY] !== slice) return;
+    var bk = censusBase(g.key), m = {};
+    WID.forEach(function(id){ m[id] = metrics(ledger(bk, worldSeries(g, id, true)), bk).cash90; });
+    wins[WID.slice().sort(function(a, b){ return m[b] - m[a]; })[0]]++;
+    wins.n++;
+  });
+  _oKey = key; _oVal = {wins: wins, shock: s};
+  return _oVal;
 }
 function niceStep(span,n){ var raw = span/n, mag = Math.pow(10,Math.floor(Math.log10(raw))), f = raw/mag;
   return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*mag; }
@@ -1796,8 +1876,11 @@ function render(langChanged){
       + '</article>';
   }).join('');
 
+  var co = censusAtOwn();
   document.getElementById('count-note').innerHTML =
       fill(t('ranked_first_cases'), {n:'<b>'+num(wins[lead])+'</b>', total:num(wins.n)})
+      + (co ? '<span id="count-own"> · ' + esc(fill(t('census_own'), {
+          shock: num(co.shock) + PS(), n: num(co.wins[lead]), total: num(co.wins.n)})) + '</span>' : '')
       + ' · ' + esc(t('tested_cases_tooltip'));
   document.getElementById('census-how-q').textContent = t('census_how_q');
   document.getElementById('census-how-a').textContent = fill(t('census_how_a'), {facts: censusFacts()});
@@ -2422,7 +2505,7 @@ function showAskErr(prob){
     if(i){ i.classList.add('bad'); i.setAttribute('aria-invalid', 'true'); }
   });
   var firstBad = document.querySelector('#ask-body input.bad');
-  if(firstBad && motionOK()) firstBad.focus();
+  if(firstBad) firstBad.focus({preventScroll: !motionOK()});
 }
 
 function renderHow(){
@@ -2672,8 +2755,13 @@ function renderAsk(){
       askAt === FLOW.length - 1 ? t('flow_see') : t('flow_next');
   document.getElementById('ask-example').textContent = t('flow_example');
   document.getElementById('ask-restart').textContent = t('start_over');
+  /* Focus follows the question, whatever the motion setting: the screen that had it was just
+     replaced. A figure step puts it in the first box; a choice step on the question itself, so a
+     screen reader reads the new question out. Reduced motion only stops the scroll. */
   var first = body.querySelector('input');
-  if(first && motionOK()) setTimeout(function(){ first.focus(); }, 60);
+  setTimeout(function(){
+    (first || document.getElementById('ask-q')).focus({preventScroll: !motionOK()});
+  }, 60);
 }
 
 /* Reading a screen's answers into the draft. Returns the label of anything unreadable, so the
@@ -2745,7 +2833,10 @@ document.getElementById('ask-body').addEventListener('click', function(e){
 });
 
 document.getElementById('ask-body').addEventListener('keydown', function(e){
-  if(e.key === 'Enter'){ e.preventDefault(); nextStep(); }
+  /* Enter in a box moves on. Enter on a choice is that choice: a button's own Enter is its click,
+     and taking it here instead once skipped the owner's answer and used the default. */
+  if(e.key === 'Enter' && !(e.target && e.target.closest && e.target.closest('button'))){
+    e.preventDefault(); nextStep(); }
 });
 
 function nextStep(){
@@ -2994,7 +3085,7 @@ document.getElementById('testrun').addEventListener('click', function(e){
     f.hidden = false;
     document.getElementById('tf-err').textContent = '';
     var first = document.getElementById('tf-before');
-    if(first && motionOK()) first.focus();
+    if(first) first.focus({preventScroll: !motionOK()});
   }
 });
 
@@ -3055,15 +3146,16 @@ document.getElementById('testform').addEventListener('submit', function(e){
 var SHARE_KEY = 'dc_shared_' + D.wedge.id;
 var ANON_KEY = 'dc_anon';
 
-function anonId(){
+function anonId(key){
+  key = key || ANON_KEY;
   var v = null;
-  try { v = localStorage.getItem(ANON_KEY); } catch(e){}
+  try { v = localStorage.getItem(key); } catch(e){}
   if(!/^[a-z0-9]{8,32}$/.test(v || '')){
     v = '';
     // Random per browser, tied to nothing. It exists so a second send can be recognised as the
     // same browser rather than counted as a second business.
     for(var i = 0; i < 16; i++) v += 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)];
-    try { localStorage.setItem(ANON_KEY, v); } catch(e){}
+    try { localStorage.setItem(key, v); } catch(e){}
   }
   return v;
 }
@@ -3248,6 +3340,7 @@ function makeSheet(choice){
   var iso = d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
   var packed = packSheet(choice, iso);
   sheetState = {date: iso, choice: choice, packed: packed, measure: measure};
+  sheetMine = true;
   try {
     var u = new URL(location.href);
     u.searchParams.delete('sheet');
@@ -3354,7 +3447,158 @@ function renderSheet(){
     document.getElementById('sheet-yours-go').textContent = t('sheet_yours_go');
   }
   document.title = t('sheet_title') + ' · ' + sheetRef(sheetState.packed);
+  renderFeedback();
 }
+
+/* ---- after the sheet: did it help? ------------------------------------------------------------
+   The one way this page learns whether it was of use, and it is asked rather than observed.
+   Each answer is optional; nothing is sent until the owner presses send, and the row is listed
+   first. Its random id is its own, so it cannot be joined to a shared measurement or a question.
+   A `src` in the link says which invitation brought the owner here; it travels only inside a
+   row they chose to send, and only for this tab. */
+var FB_KEY = 'dc_fb_' + D.wedge.id, FB_ANON = 'dc_anon_f', SRC_KEY = 'dc_src';
+var fbAns = {}, sheetMine = false;
+(function keepSource(){
+  var s = String(P.get('src') || '').toLowerCase();
+  if(/^[a-z0-9_-]{1,24}$/.test(s)){ try { sessionStorage.setItem(SRC_KEY, s); } catch(e){} }
+})();
+function fbSource(){
+  var s = '';
+  try { s = sessionStorage.getItem(SRC_KEY) || ''; } catch(e){}
+  return /^[a-z0-9_-]{1,24}$/.test(s) ? s : null;
+}
+function fbState(){ try { return localStorage.getItem(FB_KEY) || ''; } catch(e){ return ''; } }
+function fbQuestions(){
+  return [{id: 'real', opts: ['now', 'later', 'no']},
+          {id: 'helped', opts: ['yes', 'partly', 'no']},
+          {id: 'next', opts: WID.concat(ownActive() ? ['D'] : []).concat(['test', 'undecided', 'nothing'])}];
+}
+function fbOptText(qid, v){
+  if(qid === 'next' && v === 'D') return ownName();
+  if(qid === 'next' && WID.indexOf(v) >= 0) return w('world_names')[v];
+  if(qid === 'hard') return v === 'none' ? t('fb_hard_none') : ((w('intake')[v] || {}).label || v);
+  return t('fb_' + qid + '_' + v);
+}
+function fbRadios(qid, opts){
+  return opts.map(function(v){
+    return '<label class="fb-opt"><input type="radio" name="fb-' + qid + '" value="' + esc(v) + '"'
+      + (fbAns[qid] === v ? ' checked' : '') + '><span>' + esc(fbOptText(qid, v)) + '</span></label>';
+  }).join('');
+}
+function fbRow(){
+  var r = {wedge: D.wedge.id, variant: variant || null, lang: lang, demo: !!base.is_demo,
+           real: fbAns.real || null, helped: fbAns.helped || null, next: fbAns.next || null,
+           hard: fbAns.hard || null, missing: String(fbAns.miss || '').trim().slice(0, 500) || null,
+           src: fbSource(), anon: anonId(FB_ANON)};
+  if(D.offer){
+    var c = String(fbAns.contact || '').trim().slice(0, 120);
+    r.offer = fbAns.offer || null;
+    r.contact = (fbAns.offer === 'book' && fbAns.contactOk && c) ? c : null;
+    r.keep_contact = !!r.contact;
+  }
+  return r;
+}
+function fbAnswered(){
+  var r = fbRow();
+  return !!(r.real || r.helped || r.next || r.hard || r.missing || r.offer);
+}
+function renderFeedback(){
+  var box = document.getElementById('fb'), st = fbState();
+  var on = !!(D.feedback && sheetMine && st !== 'declined');
+  box.hidden = !on;
+  if(!on) return;
+  document.getElementById('fb-t').textContent = st === 'sent' ? t('fb_thanks_t') : t('fb_t');
+  document.getElementById('fb-form').hidden = st === 'sent';
+  if(st === 'sent'){ document.getElementById('fb-msg').textContent = t('share_done'); return; }
+  document.getElementById('fb-why').textContent = t('fb_why');
+  document.getElementById('fb-radios').innerHTML = fbQuestions().map(function(q){
+    return '<fieldset class="fb-q"><legend>' + esc(t('fb_' + q.id + '_l')) + '</legend>'
+      + '<div class="fb-opts">' + fbRadios(q.id, q.opts) + '</div></fieldset>';
+  }).join('');
+  document.getElementById('fb-hard-l').textContent = t('fb_hard_l');
+  document.getElementById('fb-hard').innerHTML = '<option value=""></option>'
+    + ['none'].concat(FLOW_FIELDS).map(function(f){
+        return '<option value="' + esc(f) + '"' + (fbAns.hard === f ? ' selected' : '') + '>'
+             + esc(fbOptText('hard', f)) + '</option>'; }).join('');
+  document.getElementById('fb-miss-l').textContent = t('fb_miss_l');
+  document.getElementById('fb-miss').value = fbAns.miss || '';
+  var offer = document.getElementById('fb-offer');
+  offer.hidden = !D.offer;
+  if(D.offer){
+    document.getElementById('fb-offer-l').textContent = fill(t('fb_offer_l'), {price: '⁨' + String(D.offer) + '⁩'});
+    document.getElementById('fb-offer-what').textContent = t('fb_offer_what');
+    document.getElementById('fb-offer-o').innerHTML = fbRadios('offer', ['book', 'maybe', 'no']);
+    document.getElementById('fb-contact-l').textContent = t('fb_contact_l');
+    document.getElementById('fb-contact').value = fbAns.contact || '';
+    document.getElementById('fb-contact-ok').checked = !!fbAns.contactOk;
+    document.getElementById('fb-contact-ok-l').textContent = t('fb_contact_ok_l');
+  }
+  document.getElementById('fb-what').textContent = t('share_what');
+  document.getElementById('fb-not').textContent = t('fb_not');
+  document.getElementById('fb-go').textContent = t('fb_go');
+  document.getElementById('fb-no').textContent = t('share_no');
+  document.getElementById('fb-msg').textContent = '';
+  fbRefresh();
+}
+/* The list is the row: every field that would be written, in words, and nothing else. */
+function fbRefresh(){
+  var r = fbRow(), items = [];
+  document.getElementById('fb-contact-w').hidden = fbAns.offer !== 'book';
+  ['real', 'helped', 'next', 'hard', 'offer'].forEach(function(k){
+    if(r[k]) items.push([t('fb_' + k + '_k'), fbOptText(k, r[k])]);
+  });
+  if(r.missing) items.push([t('fb_missing_k'), r.missing]);
+  if(r.contact) items.push([t('fb_contact_k'), r.contact]);
+  items.push([t('share_list_kind'), w('business')]);
+  items.push([t('fb_numbers_k'), r.demo ? t('fb_numbers_demo') : t('fb_numbers_own')]);
+  if(r.src) items.push([t('fb_src_k'), r.src]);
+  items.push([t('fb_day_k'), t('fb_day_v')]);
+  items.push([t('share_list_anon'), r.anon]);
+  document.getElementById('fb-list').innerHTML = items.map(function(pair){
+    return '<li><span class="s-k">' + esc(pair[0]) + '</span><span class="s-v" dir="auto">'
+         + esc(String(pair[1])) + '</span></li>'; }).join('');
+  document.getElementById('fb-go').disabled = !fbAnswered();
+}
+function fbInput(e){
+  var el = e.target;
+  if(!el) return;
+  if(el.type === 'radio' && el.name.indexOf('fb-') === 0) fbAns[el.name.slice(3)] = el.value;
+  else if(el.id === 'fb-hard') fbAns.hard = el.value;
+  else if(el.id === 'fb-miss') fbAns.miss = el.value;
+  else if(el.id === 'fb-contact') fbAns.contact = el.value;
+  else if(el.id === 'fb-contact-ok') fbAns.contactOk = el.checked;
+  else return;
+  fbRefresh();
+}
+document.getElementById('fb').addEventListener('change', fbInput);
+document.getElementById('fb').addEventListener('input', fbInput);
+document.getElementById('fb-no').addEventListener('click', function(){
+  try { localStorage.setItem(FB_KEY, 'declined'); } catch(e){}
+  fbAns = {};
+  renderFeedback();
+});
+document.getElementById('fb-go').addEventListener('click', function(){
+  var btn = this, msg = document.getElementById('fb-msg');
+  if(!fbAnswered()) return;
+  btn.disabled = true;
+  fetch('feedback.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(fbRow())
+  }).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
+    if(j && j.ok){
+      try { localStorage.setItem(FB_KEY, 'sent'); } catch(e){}
+      fbAns = {};
+      renderFeedback();
+    } else {
+      btn.disabled = false;
+      msg.textContent = t('fb_fail');
+    }
+  }).catch(function(){
+    btn.disabled = false;
+    msg.textContent = t('fb_fail');
+  });
+});
 
 document.getElementById('picks').addEventListener('click', function(e){
   var b = e.target.closest('.pick'); if(!b) return;

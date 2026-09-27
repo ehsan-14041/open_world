@@ -18,6 +18,7 @@ available, but they are not part of this pilot.
 | [`FACILITATOR_PACK.md`](FACILITATOR_PACK.md) | Recruitment, the session script, the paid-follow-up test, follow-up contacts, data handling |
 | [`OBSERVATION_TEMPLATE.md`](OBSERVATION_TEMPLATE.md) | One sheet per session |
 | [`PILOT_SCORECARD.md`](PILOT_SCORECARD.md) | Scoring and continue / simplify / change / pause rules, fixed before session 1 |
+| [`HYPOTHESES.md`](HYPOTHESES.md) | What the hosted build can test by itself, from answers owners choose to send, with thresholds fixed before sharing the link |
 
 These replace `docs/commercial/THREE_WEDGE_PROTOCOL.md` and `docs/commercial/SALES_SCRIPT.md`
 for this phase.

@@ -112,7 +112,12 @@ Audit points:
   tested at 20%, 30% and 40% whatever the owner entered. At the owner's own 30% alone, the split
   is +10% 43 / +5% & trim 11 of 54 — about the same share. A salon's diary fullness is tested at
   75% and 95%. The new "How is this counted?" note names these ranges beside the owner's own
-  value.
+  value. **The page now also shows the count at the owner's own increase** beside the full count
+  ("first in 130 of 162 · 43 of the 54 at your own 30%"). At a tested size it is that slice of the
+  census; between the tested sizes the browser engine runs the other 54 combinations at the
+  owner's figure. For a café at 25% the page gives +10% in 43 of 54, exactly what the Python
+  pipeline gives when swept at 25% alone (+10% 43, +5% & trim 11) — checked in
+  `tests/test_launch_page.py`. It is still a count over ranges we chose, not a probability.
 - **Salon parity defect, fixed.** The page census ignored the swept diary fullness while the
   report's census swept it, so the page counted the same 81 runs twice. It now counts what the
   report counts. See the before/after in §6.
@@ -232,7 +237,22 @@ Census (which option ranks first, out of 162 tested cases):
 | Salon: 40% full, 10% low-margin share | +10% in 162 | +10% in 162 | +10% in 162 |
 
 The census still tests the increases 20/30/40% whatever the owner entered, exactly as the
-report's census does, and the "How is this counted?" note says so.
+report's census does, and the "How is this counted?" note says so. Beside it, the page now
+shows the same count at the owner's own increase (§4).
+
+### Enter on a choice used the default instead of the owner's answer (found in the launch walkthrough)
+
+On a question answered by choosing — the low-margin share, the size of the supplier increase —
+a keyboard user who moved to a choice and pressed Enter did not choose it. The step's own Enter
+handler took the key, skipped the choice and moved on with whatever value the step already
+held: the report business's default. On the last step that meant a comparison computed with a
+low-margin share the owner never gave, with nothing on screen to say so. Pointer and touch users
+were not affected.
+
+Found by walking the shop flow by keyboard on the PHP host. Before: Enter on "low, about 10%"
+produced a result for 20% (the default). After: it records 10%. Figures for any given set of
+inputs are unchanged; what changed is which inputs a keyboard user's answers produce. Checked
+by `test_enter_on_a_choice_is_left_to_the_choice`, which fails on the previous page.
 
 ---
 

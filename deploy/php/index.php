@@ -12,8 +12,9 @@
  *
  * Each report is built here — engine, accounting, 162-point sweep, rendering — by lib/, which
  * is a port of the Python pipeline verified to produce a byte-identical bundle for all three.
- * Nothing is stored except a gzip cache keyed by a hash of the wedge, the inputs and the
- * language.
+ * This entry point stores nothing except a gzip cache keyed by a hash of the wedge, the inputs
+ * and the language. What an owner chooses to send — feedback, a measurement, a question — is
+ * written by feedback.php, contribute.php and ask.php, and only when they press send.
  */
 declare(strict_types=1);
 
@@ -21,6 +22,7 @@ require_once __DIR__ . '/lib/compat.php';
 require_once __DIR__ . '/lib/report.php';
 require_once __DIR__ . '/lib/i18n.php';
 require_once __DIR__ . '/lib/assist.php';
+require_once __DIR__ . '/lib/feedback.php';
 
 $config   = is_file(__DIR__ . '/config.php') ? (require __DIR__ . '/config.php') : [];
 $password = (string) ($config['password'] ?? '');
@@ -169,7 +171,11 @@ $libStamp = '';
 foreach (glob(__DIR__ . '/lib/*.php') ?: [] as $lib) {
     $libStamp .= basename($lib) . ':' . filemtime($lib) . ';';
 }
+// What this host asks after a sheet — whether it asks at all, and the follow-up price, if any.
+// Set in config.php, so it is part of the page and of the cache key like everything else.
+$host = ['feedback' => feedback_on($config), 'offer' => feedback_offer($config)];
 $cacheKey = hash('sha256', $wedgeId . '|' . json_encode($baseline->toDict()) . '|' . $langStamp
+    . '|' . json_encode($host)
     . '|' . filemtime(__DIR__ . "/assets/{$wedgeId}.json") . '|' . filemtime($templatePath)
     . '|' . $libStamp);
 $cacheFile = __DIR__ . '/data/cache/' . $cacheKey . '.html.gz';
@@ -183,6 +189,8 @@ if ($gzipped === '') {
         // figures rather than anywhere near them, so nothing it contains can change a number.
         [$bundle, , ] = i18n_merge($bundle, $translation);
     }
+    $bundle['feedback'] = $host['feedback'];
+    $bundle['offer'] = $host['offer'];
     $html = str_replace('__DATA__',
         str_replace('</', '<\\/', (string) json_encode($bundle,
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION)),
@@ -195,6 +203,8 @@ if ($gzipped === '') {
 header('Content-Type: text/html; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: no-referrer');
+// Nobody else's page gets to frame this one and dress up its numbers.
+header('X-Frame-Options: SAMEORIGIN');
 header(($password !== '' || !$baseline->is_demo) ? 'Cache-Control: no-store, private' : 'Cache-Control: public, max-age=300');
 
 $wantsGzip = stripos((string) ($_SERVER['HTTP_ACCEPT_ENCODING'] ?? ''), 'gzip') !== false;

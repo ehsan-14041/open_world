@@ -12,6 +12,7 @@ require_once __DIR__ . '/lib/compat.php';
 require_once __DIR__ . '/lib/llm.php';
 require_once __DIR__ . '/lib/i18n.php';
 require_once __DIR__ . '/lib/router.php';
+require_once __DIR__ . '/lib/feedback.php';
 
 $config = is_file(__DIR__ . '/config.php') ? (require __DIR__ . '/config.php') : [];
 $adminPassword = (string) ($config['admin_password'] ?? '');
@@ -22,6 +23,9 @@ if ($adminPassword === '') {
     exit("The admin page is off.\n\nSet 'admin_password' in config.php to switch it on.");
 }
 
+header('X-Frame-Options: DENY');
+header('X-Content-Type-Options: nosniff');
+header('Referrer-Policy: no-referrer');
 session_start();
 if (isset($_GET['logout'])) {
     unset($_SESSION['admin']);
@@ -49,6 +53,25 @@ if (empty($_SESSION['admin'])) {
 }
 
 $llm = llm_settings($config);
+
+// ---- downloads: what owners chose to send, as CSV, for whoever reads the evidence ---------
+$export = (string) ($_GET['export'] ?? '');
+if ($export === 'feedback' || $export === 'bookings' || $export === 'measurements') {
+    $files = ['feedback' => FEEDBACK_FILE, 'bookings' => BOOKINGS_FILE,
+              'measurements' => __DIR__ . '/data/contrib/measurements.jsonl'];
+    $cols = [
+        'feedback' => ['at', 'build', 'wedge', 'variant', 'lang', 'demo', 'src', 'real', 'helped',
+                       'next', 'hard', 'offer', 'missing', 'anon'],
+        'bookings' => ['at', 'build', 'wedge', 'variant', 'lang', 'src', 'price', 'contact', 'anon'],
+        'measurements' => ['at', 'wedge', 'variant', 'e', 'rise', 'anon'],
+    ];
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Cache-Control: no-store');
+    header('Content-Disposition: attachment; filename="' . $export . '-' . gmdate('Ymd') . '.csv"');
+    echo "\xEF\xBB\xBF" . feedback_csv(feedback_rows($files[$export]), $cols[$export]);
+    exit;
+}
+
 $notice = '';
 $problem = '';
 $testResult = null;
@@ -196,6 +219,44 @@ details summary{cursor:pointer;font-weight:600;font-size:14px;margin-top:12px}
       Make it writable (755 or 775), or put <code>llm_api_key</code>, <code>llm_base_url</code> and
       <code>llm_model</code> in <code>config.php</code> instead.</div>
   <?php endif; ?>
+
+  <?php
+    // ---- launch check: what a maintainer should confirm before sending the link to anyone ----
+    $visitorPw = (string) ($config['password'] ?? '');
+    $offer = feedback_offer($config);
+    $checks = [];
+    $checks[] = [version_compare(PHP_VERSION, '7.4.0', '>=') ? 'ok' : 'warn',
+        'PHP ' . PHP_VERSION . (version_compare(PHP_VERSION, '7.4.0', '>=') ? '' : ' — works, but no longer receives security fixes. Pick 8.1+ in the host panel.')];
+    $checks[] = [is_file(__DIR__ . '/VERSION.txt') ? 'ok' : 'warn', is_file(__DIR__ . '/VERSION.txt')
+        ? 'Build: <code>' . htmlspecialchars(feedback_build(), ENT_QUOTES) . '</code> — write this on every session sheet.'
+        : 'No VERSION.txt: answers cannot be told apart by build. Upload the whole zip.'];
+    $checks[] = [$visitorPw === 'change-me' ? 'bad' : 'ok', $visitorPw === 'change-me'
+        ? 'The visitor password is still the sample value <code>change-me</code>.'
+        : ($visitorPw === '' ? 'Open to anyone with the link (no visitor password).' : 'Behind a visitor password.')];
+    $checks[] = [hash_equals($adminPassword, $visitorPw) ? 'bad' : 'ok', hash_equals($adminPassword, $visitorPw)
+        ? 'The admin password is the same as the visitor password.' : 'Admin password is separate from the visitor password.'];
+    $checks[] = [$writable ? 'ok' : 'bad', $writable ? '<code>data/</code> is writable.'
+        : '<code>data/</code> is not writable: nothing an owner sends can be kept.'];
+    $checks[] = [is_file(__DIR__ . '/data/.htaccess') ? 'ok' : 'bad', is_file(__DIR__ . '/data/.htaccess')
+        ? '<code>data/.htaccess</code> is in place. On Apache it keeps these files off the web; on nginx, deny <code>/data/</code> in the server config and check that <code>data/feedback/feedback.jsonl</code> does not open in a browser.'
+        : '<code>data/.htaccess</code> is missing — answers and contacts could be downloaded by anyone. Upload it again.'];
+    $checks[] = [feedback_on($config) ? 'ok' : 'warn', feedback_on($config)
+        ? '"Did this help?" is asked after a decision sheet.'
+        : '"Did this help?" is off: the site will collect no evidence of its own.'];
+    $checks[] = [$offer !== null ? 'ok' : 'warn', $offer !== null
+        ? 'The paid follow-up is offered at <strong>' . htmlspecialchars($offer, ENT_QUOTES) . '</strong>. Do not change it mid-pilot.'
+        : 'No <code>offer_price</code> in config.php: the site does not test willingness to pay.'];
+    $checks[] = [llm_feature_on($llm, 'question_router') ? 'warn' : 'ok', llm_feature_on($llm, 'question_router')
+        ? 'The question router is on: typed questions are sent (scrubbed) to your provider.'
+        : 'The question router is off.'];
+  ?>
+  <div class="card">
+    <h2>Before you share the link</h2>
+    <p class="sub">What this host can check about itself. Everything marked in red should be fixed first.</p>
+    <?php foreach ($checks as $c): ?>
+      <div class="msg <?= $c[0] === 'ok' ? 'ok' : ($c[0] === 'bad' ? 'bad' : 'warn') ?>"><?= $c[1] ?></div>
+    <?php endforeach; ?>
+  </div>
 
   <form method="post" class="card">
     <input type="hidden" name="action" value="save">
@@ -392,6 +453,82 @@ details summary{cursor:pointer;font-weight:600;font-size:14px;margin-top:12px}
       <button class="danger" type="submit"><?= count(glob(__DIR__ . '/data/cache/*.gz') ?: []) ?> cached — delete them</button>
     </div>
   </form>
+
+  <?php
+    $fbRows = feedback_rows(FEEDBACK_FILE);
+    $fbSum = feedback_summary($fbRows);
+    $booked = feedback_rows(BOOKINGS_FILE);
+    $measured = feedback_rows(__DIR__ . '/data/contrib/measurements.jsonl');
+    $labels = [
+        'real' => 'A decision they actually face', 'helped' => 'The comparison helped',
+        'next' => 'What they will do next', 'hard' => 'Hardest number to give',
+        'offer' => 'The paid follow-up',
+    ];
+  ?>
+  <div class="card">
+    <h2>What owners told us</h2>
+    <p class="sub">Only what owners chose to send from the card under their decision sheet.
+       Counts, per build, with each browser counted once. Read them against
+       <code>docs/pilot/HYPOTHESES.md</code> — the thresholds there were set before these rows existed.
+       People who answer are the ones who chose to: this is not a sample of everyone who visited.</p>
+    <?php if (!$fbSum): ?>
+      <p class="note">Nothing sent yet.</p>
+    <?php else: foreach ($fbSum as $build => $b): ?>
+      <h3 style="margin:18px 0 0;font-size:16px">Build <code><?= htmlspecialchars((string) $build, ENT_QUOTES) ?></code> —
+        <?= (int) $b['owners'] ?> owners, <?= (int) $b['own_numbers'] ?> with their own numbers</h3>
+      <table>
+        <tr><th>Question</th><th>Answers</th></tr>
+        <?php foreach ($labels as $k => $label): if (empty($b['counts'][$k])) { continue; } arsort($b['counts'][$k]); ?>
+          <tr><td><?= htmlspecialchars($label, ENT_QUOTES) ?></td><td>
+            <?php foreach ($b['counts'][$k] as $v => $n): ?>
+              <code><?= htmlspecialchars((string) $v, ENT_QUOTES) ?></code> <?= (int) $n ?> &nbsp;
+            <?php endforeach; ?></td></tr>
+        <?php endforeach; ?>
+        <tr><td>Invitation (<code>src</code>)</td><td>
+          <?php arsort($b['src']); foreach ($b['src'] as $v => $n): ?>
+            <code><?= htmlspecialchars((string) $v, ENT_QUOTES) ?></code> <?= (int) $n ?> &nbsp;
+          <?php endforeach; ?></td></tr>
+      </table>
+    <?php endforeach; endif; ?>
+    <?php $said = array_values(array_filter(array_reverse($fbRows), function ($r) { return !empty($r['missing']); })); ?>
+    <?php if ($said): ?>
+      <details><summary>What was missing or unclear, in their words (<?= count($said) ?>)</summary>
+        <table>
+          <?php foreach (array_slice($said, 0, 80) as $r): ?>
+            <tr><td><code><?= htmlspecialchars((string) ($r['at'] ?? ''), ENT_QUOTES) ?></code></td>
+                <td><?= htmlspecialchars((string) ($r['wedge'] ?? ''), ENT_QUOTES) ?></td>
+                <td dir="auto"><?= htmlspecialchars((string) $r['missing'], ENT_QUOTES) ?></td></tr>
+          <?php endforeach; ?>
+        </table></details>
+    <?php endif; ?>
+    <p class="note">Price-test results shared by owners: <?= count($measured) ?>.
+      Download: <a href="admin.php?export=feedback">answers (CSV)</a> ·
+      <a href="admin.php?export=measurements">measurements (CSV)</a></p>
+  </div>
+
+  <div class="card">
+    <h2>Asked to book the follow-up</h2>
+    <p class="sub">Each of these typed a contact and ticked that it may be kept for this purpose only.
+       A request to be contacted is not yet a commitment: it counts as one only once a date and the
+       price are agreed with them. Delete a contact when asked — remove its line from
+       <code>data/feedback/bookings.jsonl</code> — and when the pilot ends.</p>
+    <?php if (!$booked): ?>
+      <p class="note">None yet.</p>
+    <?php else: ?>
+      <table>
+        <tr><th>Day</th><th>Build</th><th>Business</th><th>Price shown</th><th>Contact</th></tr>
+        <?php foreach (array_reverse($booked) as $r): ?>
+          <tr><td><code><?= htmlspecialchars((string) ($r['at'] ?? ''), ENT_QUOTES) ?></code></td>
+              <td><code><?= htmlspecialchars((string) ($r['build'] ?? ''), ENT_QUOTES) ?></code></td>
+              <td><?= htmlspecialchars(trim((string) ($r['wedge'] ?? '') . ' ' . (string) ($r['variant'] ?? '')), ENT_QUOTES) ?></td>
+              <td dir="auto"><?= htmlspecialchars((string) ($r['price'] ?? ''), ENT_QUOTES) ?></td>
+              <td dir="ltr"><?= htmlspecialchars((string) ($r['contact'] ?? ''), ENT_QUOTES) ?></td></tr>
+        <?php endforeach; ?>
+      </table>
+      <p class="note"><a href="admin.php?export=bookings">Download (CSV)</a> — it holds personal
+        contacts: keep the file off shared drives and delete it when the follow-ups are done.</p>
+    <?php endif; ?>
+  </div>
 
   <?php $asked = router_read_questions(60); ?>
   <div class="card">

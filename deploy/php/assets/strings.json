@@ -1801,6 +1801,264 @@
    "tags": []
   },
   {
+   "id": "ui.census_own",
+   "text": "{n} of the {total} at your own {shock}",
+   "placeholders": [
+    "{n}",
+    "{total}",
+    "{shock}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_t",
+   "text": "Did this help? Two minutes, all optional",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_thanks_t",
+   "text": "Thank you",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_why",
+   "text": "Your answers are kept only if you press send. They tell us what to fix next. Nothing about how you used this page is recorded otherwise.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_real_l",
+   "text": "Is this a decision you actually face?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_real_now",
+   "text": "Yes, in the next few weeks",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_real_later",
+   "text": "Yes, but not soon",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_real_no",
+   "text": "No, I was trying it out",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_helped_l",
+   "text": "Did the comparison help with it?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_helped_yes",
+   "text": "Yes",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_helped_partly",
+   "text": "Partly",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_helped_no",
+   "text": "No",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_next_l",
+   "text": "What will you do next?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_next_test",
+   "text": "Run the price test first",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_next_undecided",
+   "text": "Not decided yet",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_next_nothing",
+   "text": "Nothing for now",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_hard_l",
+   "text": "Which number was hardest to give?",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_hard_none",
+   "text": "None, they were all easy",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_miss_l",
+   "text": "What was missing or unclear? (optional; please no names or phone numbers)",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_offer_l",
+   "text": "Would you book this, for {price}?",
+   "placeholders": [
+    "{price}"
+   ],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_offer_what",
+   "text": "A follow-up on your price test: a 30-minute session this week to set it up for your own items, and a second one after two to four weeks to read your counts and rerun the comparison. You get an updated decision sheet and a one-page note of the result, including when the result is unclear. It does not promise a better decision or a clear result.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_offer_book",
+   "text": "Yes, contact me to arrange it",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_offer_maybe",
+   "text": "Maybe",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_offer_no",
+   "text": "No",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_contact_l",
+   "text": "Phone or email to arrange it",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_contact_ok_l",
+   "text": "Keep this only to arrange the follow-up. It is stored apart from my answers and deleted when I ask.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_not",
+   "text": "Your sales, costs, cash, prices and business name are not sent. They stay on this page.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_go",
+   "text": "Send",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_fail",
+   "text": "It didn't send. Nothing was kept.",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_real_k",
+   "text": "a decision you face",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_helped_k",
+   "text": "helped",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_next_k",
+   "text": "next step",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_hard_k",
+   "text": "hardest number",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_offer_k",
+   "text": "the follow-up",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_missing_k",
+   "text": "what was missing",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_contact_k",
+   "text": "your contact, kept in a separate file",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_numbers_k",
+   "text": "numbers used",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_numbers_demo",
+   "text": "the worked example",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_numbers_own",
+   "text": "your own (not sent)",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_src_k",
+   "text": "the invitation link you came from",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_day_k",
+   "text": "when",
+   "placeholders": [],
+   "tags": []
+  },
+  {
+   "id": "ui.fb_day_v",
+   "text": "today's date, not the time",
+   "placeholders": [],
+   "tags": []
+  },
+  {
    "id": "ui.census_fact",
    "text": "{label}: {vals} (yours: {yours})",
    "placeholders": [

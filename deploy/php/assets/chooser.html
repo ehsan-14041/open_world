@@ -167,6 +167,12 @@ a.ask-link:hover,a.ask-link:focus-visible{box-shadow:0 0 0 2px var(--accent) ins
 "use strict";
 var I = JSON.parse(document.getElementById('i18n').textContent);
 var P = new URLSearchParams(location.search);
+/* An invitation link can carry a tag (?src=...) saying which invitation it was. It is kept for this
+   tab only, and leaves the browser only inside feedback the owner chooses to send. */
+(function(){
+  var s = String(P.get('src') || '').toLowerCase();
+  if(/^[a-z0-9_-]{1,24}$/.test(s)){ try { sessionStorage.setItem('dc_src', s); } catch(e){} }
+})();
 var qt = P.get('theme'); if(qt==='light'||qt==='dark') document.documentElement.dataset.theme = qt;
 var LANGS = I.languages.map(function(l){ return l.code; });
 var lang = (function(){

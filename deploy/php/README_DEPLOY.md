@@ -92,6 +92,7 @@ returns 404. Everything it configures is optional — see [README_LLM.md](README
 | `/admin.php` | maintainer settings (only once `admin_password` is set) |
 | `/VERSION.txt` | which build is deployed — a plain file, so it answers even when PHP cannot |
 | `/?version` | the same, plus the PHP version the host is actually running |
+| `/?src=<tag>` · `/?w=cafe&src=<tag>` | an invitation link; the tag travels only inside feedback an owner chooses to send |
 
 **After every upload, open `/VERSION.txt` first.** If it does not match the zip you just
 uploaded, the files were not replaced — which is a far more common cause of "the fix did not
@@ -130,6 +131,8 @@ do need the rule. A cached report for one cafe should not be reachable by someon
 another cafe's URL (the filename is a hash of the inputs, so it is not guessable), and
 `data/contrib/` holds measurements owners chose to share. Those carry no figures about anyone's
 business, but they were given to you, not published.
+`data/feedback/bookings.jsonl` is the one file here that holds personal data — contacts owners
+asked you to use — and it must never be reachable from the web.
 
 ## Measurements owners choose to share
 
@@ -181,6 +184,62 @@ Read them in `admin.php`, under *Questions owners asked*. That list is the best 
 have of which question this tool should learn to answer next.
 
 **To not receive questions, delete `ask.php`.** The box disappears from the home screen.
+
+## "Did this help?" — feedback owners choose to send
+
+Under a decision sheet the owner made themselves, the page asks four short questions — is this
+a decision you face, did the comparison help, what will you do next, which number was hardest —
+plus an optional line of free text, and, if you set a price, the paid follow-up. Every answer is
+optional. **Nothing is written until the owner presses Send**, and the page lists the exact row
+first. Nothing else about a visit is recorded: no clicks, no timings, no analytics.
+
+One line goes to `data/feedback/feedback.jsonl`:
+
+```json
+{"at":"2026-09-28","build":"version 20260928-1530-abc1234","wedge":"cafe","variant":null,"lang":"fa","demo":false,"src":"assoc1","real":"now","helped":"partly","next":"test","hard":"monthly_cogs","missing":"…","anon":"k3j9x0aa11bb22cc","offer":"maybe"}
+```
+
+The free text loses phone numbers, email and web addresses before it is written. `build` is the
+first line of `VERSION.txt`, so answers from different builds are never mixed. `anon` is a
+random id made for this purpose alone — it cannot be joined to a shared measurement or a kept
+question. No IP address, no business figures, no name.
+
+**The paid follow-up.** Set `'offer_price'` in `config.php` (exactly as it should read, e.g.
+`'1,500,000 تومان'`) and the card offers the price-test follow-up described in
+`docs/pilot/FACILITATOR_PACK.md` §5 at that price. An owner who chooses "book", types a phone or
+email and ticks that it may be kept creates one line in a **separate** file,
+`data/feedback/bookings.jsonl`. That file holds personal data:
+
+* delete a line when the person asks, and the whole file when the follow-ups are done;
+* never commit it or copy it to a shared drive (the zip builder strips it, and git ignores it);
+* on nginx, make sure `/data/` is denied — open `data/feedback/feedback.jsonl` in a browser after
+  the first answer arrives; you should get 403 or 404, never the file.
+
+A booking request is **not** yet a commitment. It counts as one only once you contact the owner
+and they agree the price and a date (see `docs/pilot/HYPOTHESES.md`).
+
+**Invitation links.** Give each channel its own tag — `https://your.host/?src=assoc1`,
+`?src=supplier2`, `?src=insta` (letters, digits, `-` and `_`, up to 24). The tag is kept for that
+browser tab only and is sent only inside a row the owner chooses to send, so you can tell which
+invitations brought owners who found it useful.
+
+Read everything in `admin.php` under *What owners told us* — counts per build, each browser
+counted once — and download CSV for analysis. **To stop asking, set `'feedback' => false`** or
+delete `feedback.php`.
+
+## Before you share the link
+
+Open `admin.php`. The card *Before you share the link* checks what the host can check about
+itself: PHP version, the build stamp, that the visitor password is not the sample value and
+differs from the admin password, that `data/` is writable and protected, whether feedback is on,
+whether a price is set, and that the question router is off. Fix every red line first. Then:
+
+1. Write the build (`/VERSION.txt`, first line) at the top of the facilitator pack.
+2. Fix the thresholds in `docs/pilot/HYPOTHESES.md` and `PILOT_SCORECARD.md`, and do not change
+   them — or the offer price — while a batch is running.
+3. Make the invitation links, one tag per channel.
+4. Send one answer yourself from a private window, check it appears in `admin.php`, then delete
+   that line from `data/feedback/feedback.jsonl`.
 
 ## Decision-sheet links carry the owner's figures
 

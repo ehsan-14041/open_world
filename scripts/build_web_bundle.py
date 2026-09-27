@@ -56,8 +56,11 @@ def build(out_dir: Path, password: str | None, heading: str | None, make_zip: bo
 
     # Runtime state must never travel in a bundle: settings.json can hold an API key, the cache
     # can hold a real business's figures, and a translation belongs to the install that made it.
+    # What owners sent — answers, contacts, measurements, questions — belongs to the install that
+    # received it, and a contact is personal data: none of it may leave in a zip.
     for pattern in ("data/cache/*.gz", "data/settings.json", "data/llm_usage.json",
-                    "data/i18n/*.json", "config.php"):
+                    "data/i18n/*.json", "config.php", "data/feedback/*", "data/contrib/*",
+                    "data/questions/*"):
         for leaked in out_dir.glob(pattern):
             leaked.unlink()
 
