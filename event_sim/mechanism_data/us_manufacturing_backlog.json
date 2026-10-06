@@ -1,0 +1,530 @@
+{
+ "id": "us_manufacturing_backlog",
+ "title": "US manufacturing unfilled orders excluding transportation, 2018-2024",
+ "definition": "Monthly unfilled orders (backlog) and value of shipments for US manufacturing EXCLUDING transportation equipment, with Federal Reserve manufacturing capacity utilisation as an independently measured pressure variable.",
+ "why_excluding_transportation": "Transportation equipment (chiefly aircraft) is about 59% of total manufacturing unfilled orders and carries a multi-year order-book cycle unrelated to supply disruption. Including it would swamp the dynamic under test.",
+ "pressure_variable": "capacity_utilisation_pct",
+ "series_ids": {
+  "unfilled_orders_musd": "AMXTUO",
+  "shipments_musd": "AMXTVS",
+  "capacity_utilisation_pct": "MCUMFN"
+ },
+ "sources": [
+  "fred_amxtuo",
+  "fred_amxtvs",
+  "fred_mcumfn"
+ ],
+ "circularity_warning": "US Census M3 DERIVES New Orders as Shipments + change in Unfilled Orders. New Orders is therefore NOT an independent driver for this test and is deliberately excluded. Capacity utilisation is measured separately by the Federal Reserve (G.17) and is used as the pressure variable instead.",
+ "limitations": [
+  "NATIONAL AGGREGATE. The model's order_backlog is a node-level, disruption-specific backlog; aggregating across all industries averages together sectors that are accumulating and sectors that are draining, which attenuates exactly the dynamic under test. This test is therefore UNDERPOWERED for a node-level claim.",
+  "Backlog cover (backlog / shipments) has a secular upward trend across the window; any matched-pressure comparison must be detrended or it measures trend rather than hysteresis.",
+  "The April 2020 cover spike is a denominator artefact: shipments fell about 19% while backlog was flat, so cover rose without any accumulation.",
+  "One capacity-utilisation cycle is available in the window, giving small matched-pressure samples."
+ ],
+ "observations": [
+  {
+   "month": "2018-01",
+   "unfilled_orders_musd": 336515.0,
+   "shipments_musd": 402226.0,
+   "capacity_utilisation_pct": 77.8575
+  },
+  {
+   "month": "2018-02",
+   "unfilled_orders_musd": 339855.0,
+   "shipments_musd": 403799.0,
+   "capacity_utilisation_pct": 78.5845
+  },
+  {
+   "month": "2018-03",
+   "unfilled_orders_musd": 342998.0,
+   "shipments_musd": 404543.0,
+   "capacity_utilisation_pct": 78.5797
+  },
+  {
+   "month": "2018-04",
+   "unfilled_orders_musd": 346046.0,
+   "shipments_musd": 406838.0,
+   "capacity_utilisation_pct": 79.1923
+  },
+  {
+   "month": "2018-05",
+   "unfilled_orders_musd": 350059.0,
+   "shipments_musd": 411887.0,
+   "capacity_utilisation_pct": 78.5703
+  },
+  {
+   "month": "2018-06",
+   "unfilled_orders_musd": 353963.0,
+   "shipments_musd": 413608.0,
+   "capacity_utilisation_pct": 79.1408
+  },
+  {
+   "month": "2018-07",
+   "unfilled_orders_musd": 358003.0,
+   "shipments_musd": 414633.0,
+   "capacity_utilisation_pct": 79.1885
+  },
+  {
+   "month": "2018-08",
+   "unfilled_orders_musd": 360574.0,
+   "shipments_musd": 415824.0,
+   "capacity_utilisation_pct": 79.3649
+  },
+  {
+   "month": "2018-09",
+   "unfilled_orders_musd": 363352.0,
+   "shipments_musd": 415889.0,
+   "capacity_utilisation_pct": 79.3896
+  },
+  {
+   "month": "2018-10",
+   "unfilled_orders_musd": 366626.0,
+   "shipments_musd": 416760.0,
+   "capacity_utilisation_pct": 79.0829
+  },
+  {
+   "month": "2018-11",
+   "unfilled_orders_musd": 367119.0,
+   "shipments_musd": 411959.0,
+   "capacity_utilisation_pct": 78.8728
+  },
+  {
+   "month": "2018-12",
+   "unfilled_orders_musd": 368861.0,
+   "shipments_musd": 408645.0,
+   "capacity_utilisation_pct": 79.1512
+  },
+  {
+   "month": "2019-01",
+   "unfilled_orders_musd": 370538.0,
+   "shipments_musd": 407034.0,
+   "capacity_utilisation_pct": 78.4546
+  },
+  {
+   "month": "2019-02",
+   "unfilled_orders_musd": 372361.0,
+   "shipments_musd": 410918.0,
+   "capacity_utilisation_pct": 77.9977
+  },
+  {
+   "month": "2019-03",
+   "unfilled_orders_musd": 373485.0,
+   "shipments_musd": 410507.0,
+   "capacity_utilisation_pct": 77.8167
+  },
+  {
+   "month": "2019-04",
+   "unfilled_orders_musd": 375339.0,
+   "shipments_musd": 411556.0,
+   "capacity_utilisation_pct": 77.3266
+  },
+  {
+   "month": "2019-05",
+   "unfilled_orders_musd": 375993.0,
+   "shipments_musd": 411067.0,
+   "capacity_utilisation_pct": 77.3386
+  },
+  {
+   "month": "2019-06",
+   "unfilled_orders_musd": 377963.0,
+   "shipments_musd": 404563.0,
+   "capacity_utilisation_pct": 77.6484
+  },
+  {
+   "month": "2019-07",
+   "unfilled_orders_musd": 380410.0,
+   "shipments_musd": 403636.0,
+   "capacity_utilisation_pct": 77.1189
+  },
+  {
+   "month": "2019-08",
+   "unfilled_orders_musd": 382595.0,
+   "shipments_musd": 402675.0,
+   "capacity_utilisation_pct": 77.6535
+  },
+  {
+   "month": "2019-09",
+   "unfilled_orders_musd": 384219.0,
+   "shipments_musd": 400681.0,
+   "capacity_utilisation_pct": 77.0507
+  },
+  {
+   "month": "2019-10",
+   "unfilled_orders_musd": 386260.0,
+   "shipments_musd": 396125.0,
+   "capacity_utilisation_pct": 76.4496
+  },
+  {
+   "month": "2019-11",
+   "unfilled_orders_musd": 388743.0,
+   "shipments_musd": 396228.0,
+   "capacity_utilisation_pct": 77.1244
+  },
+  {
+   "month": "2019-12",
+   "unfilled_orders_musd": 389628.0,
+   "shipments_musd": 396785.0,
+   "capacity_utilisation_pct": 77.2053
+  },
+  {
+   "month": "2020-01",
+   "unfilled_orders_musd": 391198.0,
+   "shipments_musd": 389716.0,
+   "capacity_utilisation_pct": 76.9774
+  },
+  {
+   "month": "2020-02",
+   "unfilled_orders_musd": 393086.0,
+   "shipments_musd": 383525.0,
+   "capacity_utilisation_pct": 77.2033
+  },
+  {
+   "month": "2020-03",
+   "unfilled_orders_musd": 393580.0,
+   "shipments_musd": 369348.0,
+   "capacity_utilisation_pct": 73.7668
+  },
+  {
+   "month": "2020-04",
+   "unfilled_orders_musd": 393230.0,
+   "shipments_musd": 336384.0,
+   "capacity_utilisation_pct": 62.4754
+  },
+  {
+   "month": "2020-05",
+   "unfilled_orders_musd": 394768.0,
+   "shipments_musd": 341453.0,
+   "capacity_utilisation_pct": 65.3154
+  },
+  {
+   "month": "2020-06",
+   "unfilled_orders_musd": 397079.0,
+   "shipments_musd": 358661.0,
+   "capacity_utilisation_pct": 70.5106
+  },
+  {
+   "month": "2020-07",
+   "unfilled_orders_musd": 400150.0,
+   "shipments_musd": 368115.0,
+   "capacity_utilisation_pct": 73.1726
+  },
+  {
+   "month": "2020-08",
+   "unfilled_orders_musd": 403191.0,
+   "shipments_musd": 371700.0,
+   "capacity_utilisation_pct": 74.2964
+  },
+  {
+   "month": "2020-09",
+   "unfilled_orders_musd": 409191.0,
+   "shipments_musd": 376294.0,
+   "capacity_utilisation_pct": 74.3524
+  },
+  {
+   "month": "2020-10",
+   "unfilled_orders_musd": 414187.0,
+   "shipments_musd": 381430.0,
+   "capacity_utilisation_pct": 75.1925
+  },
+  {
+   "month": "2020-11",
+   "unfilled_orders_musd": 419318.0,
+   "shipments_musd": 387533.0,
+   "capacity_utilisation_pct": 75.6805
+  },
+  {
+   "month": "2020-12",
+   "unfilled_orders_musd": 426189.0,
+   "shipments_musd": 398528.0,
+   "capacity_utilisation_pct": 76.354
+  },
+  {
+   "month": "2021-01",
+   "unfilled_orders_musd": 431566.0,
+   "shipments_musd": 411566.0,
+   "capacity_utilisation_pct": 77.1699
+  },
+  {
+   "month": "2021-02",
+   "unfilled_orders_musd": 439761.0,
+   "shipments_musd": 412745.0,
+   "capacity_utilisation_pct": 74.0286
+  },
+  {
+   "month": "2021-03",
+   "unfilled_orders_musd": 448334.0,
+   "shipments_musd": 417571.0,
+   "capacity_utilisation_pct": 76.4058
+  },
+  {
+   "month": "2021-04",
+   "unfilled_orders_musd": 457740.0,
+   "shipments_musd": 425921.0,
+   "capacity_utilisation_pct": 76.6281
+  },
+  {
+   "month": "2021-05",
+   "unfilled_orders_musd": 465956.0,
+   "shipments_musd": 433012.0,
+   "capacity_utilisation_pct": 77.5117
+  },
+  {
+   "month": "2021-06",
+   "unfilled_orders_musd": 473804.0,
+   "shipments_musd": 441061.0,
+   "capacity_utilisation_pct": 77.5594
+  },
+  {
+   "month": "2021-07",
+   "unfilled_orders_musd": 480436.0,
+   "shipments_musd": 449138.0,
+   "capacity_utilisation_pct": 78.2805
+  },
+  {
+   "month": "2021-08",
+   "unfilled_orders_musd": 488411.0,
+   "shipments_musd": 451052.0,
+   "capacity_utilisation_pct": 77.8379
+  },
+  {
+   "month": "2021-09",
+   "unfilled_orders_musd": 494706.0,
+   "shipments_musd": 457746.0,
+   "capacity_utilisation_pct": 76.894
+  },
+  {
+   "month": "2021-10",
+   "unfilled_orders_musd": 500206.0,
+   "shipments_musd": 467930.0,
+   "capacity_utilisation_pct": 77.9803
+  },
+  {
+   "month": "2021-11",
+   "unfilled_orders_musd": 505318.0,
+   "shipments_musd": 473352.0,
+   "capacity_utilisation_pct": 78.439
+  },
+  {
+   "month": "2021-12",
+   "unfilled_orders_musd": 512344.0,
+   "shipments_musd": 478779.0,
+   "capacity_utilisation_pct": 78.3404
+  },
+  {
+   "month": "2022-01",
+   "unfilled_orders_musd": 518836.0,
+   "shipments_musd": 482122.0,
+   "capacity_utilisation_pct": 77.585
+  },
+  {
+   "month": "2022-02",
+   "unfilled_orders_musd": 523796.0,
+   "shipments_musd": 487496.0,
+   "capacity_utilisation_pct": 78.0262
+  },
+  {
+   "month": "2022-03",
+   "unfilled_orders_musd": 528809.0,
+   "shipments_musd": 500434.0,
+   "capacity_utilisation_pct": 78.3705
+  },
+  {
+   "month": "2022-04",
+   "unfilled_orders_musd": 534389.0,
+   "shipments_musd": 502756.0,
+   "capacity_utilisation_pct": 78.3191
+  },
+  {
+   "month": "2022-05",
+   "unfilled_orders_musd": 539371.0,
+   "shipments_musd": 510995.0,
+   "capacity_utilisation_pct": 77.9575
+  },
+  {
+   "month": "2022-06",
+   "unfilled_orders_musd": 543619.0,
+   "shipments_musd": 514851.0,
+   "capacity_utilisation_pct": 77.515
+  },
+  {
+   "month": "2022-07",
+   "unfilled_orders_musd": 548577.0,
+   "shipments_musd": 507337.0,
+   "capacity_utilisation_pct": 77.5659
+  },
+  {
+   "month": "2022-08",
+   "unfilled_orders_musd": 552149.0,
+   "shipments_musd": 503586.0,
+   "capacity_utilisation_pct": 77.5335
+  },
+  {
+   "month": "2022-09",
+   "unfilled_orders_musd": 556097.0,
+   "shipments_musd": 506041.0,
+   "capacity_utilisation_pct": 77.5079
+  },
+  {
+   "month": "2022-10",
+   "unfilled_orders_musd": 560148.0,
+   "shipments_musd": 509633.0,
+   "capacity_utilisation_pct": 77.6805
+  },
+  {
+   "month": "2022-11",
+   "unfilled_orders_musd": 562988.0,
+   "shipments_musd": 502516.0,
+   "capacity_utilisation_pct": 77.0373
+  },
+  {
+   "month": "2022-12",
+   "unfilled_orders_musd": 566568.0,
+   "shipments_musd": 496922.0,
+   "capacity_utilisation_pct": 75.6673
+  },
+  {
+   "month": "2023-01",
+   "unfilled_orders_musd": 567144.0,
+   "shipments_musd": 503350.0,
+   "capacity_utilisation_pct": 76.9659
+  },
+  {
+   "month": "2023-02",
+   "unfilled_orders_musd": 566663.0,
+   "shipments_musd": 499405.0,
+   "capacity_utilisation_pct": 76.9753
+  },
+  {
+   "month": "2023-03",
+   "unfilled_orders_musd": 568681.0,
+   "shipments_musd": 493736.0,
+   "capacity_utilisation_pct": 76.4495
+  },
+  {
+   "month": "2023-04",
+   "unfilled_orders_musd": 568348.0,
+   "shipments_musd": 490791.0,
+   "capacity_utilisation_pct": 77.1414
+  },
+  {
+   "month": "2023-05",
+   "unfilled_orders_musd": 563941.0,
+   "shipments_musd": 489467.0,
+   "capacity_utilisation_pct": 76.9659
+  },
+  {
+   "month": "2023-06",
+   "unfilled_orders_musd": 562933.0,
+   "shipments_musd": 491364.0,
+   "capacity_utilisation_pct": 76.398
+  },
+  {
+   "month": "2023-07",
+   "unfilled_orders_musd": 563171.0,
+   "shipments_musd": 492748.0,
+   "capacity_utilisation_pct": 76.664
+  },
+  {
+   "month": "2023-08",
+   "unfilled_orders_musd": 561893.0,
+   "shipments_musd": 500316.0,
+   "capacity_utilisation_pct": 76.5909
+  },
+  {
+   "month": "2023-09",
+   "unfilled_orders_musd": 561327.0,
+   "shipments_musd": 505336.0,
+   "capacity_utilisation_pct": 76.5797
+  },
+  {
+   "month": "2023-10",
+   "unfilled_orders_musd": 560674.0,
+   "shipments_musd": 498163.0,
+   "capacity_utilisation_pct": 76.1299
+  },
+  {
+   "month": "2023-11",
+   "unfilled_orders_musd": 559745.0,
+   "shipments_musd": 495990.0,
+   "capacity_utilisation_pct": 76.4498
+  },
+  {
+   "month": "2023-12",
+   "unfilled_orders_musd": 559362.0,
+   "shipments_musd": 498826.0,
+   "capacity_utilisation_pct": 76.4022
+  },
+  {
+   "month": "2024-01",
+   "unfilled_orders_musd": 557560.0,
+   "shipments_musd": 494618.0,
+   "capacity_utilisation_pct": 75.1799
+  },
+  {
+   "month": "2024-02",
+   "unfilled_orders_musd": 556435.0,
+   "shipments_musd": 496438.0,
+   "capacity_utilisation_pct": 76.0838
+  },
+  {
+   "month": "2024-03",
+   "unfilled_orders_musd": 555325.0,
+   "shipments_musd": 499620.0,
+   "capacity_utilisation_pct": 76.1421
+  },
+  {
+   "month": "2024-04",
+   "unfilled_orders_musd": 554371.0,
+   "shipments_musd": 501993.0,
+   "capacity_utilisation_pct": 75.6821
+  },
+  {
+   "month": "2024-05",
+   "unfilled_orders_musd": 553522.0,
+   "shipments_musd": 498196.0,
+   "capacity_utilisation_pct": 76.0561
+  },
+  {
+   "month": "2024-06",
+   "unfilled_orders_musd": 553885.0,
+   "shipments_musd": 496838.0,
+   "capacity_utilisation_pct": 75.865
+  },
+  {
+   "month": "2024-07",
+   "unfilled_orders_musd": 553826.0,
+   "shipments_musd": 499121.0,
+   "capacity_utilisation_pct": 75.2171
+  },
+  {
+   "month": "2024-08",
+   "unfilled_orders_musd": 554223.0,
+   "shipments_musd": 498601.0,
+   "capacity_utilisation_pct": 75.5198
+  },
+  {
+   "month": "2024-09",
+   "unfilled_orders_musd": 556014.0,
+   "shipments_musd": 499056.0,
+   "capacity_utilisation_pct": 75.0416
+  },
+  {
+   "month": "2024-10",
+   "unfilled_orders_musd": 557232.0,
+   "shipments_musd": 498602.0,
+   "capacity_utilisation_pct": 74.4805
+  },
+  {
+   "month": "2024-11",
+   "unfilled_orders_musd": 557118.0,
+   "shipments_musd": 502396.0,
+   "capacity_utilisation_pct": 74.6357
+  },
+  {
+   "month": "2024-12",
+   "unfilled_orders_musd": 557850.0,
+   "shipments_musd": 502120.0,
+   "capacity_utilisation_pct": 74.9036
+  }
+ ]
+}

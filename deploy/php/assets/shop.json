@@ -1,0 +1,1985 @@
+{
+ "wedge": {
+  "id": "shop",
+  "business": "Shop / Online Store",
+  "question": "My supplier raised prices. Should I pass it on?",
+  "module_id": "shop_cost_shock_v1"
+ },
+ "copy": {
+  "fields": {
+   "units_per_day": "daily_orders",
+   "unit_cost_total": "monthly_cogs",
+   "revenue": "monthly_revenue",
+   "fixed": "monthly_fixed_costs",
+   "cash": "cash_on_hand",
+   "shock": "supplier_increase_pct",
+   "low_margin": "low_margin_share_pct"
+  },
+  "primary_axis": "price_sensitivity",
+  "summary_fields": [
+   [
+    "monthly_revenue",
+    "monthly_revenue",
+    2
+   ],
+   [
+    "daily_orders",
+    "daily_orders",
+    1
+   ],
+   [
+    "average_order_value",
+    "average_ticket",
+    2
+   ],
+   [
+    "monthly_cogs",
+    "unit_cost_total",
+    2
+   ],
+   [
+    "cogs_pct",
+    "cost_pct",
+    1
+   ],
+   [
+    "gross_margin_pct",
+    "gross_margin_pct",
+    1
+   ],
+   [
+    "monthly_fixed_costs",
+    "fixed",
+    2
+   ],
+   [
+    "monthly_net",
+    "monthly_net",
+    2
+   ],
+   [
+    "net_margin_pct",
+    "net_margin_pct",
+    1
+   ],
+   [
+    "cash_on_hand",
+    "cash",
+    2
+   ],
+   [
+    "supplier_increase_pct",
+    "supplier_increase_pct",
+    null
+   ],
+   [
+    "low_margin_share_pct",
+    "low_margin_share_pct",
+    null
+   ]
+  ],
+  "grid_key_fields": {
+   "price_sensitivity": "price_sensitivity",
+   "cogs_pass_through": "cogs_pass_through",
+   "supplier_increase_pct": {
+    "float": "supplier_increase_pct"
+   },
+   "reduction_points": "reduction",
+   "demand_adjustment_speed": "demand_adjustment_speed"
+  },
+  "demo_noun": "shop",
+  "page_title": "Shop cost decision — three options compared",
+  "research_settings": [
+   "high"
+  ],
+  "world_verdict_labels": {
+   "A": "Holding prices",
+   "B": "Raising prices 8%",
+   "C": "A 4% rise plus dropping low-margin lines"
+  },
+  "world_names": {
+   "A": "Hold prices",
+   "B": "Raise prices 8%",
+   "C": "Raise prices 4% + drop low-margin lines"
+  },
+  "world_short": {
+   "A": "Hold prices",
+   "B": "Raise 8%",
+   "C": "Raise 4% + drop lines"
+  },
+  "headline": "Your supplier put prices up {shock}%. Should you pass it on?",
+  "hero_lede": "We compared three decisions using the same model of your shop and the same assumptions. Only the decision changes between them — so the differences come from the decision, not from different guesses.",
+  "unit_word": "orders",
+  "unit_word_singular": "order",
+  "cost_word": "cost of goods",
+  "uncertainty_title": "How price-sensitive are your customers?",
+  "uncertainty_eyebrow": "The biggest uncertainty",
+  "sens_help": {
+   "low": "Loyal customers, an awkward shop to replace, or competitors raising prices too.",
+   "central": "Our judgement: customers who could shop elsewhere, with some effort.",
+   "high": "Research figure for customers who can buy the identical item elsewhere."
+  },
+  "sens_values": {
+   "low": "0.70",
+   "central": "1.30",
+   "high": "2.60"
+  },
+  "c_card_note": "Depends on two of our assumptions: how much dropping low-margin lines cuts your {cost} (about {red} points here) and how many {unit} leave with those lines ({loss}%). Neither is calibrated to your business yet.",
+  "chart_title": "Cash in the bank under each decision",
+  "chart_lede": "Costs take about three weeks to rise — the stock on your shelves was bought at the old price. Customers react to a new price within a week or two.",
+  "next_measurement": "A two-week price test on a handful of lines — or your own sales figures from the last time you put prices up — would tell you far more about how your customers respond than any assumption we can make. That evidence can replace the estimate used here.",
+  "sources_note": "On price sensitivity: the research quoted measures customers switching between brands on the same shelf, which is easier than switching shops. It sets the top of the range rather than the middle, and the middle is our judgement, not a research finding.",
+  "limits_does_not": [
+   "Predict the future or guarantee an outcome.",
+   "Model how competitors or marketplaces react.",
+   "Model advertising, search ranking or promotions.",
+   "Know your customers' price sensitivity — unless you bring evidence."
+  ],
+  "flow": [
+   {
+    "key": "shock",
+    "fields": [
+     "supplier_increase_pct"
+    ],
+    "choices": [
+     15,
+     25,
+     35
+    ],
+    "other": true
+   },
+   {
+    "key": "sales",
+    "fields": [
+     "monthly_revenue",
+     "daily_orders"
+    ]
+   },
+   {
+    "key": "costs",
+    "fields": [
+     "monthly_cogs",
+     "monthly_fixed_costs"
+    ]
+   },
+   {
+    "key": "cash",
+    "fields": [
+     "cash_on_hand"
+    ]
+   },
+   {
+    "key": "mix",
+    "fields": [
+     "low_margin_share_pct"
+    ],
+    "choices": [
+     10,
+     20,
+     30
+    ]
+   }
+  ],
+  "intake_groups": [
+   {
+    "label": "Your business",
+    "fields": [
+     "monthly_revenue",
+     "daily_orders",
+     "cash_on_hand"
+    ]
+   },
+   {
+    "label": "Your costs",
+    "fields": [
+     "monthly_cogs",
+     "monthly_fixed_costs"
+    ]
+   },
+   {
+    "label": "The shock",
+    "fields": [
+     "supplier_increase_pct"
+    ]
+   },
+   {
+    "label": "Your range",
+    "fields": [
+     "low_margin_share_pct",
+     "name"
+    ]
+   }
+  ]
+ },
+ "i18n": {
+  "languages": [
+   {
+    "code": "en",
+    "label": "English",
+    "dir": "ltr"
+   },
+   {
+    "code": "fa",
+    "label": "فارسی",
+    "dir": "rtl"
+   }
+  ],
+  "default": "en",
+  "strings": {
+   "en": {
+    "dir": "ltr",
+    "label": "English",
+    "numerals": "latn",
+    "ui": {
+     "product": "Decision Compare",
+     "tagline": "See the trade-offs before you decide.",
+     "principle_1": "Same business.",
+     "principle_2": "Same assumptions.",
+     "principle_3": "Different decision.",
+     "home_question": "What kind of business do you run?",
+     "home_lede": "Pick the one closest to yours. You will compare a few versions of one real decision — with your own figures.",
+     "home_pick": "Compare the options",
+     "home_footer": "Each report compares three versions of one decision on the same model, so the differences come from the decision rather than from different guesses. It is a scenario comparison under stated assumptions — not a prediction, and not advice.",
+     "switch_business": "Change business type",
+     "language": "Language",
+     "demo_badge": "Demo — fictional {noun}",
+     "back_home": "All business types",
+     "decision_eyebrow": "The decision",
+     "your_options": "Your three choices",
+     "ranked_first": "Ranked first",
+     "ranked_first_cases": "Ranked first in {n} of {total} tested cases",
+     "ranked_first_central": "Ranks first under the current assumptions",
+     "per_month": "per month",
+     "per_month_after": "once things have settled",
+     "today": "today",
+     "cash_at_90": "cash after 90 days",
+     "cash_runs_out": "cash runs out on day {day}",
+     "orders_change": "{unit}",
+     "not_a_prediction": "A scenario comparison under stated assumptions — not a prediction.",
+     "tested_cases_tooltip": "These are tested assumption combinations, not probabilities.",
+     "why_title": "Why does {option} come out ahead?",
+     "why_tie": "Why is it this close?",
+     "why_lose_units": "You lose about {pct} of your {unit},",
+     "why_gain": "but under the current assumptions the higher price more than makes up for it.",
+     "why_gain_capacity": "but your diary was already full, so most of those were people you were turning away anyway.",
+     "why_cost": "and the saving on {cost} more than makes up for it.",
+     "why_vs_a": "Against {other}, that is {amount} more cash after 90 days.",
+     "why_gap": "{lead} is {amount} ahead of {second}.",
+     "chart_eyebrow": "The next 90 days",
+     "chart_title": "Cash in the bank under each choice",
+     "chart_alt": "Cash over 90 days for the three choices. {summary}",
+     "chart_today": "today",
+     "cash_zero": "cash = 0",
+     "day": "Day {n}",
+     "cash_derived": "Cash is calculated from the simulated business activity. It is not directly simulated by the engine.",
+     "compare_table": "Side by side",
+     "row_cash_30": "Cash after 30 days",
+     "row_cash_90": "Cash after 90 days",
+     "row_net": "Net per month once settled",
+     "row_utilisation": "How full you end up",
+     "row_turned_away": "Turned away per day",
+     "unknown_eyebrow": "The biggest unknown",
+     "unknown_why": "Why it matters",
+     "unknown_could": "Could it change the decision?",
+     "unknown_how": "How you could find out",
+     "change_eyebrow": "What could change the answer?",
+     "change_title": "Which assumptions actually move the decision",
+     "influence_high": "High",
+     "influence_medium": "Medium",
+     "influence_low": "Low",
+     "changes_ranking": "changes which ranks first",
+     "changes_size": "changes the size of the gap",
+     "only_one_flips": "Only one assumption changed which option ranked first: {name}.",
+     "several_flip": "{n} assumptions changed which option ranked first: {names}.",
+     "none_flips": "Nothing we tested changed which option ranked first.",
+     "try_it": "Try it",
+     "other_assumptions": "Other assumptions you can change",
+     "evidence_eyebrow": "Where the numbers come from",
+     "group_yours": "Your numbers",
+     "group_research": "External research",
+     "group_assumptions": "Model assumptions",
+     "group_calculated": "Calculated results",
+     "no_research": "Nothing here is set from a published study at the setting you have chosen.",
+     "no_research_ever": "No published study covers this trade closely enough to use. Every setting here is our judgement.",
+     "does_title": "What this does — and doesn't do",
+     "does": "This does",
+     "does_not": "This does not",
+     "does_1": "Compare several decisions consistently.",
+     "does_2": "Show the financial trade-offs.",
+     "does_3": "Show which assumptions matter.",
+     "does_4": "Show what could change the ranking.",
+     "cta_lede": "Your figures stay in this page. Nothing is sent anywhere.",
+     "cta_run": "Compare my choices",
+     "cta_reset": "Back to the demo",
+     "cta_done": "Done — this page now uses your numbers.",
+     "group_about": "About your business",
+     "group_costs": "Your costs",
+     "group_capacity": "Your capacity",
+     "group_changed": "What changed",
+     "group_mix": "What you sell",
+     "err_numbers": "Please fill in every number.",
+     "err_cost_high": "We can't compare these options with these numbers yet.",
+     "err_cost_high_why": "Your costs are the same as or higher than your sales, so there is no margin to compare. Check the cost figure.",
+     "err_positive": "These need to be more than zero: {names}.",
+     "err_utilisation": "How full the diary is should be between 1% and 100%.",
+     "err_failed": "Something went wrong while comparing. No numbers are shown, because half-finished ones would be worse than none.",
+     "how_title": "How this was calculated",
+     "how_open": "Method, sources and reproducibility",
+     "advanced": "Advanced",
+     "currency_note": "All figures are in whatever currency you entered.",
+     "klass_labels": {
+      "Customer input": "Your numbers",
+      "External research": "External research",
+      "Assumption": "Model assumption",
+      "Derived": "Calculated"
+     },
+     "setting_labels": {
+      "low": "Low",
+      "central": "Middle",
+      "high": "High",
+      "slow": "Slow",
+      "fast": "Fast"
+     },
+     "value_of_sales": "{v} ({p}% of sales)",
+     "pct_sign": "%",
+     "per_day": "a day",
+     "whoami_cash": "in cash",
+     "whoami_capacity": "of capacity a day",
+     "elasticity_plain": "≈{v}% of {unit} per 1% rise",
+     "render_failed": "Something went wrong drawing this page. The figures shown may be out of date — please reload.",
+     "why_demand_grows": "Demand is still growing at this price,",
+     "why_demand_holds": "Demand barely moves at this price,",
+     "why_capacity_full": "and you were already at capacity, so the gain comes from the price rather than from more work.",
+     "why_price_through": "and the higher price carries almost straight through to what you keep.",
+     "verdict": "{option} leaves you with the most cash after 90 days — under these assumptions.",
+     "verdict_close": "{lead} and {second} finish within {amount} of each other after 90 days — under these assumptions.",
+     "use_your_numbers": "Use your own numbers",
+     "answer_changed_banner": "The answer changed — this is the assumption that matters most.",
+     "home_flow": "Pick your business → see three choices → test your numbers.",
+     "credibility": "Every figure on the page comes from one model. Every assumption behind it is named and marked as your number, published research, or our own assumption — and the one most likely to change the answer can be tested.",
+     "chart_shock": "the increase starts",
+     "chart_axis_unit": "cash",
+     "currency_pick": "Show figures in",
+     "currency_none": "no symbol",
+     "print_view": "Print or save as PDF",
+     "print_hint": "Verdict, chart and assumptions. Everything else is left out.",
+     "flow_step_of": "{n} of {total}",
+     "flow_back": "Back",
+     "flow_next": "Next",
+     "flow_see": "Show me the comparison",
+     "flow_other": "Something else",
+     "flow_approx": "It doesn't need to be exact.",
+     "flow_example": "Or look at a worked example",
+     "flow_change": "Change your numbers",
+     "ahead_now": "Currently ahead",
+     "per_month_label": "monthly",
+     "why_q": "Why is {option} ahead?",
+     "unknown_lead": "But one thing could change the answer.",
+     "flip_title": "The answer changed.",
+     "flip_body": "At this setting, {winner} moves ahead of {loser}.",
+     "flip_same": "At this setting {winner} still comes out ahead.",
+     "unsure_q": "Not sure?",
+     "unsure_lead": "Here is a simple way to find out:",
+     "give_me_test": "Show me that test",
+     "test_reading": "In the second week after a {rise} rise, compared with the week before, the model expects the repriced items to sell:",
+     "assume_reveal_q": "What is this answer built on?",
+     "assume_reveal_btn": "Show the assumptions",
+     "method_btn": "How it was calculated",
+     "home_hero": "Got a business decision to make?",
+     "home_hero_2": "See the trade-offs before you make it.",
+     "home_problem_q": "What's the problem right now?",
+     "home_example_lead": "Say your ingredient costs go up 30%:",
+     "home_example_cta": "Compare them",
+     "noscript": "This page needs JavaScript to work.",
+     "beat_now": "If you do nothing",
+     "beat_now_cap": "{mnet} a month · {cash} in the bank after 90 days",
+     "beat_options": "Three things you can do",
+     "beat_race": "The 90-day race",
+     "overtake": "From day {d}, {b} moves ahead of {a}",
+     "beat_monday": "Your next step: a small price test",
+     "census_block": "{opt} in {n} of {total}",
+     "capacity_full_note": "Your diary is full — turning away about {n} appointments a day",
+     "resume_note": "Your numbers from last time",
+     "start_over": "Start over",
+     "decide_t": "Which one are you going with?",
+     "decide_lead": "Record your choice and I'll make you a sheet you can keep, print, or show someone.",
+     "decide_pick": "I'm going with this",
+     "sheet_title": "Decision sheet",
+     "sheet_id": "Reference",
+     "sheet_date": "Date",
+     "sheet_situation": "The situation",
+     "sheet_decision": "My decision",
+     "sheet_compared": "The three I compared",
+     "sheet_chosen": "chosen",
+     "sheet_month": "monthly",
+     "sheet_rests": "What this decision rests on",
+     "sheet_will_do": "And this is what I'll measure",
+     "sheet_sign": "Signed and dated",
+     "sheet_reproduce": "None of these figures is stored anywhere; they are recalculated from the link itself. Anyone who opens it sees exactly these numbers.",
+     "sheet_copy": "Copy link",
+     "sheet_copied": "Copied",
+     "sheet_back": "Back to the comparison",
+     "rest_shock": "What changed",
+     "rest_horizon": "Compared over",
+     "rest_horizon_v": "{n} days",
+     "rest_stability": "How stable this choice is",
+     "rest_stability_v": "first in {n} of {total} tested cases",
+     "test_start": "I've started the test",
+     "test_started_on": "Started {date}",
+     "test_come_back": "Come back after at least two weeks. Until then, count the repriced items and the unchanged ones every day.",
+     "test_enter": "Enter the result",
+     "test_cancel": "Never mind",
+     "test_form_t": "Record what happened",
+     "test_rise_l": "How much did you put the price up?",
+     "test_before_l": "Daily {unit} before",
+     "test_after_l": "Daily {unit} in the latest days",
+     "test_calc": "Work it out",
+     "test_bad": "Check the numbers: the price rise and both counts for the repriced items must be above zero, each average must cover at least one day and no more days than have passed, and the unchanged items need both counts or neither.",
+     "measured_lead": "Your own test now sets this assumption.",
+     "measured_on": "Recorded {date}",
+     "measured_clear": "Clear this result",
+     "measured_row": "Price sensitivity, from your own test",
+     "sheet_measured": "My own test",
+     "flow_kind_q": "What kind of place is it?",
+     "flow_kind_hint": "Same model either way — the words and the starting estimate differ.",
+     "share_q": "Share this number with the others?",
+     "share_why": "The estimate this page starts from comes from a 2010 American study of eating out. Results from tests that met their conditions, from businesses here, can improve the next starting estimate.",
+     "share_what": "What gets sent?",
+     "share_list_e": "the change you observed, per 1% of price",
+     "share_list_rise": "how much you put the price up",
+     "share_list_kind": "the kind of business",
+     "share_list_date": "the date (the day, not the time)",
+     "share_list_anon": "a random id your browser made up",
+     "share_not": "Your sales, your cash, your order counts, your name and your address are not sent. They stay on this page.",
+     "share_go": "Send it",
+     "share_no": "No thanks",
+     "share_done": "Sent. Thank you.",
+     "share_fail": "It didn't send. No matter — your measurement is still here.",
+     "sheet_yours_q": "Facing a decision like this yourself?",
+     "sheet_yours_go": "See your own three choices",
+     "own_t": "Or build your own option",
+     "own_lead": "The same model, with the levers set by you: raise prices by as much as you like, and add “{reduce}” if you want.",
+     "own_p_l": "How much would you raise prices?",
+     "own_r_l": "Also: {reduce}",
+     "own_name_p": "Raise prices {p}",
+     "own_name_pr": "Raise prices {p} + {reduce}",
+     "own_name_r": "Hold prices + {reduce}",
+     "own_name_0": "Hold prices, change nothing",
+     "own_label": "Your option",
+     "own_same": "This is option “{x}” — and the model gives back exactly the same figure.",
+     "own_vs_more": "{amount} more cash after {n} days than “{lead}”, which leads the three on that measure.",
+     "own_vs_less": "{amount} less cash after {n} days than “{lead}”, which leads the three on that measure.",
+     "own_vs_equal": "About the same cash after {n} days as “{lead}”, which leads the three on that measure.",
+     "own_census": "In {n} of {total} tested cases it does at least as well as the best of the three.",
+     "own_units_down": "About {pct} fewer {unit}",
+     "own_units_up": "About {pct} more {unit}",
+     "own_units_flat": "The number of {unit} stays about the same",
+     "own_how": "This option was worked out just now in your own browser, by the same model that produced the three. Before it was allowed to, your browser rebuilt all {n} precomputed cases on this page and checked them against the originals. Your business’s figures do not leave this page.",
+     "own_good": "The mix you set yourself",
+     "own_stability_v": "at least as good as the best of the three in {n} of {total} cases",
+     "ask_t": "Ask your own question",
+     "ask_lead": "Write it the way you would ask it yourself. If it is one this tool can answer with numbers, it takes you straight there; if not, it says plainly that it cannot yet.",
+     "ask_ph": "For example: my supplier put prices up 25% — should I raise mine 7%, or drop the low-margin lines?",
+     "ask_keep": "Keep my question",
+     "ask_keep_why": "So it becomes clear what owners actually ask, and what this tool should learn next. The text is kept as you wrote it, with the day (not the time) and a random id your browser made. Phone numbers, emails and web addresses are removed before it is stored. Don’t write names or anything private.",
+     "ask_route_note": "To understand your question, its text is sent to the AI service the person running this site has chosen. It only sorts the question; no figure in this tool comes from it.",
+     "ask_noroute_note": "This site does not read questions automatically right now. If you allow it, your question is kept so it can be read.",
+     "ask_go": "Ask",
+     "ask_busy": "Reading…",
+     "ask_fit_exact": "This one I can answer with numbers:",
+     "ask_fit_near": "Not exactly this. The nearest question I can answer with numbers is:",
+     "ask_fit_none": "I can’t answer this one with numbers yet ({topic}). Guessing is not what this tool does.",
+     "ask_unrouted": "This site does not read questions automatically right now. These are the questions I can answer today:",
+     "ask_kept": "Your question was kept. Thank you.",
+     "ask_open": "Take me there",
+     "ask_restate_own": "your own option: {own}",
+     "ask_size_next": "the size of the change is asked next",
+     "ask_err": "Something went wrong; your question was not sent.",
+     "ask_empty": "Write your question first.",
+     "ask_need_keep": "This site is not reading questions right now; to send it, tick “Keep my question”.",
+     "ask_topics": {
+      "hiring": "hiring",
+      "hours": "opening hours",
+      "delivery": "delivery",
+      "rent_move": "rent or moving",
+      "marketing": "marketing",
+      "range": "range or menu",
+      "loan_cash": "loans and cash",
+      "other": "another topic"
+     },
+     "objective_line": "Ranked by one measure: the cash you would have after {n} days. Each card's monthly figure is the profit rate over that period's last month. Fixed costs and your new prices are held constant.",
+     "class_line": "What this rests on: {c} of your numbers, {r} from published research, {a} of our assumptions and {d} calculated.",
+     "class_line_go": "Show them",
+     "census_how_q": "How is this counted?",
+     "census_how_a": "Each tested case counts once, whether or not it is likely for your business, and we chose the ranges — {facts}. So the count shows how widely an option holds up across those ranges. It is not the chance that it works.",
+     "census_own": "{n} of the {total} at your own {shock}",
+     "fb_t": "Did this help? Two minutes, all optional",
+     "fb_thanks_t": "Thank you",
+     "fb_why": "Your answers are kept only if you press send. They tell us what to fix next. Nothing about how you used this page is recorded otherwise.",
+     "fb_real_l": "Is this a decision you actually face?",
+     "fb_real_now": "Yes, in the next few weeks",
+     "fb_real_later": "Yes, but not soon",
+     "fb_real_no": "No, I was trying it out",
+     "fb_helped_l": "Did the comparison help with it?",
+     "fb_helped_yes": "Yes",
+     "fb_helped_partly": "Partly",
+     "fb_helped_no": "No",
+     "fb_next_l": "What will you do next?",
+     "fb_next_test": "Run the price test first",
+     "fb_next_undecided": "Not decided yet",
+     "fb_next_nothing": "Nothing for now",
+     "fb_hard_l": "Which number was hardest to give?",
+     "fb_hard_none": "None, they were all easy",
+     "fb_miss_l": "What was missing or unclear? (optional; please no names or phone numbers)",
+     "fb_offer_l": "Would you book this, for {price}?",
+     "fb_offer_what": "A follow-up on your price test: a 30-minute session this week to set it up for your own items, and a second one after two to four weeks to read your counts and rerun the comparison. You get an updated decision sheet and a one-page note of the result, including when the result is unclear. It does not promise a better decision or a clear result.",
+     "fb_offer_book": "Yes, contact me to arrange it",
+     "fb_offer_maybe": "Maybe",
+     "fb_offer_no": "No",
+     "fb_contact_l": "Phone or email to arrange it",
+     "fb_contact_ok_l": "Keep this only to arrange the follow-up. It is stored apart from my answers and deleted when I ask.",
+     "fb_not": "Your sales, costs, cash, prices and business name are not sent. They stay on this page.",
+     "fb_go": "Send",
+     "fb_fail": "It didn't send. Nothing was kept.",
+     "fb_real_k": "a decision you face",
+     "fb_helped_k": "helped",
+     "fb_next_k": "next step",
+     "fb_hard_k": "hardest number",
+     "fb_offer_k": "the follow-up",
+     "fb_missing_k": "what was missing",
+     "fb_contact_k": "your contact, kept in a separate file",
+     "fb_numbers_k": "numbers used",
+     "fb_numbers_demo": "the worked example",
+     "fb_numbers_own": "your own (not sent)",
+     "fb_src_k": "the invitation link you came from",
+     "fb_day_k": "when",
+     "fb_day_v": "today's date, not the time",
+     "census_fact": "{label}: {vals} (yours: {yours})",
+     "setting_is_research": "a published figure",
+     "setting_is_assumption": "our assumption — not measured",
+     "own_warn": "Above {max} you are past the largest rise this comparison was built around. The model still works it out, but only by assuming customers keep reacting in the same straight-line way to a bigger rise — nothing here shows that they do. Treat this figure as rough.",
+     "sheet_link_note": "This link carries the figures you entered — sales, costs, cash. Anyone you send it to can read them. They sit after the # in the link, so opening it does not send them to the web server.",
+     "test_band_range": "{band}: about {lo} to {hi} fewer {unit}",
+     "test_overlap": "The ranges overlap because the model is also unsure how fast customers react. A result inside an overlap cannot tell the settings apart, and small daily counts widen it further. An unclear result is a normal outcome.",
+     "test_need": "What to record: every day, how many of the repriced items you sell and how many of a few similar items you did not reprice — for a week before and at least two weeks after. Keep the same days and hours, and avoid weeks with promotions, holidays or stock-outs.",
+     "test_need_capacity": "What to record: requests for the repriced services and for your other services — not bookings, which your diary caps — for two weeks before and at least four weeks after. Keep the same days and hours, and avoid weeks with promotions or holidays.",
+     "test_days_l": "How many days ago did you raise it?",
+     "test_n_l": "How many days does each average cover?",
+     "test_rep_h": "The items you repriced",
+     "test_oth_h": "Similar items you did not reprice (strongly recommended)",
+     "test_obefore_l": "Daily {unit} before",
+     "test_oafter_l": "Daily {unit} in the same latest days",
+     "test_c1": "Same opening days and hours in both periods",
+     "test_c2": "No promotion, holiday or special event in either period",
+     "test_c3": "Nothing ran out of stock",
+     "test_c4": "Nothing else changed at the same time — other prices, the menu, staff, suppliers",
+     "test_status_supported": "Your test points to “{band}”, and it met every condition. The comparison now uses “{band}”.",
+     "test_status_provisional": "Your test points to “{band}”, but not every condition was met, so the comparison still uses what it used before. Keep it as a note.",
+     "test_status_inconclusive": "Your test fits more than one setting ({bands}), so it cannot tell them apart and nothing was changed. That is a normal result, not a failure.",
+     "test_status_outside": "Your result does not fit any setting we tested. Something else probably changed during the test — or your customers react differently from every setting here. Nothing was changed.",
+     "test_status_legacy": "Recorded with an earlier version of this test that did not check its conditions. Kept as a note; the comparison does not use it.",
+     "test_obs": "What you saw: after a {rise} rise, daily sales of the repriced items changed by {t}, comparing the latest {n} days (up to day {days} after the change) with before.",
+     "test_obs_ctl": "What you saw: after a {rise} rise, daily sales of the repriced items changed by {t} and of the unchanged items by {o}, comparing the latest {n} days (up to day {days}) with before. Against the unchanged items, that is {rel}.",
+     "test_obs_legacy": "Recorded then: after a {rise} rise, every 1% on the price went with about {v}% fewer sales.",
+     "test_inf": "What the model infers, under its own assumptions about how fast customers react: this fits “{bands}”.",
+     "test_inf_none": "What the model infers: none of its settings would produce a change like this.",
+     "test_open_noctl": "No unchanged items were counted, so a quiet or busy fortnight cannot be told apart from the price change.",
+     "test_open_checks": "Not every condition was confirmed; whatever was different may explain part of the change.",
+     "test_open_short_n": "Each average covers fewer than 7 days, so weekday patterns can distort it.",
+     "test_open_short_days": "Fewer than 14 days had passed; under the model's assumptions most of the reaction may still be to come.",
+     "test_open_capacity": "Your diary is capped by your slots, so fewer bookings may not show until demand falls below them. This test never changes the comparison automatically.",
+     "test_open_noise": "The range allows only for ordinary counting noise. Real weeks usually vary more, so treat even a clear-looking result with care.",
+     "test_open_items": "It covers a few items; using it for your whole business is still a judgement.",
+     "test_open_legacy": "Run the test again with the unchanged items and the checks, and it can be used.",
+     "sheet_meas_supported": "My own test pointed to “{band}”, and the comparison above uses that setting.",
+     "sheet_meas_other": "I ran a test with a {rise} price rise. Its result was {state}, so the comparison above does not rely on it.",
+     "test_state_supported": "usable",
+     "test_state_provisional": "provisional — not every condition was met",
+     "test_state_inconclusive": "inconclusive — it fitted more than one setting",
+     "test_state_outside": "outside every tested setting",
+     "test_state_legacy": "recorded without the condition checks",
+     "inputs_nearest": "This browser could not run the model, so the comparison uses the nearest figures this page carries: a {shock} supplier increase and a low-margin share of {share}.",
+     "scale_million": "million",
+     "scale_billion": "billion",
+     "currency_ask": "What currency are your figures in?"
+    },
+    "wedge": {
+     "business": "Shop / Online Store",
+     "business_short": "Shop",
+     "noun": "shop",
+     "icon": "🛍",
+     "question": "My supplier raised prices. Should I pass it on?",
+     "page_title": "Shop cost decision — three choices compared",
+     "headline": "Your supplier put prices up {shock}%. Should you pass it on?",
+     "hero_lede": "Three ways to respond, compared on the same model of your shop and the same assumptions. Only the decision changes between them.",
+     "what_changed": "Your supplier put wholesale prices up {shock}%.",
+     "unit_word": "orders",
+     "unit_word_singular": "order",
+     "cost_word": "cost of goods",
+     "world_names": {
+      "A": "Hold prices",
+      "B": "Raise prices 8%",
+      "C": "Raise prices 4% + drop low-margin lines"
+     },
+     "world_short": {
+      "A": "Hold prices",
+      "B": "Raise 8%",
+      "C": "Raise 4% + drop lines"
+     },
+     "world_verdict_labels": {
+      "A": "Holding prices",
+      "B": "Raising prices 8%",
+      "C": "A 4% rise plus dropping low-margin lines"
+     },
+     "uncertainty_title": "How price-sensitive are your customers?",
+     "unknown_why": "A shop's customers can often buy the same item elsewhere, so a price rise costs more orders here than in a trade where people come for you specifically. How much more is the thing nobody has measured for your shop.",
+     "unknown_how": "Put prices up on a handful of lines for at least two weeks and compare them with lines you left alone. Numbers from the last time you raised prices help too, if nothing else changed at the same time.",
+     "sens_help": {
+      "low": "Loyal customers, an awkward shop to replace, or competitors raising prices too.",
+      "central": "Our judgement: customers who could shop elsewhere, with some effort.",
+      "high": "The research figure for customers who can buy the identical item elsewhere."
+     },
+     "c_card_note": "Depends on how much dropping low-margin lines cuts your cost of goods (about {red} points here) and how many {unit} leave with those lines ({loss}%). Neither is measured from your shop.",
+     "chart_lede": "Costs take about three weeks to rise — the stock on your shelves was bought at the old price. Customers react to a new price within a week or two.",
+     "sources_note": "The research quoted measures customers switching between brands on the same shelf, which is easier than switching shops. It sets the top of the range rather than the middle.",
+     "limits_does_not": [
+      "Predict your future sales.",
+      "Know how your individual customers will behave.",
+      "Model competitors, marketplaces or search ranking.",
+      "Model advertising or promotions."
+     ],
+     "intake": {
+      "monthly_revenue": {
+       "label": "About how much do you sell in a month?",
+       "hint": "A typical month, before the increase.",
+       "placeholder": "92,000"
+      },
+      "daily_orders": {
+       "label": "About how many orders a day?",
+       "hint": "In store and online together.",
+       "placeholder": "90"
+      },
+      "monthly_cogs": {
+       "label": "What do the goods cost you a month?",
+       "hint": "What you pay suppliers for what you sell. Not wages, not rent.",
+       "placeholder": "53,360"
+      },
+      "monthly_fixed_costs": {
+       "label": "Rent, wages and bills a month?",
+       "hint": "Everything that will not change in the next 90 days.",
+       "placeholder": "33,000"
+      },
+      "cash_on_hand": {
+       "label": "How much cash is in the account today?",
+       "hint": "What you could spend right now.",
+       "placeholder": "26,000"
+      },
+      "supplier_increase_pct": {
+       "label": "How much did your supplier put prices up?",
+       "hint": "As a percentage of what you pay for goods.",
+       "placeholder": "25"
+      },
+      "low_margin_share_pct": {
+       "label": "What share of orders are lines that earn you little?",
+       "hint": "Roughly. A guess is fine — it is tested as an assumption.",
+       "placeholder": "20"
+      },
+      "name": {
+       "label": "What is your shop called?",
+       "hint": "Only used on this page.",
+       "placeholder": "Nine Yards"
+      }
+     },
+     "sweep_labels": {
+      "price_sensitivity": "How price-sensitive your customers are",
+      "cogs_pass_through": "How much of the increase reaches your costs",
+      "supplier_increase_pct": "How big the supplier increase really is",
+      "reduction_points": "How much dropping low-margin lines really saves",
+      "demand_adjustment_speed": "How quickly customers react"
+     },
+     "assumptions": {
+      "monthly_revenue": {
+       "label": "Current monthly sales"
+      },
+      "daily_orders": {
+       "label": "Orders per day"
+      },
+      "monthly_cogs": {
+       "label": "Monthly cost of goods"
+      },
+      "monthly_fixed_costs": {
+       "label": "Monthly fixed costs (incl. wages)"
+      },
+      "cash_on_hand": {
+       "label": "Cash available today"
+      },
+      "supplier_increase_pct": {
+       "label": "Supplier cost increase"
+      },
+      "low_margin_share_pct": {
+       "label": "Share of orders on low-margin lines"
+      },
+      "price_sensitivity": {
+       "label": "Price sensitivity of customers"
+      },
+      "cogs_pass_through": {
+       "label": "Share of supplier increase reaching your cost of goods"
+      },
+      "inventory_lag": {
+       "label": "Delay before higher supplier prices reach your costs",
+       "text": "about 20 days (stock on hand)"
+      },
+      "demand_adjustment_speed": {
+       "label": "How quickly customers react to a price change",
+       "map": {
+        "slow": "about two and a half weeks to half-react",
+        "central": "about eight days to half-react",
+        "fast": "about four days to half-react"
+       }
+      },
+      "trim_effectiveness": {
+       "label": "Cost saving from dropping low-margin lines",
+       "text": "{reduction:g} points off average cost of goods ({trim_effectiveness:.3f} per point of low-margin share)"
+      },
+      "trim_demand_cost": {
+       "label": "Orders lost from dropping those lines",
+       "text": "{demand_cost:.1f}% of orders"
+      },
+      "price_rises": {
+       "label": "Price rises compared",
+       "text": "B: +8%   C: +4%"
+      },
+      "horizon": {
+       "label": "Comparison horizon",
+       "text": "90 days"
+      },
+      "average_order_value": {
+       "label": "Average order value"
+      },
+      "cogs_per_order": {
+       "label": "Cost of goods per order"
+      }
+     },
+     "chart_turn": "old stock runs out around here",
+     "problem": "My supplier raised prices",
+     "flow_q": {
+      "shock": "How much did your supplier put prices up?",
+      "sales": "How busy is the shop?",
+      "costs": "What do you spend in a month?",
+      "cash": "How much cash have you got set aside for the business?",
+      "mix": "How many of your sales are low-margin?"
+     },
+     "flow_choices": {
+      "shock": {
+       "15": "15%",
+       "25": "25%",
+       "35": "35%"
+      },
+      "mix": {
+       "10": "Few — about 10%",
+       "20": "Some — about 20%",
+       "30": "Many — about 30%"
+      }
+     },
+     "tradeoff": {
+      "A": {
+       "good": "Your prices stay where they are",
+       "bad": "but you absorb the whole increase"
+      },
+      "B": {
+       "good": "You pass most of the increase on",
+       "bad": "but sales drop by about {pct}"
+      },
+      "C": {
+       "good": "A smaller rise, and your costs come down too",
+       "bad": "but it depends on what dropping low-margin lines really saves"
+      }
+     },
+     "experiment": "Put the price of three to five best-sellers up {rise} and change nothing else. Every day, count how many of those you sell — and how many of a few similar lines you did not reprice. Count for a week before and at least two weeks after.",
+     "own_reduce": "drop low-margin lines"
+    },
+    "all_wedges": {
+     "cafe": {
+      "business": "Cafe / Restaurant",
+      "business_short": "Cafe",
+      "icon": "☕"
+     },
+     "shop": {
+      "business": "Shop / Online Store",
+      "business_short": "Shop",
+      "icon": "🛍"
+     },
+     "salon": {
+      "business": "Salon / Service Business",
+      "business_short": "Salon",
+      "icon": "✂"
+     }
+    }
+   },
+   "fa": {
+    "dir": "rtl",
+    "label": "فارسی",
+    "numerals": "arabext",
+    "ui": {
+     "product": "مقایسهٔ تصمیم",
+     "tagline": "قبل از تصمیم، پیامد انتخاب‌هایت را ببین.",
+     "principle_1": "همان کسب‌وکار.",
+     "principle_2": "همان فرض‌ها.",
+     "principle_3": "تصمیم متفاوت.",
+     "home_question": "چه کسب‌وکاری داری؟",
+     "home_lede": "نزدیک‌ترین را انتخاب کن. قرار است چند حالت از یک تصمیم واقعی را با عددهای خودت مقایسه کنی.",
+     "home_pick": "انتخاب‌ها را مقایسه کن",
+     "home_footer": "هر گزارش سه حالت از یک تصمیم را روی یک مدل مقایسه می‌کند، تا تفاوت‌ها از خودِ تصمیم بیاید نه از حدس‌های متفاوت. این یک مقایسهٔ سناریو با فرض‌های مشخص است؛ نه پیش‌بینی، نه توصیه.",
+     "switch_business": "تغییر نوع کسب‌وکار",
+     "language": "زبان",
+     "demo_badge": "نمونه — {noun} فرضی",
+     "back_home": "همهٔ کسب‌وکارها",
+     "decision_eyebrow": "تصمیم",
+     "your_options": "سه انتخاب تو",
+     "ranked_first": "انتخاب اول",
+     "ranked_first_cases": "انتخاب اول در {n} حالت از {total} حالت بررسی‌شده",
+     "ranked_first_central": "با فرض‌های فعلی، اول است",
+     "per_month": "در ماه",
+     "per_month_after": "بعد از اینکه اوضاع آرام گرفت",
+     "today": "الان",
+     "cash_at_90": "موجودی بعد از ۹۰ روز",
+     "cash_runs_out": "پول روز {day} تمام می‌شود",
+     "orders_change": "{unit}",
+     "not_a_prediction": "مقایسهٔ سناریو با فرض‌های مشخص — نه پیش‌بینی.",
+     "tested_cases_tooltip": "این عدد احتمال موفقیت نیست؛ تعداد حالت‌های مختلفی است که بررسی شده‌اند.",
+     "why_title": "چرا {option} جلو می‌افتد؟",
+     "why_tie": "چرا این‌قدر نزدیک است؟",
+     "why_lose_units": "حدود {pct} از {unit} کم می‌شود،",
+     "why_gain": "اما با فرض‌های فعلی، افزایش قیمت بیشتر از این افت را جبران می‌کند.",
+     "why_gain_capacity": "اما وقت‌هایت از قبل پر بود، پس بیشترشان کسانی بودند که به‌هرحال جا نمی‌شدند.",
+     "why_cost": "و صرفه‌جویی در {cost} بیشتر از این افت را جبران می‌کند.",
+     "why_vs_a": "در مقایسه با {other}، بعد از ۹۰ روز {amount} پول بیشتری در حساب می‌ماند.",
+     "why_gap": "{lead} به اندازهٔ {amount} از {second} جلوتر است.",
+     "chart_eyebrow": "۹۰ روز آینده",
+     "chart_title": "موجودی حساب با هر انتخاب",
+     "chart_alt": "موجودی نقدی در ۹۰ روز برای سه انتخاب. {summary}",
+     "chart_today": "الان",
+     "cash_zero": "صفر",
+     "day": "روز {n}",
+     "cash_derived": "مسیر نقدینگی از نتایج فعالیت کسب‌وکار محاسبه می‌شود؛ خودِ موتور مستقیماً پول نقد را شبیه‌سازی نمی‌کند.",
+     "compare_table": "کنار هم",
+     "row_cash_30": "موجودی بعد از ۳۰ روز",
+     "row_cash_90": "موجودی بعد از ۹۰ روز",
+     "row_net": "سود ماهانه بعد از آرام‌شدن",
+     "row_utilisation": "در پایان چقدر پر می‌شوی",
+     "row_turned_away": "روزانه چند نفر جا نمی‌شوند",
+     "unknown_eyebrow": "مهم‌ترین چیزی که هنوز نمی‌دانیم",
+     "unknown_why": "چرا مهم است",
+     "unknown_could": "می‌تواند تصمیم را عوض کند؟",
+     "unknown_how": "چطور می‌توانی بفهمی",
+     "change_eyebrow": "چه چیزی می‌تواند نتیجه را عوض کند؟",
+     "change_title": "کدام فرض‌ها واقعاً تصمیم را جابه‌جا می‌کنند",
+     "influence_high": "زیاد",
+     "influence_medium": "متوسط",
+     "influence_low": "کم",
+     "changes_ranking": "ترتیب را عوض می‌کند",
+     "changes_size": "فقط فاصله را کم و زیاد می‌کند",
+     "only_one_flips": "فقط یک فرض توانست انتخاب اول را عوض کند: {name}.",
+     "several_flip": "{n} فرض توانستند انتخاب اول را عوض کنند: {names}.",
+     "none_flips": "هیچ‌کدام از چیزهایی که بررسی کردیم انتخاب اول را عوض نکرد.",
+     "try_it": "امتحان کن",
+     "other_assumptions": "فرض‌های دیگری که می‌توانی عوض کنی",
+     "evidence_eyebrow": "این عددها از کجا آمده‌اند",
+     "group_yours": "عددهای کسب‌وکار شما",
+     "group_research": "اطلاعات پژوهشی",
+     "group_assumptions": "فرض‌های مدل",
+     "group_calculated": "نتایج محاسبه‌شده",
+     "no_research": "با تنظیمی که انتخاب کرده‌ای، هیچ عددی اینجا از یک پژوهش منتشرشده نیامده.",
+     "no_research_ever": "هیچ پژوهش منتشرشده‌ای این صنف را به‌اندازهٔ کافی پوشش نمی‌دهد. همهٔ تنظیم‌های اینجا قضاوت ماست.",
+     "does_title": "این ابزار چه کاری می‌کند و چه کاری نمی‌کند",
+     "does": "این کار را می‌کند",
+     "does_not": "این کار را نمی‌کند",
+     "does_1": "چند تصمیم را با یک معیار مقایسه می‌کند.",
+     "does_2": "بده‌بستان مالی هر کدام را نشان می‌دهد.",
+     "does_3": "نشان می‌دهد کدام فرض‌ها مهم‌اند.",
+     "does_4": "نشان می‌دهد چه چیزی می‌تواند ترتیب را عوض کند.",
+     "cta_lede": "عددهایت در همین صفحه می‌ماند. هیچ‌جا فرستاده نمی‌شود.",
+     "cta_run": "انتخاب‌هایم را مقایسه کن",
+     "cta_reset": "برگرد به نمونه",
+     "cta_done": "انجام شد — این صفحه حالا با عددهای توست.",
+     "group_about": "دربارهٔ کسب‌وکارت",
+     "group_costs": "هزینه‌هایت",
+     "group_capacity": "ظرفیتت",
+     "group_changed": "چه چیزی تغییر کرده",
+     "group_mix": "چه چیزی می‌فروشی",
+     "err_numbers": "لطفاً همهٔ عددها را پر کن.",
+     "err_cost_high": "با این عددها هنوز نمی‌توانیم گزینه‌ها را درست مقایسه کنیم.",
+     "err_cost_high_why": "هزینه‌ات برابر یا بیشتر از فروشت است، پس حاشیه‌ای نمی‌ماند که مقایسه شود. عدد هزینه را یک بار دیگر ببین.",
+     "err_positive": "این‌ها باید بیشتر از صفر باشند: {names}.",
+     "err_utilisation": "پر بودن وقت‌ها باید بین ۱٪ تا ۱۰۰٪ باشد.",
+     "err_failed": "در مقایسه مشکلی پیش آمد. هیچ عددی نشان نمی‌دهیم، چون عدد نصفه‌ونیمه از هیچ بدتر است.",
+     "how_title": "این محاسبه چطور انجام شده؟",
+     "how_open": "روش، منابع و قابلیت بازتولید",
+     "advanced": "پیشرفته",
+     "currency_note": "همهٔ عددها به همان واحد پولی است که خودت وارد کرده‌ای.",
+     "klass_labels": {
+      "Customer input": "عددهای خودت",
+      "External research": "پژوهش بیرونی",
+      "Assumption": "فرض مدل",
+      "Derived": "محاسبه‌شده"
+     },
+     "setting_labels": {
+      "low": "کم",
+      "central": "متوسط",
+      "high": "زیاد",
+      "slow": "کند",
+      "fast": "سریع"
+     },
+     "value_of_sales": "{v} ({p}٪ از فروش)",
+     "pct_sign": "٪",
+     "per_day": "در روز",
+     "whoami_cash": "پول نقد",
+     "whoami_capacity": "ظرفیت در روز",
+     "elasticity_plain": "حدود {v}٪ از {unit} به ازای هر ۱٪ گرانی",
+     "render_failed": "در ترسیم این صفحه خطایی رخ داد. ممکن است عددهای نمایش‌داده‌شده به‌روز نباشند — صفحه را دوباره باز کن.",
+     "why_demand_grows": "تقاضا با این قیمت همچنان رشد می‌کند،",
+     "why_demand_holds": "تقاضا با این قیمت تقریباً ثابت می‌ماند،",
+     "why_capacity_full": "و ظرفیتت از قبل پر بود، پس سود از قیمت می‌آید نه از کار بیشتر.",
+     "why_price_through": "و افزایش قیمت تقریباً مستقیم به چیزی که برایت می‌ماند اضافه می‌شود.",
+     "verdict": "{option} بعد از ۹۰ روز بیشترین پول را برایت باقی می‌گذارد — با این فرض‌ها.",
+     "verdict_close": "{lead} و {second} بعد از ۹۰ روز با فاصلهٔ {amount} به هم می‌رسند — با این فرض‌ها.",
+     "use_your_numbers": "با عددهای خودت امتحان کن",
+     "answer_changed_banner": "جواب عوض شد — همین فرض است که بیشترین اهمیت را دارد.",
+     "home_flow": "کسب‌وکارت را انتخاب کن ← سه انتخاب را ببین ← عددهای خودت را امتحان کن.",
+     "credibility": "همهٔ عددهای این صفحه از یک مدل می‌آیند. هر فرضی که پشتشان است نام برده شده و مشخص است که عدد خودت است، پژوهش منتشرشده، یا فرض ما — و فرضی که بیش از همه می‌تواند جواب را عوض کند، قابل آزمایش است.",
+     "chart_shock": "گرانی از اینجا شروع می‌شود",
+     "chart_axis_unit": "موجودی",
+     "currency_pick": "نمایش عددها با",
+     "currency_none": "بدون نماد",
+     "print_view": "چاپ یا ذخیره به PDF",
+     "print_hint": "نتیجه، نمودار و فرض‌ها. باقی صفحه چاپ نمی‌شود.",
+     "flow_step_of": "{n} از {total}",
+     "flow_back": "برگرد",
+     "flow_next": "بعدی",
+     "flow_see": "نتیجه را نشانم بده",
+     "flow_other": "عدد دیگه",
+     "flow_approx": "لازم نیست دقیق باشه.",
+     "flow_example": "یا یک نمونهٔ آماده را ببین",
+     "flow_change": "عددها را عوض کن",
+     "ahead_now": "فعلاً جلوتر",
+     "per_month_label": "ماهانه",
+     "why_q": "چرا {option} جلو افتاده؟",
+     "unknown_lead": "اما یک چیز می‌تواند جواب را عوض کند.",
+     "flip_title": "انتخاب اول عوض شد.",
+     "flip_body": "با این فرض، {winner} از {loser} جلو می‌افتد.",
+     "flip_same": "با این فرض هم {winner} جلوتر می‌ماند.",
+     "unsure_q": "مطمئن نیستی؟",
+     "unsure_lead": "یک راه ساده برای فهمیدنش:",
+     "give_me_test": "این تست را بهم بده",
+     "test_reading": "در هفتهٔ دوم بعد از {rise} گرانی، در مقایسه با هفتهٔ قبل از آن، مدل انتظار دارد فروش اقلامِ گران‌شده این‌قدر کم شود:",
+     "assume_reveal_q": "این نتیجه بر چه فرض‌هایی بنا شده؟",
+     "assume_reveal_btn": "مشاهده فرض‌ها",
+     "method_btn": "جزئیات روش محاسبه",
+     "home_hero": "یه تصمیم توی کسب‌وکارت داری؟",
+     "home_hero_2": "قبل از انجامش ببین هر انتخاب چه پیامدی داره.",
+     "home_problem_q": "الان چه مشکلی داری؟",
+     "home_example_lead": "مثلاً اگر مواد اولیه ۳۰٪ گرون بشه:",
+     "home_example_cta": "مقایسه کن",
+     "noscript": "این صفحه برای کار کردن به جاوااسکریپت نیاز دارد.",
+     "beat_now": "اگر هیچ کاری نکنی",
+     "beat_now_cap": "ماهانه {mnet} · بعد از ۹۰ روز {cash} در حساب",
+     "beat_options": "سه کار می‌توانی بکنی",
+     "beat_race": "مسابقهٔ ۹۰ روزه",
+     "overtake": "از روز {d}، {b} از {a} جلو می‌زند",
+     "beat_monday": "قدم بعدی: یک آزمایش کوچکِ قیمت",
+     "census_block": "{opt} در {n} از {total}",
+     "capacity_full_note": "دفترت پر شده — حدود {n} نوبت در روز رد می‌کنی",
+     "resume_note": "عددهای دفعهٔ قبلت",
+     "start_over": "از اول شروع کن",
+     "decide_t": "کدام را انتخاب می‌کنی؟",
+     "decide_lead": "انتخابت را ثبت کن تا یک برگه بسازم که بتوانی نگه داری، چاپ کنی یا نشان بدهی.",
+     "decide_pick": "همین را انتخاب می‌کنم",
+     "sheet_title": "برگهٔ تصمیم",
+     "sheet_id": "شناسه",
+     "sheet_date": "تاریخ",
+     "sheet_situation": "وضعیت",
+     "sheet_decision": "تصمیم من",
+     "sheet_compared": "سه راهی که مقایسه شد",
+     "sheet_chosen": "انتخاب‌شده",
+     "sheet_month": "ماهانه",
+     "sheet_rests": "این تصمیم روی این فرض‌ها ایستاده",
+     "sheet_will_do": "و این را اندازه می‌گیرم",
+     "sheet_sign": "امضا و تاریخ",
+     "sheet_reproduce": "عددهای این برگه جایی ذخیره نشده‌اند؛ از روی خودِ لینک دوباره حساب می‌شوند. هر کسی این لینک را باز کند دقیقاً همین عددها را می‌بیند.",
+     "sheet_copy": "کپی لینک",
+     "sheet_copied": "کپی شد",
+     "sheet_back": "برگرد به مقایسه",
+     "rest_shock": "چیزی که تغییر کرده",
+     "rest_horizon": "بازهٔ مقایسه",
+     "rest_horizon_v": "{n} روز",
+     "rest_stability": "پایداری این انتخاب",
+     "rest_stability_v": "در {n} از {total} حالتِ آزموده اول است",
+     "test_start": "آزمایش را شروع کردم",
+     "test_started_on": "شروع‌شده در {date}",
+     "test_come_back": "دست‌کم بعد از دو هفته برگرد. تا آن موقع هر روز هم اقلامِ گران‌شده را بشمار، هم آن‌هایی را که دست نزده‌ای.",
+     "test_enter": "نتیجه را وارد کن",
+     "test_cancel": "بی‌خیال",
+     "test_form_t": "ثبت کن چه شد",
+     "test_rise_l": "چند درصد گران کردی؟",
+     "test_before_l": "{unit} در روز، قبل",
+     "test_after_l": "{unit} در روز، در روزهای اخیر",
+     "test_calc": "حساب کن",
+     "test_bad": "عددها را بررسی کن: درصد گرانی و هر دو عددِ اقلامِ گران‌شده باید بزرگ‌تر از صفر باشند، هر میانگین دست‌کم یک روز و نه بیشتر از روزهای گذشته را در بر بگیرد، و برای اقلامِ دست‌نخورده یا هر دو عدد را بنویس یا هیچ‌کدام.",
+     "measured_lead": "این فرض را حالا آزمایش خودت تعیین می‌کند.",
+     "measured_on": "ثبت‌شده در {date}",
+     "measured_clear": "این نتیجه را پاک کن",
+     "measured_row": "حساسیت به قیمت، از آزمایش خودت",
+     "sheet_measured": "آزمایش خودم",
+     "flow_kind_q": "چه‌جور کسب‌وکاری داری؟",
+     "flow_kind_hint": "مدل یکی است؛ فقط واژه‌ها و حدس اولیه فرق می‌کنند.",
+     "share_q": "این عدد را با بقیه در میان می‌گذاری؟",
+     "share_why": "حدس اولیهٔ این صفحه از یک پژوهش آمریکایی سال ۲۰۱۰ دربارهٔ بیرون‌غذاخوردن می‌آید. نتیجهٔ آزمایش‌هایی که شرط‌هایشان برقرار بوده، از کسب‌وکارهای همین‌جا، می‌تواند حدس بعدی را بهتر کند.",
+     "share_what": "چه چیزی فرستاده می‌شود؟",
+     "share_list_e": "تغییری که دیدی، به ازای هر ۱٪ قیمت",
+     "share_list_rise": "چند درصد گران کردی",
+     "share_list_kind": "نوع کسب‌وکار",
+     "share_list_date": "تاریخ (فقط روز)",
+     "share_list_anon": "یک شناسهٔ تصادفی که مرورگرت ساخته",
+     "share_not": "فروش، پول نقد، تعداد سفارش، اسم و نشانی‌ات فرستاده نمی‌شود. اینها روی همین صفحه می‌مانند.",
+     "share_go": "بفرست",
+     "share_no": "نه، ممنون",
+     "share_done": "فرستاده شد. ممنون.",
+     "share_fail": "فرستاده نشد. اشکالی ندارد — اندازه‌گیری‌ات سر جایش است.",
+     "sheet_yours_q": "تو هم چنین تصمیمی داری؟",
+     "sheet_yours_go": "سه‌راهی خودت را ببین",
+     "own_t": "یا گزینهٔ خودت را بساز",
+     "own_lead": "همان مدل، با اهرم‌هایی که خودت تنظیم می‌کنی: قیمت را هر قدر خواستی بالا ببر و اگر خواستی {reduce} را هم کنارش بگذار.",
+     "own_p_l": "چند درصد قیمت را بالا می‌بری؟",
+     "own_r_l": "همراه با {reduce}",
+     "own_name_p": "قیمت {p} بالا",
+     "own_name_pr": "قیمت {p} بالا + {reduce}",
+     "own_name_r": "قیمت ثابت + {reduce}",
+     "own_name_0": "قیمت ثابت، بی‌هیچ تغییر",
+     "own_label": "گزینهٔ تو",
+     "own_same": "این همان گزینهٔ «{x}» است — و مدل هم دقیقاً همان عدد را برمی‌گرداند.",
+     "own_vs_more": "بعد از {n} روز {amount} پول بیشتر از «{lead}»، که با همین معیار از آن سه جلوتر است.",
+     "own_vs_less": "بعد از {n} روز {amount} پول کمتر از «{lead}»، که با همین معیار از آن سه جلوتر است.",
+     "own_vs_equal": "بعد از {n} روز تقریباً هم‌اندازهٔ «{lead}»، که با همین معیار از آن سه جلوتر است.",
+     "own_census": "در {n} از {total} حالتِ آزموده، دست‌کم به خوبیِ بهترینِ آن سه است.",
+     "own_units_down": "تعداد {unit} حدود {pct} کم می‌شود",
+     "own_units_up": "تعداد {unit} حدود {pct} بیشتر می‌شود",
+     "own_units_flat": "تعداد {unit} تقریباً ثابت می‌ماند",
+     "own_how": "این گزینه همین حالا در مرورگر خودت حساب شد، با همان مدلی که آن سه را ساخت. پیش از آن، مرورگرت هر {n} حالتِ ازپیش‌حساب‌شدهٔ این صفحه را از نو ساخت و با نسخهٔ اصلی مقایسه کرد. عددهای کسب‌وکارت از این صفحه بیرون نمی‌روند.",
+     "own_good": "ترکیبی که خودت تنظیم کردی",
+     "own_stability_v": "در {n} از {total} حالت، دست‌کم به خوبیِ بهترینِ آن سه",
+     "ask_t": "سؤالِ خودت را بپرس",
+     "ask_lead": "همان‌طور که برای خودت می‌پرسی بنویس. اگر از سؤال‌هایی باشد که این ابزار با عدد جواب می‌دهد، مستقیم می‌بَرَدت سرِ همان؛ اگر نباشد، راستش را می‌گوید که هنوز نمی‌تواند.",
+     "ask_ph": "مثلاً: تأمین‌کننده ۲۵٪ گران کرده؛ قیمت‌ها را ۷٪ بالا ببرم یا کالاهای کم‌سود را حذف کنم؟",
+     "ask_keep": "سؤالم را نگه دارید",
+     "ask_keep_why": "تا معلوم شود صاحبان کسب‌وکار واقعاً چه می‌پرسند و این ابزار بعد از این چه چیزی را یاد بگیرد. متن همان‌طور که نوشتی نگه داشته می‌شود، با روزِ ثبت (نه ساعت) و شناسه‌ای تصادفی که مرورگرت ساخته. شماره تلفن، ایمیل و نشانی سایت پیش از ذخیره پاک می‌شوند. اسم یا چیزِ خصوصی ننویس.",
+     "ask_route_note": "برای فهمیدن سؤالت، متنش به سرویس هوش مصنوعی‌ای فرستاده می‌شود که گردانندهٔ این سایت انتخاب کرده. آن سرویس فقط سؤال را دسته‌بندی می‌کند؛ هیچ عددی در این ابزار از آن نمی‌آید.",
+     "ask_noroute_note": "این سایت فعلاً سؤال‌ها را خودکار نمی‌خواند. اگر اجازه بدهی نگهش می‌داریم تا خوانده شود.",
+     "ask_go": "بپرس",
+     "ask_busy": "دارم می‌خوانم…",
+     "ask_fit_exact": "این را می‌توانم با عدد جواب بدهم:",
+     "ask_fit_near": "دقیقاً این را نه. نزدیک‌ترین سؤالی که با عدد جوابش را دارم این است:",
+     "ask_fit_none": "این یکی را هنوز نمی‌توانم با عدد جواب بدهم ({topic}). حدس زدن کارِ این ابزار نیست.",
+     "ask_unrouted": "این سایت فعلاً سؤال‌ها را خودکار نمی‌خواند. سؤال‌هایی که همین حالا جوابشان را دارم این‌هاست:",
+     "ask_kept": "سؤالت نگه داشته شد. ممنون.",
+     "ask_open": "برو سرِ همین",
+     "ask_restate_own": "گزینهٔ خودت: {own}",
+     "ask_size_next": "اندازهٔ تغییر را در سؤال‌های بعدی می‌پرسم",
+     "ask_err": "چیزی خراب شد؛ سؤالت فرستاده نشد.",
+     "ask_empty": "اول سؤالت را بنویس.",
+     "ask_need_keep": "این سایت فعلاً سؤال‌ها را نمی‌خواند؛ برای فرستادن، «سؤالم را نگه دارید» را بزن.",
+     "ask_topics": {
+      "hiring": "استخدام",
+      "hours": "ساعت کاری",
+      "delivery": "پیک و ارسال",
+      "rent_move": "اجاره یا جابه‌جایی",
+      "marketing": "تبلیغ",
+      "range": "تنوع کالا یا منو",
+      "loan_cash": "وام و نقدینگی",
+      "other": "موضوعی دیگر"
+     },
+     "objective_line": "رتبه‌بندی با یک معیار است: پولی که بعد از {n} روز برایت می‌ماند. عدد ماهانهٔ هر کارت، سود یا زیان ماه آخرِ همین دوره است. هزینه‌های ثابت و قیمت‌های تازه ثابت فرض شده‌اند.",
+     "class_line": "این نتیجه روی این‌ها بنا شده: {c} عدد از خودت، {r} از پژوهش منتشرشده، {a} فرض ما و {d} محاسبه.",
+     "class_line_go": "نشانم بده",
+     "census_how_q": "این شمارش چطور است؟",
+     "census_how_a": "هر حالتِ آزموده یک بار شمرده می‌شود، چه برای کسب‌وکار تو محتمل باشد چه نه، و بازه‌ها را ما انتخاب کرده‌ایم — {facts}. پس این شمارش نشان می‌دهد یک گزینه در این بازه‌ها چقدر سر پا می‌ماند؛ احتمال موفقیتش نیست.",
+     "census_own": "{n} از {total} حالتِ با {shock}ِ خودت",
+     "fb_t": "به کارت آمد؟ دو دقیقه، همه اختیاری",
+     "fb_thanks_t": "ممنون",
+     "fb_why": "جواب‌هایت فقط اگر «بفرست» را بزنی نگه داشته می‌شوند. به ما می‌گویند چه چیزی را بعد از این درست کنیم. جز این، هیچ چیزی از نحوهٔ استفاده‌ات از این صفحه ثبت نمی‌شود.",
+     "fb_real_l": "این تصمیمی است که واقعاً پیش رو داری؟",
+     "fb_real_now": "بله، در چند هفتهٔ آینده",
+     "fb_real_later": "بله، ولی نه به‌زودی",
+     "fb_real_no": "نه، فقط امتحانش کردم",
+     "fb_helped_l": "مقایسه برای این تصمیم کمکت کرد؟",
+     "fb_helped_yes": "بله",
+     "fb_helped_partly": "تا حدی",
+     "fb_helped_no": "نه",
+     "fb_next_l": "قدم بعدی‌ات چیست؟",
+     "fb_next_test": "اول آزمایش قیمت را انجام می‌دهم",
+     "fb_next_undecided": "هنوز تصمیم نگرفته‌ام",
+     "fb_next_nothing": "فعلاً هیچ کاری",
+     "fb_hard_l": "دادن کدام عدد از همه سخت‌تر بود؟",
+     "fb_hard_none": "هیچ‌کدام، همه راحت بودند",
+     "fb_miss_l": "چه چیزی کم بود یا روشن نبود؟ (اختیاری؛ لطفاً بدون اسم و شماره تلفن)",
+     "fb_offer_l": "این را با {price} رزرو می‌کنی؟",
+     "fb_offer_what": "پیگیری آزمایش قیمتت: یک جلسهٔ ۳۰ دقیقه‌ای همین هفته برای چیدن آزمایش روی اقلام خودت، و جلسهٔ دوم بعد از دو تا چهار هفته برای خواندن شمارش‌ها و اجرای دوبارهٔ مقایسه. یک برگهٔ تصمیمِ به‌روز و یک یادداشت یک‌صفحه‌ای از نتیجه می‌گیری، حتی وقتی نتیجه روشن نیست. قولِ تصمیم بهتر یا نتیجهٔ روشن نمی‌دهد.",
+     "fb_offer_book": "بله، برای هماهنگی با من تماس بگیرید",
+     "fb_offer_maybe": "شاید",
+     "fb_offer_no": "نه",
+     "fb_contact_l": "تلفن یا ایمیل برای هماهنگی",
+     "fb_contact_ok_l": "این را فقط برای هماهنگی پیگیری نگه دارید. جدا از جواب‌هایم نگه داشته می‌شود و هر وقت بخواهم پاک می‌شود.",
+     "fb_not": "فروش، هزینه‌ها، نقدینگی، قیمت‌ها و اسم کسب‌وکارت فرستاده نمی‌شود. همین‌جا روی صفحه می‌ماند.",
+     "fb_go": "بفرست",
+     "fb_fail": "فرستاده نشد. چیزی نگه داشته نشد.",
+     "fb_real_k": "تصمیمی که پیش رو داری",
+     "fb_helped_k": "کمک کرد",
+     "fb_next_k": "قدم بعدی",
+     "fb_hard_k": "سخت‌ترین عدد",
+     "fb_offer_k": "پیگیری",
+     "fb_missing_k": "چه چیزی کم بود",
+     "fb_contact_k": "راه تماس، در فایلی جدا",
+     "fb_numbers_k": "عددهای استفاده‌شده",
+     "fb_numbers_demo": "مثالِ آماده",
+     "fb_numbers_own": "عددهای خودت (فرستاده نمی‌شوند)",
+     "fb_src_k": "لینک دعوتی که از آن آمدی",
+     "fb_day_k": "زمان",
+     "fb_day_v": "تاریخ امروز، نه ساعت",
+     "census_fact": "{label}: {vals} (مال تو: {yours})",
+     "setting_is_research": "عدد پژوهشِ منتشرشده",
+     "setting_is_assumption": "فرض ما — اندازه‌گیری نشده",
+     "own_warn": "بالاتر از {max} از بزرگ‌ترین افزایشی که این مقایسه برایش ساخته شده جلوتر رفته‌ای. مدل باز هم حسابش می‌کند، اما فقط با این فرض که مشتری‌ها به افزایشِ بزرگ‌تر هم به همان شکلِ خطی واکنش نشان می‌دهند — و چیزی در اینجا نشان نمی‌دهد که چنین باشد. این عدد را تقریبی بدان.",
+     "sheet_link_note": "این لینک عددهایی را که وارد کردی — فروش، هزینه، پول نقد — در خودش دارد. هر کسی که آن را برایش بفرستی می‌تواند ببیندشان. این عددها بعد از علامت # در لینک‌اند، پس باز کردنش آن‌ها را به سرورِ سایت نمی‌فرستد.",
+     "test_band_range": "{band}: حدود {lo} تا {hi} {unit} کمتر",
+     "test_overlap": "این بازه‌ها روی هم می‌افتند، چون مدل هم نمی‌داند مشتری‌ها با چه سرعتی واکنش نشان می‌دهند. نتیجه‌ای که در ناحیهٔ مشترک بیفتد نمی‌تواند این حالت‌ها را از هم جدا کند، و شمارش‌های روزانهٔ کوچک این ناحیه را پهن‌تر هم می‌کند. نتیجهٔ نامشخص یک نتیجهٔ عادی است.",
+     "test_need": "چه چیزی را ثبت کنی: هر روز، تعداد فروش اقلامِ گران‌شده و چند قلمِ مشابه که قیمتشان را عوض نکرده‌ای — یک هفته قبل و دست‌کم دو هفته بعد. روزها و ساعت‌های کار را یکسان نگه دار و از هفته‌های تخفیف، تعطیلات یا کمبود کالا دوری کن.",
+     "test_need_capacity": "چه چیزی را ثبت کنی: تعداد درخواست‌ها برای خدمت‌های گران‌شده و برای بقیهٔ خدمت‌ها — نه نوبت‌ها، چون ظرفیتِ دفترت سقفشان است — دو هفته قبل و دست‌کم چهار هفته بعد. روزها و ساعت‌های کار را یکسان نگه دار و از هفته‌های تخفیف یا تعطیلات دوری کن.",
+     "test_days_l": "چند روز پیش قیمت را بالا بردی؟",
+     "test_n_l": "هر میانگین چند روز را در بر می‌گیرد؟",
+     "test_rep_h": "اقلامی که گران کردی",
+     "test_oth_h": "اقلامِ مشابهی که قیمتشان را عوض نکردی (خیلی توصیه می‌شود)",
+     "test_obefore_l": "{unit} در روز، قبل",
+     "test_oafter_l": "{unit} در روز، در همان روزهای اخیر",
+     "test_c1": "در هر دو دوره روزها و ساعت‌های کار یکسان بود",
+     "test_c2": "در هیچ‌کدام تخفیف، تعطیلی یا مناسبت خاصی نبود",
+     "test_c3": "هیچ قلمی تمام نشد",
+     "test_c4": "هم‌زمان چیز دیگری عوض نشد — قیمت‌های دیگر، منو، کارکنان، تأمین‌کننده",
+     "test_status_supported": "آزمایشت به «{band}» اشاره می‌کند و همهٔ شرط‌ها را داشت. مقایسه حالا با «{band}» اجرا می‌شود.",
+     "test_status_provisional": "آزمایشت به «{band}» اشاره می‌کند، اما همهٔ شرط‌ها برقرار نبود؛ پس مقایسه همان فرض قبلی را نگه می‌دارد. آن را یادداشت نگه دار.",
+     "test_status_inconclusive": "آزمایشت با بیش از یک حالت جور درمی‌آید ({bands})، پس نمی‌تواند آن‌ها را از هم جدا کند و چیزی عوض نشد. این یک نتیجهٔ عادی است، نه شکست.",
+     "test_status_outside": "نتیجه‌ات با هیچ‌کدام از حالت‌هایی که آزموده‌ایم جور درنمی‌آید. احتمالاً در این مدت چیز دیگری هم عوض شده — یا مشتری‌هایت با همهٔ این حالت‌ها فرق دارند. چیزی عوض نشد.",
+     "test_status_legacy": "این نتیجه با نسخهٔ قبلیِ آزمایش ثبت شده که شرط‌ها را بررسی نمی‌کرد. به‌عنوان یادداشت نگه داشته شده و مقایسه از آن استفاده نمی‌کند.",
+     "test_obs": "آنچه دیدی: بعد از {rise} گرانی، فروش روزانهٔ اقلامِ گران‌شده {t} تغییر کرد — مقایسهٔ {n} روزِ اخیر (تا روز {days} بعد از تغییر) با قبل.",
+     "test_obs_ctl": "آنچه دیدی: بعد از {rise} گرانی، فروش روزانهٔ اقلامِ گران‌شده {t} و اقلامِ دست‌نخورده {o} تغییر کرد — مقایسهٔ {n} روزِ اخیر (تا روز {days}) با قبل. نسبت به اقلامِ دست‌نخورده، این یعنی {rel}.",
+     "test_obs_legacy": "آنچه آن موقع ثبت شد: بعد از {rise} گرانی، هر ۱٪ گرانی با حدود {v}٪ فروش کمتر همراه بود.",
+     "test_inf": "آنچه مدل با فرض‌های خودش دربارهٔ سرعت واکنش مشتری‌ها نتیجه می‌گیرد: این با «{bands}» جور است.",
+     "test_inf_none": "آنچه مدل نتیجه می‌گیرد: هیچ‌کدام از حالت‌هایش چنین تغییری نمی‌سازد.",
+     "test_open_noctl": "اقلامِ دست‌نخورده شمرده نشدند، پس نمی‌شود دو هفتهٔ کم‌رونق یا پررونق را از اثر گرانی جدا کرد.",
+     "test_open_checks": "همهٔ شرط‌ها تأیید نشد؛ هر چیزی که فرق داشت ممکن است بخشی از تغییر را توضیح بدهد.",
+     "test_open_short_n": "هر میانگین کمتر از ۷ روز است، پس الگوی روزهای هفته می‌تواند آن را کج کند.",
+     "test_open_short_days": "کمتر از ۱۴ روز گذشته؛ با فرض‌های مدل، بیشترِ واکنش ممکن است هنوز نیامده باشد.",
+     "test_open_capacity": "ظرفیتِ دفترت سقف نوبت‌هاست، پس کم شدنِ نوبت‌ها ممکن است تا وقتی تقاضا زیر ظرفیت نیاید دیده نشود. این آزمایش هیچ‌وقت خودکار مقایسه را عوض نمی‌کند.",
+     "test_open_noise": "این بازه فقط نوسانِ معمولیِ شمارش را حساب می‌کند. هفته‌های واقعی معمولاً بیشتر نوسان دارند، پس با نتیجه‌ای که روشن به نظر می‌رسد هم محتاط باش.",
+     "test_open_items": "این روی چند قلم آزموده شده؛ تعمیمش به کلِ کسب‌وکار هنوز یک قضاوت است.",
+     "test_open_legacy": "آزمایش را با اقلامِ دست‌نخورده و بررسی شرط‌ها دوباره انجام بده تا قابل استفاده شود.",
+     "sheet_meas_supported": "آزمایش خودم به «{band}» اشاره کرد و مقایسهٔ بالا با همان حالت انجام شده.",
+     "sheet_meas_other": "آزمایشی با {rise} گرانی انجام دادم. نتیجه‌اش {state} بود، پس مقایسهٔ بالا به آن تکیه نمی‌کند.",
+     "test_state_supported": "قابل استفاده",
+     "test_state_provisional": "موقت — همهٔ شرط‌ها برقرار نبود",
+     "test_state_inconclusive": "نامشخص — با بیش از یک حالت جور درمی‌آمد",
+     "test_state_outside": "خارج از همهٔ حالت‌های آزموده",
+     "test_state_legacy": "بدون بررسی شرط‌ها ثبت شده",
+     "inputs_nearest": "این مرورگر نتوانست مدل را اجرا کند، پس مقایسه با نزدیک‌ترین عددهایی انجام شده که این صفحه در خود دارد: افزایش {shock} از طرف تأمین‌کننده و سهم اقلام کم‌سودِ {share}.",
+     "scale_million": "میلیون",
+     "scale_billion": "میلیارد",
+     "currency_ask": "عددها را با چه واحدی وارد می‌کنی؟"
+    },
+    "wedge": {
+     "business": "فروشگاه / آنلاین‌شاپ",
+     "business_short": "فروشگاه",
+     "noun": "فروشگاه",
+     "icon": "🛍",
+     "question": "تأمین‌کننده قیمت را بالا برده. من هم قیمت را بالا ببرم؟",
+     "page_title": "تصمیم هزینه در فروشگاه — مقایسهٔ سه انتخاب",
+     "headline": "تأمین‌کننده قیمت را {shock}٪ بالا برده. تو هم بالا ببری؟",
+     "hero_lede": "سه راه واکنش، روی یک مدل از فروشگاه خودت و با همان فرض‌ها مقایسه شده‌اند. تنها چیزی که بینشان فرق می‌کند، خودِ تصمیم است.",
+     "what_changed": "تأمین‌کننده قیمت عمده را {shock}٪ بالا برده.",
+     "unit_word": "سفارش",
+     "unit_word_singular": "سفارش",
+     "cost_word": "قیمت تمام‌شدهٔ کالا",
+     "world_names": {
+      "A": "قیمت را نگه دار",
+      "B": "قیمت را ۸٪ بالا ببر",
+      "C": "قیمت ۴٪ بالا + حذف کالاهای کم‌سود"
+     },
+     "world_short": {
+      "A": "نگه‌داشتن قیمت",
+      "B": "۸٪ بالا",
+      "C": "۴٪ بالا + حذف کم‌سودها"
+     },
+     "world_verdict_labels": {
+      "A": "نگه‌داشتن قیمت",
+      "B": "۸٪ بالا بردن قیمت",
+      "C": "۴٪ بالا بردن قیمت همراه با حذف کالاهای کم‌سود"
+     },
+     "uncertainty_title": "مشتری‌های تو چقدر به قیمت حساس‌اند؟",
+     "unknown_why": "مشتری فروشگاه معمولاً همان جنس را جای دیگری هم پیدا می‌کند، پس بالا بردن قیمت اینجا بیشتر از صنف‌هایی که مشتری برای خودِ تو می‌آید سفارش می‌برد. اینکه چقدر بیشتر، برای فروشگاه تو اندازه‌گیری نشده.",
+     "unknown_how": "قیمت چند قلم را دست‌کم دو هفته بالا ببر و فروششان را با قلم‌هایی که دست نزدی مقایسه کن. عددهای دفعهٔ قبلی که قیمت را بالا بردی هم کمک می‌کند، اگر هم‌زمان چیز دیگری عوض نشده بود.",
+     "sens_help": {
+      "low": "مشتری وفادار، فروشگاهی که جایگزین‌کردنش سخت است، یا رقبایی که آن‌ها هم گران کرده‌اند.",
+      "central": "قضاوت ما: مشتری‌ای که می‌تواند جای دیگری برود، ولی کمی زحمت دارد.",
+      "high": "عدد پژوهشی برای مشتری‌ای که دقیقاً همان جنس را جای دیگر می‌خرد."
+     },
+     "c_card_note": "به این بستگی دارد که حذف کالاهای کم‌سود چقدر از قیمت تمام‌شده کم می‌کند (اینجا حدود {red} واحد) و چند {unit} همراه آن کالاها می‌رود ({loss}٪). هیچ‌کدام از فروشگاه تو اندازه‌گیری نشده.",
+     "chart_lede": "هزینه‌ها حدود سه هفته طول می‌کشد تا بالا بیاید — جنسی که روی قفسه است با قیمت قبلی خریده شده. مشتری‌ها یکی دو هفته‌ای واکنش نشان می‌دهند.",
+     "sources_note": "پژوهشی که نقل شده، جابه‌جا شدن مشتری بین برندهای روی یک قفسه را می‌سنجد، که از عوض‌کردن فروشگاه راحت‌تر است. پس سقف بازه را تعیین می‌کند، نه وسط آن را.",
+     "limits_does_not": [
+      "فروش آیندهٔ تو را پیش‌بینی کند.",
+      "بداند تک‌تک مشتری‌هایت چه می‌کنند.",
+      "رقبا، مارکت‌پلیس‌ها یا رتبهٔ جست‌وجو را مدل کند.",
+      "تبلیغات یا کمپین‌ها را مدل کند."
+     ],
+     "intake": {
+      "monthly_revenue": {
+       "label": "تقریباً ماهی چقدر فروش داری؟",
+       "hint": "یک ماه معمولی، قبل از گران‌شدن.",
+       "placeholder": "۹۲٬۰۰۰"
+      },
+      "daily_orders": {
+       "label": "روزی تقریباً چند سفارش داری؟",
+       "hint": "حضوری و آنلاین با هم.",
+       "placeholder": "۹۰"
+      },
+      "monthly_cogs": {
+       "label": "خودِ جنس ماهی چقدر برایت خرج برمی‌دارد؟",
+       "hint": "چیزی که بابت جنسی که می‌فروشی به تأمین‌کننده می‌دهی. نه حقوق، نه اجاره.",
+       "placeholder": "۵۳٬۳۶۰"
+      },
+      "monthly_fixed_costs": {
+       "label": "اجاره و حقوق و قبض‌ها ماهی چقدر است؟",
+       "hint": "هر چیزی که در ۹۰ روز آینده تغییر نمی‌کند.",
+       "placeholder": "۳۳٬۰۰۰"
+      },
+      "cash_on_hand": {
+       "label": "الان چقدر پول نقد داری؟",
+       "hint": "چیزی که همین حالا می‌توانی خرج کنی.",
+       "placeholder": "۲۶٬۰۰۰"
+      },
+      "supplier_increase_pct": {
+       "label": "تأمین‌کننده چقدر قیمت را بالا برده؟",
+       "hint": "به‌صورت درصدی از چیزی که بابت جنس می‌دهی.",
+       "placeholder": "۲۵"
+      },
+      "low_margin_share_pct": {
+       "label": "چند درصد سفارش‌ها کالاهایی است که سود کمی دارد؟",
+       "hint": "تقریبی. حدس هم کافی است — به‌عنوان فرض بررسی می‌شود.",
+       "placeholder": "۲۰"
+      },
+      "name": {
+       "label": "اسم فروشگاهت چیست؟",
+       "hint": "فقط روی همین صفحه استفاده می‌شود.",
+       "placeholder": "فروشگاه نه"
+      }
+     },
+     "sweep_labels": {
+      "price_sensitivity": "حساسیت مشتری به قیمت",
+      "cogs_pass_through": "چقدر از گرانی به هزینه‌ات می‌رسد",
+      "supplier_increase_pct": "گرانی تأمین‌کننده واقعاً چقدر است",
+      "reduction_points": "حذف کالاهای کم‌سود واقعاً چقدر صرفه‌جویی دارد",
+      "demand_adjustment_speed": "سرعت واکنش مشتری"
+     },
+     "assumptions": {
+      "monthly_revenue": {
+       "label": "فروش ماهانهٔ فعلی"
+      },
+      "daily_orders": {
+       "label": "فروش در روز"
+      },
+      "monthly_cogs": {
+       "label": "بهای تمام‌شدهٔ کالای ماهانه"
+      },
+      "monthly_fixed_costs": {
+       "label": "هزینه‌های ثابت ماهانه (با حقوق)"
+      },
+      "cash_on_hand": {
+       "label": "پول نقد موجود امروز"
+      },
+      "supplier_increase_pct": {
+       "label": "میزان گرانی تأمین‌کننده"
+      },
+      "low_margin_share_pct": {
+       "label": "سهم فروش‌های کم‌سود"
+      },
+      "price_sensitivity": {
+       "label": "حساسیت مشتری به قیمت"
+      },
+      "cogs_pass_through": {
+       "label": "چقدر از گرانی به بهای تمام‌شده‌ات می‌رسد"
+      },
+      "inventory_lag": {
+       "label": "فاصله تا اثر گرانی روی هزینه‌ات",
+       "text": "حدود ۲۰ روز (موجودی انبار)"
+      },
+      "demand_adjustment_speed": {
+       "label": "سرعت واکنش مشتری به تغییر قیمت",
+       "map": {
+        "slow": "حدود دو هفته و نیم تا نصف واکنش",
+        "central": "حدود هشت روز تا نصف واکنش",
+        "fast": "حدود چهار روز تا نصف واکنش"
+       }
+      },
+      "trim_effectiveness": {
+       "label": "صرفه‌جویی از کنارگذاشتن اقلام کم‌سود",
+       "text": "{reduction:g} واحد کاهش در میانگین بهای تمام‌شده ({trim_effectiveness:.3f} به ازای هر واحد سهم کم‌سود)"
+      },
+      "trim_demand_cost": {
+       "label": "فروش‌های از‌دست‌رفته با کنارگذاشتن آن اقلام",
+       "text": "{demand_cost:.1f}٪ از فروش‌ها"
+      },
+      "price_rises": {
+       "label": "افزایش قیمت‌های مقایسه‌شده",
+       "text": "ب: +۸٪   پ: +۴٪"
+      },
+      "horizon": {
+       "label": "بازهٔ مقایسه",
+       "text": "۹۰ روز"
+      },
+      "average_order_value": {
+       "label": "میانگین مبلغ هر خرید"
+      },
+      "cogs_per_order": {
+       "label": "بهای تمام‌شدهٔ هر خرید"
+      }
+     },
+     "chart_turn": "موجودی قدیمی حدوداً اینجا تمام می‌شود",
+     "problem": "تأمین‌کننده قیمت رو بالا برده",
+     "flow_q": {
+      "shock": "تأمین‌کننده چقدر گرون کرده؟",
+      "sales": "فروشگاهت چقدر کار می‌کنه؟",
+      "costs": "ماهی چقدر خرج داری؟",
+      "cash": "چقدر پول نقد برای کسب‌وکار کنار گذاشتی؟",
+      "mix": "چند درصد فروش‌ها کم‌سودن؟"
+     },
+     "flow_choices": {
+      "shock": {
+       "15": "۱۵٪",
+       "25": "۲۵٪",
+       "35": "۳۵٪"
+      },
+      "mix": {
+       "10": "کم — حدود ۱۰٪",
+       "20": "متوسط — حدود ۲۰٪",
+       "30": "زیاد — حدود ۳۰٪"
+      }
+     },
+     "tradeoff": {
+      "A": {
+       "good": "قیمت‌هایت دست‌نخورده می‌ماند",
+       "bad": "اما تمام گرانی را خودت می‌دهی"
+      },
+      "B": {
+       "good": "بیشترِ گرانی را رد می‌کنی",
+       "bad": "ولی فروش‌ها حدود {pct} کم می‌شوند"
+      },
+      "C": {
+       "good": "هم قیمت کمتر بالا می‌رود هم خرجت پایین می‌آید",
+       "bad": "اما به این بستگی دارد که حذف کالاهای کم‌سود واقعاً چقدر صرفه دارد"
+      }
+     },
+     "experiment": "قیمت ۳ تا ۵ کالای پرفروش را {rise} بالا ببر و چیز دیگری را عوض نکن. هر روز بشمار از آن‌ها چندتا فروختی — و از چند کالای مشابه که قیمتشان را دست نزدی چندتا. یک هفته قبل و دست‌کم دو هفته بعد بشمار.",
+     "own_reduce": "حذف کالاهای کم‌سود"
+    },
+    "all_wedges": {
+     "cafe": {
+      "business": "کافه / رستوران",
+      "business_short": "کافه",
+      "icon": "☕"
+     },
+     "shop": {
+      "business": "فروشگاه / آنلاین‌شاپ",
+      "business_short": "فروشگاه",
+      "icon": "🛍"
+     },
+     "salon": {
+      "business": "سالن / کسب‌وکار خدماتی",
+      "business_short": "سالن",
+      "icon": "✂"
+     }
+    }
+   }
+  }
+ },
+ "module_id": "shop_cost_shock_v1",
+ "module_semantic_hash": "a6b32acba109259c8af4a44304b80dbfb866355ed879fcd366bcd1cf2080f7fe",
+ "shared_fingerprint": "0f9c06c5cb5d23000b69eb23961c8dd84223f1104428225de006ef25baf50bb5",
+ "canonical": {
+  "slice": "{\"assumptions\": [{\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"retail_price\", \"kind\": \"variable_dynamics\", \"mechanism\": \"Average selling price relative to before the increase. Moved only by the decision being tested; nothing in the module moves it on its own.\", \"sourced\": false, \"statement\": \"retail_price baseline 100.0 index (100 = pre-shock), closes 100% of the gap to causal pressure per turn\", \"status\": \"user_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"supplier_cost\", \"kind\": \"variable_dynamics\", \"mechanism\": \"What the shop pays its suppliers, relative to before the increase. Held at the shock level by the injected event; it is an input to the world, not something the shop's own decisions move.\", \"sourced\": false, \"statement\": \"supplier_cost baseline 100.0 index (100 = pre-shock), closes 100% of the gap to causal pressure per turn\", \"status\": \"user_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 1.9000000000000001, \"id\": \"retail_price->demand\", \"kind\": \"causal_edge\", \"mechanism\": \"\", \"sourced\": true, \"statement\": \"retail_price affects demand (negative, effect 0.7-2.6, lag 0-0 days)\", \"status\": \"expert_assumption\"}, {\"confidence\": \"medium\", \"effect_span\": 0.30000000000000004, \"id\": \"supplier_cost->unit_cost\", \"kind\": \"causal_edge\", \"mechanism\": \"\", \"sourced\": false, \"statement\": \"supplier_cost affects unit_cost (positive, effect 0.7-1.0, lag 10-30 days)\", \"status\": \"expert_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"cogs_pass_through\", \"kind\": \"assumption_axis\", \"mechanism\": \"Low: you absorb some through substitution, renegotiation or fixed-price contracts (0.70). Central and high: all of it (1.00).\", \"sourced\": false, \"statement\": \"How much of the supplier increase reaches your cost of goods?: swept over low, central, high\", \"status\": \"expert_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"demand\", \"kind\": \"variable_dynamics\", \"mechanism\": \"Daily orders relative to before the increase. Responds to the retail price through the elasticity edge, gradually: response 0.08/day means customers reach half of their full reaction in about eight days. Retail shoppers are taken to notice a price change somewhat faster than cafe customers because prices are displayed per item and are easy to compare; that speed is an assumption and is swept.\", \"sourced\": false, \"statement\": \"demand baseline 100.0 index (100 = pre-shock daily orders), closes 8% of the gap to causal pressure per turn\", \"status\": \"expert_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"demand_adjustment_speed\", \"kind\": \"assumption_axis\", \"mechanism\": \"Multiplies the demand response rate. Slow: half-reaction in about two and a half weeks. Central: about eight days. Fast: about four days.\", \"sourced\": false, \"statement\": \"How quickly do customers react?: swept over slow, central, fast\", \"status\": \"expert_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"price_sensitivity\", \"kind\": \"assumption_axis\", \"mechanism\": \"The single assumption most likely to change the decision. Low 0.70: loyal customers, an inconvenient-to-replace shop, or competitors raising prices too. Central 1.30: our judgement for a small shop whose customers could shop elsewhere with some effort. High 2.60: the brand-level meta-analytic mean, i.e. customers who can buy the identical item elsewhere with no friction.\", \"sourced\": false, \"statement\": \"How price-sensitive are your customers?: swept over low, central, high\", \"status\": \"expert_assumption\"}, {\"confidence\": \"low\", \"effect_span\": 0.0, \"id\": \"unit_cost\", \"kind\": \"variable_dynamics\", \"mechanism\": \"Average cost of the goods in a typical order. Follows the supplier cost after an inventory delay: stock already on the shelf was bought at the old price, so the increase arrives only as that stock is replaced.\", \"sourced\": false, \"statement\": \"unit_cost baseline 100.0 index (100 = pre-shock), closes 50% of the gap to causal pressure per turn\", \"status\": \"expert_assumption\"}], \"axes\": [{\"applies_to\": [\"retail_price->demand\"], \"description\": \"The single assumption most likely to change the decision. Low 0.70: loyal customers, an inconvenient-to-replace shop, or competitors raising prices too. Central 1.30: our judgement for a small shop whose customers could shop elsewhere with some effort. High 2.60: the brand-level meta-analytic mean, i.e. customers who can buy the identical item elsewhere with no friction.\", \"id\": \"price_sensitivity\", \"label\": \"How price-sensitive are your customers?\", \"mapping\": {\"central\": {\"effect\": \"central\"}, \"high\": {\"effect\": \"high\"}, \"low\": {\"effect\": \"low\"}}, \"settings\": [\"low\", \"central\", \"high\"], \"status\": \"expert_assumption\"}, {\"applies_to\": [\"supplier_cost->unit_cost\"], \"description\": \"Low: you absorb some through substitution, renegotiation or fixed-price contracts (0.70). Central and high: all of it (1.00).\", \"id\": \"cogs_pass_through\", \"label\": \"How much of the supplier increase reaches your cost of goods?\", \"mapping\": {\"central\": {\"effect\": \"central\"}, \"high\": {\"effect\": \"high\"}, \"low\": {\"effect\": \"low\"}}, \"settings\": [\"low\", \"central\", \"high\"], \"status\": \"expert_assumption\"}, {\"applies_to\": [\"demand\"], \"description\": \"Multiplies the demand response rate. Slow: half-reaction in about two and a half weeks. Central: about eight days. Fast: about four days.\", \"id\": \"demand_adjustment_speed\", \"label\": \"How quickly do customers react?\", \"mapping\": {\"central\": {\"response_multiplier\": 1.0}, \"fast\": {\"response_multiplier\": 2.0}, \"slow\": {\"response_multiplier\": 0.5}}, \"settings\": [\"slow\", \"central\", \"fast\"], \"status\": \"expert_assumption\"}], \"coverage\": {\"assumption_share\": 1.0, \"by_group\": {\"ai_hypothesis\": 0, \"assumption\": 2, \"literature_backed\": 0, \"observed_empirical\": 0}, \"by_status\": {\"expert_assumption\": 2}, \"disclaimer\": \"Coverage counts how many causal mechanisms carry evidence. It is not a probability that the simulated trajectories are correct.\", \"edge_count\": 2, \"group_labels\": {\"ai_hypothesis\": \"AI hypothesis\", \"assumption\": \"Expert or user assumption\", \"literature_backed\": \"Literature-backed / historically calibrated\", \"observed_empirical\": \"Observed / empirical\"}, \"shares\": {\"ai_hypothesis\": 0.0, \"assumption\": 1.0, \"literature_backed\": 0.0, \"observed_empirical\": 0.0}, \"sourced_edges\": 1, \"variable_count\": 4, \"variables_by_status\": {\"expert_assumption\": 2, \"user_assumption\": 2}, \"weakly_evidenced\": true}, \"edges\": [{\"axis\": \"cogs_pass_through\", \"calibration\": {}, \"confidence\": \"medium\", \"effect\": {\"central\": 1.0, \"high\": 1.0, \"low\": 0.7}, \"evidence\": [], \"geography\": [\"global\"], \"lag\": {\"max\": 30, \"min\": 10, \"unit\": \"days\"}, \"mechanism\": \"\", \"mechanism_type\": \"behavioural\", \"polarity\": \"positive\", \"source\": \"supplier_cost\", \"status\": \"expert_assumption\", \"target\": \"unit_cost\"}, {\"axis\": \"price_sensitivity\", \"calibration\": {}, \"confidence\": \"low\", \"effect\": {\"central\": 1.3, \"high\": 2.6, \"low\": 0.7}, \"evidence\": [{\"note\": \"Mean BRAND-level price elasticity -2.62 across 1,851 estimates from 81 studies, predominantly packaged consumer goods in retail scanner data. Supports the HIGH setting: the case where the shop's customers can buy an identical item elsewhere, which is what brand-level switching inside a category measures. It does NOT measure what happens when one shop raises all of its prices at once, which is harder for a customer to escape.\", \"reference\": \"Bijmolt THA, van Heerde HJ, Pieters RGM. New empirical generalizations on the determinants of price elasticity. J Marketing Res. 2005;42(2):141-156.\", \"type\": \"empirical_study\", \"year\": 2005}, {\"note\": \"Mean price elasticity -1.76 across 367 estimates from roughly 220 brands and markets. A second brand-level reference point, quoted so the upper end of the range does not rest on a single meta-analysis. Same limitation: selective (brand) demand, largely goods, not store-level.\", \"reference\": \"Tellis GJ. The price elasticity of selective demand: a meta-analysis of econometric models of sales. J Marketing Res. 1988;25(4):331-341.\", \"type\": \"empirical_study\", \"year\": 1988}], \"geography\": [\"global\"], \"lag\": {\"max\": 0, \"min\": 0, \"unit\": \"days\"}, \"mechanism\": \"\", \"mechanism_type\": \"behavioural\", \"polarity\": \"negative\", \"source\": \"retail_price\", \"status\": \"expert_assumption\", \"target\": \"demand\"}], \"excluded_systems\": [\"small_business/cafe_cost_shock_v1\", \"small_business/salon_capacity_pricing_v1\", \"supply_chain/port_disruption\", \"supply_chain/port_disruption_h1_queue_experimental\"], \"id\": \"shop_cost_shock_v1\", \"included_systems\": [\"small_business/shop_cost_shock_v1\"], \"interventions\": [{\"default_duration\": 90, \"default_magnitude\": 8.0, \"default_start_turn\": 1, \"description\": \"Adds the given number of percentage points to the average retail price for the whole horizon. Magnitude is the price increase in percent.\", \"effects_per_unit\": {\"retail_price\": 1.0}, \"id\": \"raise_prices\", \"label\": \"Raise retail prices\", \"magnitude_label\": \"price increase, percent\", \"module\": \"shop_cost_shock_v1\", \"status\": \"user_assumption\"}, {\"default_duration\": 90, \"default_magnitude\": 7.5, \"default_start_turn\": 1, \"description\": \"Lowers average cost of goods per order by the given number of percentage points of the pre-shock cost, by shifting the mix away from lines that earn little, and costs a share of orders from customers who came for those lines. Magnitude is the cost reduction in percentage points; the demand cost is a fixed ratio of it (expert assumption, see the evidence registry).\", \"effects_per_unit\": {\"demand\": -0.45, \"unit_cost\": -1.0}, \"id\": \"trim_low_margin_range\", \"label\": \"Stop restocking low-margin lines\", \"magnitude_label\": \"cost-of-goods reduction, percentage points\", \"module\": \"shop_cost_shock_v1\", \"status\": \"expert_assumption\"}], \"missing_evidence\": [{\"confidence\": \"medium\", \"edge\": \"supplier_cost->unit_cost\", \"effect_span\": 0.30000000000000004, \"mechanism\": \"\", \"needs\": \"empirical estimate of effect size and lag\", \"source\": \"supplier_cost\", \"status\": \"expert_assumption\", \"target\": \"unit_cost\"}], \"question\": \"Supplier costs rose. Which response?\", \"time_unit\": \"days\", \"variables\": [{\"axis\": null, \"baseline\": 100.0, \"description\": \"What the shop pays its suppliers, relative to before the increase. Held at the shock level by the injected event; it is an input to the world, not something the shop's own decisions move.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 1.0, \"stock\": {}}, \"id\": \"supplier_cost\", \"label\": \"Supplier / wholesale cost\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Supplier invoices.\", \"range\": {\"max\": 300.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"user_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": \"cogs_pass_through\", \"baseline\": 100.0, \"description\": \"Average cost of the goods in a typical order. Follows the supplier cost after an inventory delay: stock already on the shelf was bought at the old price, so the increase arrives only as that stock is replaced.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 0.5, \"stock\": {}}, \"id\": \"unit_cost\", \"label\": \"Cost of goods per order\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Cost of goods sold divided by orders, from the books.\", \"range\": {\"max\": 300.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"expert_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": null, \"baseline\": 100.0, \"description\": \"Average selling price relative to before the increase. Moved only by the decision being tested; nothing in the module moves it on its own.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 1.0, \"stock\": {}}, \"id\": \"retail_price\", \"label\": \"Retail price\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"The shop's own price list.\", \"range\": {\"max\": 200.0, \"min\": 50.0}, \"scale\": 100.0, \"status\": \"user_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": \"demand_adjustment_speed\", \"baseline\": 100.0, \"description\": \"Daily orders relative to before the increase. Responds to the retail price through the elasticity edge, gradually: response 0.08/day means customers reach half of their full reaction in about eight days. Retail shoppers are taken to notice a price change somewhat faster than cafe customers because prices are displayed per item and are easy to compare; that speed is an assumption and is swept.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 0.08, \"stock\": {}}, \"id\": \"demand\", \"label\": \"Customer orders\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Daily order count from the till or the store back-end.\", \"range\": {\"max\": 200.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"expert_assumption\", \"unit\": \"index (100 = pre-shock daily orders)\"}]}",
+  "trajectory_slice": "[{\"axis\": null, \"baseline\": 100.0, \"description\": \"What the shop pays its suppliers, relative to before the increase. Held at the shock level by the injected event; it is an input to the world, not something the shop's own decisions move.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 1.0, \"stock\": {}}, \"id\": \"supplier_cost\", \"label\": \"Supplier / wholesale cost\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Supplier invoices.\", \"range\": {\"max\": 300.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"user_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": \"cogs_pass_through\", \"baseline\": 100.0, \"description\": \"Average cost of the goods in a typical order. Follows the supplier cost after an inventory delay: stock already on the shelf was bought at the old price, so the increase arrives only as that stock is replaced.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 0.5, \"stock\": {}}, \"id\": \"unit_cost\", \"label\": \"Cost of goods per order\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Cost of goods sold divided by orders, from the books.\", \"range\": {\"max\": 300.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"expert_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": null, \"baseline\": 100.0, \"description\": \"Average selling price relative to before the increase. Moved only by the decision being tested; nothing in the module moves it on its own.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 1.0, \"stock\": {}}, \"id\": \"retail_price\", \"label\": \"Retail price\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"The shop's own price list.\", \"range\": {\"max\": 200.0, \"min\": 50.0}, \"scale\": 100.0, \"status\": \"user_assumption\", \"unit\": \"index (100 = pre-shock)\"}, {\"axis\": \"demand_adjustment_speed\", \"baseline\": 100.0, \"description\": \"Daily orders relative to before the increase. Responds to the retail price through the elasticity edge, gradually: response 0.08/day means customers reach half of their full reaction in about eight days. Retail shoppers are taken to notice a price change somewhat faster than cafe customers because prices are displayed per item and are easy to compare; that speed is an assumption and is swept.\", \"dynamics\": {\"kind\": \"relaxation\", \"response\": 0.08, \"stock\": {}}, \"id\": \"demand\", \"label\": \"Customer orders\", \"observability\": \"measured\", \"observability_class\": \"observable\", \"observability_note\": \"Daily order count from the till or the store back-end.\", \"range\": {\"max\": 200.0, \"min\": 0.0}, \"scale\": 100.0, \"status\": \"expert_assumption\", \"unit\": \"index (100 = pre-shock daily orders)\"}, {\"axis\": \"cogs_pass_through\", \"calibration\": {}, \"confidence\": \"medium\", \"effect\": {\"central\": 1.0, \"high\": 1.0, \"low\": 0.7}, \"evidence\": [], \"geography\": [\"global\"], \"lag\": {\"max\": 30, \"min\": 10, \"unit\": \"days\"}, \"mechanism\": \"\", \"mechanism_type\": \"behavioural\", \"polarity\": \"positive\", \"source\": \"supplier_cost\", \"status\": \"expert_assumption\", \"target\": \"unit_cost\"}, {\"axis\": \"price_sensitivity\", \"calibration\": {}, \"confidence\": \"low\", \"effect\": {\"central\": 1.3, \"high\": 2.6, \"low\": 0.7}, \"evidence\": [{\"note\": \"Mean BRAND-level price elasticity -2.62 across 1,851 estimates from 81 studies, predominantly packaged consumer goods in retail scanner data. Supports the HIGH setting: the case where the shop's customers can buy an identical item elsewhere, which is what brand-level switching inside a category measures. It does NOT measure what happens when one shop raises all of its prices at once, which is harder for a customer to escape.\", \"reference\": \"Bijmolt THA, van Heerde HJ, Pieters RGM. New empirical generalizations on the determinants of price elasticity. J Marketing Res. 2005;42(2):141-156.\", \"type\": \"empirical_study\", \"year\": 2005}, {\"note\": \"Mean price elasticity -1.76 across 367 estimates from roughly 220 brands and markets. A second brand-level reference point, quoted so the upper end of the range does not rest on a single meta-analysis. Same limitation: selective (brand) demand, largely goods, not store-level.\", \"reference\": \"Tellis GJ. The price elasticity of selective demand: a meta-analysis of econometric models of sales. J Marketing Res. 1988;25(4):331-341.\", \"type\": \"empirical_study\", \"year\": 1988}], \"geography\": [\"global\"], \"lag\": {\"max\": 0, \"min\": 0, \"unit\": \"days\"}, \"mechanism\": \"\", \"mechanism_type\": \"behavioural\", \"polarity\": \"negative\", \"source\": \"retail_price\", \"status\": \"expert_assumption\", \"target\": \"demand\"}, {\"applies_to\": [\"retail_price->demand\"], \"description\": \"The single assumption most likely to change the decision. Low 0.70: loyal customers, an inconvenient-to-replace shop, or competitors raising prices too. Central 1.30: our judgement for a small shop whose customers could shop elsewhere with some effort. High 2.60: the brand-level meta-analytic mean, i.e. customers who can buy the identical item elsewhere with no friction.\", \"id\": \"price_sensitivity\", \"label\": \"How price-sensitive are your customers?\", \"mapping\": {\"central\": {\"effect\": \"central\"}, \"high\": {\"effect\": \"high\"}, \"low\": {\"effect\": \"low\"}}, \"settings\": [\"low\", \"central\", \"high\"], \"status\": \"expert_assumption\"}, {\"applies_to\": [\"supplier_cost->unit_cost\"], \"description\": \"Low: you absorb some through substitution, renegotiation or fixed-price contracts (0.70). Central and high: all of it (1.00).\", \"id\": \"cogs_pass_through\", \"label\": \"How much of the supplier increase reaches your cost of goods?\", \"mapping\": {\"central\": {\"effect\": \"central\"}, \"high\": {\"effect\": \"high\"}, \"low\": {\"effect\": \"low\"}}, \"settings\": [\"low\", \"central\", \"high\"], \"status\": \"expert_assumption\"}, {\"applies_to\": [\"demand\"], \"description\": \"Multiplies the demand response rate. Slow: half-reaction in about two and a half weeks. Central: about eight days. Fast: about four days.\", \"id\": \"demand_adjustment_speed\", \"label\": \"How quickly do customers react?\", \"mapping\": {\"central\": {\"response_multiplier\": 1.0}, \"fast\": {\"response_multiplier\": 2.0}, \"slow\": {\"response_multiplier\": 0.5}}, \"settings\": [\"slow\", \"central\", \"fast\"], \"status\": \"expert_assumption\"}]",
+  "config": "{\"axis_settings\": {\"cogs_pass_through\": \"central\", \"demand_adjustment_speed\": \"central\", \"price_sensitivity\": \"central\"}, \"label\": \"shop\", \"lag_setting\": \"central\", \"seed\": 0, \"turns\": 90}"
+ },
+ "slice": {
+  "variables": [
+   {
+    "id": "supplier_cost",
+    "label": "Supplier / wholesale cost",
+    "unit": "index (100 = pre-shock)",
+    "baseline": 100.0,
+    "scale": 100.0,
+    "min": 0.0,
+    "max": 300.0,
+    "response": 1.0,
+    "kind": "relaxation",
+    "axis": null
+   },
+   {
+    "id": "unit_cost",
+    "label": "Cost of goods per order",
+    "unit": "index (100 = pre-shock)",
+    "baseline": 100.0,
+    "scale": 100.0,
+    "min": 0.0,
+    "max": 300.0,
+    "response": 0.5,
+    "kind": "relaxation",
+    "axis": "cogs_pass_through"
+   },
+   {
+    "id": "retail_price",
+    "label": "Retail price",
+    "unit": "index (100 = pre-shock)",
+    "baseline": 100.0,
+    "scale": 100.0,
+    "min": 50.0,
+    "max": 200.0,
+    "response": 1.0,
+    "kind": "relaxation",
+    "axis": null
+   },
+   {
+    "id": "demand",
+    "label": "Customer orders",
+    "unit": "index (100 = pre-shock daily orders)",
+    "baseline": 100.0,
+    "scale": 100.0,
+    "min": 0.0,
+    "max": 200.0,
+    "response": 0.08,
+    "kind": "relaxation",
+    "axis": "demand_adjustment_speed"
+   }
+  ],
+  "edges": [
+   {
+    "id": "supplier_cost->unit_cost",
+    "source": "supplier_cost",
+    "target": "unit_cost",
+    "polarity": "positive",
+    "mechanism_type": "behavioural",
+    "axis": "cogs_pass_through",
+    "effect": {
+     "low": 0.7,
+     "central": 1.0,
+     "high": 1.0
+    },
+    "lag": 20
+   },
+   {
+    "id": "retail_price->demand",
+    "source": "retail_price",
+    "target": "demand",
+    "polarity": "negative",
+    "mechanism_type": "behavioural",
+    "axis": "price_sensitivity",
+    "effect": {
+     "low": 0.7,
+     "central": 1.3,
+     "high": 2.6
+    },
+    "lag": 0
+   }
+  ],
+  "axes": [
+   {
+    "id": "price_sensitivity",
+    "settings": [
+     "low",
+     "central",
+     "high"
+    ],
+    "applies_to": [
+     "retail_price->demand"
+    ],
+    "mapping": {
+     "low": {
+      "effect": "low"
+     },
+     "central": {
+      "effect": "central"
+     },
+     "high": {
+      "effect": "high"
+     }
+    },
+    "default_setting": "central"
+   },
+   {
+    "id": "cogs_pass_through",
+    "settings": [
+     "low",
+     "central",
+     "high"
+    ],
+    "applies_to": [
+     "supplier_cost->unit_cost"
+    ],
+    "mapping": {
+     "low": {
+      "effect": "low"
+     },
+     "central": {
+      "effect": "central"
+     },
+     "high": {
+      "effect": "high"
+     }
+    },
+    "default_setting": "central"
+   },
+   {
+    "id": "demand_adjustment_speed",
+    "settings": [
+     "slow",
+     "central",
+     "fast"
+    ],
+    "applies_to": [
+     "demand"
+    ],
+    "mapping": {
+     "slow": {
+      "response_multiplier": 0.5
+     },
+     "central": {
+      "response_multiplier": 1.0
+     },
+     "fast": {
+      "response_multiplier": 2.0
+     }
+    },
+    "default_setting": "central"
+   }
+  ],
+  "interventions": [
+   {
+    "id": "raise_prices",
+    "label": "Raise retail prices",
+    "description": "Adds the given number of percentage points to the average retail price for the whole horizon. Magnitude is the price increase in percent.",
+    "status": "user_assumption",
+    "magnitude_label": "price increase, percent",
+    "default_magnitude": 8.0,
+    "default_start_turn": 1,
+    "default_duration": 90,
+    "effects_per_unit": {
+     "retail_price": 1.0
+    },
+    "module": "shop_cost_shock_v1"
+   },
+   {
+    "id": "trim_low_margin_range",
+    "label": "Stop restocking low-margin lines",
+    "description": "Lowers average cost of goods per order by the given number of percentage points of the pre-shock cost, by shifting the mix away from lines that earn little, and costs a share of orders from customers who came for those lines. Magnitude is the cost reduction in percentage points; the demand cost is a fixed ratio of it (expert assumption, see the evidence registry).",
+    "status": "expert_assumption",
+    "magnitude_label": "cost-of-goods reduction, percentage points",
+    "default_magnitude": 7.5,
+    "default_start_turn": 1,
+    "default_duration": 90,
+    "effects_per_unit": {
+     "unit_cost": -1.0,
+     "demand": -0.45
+    },
+    "module": "shop_cost_shock_v1"
+   }
+  ]
+ },
+ "roles": {
+  "demand_var": "demand",
+  "price_var": "retail_price",
+  "unit_cost_var": "unit_cost",
+  "index_vars": [
+   "supplier_cost",
+   "unit_cost",
+   "retail_price",
+   "demand"
+  ]
+ },
+ "defaults": {
+  "horizon_days": 90,
+  "days_per_month": 30.416666666666668,
+  "axis_settings": {
+   "price_sensitivity": "central",
+   "cogs_pass_through": "central",
+   "demand_adjustment_speed": "central"
+  },
+  "knobs": {
+   "trim_effectiveness": 0.375
+  },
+  "price_rise_b": 8.0,
+  "price_rise_c": 4.0
+ },
+ "worlds": {
+  "event": {
+   "id": "supplier_cost_increase",
+   "target": "supplier_cost",
+   "magnitude_field": "supplier_increase_pct",
+   "label": "Supplier prices +{shock}%",
+   "description": "Wholesale / supplier prices rise and stay at the new level for 90 days."
+  },
+  "reduction": {
+   "share_field": "low_margin_share_pct",
+   "knob": "trim_effectiveness"
+  },
+  "levers": {
+   "price": "raise_prices",
+   "reduce": "trim_low_margin_range"
+  },
+  "options": [
+   {
+    "id": "A",
+    "label": "Hold prices",
+    "headline": "Keep your prices where they are and absorb the whole increase.",
+    "price_rise_pct": 0.0,
+    "uses_reduction": false
+   },
+   {
+    "id": "B",
+    "label": "Raise prices 8%",
+    "headline": "Pass most of the increase on with a 8% rise across the range.",
+    "price_rise_pct": 8.0,
+    "uses_reduction": false
+   },
+   {
+    "id": "C",
+    "label": "Raise prices 4% + stop restocking low-margin lines",
+    "headline": "A smaller 4% rise, plus letting the lines that earn least sell through and not reordering them.",
+    "price_rise_pct": 4.0,
+    "uses_reduction": true
+   }
+  ]
+ },
+ "capacity": null,
+ "registry_spec": [
+  {
+   "key": "monthly_revenue",
+   "label": "Current monthly sales",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money",
+    "field": "monthly_revenue"
+   }
+  },
+  {
+   "key": "daily_orders",
+   "label": "Orders per day",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money",
+    "field": "daily_orders"
+   }
+  },
+  {
+   "key": "monthly_cogs",
+   "label": "Monthly cost of goods",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money_with_pct",
+    "field": "monthly_cogs",
+    "pct_of": "cogs_pct"
+   }
+  },
+  {
+   "key": "monthly_fixed_costs",
+   "label": "Monthly fixed costs (incl. wages)",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money",
+    "field": "monthly_fixed_costs"
+   },
+   "note": "Treated as unchanged over 90 days."
+  },
+  {
+   "key": "cash_on_hand",
+   "label": "Cash available today",
+   "klass": "Customer input",
+   "value": {
+    "kind": "money",
+    "field": "cash_on_hand"
+   }
+  },
+  {
+   "key": "supplier_increase_pct",
+   "label": "Supplier cost increase",
+   "klass": "Customer input",
+   "swept": true,
+   "value": {
+    "kind": "g",
+    "field": "supplier_increase_pct",
+    "prefix": "+",
+    "suffix": "%"
+   },
+   "note": "Tested at 15%, 25% and 35%."
+  },
+  {
+   "key": "low_margin_share_pct",
+   "label": "Share of orders on low-margin lines",
+   "klass": "Customer input",
+   "value": {
+    "kind": "g",
+    "field": "low_margin_share_pct",
+    "suffix": "%"
+   }
+  },
+  {
+   "key": "price_sensitivity",
+   "label": "Price sensitivity of customers",
+   "klass": "Assumption",
+   "swept": true,
+   "elasticity": true,
+   "value": {
+    "kind": "axis",
+    "axis": "price_sensitivity",
+    "map": {
+     "low": "0.70",
+     "central": "1.30",
+     "high": "2.60"
+    }
+   },
+   "source": "bijmolt2005 (brand-level mean); tellis1988 (second reference point)",
+   "assumption_source": "No study supports this setting. bijmolt2005 and tellis1988 measure brand switching inside a shop and set the top of the range, not its middle.",
+   "note": "A 1% price rise eventually reduces orders by this percentage. Low 0.70 / central 1.30 / high 2.60. Only the high setting is a published figure — the brand-level meta-analytic mean, i.e. customers who can buy the identical item elsewhere. The central and low settings are our judgement, set below brand level because changing shop is harder than changing brand. This is the assumption most likely to change the decision."
+  },
+  {
+   "key": "cogs_pass_through",
+   "label": "Share of supplier increase reaching your cost of goods",
+   "klass": "Assumption",
+   "swept": true,
+   "value": {
+    "kind": "axis",
+    "axis": "cogs_pass_through",
+    "map": {
+     "low": "70%",
+     "central": "100%",
+     "high": "100%"
+    }
+   },
+   "note": "100% by definition unless you can substitute cheaper lines, renegotiate, or hold fixed-price contracts (tested at 70%)."
+  },
+  {
+   "key": "inventory_lag",
+   "label": "Delay before higher supplier prices reach your costs",
+   "klass": "Assumption",
+   "value": {
+    "kind": "literal",
+    "text": "about 20 days (stock on hand)"
+   },
+   "note": "Stock already on the shelf was bought at the old price. Tested over a 10-30 day range; the comparison uses the midpoint. A shop holding more stock than that sees the increase later than this shows."
+  },
+  {
+   "key": "demand_adjustment_speed",
+   "label": "How quickly customers react to a price change",
+   "klass": "Assumption",
+   "swept": true,
+   "value": {
+    "kind": "axis",
+    "axis": "demand_adjustment_speed",
+    "map": {
+     "slow": "about two and a half weeks to half-react",
+     "central": "about eight days to half-react",
+     "fast": "about four days to half-react"
+    }
+   }
+  },
+  {
+   "key": "trim_effectiveness",
+   "label": "Cost saving from dropping low-margin lines",
+   "klass": "Assumption",
+   "swept": true,
+   "value": {
+    "kind": "template",
+    "text": "{reduction:g} points off average cost of goods ({trim_effectiveness:.3f} per point of low-margin share)"
+   },
+   "note": "Assumes low-margin lines carry roughly 2.9x the average cost share, which is close to what makes them low-margin. Tested at half and one-and-a-half times this rate."
+  },
+  {
+   "key": "trim_demand_cost",
+   "label": "Orders lost from dropping those lines",
+   "klass": "Assumption",
+   "value": {
+    "kind": "template",
+    "text": "{demand_cost:.1f}% of orders"
+   },
+   "note": "0.45 of the cost saving, in points of orders: customers who came for the removed lines and do not substitute. Higher than the cafe's ratio because a shopper who cannot find a specific product is more likely to leave."
+  },
+  {
+   "key": "price_rises",
+   "label": "Price rises compared",
+   "klass": "Customer input",
+   "value": {
+    "kind": "literal",
+    "text": "B: +8%   C: +4%"
+   },
+   "note": "The decisions being compared; fixed by the question."
+  },
+  {
+   "key": "horizon",
+   "label": "Comparison horizon",
+   "klass": "Assumption",
+   "value": {
+    "kind": "literal",
+    "text": "90 days"
+   },
+   "note": "Long enough for the stock to turn over at the new cost and for most of the customer reaction to land; short enough that rent and wages can be treated as fixed."
+  },
+  {
+   "key": "average_order_value",
+   "label": "Average order value",
+   "klass": "Derived",
+   "value": {
+    "kind": "money",
+    "field": "average_order_value",
+    "dp": 2
+   },
+   "note": "Monthly sales divided by monthly orders."
+  },
+  {
+   "key": "cogs_per_order",
+   "label": "Cost of goods per order",
+   "klass": "Derived",
+   "value": {
+    "kind": "money",
+    "field": "cogs_per_order",
+    "dp": 2
+   }
+  }
+ ],
+ "research_settings": [
+  "high"
+ ],
+ "sweep": {
+  "price_sensitivity": [
+   "low",
+   "central",
+   "high"
+  ],
+  "cogs_pass_through": [
+   "low",
+   "central"
+  ],
+  "supplier_increase_pct": [
+   15.0,
+   25.0,
+   35.0
+  ],
+  "trim_effectiveness": [
+   0.1875,
+   0.375,
+   0.5625
+  ],
+  "demand_adjustment_speed": [
+   "slow",
+   "central",
+   "fast"
+  ]
+ },
+ "sweep_labels": {
+  "price_sensitivity": "How price-sensitive customers are",
+  "cogs_pass_through": "How much of the supplier increase reaches your costs",
+  "supplier_increase_pct": "How large the supplier increase actually is",
+  "trim_effectiveness": "How much dropping low-margin lines really saves",
+  "demand_adjustment_speed": "How quickly customers react"
+ },
+ "sources": [
+  {
+   "id": "bijmolt2005",
+   "citation": "Bijmolt THA, van Heerde HJ, Pieters RGM. New empirical generalizations on the determinants of price elasticity. Journal of Marketing Research. 2005;42(2):141-156.",
+   "population": "1,851 price elasticities from 81 studies, predominantly packaged consumer goods in retail scanner data",
+   "estimate": "Mean brand-level price elasticity -2.62",
+   "limitations": "Brand-level in supermarket categories with near-perfect substitutes on the same shelf. It measures switching between brands inside a shop, not switching between shops.",
+   "transfer": "Used as the upper reference point. For a shop it is the 'my customers can buy the identical thing elsewhere' end of the range; for a cafe it is further away still, and the HIGH setting of 1.60 there is a judgement placed between the food category CI top (1.07) and this mean."
+  },
+  {
+   "id": "tellis1988",
+   "citation": "Tellis GJ. The price elasticity of selective demand: a meta-analysis of econometric models of sales. Journal of Marketing Research. 1988;25(4):331-341.",
+   "population": "367 price elasticities from roughly 220 brands and markets",
+   "estimate": "Mean price elasticity -1.76",
+   "limitations": "Selective (brand-level) demand, largely goods rather than services, and estimated from studies published up to the mid-1980s. Like Bijmolt it measures brand switching, not store switching.",
+   "transfer": "A second brand-level reference point for the shop wedge, quoted so the range shown is not resting on a single meta-analysis. It does not establish what happens when one shop raises all of its prices at once."
+  }
+ ],
+ "intake_fields": [
+  {
+   "key": "name",
+   "label": "Business name",
+   "unit": "",
+   "hint": "Only used on the report."
+  },
+  {
+   "key": "monthly_revenue",
+   "label": "Monthly sales",
+   "unit": "currency",
+   "hint": "Typical month, before the cost increase."
+  },
+  {
+   "key": "daily_orders",
+   "label": "Orders per day",
+   "unit": "orders",
+   "hint": "Average orders or sales a day, online and in store together."
+  },
+  {
+   "key": "monthly_cogs",
+   "label": "Monthly cost of goods",
+   "unit": "currency",
+   "hint": "What you pay suppliers for the goods you sell. Not wages, not rent, not shipping you absorb."
+  },
+  {
+   "key": "monthly_fixed_costs",
+   "label": "Monthly fixed costs",
+   "unit": "currency",
+   "hint": "Rent, wages, utilities, software, loan payments — everything that will not change in the next 90 days."
+  },
+  {
+   "key": "cash_on_hand",
+   "label": "Cash available",
+   "unit": "currency",
+   "hint": "What is in the business account today."
+  },
+  {
+   "key": "supplier_increase_pct",
+   "label": "Supplier cost increase",
+   "unit": "%",
+   "hint": "The increase you are facing, as a percentage of what you pay for goods."
+  },
+  {
+   "key": "low_margin_share_pct",
+   "label": "Share of orders on low-margin lines",
+   "unit": "%",
+   "hint": "Roughly what share of orders are lines that earn you little. A guess is fine; it is tested as an assumption."
+  }
+ ],
+ "demo": {
+  "name": "Demo shop (fictional)",
+  "monthly_revenue": 92000.0,
+  "daily_orders": 90.0,
+  "monthly_cogs": 53360.0,
+  "monthly_fixed_costs": 33000.0,
+  "cash_on_hand": 26000.0,
+  "supplier_increase_pct": 25.0,
+  "low_margin_share_pct": 20.0,
+  "is_demo": true,
+  "notes": [
+   "Fictional. Chosen to be a realistic small retailer at a normal gross margin, not a composite of any real business.",
+   "Cost of goods is 58% of sales, so a 25% supplier increase removes roughly 14 points of gross margin if nothing else changes."
+  ]
+ },
+ "language": {
+  "scenario_not_forecast": "This is a scenario comparison under stated assumptions, not a forecast."
+ }
+}

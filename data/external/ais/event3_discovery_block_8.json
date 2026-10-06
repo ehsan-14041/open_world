@@ -1,0 +1,65 @@
+{
+  "block": 8,
+  "span": [
+    "2023-07-31",
+    "2023-12-31"
+  ],
+  "warmup": [
+    "2023-07-31",
+    "2023-08-13"
+  ],
+  "discovery": [
+    "2023-08-14",
+    "2023-11-11"
+  ],
+  "days_acquired": 104,
+  "days_wanted": 104,
+  "discovery_days_evaluable": 90,
+  "detector_semantic_hash": "49ed3b935527f1fb000ad348c411c5049070b672eb01eea69e4f457e97022f73",
+  "artifact_set_sha256": "130f629c1c64fbf5a135a79c5b468f97bfc54a0e879365be884884003911028b",
+  "occupancy_distribution": {
+    "n": 104,
+    "mean": 15.8077,
+    "median": 16.0,
+    "variance": 13.6169,
+    "stdev": 3.6901,
+    "mad": 3.0,
+    "minimum": 7.0,
+    "p10": 11.0,
+    "p25": 13.0,
+    "p75": 18.0,
+    "p90": 20.0,
+    "maximum": 24.0
+  },
+  "residual_distribution": {
+    "n": 90,
+    "mean": 0.2698,
+    "median": 0.3333,
+    "variance": 3.6462,
+    "stdev": 1.9095,
+    "mad": 1.3333,
+    "minimum": -5.0,
+    "p10": -2.0,
+    "p25": -1.0,
+    "p75": 1.5,
+    "p90": 2.0,
+    "maximum": 4.5
+  },
+  "threshold_reachability": {
+    "threshold": 3.0,
+    "max_observed_residual": 4.5,
+    "p99_residual": 4.5,
+    "p95_residual": 3.0,
+    "days_at_or_above_threshold": 8,
+    "share_at_or_above_threshold": 0.0889,
+    "reachable": true
+  },
+  "coverage_regime_counts": {
+    "stable": 71,
+    "abrupt_measurement_shift": 12,
+    "uncertain": 5,
+    "gradual_shift": 2
+  },
+  "trigger_count": 0,
+  "trigger_windows": []
+}

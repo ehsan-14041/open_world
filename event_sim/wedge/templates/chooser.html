@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decision Compare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Source+Sans+3:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F7F5F0; --raised:#FFFFFF; --sunk:#EFEDE6; --ink:#1D2A2F; --muted:#5D6E75; --rule:#E0DED5;
+  --cafe:#1E7A5E; --shop:#2F5DA8; --salon:#A34E86; --focus:#1E7A5E;
+  --shadow-2:0 1px 2px rgba(29,42,47,.05),0 10px 30px -14px rgba(29,42,47,.16);
+  --shadow-3:0 2px 4px rgba(29,42,47,.06),0 22px 46px -18px rgba(29,42,47,.22);
+  --display:"Fraunces",Georgia,serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+html[dir="rtl"]{--display:"Vazirmatn","Segoe UI",system-ui,sans-serif;--body:"Vazirmatn","Segoe UI",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#14181A; --raised:#1B2022; --sunk:#222829; --ink:#E9EAE5; --muted:#9BA7AC; --rule:#2A3134;
+    --cafe:#4FB58E; --shop:#7FA7E6; --salon:#D48CC0; --focus:#4FB58E;
+    --shadow-2:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+    --shadow-3:0 2px 4px rgba(0,0,0,.35),0 22px 46px -18px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14181A; --raised:#1B2022; --sunk:#222829; --ink:#E9EAE5; --muted:#9BA7AC; --rule:#2A3134;
+  --cafe:#4FB58E; --shop:#7FA7E6; --salon:#D48CC0; --focus:#4FB58E;
+  --shadow-2:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+  --shadow-3:0 2px 4px rgba(0,0,0,.35),0 22px 46px -18px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box} .cards>*{min-width:0}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);padding:0 20px 72px;
+     font:17px/1.6 var(--body);-webkit-text-size-adjust:100%}
+html[dir="rtl"] body{font-size:16.5px;line-height:1.9}
+.wrap{max-width:960px;margin:0 auto}
+.bar{display:flex;align-items:center;gap:12px;padding:18px 0;flex-wrap:wrap}
+.mark{font-weight:700}
+.spacer{margin-inline-start:auto}
+.langs{display:flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden;background:var(--sunk)}
+.langs button{border:0;background:transparent;padding:10px 15px;font:600 14px/1 var(--body);cursor:pointer;color:var(--muted);min-height:44px}
+.langs button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+header{padding:44px 0 6px}
+h1{font:500 clamp(30px,5.4vw,50px)/1.08 var(--display);letter-spacing:-.015em;margin:0;text-wrap:balance}
+html[dir="rtl"] h1{font-weight:700;letter-spacing:0;line-height:1.4}
+.tagline{color:var(--muted);font-size:15px;margin:0 0 14px;font-weight:600}
+.pq{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,26px);margin:44px 0 0;
+    letter-spacing:-.01em}
+html[dir="rtl"] .pq{font-weight:700;letter-spacing:0;line-height:1.6}
+/* The problem is what the reader recognises; the trade it belongs to is the footnote. */
+.problem{font-family:var(--display);font-size:23px;font-weight:600;line-height:1.28;margin-top:2px}
+html[dir="rtl"] .problem{font-size:21px;font-weight:700;line-height:1.6}
+.biz{font-size:14.5px;color:var(--muted);font-weight:600;margin-top:auto}
+html[dir="rtl"] .biz{font-size:14px}
+.example{margin-top:44px;border:1px solid var(--rule);border-radius:20px;background:var(--raised);
+         padding:26px 26px 22px;box-shadow:var(--shadow-1);max-width:560px}
+.ex-lead{margin:0 0 14px;font-weight:600;font-size:16.5px}
+.ex-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.ex-list li{background:var(--sunk);border-radius:10px;padding:12px 15px;font-size:16px}
+.ex-cta{display:inline-flex;align-items:center;min-height:48px;margin-top:18px;font-weight:700;
+        color:var(--cafe);text-decoration:none}
+.ex-cta:hover,.ex-cta:focus-visible{text-decoration:underline;text-underline-offset:3px}
+.lede{color:var(--muted);margin:16px 0 0;max-width:54ch;font-size:19px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+@media (max-width:860px){.cards{grid-template-columns:1fr}}
+a.card{display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit;background:var(--raised);
+       border:1px solid var(--rule);border-radius:20px;padding:26px 24px 24px;box-shadow:var(--shadow-2);min-height:212px}
+a.card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+a.card:hover,a.card:focus-visible{border-color:var(--accent);outline:none;
+       box-shadow:0 0 0 2px var(--accent) inset,var(--shadow-3);transform:translateY(-2px)}
+a.card:active{transform:translateY(0)}
+a.card:hover .go,a.card:focus-visible .go{text-decoration:underline;text-underline-offset:3px}
+@media (prefers-reduced-motion:reduce){a.card{transition:none}a.card:hover,a.card:focus-visible{transform:none}}
+.cafe{--accent:var(--cafe)} .shop{--accent:var(--shop)} .salon{--accent:var(--salon)}
+.icon{font-size:34px;line-height:1}
+.biz{font-size:21px;font-weight:600;line-height:1.3}
+html[dir="rtl"] .biz{font-size:19.5px}
+.q{color:var(--muted);font-size:16.5px;margin-top:auto;line-height:1.5}
+html[dir="rtl"] .q{font-size:16px}
+.go{font-size:14px;font-weight:700;color:var(--accent)}
+.flow{margin-top:32px;font-size:15.5px;color:var(--muted);background:var(--sunk);
+       border-radius:999px;padding:12px 20px;display:inline-block;max-width:100%}
+html[dir="rtl"] .flow{font-size:15px}
+.credibility{margin-top:18px;font-size:13.5px;color:var(--muted);max-width:66ch;line-height:1.65}
+.foot{margin-top:40px;padding-top:24px;border-top:1px solid var(--rule);color:var(--muted);font-size:15px;max-width:66ch}
+.foot b{color:var(--ink);font-weight:600;display:block;margin-bottom:6px}
+/* A question in the owner's own words, for whoever does not see theirs among the three. */
+.ask{margin-top:34px;background:var(--raised);border:1px solid var(--rule);border-radius:20px;
+     padding:24px 24px 20px;box-shadow:var(--shadow-2);max-width:720px}
+.ask[hidden]{display:none}
+.ask h2{font-family:var(--display);font-weight:600;font-size:clamp(19px,2.4vw,23px);margin:0 0 6px}
+html[dir="rtl"] .ask h2{font-weight:700;line-height:1.6}
+.ask-lead{margin:0 0 14px;color:var(--muted);font-size:15.5px;line-height:1.7}
+.ask textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--rule);border-radius:12px;
+     background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);padding:12px 14px}
+.ask-keep{display:flex;align-items:center;gap:10px;margin-top:12px;min-height:44px;font-weight:600;cursor:pointer}
+.ask-keep input{width:22px;height:22px;flex:none;accent-color:var(--cafe)}
+.ask-note{margin:4px 0 0;font-size:13.5px;color:var(--muted);line-height:1.7}
+.ask-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px}
+#ask-go{min-height:48px;padding:0 26px;border:0;border-radius:999px;background:var(--ink);color:var(--paper);
+     font:700 16px/1 var(--body);cursor:pointer}
+#ask-go[disabled]{opacity:.6;cursor:progress}
+.ask-msg{font-size:14px;color:var(--muted)}
+.ask-out{margin-top:16px}
+.ask-out:empty{display:none}
+.ask-fit{margin:0 0 10px;font-weight:600;line-height:1.7}
+a.ask-link{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;
+     border:1px solid var(--accent);border-radius:14px;padding:16px 18px;background:var(--paper)}
+a.ask-link:hover,a.ask-link:focus-visible{box-shadow:0 0 0 2px var(--accent) inset;outline:none}
+.ask-re{font-size:17px;font-weight:600;line-height:1.6}
+.ask-list{margin:0;padding-inline-start:20px;display:grid;gap:6px}
+.ask-list a{color:var(--ink)}
+.ask-kept{margin:12px 0 0;font-size:14px;color:var(--cafe);font-weight:600}
+.ask-bad{color:#B4453B;font-weight:600;margin:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <span class="mark" id="mark"></span>
+    <span class="spacer"></span>
+    <div class="langs" id="langs" role="group" aria-label="Language"></div>
+  </div>
+  <header>
+    <h1 id="hero"></h1>
+    <p class="lede" id="hero2"></p>
+  </header>
+  <h2 class="pq" id="problem-q"></h2>
+  <div class="cards" id="cards"></div>
+
+  <!-- A question in the owner's own words. Shown only where the host can take one; sorted, if
+       the host has switched that on, and never answered by anything but the model and the
+       owner's own figures. -->
+  <section class="ask" id="askbox" hidden>
+    <h2 id="ask-t"></h2>
+    <p class="ask-lead" id="ask-lead"></p>
+    <textarea id="ask-q" rows="3" maxlength="600" dir="auto"></textarea>
+    <label class="ask-keep"><input type="checkbox" id="ask-keep"><span id="ask-keep-l"></span></label>
+    <p class="ask-note" id="ask-keep-why"></p>
+    <p class="ask-note" id="ask-route-note"></p>
+    <div class="ask-row"><button type="button" id="ask-go"></button>
+      <span class="ask-msg" id="ask-msg" role="status"></span></div>
+    <div class="ask-out" id="ask-out" role="status" aria-live="polite"></div>
+  </section>
+
+  <!-- Showing one comparison is a better explanation of the product than a paragraph about
+       what the product does. -->
+  <section class="example" id="example">
+    <p class="ex-lead" id="ex-lead"></p>
+    <ul class="ex-list" id="ex-list"></ul>
+    <a class="ex-cta" id="ex-cta" href="cafe/cafe_decision_report.html"></a>
+  </section>
+
+  <p class="flow" id="flow"></p>
+  <p class="foot"><b id="principle"></b><span id="footer"></span></p>
+  <p class="credibility" id="credibility"></p>
+</div>
+
+<script id="ask-cfg" type="application/json">__ASK__</script>
+<script id="i18n" type="application/json">__I18N__</script>
+<script>
+(function(){
+"use strict";
+var I = JSON.parse(document.getElementById('i18n').textContent);
+var P = new URLSearchParams(location.search);
+/* An invitation link can carry a tag (?src=...) saying which invitation it was. It is kept for this
+   tab only, and leaves the browser only inside feedback the owner chooses to send. */
+(function(){
+  var s = String(P.get('src') || '').toLowerCase();
+  if(/^[a-z0-9_-]{1,24}$/.test(s)){ try { sessionStorage.setItem('dc_src', s); } catch(e){} }
+})();
+var qt = P.get('theme'); if(qt==='light'||qt==='dark') document.documentElement.dataset.theme = qt;
+var LANGS = I.languages.map(function(l){ return l.code; });
+var lang = (function(){
+  var q = P.get('lang'); if(LANGS.indexOf(q)>=0) return q;
+  try { var s = localStorage.getItem('dc_lang'); if(LANGS.indexOf(s)>=0) return s; } catch(e){}
+  var nav = (navigator.languages||[navigator.language||'']);
+  for(var i=0;i<nav.length;i++){ var n = String(nav[i]).slice(0,2); if(LANGS.indexOf(n)>=0) return n; }
+  return I.default;
+})();
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+/* Each card is a link, so the whole thing stays usable without JavaScript running the routing.
+   Where the app serves everything from one entry point the href is rewritten server-side. */
+var HREF = {cafe:'cafe/cafe_decision_report.html', shop:'shop/shop_decision_report.html',
+            salon:'salon/salon_decision_report.html'};
+
+/* ---- a question in the owner's own words -------------------------------------------------------
+   What the page says about an answer is built here, from fields the host checked: the service
+   that sorts the question never writes a word or a number the reader sees. */
+var ASK = {};
+try { ASK = JSON.parse(document.getElementById('ask-cfg').textContent) || {}; } catch(e){ ASK = {}; }
+var lastAsk = null;
+function nf(v){
+  try {
+    return new Intl.NumberFormat(I.strings[lang].numerals === 'arabext' ? 'fa-IR' : 'en-US',
+      {maximumFractionDigits: 1}).format(v);
+  } catch(e){ return String(v); }
+}
+function fillS(s, v){ return String(s).replace(/\{(\w+)\}/g, function(m, k){ return (k in v) ? v[k] : m; }); }
+function anonQ(){
+  // Its own id, not the one a shared measurement carries, so the two files cannot be joined.
+  var v = null;
+  try { v = localStorage.getItem('dc_anon_q'); } catch(e){}
+  if(!/^[a-z0-9]{8,32}$/.test(v || '')){
+    v = '';
+    for(var i = 0; i < 16; i++) v += 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)];
+    try { localStorage.setItem('dc_anon_q', v); } catch(e){}
+  }
+  return v;
+}
+function hasOwn(r){ return (r.price !== null && r.price !== undefined) || !!r.reduce; }
+function askHref(r){
+  var h = HREF[r.wedge];
+  h += (h.indexOf('?') >= 0 ? '&' : '?') + 'lang=' + encodeURIComponent(lang);
+  if(r.variant) h += '&variant=' + encodeURIComponent(r.variant);
+  if(r.shock) h += '&shock=' + encodeURIComponent(r.shock);
+  if(hasOwn(r)) h += '&own=' + encodeURIComponent((r.price || 0) + ',' + (r.reduce ? 1 : 0));
+  return h;
+}
+/* The question the tool will actually answer, in the report's own words for it. */
+function restate(r, L, U){
+  var x = L.wedges[r.wedge] || {};
+  var biz = (r.variant && x.variant_names && x.variant_names[r.variant]) || x.business || '';
+  // Joined with a middle dot, so the situation line gives up its closing full stop.
+  var sit = r.shock ? fillS(x.what_changed || '', {shock: nf(r.shock)}).replace(/[.۔]\s*$/, '')
+                    : U.ask_size_next;
+  var parts = [biz, sit];
+  if(hasOwn(r)){
+    var p = r.price || 0, pv = nf(p) + (U.pct_sign || '%'), red = x.own_reduce || '';
+    var own = p === 0 ? (r.reduce ? fillS(U.own_name_r, {reduce: red}) : U.own_name_0)
+            : (r.reduce ? fillS(U.own_name_pr, {p: pv, reduce: red}) : fillS(U.own_name_p, {p: pv}));
+    parts.push(fillS(U.ask_restate_own, {own: own}));
+  }
+  return parts.join(' · ');
+}
+function renderAskOut(L, U){
+  var out = document.getElementById('ask-out'), r = lastAsk;
+  if(!r){ out.innerHTML = ''; return; }
+  if(r.error){ out.innerHTML = '<p class="ask-bad">' + esc(U.ask_err) + '</p>'; return; }
+  var ARROW = L.dir === 'rtl' ? '←' : '→', html;
+  if((r.fit === 'exact' || r.fit === 'near') && HREF[r.wedge]){
+    html = '<p class="ask-fit">' + esc(r.fit === 'exact' ? U.ask_fit_exact : U.ask_fit_near) + '</p>'
+      + '<a class="ask-link ' + esc(r.wedge) + '" id="ask-link" href="' + esc(askHref(r)) + '">'
+      + '<span class="ask-re">' + esc(restate(r, L, U)) + '</span>'
+      + '<span class="go">' + esc(U.ask_open) + ' ' + ARROW + '</span></a>';
+  } else if(r.fit === 'none' || r.fit === 'exact' || r.fit === 'near'){
+    var topics = U.ask_topics || {};
+    html = '<p class="ask-fit">'
+      + esc(fillS(U.ask_fit_none, {topic: topics[r.topic] || topics.other || ''})) + '</p>';
+  } else {
+    html = '<p class="ask-fit">' + esc(U.ask_unrouted) + '</p><ul class="ask-list">'
+      + ['cafe','shop','salon'].map(function(id){
+          var h = HREF[id] + (HREF[id].indexOf('?') >= 0 ? '&' : '?') + 'lang=' + lang;
+          return '<li><a href="' + esc(h) + '">' + esc(L.wedges[id].question) + '</a></li>'; }).join('')
+      + '</ul>';
+  }
+  if(r.kept) html += '<p class="ask-kept">' + esc(U.ask_kept) + '</p>';
+  out.innerHTML = html;
+}
+function renderAskBox(L, U){
+  var box = document.getElementById('askbox');
+  box.hidden = !ASK.on;
+  if(!ASK.on) return;
+  document.getElementById('ask-t').textContent = U.ask_t;
+  document.getElementById('ask-lead').textContent = U.ask_lead;
+  document.getElementById('ask-q').placeholder = U.ask_ph;
+  document.getElementById('ask-keep-l').textContent = U.ask_keep;
+  document.getElementById('ask-keep-why').textContent = U.ask_keep_why;
+  document.getElementById('ask-route-note').textContent = ASK.route ? U.ask_route_note : U.ask_noroute_note;
+  var go = document.getElementById('ask-go');
+  if(!go.disabled) go.textContent = U.ask_go;
+  renderAskOut(L, U);
+}
+
+function render(){
+  var L = I.strings[lang], U = L.ui;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = L.dir;
+  document.title = U.product;
+  document.getElementById('mark').textContent = U.product;
+  document.getElementById('hero').textContent = U.home_hero;
+  document.getElementById('hero2').textContent = U.home_hero_2;
+  document.getElementById('problem-q').textContent = U.home_problem_q;
+  document.getElementById('langs').innerHTML = I.languages.map(function(l){
+    return '<button type="button" data-l="'+l.code+'" lang="'+l.code+'" aria-pressed="'
+      + (l.code===lang) + '">' + esc(l.label) + '</button>'; }).join('');
+  /* "Onward" points the way the reader is already going. */
+  var ARROW = L.dir === 'rtl' ? '←' : '→';
+  document.getElementById('cards').innerHTML = ['cafe','shop','salon'].map(function(id){
+    var x = L.wedges[id];
+    var href = HREF[id] + (HREF[id].indexOf('?')>=0 ? '&' : '?') + 'lang=' + lang;
+    return '<a class="card '+id+'" href="'+esc(href)+'">'
+      + '<span class="icon" aria-hidden="true">'+esc(x.icon)+'</span>'
+      + '<span class="problem">'+esc(x.problem)+'</span>'
+      + '<span class="biz">'+esc(x.business_covers || x.business)+'</span>'
+      + '<span class="go">'+esc(U.home_pick)+' '+ARROW+'</span></a>'; }).join('');
+  document.getElementById('flow').textContent = U.home_flow;
+  document.getElementById('credibility').textContent = U.credibility;
+
+  /* The worked example names the cafe's three real decisions, so the thing being promised on
+     the home screen is the thing the next page delivers. */
+  var ex = L.wedges.cafe;
+  document.getElementById('ex-lead').textContent = U.home_example_lead;
+  document.getElementById('ex-list').innerHTML = ['A','B','C'].map(function(k){
+    return '<li>' + esc(ex.world_names[k]) + '</li>'; }).join('');
+  var cta = document.getElementById('ex-cta');
+  cta.textContent = U.home_example_cta + ' ' + ARROW;
+  cta.href = HREF.cafe + (HREF.cafe.indexOf('?') >= 0 ? '&' : '?') + 'lang=' + lang + '&demo=1';
+  document.getElementById('principle').textContent =
+    U.principle_1 + ' ' + U.principle_2 + ' ' + U.principle_3;
+  document.getElementById('footer').textContent = U.home_footer;
+  renderAskBox(L, U);
+  try { localStorage.setItem('dc_lang', lang); } catch(e){}
+}
+document.getElementById('langs').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return;
+  lang = b.dataset.l;
+  var u = new URL(location.href); u.searchParams.set('lang', lang); history.replaceState(null,'',u);
+  render();
+});
+document.getElementById('ask-go').addEventListener('click', function(){
+  var U = I.strings[lang].ui, btn = this, msg = document.getElementById('ask-msg');
+  var q = document.getElementById('ask-q').value.replace(/\s+/g, ' ').trim();
+  var keep = document.getElementById('ask-keep').checked;
+  msg.textContent = '';
+  if(q.length < 3){ msg.textContent = U.ask_empty; return; }
+  if(!ASK.route && !keep){ msg.textContent = U.ask_need_keep; return; }
+  btn.disabled = true;
+  btn.textContent = U.ask_busy;
+  var done = function(r){
+    btn.disabled = false;
+    btn.textContent = I.strings[lang].ui.ask_go;
+    lastAsk = r;
+    renderAskOut(I.strings[lang], I.strings[lang].ui);
+  };
+  fetch('ask.php', {method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({q: q, lang: lang, keep: keep, anon: keep ? anonQ() : ''})})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){ done(j && j.ok ? j : {error: true}); })
+    .catch(function(){ done({error: true}); });
+});
+render();
+})();
+</script>
+</body>
+</html>

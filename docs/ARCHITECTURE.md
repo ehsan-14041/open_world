@@ -1,6 +1,8 @@
-# Open World Engine 2 — Architecture
+# Open World Engine — Architecture
 
-This document describes the core architecture of the **open_world_engine2** project: causal variable graph, belief state, rule engine, event queue, action contract, trace, and narrative flow.
+> **Product path:** For the Enterprise Operations Decision Simulator (`/`), start with [PRODUCT_GUIDE.md](PRODUCT_GUIDE.md). The default demo uses `adapters/ops_scenario_builder.py` and deterministic `dry_run` — not the MC+RL or LLM paths below.
+
+This document describes the core architecture of the **Open World Engine** project: causal variable graph, belief state, rule engine, event queue, action contract, trace, narrative flow, and the **Enterprise Operations Decision Simulator** product layer.
 
 ## World state (causal variable graph)
 
@@ -53,6 +55,60 @@ Propagation is implemented in `core/propagation.py` and invoked from `WorldModel
 
 ---
 
+## Enterprise Operations Decision Simulator (product layer)
+
+The operations-facing product sits **above** the engine. It does not change simulation semantics; it builds deterministic scenarios, runs dry simulations by default, and maps engine output into plain-language briefs for supply chain and planning leaders.
+
+### Request flow
+
+```
+POST /api/brief  { ops_profile, decision_id, compare_decision_id?, steps?, dry_run? }
+  → validate_ops_profile()              (schemas/ops_schema.py)
+  → get_decision_template(decision_id)  (config/ops_decisions.json)
+  → build_scenario(profile, template)   (adapters/ops_scenario_builder.py — no LLM, no parse_scenario_text)
+  → SimulationLoop(scenario_data, dry_run=True by default)
+  → build_decision_brief()              (ui/decision_brief.py — display-only mapping)
+  → build_ops_outcomes()                (ui/ops_outcomes.py — verdict, service/cost/risk headlines)
+  → build_turn_trace()                  (ui/turn_trace.py — per-turn deltas)
+  → [optional] save_decision()          (core/decision_journal.py → output/decisions/)
+```
+
+**Path guard:** When `ops_profile` is present, `parse_scenario_text()` is never called. This keeps the home-page demo API-key-free and deterministic.
+
+### Key modules
+
+| Module | Role |
+|--------|------|
+| **schemas/ops_schema.py** | Validates/normalizes operations profile (business_unit_type, inventory, demand, fill_rate, lead_time, …) |
+| **schemas/decision_schema.py** | Structured `DecisionInput` (move, actors, constraints, horizon_months); also used for legacy text path via `decision_to_scenario_text()` |
+| **adapters/ops_scenario_builder.py** | Merges profile + decision template into engine scenario: agents, causal_links by business unit type, action_tradeoffs, initial_state |
+| **ui/ops_outcomes.py** | Operations copy: one-line verdict, service/cost/risk headlines, walk-away signals, comparison cards |
+| **ui/decision_brief.py** | Structured brief from dashboard payload + narrative (drivers, second-order effects, kill criteria) |
+| **ui/turn_trace.py** | Compact turn-by-turn variable changes for the UI panel |
+| **core/decision_journal.py** | File-backed persistence; annotate outcomes later for S&OP learning loops |
+
+### Config and presets
+
+- **config/ops_presets.json** — Demo site profiles tagged `outlook`: `stable` | `strained` | `uncertain`
+- **config/ops_decisions.json** — 12 decision templates (safety stock, expedite reorder, switch supplier, reallocate demand, …) with tradeoff hints and editable assumptions
+
+### Web routes (product)
+
+| Route | Purpose |
+|-------|---------|
+| `/` | Enterprise Operations Decision Simulator home |
+| `/graph` | Causal impact map (supporting evidence) |
+| `/journal` | Decision history |
+| `/advanced` | Raw scenario JSON, streaming runs (engineering; disabled when `product_mode=true`) |
+| `GET /api/ops_presets` | Preset library |
+| `GET /api/ops_decisions` | Decision template library |
+| `POST /api/brief` | Simulate + brief (+ optional comparison run) |
+| `GET/POST /api/journal*` | List, fetch, annotate saved decisions |
+
+See [SYSTEM_GUIDE.md](SYSTEM_GUIDE.md) for API bodies, config keys, and the text→JSON pipeline used on `/advanced`.
+
+---
+
 ## V2 Engine (Generalized)
 
 The v2 refactor adds domain-agnostic data models, a strict turn pipeline, and full traceability. Existing entrypoints and scenarios remain supported.
@@ -97,7 +153,7 @@ After a run, `core/scenario_analysis_output.py` produces Logic Core (JSON), Exec
 
 ### Live Enterprise Dashboard and payload
 
-- **core/dashboard_payload.py:** Builds a single JSON payload from snapshot, provenance entry, scenario, and optional provenance history: `state_snapshot`, `risk_report` (from `core/risk_assessment.py`), `calibration_metrics` (prediction_vs_realized, rmse_over_time, overconfidence_flags, health), `selected_action`, `explanation`, `assumption_summary`, `edition`, optional `belief_alignment` (when belief layer enabled), `shock` (when shock active), optional `oracle_analysis` (when `ENABLE_ORACLE`), and **narrative payload** when narrative is available or generated: `narrative` (full dict), `turn_intelligence` (turn_summary, outcome_assessment, regime_commentary), `actor_ranking`, `causal_story`, `hidden_costs`, `longitudinal_story` (from `core/narrative_memory.generate_longitudinal_story(5)`). Narrative is produced by `core/narrative_engine.generate_turn_narrative()` and appended via `core/narrative_memory.append_narrative()`. No simulation imports; used by the Live Dashboard.
+- **ui/dashboard_payload.py:** Builds a single JSON payload from snapshot, provenance entry, scenario, and optional provenance history: `state_snapshot`, `risk_report` (from `core/risk_assessment.py`), `calibration_metrics` (prediction_vs_realized, rmse_over_time, overconfidence_flags, health), `selected_action`, `explanation`, `assumption_summary`, `edition`, optional `belief_alignment` (when belief layer enabled), `shock` (when shock active), optional `oracle_analysis` (when `ENABLE_ORACLE`), and **narrative payload** when narrative is available or generated: `narrative` (full dict), `turn_intelligence` (turn_summary, outcome_assessment, regime_commentary), `actor_ranking`, `causal_story`, `hidden_costs`, `longitudinal_story` (from `core/narrative_memory.generate_longitudinal_story(5)`). Narrative is produced by `core/narrative_engine.generate_turn_narrative()` and appended via `core/narrative_memory.append_narrative()`. No simulation imports; used by the Live Dashboard.
 - **core/prediction_calibration.py:** Maintains per‑agent rolling `rolling_mse`, `rolling_bias`, `rolling_variance` and a bounded `calibration_weight`. `SimulationLoop.step()` updates this store from `delta_raw_per_agent` vs `self_effect_per_agent`, feeds the weight into MC+RL scoring, and `dashboard_payload` surfaces it as `calibration_metrics["per_agent_calibration"]` (agent‑level calibration panel).
 - **core/oracle.py:** LLM Advisor (Oracle) layer: advisory-only analysis of proposed actions. `summarize_history_for_oracle(provenance_history, last_n, max_chars)` builds a short text summary of recent turns (no LLM). `analyze_action(...)` returns JSON with Action, Confidence (0–100), Risk Factors, Alternative Scenarios, optional Hidden Variables, Prediction Failure Reasons, and optional **causal_learning_suggestion** (`{source, target, polarity, strength_estimate}`) for belief-graph updates. Does not modify simulation state. Enabled via `ENABLE_ORACLE`; `ORACLE_HISTORY_TURNS`, `ORACLE_MAX_TOKENS` in config.
 - **core/mental_simulation.py:** Light mental simulation for the planner: `apply_delta_light()` and `run_mental_simulation()` apply delta with deterministic propagation (same damping/decay/significance as `core/propagation`), bounded hops (`LIGHT_PROP_HOPS`), no noise. Used by `agents/planner.apply_delta_to_state_or_mental_simulation()` when `causal_links` exist.

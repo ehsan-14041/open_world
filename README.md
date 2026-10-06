@@ -1,16 +1,122 @@
-# Open World Engine
+# Enterprise Operations Decision Simulator
 
-موتور شبیه‌سازی چندعاملی (multi-agent) با WorldModelAgent، RoleAgents، حاکمیت و هستان‌شناسی. گراف متغیرهای علّی با انتشار، حالت باور عامل (مشاهده نویزی)، قوانین و رویدادهای تعریف‌شده در سناریو، مفسر اقدام و روایت ساخته‌شده از ردیابی شبیه‌سازی پشتیبانی می‌شود. جزئیات: [Architecture](docs/ARCHITECTURE.md).
+**Simulate one operational decision before you make it.**
+
+For VP Operations, supply chain directors, and planning leaders: should you increase inventory, switch suppliers, add capacity, or reallocate demand — given lead-time uncertainty, demand shifts, and service targets?
+
+The product delivers a **decision-support recommendation** in under 30 seconds: cost impact, service level impact, risk, walk-away signals, and next best action. No API key required for the demo. The causal impact map at `/graph` is supporting evidence only.
+
+**Built for:** VP Operations · Supply Chain Director · Production Planning Manager · Demand / Inventory Planning · Risk & Business Continuity teams.
+
+For engine architecture, see [Architecture](docs/ARCHITECTURE.md).
+
+---
+
+## 30-second demo (no API key)
+
+```bash
+pip install -r requirements.txt
+python ui.py
+```
+
+Open **http://127.0.0.1:5081**
+
+1. Load **Strained — demand spike, capacity tight** (or pick another operations preset)
+2. Select **Increase safety stock** — compare with **Expedite reorder**
+3. Click **Simulate this decision**
+
+You immediately get:
+
+- **One-line verdict** — e.g. "Increase buffer cautiously — service gain must justify holding cost"
+- **Service / cost / risk headlines** — fill rate change, weekly holding cost, stockout risk
+- **Best and worst case**, **key drivers**, **walk-away signals**, **next best action**
+- **Side-by-side comparison** between two decisions
+- **Impact map** at `/graph` as supporting evidence only
+
+**Demo presets** (`config/ops_presets.json`) are tagged by operational outlook:
+
+| Outlook | Example | What it shows |
+|---------|---------|----------------|
+| **stable** | Balanced regional DC | Healthy buffer, predictable demand |
+| **strained** | Demand spike + tight capacity | Service level at risk |
+| **uncertain** | Supplier delay + margin pressure | Lead time and cost volatility |
+
+The product path **always** builds scenarios via `adapters/ops_scenario_builder.py` (deterministic, no LLM). API keys are not required for the home-page demo.
+
+| Route | Purpose |
+|-------|---------|
+| `/` | Enterprise Operations Decision Simulator (product home) |
+| `/graph` | Causal impact map (evidence) |
+| `/journal` | Decision history |
+| `/advanced` | Engine tools (debug, disabled in product mode) |
+
+**API (operations product path):**
+
+```json
+POST /api/brief
+{
+  "ops_profile": {
+    "business_unit_type": "distribution",
+    "inventory_on_hand": 8200,
+    "weekly_demand": 1100,
+    "fill_rate": 0.89,
+    "lead_time_days": 16,
+    ...
+  },
+  "decision_id": "increase_safety_stock",
+  "compare_decision_id": "expedite_reorder",
+  "steps": 6,
+  "dry_run": true,
+  "save_snapshot": true
+}
+```
+
+`decision_id` is **required** with `ops_profile`. The adapter builds the scenario; `parse_scenario_text()` is never called on this path.
+
+| Endpoint | Purpose |
+|----------|---------|
+| `GET /api/ops_presets` | Operations scenario presets (`outlook`: stable / strained / uncertain) |
+| `GET /api/ops_decisions` | 12 decision templates (inventory, supplier, capacity, allocation, …) |
+| `GET /api/decision_presets` | Legacy chips (`legacy/startup/config/`, not used by product home) |
+
+Config: `config/ops_presets.json`, `config/ops_decisions.json`. Adapter: `adapters/ops_scenario_builder.py`. Outcome copy: `ui/ops_outcomes.py`.
+
+---
+
+## Product features
+
+- **Operations Decision Simulator** — Home (`/`): operations profile + decision → verdict, cost/service/risk impact, comparison (`adapters/ops_scenario_builder.py`, `ui/ops_outcomes.py`).
+- **Decision Brief** — Structured exploration: likely outcomes, drivers, second-order effects, walk-away signals (`ui/decision_brief.py`).
+- **Decision Journal** — Persist and annotate past decisions for S&OP learning loops (`core/decision_journal.py`).
+- **Causal impact map** — Visual evidence of variable propagation (`/graph`).
+
+## Engineering mode
+
+The product demo does not require API keys or LLM calls. For the underlying simulation engine (multi-agent paths, free-text scenarios, dashboard), see [Engine internals](docs/ENGINE_INTERNALS.md). Buyer-facing guide: [Product Guide](docs/PRODUCT_GUIDE.md).
+
+### Event Simulator (experimental)
+
+A second product surface on the same engine, at `/event-sim`: explore how an event could unfold under explicit assumptions — persistent world state, evidence-tagged causal edges, branching worlds, and identical-condition comparison. It is **not** a predictor and produces no probabilities. The Operations product is unaffected.
+
+```bash
+python scripts/run_port_disruption.py
+```
+
+See [Event Simulator](docs/EVENT_SIMULATOR.md) and [its architecture](docs/EVENT_SIMULATOR_ARCHITECTURE.md).
+
+---
 
 ## Requirements
 
 - Python **3.10+**
-- وابستگی‌ها: **pydantic**, **openai**, **flask** (مشاهده `requirements.txt`)
+- Dependencies: **pydantic**, **openai**, **flask** (see `requirements.txt`)
+
+---
 
 ## Install
 
 ```bash
-cd open_world_engine2
+cd owe
 pip install -r requirements.txt
 ```
 
@@ -18,178 +124,276 @@ Using a virtual environment (recommended):
 
 ```bash
 python3 -m venv .venv
+
+# Linux / macOS
 .venv/bin/pip install -r requirements.txt
 .venv/bin/python main.py --dry-run --steps 3
+
+# Windows
+.venv\Scripts\pip install -r requirements.txt
+.venv\Scripts\python main.py --dry-run --steps 3
 ```
+
+---
 
 ## Configuration
 
-تنظیمات از **`config/settings.json`** (اختیاری) خوانده می‌شوند و سپس با متغیرهای محیطی بازنویسی می‌شوند.
+Settings are loaded from **`config/settings.json`** (optional) and overridden by environment variables.
 
-- **فایل config:** برای مسیر دیگر `OWE_CONFIG` را تنظیم کنید (مثلاً `OWE_CONFIG=/path/to/settings.json`).
-- **سناریو:** `scenario_path` در config یا `OWE_SCENARIO_PATH` در env. پیش‌فرض: `config/scenarios/demo_scenario.json`.
-- **Dry run:** `dry_run` در config یا `OWE_DRY_RUN=true` در env.
-- **Snapshot:** `snapshot_path` در config یا `OWE_SNAPSHOT_PATH` در env.
-- **LLM provider:** `llm_provider` در config (`avalai` یا `groq`) یا متغیر محیطی `LLM_PROVIDER`. پیش‌فرض: `avalai`.
-- **تنظیمات پراوایدر:** برای هر پراوایدر در config می‌توانید بلوک `avalai` یا `groq` تعریف کنید: `api_key`, `base_url`, `model`, `temperature`, `max_tokens`, `timeout`.
-- **سایر گزینه‌ها:** `max_llm_calls_per_turn`, `enable_uncertainty`, `debug_llm`, `delta_magnitude_cap`, `random_seed`, `meta_proposal_auto_approve_max_agents`, `enable_environment_agent`, `enable_meta_actions`, `max_delta`, `obs_noise_scale`, `proposal_throttle_turns`, `propagation_max_iter`, `propagation_epsilon`, `propagation_damping`, `phase_top_k_turns`, `allow_numbers`, `enable_shocks`, `lang` (در config یا با پیشوند `OWE_*` در env). لیست کامل: `config/settings.py`.
+| Setting | Config key | Environment variable |
+|---------|------------|----------------------|
+| Config file path | — | `OWE_CONFIG` |
+| Scenario file | `scenario_path` | `OWE_SCENARIO_PATH` |
+| Dry run (no LLM) | `dry_run` | `OWE_DRY_RUN=true` |
+| Snapshot output | `snapshot_path` | `OWE_SNAPSHOT_PATH` |
+| LLM provider | `llm_provider` (`avalai`, `groq`, or OpenAI-compatible) | `LLM_PROVIDER` |
+| Decision journal | `enable_decision_journal` | `OWE_ENABLE_DECISION_JOURNAL` |
+| Language | `lang` (`auto`, `en`, `fa`, …) | `OWE_LANG` |
 
-## API key
+**Provider blocks** in `config/settings.json`:
 
-- **با sim_app:** موتور می‌تواند از کلاینت LLM موجود استفاده کند. `GROQ_API_KEY` یا `AVALAI_API_KEY` را در محیط یا در `sim_app/settings.json` تنظیم کنید. [INTEGRATION_NOTES.md](INTEGRATION_NOTES.md).
-- **Standalone:** کلید API را در `config/settings.json` در `avalai.api_key`, `groq.api_key` یا `openai.api_key` قرار دهید، یا از env: `AVALAI_API_KEY`, `GROQ_API_KEY`, `OPENAI_API_KEY`. برای endpoint سازگار با OpenAI: `OPENAI_BASE_URL`, `OPENAI_MODEL` (پیش‌فرض: `https://api.openai.com/v1`, `gpt-4o-mini`).
-
-اجرای بدون کلید API (فقط قطعی و مبتنی بر قانون):
-
-```bash
-python main.py --dry-run --steps 3
+```json
+{
+  "llm_provider": "groq",
+  "avalai": {
+    "api_key": "",
+    "base_url": "https://api.avalai.ir/v1",
+    "model": "gpt-4o",
+    "temperature": 0.2,
+    "max_tokens": 4096,
+    "timeout": 120
+  },
+  "groq": {
+    "api_key": "",
+    "base_url": "https://api.groq.com/openai/v1",
+    "model": "llama-3.3-70b-versatile",
+    "temperature": 0.2,
+    "max_tokens": 2048,
+    "timeout": 60
+  }
+}
 ```
 
-## Run
+Additional options (config or `OWE_*` env): `max_llm_calls_per_turn`, `enable_uncertainty`, `debug_llm`, `delta_magnitude_cap`, `random_seed`, `enable_environment_agent`, `enable_meta_actions`, `enable_shocks`, `enable_belief_layer`, `propagation_max_iter`, `propagation_epsilon`, `propagation_damping`, and more. Full list: `config/settings.py`.
 
-از پوشه `open_world_engine2`:
+> **Security:** Do not commit real API keys. Use environment variables or a local `settings.json` that is gitignored.
+
+---
+
+## API Keys
+
+**Not required** for the operations product demo at `/` (`dry_run=true` by default).
+
+API keys are only needed for engineering paths: free-text scenario parsing, LLM agent reasoning, and narrative generation. Configure via `config/settings.json` or `GROQ_API_KEY` / `OPENAI_API_KEY` env vars. See [Engine internals](docs/ENGINE_INTERNALS.md).
+
+---
+
+## CLI Usage
+
+From the project root:
 
 ```bash
 python main.py
 python main.py --steps 10
 python main.py --dry-run --steps 5
 python main.py --snapshot /tmp/out.json --steps 5
-python main.py --scenario config/scenarios/startup_competitive.json --steps 5
 python main.py --narrative --steps 3
 python main.py --summary --dry-run --steps 5
-python main.py --scenario-text "استارتاپ با بنیان‌گذار و سرمایه‌گذار؛ ۱۰۰هزار نقد، ۱۸ ماه runway" --use-llm-for-agents --steps 5
+python main.py --scenario-text "Regional DC: 8200 units on hand, 1100 weekly demand, 89% fill rate; weighing safety stock vs expedited reorder" --dry-run --steps 5
 ```
 
 | Option | Description |
 |--------|-------------|
-| `--steps N` | تعداد گام‌های شبیه‌سازی (پیش‌فرض: 5). |
-| `--dry-run` | غیرفعال کردن LLM؛ فقط پیشنهادها و دلتاهای مبتنی بر قانون. |
-| `--snapshot path` | ذخیره اسنپ‌شات نهایی جهان به صورت JSON در مسیر داده‌شده. |
-| `--scenario path` | مسیر فایل سناریو JSON (پیش‌فرض: `config/scenarios/demo_scenario.json`). |
-| `--scenario-text "..."` | متن آزاد سناریو؛ با LLM به JSON تبدیل شده و سپس شبیه‌سازی اجرا می‌شود. |
-| `--use-llm-for-agents` | همراه با `--scenario-text`: تولید تعریف عامل‌ها (شخصیت، متغیرهای اولیه) با LLM. |
-| `--narrative` | چاپ روایت نهایی ساخته‌شده از provenance و حالت جهان. |
-| `--summary` | چاپ فقط خلاصهٔ ساخت‌یافتهٔ یک‌پاراگرافی جهان. |
+| `--steps N` | Number of simulation turns (default: 5) |
+| `--dry-run` | Disable LLM; use rule-based proposals and deltas only |
+| `--snapshot path` | Save final world snapshot as JSON |
+| `--scenario path` | Path to scenario JSON (default: `config/scenarios/demo_scenario.json`) |
+| `--scenario-text "..."` | Free-form scenario text; parsed to JSON via LLM, then simulated |
+| `--use-llm-for-agents` | With `--scenario-text`: generate agent definitions (personality, initial variables) via LLM |
+| `--narrative` | Print final narrative built from provenance and world state |
+| `--summary` | Print structured one-paragraph world summary only |
 
-## Project structure
-
-```
-open_world_engine2/
-├── main.py              # CLI entry
-├── ui.py                # Web UI server
-├── scenario_parser.py   # Free-text → scenario JSON (LLM or rule-based)
-├── config/
-│   ├── settings.py      # Loads config/settings.json + env
-│   ├── settings.json    # Optional config file (api_key حساس است؛ در repo واقعی commit نکنید)
-│   └── scenarios/       # demo_scenario.json, startup_competitive.json, goal_driven_delayed.json, variable_only_scenario.json, iran_us_standoff.json, gulf_standoff.json
-├── simulation/
-│   └── loop.py          # SimulationLoop
-├── agents/              # base_agent, world_model_agent, RoleAgents (agents.py), memory, planner, utility
-├── core/                # llm_client, llm_action_guard, world_summarizer, governance, world_model, ontology_manager,
-│                        # agent_constructor, agent_generator, prompt_builder, propagation, rule_engine, event_queue,
-│                        # action_interpreter, observation, narrative_builder
-├── world/               # world_state, delayed_events
-├── schemas/             # scenario_schema, proposal_schema, delta_schema, llm_action_schema, memory_schema
-├── utils/               # id_generator, logging
-├── docs/
-│   ├── README.md        # فهرست اسناد
-│   ├── SYSTEM_GUIDE.md  # Pipeline، actions، variables، narrative، config
-│   ├── ARCHITECTURE.md  # Causal graph، beliefs، rules، events، trace، narrative
-│   └── ARCHITECTURE_DOSSIER.md  # دوسیهٔ معماری کامل
-├── data/snapshots/      # last_snapshot.json (written by runs)
-├── templates/           # Flask templates for Web UI (index.html, graph.html, run_viewer.html)
-├── static/              # Static assets for Web UI (CSS, JS)
-├── visualization/       # Graph visualization (graph_viewer.py, impact_data.py)
-└── tests/               # test_uncertainty.py, test_text_first.py
-```
+---
 
 ## Web UI
 
-رابط وب ساده برای وارد کردن سناریو به صورت متن آزاد، تبدیل به JSON سناریو (با scenario parser + LLM) و اجرای شبیه‌سازی با نتایج زنده.
+Flask interface with two surfaces:
 
-1. **اجرای UI** (از پوشه `open_world_engine2`):
+| URL | Audience | Purpose |
+|-----|----------|---------|
+| **`/`** | Operations leaders | **Enterprise Operations Decision Simulator** — profile, decision, simulate, results |
+| **`/advanced`** | Engineers | Raw scenario JSON, LLM logs, streaming runs (debug; disabled in `product_mode`) |
+| **`/graph`** | Both | Causal impact map after a run |
+| **`/journal`** | Operations leaders | Decision history and outcome annotations |
 
+### Start the server
+
+```bash
+pip install -r requirements.txt
+python ui.py
+```
+
+Open **http://127.0.0.1:5081** (default port **5081**).
+
+Options:
+
+```bash
+python ui.py --port 8080
+python ui.py --host 127.0.0.1    # local only
+python ui.py --debug             # Flask debug mode
+```
+
+### Operations workflow (`/`)
+
+1. **Operations profile** — Use a preset (Stable / Strained / Uncertain) or edit fields (inventory, demand, fill rate, lead time, supplier risk, …).
+2. **Decision** — Pick from 12 templates (increase safety stock, expedite reorder, switch supplier, …). Optionally compare a second decision.
+3. **Simulate** — Deterministic run (no API key). Results include outcome cards, service/cost/risk headlines, brief, and turn trace.
+4. **Impact map** — Open `/graph` to inspect causal drivers.
+
+Snapshots are written to `data/snapshots/snapshot_<id>.json` and `last_snapshot.json`.
+
+### Engineering workflow (`/advanced`)
+
+1. **Submit Scenario** — Free-text or JSON scenario; optional LLM conversion.
+2. **Run Simulation** — Configure steps and dry-run; stream or batch results.
+3. **Graph / Viewer / Dashboard** — Inspect JSON, causal graph, and turn intelligence.
+
+Legacy free-text brief analysis is not exposed on `/`; use `/advanced` or the API with explicit `text` / `decision_input` if needed.
+
+### API endpoints (summary)
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/health` | GET | Health check (`service`: `enterprise_ops_decision_simulator`) |
+| `/api/brief` | POST | Simulate + brief (ops profile or legacy text/decision_input) |
+| `/api/ops_presets` | GET | Operations scenario presets |
+| `/api/ops_decisions` | GET | Decision template library |
+| `/api/submit_scenario` | POST | Parse and validate scenario text (`/advanced`) |
+| `/api/run_simulation` | POST | Run simulation |
+| `/api/run_simulation_stream` | POST | Stream turn-by-turn results (SSE) |
+| `/api/journal` | GET | List saved decisions |
+| `/api/snapshot` | GET | Last run snapshot |
+| `/api/narrative` | GET | Narrative for last run |
+| `/graph` | GET | Causal graph visualization |
+| `/viewer` | GET | Run viewer |
+
+### Troubleshooting 503 (Service Unavailable)
+
+A **503** usually means the reverse proxy reached the server but the Flask app is down or timed out.
+
+1. **Confirm the server is running:**
    ```bash
-   pip install -r requirements.txt   # includes Flask
-   python ui.py
+   python ui.py --port 5081
    ```
 
-   سپس در مرورگر **http://127.0.0.1:5000** را باز کنید. سرور به‌طور پیش‌فرض به `0.0.0.0` متصل می‌شود. اختیاری: `python ui.py --port 8080`, `--host 127.0.0.1` (فقط لوکال), یا `--debug` (حالت دیباگ Flask).
-
-2. **Submit Scenario** – توضیح کوتاه سناریو را وارد کنید (مثلاً *"استارتاپ با بنیان‌گذار و سرمایه‌گذار؛ ۱۰۰هزار نقد، ۱۸ ماه runway"*)، در صورت تمایل «Use LLM to convert to JSON» را بزنید و **Submit Scenario** را کلیک کنید. JSON سناریوی پارس‌شده (اعتبارسنجی با schema) در ناحیه نتیجه نمایش داده می‌شود.
-
-3. **Run Simulation** – **Run Simulation** را بزنید تا موتور با آخرین سناریوی ثبت‌شده اجرا شود. **Steps** و **Dry run** را تنظیم کنید. نتایج گام‌به‌گام و اسنپ‌شات نهایی نمایش داده می‌شود.
-
-4. **View Snapshot** – **View Snapshot** را بزنید تا آخرین اسنپ‌شات ذخیره‌شده از آخرین اجرا نمایش داده شود.
-
-5. **Graph / Impact View** – بعد از اجرا، **View Snapshot** را باز کنید و از نمای گراف برای دیدن گراف متغیرهای علّی و نمای impact (حالت اولیه در برابر نهایی، مهم‌ترین عوامل، یال‌های فعال) استفاده کنید.
-
-اسنپ‌شاتها همچنین در `data/snapshots/last_snapshot.json` ذخیره می‌شوند.
-
-### رفع خطای 503 (Service Unavailable)
-
-خطای **503** معمولاً یعنی درخواست به پروکسی رسیده ولی **اپ Flask در دسترس نیست** یا **تایم‌اوت شده**.
-
-1. **مطمئن شوید سرور روشن است:**
+2. **Health check:**
    ```bash
-   cd open_world_engine2 && python ui.py --port 5080
+   curl http://127.0.0.1:5081/health
    ```
-   یا با systemd: `sudo systemctl start open-world-ui`
+   Expected: `{"status":"ok","service":"enterprise_ops_decision_simulator"}`
 
-2. **تست سلامت:** `curl http://127.0.0.1:5080/health` باید `{"status":"ok"}` برگرداند.
-
-3. **اگر پشت Nginx هستید:** شبیه‌سازی و خلاصه‌سازی ممکن است طولانی شود. در `location` مربوطه تایم‌اوت را افزایش دهید:
+3. **Behind Nginx:** Simulations and narrative generation can take a long time. Increase timeouts:
    ```nginx
    proxy_read_timeout 300s;
    proxy_send_timeout 300s;
    ```
-   (خلاصه‌سازی `/api/narrative` هم برای traceهای بزرگ ممکن است چند ده ثانیه طول بکشد.)
 
-## Scenario parser
+---
 
-سناریوهای متنی با `scenario_parser.py` و با استفاده از کلاینت LLM تنظیم‌شده (AvalAI، Groq یا OpenAI) به JSON سناریو تبدیل می‌شوند. خروجی با `schemas/scenario_schema.py` اعتبارسنجی می‌شود (کلیدهای الزامی: `description`, `initial_agents`, `initial_state`, `relations`, `allowed_actions`). برای شکل مورد انتظار JSON به فایل‌های سناریو در `config/scenarios/` مراجعه کنید.
+## Operations scenario format (product path)
 
-## Architecture (summary)
+The product does not use hand-authored scenario JSON. It builds scenarios from:
 
-- **World state:** Causal variable graph (`variables`, `causal_links`); propagation in `core/propagation.py`. Snapshot exposes `global_state` for backward compatibility.
-- **Agents:** Belief state with noisy observation (`core/observation.py`); decisions use beliefs. Base agent, planner, utility; WorldModelAgent normalizes proposals.
-- **Rules & events:** Scenario-defined rules (`core/rule_engine.py`) and event queue (`core/event_queue.py`), including delayed_events.
-- **Actions:** Abstract actions via action_spec; `core/action_interpreter.py` maps to deltas (e.g. increase_variable, set_variable).
-- **Trace & narrative:** Each step appends to trace; `core/narrative_builder.py` builds a structured summary (and optionally LLM narrative) from the trace.
+- **Operations profile** — `schemas/ops_schema.py` (inventory, demand, fill rate, lead time, supplier risk, …)
+- **Decision template** — `config/ops_decisions.json` (e.g. `increase_safety_stock`, `expedite_reorder`)
 
-Full details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+See `adapters/ops_scenario_builder.py`. Engineering scenarios (JSON files under `config/scenarios/`) are documented in [Engine internals](docs/ENGINE_INTERNALS.md).
 
-## What to expect
+---
 
-- **Agents:** Founder (growth, conserve cash), Investor (runway, governance), CommunityLeader (engagement, trust).
-- **Example flow:** Founder proposes e.g. `launch_discount_campaign` → WorldModelAgent normalizes to a numeric delta (e.g. cash -5000, growth +5) → Governance validates → World model updates (with propagation if causal_links exist); narrative and trace are recorded.
-- Each turn prints a compact world snapshot (variables/global_state, entities, relations, narrative, version, turn).
-
-## Sample run log (3 turns, dry-run)
+## Architecture (product path)
 
 ```
-Running Open World Engine
-  steps=3 dry_run=True scenario=.../config/scenarios/demo_scenario.json
---- Turn 1 ---
-{
-  "entities": {},
-  "relations": [...],
-  "global_state": { "cash": 100000, "runway_months": 18, "growth": 11, ... },
-  "narrative": ["[v0] Rule-based fallback for steady_finance ..."],
-  "version": 1,
-  "turn": 1
-}
-...
---- Turn 3 ---
-{ ... }
-Done.
+ops_profile + decision_id
+  → ops_scenario_builder (deterministic)
+  → SimulationLoop (dry_run)
+  → decision_brief + ops_outcomes
+  → verdict, service/cost/risk/delay impact, comparison
 ```
 
-With LLM enabled, proposals and deltas will vary; governance still enforces non-negative resources and population.
+Causal propagation powers second-order effects; the impact map at `/graph` is supporting evidence. Full engine architecture: [docs/ENGINE_INTERNALS.md](docs/ENGINE_INTERNALS.md).
+
+---
+
+## What to Expect (product demo)
+
+**Default operations agents** (internal roles — not shown as "multi-agent" in the UI):
+
+| Agent | Focus |
+|-------|--------|
+| ops_director | Service level vs cost |
+| supply_chain_lead | Lead time, supplier risk |
+| finance_controller | Holding cost, margin |
+| planning_manager | Forecast accuracy, allocation |
+
+**Example product flow:**
+
+1. Load **demand spike + tight capacity** preset
+2. Select **Increase safety stock**; compare with **Expedite reorder**
+3. Simulate — ops_director executes the chosen decision on turn 1
+4. Causal links propagate fill rate, holding cost, backlog, stockout risk
+5. UI shows verdict, impact headlines, walk-away signals, and optional comparison cards
+
+---
+
+## Project Structure
+
+```
+owe/
+├── main.py                 # CLI entry point
+├── ui.py                   # Web UI server
+├── scenario_parser.py      # Free-text → scenario JSON (LLM or rule-based)
+├── config/
+│   ├── settings.py         # Loads config/settings.json + env
+│   ├── settings.json       # Optional local config (do not commit secrets; dry_run defaults true)
+│   ├── ops_presets.json        # Operations demo presets (stable / strained / uncertain)
+│   ├── ops_decisions.json      # 12 decision templates
+│   └── scenarios/          # Engineering scenario JSON files
+├── adapters/
+│   └── ops_scenario_builder.py      # Profile + decision → engine scenario (product path)
+├── legacy/
+│   └── startup/            # Former founder SKU (not wired to ui.py)
+├── simulation/
+│   └── loop.py             # SimulationLoop — main turn loop
+├── agents/                 # base_agent, world_model_agent, RoleAgents, memory, planner, utility
+├── core/                   # propagation, rule_engine, event_queue, action_interpreter,
+│                           # narrative_engine, narrative_builder, governance, llm_client, …
+├── world/                  # world_state, delayed_events
+├── model/                  # V2: valuespec, causal_graph, state
+├── policy/                 # V2: action DSL
+├── pipeline/               # Text → scenario JSON pipeline (orchestrator, entity extractor, …)
+├── epistemic/              # Belief update models
+├── schemas/                # scenario, proposal, delta, decision, ops schemas
+├── ui/                     # dashboard_payload, decision_brief, ops_outcomes, turn_trace
+├── summarization/          # NarrativeFacts, renderer, LLM narrator
+├── visualization/          # graph_viewer, impact_data
+├── templates/              # brief (product home), index (advanced), journal, graph, run_viewer
+├── static/                 # CSS, JS for Web UI
+├── data/snapshots/         # Written by runs (last_snapshot.json)
+├── output/decisions/       # Decision journal records
+├── docs/
+│   ├── ARCHITECTURE.md     # Causal graph, beliefs, rules, trace, narrative
+│   ├── ARCHITECTURE_DOSSIER.md
+│   ├── SYSTEM_GUIDE.md     # Pipeline, actions, variables, config
+│   └── HYBRID_ENGINE.md
+└── tests/                  # pytest suite
+```
+
+---
 
 ## Tests
 
-از پوشه `open_world_engine2`:
+From the project root:
 
 ```bash
 pip install -r requirements.txt
@@ -197,7 +401,32 @@ pip install pytest
 pytest tests/ -v
 ```
 
-## See also
+Test coverage includes: determinism, dry-run environment, scenario compiler, pipeline stages, narrative synthesizer, **ops schema/builder/E2E path guard**, **operations outcome language**, decision schema/brief/presets, kill criteria, calibration, LLM budget, V2 engine, and more.
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — گراف علّی، باورها، rule engine، صف رویداد، قرارداد اقدام، trace و narrative.
-- [INTEGRATION_NOTES.md](INTEGRATION_NOTES.md) — استفاده مجدد از کلاینت LLM مربوط به `sim_app` در همان مخزن.
+Operations product tests:
+
+```bash
+pytest tests/test_ops_*.py tests/test_ops_language.py tests/test_ui_routes.py -v
+```
+
+---
+
+## Documentation
+
+| Document | Contents |
+|----------|----------|
+| [docs/PRODUCT_GUIDE.md](docs/PRODUCT_GUIDE.md) | Buyer-facing product guide, demo script, planning workflow |
+| [docs/ADVISOR_PILOT.md](docs/ADVISOR_PILOT.md) | Consultant / S&OP advisor pilot kit |
+| [docs/SYSTEM_GUIDE.md](docs/SYSTEM_GUIDE.md) | Operations API, journal, config |
+| [docs/ENGINE_INTERNALS.md](docs/ENGINE_INTERNALS.md) | Engineering mode, Open World Engine |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Engine architecture (advanced) |
+| [docs/ARCHITECTURE_DOSSIER.md](docs/ARCHITECTURE_DOSSIER.md) | Full engine dossier (advanced) |
+| [docs/HYBRID_ENGINE.md](docs/HYBRID_ENGINE.md) | MC+RL and stochastic gating (advanced) |
+| [docs/EVENT_SIMULATOR.md](docs/EVENT_SIMULATOR.md) | Event Simulator: run it, API, reading output honestly |
+| [docs/EVENT_SIMULATOR_ARCHITECTURE.md](docs/EVENT_SIMULATOR_ARCHITECTURE.md) | Event Simulator architecture and repository audit |
+
+---
+
+## License
+
+See repository license file if present.

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "pricing",
+    "label_fa": "قیمت‌گذاری",
+    "label_en": "Pricing",
+    "move_fa": "افزایش قیمت ۳۰٪ برای مشتریان فعلی",
+    "move_en": "Raise prices 30% for existing customers",
+    "actors_fa": ["مشتریان فعلی", "تیم فروش", "رقبا"],
+    "actors_en": ["existing customers", "sales team", "competitors"],
+    "context_fa": "SaaS B2B با ARR حدود ۲M دلار. نرخ ریزش ماهانه ۴٪. تیم ۱۲ نفره.",
+    "context_en": "B2B SaaS at ~$2M ARR. Monthly churn 4%. Team of 12. Key variables: revenue, retention, burn rate, sales capacity.",
+    "constraints": {"budget": "$2M ARR", "team_size": 12, "runway_months": 9},
+    "horizon_months": 6
+  },
+  {
+    "id": "hiring",
+    "label_fa": "استخدام",
+    "label_en": "Hiring",
+    "move_fa": "استخدام ۵ مهندس در ۳ ماه",
+    "move_en": "Hire 5 engineers over 3 months",
+    "actors_fa": ["تیم فعلی", "مدیر محصول", "سرمایه‌گذار"],
+    "actors_en": ["current team", "product lead", "investors"],
+    "context_fa": "استارتاپ ۱۸ نفره. runway ۱۰ ماه. ظرفیت تحویل محصول در حداکثر است.",
+    "context_en": "18-person startup. 10 months runway. Product delivery at capacity. Key variables: burn rate, velocity, retention, hiring capacity.",
+    "constraints": {"team_size": 18, "runway_months": 10, "budget": "$800K cash"},
+    "horizon_months": 6
+  },
+  {
+    "id": "expansion",
+    "label_fa": "ورود به بازار",
+    "label_en": "Market entry",
+    "move_fa": "ورود به بازار اروپا با تیم فروش محلی",
+    "move_en": "Enter European market with local sales team",
+    "actors_fa": ["تیم فروش", "مشتریان آمریکایی", "رقبای محلی", "تیم حقوقی"],
+    "actors_en": ["sales team", "US customers", "local competitors", "legal team"],
+    "context_fa": "PMF در آمریکا. بودجه GTM محدود. نیاز به compliance اروپایی.",
+    "context_en": "PMF in US. Limited GTM budget. GDPR compliance required. Key variables: revenue, CAC, capacity, regulatory risk.",
+    "constraints": {"budget": "$500K GTM", "team_size": 25, "runway_months": 14, "regulatory": "GDPR"},
+    "horizon_months": 12
+  },
+  {
+    "id": "restructure",
+    "label_fa": "بازسازی تیم",
+    "label_en": "Restructuring",
+    "move_fa": "کاهش ۲۰٪ نیرو و تمرکز روی یک محصول",
+    "move_en": "Cut team 20% and focus on one product line",
+    "actors_fa": ["کارکنان", "مدیرعامل", "سرمایه‌گذار", "مشتریان enterprise"],
+    "actors_en": ["employees", "CEO", "investors", "enterprise customers"],
+    "context_fa": "رشد کند. burn بالا. دو خط محصول با overlap زیاد.",
+    "context_en": "Slow growth, high burn, two overlapping product lines. Key variables: burn rate, morale, retention, delivery capacity.",
+    "constraints": {"team_size": 40, "runway_months": 8},
+    "horizon_months": 6
+  },
+  {
+    "id": "product_invest",
+    "label_fa": "سرمایه‌گذاری محصول",
+    "label_en": "Product investment",
+    "move_fa": "ساخت نسخه enterprise با SSO و audit log",
+    "move_en": "Build enterprise tier with SSO and audit logs",
+    "actors_fa": ["تیم مهندسی", "فروش enterprise", "مشتریان mid-market"],
+    "actors_en": ["engineering team", "enterprise sales", "mid-market customers"],
+    "context_fa": "درخواست‌های enterprise زیاد اما ظرفیت فنی محدود. رقبا feature parity دارند.",
+    "context_en": "Strong enterprise inbound but limited eng capacity. Competitors have feature parity. Key variables: revenue, capacity, retention, time-to-market.",
+    "constraints": {"team_size": 22, "runway_months": 11, "budget": "2 eng squads"},
+    "horizon_months": 12
+  }
+]

@@ -1,0 +1,945 @@
+{
+ "id": "iran_mobile_studio_v0",
+ "domain": "exploratory",
+ "title": "Iranian mobile game studio under currency and connectivity shocks (exploratory)",
+ "time_unit": "days",
+ "version": "0.1.0",
+ "geography": [
+  "IR"
+ ],
+ "description": "EXPLORATORY, NOT A PRODUCT MODULE. A domestic free-to-play mobile studio selling in-app purchases through Iranian stores (Bazaar, Myket) and showing domestic ads. Behavioural relationships only, in index space (100 = before the shock). Revenue, wage bill, dollar-linked costs and cash are accounting identities computed outside the engine (research/iran_game_studio/study.py). Every coefficient was fixed before the historical benchmark was run, and every one is an expert_assumption: no Iran-specific estimate was found for any of them.",
+ "notes": "Two exogenous drivers are held by events: the free-market dollar rate and how usable the internet is. The exchange rate reaches the studio four ways: dollar-linked costs (accounting, immediate), the general price level (partial pass-through, lagged), wages (follow prices, plus extra pressure from dollar-paid remote work), and players' real income (incomes catch up with prices only partly). Connectivity reaches players two ways: sessions directly, and a slow habit that recovers slowly after the network does - the mechanism by which an outage costs players after it ends. Payments are hit harder than play because a purchase needs the payment path to work end to end.",
+ "variables": [
+  {
+   "id": "fx_rate",
+   "label": "Free-market dollar rate",
+   "unit": "index (100 = before)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 10.0,
+    "max": 1000.0
+   },
+   "dynamics": {
+    "response": 1.0
+   },
+   "observability": "measured",
+   "observability_class": "observable",
+   "status": "user_assumption",
+   "description": "Held by the currency event.",
+   "observability_note": "Daily free-market quotes are published (e.g. bonbast, tgju). The event holds it."
+  },
+  {
+   "id": "connectivity",
+   "label": "Internet usability for players",
+   "unit": "index (100 = normal)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 0.0,
+    "max": 100.0
+   },
+   "dynamics": {
+    "response": 1.0
+   },
+   "observability": "measured",
+   "observability_class": "proxy_observable",
+   "status": "user_assumption",
+   "description": "Held by shutdown / throttling events. 10 = near-total shutdown with the domestic network partly up; 60 = heavy throttling.",
+   "observability_note": "No direct series for a studio; proxies: NetBlocks / Cloudflare Radar / IODA traffic for Iran, the studio's own server request logs."
+  },
+  {
+   "id": "price_level",
+   "label": "General price level (CPI)",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 10.0,
+    "max": 1000.0
+   },
+   "dynamics": {
+    "response": 0.03
+   },
+   "observability": "measured",
+   "observability_class": "observable",
+   "status": "expert_assumption",
+   "description": "Follows the dollar partially and slowly.",
+   "observability_note": "Statistical Centre of Iran monthly CPI."
+  },
+  {
+   "id": "household_income",
+   "label": "Players' household nominal income",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 10.0,
+    "max": 1000.0
+   },
+   "dynamics": {
+    "response": 0.02
+   },
+   "observability": "derived",
+   "observability_class": "latent",
+   "status": "expert_assumption",
+   "description": "Catches up with prices only partly and with a lag.",
+   "observability_note": "No timely series; annual household income-expenditure survey only. Latent for a studio."
+  },
+  {
+   "id": "real_income",
+   "label": "Players' real income",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 10.0,
+    "max": 300.0
+   },
+   "dynamics": {
+    "response": 1.0
+   },
+   "observability": "derived",
+   "observability_class": "latent",
+   "status": "expert_assumption",
+   "description": "Nominal income relative to prices (linearised).",
+   "observability_note": "Derived from two latent/annual series; latent for a studio."
+  },
+  {
+   "id": "studio_wage",
+   "label": "Wage per developer",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 10.0,
+    "max": 1000.0
+   },
+   "dynamics": {
+    "response": 0.03
+   },
+   "observability": "measured",
+   "observability_class": "observable",
+   "status": "expert_assumption",
+   "description": "What it costs to keep a developer: follows prices, plus pressure from remote work paid in dollars.",
+   "observability_note": "The studio's own payroll."
+  },
+  {
+   "id": "iap_price",
+   "label": "In-app prices (tomans)",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 20.0,
+    "max": 500.0
+   },
+   "dynamics": {
+    "response": 1.0
+   },
+   "observability": "measured",
+   "observability_class": "observable",
+   "status": "user_assumption",
+   "description": "The studio's decision. No incoming edges.",
+   "observability_note": "The studio's own price list."
+  },
+  {
+   "id": "relative_price",
+   "label": "In-app prices relative to everything else",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 10.0,
+    "max": 500.0
+   },
+   "dynamics": {
+    "response": 1.0
+   },
+   "observability": "derived",
+   "observability_class": "latent",
+   "status": "expert_assumption",
+   "description": "In-app price relative to the price level (linearised).",
+   "observability_note": "Derived: own price list over CPI."
+  },
+  {
+   "id": "staff",
+   "label": "Team capacity",
+   "unit": "index (100 = today's team)",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 0.0,
+    "max": 200.0
+   },
+   "dynamics": {
+    "response": 1.0
+   },
+   "observability": "measured",
+   "observability_class": "observable",
+   "status": "user_assumption",
+   "description": "Moved only by layoffs or departures (interventions / events).",
+   "observability_note": "The studio's own headcount."
+  },
+  {
+   "id": "content_output",
+   "label": "Content and update output",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 0.0,
+    "max": 200.0
+   },
+   "dynamics": {
+    "response": 0.1
+   },
+   "observability": "measured",
+   "observability_class": "observable",
+   "status": "expert_assumption",
+   "description": "Follows team capacity with about a week's delay.",
+   "observability_note": "The studio's own release log (updates, events per month)."
+  },
+  {
+   "id": "play_habit",
+   "label": "Players' habit of returning",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 0.0,
+    "max": 150.0
+   },
+   "dynamics": {
+    "response": 0.04
+   },
+   "observability": "derived",
+   "observability_class": "latent",
+   "status": "expert_assumption",
+   "axis": "habit_recovery",
+   "description": "Slow: breaks during an outage and rebuilds over weeks. Half-life ~17 days at the central setting.",
+   "observability_note": "No series; inferred from retention cohorts (D7/D30) in the studio's analytics."
+  },
+  {
+   "id": "active_players",
+   "label": "Daily active players",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 0.0,
+    "max": 200.0
+   },
+   "dynamics": {
+    "response": 0.3
+   },
+   "observability": "measured",
+   "observability_class": "observable",
+   "status": "expert_assumption",
+   "description": "Sessions: connectivity directly, plus habit.",
+   "observability_note": "Store console / the studio's own analytics (DAU)."
+  },
+  {
+   "id": "payer_conversion",
+   "label": "Share of active players who pay",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 0.0,
+    "max": 300.0
+   },
+   "dynamics": {
+    "response": 0.1
+   },
+   "observability": "measured",
+   "observability_class": "observable",
+   "status": "expert_assumption",
+   "description": "Falls with the relative price, rises with real income, and needs the payment path to work.",
+   "observability_note": "Store console: paying users / DAU."
+  },
+  {
+   "id": "ad_rate",
+   "label": "Domestic ad price per impression (tomans)",
+   "unit": "index",
+   "baseline": 100.0,
+   "scale": 100.0,
+   "range": {
+    "min": 10.0,
+    "max": 1000.0
+   },
+   "dynamics": {
+    "response": 0.02
+   },
+   "observability": "measured",
+   "observability_class": "observable",
+   "status": "expert_assumption",
+   "description": "Domestic ad prices follow inflation slowly.",
+   "observability_note": "Ad network dashboard: eCPM in tomans."
+  }
+ ],
+ "edges": [
+  {
+   "source": "fx_rate",
+   "target": "price_level",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.3,
+    "central": 0.5,
+    "high": 0.7
+   },
+   "lag": {
+    "min": 15,
+    "max": 45,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "fx_pass_through",
+   "mechanism": "Imported goods and expectations carry a dollar move into consumer prices over months; not all of it."
+  },
+  {
+   "source": "price_level",
+   "target": "household_income",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.6,
+    "central": 0.75,
+    "high": 0.9
+   },
+   "lag": {
+    "min": 30,
+    "max": 90,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "income_catch_up",
+   "mechanism": "Wages and transfers are adjusted toward inflation, typically at the new year and only partly."
+  },
+  {
+   "source": "household_income",
+   "target": "real_income",
+   "polarity": "positive",
+   "effect": {
+    "low": 1.0,
+    "central": 1.0,
+    "high": 1.0
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "high",
+   "status": "expert_assumption",
+   "mechanism": "Definition (linearised)."
+  },
+  {
+   "source": "price_level",
+   "target": "real_income",
+   "polarity": "negative",
+   "effect": {
+    "low": 1.0,
+    "central": 1.0,
+    "high": 1.0
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "high",
+   "status": "expert_assumption",
+   "mechanism": "Definition (linearised)."
+  },
+  {
+   "source": "price_level",
+   "target": "studio_wage",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.7,
+    "central": 0.7,
+    "high": 0.7
+   },
+   "lag": {
+    "min": 30,
+    "max": 60,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "mechanism": "Developers' pay follows living costs."
+  },
+  {
+   "source": "fx_rate",
+   "target": "studio_wage",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.1,
+    "central": 0.2,
+    "high": 0.4
+   },
+   "lag": {
+    "min": 15,
+    "max": 45,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "talent_pressure",
+   "mechanism": "Remote work paid in dollars sets an outside option; a falling rial raises what it takes to keep people."
+  },
+  {
+   "source": "iap_price",
+   "target": "relative_price",
+   "polarity": "positive",
+   "effect": {
+    "low": 1.0,
+    "central": 1.0,
+    "high": 1.0
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "high",
+   "status": "expert_assumption",
+   "mechanism": "Definition (linearised)."
+  },
+  {
+   "source": "price_level",
+   "target": "relative_price",
+   "polarity": "negative",
+   "effect": {
+    "low": 1.0,
+    "central": 1.0,
+    "high": 1.0
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "high",
+   "status": "expert_assumption",
+   "mechanism": "Definition (linearised)."
+  },
+  {
+   "source": "relative_price",
+   "target": "payer_conversion",
+   "polarity": "negative",
+   "effect": {
+    "low": 0.5,
+    "central": 1.0,
+    "high": 1.6
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "price_sensitivity",
+   "mechanism": "Fewer players pay when in-app prices rise relative to other prices. No Iran-specific in-app price elasticity was found."
+  },
+  {
+   "source": "real_income",
+   "target": "payer_conversion",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.5,
+    "central": 1.0,
+    "high": 1.5
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "income_sensitivity",
+   "mechanism": "Games are discretionary spending; it shrinks when real income does."
+  },
+  {
+   "source": "connectivity",
+   "target": "payer_conversion",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.2,
+    "central": 0.4,
+    "high": 0.6
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "network_dependence",
+   "mechanism": "A purchase needs store, gateway and game server reachable at once; failures compound beyond the drop in play."
+  },
+  {
+   "source": "connectivity",
+   "target": "active_players",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.4,
+    "central": 0.6,
+    "high": 0.8
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "network_dependence",
+   "mechanism": "Online sessions fail when the network does. Low: much of the game works offline or on the domestic network."
+  },
+  {
+   "source": "connectivity",
+   "target": "play_habit",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.6,
+    "central": 0.6,
+    "high": 0.6
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "mechanism": "Players who cannot play drift to other pastimes; the habit weakens while the network is down."
+  },
+  {
+   "source": "content_output",
+   "target": "play_habit",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.3,
+    "central": 0.6,
+    "high": 1.0
+   },
+   "lag": {
+    "min": 14,
+    "max": 28,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "mechanism": "Fewer updates and events, weaker reason to return. Added as a swept axis after the first central run, before the benchmark was read: the ranking of 'cut the team' hinged on it.",
+   "axis": "content_dependence"
+  },
+  {
+   "source": "play_habit",
+   "target": "active_players",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.4,
+    "central": 0.4,
+    "high": 0.4
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "mechanism": "Returning players."
+  },
+  {
+   "source": "real_income",
+   "target": "active_players",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.1,
+    "central": 0.1,
+    "high": 0.1
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "mechanism": "Small: playing a free game costs little, but data plans and handset upgrades do."
+  },
+  {
+   "source": "staff",
+   "target": "content_output",
+   "polarity": "positive",
+   "effect": {
+    "low": 1.0,
+    "central": 1.0,
+    "high": 1.0
+   },
+   "lag": {
+    "min": 0,
+    "max": 0,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "medium",
+   "status": "expert_assumption",
+   "mechanism": "Output follows team capacity."
+  },
+  {
+   "source": "price_level",
+   "target": "ad_rate",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.6,
+    "central": 0.6,
+    "high": 0.6
+   },
+   "lag": {
+    "min": 30,
+    "max": 60,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "mechanism": "Domestic advertisers' budgets rise with inflation, partly and late."
+  },
+  {
+   "source": "content_output",
+   "target": "payer_conversion",
+   "polarity": "positive",
+   "effect": {
+    "low": 0.2,
+    "central": 0.5,
+    "high": 0.8
+   },
+   "lag": {
+    "min": 7,
+    "max": 21,
+    "unit": "days"
+   },
+   "evidence": [],
+   "geography": [
+    "IR"
+   ],
+   "confidence": "low",
+   "status": "expert_assumption",
+   "axis": "content_dependence",
+   "mechanism": "Live-ops events and new items are what most purchases are made on; fewer of them, fewer purchases. Added with the axis above."
+  }
+ ],
+ "axes": [
+  {
+   "id": "price_sensitivity",
+   "label": "How much paying falls when in-app prices rise",
+   "settings": [
+    "low",
+    "central",
+    "high"
+   ],
+   "applies_to": [
+    "relative_price->payer_conversion"
+   ],
+   "status": "expert_assumption",
+   "mapping": {
+    "low": {
+     "effect_setting": "low"
+    },
+    "central": {
+     "effect_setting": "central"
+    },
+    "high": {
+     "effect_setting": "high"
+    }
+   }
+  },
+  {
+   "id": "income_sensitivity",
+   "label": "How much paying falls with real income",
+   "settings": [
+    "low",
+    "central",
+    "high"
+   ],
+   "applies_to": [
+    "real_income->payer_conversion"
+   ],
+   "status": "expert_assumption",
+   "mapping": {
+    "low": {
+     "effect_setting": "low"
+    },
+    "central": {
+     "effect_setting": "central"
+    },
+    "high": {
+     "effect_setting": "high"
+    }
+   }
+  },
+  {
+   "id": "fx_pass_through",
+   "label": "How much of a dollar move reaches prices",
+   "settings": [
+    "low",
+    "central",
+    "high"
+   ],
+   "applies_to": [
+    "fx_rate->price_level"
+   ],
+   "status": "expert_assumption",
+   "mapping": {
+    "low": {
+     "effect_setting": "low"
+    },
+    "central": {
+     "effect_setting": "central"
+    },
+    "high": {
+     "effect_setting": "high"
+    }
+   }
+  },
+  {
+   "id": "network_dependence",
+   "label": "How much the game and its payments need the open internet",
+   "settings": [
+    "low",
+    "central",
+    "high"
+   ],
+   "applies_to": [
+    "connectivity->active_players",
+    "connectivity->payer_conversion"
+   ],
+   "status": "expert_assumption",
+   "mapping": {
+    "low": {
+     "effect_setting": "low"
+    },
+    "central": {
+     "effect_setting": "central"
+    },
+    "high": {
+     "effect_setting": "high"
+    }
+   }
+  },
+  {
+   "id": "income_catch_up",
+   "label": "How far incomes catch up with prices",
+   "settings": [
+    "low",
+    "central",
+    "high"
+   ],
+   "applies_to": [
+    "price_level->household_income"
+   ],
+   "status": "expert_assumption",
+   "mapping": {
+    "low": {
+     "effect_setting": "low"
+    },
+    "central": {
+     "effect_setting": "central"
+    },
+    "high": {
+     "effect_setting": "high"
+    }
+   }
+  },
+  {
+   "id": "talent_pressure",
+   "label": "How hard dollar-paid remote work pulls on wages",
+   "settings": [
+    "low",
+    "central",
+    "high"
+   ],
+   "applies_to": [
+    "fx_rate->studio_wage"
+   ],
+   "status": "expert_assumption",
+   "mapping": {
+    "low": {
+     "effect_setting": "low"
+    },
+    "central": {
+     "effect_setting": "central"
+    },
+    "high": {
+     "effect_setting": "high"
+    }
+   }
+  },
+  {
+   "id": "habit_recovery",
+   "label": "How fast the playing habit comes back",
+   "settings": [
+    "slow",
+    "central",
+    "fast"
+   ],
+   "applies_to": [
+    "play_habit"
+   ],
+   "status": "expert_assumption",
+   "mapping": {
+    "slow": {
+     "response_multiplier": 0.5
+    },
+    "central": {
+     "response_multiplier": 1.0
+    },
+    "fast": {
+     "response_multiplier": 2.0
+    }
+   }
+  },
+  {
+   "id": "content_dependence",
+   "label": "How much players and purchases depend on new content and events",
+   "settings": [
+    "low",
+    "central",
+    "high"
+   ],
+   "applies_to": [
+    "content_output->play_habit",
+    "content_output->payer_conversion"
+   ],
+   "status": "expert_assumption",
+   "mapping": {
+    "low": {
+     "effect_setting": "low"
+    },
+    "central": {
+     "effect_setting": "central"
+    },
+    "high": {
+     "effect_setting": "high"
+    }
+   }
+  }
+ ],
+ "interventions": [
+  {
+   "id": "raise_iap_prices",
+   "label": "Raise in-app prices",
+   "status": "user_assumption",
+   "magnitude_label": "percent",
+   "default_magnitude": 30.0,
+   "default_start_turn": 1,
+   "default_duration": 365,
+   "effects_per_unit": {
+    "iap_price": 1.0
+   }
+  },
+  {
+   "id": "cut_team",
+   "label": "Reduce the team",
+   "status": "user_assumption",
+   "magnitude_label": "percent of team",
+   "default_magnitude": 25.0,
+   "default_start_turn": 1,
+   "default_duration": 365,
+   "effects_per_unit": {
+    "staff": -1.0
+   }
+  },
+  {
+   "id": "more_ads",
+   "label": "Show more ads",
+   "status": "expert_assumption",
+   "magnitude_label": "percent more ad load",
+   "default_magnitude": 50.0,
+   "default_start_turn": 1,
+   "default_duration": 365,
+   "description": "Ad impressions per player rise (accounting); the annoyance costs habit at 0.1 points per point of extra load (expert assumption).",
+   "effects_per_unit": {
+    "play_habit": -0.1
+   }
+  }
+ ]
+}

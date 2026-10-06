@@ -1,0 +1,46 @@
+{
+  "_note": "Explicit mapping from real-world metrics to simulation variables. A proxy is never silently treated as the real variable: every proxy mapping must state its limitations, and the registry refuses to load one that does not.",
+
+  "mappings": [
+    {
+      "id": "map_delay_from_si_global",
+      "source_metric": "Average delay for LATE vessel arrivals (Sea-Intelligence Global Liner Performance)",
+      "simulation_variable": "shipping_delay",
+      "mapping_type": "proxy",
+      "transformation": "identity",
+      "source_unit": "days",
+      "target_unit": "days",
+      "source_ids": [
+        "si_glp_2021_03", "si_glp_2021_04", "si_glp_2021_05",
+        "si_glp_2021_06", "si_glp_2021_07", "si_glp_2021_08"
+      ],
+      "rationale": "The simulation variable shipping_delay is 'average additional door-to-door transit time for cargo routed through the affected corridor', in days. Sea-Intelligence publishes an average delay for late vessel arrivals in days, which is the closest publicly available quantity in the same unit — no conversion is required, so the mapping itself introduces no scaling error.",
+      "limitations": "THREE material limitations, all of which weaken the replay: (1) GEOGRAPHY — the published figure is a GLOBAL aggregate across all trades, while the simulated world is a single port. A one-port disruption can only ever move a small share of a global average, so the model and the observation are not measuring the same population. (2) FREQUENCY — the series is MONTHLY while the simulation runs WEEKLY, so a four-and-a-half week disruption is spanned by roughly two observations. (3) CONFOUNDING — mid-2021 global container shipping was under severe pandemic-driven congestion from many simultaneous causes; movement in this series cannot be attributed to Yantian. Consequence: this proxy can test DIRECTION weakly and cannot test MAGNITUDE at all."
+    },
+    {
+      "id": "map_capacity_from_reported_share",
+      "source_metric": "Reported terminal operating capacity as a share of normal (carrier advisories and trade press)",
+      "simulation_variable": "port_capacity",
+      "mapping_type": "normalized",
+      "transformation": "normalize_against_baseline",
+      "source_unit": "share of normal operations (0-1)",
+      "target_unit": "index (100 = normal weekly throughput)",
+      "parameters": {"baseline": 1.0, "scale": 100.0},
+      "source_ids": ["scdive_yantian_2021", "flexport_yantian_2021"],
+      "rationale": "port_capacity is defined as an index where 100 = normal weekly throughput, so a reported '30% of normal capacity' maps to 30 index points by construction. This mapping is used to define the INJECTED EVENT, not to evaluate the model: it is a model input, not a test of it.",
+      "limitations": "Reported operating capacity is an operational statement by carriers and press, not a measured throughput figure. The transition dates between capacity levels are known only approximately (last week of May; partial reopening 10 June; full resumption 24 June), so the injected event's step boundaries carry date uncertainty of a few days. No weekly TEU throughput series was obtainable to check these percentages."
+    },
+    {
+      "id": "map_backlog_from_teu_awaiting",
+      "source_metric": "Container volume awaiting export at the affected terminal (TEU)",
+      "simulation_variable": "order_backlog",
+      "mapping_type": "proxy",
+      "transformation": "identity",
+      "source_unit": "TEU",
+      "target_unit": "index (100 = normal open order book)",
+      "source_ids": ["flexport_yantian_2021", "scdive_yantian_2021"],
+      "rationale": "Containers stranded awaiting export are the most directly observable counterpart to the model's order_backlog.",
+      "limitations": "NOT USABLE AS A SERIES, and therefore not scored. Only isolated point estimates exist ('more than 400,000 TEU' on 14 June 2021; '~300,000 TEU' reported elsewhere), they are lower bounds rather than measurements, and no normal-conditions baseline TEU figure was obtainable — so there is no way to convert them to the model's 100 = normal index without inventing the denominator. Recorded here to make the gap explicit rather than to enable a fit."
+    }
+  ]
+}

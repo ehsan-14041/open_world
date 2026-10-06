@@ -1,0 +1,1067 @@
+{
+  "lang": "en",
+  "dir": "ltr",
+  "label": "English",
+  "native": "English",
+  "numerals": "latn",
+  "ui": {
+    "product": "Decision Compare",
+    "tagline": "See the trade-offs before you decide.",
+    "principle_1": "Same business.",
+    "principle_2": "Same assumptions.",
+    "principle_3": "Different decision.",
+    "home_question": "What kind of business do you run?",
+    "home_lede": "Pick the one closest to yours. You will compare a few versions of one real decision — with your own figures.",
+    "home_pick": "Compare the options",
+    "home_footer": "Each report compares three versions of one decision on the same model, so the differences come from the decision rather than from different guesses. It is a scenario comparison under stated assumptions — not a prediction, and not advice.",
+    "switch_business": "Change business type",
+    "language": "Language",
+    "demo_badge": "Demo — fictional {noun}",
+    "back_home": "All business types",
+    "decision_eyebrow": "The decision",
+    "your_options": "Your three choices",
+    "ranked_first": "Ranked first",
+    "ranked_first_cases": "Ranked first in {n} of {total} tested cases",
+    "ranked_first_central": "Ranks first under the current assumptions",
+    "per_month": "per month",
+    "per_month_after": "once things have settled",
+    "today": "today",
+    "cash_at_90": "cash after 90 days",
+    "cash_runs_out": "cash runs out on day {day}",
+    "orders_change": "{unit}",
+    "not_a_prediction": "A scenario comparison under stated assumptions — not a prediction.",
+    "tested_cases_tooltip": "These are tested assumption combinations, not probabilities.",
+    "why_title": "Why does {option} come out ahead?",
+    "why_tie": "Why is it this close?",
+    "why_lose_units": "You lose about {pct} of your {unit},",
+    "why_gain": "but under the current assumptions the higher price more than makes up for it.",
+    "why_gain_capacity": "but your diary was already full, so most of those were people you were turning away anyway.",
+    "why_cost": "and the saving on {cost} more than makes up for it.",
+    "why_vs_a": "Against {other}, that is {amount} more cash after 90 days.",
+    "why_gap": "{lead} is {amount} ahead of {second}.",
+    "chart_eyebrow": "The next 90 days",
+    "chart_title": "Cash in the bank under each choice",
+    "chart_alt": "Cash over 90 days for the three choices. {summary}",
+    "chart_today": "today",
+    "cash_zero": "cash = 0",
+    "day": "Day {n}",
+    "cash_derived": "Cash is calculated from the simulated business activity. It is not directly simulated by the engine.",
+    "compare_table": "Side by side",
+    "row_cash_30": "Cash after 30 days",
+    "row_cash_90": "Cash after 90 days",
+    "row_net": "Net per month once settled",
+    "row_utilisation": "How full you end up",
+    "row_turned_away": "Turned away per day",
+    "unknown_eyebrow": "The biggest unknown",
+    "unknown_why": "Why it matters",
+    "unknown_could": "Could it change the decision?",
+    "unknown_how": "How you could find out",
+    "change_eyebrow": "What could change the answer?",
+    "change_title": "Which assumptions actually move the decision",
+    "influence_high": "High",
+    "influence_medium": "Medium",
+    "influence_low": "Low",
+    "changes_ranking": "changes which ranks first",
+    "changes_size": "changes the size of the gap",
+    "only_one_flips": "Only one assumption changed which option ranked first: {name}.",
+    "several_flip": "{n} assumptions changed which option ranked first: {names}.",
+    "none_flips": "Nothing we tested changed which option ranked first.",
+    "try_it": "Try it",
+    "other_assumptions": "Other assumptions you can change",
+    "evidence_eyebrow": "Where the numbers come from",
+    "group_yours": "Your numbers",
+    "group_research": "External research",
+    "group_assumptions": "Model assumptions",
+    "group_calculated": "Calculated results",
+    "no_research": "Nothing here is set from a published study at the setting you have chosen.",
+    "no_research_ever": "No published study covers this trade closely enough to use. Every setting here is our judgement.",
+    "does_title": "What this does — and doesn't do",
+    "does": "This does",
+    "does_not": "This does not",
+    "does_1": "Compare several decisions consistently.",
+    "does_2": "Show the financial trade-offs.",
+    "does_3": "Show which assumptions matter.",
+    "does_4": "Show what could change the ranking.",
+    "cta_lede": "Your figures stay in this page. Nothing is sent anywhere.",
+    "cta_run": "Compare my choices",
+    "cta_reset": "Back to the demo",
+    "cta_done": "Done — this page now uses your numbers.",
+    "group_about": "About your business",
+    "group_costs": "Your costs",
+    "group_capacity": "Your capacity",
+    "group_changed": "What changed",
+    "group_mix": "What you sell",
+    "err_numbers": "Please fill in every number.",
+    "err_cost_high": "We can't compare these options with these numbers yet.",
+    "err_cost_high_why": "Your costs are the same as or higher than your sales, so there is no margin to compare. Check the cost figure.",
+    "err_positive": "These need to be more than zero: {names}.",
+    "err_utilisation": "How full the diary is should be between 1% and 100%.",
+    "err_failed": "Something went wrong while comparing. No numbers are shown, because half-finished ones would be worse than none.",
+    "how_title": "How this was calculated",
+    "how_open": "Method, sources and reproducibility",
+    "advanced": "Advanced",
+    "currency_note": "All figures are in whatever currency you entered.",
+    "klass_labels": {
+      "Customer input": "Your numbers",
+      "External research": "External research",
+      "Assumption": "Model assumption",
+      "Derived": "Calculated"
+    },
+    "setting_labels": {
+      "low": "Low",
+      "central": "Middle",
+      "high": "High",
+      "slow": "Slow",
+      "fast": "Fast"
+    },
+    "value_of_sales": "{v} ({p}% of sales)",
+    "pct_sign": "%",
+    "per_day": "a day",
+    "whoami_cash": "in cash",
+    "whoami_capacity": "of capacity a day",
+    "elasticity_plain": "≈{v}% of {unit} per 1% rise",
+    "render_failed": "Something went wrong drawing this page. The figures shown may be out of date — please reload.",
+    "why_demand_grows": "Demand is still growing at this price,",
+    "why_demand_holds": "Demand barely moves at this price,",
+    "why_capacity_full": "and you were already at capacity, so the gain comes from the price rather than from more work.",
+    "why_price_through": "and the higher price carries almost straight through to what you keep.",
+    "verdict": "{option} leaves you with the most cash after 90 days — under these assumptions.",
+    "verdict_close": "{lead} and {second} finish within {amount} of each other after 90 days — under these assumptions.",
+    "use_your_numbers": "Use your own numbers",
+    "answer_changed_banner": "The answer changed — this is the assumption that matters most.",
+    "home_flow": "Pick your business → see three choices → test your numbers.",
+    "credibility": "Every figure on the page comes from one model. Every assumption behind it is named and marked as your number, published research, or our own assumption — and the one most likely to change the answer can be tested.",
+    "chart_shock": "the increase starts",
+    "chart_axis_unit": "cash",
+    "currency_pick": "Show figures in",
+    "currency_none": "no symbol",
+    "print_view": "Print or save as PDF",
+    "print_hint": "Verdict, chart and assumptions. Everything else is left out.",
+    "flow_step_of": "{n} of {total}",
+    "flow_back": "Back",
+    "flow_next": "Next",
+    "flow_see": "Show me the comparison",
+    "flow_other": "Something else",
+    "flow_approx": "It doesn't need to be exact.",
+    "flow_example": "Or look at a worked example",
+    "flow_change": "Change your numbers",
+    "ahead_now": "Currently ahead",
+    "per_month_label": "monthly",
+    "why_q": "Why is {option} ahead?",
+    "unknown_lead": "But one thing could change the answer.",
+    "flip_title": "The answer changed.",
+    "flip_body": "At this setting, {winner} moves ahead of {loser}.",
+    "flip_same": "At this setting {winner} still comes out ahead.",
+    "unsure_q": "Not sure?",
+    "unsure_lead": "Here is a simple way to find out:",
+    "give_me_test": "Show me that test",
+    "test_reading": "In the second week after a {rise} rise, compared with the week before, the model expects the repriced items to sell:",
+    "assume_reveal_q": "What is this answer built on?",
+    "assume_reveal_btn": "Show the assumptions",
+    "method_btn": "How it was calculated",
+    "home_hero": "Got a business decision to make?",
+    "home_hero_2": "See the trade-offs before you make it.",
+    "home_problem_q": "What's the problem right now?",
+    "home_example_lead": "Say your ingredient costs go up 30%:",
+    "home_example_cta": "Compare them",
+    "noscript": "This page needs JavaScript to work.",
+    "beat_now": "If you do nothing",
+    "beat_now_cap": "{mnet} a month · {cash} in the bank after 90 days",
+    "beat_options": "Three things you can do",
+    "beat_race": "The 90-day race",
+    "overtake": "From day {d}, {b} moves ahead of {a}",
+    "beat_monday": "Your next step: a small price test",
+    "census_block": "{opt} in {n} of {total}",
+    "capacity_full_note": "Your diary is full — turning away about {n} appointments a day",
+    "resume_note": "Your numbers from last time",
+    "start_over": "Start over",
+    "decide_t": "Which one are you going with?",
+    "decide_lead": "Record your choice and I'll make you a sheet you can keep, print, or show someone.",
+    "decide_pick": "I'm going with this",
+    "sheet_title": "Decision sheet",
+    "sheet_id": "Reference",
+    "sheet_date": "Date",
+    "sheet_situation": "The situation",
+    "sheet_decision": "My decision",
+    "sheet_compared": "The three I compared",
+    "sheet_chosen": "chosen",
+    "sheet_month": "monthly",
+    "sheet_rests": "What this decision rests on",
+    "sheet_will_do": "And this is what I'll measure",
+    "sheet_sign": "Signed and dated",
+    "sheet_reproduce": "None of these figures is stored anywhere; they are recalculated from the link itself. Anyone who opens it sees exactly these numbers.",
+    "sheet_copy": "Copy link",
+    "sheet_copied": "Copied",
+    "sheet_back": "Back to the comparison",
+    "rest_shock": "What changed",
+    "rest_horizon": "Compared over",
+    "rest_horizon_v": "{n} days",
+    "rest_stability": "How stable this choice is",
+    "rest_stability_v": "first in {n} of {total} tested cases",
+    "test_start": "I've started the test",
+    "test_started_on": "Started {date}",
+    "test_come_back": "Come back after at least two weeks. Until then, count the repriced items and the unchanged ones every day.",
+    "test_enter": "Enter the result",
+    "test_cancel": "Never mind",
+    "test_form_t": "Record what happened",
+    "test_rise_l": "How much did you put the price up?",
+    "test_before_l": "Daily {unit} before",
+    "test_after_l": "Daily {unit} in the latest days",
+    "test_calc": "Work it out",
+    "test_bad": "Check the numbers: the price rise and both counts for the repriced items must be above zero, each average must cover at least one day and no more days than have passed, and the unchanged items need both counts or neither.",
+    "measured_lead": "Your own test now sets this assumption.",
+    "measured_on": "Recorded {date}",
+    "measured_clear": "Clear this result",
+    "measured_row": "Price sensitivity, from your own test",
+    "sheet_measured": "My own test",
+    "flow_kind_q": "What kind of place is it?",
+    "flow_kind_hint": "Same model either way — the words and the starting estimate differ.",
+    "share_q": "Share this number with the others?",
+    "share_why": "The estimate this page starts from comes from a 2010 American study of eating out. Results from tests that met their conditions, from businesses here, can improve the next starting estimate.",
+    "share_what": "What gets sent?",
+    "share_list_e": "the change you observed, per 1% of price",
+    "share_list_rise": "how much you put the price up",
+    "share_list_kind": "the kind of business",
+    "share_list_date": "the date (the day, not the time)",
+    "share_list_anon": "a random id your browser made up",
+    "share_not": "Your sales, your cash, your order counts, your name and your address are not sent. They stay on this page.",
+    "share_go": "Send it",
+    "share_no": "No thanks",
+    "share_done": "Sent. Thank you.",
+    "share_fail": "It didn't send. No matter — your measurement is still here.",
+    "sheet_yours_q": "Facing a decision like this yourself?",
+    "sheet_yours_go": "See your own three choices",
+    "own_t": "Or build your own option",
+    "own_lead": "The same model, with the levers set by you: raise prices by as much as you like, and add “{reduce}” if you want.",
+    "own_p_l": "How much would you raise prices?",
+    "own_r_l": "Also: {reduce}",
+    "own_name_p": "Raise prices {p}",
+    "own_name_pr": "Raise prices {p} + {reduce}",
+    "own_name_r": "Hold prices + {reduce}",
+    "own_name_0": "Hold prices, change nothing",
+    "own_label": "Your option",
+    "own_same": "This is option “{x}” — and the model gives back exactly the same figure.",
+    "own_vs_more": "{amount} more cash after {n} days than “{lead}”, which leads the three on that measure.",
+    "own_vs_less": "{amount} less cash after {n} days than “{lead}”, which leads the three on that measure.",
+    "own_vs_equal": "About the same cash after {n} days as “{lead}”, which leads the three on that measure.",
+    "own_census": "In {n} of {total} tested cases it does at least as well as the best of the three.",
+    "own_units_down": "About {pct} fewer {unit}",
+    "own_units_up": "About {pct} more {unit}",
+    "own_units_flat": "The number of {unit} stays about the same",
+    "own_how": "This option was worked out just now in your own browser, by the same model that produced the three. Before it was allowed to, your browser rebuilt all {n} precomputed cases on this page and checked them against the originals. Your business’s figures do not leave this page.",
+    "own_good": "The mix you set yourself",
+    "own_stability_v": "at least as good as the best of the three in {n} of {total} cases",
+    "ask_t": "Ask your own question",
+    "ask_lead": "Write it the way you would ask it yourself. If it is one this tool can answer with numbers, it takes you straight there; if not, it says plainly that it cannot yet.",
+    "ask_ph": "For example: my supplier put prices up 25% — should I raise mine 7%, or drop the low-margin lines?",
+    "ask_keep": "Keep my question",
+    "ask_keep_why": "So it becomes clear what owners actually ask, and what this tool should learn next. The text is kept as you wrote it, with the day (not the time) and a random id your browser made. Phone numbers, emails and web addresses are removed before it is stored. Don’t write names or anything private.",
+    "ask_route_note": "To understand your question, its text is sent to the AI service the person running this site has chosen. It only sorts the question; no figure in this tool comes from it.",
+    "ask_noroute_note": "This site does not read questions automatically right now. If you allow it, your question is kept so it can be read.",
+    "ask_go": "Ask",
+    "ask_busy": "Reading…",
+    "ask_fit_exact": "This one I can answer with numbers:",
+    "ask_fit_near": "Not exactly this. The nearest question I can answer with numbers is:",
+    "ask_fit_none": "I can’t answer this one with numbers yet ({topic}). Guessing is not what this tool does.",
+    "ask_unrouted": "This site does not read questions automatically right now. These are the questions I can answer today:",
+    "ask_kept": "Your question was kept. Thank you.",
+    "ask_open": "Take me there",
+    "ask_restate_own": "your own option: {own}",
+    "ask_size_next": "the size of the change is asked next",
+    "ask_err": "Something went wrong; your question was not sent.",
+    "ask_empty": "Write your question first.",
+    "ask_need_keep": "This site is not reading questions right now; to send it, tick “Keep my question”.",
+    "ask_topics": {
+      "hiring": "hiring",
+      "hours": "opening hours",
+      "delivery": "delivery",
+      "rent_move": "rent or moving",
+      "marketing": "marketing",
+      "range": "range or menu",
+      "loan_cash": "loans and cash",
+      "other": "another topic"
+    },
+    "objective_line": "Ranked by one measure: the cash you would have after {n} days. Each card's monthly figure is the profit rate over that period's last month. Fixed costs and your new prices are held constant.",
+    "class_line": "What this rests on: {c} of your numbers, {r} from published research, {a} of our assumptions and {d} calculated.",
+    "class_line_go": "Show them",
+    "census_how_q": "How is this counted?",
+    "census_how_a": "Each tested case counts once, whether or not it is likely for your business, and we chose the ranges — {facts}. So the count shows how widely an option holds up across those ranges. It is not the chance that it works.",
+    "census_own": "{n} of the {total} at your own {shock}",
+    "fb_t": "Did this help? Two minutes, all optional",
+    "fb_thanks_t": "Thank you",
+    "fb_why": "Your answers are kept only if you press send. They tell us what to fix next. Nothing about how you used this page is recorded otherwise.",
+    "fb_real_l": "Is this a decision you actually face?",
+    "fb_real_now": "Yes, in the next few weeks",
+    "fb_real_later": "Yes, but not soon",
+    "fb_real_no": "No, I was trying it out",
+    "fb_helped_l": "Did the comparison help with it?",
+    "fb_helped_yes": "Yes",
+    "fb_helped_partly": "Partly",
+    "fb_helped_no": "No",
+    "fb_next_l": "What will you do next?",
+    "fb_next_test": "Run the price test first",
+    "fb_next_undecided": "Not decided yet",
+    "fb_next_nothing": "Nothing for now",
+    "fb_hard_l": "Which number was hardest to give?",
+    "fb_hard_none": "None, they were all easy",
+    "fb_miss_l": "What was missing or unclear? (optional; please no names or phone numbers)",
+    "fb_offer_l": "Would you book this, for {price}?",
+    "fb_offer_what": "A follow-up on your price test: a 30-minute session this week to set it up for your own items, and a second one after two to four weeks to read your counts and rerun the comparison. You get an updated decision sheet and a one-page note of the result, including when the result is unclear. It does not promise a better decision or a clear result.",
+    "fb_offer_book": "Yes, contact me to arrange it",
+    "fb_offer_maybe": "Maybe",
+    "fb_offer_no": "No",
+    "fb_contact_l": "Phone or email to arrange it",
+    "fb_contact_ok_l": "Keep this only to arrange the follow-up. It is stored apart from my answers and deleted when I ask.",
+    "fb_not": "Your sales, costs, cash, prices and business name are not sent. They stay on this page.",
+    "fb_go": "Send",
+    "fb_fail": "It didn't send. Nothing was kept.",
+    "fb_real_k": "a decision you face",
+    "fb_helped_k": "helped",
+    "fb_next_k": "next step",
+    "fb_hard_k": "hardest number",
+    "fb_offer_k": "the follow-up",
+    "fb_missing_k": "what was missing",
+    "fb_contact_k": "your contact, kept in a separate file",
+    "fb_numbers_k": "numbers used",
+    "fb_numbers_demo": "the worked example",
+    "fb_numbers_own": "your own (not sent)",
+    "fb_src_k": "the invitation link you came from",
+    "fb_day_k": "when",
+    "fb_day_v": "today's date, not the time",
+    "census_fact": "{label}: {vals} (yours: {yours})",
+    "setting_is_research": "a published figure",
+    "setting_is_assumption": "our assumption — not measured",
+    "own_warn": "Above {max} you are past the largest rise this comparison was built around. The model still works it out, but only by assuming customers keep reacting in the same straight-line way to a bigger rise — nothing here shows that they do. Treat this figure as rough.",
+    "sheet_link_note": "This link carries the figures you entered — sales, costs, cash. Anyone you send it to can read them. They sit after the # in the link, so opening it does not send them to the web server.",
+    "test_band_range": "{band}: about {lo} to {hi} fewer {unit}",
+    "test_overlap": "The ranges overlap because the model is also unsure how fast customers react. A result inside an overlap cannot tell the settings apart, and small daily counts widen it further. An unclear result is a normal outcome.",
+    "test_need": "What to record: every day, how many of the repriced items you sell and how many of a few similar items you did not reprice — for a week before and at least two weeks after. Keep the same days and hours, and avoid weeks with promotions, holidays or stock-outs.",
+    "test_need_capacity": "What to record: requests for the repriced services and for your other services — not bookings, which your diary caps — for two weeks before and at least four weeks after. Keep the same days and hours, and avoid weeks with promotions or holidays.",
+    "test_days_l": "How many days ago did you raise it?",
+    "test_n_l": "How many days does each average cover?",
+    "test_rep_h": "The items you repriced",
+    "test_oth_h": "Similar items you did not reprice (strongly recommended)",
+    "test_obefore_l": "Daily {unit} before",
+    "test_oafter_l": "Daily {unit} in the same latest days",
+    "test_c1": "Same opening days and hours in both periods",
+    "test_c2": "No promotion, holiday or special event in either period",
+    "test_c3": "Nothing ran out of stock",
+    "test_c4": "Nothing else changed at the same time — other prices, the menu, staff, suppliers",
+    "test_status_supported": "Your test points to “{band}”, and it met every condition. The comparison now uses “{band}”.",
+    "test_status_provisional": "Your test points to “{band}”, but not every condition was met, so the comparison still uses what it used before. Keep it as a note.",
+    "test_status_inconclusive": "Your test fits more than one setting ({bands}), so it cannot tell them apart and nothing was changed. That is a normal result, not a failure.",
+    "test_status_outside": "Your result does not fit any setting we tested. Something else probably changed during the test — or your customers react differently from every setting here. Nothing was changed.",
+    "test_status_legacy": "Recorded with an earlier version of this test that did not check its conditions. Kept as a note; the comparison does not use it.",
+    "test_obs": "What you saw: after a {rise} rise, daily sales of the repriced items changed by {t}, comparing the latest {n} days (up to day {days} after the change) with before.",
+    "test_obs_ctl": "What you saw: after a {rise} rise, daily sales of the repriced items changed by {t} and of the unchanged items by {o}, comparing the latest {n} days (up to day {days}) with before. Against the unchanged items, that is {rel}.",
+    "test_obs_legacy": "Recorded then: after a {rise} rise, every 1% on the price went with about {v}% fewer sales.",
+    "test_inf": "What the model infers, under its own assumptions about how fast customers react: this fits “{bands}”.",
+    "test_inf_none": "What the model infers: none of its settings would produce a change like this.",
+    "test_open_noctl": "No unchanged items were counted, so a quiet or busy fortnight cannot be told apart from the price change.",
+    "test_open_checks": "Not every condition was confirmed; whatever was different may explain part of the change.",
+    "test_open_short_n": "Each average covers fewer than 7 days, so weekday patterns can distort it.",
+    "test_open_short_days": "Fewer than 14 days had passed; under the model's assumptions most of the reaction may still be to come.",
+    "test_open_capacity": "Your diary is capped by your slots, so fewer bookings may not show until demand falls below them. This test never changes the comparison automatically.",
+    "test_open_noise": "The range allows only for ordinary counting noise. Real weeks usually vary more, so treat even a clear-looking result with care.",
+    "test_open_items": "It covers a few items; using it for your whole business is still a judgement.",
+    "test_open_legacy": "Run the test again with the unchanged items and the checks, and it can be used.",
+    "sheet_meas_supported": "My own test pointed to “{band}”, and the comparison above uses that setting.",
+    "sheet_meas_other": "I ran a test with a {rise} price rise. Its result was {state}, so the comparison above does not rely on it.",
+    "test_state_supported": "usable",
+    "test_state_provisional": "provisional — not every condition was met",
+    "test_state_inconclusive": "inconclusive — it fitted more than one setting",
+    "test_state_outside": "outside every tested setting",
+    "test_state_legacy": "recorded without the condition checks",
+    "inputs_nearest": "This browser could not run the model, so the comparison uses the nearest figures this page carries: a {shock} supplier increase and a low-margin share of {share}.",
+    "scale_million": "million",
+    "scale_billion": "billion",
+    "currency_ask": "What currency are your figures in?"
+  },
+  "wedges": {
+    "cafe": {
+      "business": "Cafe / Restaurant",
+      "business_short": "Cafe",
+      "noun": "cafe",
+      "icon": "☕",
+      "question": "Ingredient costs jumped. What should I change?",
+      "page_title": "Cafe cost decision — three choices compared",
+      "headline": "Ingredient costs are up {shock}%. What should you do?",
+      "hero_lede": "Three ways to respond, compared on the same model of your cafe and the same assumptions. Only the decision changes between them.",
+      "what_changed": "Your suppliers put ingredient prices up {shock}%.",
+      "unit_word": "orders",
+      "unit_word_singular": "order",
+      "cost_word": "ingredient cost",
+      "world_names": {
+        "A": "Hold prices",
+        "B": "Raise prices 10%",
+        "C": "Raise prices 5% + simplify the menu"
+      },
+      "world_short": {
+        "A": "Hold prices",
+        "B": "Raise 10%",
+        "C": "Raise 5% + simplify"
+      },
+      "world_verdict_labels": {
+        "A": "Holding prices",
+        "B": "Raising prices 10%",
+        "C": "A 5% rise plus simplifying the menu"
+      },
+      "uncertainty_title": "How price-sensitive are your customers?",
+      "unknown_why": "Everything here turns on how many customers you lose when the price goes up. Nobody knows that number for your cafe — the figure used comes from research on eating out as a whole.",
+      "unknown_how": "Raise the price of a few items for at least two weeks, and every day count them and a few unchanged items. It may still leave the answer open — that is worth knowing too.",
+      "sens_help": {
+        "low": "Loyal customers, or your competitors are raising prices too.",
+        "central": "The typical response found in research on eating out.",
+        "high": "Stress case: competitors hold their prices and customers have easy alternatives."
+      },
+      "c_card_note": "Depends on how much simplifying the menu cuts ingredient cost (about {red} points here) and how many {unit} leave with the removed items ({loss}%). Neither is measured from your cafe.",
+      "chart_lede": "Costs take about a week to rise — you are still using stock bought at the old price. Customers take a couple of weeks to react to a new price.",
+      "sources_note": "Research gives a reference range for eating out as a whole. Your own customers may be more or less price-sensitive than that.",
+      "limits_does_not": [
+        "Predict your future sales.",
+        "Know how your individual customers will behave.",
+        "Model how competitors react.",
+        "Model the wider economy, seasons or new customers."
+      ],
+      "intake": {
+        "monthly_revenue": {
+          "label": "About how much do you sell in a month?",
+          "hint": "A typical month, before the cost increase.",
+          "placeholder": "48,600"
+        },
+        "daily_orders": {
+          "label": "About how many orders a day?",
+          "hint": "Average transactions on a normal day.",
+          "placeholder": "200"
+        },
+        "monthly_cogs": {
+          "label": "What do ingredients cost you a month?",
+          "hint": "What you pay suppliers for what you sell. Not wages, not rent.",
+          "placeholder": "15,550"
+        },
+        "monthly_fixed_costs": {
+          "label": "Rent, wages and bills a month?",
+          "hint": "Everything that will not change in the next 90 days.",
+          "placeholder": "29,500"
+        },
+        "cash_on_hand": {
+          "label": "How much cash is in the account today?",
+          "hint": "What you could spend right now.",
+          "placeholder": "18,000"
+        },
+        "supplier_increase_pct": {
+          "label": "How much did your supplier put prices up?",
+          "hint": "As a percentage of your ingredient cost.",
+          "placeholder": "30"
+        },
+        "low_margin_share_pct": {
+          "label": "What share of orders are items you could drop?",
+          "hint": "Roughly. A guess is fine — it is tested as an assumption.",
+          "placeholder": "20"
+        },
+        "name": {
+          "label": "What is your cafe called?",
+          "hint": "Only used on this page.",
+          "placeholder": "Corner Bean"
+        }
+      },
+      "sweep_labels": {
+        "price_sensitivity": "How price-sensitive your customers are",
+        "cogs_pass_through": "How much of the increase reaches your costs",
+        "supplier_increase_pct": "How big the supplier increase really is",
+        "reduction_points": "How much simplifying the menu really saves",
+        "demand_adjustment_speed": "How quickly customers react"
+      },
+      "assumptions": {
+        "monthly_revenue": {
+          "label": "Current monthly sales"
+        },
+        "daily_orders": {
+          "label": "Orders per day"
+        },
+        "monthly_cogs": {
+          "label": "Monthly ingredient cost"
+        },
+        "monthly_fixed_costs": {
+          "label": "Monthly fixed costs (incl. wages)"
+        },
+        "cash_on_hand": {
+          "label": "Cash available today"
+        },
+        "supplier_increase_pct": {
+          "label": "Supplier cost increase"
+        },
+        "low_margin_share_pct": {
+          "label": "Share of orders on low-margin items"
+        },
+        "price_sensitivity": {
+          "label": "Price sensitivity of customers"
+        },
+        "cogs_pass_through": {
+          "label": "Share of supplier increase reaching your costs"
+        },
+        "cogs_lag": {
+          "label": "Delay before higher prices reach your costs",
+          "text": "about 7 days (stock on hand)"
+        },
+        "demand_adjustment_speed": {
+          "label": "How quickly customers react to a price change",
+          "map": {
+            "slow": "about a month to half-react",
+            "central": "about two weeks to half-react",
+            "fast": "about a week to half-react"
+          }
+        },
+        "reformulation_effectiveness": {
+          "label": "Ingredient-cost saving from trimming the menu",
+          "text": "{reduction:g} points off average ingredient cost ({reformulation_effectiveness:.2f} per point of low-margin share)"
+        },
+        "reformulation_demand_cost": {
+          "label": "Orders lost from removing items",
+          "text": "{demand_cost:.1f}% of orders"
+        },
+        "price_rises": {
+          "label": "Price rises compared",
+          "text": "B: +10%   C: +5%"
+        },
+        "horizon": {
+          "label": "Comparison horizon",
+          "text": "90 days"
+        },
+        "average_order_value": {
+          "label": "Average order value"
+        },
+        "cogs_per_order": {
+          "label": "Ingredient cost per order"
+        }
+      },
+      "chart_turn": "old stock runs out around here",
+      "problem": "Ingredient costs went up",
+      "flow_q": {
+        "shock": "How much did your ingredient costs go up?",
+        "sales": "How busy is the cafe?",
+        "costs": "What do you spend in a month?",
+        "cash": "How much cash have you got set aside for the business?",
+        "mix": "How many of your orders are low-margin?"
+      },
+      "flow_choices": {
+        "shock": {
+          "10": "10%",
+          "20": "20%",
+          "30": "30%"
+        },
+        "mix": {
+          "10": "Few — about 10%",
+          "20": "Some — about 20%",
+          "30": "Many — about 30%"
+        }
+      },
+      "tradeoff": {
+        "A": {
+          "good": "Nothing changes for your customers",
+          "bad": "but your margin takes the hit"
+        },
+        "B": {
+          "good": "You keep more of the money",
+          "bad": "but orders drop by about {pct}"
+        },
+        "C": {
+          "good": "Smaller drop in orders",
+          "bad": "but it leans more on your menu mix"
+        }
+      },
+      "experiment": "Put the price of three to five best-sellers up {rise} and change nothing else. Every day, count how many of those you sell — and how many of a few similar items you did not reprice. Count for a week before and at least two weeks after.",
+      "variants": {
+        "bakery": {
+          "business": "Bakery",
+          "business_short": "Bakery",
+          "noun": "bakery",
+          "problem": "Flour and ingredients went up",
+          "question": "Flour and ingredients jumped. What should I change?",
+          "page_title": "Bakery cost decision — three choices compared",
+          "headline": "Flour and ingredients are up {shock}%. What should you do?",
+          "what_changed": "Your suppliers put flour and ingredient prices up {shock}%.",
+          "unit_word": "sales",
+          "unit_word_singular": "sale",
+          "cost_word": "ingredient cost",
+          "world_names": {
+            "A": "Hold prices",
+            "B": "Raise prices 10%",
+            "C": "Raise prices 5% + drop low-margin lines"
+          },
+          "world_short": {
+            "A": "Hold prices",
+            "B": "Raise 10%",
+            "C": "Raise 5% + drop lines"
+          },
+          "tradeoff": {
+            "A": {
+              "good": "Nothing changes for your customers",
+              "bad": "but your margin takes the hit"
+            },
+            "B": {
+              "good": "You keep more of the money",
+              "bad": "but sales drop by about {pct}"
+            },
+            "C": {
+              "good": "Smaller drop in sales",
+              "bad": "but it leans more on what you bake"
+            }
+          },
+          "c_card_note": "Depends on how much dropping low-margin lines cuts ingredient cost (about {red} points here) and how many {unit} leave with them ({loss}%). Neither is measured from your bakery.",
+          "flow_q": {
+            "shock": "How much did flour and ingredients go up?",
+            "sales": "How busy is the bakery?",
+            "costs": "What do you spend in a month?",
+            "cash": "How much cash have you got set aside for the business?",
+            "mix": "How many of your sales are low-margin?"
+          },
+          "experiment": "Put the price of three to five best-sellers up {rise} and change nothing else. Every day, count how many of those you sell — and how many of a few similar items you did not reprice. Count for a week before and at least two weeks after.",
+          "sens_help": {
+            "low": "Regulars from the neighbourhood, or your competitors are raising prices too.",
+            "central": "The typical response research finds for eating out — bread sits further from that, being an everyday staple.",
+            "high": "Stress case: another bakery is close by and customers switch easily."
+          },
+          "sources_note": "On price sensitivity: the figure here comes from research on eating out, not on bread. Bread is an everyday staple and customers usually move less on its price, so this number probably overstates the drop. The two-week test measures it for your own bakery.",
+          "limits_does_not": [
+            "Predict your future sales.",
+            "Know how your individual customers will behave.",
+            "Model how the other bakeries nearby react.",
+            "Know how far bread differs from eating out — until you measure it."
+          ],
+          "own_reduce": "drop low-margin lines"
+        },
+        "fastfood": {
+          "business": "Fast food",
+          "business_short": "Fast food",
+          "noun": "fast-food shop",
+          "problem": "Ingredient costs went up",
+          "question": "Ingredient costs jumped. What should I change?",
+          "page_title": "Fast-food cost decision — three choices compared",
+          "headline": "Ingredient costs are up {shock}%. What should you do?",
+          "unit_word": "orders",
+          "unit_word_singular": "order",
+          "flow_q": {
+            "shock": "How much did your ingredient costs go up?",
+            "sales": "How busy is the shop?",
+            "costs": "What do you spend in a month?",
+            "cash": "How much cash have you got set aside for the business?",
+            "mix": "How many of your orders are low-margin?"
+          },
+          "c_card_note": "Depends on how much simplifying the menu cuts ingredient cost (about {red} points here) and how many {unit} leave with the removed items ({loss}%). Neither is measured from your shop.",
+          "sens_help": {
+            "low": "Regulars, or your competitors are raising prices too.",
+            "central": "The typical response found in research on eating out.",
+            "high": "Stress case: a few other options are right nearby and customers switch easily."
+          },
+          "sources_note": "On price sensitivity: research gives a reference range for eating out as a whole. Fast food usually has easier substitutes close by, so customers may move faster than this figure suggests. The two-week test measures it for you."
+        }
+      },
+      "business_covers": "Cafe / Restaurant · Bakery · Fast food",
+      "own_reduce": "simplify the menu"
+    },
+    "shop": {
+      "business": "Shop / Online Store",
+      "business_short": "Shop",
+      "noun": "shop",
+      "icon": "🛍",
+      "question": "My supplier raised prices. Should I pass it on?",
+      "page_title": "Shop cost decision — three choices compared",
+      "headline": "Your supplier put prices up {shock}%. Should you pass it on?",
+      "hero_lede": "Three ways to respond, compared on the same model of your shop and the same assumptions. Only the decision changes between them.",
+      "what_changed": "Your supplier put wholesale prices up {shock}%.",
+      "unit_word": "orders",
+      "unit_word_singular": "order",
+      "cost_word": "cost of goods",
+      "world_names": {
+        "A": "Hold prices",
+        "B": "Raise prices 8%",
+        "C": "Raise prices 4% + drop low-margin lines"
+      },
+      "world_short": {
+        "A": "Hold prices",
+        "B": "Raise 8%",
+        "C": "Raise 4% + drop lines"
+      },
+      "world_verdict_labels": {
+        "A": "Holding prices",
+        "B": "Raising prices 8%",
+        "C": "A 4% rise plus dropping low-margin lines"
+      },
+      "uncertainty_title": "How price-sensitive are your customers?",
+      "unknown_why": "A shop's customers can often buy the same item elsewhere, so a price rise costs more orders here than in a trade where people come for you specifically. How much more is the thing nobody has measured for your shop.",
+      "unknown_how": "Put prices up on a handful of lines for at least two weeks and compare them with lines you left alone. Numbers from the last time you raised prices help too, if nothing else changed at the same time.",
+      "sens_help": {
+        "low": "Loyal customers, an awkward shop to replace, or competitors raising prices too.",
+        "central": "Our judgement: customers who could shop elsewhere, with some effort.",
+        "high": "The research figure for customers who can buy the identical item elsewhere."
+      },
+      "c_card_note": "Depends on how much dropping low-margin lines cuts your cost of goods (about {red} points here) and how many {unit} leave with those lines ({loss}%). Neither is measured from your shop.",
+      "chart_lede": "Costs take about three weeks to rise — the stock on your shelves was bought at the old price. Customers react to a new price within a week or two.",
+      "sources_note": "The research quoted measures customers switching between brands on the same shelf, which is easier than switching shops. It sets the top of the range rather than the middle.",
+      "limits_does_not": [
+        "Predict your future sales.",
+        "Know how your individual customers will behave.",
+        "Model competitors, marketplaces or search ranking.",
+        "Model advertising or promotions."
+      ],
+      "intake": {
+        "monthly_revenue": {
+          "label": "About how much do you sell in a month?",
+          "hint": "A typical month, before the increase.",
+          "placeholder": "92,000"
+        },
+        "daily_orders": {
+          "label": "About how many orders a day?",
+          "hint": "In store and online together.",
+          "placeholder": "90"
+        },
+        "monthly_cogs": {
+          "label": "What do the goods cost you a month?",
+          "hint": "What you pay suppliers for what you sell. Not wages, not rent.",
+          "placeholder": "53,360"
+        },
+        "monthly_fixed_costs": {
+          "label": "Rent, wages and bills a month?",
+          "hint": "Everything that will not change in the next 90 days.",
+          "placeholder": "33,000"
+        },
+        "cash_on_hand": {
+          "label": "How much cash is in the account today?",
+          "hint": "What you could spend right now.",
+          "placeholder": "26,000"
+        },
+        "supplier_increase_pct": {
+          "label": "How much did your supplier put prices up?",
+          "hint": "As a percentage of what you pay for goods.",
+          "placeholder": "25"
+        },
+        "low_margin_share_pct": {
+          "label": "What share of orders are lines that earn you little?",
+          "hint": "Roughly. A guess is fine — it is tested as an assumption.",
+          "placeholder": "20"
+        },
+        "name": {
+          "label": "What is your shop called?",
+          "hint": "Only used on this page.",
+          "placeholder": "Nine Yards"
+        }
+      },
+      "sweep_labels": {
+        "price_sensitivity": "How price-sensitive your customers are",
+        "cogs_pass_through": "How much of the increase reaches your costs",
+        "supplier_increase_pct": "How big the supplier increase really is",
+        "reduction_points": "How much dropping low-margin lines really saves",
+        "demand_adjustment_speed": "How quickly customers react"
+      },
+      "assumptions": {
+        "monthly_revenue": {
+          "label": "Current monthly sales"
+        },
+        "daily_orders": {
+          "label": "Orders per day"
+        },
+        "monthly_cogs": {
+          "label": "Monthly cost of goods"
+        },
+        "monthly_fixed_costs": {
+          "label": "Monthly fixed costs (incl. wages)"
+        },
+        "cash_on_hand": {
+          "label": "Cash available today"
+        },
+        "supplier_increase_pct": {
+          "label": "Supplier cost increase"
+        },
+        "low_margin_share_pct": {
+          "label": "Share of orders on low-margin lines"
+        },
+        "price_sensitivity": {
+          "label": "Price sensitivity of customers"
+        },
+        "cogs_pass_through": {
+          "label": "Share of supplier increase reaching your cost of goods"
+        },
+        "inventory_lag": {
+          "label": "Delay before higher supplier prices reach your costs",
+          "text": "about 20 days (stock on hand)"
+        },
+        "demand_adjustment_speed": {
+          "label": "How quickly customers react to a price change",
+          "map": {
+            "slow": "about two and a half weeks to half-react",
+            "central": "about eight days to half-react",
+            "fast": "about four days to half-react"
+          }
+        },
+        "trim_effectiveness": {
+          "label": "Cost saving from dropping low-margin lines",
+          "text": "{reduction:g} points off average cost of goods ({trim_effectiveness:.3f} per point of low-margin share)"
+        },
+        "trim_demand_cost": {
+          "label": "Orders lost from dropping those lines",
+          "text": "{demand_cost:.1f}% of orders"
+        },
+        "price_rises": {
+          "label": "Price rises compared",
+          "text": "B: +8%   C: +4%"
+        },
+        "horizon": {
+          "label": "Comparison horizon",
+          "text": "90 days"
+        },
+        "average_order_value": {
+          "label": "Average order value"
+        },
+        "cogs_per_order": {
+          "label": "Cost of goods per order"
+        }
+      },
+      "chart_turn": "old stock runs out around here",
+      "problem": "My supplier raised prices",
+      "flow_q": {
+        "shock": "How much did your supplier put prices up?",
+        "sales": "How busy is the shop?",
+        "costs": "What do you spend in a month?",
+        "cash": "How much cash have you got set aside for the business?",
+        "mix": "How many of your sales are low-margin?"
+      },
+      "flow_choices": {
+        "shock": {
+          "15": "15%",
+          "25": "25%",
+          "35": "35%"
+        },
+        "mix": {
+          "10": "Few — about 10%",
+          "20": "Some — about 20%",
+          "30": "Many — about 30%"
+        }
+      },
+      "tradeoff": {
+        "A": {
+          "good": "Your prices stay where they are",
+          "bad": "but you absorb the whole increase"
+        },
+        "B": {
+          "good": "You pass most of the increase on",
+          "bad": "but sales drop by about {pct}"
+        },
+        "C": {
+          "good": "A smaller rise, and your costs come down too",
+          "bad": "but it depends on what dropping low-margin lines really saves"
+        }
+      },
+      "experiment": "Put the price of three to five best-sellers up {rise} and change nothing else. Every day, count how many of those you sell — and how many of a few similar lines you did not reprice. Count for a week before and at least two weeks after.",
+      "own_reduce": "drop low-margin lines"
+    },
+    "salon": {
+      "business": "Salon / Service Business",
+      "business_short": "Salon",
+      "noun": "salon",
+      "icon": "✂",
+      "question": "My schedule is filling up. Is it time to raise prices?",
+      "page_title": "Salon pricing decision — three choices compared",
+      "headline": "Your diary is {shock}% busier. Is it time to raise prices?",
+      "hero_lede": "Three ways to respond, compared on the same model of your salon and the same assumptions. Only the decision changes between them.",
+      "what_changed": "Demand for appointments is up {shock}%, and your diary has a ceiling.",
+      "unit_word": "appointments",
+      "unit_word_singular": "appointment",
+      "cost_word": "cost per appointment",
+      "world_names": {
+        "A": "Keep prices, serve more",
+        "B": "Raise prices 10%",
+        "C": "Raise prices 5% + shift the mix"
+      },
+      "world_short": {
+        "A": "Keep prices",
+        "B": "Raise 10%",
+        "C": "Raise 5% + shift mix"
+      },
+      "world_verdict_labels": {
+        "A": "Keeping prices and serving more",
+        "B": "Raising prices 10%",
+        "C": "A 5% rise plus shifting the mix"
+      },
+      "uncertainty_title": "How price-sensitive are your clients?",
+      "unknown_why": "There is no published figure for how salon clients respond to a price rise — not a weak one, none we could use honestly. Every setting on this control is our judgement, so your own test is worth more here than in any other trade.",
+      "unknown_how": "Raise the price of one service, or for new clients only, and over six weeks compare requests and rebookings with services you left alone.",
+      "sens_help": {
+        "low": "A loyal client base who book with you personally.",
+        "central": "Our judgement for an appointment business with real switching costs.",
+        "high": "Stress case: clients who treat it as a commodity and shop on price."
+      },
+      "capacity_note": "Your diary has a ceiling, so some of the {unit} a price rise costs you were being turned away anyway. That is why raising prices costs less here than the price sensitivity alone suggests.",
+      "c_card_note": "Depends on how much shifting the mix cuts your cost per appointment (about {red} points here), how much it lifts the average ticket, and how many {unit} leave with the discounts ({loss}%). None is measured from your salon.",
+      "chart_lede": "Clients on a six-week cycle only meet a new price at their next visit, so the reaction arrives over a couple of weeks rather than at once.",
+      "sources_note": "We found no published figure for personal-care services that could be used honestly. Every setting on the price control is our judgement. The retail studies listed are only the reference points our range was positioned against.",
+      "limits_does_not": [
+        "Predict your future bookings.",
+        "Know how your individual clients will behave.",
+        "Model hiring, longer hours or a second chair.",
+        "Model competitors, word of mouth or reputation."
+      ],
+      "intake": {
+        "monthly_revenue": {
+          "label": "About how much do you take in a month?",
+          "hint": "A typical month right now.",
+          "placeholder": "24,000"
+        },
+        "appointments_per_day": {
+          "label": "About how many appointments a day?",
+          "hint": "On an average working day.",
+          "placeholder": "12"
+        },
+        "utilisation_pct": {
+          "label": "How full is the diary?",
+          "hint": "Roughly what share of your slots get booked. 100% means completely full.",
+          "placeholder": "85"
+        },
+        "monthly_variable_costs": {
+          "label": "What do products cost you a month?",
+          "hint": "Colour, product, consumables. NOT wages and NOT rent.",
+          "placeholder": "2,880"
+        },
+        "monthly_fixed_costs": {
+          "label": "Rent, wages and bills a month?",
+          "hint": "Everything that will not change in the next 90 days.",
+          "placeholder": "17,000"
+        },
+        "cash_on_hand": {
+          "label": "How much cash is in the account today?",
+          "hint": "What you could spend right now.",
+          "placeholder": "9,000"
+        },
+        "demand_growth_pct": {
+          "label": "How much busier have you got?",
+          "hint": "More enquiries, requests, a waiting list — roughly how much more.",
+          "placeholder": "25"
+        },
+        "low_margin_share_pct": {
+          "label": "What share of appointments are discounted or earn least?",
+          "hint": "Roughly. A guess is fine — it is tested as an assumption.",
+          "placeholder": "25"
+        },
+        "name": {
+          "label": "What is your salon called?",
+          "hint": "Only used on this page.",
+          "placeholder": "Studio Nine"
+        }
+      },
+      "sweep_labels": {
+        "price_sensitivity": "How price-sensitive your clients are",
+        "utilisation_pct": "How full the diary really is",
+        "demand_growth_pct": "How much busier you have really got",
+        "reduction_points": "How much shifting the mix really saves",
+        "demand_adjustment_speed": "How quickly clients react"
+      },
+      "assumptions": {
+        "monthly_revenue": {
+          "label": "Current monthly sales"
+        },
+        "appointments_per_day": {
+          "label": "Appointments per day"
+        },
+        "utilisation_pct": {
+          "label": "How full the diary is today"
+        },
+        "demand_growth_pct": {
+          "label": "How much busier it has become"
+        },
+        "monthly_variable_costs": {
+          "label": "Monthly product cost"
+        },
+        "monthly_fixed_costs": {
+          "label": "Monthly fixed costs (incl. wages)"
+        },
+        "cash_on_hand": {
+          "label": "Cash available today"
+        },
+        "low_margin_share_pct": {
+          "label": "Share of appointments on discounted / low-margin services"
+        },
+        "price_sensitivity": {
+          "label": "Price sensitivity of clients"
+        },
+        "capacity_per_day": {
+          "label": "Appointment slots available per day"
+        },
+        "capacity_rule": {
+          "label": "What happens when demand exceeds the slots",
+          "text": "appointments served = the smaller of wanted and available"
+        },
+        "demand_adjustment_speed": {
+          "label": "How quickly clients react to a price change",
+          "map": {
+            "slow": "about three weeks to half-react",
+            "central": "about eleven days to half-react",
+            "fast": "about five days to half-react"
+          }
+        },
+        "mix_effectiveness": {
+          "label": "Cost saving from shifting the service mix",
+          "text": "{reduction:g} points off cost per appointment ({mix_effectiveness:.2f} per point of low-margin share)"
+        },
+        "mix_price_gain": {
+          "label": "Price gain from a richer mix",
+          "text": "+{price_gain:.1f}% on the average ticket"
+        },
+        "mix_demand_cost": {
+          "label": "Appointments lost from cutting discounts",
+          "text": "{demand_cost:.1f}% of appointments wanted"
+        },
+        "price_rises": {
+          "label": "Price rises compared",
+          "text": "B: +10%   C: +5%"
+        },
+        "horizon": {
+          "label": "Comparison horizon",
+          "text": "90 days"
+        },
+        "average_ticket": {
+          "label": "Average price per appointment"
+        },
+        "cost_per_appointment": {
+          "label": "Product cost per appointment"
+        }
+      },
+      "chart_turn": "holding your price stops paying here",
+      "problem": "My schedule is filling up",
+      "flow_q": {
+        "shock": "How much busier has it got?",
+        "full": "How full is your diary, usually?",
+        "sales": "How busy is the salon?",
+        "costs": "What do you spend in a month?",
+        "cash": "A couple of last numbers"
+      },
+      "flow_choices": {
+        "shock": {
+          "15": "15%",
+          "25": "25%",
+          "35": "35%"
+        },
+        "full": {
+          "55": "Under 60%",
+          "70": "Between 60 and 80%",
+          "88": "Over 80%"
+        }
+      },
+      "tradeoff": {
+        "A": {
+          "good": "Prices stay put and clients are happy",
+          "bad": "but you fill up and start turning appointments away"
+        },
+        "B": {
+          "good": "The same hours bring in more",
+          "bad": "but demand shifts by about {pct}"
+        },
+        "C": {
+          "good": "A smaller rise, and a richer service mix",
+          "bad": "but it depends on how well the mix shift actually works"
+        }
+      },
+      "experiment": "Put the price of one or two in-demand services up {rise}, or for new clients only. Count requests for them — not bookings, which your diary caps — and requests for your other services, for two weeks before and at least four weeks after.",
+      "own_reduce": "shift the mix"
+    }
+  }
+}

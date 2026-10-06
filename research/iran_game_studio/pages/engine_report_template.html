@@ -1,0 +1,416 @@
+<title>انجین زیر شوک گیم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;800&display=swap">
+<style>
+/* Layout: a short read. Each section asks one question, answers it in one sentence, then shows one picture. */
+:root{
+  --bg:#F3F5F3; --surface:#FFFFFF; --ink:#16201C; --muted:#56635E; --faint:#8A9691; --rule:#DFE4E1; --grid:#ECEFED;
+  --soft:#EEF2EF; --band:#E3EAF3;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --cost:#4a3aa7;
+  --good:#0F7A4F; --warn:#9A6400; --bad:#B23B3B; --good-bg:#E4F2EA; --warn-bg:#F6EEDC; --bad-bg:#F7E4E2;
+  --body:"Vazirmatn","Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#121615; --surface:#1A1F1D; --ink:#E7ECE9; --muted:#A3AFAA; --faint:#7F8B86; --rule:#2B3330; --grid:#232A27;
+  --soft:#202725; --band:#1E2630;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --cost:#9085e9;
+  --good:#5FC795; --warn:#E0A84A; --bad:#EE7C7C; --good-bg:#16291F; --warn-bg:#2B2416; --bad-bg:#2E1B1B; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#121615; --surface:#1A1F1D; --ink:#E7ECE9; --muted:#A3AFAA; --faint:#7F8B86; --rule:#2B3330; --grid:#232A27;
+  --soft:#202725; --band:#1E2630;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --cost:#9085e9;
+  --good:#5FC795; --warn:#E0A84A; --bad:#EE7C7C; --good-bg:#16291F; --warn-bg:#2B2416; --bad-bg:#2E1B1B; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.9;font-variant-numeric:tabular-nums}
+.wrap{max-width:860px;margin:0 auto;padding-inline:20px;padding-block:30px 70px}
+@media (max-width:600px){.wrap{padding-inline:16px}}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-size:clamp(25px,4.2vw,36px);font-weight:800;line-height:1.4}
+h2{font-size:21px;font-weight:800;line-height:1.55}
+h3{font-size:15.5px;font-weight:600}
+p{margin:0;max-width:66ch}
+.eyebrow{font-size:13px;font-weight:600;color:var(--muted)}
+.lede{color:var(--muted);margin-top:10px}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:18px;min-width:0}
+.answer{font-size:17.5px;font-weight:600;line-height:1.8}
+.cap{color:var(--muted);font-size:14.5px}
+section{margin-top:46px;display:grid;gap:14px}
+.qnum{font-size:13px;font-weight:600;color:var(--muted)}
+/* the one-glance box */
+.glance{display:grid;gap:10px;margin-top:24px}
+.glance .row{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start}
+.glance .dot{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--surface);display:grid;place-items:center;font-weight:800;font-size:14px}
+/* the setup */
+.setup{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.setup{grid-template-columns:1fr}}
+.facts{display:grid;gap:6px;margin-top:8px;font-size:15px}
+.facts div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:5px}
+.facts span:first-child{color:var(--muted)}
+.opts{display:grid;gap:8px;margin-top:8px}
+.opt{display:flex;gap:10px;align-items:center;font-size:15px}
+.sw{width:14px;height:14px;border-radius:4px;flex:none}
+/* charts */
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--body);fill:var(--muted);font-size:12.5px}
+.gl{stroke:var(--grid);stroke-width:1}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--muted);margin-bottom:6px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:inherit;font-size:14px;padding:5px 13px;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer;min-height:38px}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chips button:focus-visible,summary:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.tip{position:fixed;pointer-events:none;z-index:9;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:7px 11px;font-size:13.5px;line-height:1.7;box-shadow:0 6px 20px rgba(0,0,0,.14)}
+.tip[hidden]{display:none}
+/* decision path */
+.flow{display:grid;gap:10px}
+.q{background:var(--soft);border-radius:12px;padding:12px 14px;font-weight:600}
+.branches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:600px){.branches{grid-template-columns:1fr}}
+.br{border:1px solid var(--rule);border-radius:12px;padding:12px 14px;display:grid;gap:8px;min-width:0}
+.br .if{font-size:13.5px;color:var(--muted);font-weight:600}
+.res{display:flex;gap:10px;align-items:center;font-weight:600}
+.br .why{font-size:14px;color:var(--muted)}
+.sub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:420px){.sub{grid-template-columns:1fr}}
+.sub .br{background:var(--surface)}
+/* reality check */
+.checks{display:grid;gap:12px}
+.check{display:grid;gap:8px}
+.check .t{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.verdict{font-size:13px;font-weight:600;padding:2px 11px;border-radius:999px;white-space:nowrap}
+.v-good{color:var(--good);background:var(--good-bg)} .v-warn{color:var(--warn);background:var(--warn-bg)} .v-bad{color:var(--bad);background:var(--bad-bg)}
+.pair{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 10px;align-items:center;font-size:14px}
+.pair .lab{color:var(--muted)}
+.track{height:14px;position:relative}
+.track .z{position:absolute;inset-block:-3px;width:1px;background:var(--faint)}
+.track .b{position:absolute;height:14px;border-radius:4px}
+.tests{margin:0;padding-inline-start:20px;display:grid;gap:8px}
+details summary{cursor:pointer;color:var(--muted);font-weight:600;font-size:14.5px}
+details .cap{margin-top:8px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;font-size:13.5px;width:100%;margin-top:8px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--rule);text-align:start;white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+.src a{color:inherit}
+</style>
+
+<div class="wrap" dir="rtl" lang="fa">
+  <header>
+    <p class="eyebrow">آزمایش انجین OWE روی صنعت بازی ایران · مهر ۱۴۰۵ · پیش‌نویس برای گفت‌وگو</p>
+    <h1>اگر دلار گران شود و اینترنت قطع شود، یک استودیوی بازی موبایل چه کند؟</h1>
+    <p class="lede">یک استودیوی نمونه را به انجین دادیم و یک سال آینده‌اش را در هشت وضعیت مختلف شبیه‌سازی کردیم.
+      این گزارش پیش‌بینی نیست؛ نشان می‌دهد با حدس‌هایی که فعلاً داریم، کدام تصمیم بیشتر جواب می‌دهد و جواب به چه چیزی بستگی دارد.</p>
+    <div class="panel glance">
+      <h3>در یک نگاه</h3>
+      <div class="row"><span class="dot">۱</span><p>بزرگ‌ترین خطر <b>جهش دلار</b> است. قطعی اینترنت درآمد را موقتاً تا یک‌سوم پایین می‌آورد، ولی جهش دلار هزینه‌ها را برای همیشه بالا می‌برد.</p></div>
+      <div class="row"><span class="dot">۲</span><p><b>دست روی دست گذاشتن</b> در هیچ‌کدام از حالت‌هایی که آزمودیم بهترین انتخاب نبود.</p></div>
+      <div class="row"><span class="dot">۳</span><p><b>گران‌کردن آیتم‌ها</b> در بیشتر حالت‌ها کمکی نمی‌کند و در شرایط جنگی پرریسک‌ترین کار است.</p></div>
+      <div class="row"><span class="dot">۴</span><p>اینکه بهترین کار <b>کوچک‌کردن تیم</b> است یا <b>نشان‌دادن تبلیغ بیشتر</b>، به دو چیز بستگی دارد که هر استودیو می‌تواند از دادهٔ خودش اندازه بگیرد.</p></div>
+    </div>
+  </header>
+
+  <section>
+    <p class="qnum">استودیوی نمونه</p>
+    <h2>چه کسبی را آزمایش کردیم؟</h2>
+    <div class="setup">
+      <div class="panel"><h3>استودیو (عددها نمونه‌اند)</h3>
+        <div class="facts">
+          <div><span>تیم</span><span>۱۵ نفر</span></div>
+          <div><span>درآمد ماهانه پس از سهم فروشگاه</span><span>حدود ۱٫۴ میلیارد تومان</span></div>
+          <div><span>هزینهٔ ماهانه</span><span>حدود ۱٫۳ میلیارد تومان</span></div>
+          <div><span>سهم هزینه‌های دلاری (سرور، ابزار)</span><span>حدود یک‌پنجم</span></div>
+          <div><span>پول نقد در دست</span><span>۴ میلیارد تومان، حدود سه ماه</span></div>
+        </div></div>
+      <div class="panel"><h3>چهار تصمیمی که مقایسه شد</h3>
+        <div class="opts" id="opts"></div>
+        <p class="cap" style="margin-top:10px">رنگ هر تصمیم در همهٔ نمودارهای این صفحه همین است.</p></div>
+    </div>
+    <p class="cap">چیزهایی را که هنوز نمی‌دانیم، مثل اینکه بازیکن‌ها چقدر به قیمت حساس‌اند، حدس زدیم. برای هر کدام سه حدس گذاشتیم (کم، متوسط، زیاد)
+      و همهٔ ترکیب‌ها را امتحان کردیم: ۷۲۹ ترکیب برای هر وضعیت.</p>
+  </section>
+
+  <section>
+    <p class="qnum">پرسش ۱</p>
+    <h2>اگر هیچ کاری نکنید، آخر سال چقدر پول برایتان می‌ماند؟</h2>
+    <p class="answer">جهش دلار از قطعی اینترنت خطرناک‌تر است: اگر دلار دو برابر شود، تقریباً همهٔ پول استودیو تا آخر سال خرج می‌شود.</p>
+    <div class="panel"><div id="c1"></div></div>
+    <p class="cap">خط عمودی: ۴ میلیارد تومانی که سال را با آن شروع کردید. میله‌های کوتاه‌تر از این خط یعنی سال را با پول کمتری تمام می‌کنید.</p>
+  </section>
+
+  <section>
+    <p class="qnum">پرسش ۲</p>
+    <h2>در یک بحران مثل جنگ، چه اتفاقی برای درآمد و هزینه می‌افتد؟</h2>
+    <p class="answer">درآمد در روزهای قطعی به یک‌سوم می‌رسد و بعد برمی‌گردد؛ اما هزینه‌ها با دلار بالا می‌روند و دیگر پایین نمی‌آیند.</p>
+    <div class="panel">
+      <div class="legend"><span><span class="sw" style="background:var(--ink)"></span>درآمد روزانه</span><span><span class="sw" style="background:var(--cost)"></span>هزینهٔ روزانه</span></div>
+      <div id="c2"></div>
+    </div>
+    <p class="cap">وضعیت: ۱۰ روز قطع کامل اینترنت، بعد حدود دو ماه و نیم اینترنت کند، و دلار ۶۰٪ گران‌تر. استودیو هیچ کاری نمی‌کند.
+      ۱۰۰ یعنی مقدار عادی قبل از بحران.</p>
+  </section>
+
+  <section>
+    <p class="qnum">پرسش ۳</p>
+    <h2>کدام تصمیم پول بیشتری نگه می‌دارد؟</h2>
+    <p class="answer" id="a3"></p>
+    <div class="chips" id="chips" role="group" aria-label="وضعیت"></div>
+    <div class="panel"><div id="c3"></div></div>
+    <p class="cap">پول نقد آخر سال برای هر تصمیم، با حدس‌های متوسط. یک وضعیت را انتخاب کنید.</p>
+  </section>
+
+  <section>
+    <p class="qnum">پرسش ۴</p>
+    <h2>اگر حدس‌هایمان غلط باشد چه؟</h2>
+    <p class="answer">در وضعیت جنگی، با «تبلیغ بیشتر» در ۸۹ ترکیب از هر ۱۰۰ پول تا آخر سال تمام نمی‌شود؛ با «گران‌کردن» فقط در ۴۲ ترکیب.</p>
+    <div class="panel"><div id="c4"></div></div>
+    <p class="cap">هر ۷۲۹ ترکیب حدس را امتحان کردیم و شمردیم که در چندتا پول استودیو تا آخر سال منفی نمی‌شود (به‌ازای هر ۱۰۰ ترکیب).
+      این احتمال نیست؛ فقط نشان می‌دهد هر تصمیم در برابر حدس‌های غلط چقدر مقاوم است.</p>
+  </section>
+
+  <section>
+    <p class="qnum">پرسش ۵</p>
+    <h2>پس بهترین تصمیم به چه چیزی بستگی دارد؟</h2>
+    <p class="answer">به دو پرسش که هر استودیو می‌تواند با دادهٔ خودش جواب بدهد:</p>
+    <div class="panel flow">
+      <div class="q">۱. اگر چند ماه رویداد و آپدیت تازه نداشته باشید، فروش بازی‌تان چقدر کم می‌شود؟</div>
+      <div class="branches">
+        <div class="br"><span class="if">اگر خیلی کم نمی‌شود</span>
+          <span class="res"><span class="sw" style="background:var(--s3)"></span>کوچک‌کردن تیم بهترین است</span>
+          <span class="why">در همهٔ ترکیب‌هایی که وابستگی به محتوا کم بود، این تصمیم اول شد.</span></div>
+        <div class="br"><span class="if">اگر زیاد کم می‌شود</span>
+          <span class="res">کوچک‌کردن تیم به ضررتان است. برو سراغ پرسش ۲:</span>
+          <div class="q" style="font-size:15px">۲. اگر قیمت آیتم‌ها را بالا ببرید، چند نفر کمتر خرید می‌کنند؟</div>
+          <div class="sub">
+            <div class="br"><span class="if">تعداد کمی</span><span class="res"><span class="sw" style="background:var(--s2)"></span>گران‌کردن هم می‌تواند جواب بدهد</span></div>
+            <div class="br"><span class="if">تعداد زیادی</span><span class="res"><span class="sw" style="background:var(--s4)"></span>تبلیغ بیشتر</span>
+              <span class="why">به شرط اینکه تبلیغ بیشتر بازیکن‌ها را فراری ندهد (پرسش ۶).</span></div>
+          </div></div>
+      </div>
+    </div>
+    <p class="cap">بقیهٔ حدس‌ها، مثل اینکه قطعی چقدر عمیق است یا بازیکن‌ها چقدر زود برمی‌گردند، شدت آسیب را عوض می‌کنند، ولی تقریباً هیچ‌وقت ترتیب این تصمیم‌ها را نه.</p>
+  </section>
+
+  <section>
+    <p class="qnum">پرسش ۶</p>
+    <h2>تبلیغ بیشتر واقعاً امن است؟</h2>
+    <p class="answer">نه لزوماً. اگر تبلیغ بیشتر حتی کمی بیشتر از حدس ما بازیکن‌ها را فراری بدهد، کوچک‌کردن تیم از آن جلو می‌زند.</p>
+    <div class="panel">
+      <div class="legend"><span><span class="sw" style="background:var(--s4)"></span>تبلیغ بیشتر</span><span><span class="sw" style="background:var(--s3)"></span>کوچک‌کردن تیم</span></div>
+      <div id="c6"></div>
+    </div>
+    <p class="cap">وضعیت جنگی. از راست به چپ هر چه جلوتر بروید، تبلیغ بیشتر بازیکن بیشتری را فراری می‌دهد. حدس اولیهٔ ما کمترین مقدار بود.</p>
+  </section>
+
+  <section>
+    <p class="qnum">پرسش ۷</p>
+    <h2>انجین چقدر با واقعیت جور درآمد؟</h2>
+    <p class="answer">در یک مورد خوب، در یک مورد نامطمئن، و در یک مورد اشتباه: انجین ریزش بازیکن‌ها را خیلی کمتر از واقعیت نشان داد.</p>
+    <div class="panel checks" id="checks"></div>
+    <p class="cap">عددهای واقعی از گزارش‌های بنیاد ملی بازی‌های رایانه‌ای و اخبار است. این عددها را قبل از ساختن مدل دیده بودیم، ولی مدل را با آن‌ها تنظیم نکردیم.</p>
+  </section>
+
+  <section>
+    <p class="qnum">قدم بعد</p>
+    <h2>با سه آزمایش ساده جواب روشن می‌شود</h2>
+    <div class="panel"><ol class="tests">
+      <li><b>وابستگی به محتوا:</b> فروش هفته‌هایی که رویداد یا آپدیت داشتید را با هفته‌های عادی ۶ ماه گذشته مقایسه کنید. این داده احتمالاً همین الان در پنل کافه‌بازار هست.</li>
+      <li><b>هزینهٔ تبلیغ:</b> برای نیمی از بازیکن‌ها که تصادفی انتخاب شده‌اند، تبلیغ را ۵۰٪ بیشتر کنید و ببینید بعد از ۷ و ۳۰ روز چند نفرشان مانده‌اند.</li>
+      <li><b>حساسیت به قیمت:</b> چند آیتم را گران کنید و چند آیتم مشابه را نه، و خرید هر دو گروه را قبل و بعد بشمارید.</li>
+    </ol></div>
+    <p class="cap">با عددهای واقعی یک استودیو، همین آزمایش دوباره اجرا می‌شود و جواب مخصوص همان استودیو را می‌دهد.</p>
+  </section>
+
+  <section>
+    <details class="panel">
+      <summary>جزئیات فنی و منابع</summary>
+      <p class="cap">مدل اکتشافی <span dir="ltr" id="sha"></span>، با ۱۴ متغیر و ۱۹ رابطه. همهٔ ضرایب فرض کارشناسی‌اند. نسخهٔ سریعی که برای
+        ۵٬۸۳۲ اجرا استفاده شد، در همهٔ ۳۲ اجرای یک‌ساله با خود انجین مقایسه شد؛ بیشترین اختلاف ۰ بود.
+        مدل خطی است؛ در جهش‌های خیلی بزرگ فقط جهت نتیجه قابل اتکاست، نه اندازه‌اش.
+        بیرون از مدل: ریزش دائمی بازیکن بعد از قطعی، رقابت بازی‌های خارجی (سهم بازی‌های ایرانی از ۴۰٪ به ۶٪ رسید)، مهاجرت نیرو به‌عنوان نتیجهٔ بحران، و فروش خارجی.</p>
+      <div class="tw"><table id="tbl"></table></div>
+      <p class="cap src">منابع:
+        <a href="https://www.mehrnews.com/news/6657793/">مهر</a>،
+        <a href="https://peivast.com/p/154213">پیوست</a>،
+        <a href="https://www.zoomit.ir/tech-iran/452199-gamers-in-iran-report-1402/">زومیت</a>،
+        گزارش‌های کافه‌بازار (<a href="https://www.zoomit.ir/tech-iran/374706-annual-report-of-bazaar-cafe-99/">۱۳۹۹</a>،
+        <a href="https://www.zoomit.ir/tech-iran/424276-bazaar-annual-report-1402">۱۴۰۲</a>)،
+        <a href="https://peivast.com/p/98069">کمیسیون کافه‌بازار</a>، و دیدبان و شرق برای قطعی‌های ۱۴۰۴ و ۱۴۰۵.</p>
+    </details>
+  </section>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script id="viz" type="application/json">__VIZ__</script>
+<script>
+(function(){
+"use strict";
+var V = JSON.parse(document.getElementById('viz').textContent);
+var F1 = new Intl.NumberFormat('fa-IR', {maximumFractionDigits: 1, minimumFractionDigits: 1});
+var F0 = new Intl.NumberFormat('fa-IR', {maximumFractionDigits: 0});
+function bn(m){ return (m < 0 ? '−' : '') + F1.format(Math.abs(m) / 1000); }
+function n(v){ return F0.format(Math.round(v)); }
+var OPT = {A:'هیچ کاری نکن', B:'آیتم‌ها را ۳۰٪ گران کن', C:'تیم را یک‌چهارم کوچک کن', D:'۵۰٪ تبلیغ بیشتر نشان بده'};
+var SHORT = {A:'هیچ کاری', B:'گران‌کردن', C:'کوچک‌کردن تیم', D:'تبلیغ بیشتر'};
+var COL = {A:'var(--s1)', B:'var(--s2)', C:'var(--s3)', D:'var(--s4)'};
+var SC = {S0_calm:'سال عادی', S1_fx50:'دلار ۵۰٪ گران‌تر', S2_fx100:'دلار دو برابر', S3_shutdown10:'قطع کامل اینترنت، ۱۰ روز',
+  S4_throttle88:'اینترنت کند، حدود سه ماه', S5_war_combo:'وضعیت جنگی', S6_brain_drain:'رفتن یک‌پنجم تیم', S7_commission15:'سهم فروشگاه نصف شود'};
+var NS = 'http://www.w3.org/2000/svg';
+function el(t, a, p){ var e = document.createElementNS(NS, t); for(var k in a) e.setAttribute(k, a[k]); if(p) p.appendChild(e); return e; }
+function tx(p, x, y, s, a){ var t = el('text', Object.assign({x: x, y: y}, a || {}), p); t.textContent = s; return t; }
+var tip = document.getElementById('tip');
+function show(ev, h){ tip.innerHTML = h; tip.hidden = false; var w = tip.offsetWidth, hh = tip.offsetHeight, x = ev.clientX + 14, y = ev.clientY + 14;
+  if(x + w > innerWidth - 8) x = ev.clientX - w - 14; if(y + hh > innerHeight - 8) y = ev.clientY - hh - 14;
+  tip.style.left = Math.max(8, x) + 'px'; tip.style.top = Math.max(8, y) + 'px'; }
+function hide(){ tip.hidden = true; }
+var byId = {}; V.scen.forEach(function(s){ byId[s.id] = s; });
+document.getElementById('sha').textContent = V.sha;
+document.getElementById('opts').innerHTML = ['A','B','C','D'].map(function(o){
+  return '<div class="opt"><span class="sw" style="background:' + COL[o] + '"></span>' + OPT[o] + '</div>'; }).join('');
+
+/* Horizontal bars, right-aligned labels: the shape every chart below shares. Values in millions. */
+function hbars(box, rows, opt){
+  box.innerHTML = '';
+  var W = 760, rowH = opt.rowH || 40, labW = opt.labW || 200, R = 70, T = 6, Hh = T + rows.length * rowH + 28;
+  var lo = opt.lo, hi = opt.hi;
+  var svg = el('svg', {viewBox: '0 0 ' + W + ' ' + Hh, role: 'img', 'aria-label': opt.aria}, box);
+  /* RTL reading: the label column sits on the right, bars grow leftward from zero. */
+  var x0 = W - labW - 12, x = function(v){ return x0 - (x0 - R) * (v - lo) / (hi - lo); };
+  opt.ticks.forEach(function(v){ el('line', {x1: x(v), x2: x(v), y1: T, y2: Hh - 24, 'class': 'gl'}, svg);
+    tx(svg, x(v), Hh - 6, opt.tick(v), {'text-anchor': 'middle'}); });
+  if(lo < 0) el('line', {x1: x(0), x2: x(0), y1: T, y2: Hh - 24, stroke: 'var(--faint)', 'stroke-width': 1}, svg);
+  if(opt.ref !== undefined){ el('line', {x1: x(opt.ref), x2: x(opt.ref), y1: T - 4, y2: Hh - 24, stroke: 'var(--ink)', 'stroke-width': 1.5}, svg);
+    tx(svg, x(opt.ref), T - 8 < 0 ? 0 : Hh - 6, '', {}); }
+  rows.forEach(function(r, i){
+    var y = T + i * rowH + (rowH - 22) / 2, a = x(Math.max(0, lo)), b = x(r.v);
+    tx(svg, W - 4, y + 16, r.label, {'text-anchor': 'end', fill: 'var(--ink)', 'font-size': 13.5});
+    var left = Math.min(a, b), w = Math.max(2, Math.abs(b - a));
+    var rect = el('rect', {x: left, y: y, width: w, height: 22, rx: 4, fill: r.color}, svg);
+    rect.addEventListener('mousemove', function(ev){ show(ev, r.tip); }); rect.addEventListener('mouseleave', hide);
+    /* A bar below zero is short and sits against the label column, so its value goes on the
+       open side of the zero line instead of past the bar's end. */
+    var lx = r.v >= 0 ? b - 8 : a - 8;
+    tx(svg, lx, y + 16, r.text, {'text-anchor': 'end', fill: 'var(--ink)', 'font-size': 13, 'font-weight': 600});
+  });
+  return svg;
+}
+
+/* 1: end cash if you do nothing */
+(function(){
+  var ids = ['S2_fx100','S1_fx50','S4_throttle88','S3_shutdown10','S0_calm','S6_brain_drain','S7_commission15'];
+  ids = ['S5_war_combo'].concat(ids);
+  var rows = ids.map(function(id){ var v = byId[id].end.A;
+    return {label: SC[id], v: v, color: 'var(--s1)', text: bn(v) + ' میلیارد',
+      tip: SC[id] + ': آخر سال ' + bn(v) + ' میلیارد تومان'}; }).sort(function(a, b){ return a.v - b.v; });
+  var svg = hbars(document.getElementById('c1'), rows, {lo: 0, hi: 9000, ticks: [0, 2000, 4000, 6000, 8000],
+    tick: function(v){ return n(v / 1000) + ' میلیارد'; }, ref: 4000, labW: 210, aria: 'پول آخر سال اگر هیچ کاری نکنید'});
+})();
+
+/* 2: revenue vs cost through the crisis */
+(function(){
+  var box = document.getElementById('c2'), W = 760, Hh = 300, L = 14, R = 50, T = 18, B = 30, step = 2;
+  var svg = el('svg', {viewBox: '0 0 ' + W + ' ' + Hh, role: 'img', 'aria-label': 'درآمد و هزینه در وضعیت جنگی'}, box);
+  var lo = 0, hi = 150, days = 365;
+  /* time runs right to left, as Persian reads */
+  var x = function(d){ return W - R - (W - L - R) * d / days; }, y = function(v){ return T + (Hh - T - B) * (hi - v) / (hi - lo); };
+  el('rect', {x: x(10), y: T, width: x(1) - x(10), height: Hh - T - B, fill: 'var(--band)'}, svg);
+  el('rect', {x: x(88), y: T, width: x(11) - x(88), height: Hh - T - B, fill: 'var(--soft)'}, svg);
+  tx(svg, x(5), T - 4, 'قطع کامل', {'text-anchor': 'middle', 'font-size': 12});
+  tx(svg, x(50), T - 4, 'اینترنت کند', {'text-anchor': 'middle', 'font-size': 12});
+  [0, 50, 100, 150].forEach(function(v){ el('line', {x1: L, x2: W - R, y1: y(v), y2: y(v), 'class': 'gl'}, svg);
+    tx(svg, W - R + 8, y(v) + 4, n(v), {'text-anchor': 'start'}); });
+  el('line', {x1: L, x2: W - R, y1: y(100), y2: y(100), stroke: 'var(--faint)', 'stroke-width': 1}, svg);
+  [0, 90, 180, 270, 365].forEach(function(d){ tx(svg, x(d), Hh - 8, d === 0 ? 'شروع بحران' : 'روز ' + n(d), {'text-anchor': 'middle'}); });
+  function line(s, c){ el('path', {d: s.map(function(v, i){ return (i ? 'L' : 'M') + x(Math.min(days, i * step)).toFixed(1) + ' ' + y(v).toFixed(1); }).join(''),
+    fill: 'none', stroke: c, 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg); }
+  line(V.war_cost, 'var(--cost)'); line(V.war_rev, 'var(--ink)');
+  var rv = V.war_rev, mi = rv.indexOf(Math.min.apply(null, rv));
+  el('circle', {cx: x(mi * step), cy: y(rv[mi]), r: 5, fill: 'var(--ink)', stroke: 'var(--surface)', 'stroke-width': 2}, svg);
+  tx(svg, x(mi * step) - 10, y(rv[mi]) + 5, 'درآمد به ' + n(rv[mi]) + '٪ رسید', {'text-anchor': 'end', fill: 'var(--ink)', 'font-size': 13, 'font-weight': 600});
+  var last = rv.length - 1, lc = V.war_cost[last];
+  tx(svg, x(days) + 4, y(lc) - 8, 'هزینه: ' + n(lc), {'text-anchor': 'start', fill: 'var(--ink)', 'font-size': 13, 'font-weight': 600});
+  tx(svg, x(days) + 4, y(rv[last]) + 18, 'درآمد: ' + n(rv[last]), {'text-anchor': 'start', fill: 'var(--ink)', 'font-size': 13, 'font-weight': 600});
+  var hit = el('rect', {x: L, y: T, width: W - L - R, height: Hh - T - B, fill: 'transparent'}, svg);
+  var cr = el('line', {y1: T, y2: Hh - B, stroke: 'var(--faint)', opacity: 0}, svg);
+  hit.addEventListener('mousemove', function(ev){ var r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) / r.width * W;
+    var d = Math.max(0, Math.min(days, (W - R - px) / (W - L - R) * days)), i = Math.min(last, Math.round(d / step));
+    cr.setAttribute('x1', x(i * step)); cr.setAttribute('x2', x(i * step)); cr.setAttribute('opacity', 1);
+    show(ev, 'روز ' + n(i * step) + '<br>درآمد: ' + n(V.war_rev[i]) + '<br>هزینه: ' + n(V.war_cost[i]) + '<br>بازیکنان: ' + n(V.war_players[i])); });
+  hit.addEventListener('mouseleave', function(){ cr.setAttribute('opacity', 0); hide(); });
+})();
+
+/* 3: end cash per decision, per situation */
+var cur = 'S5_war_combo', CH = ['S5_war_combo','S2_fx100','S3_shutdown10','S0_calm'];
+document.getElementById('chips').innerHTML = CH.map(function(id){
+  return '<button type="button" id="ch-' + id + '" data-s="' + id + '" aria-pressed="' + (id === cur) + '">' + SC[id] + '</button>'; }).join('');
+document.getElementById('chips').addEventListener('click', function(e){ var b = e.target.closest('button'); if(!b) return;
+  cur = b.dataset.s; [].forEach.call(this.querySelectorAll('button'), function(x){ x.setAttribute('aria-pressed', String(x === b)); }); draw3(); });
+function draw3(){
+  var s = byId[cur], rows = ['A','B','C','D'].map(function(o){ var v = s.end[o];
+    return {label: SHORT[o], v: v, color: COL[o], text: bn(v) + ' میلیارد' + (s.neg[o] !== null ? ' · پول از روز ' + n(s.neg[o]) + ' تمام شد' : ''),
+      tip: OPT[o] + ': ' + bn(v) + ' میلیارد تومان'}; });
+  hbars(document.getElementById('c3'), rows, {lo: -1000, hi: 7500, ticks: [0, 2000, 4000, 6000],
+    tick: function(v){ return n(v / 1000) + ' میلیارد'; }, ref: 4000, labW: 140, rowH: 46, aria: 'پول آخر سال برای هر تصمیم'});
+  var best = ['A','B','C','D'].reduce(function(a, b){ return s.end[b] > s.end[a] ? b : a; });
+  var worst = ['A','B','C','D'].reduce(function(a, b){ return s.end[b] < s.end[a] ? b : a; });
+  document.getElementById('a3').textContent = 'در «' + SC[cur] + '»، «' + SHORT[best] + '» بیشترین پول را نگه می‌دارد ('
+    + bn(s.end[best]) + ' میلیارد) و «' + SHORT[worst] + '» کمترین را (' + bn(s.end[worst]) + ' میلیارد).';
+}
+draw3();
+
+/* 4: how many of every 100 guesses keep you solvent, war situation */
+(function(){
+  var c = V.census.S5_war_combo, rows = ['D','C','A','B'].map(function(o){ var v = 100 * c.never_negative[o] / c.n;
+    return {label: SHORT[o], v: v, color: COL[o], text: n(v) + ' از ۱۰۰',
+      tip: SHORT[o] + ': در ' + n(c.never_negative[o]) + ' ترکیب از ' + n(c.n) + ' پول تمام نمی‌شود'}; });
+  hbars(document.getElementById('c4'), rows, {lo: 0, hi: 100, ticks: [0, 25, 50, 75, 100], tick: function(v){ return n(v); },
+    labW: 140, rowH: 44, aria: 'در چند ترکیب از ۱۰۰ پول تمام نمی‌شود'});
+})();
+
+/* 6: more ads vs cutting the team, as the annoyance guess grows */
+(function(){
+  var a = V.ann.S5_war_combo, K = ['حدس ما', 'کمی بیشتر', 'متوسط', 'زیاد', 'خیلی زیاد'];
+  var box = document.getElementById('c6'), W = 760, Hh = 260, L = 70, R = 30, T = 16, B = 34, hi = 2000;
+  var svg = el('svg', {viewBox: '0 0 ' + W + ' ' + Hh, role: 'img', 'aria-label': 'تبلیغ بیشتر در برابر کوچک‌کردن تیم'}, box);
+  var x = function(i){ return W - R - (W - L - R) * i / 4; }, y = function(v){ return T + (Hh - T - B) * (hi - v) / hi; };
+  [0, 500, 1000, 1500, 2000].forEach(function(v){ el('line', {x1: L, x2: W - R, y1: y(v), y2: y(v), 'class': 'gl'}, svg);
+    tx(svg, L - 8, y(v) + 4, F1.format(v / 1000), {'text-anchor': 'end'}); });
+  tx(svg, L - 8, T - 4, 'میلیارد تومان', {'text-anchor': 'end', 'font-size': 11.5});
+  K.forEach(function(k, i){ tx(svg, x(i), Hh - 10, k, {'text-anchor': 'middle'}); });
+  el('line', {x1: L, x2: W - R, y1: y(a.best), y2: y(a.best), stroke: COL.C, 'stroke-width': 2.5}, svg);
+  tx(svg, L + 4, y(a.best) - 8, 'کوچک‌کردن تیم: ' + bn(a.best) + ' میلیارد', {'text-anchor': 'start', fill: 'var(--ink)', 'font-size': 13, 'font-weight': 600});
+  el('path', {d: a.d.map(function(v, i){ return (i ? 'L' : 'M') + x(i) + ' ' + y(v); }).join(''), fill: 'none', stroke: COL.D, 'stroke-width': 2.5}, svg);
+  a.d.forEach(function(v, i){ var c = el('circle', {cx: x(i), cy: y(v), r: 6, fill: COL.D, stroke: 'var(--surface)', 'stroke-width': 2}, svg);
+    c.addEventListener('mousemove', function(ev){ show(ev, 'تبلیغ بیشتر، فرار بازیکن «' + K[i] + '»: ' + bn(v) + ' میلیارد'); });
+    c.addEventListener('mouseleave', hide); });
+  tx(svg, x(0) - 10, y(a.d[0]) - 10, 'تبلیغ بیشتر: ' + bn(a.d[0]), {'text-anchor': 'end', fill: 'var(--ink)', 'font-size': 13, 'font-weight': 600});
+})();
+
+/* 7: reality check */
+(function(){
+  var B = V.bench, box = document.getElementById('checks');
+  var items = [
+    {t: 'وقتی اینترنت قطع است، فروش چقدر کم می‌شود؟', v: ['v-good', 'جور درآمد'], lo: -80, hi: 0,
+     e: [-65, -42], el: 'انجین: ۴۲ تا ۶۵٪ کمتر', r: [-70, -40], rl: 'واقعیت: ۴۰ تا ۷۰٪ کمتر'},
+    {t: 'درآمد بازی‌های ایرانی از ۱۴۰۰ تا ۱۴۰۲ چقدر زیاد شد؟', v: ['v-warn', 'نامطمئن'], lo: 0, hi: 80,
+     e: [B['hold prices'].revenue_y1402_vs_y1400_pct, B['index half of inflation'].revenue_y1402_vs_y1400_pct],
+     el: 'انجین: ۲۹ تا ۷۷٪ بیشتر (بسته به قیمت‌گذاری)', r: [41, 43], rl: 'واقعیت: ۴۲٪ بیشتر'},
+    {t: 'تعداد بازیکنان از ۱۴۰۰ تا ۱۴۰۲ چقدر کم شد؟', v: ['v-bad', 'اشتباه'], lo: -20, hi: 0,
+     e: [-4.6, -4.0], el: 'انجین: ۴٪ کمتر', r: [-14.2, -13.6], rl: 'واقعیت: ۱۴٪ کمتر (از ۳۴ به ۲۹٫۳ میلیون)'}
+  ];
+  box.innerHTML = items.map(function(it){
+    function bar(rg, c){ var a = (Math.min(rg[0], rg[1]) - it.lo) / (it.hi - it.lo) * 100, b = (Math.max(rg[0], rg[1]) - it.lo) / (it.hi - it.lo) * 100;
+      return '<div class="track"><span class="b" style="right:' + (100 - b) + '%;width:' + Math.max(1.5, b - a) + '%;background:' + c + '"></span></div>'; }
+    return '<div class="check"><div class="t"><h3>' + it.t + '</h3><span class="verdict ' + it.v[0] + '">' + it.v[1] + '</span></div>'
+      + '<div class="pair"><span class="lab">انجین</span>' + bar(it.e, 'var(--ink)') + '<span></span><span class="cap">' + it.el + '</span>'
+      + '<span class="lab">واقعیت</span>' + bar(it.r, 'var(--faint)') + '<span></span><span class="cap">' + it.rl + '</span></div></div>';
+  }).join('') + '<p class="cap">مورد اول را نمی‌شود موفقیت کامل حساب کرد، چون عددهای واقعی را قبل از ساختن مدل دیده بودیم.'
+    + ' دلیل اشتباه سوم: در مدل، بازیکن‌ها بعد از هر قطعی کامل برمی‌گردند و رقابت بازی‌های خارجی هم دیده نمی‌شود.</p>';
+})();
+
+/* table */
+document.getElementById('tbl').innerHTML = '<tr><th>وضعیت</th>' + ['A','B','C','D'].map(function(o){ return '<th>' + SHORT[o] + '</th>'; }).join('')
+  + '</tr>' + V.scen.map(function(s){ return '<tr><td>' + SC[s.id] + '</td>' + ['A','B','C','D'].map(function(o){
+    return '<td>' + bn(s.end[o]) + ' میلیارد</td>'; }).join('') + '</tr>'; }).join('');
+})();
+</script>

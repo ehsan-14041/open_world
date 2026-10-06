@@ -1,0 +1,95 @@
+{
+  "block": 4,
+  "span": [
+    "2021-05-22",
+    "2021-08-14"
+  ],
+  "warmup": [
+    "2021-05-22",
+    "2021-06-04"
+  ],
+  "discovery": [
+    "2021-06-05",
+    "2021-08-14"
+  ],
+  "days_acquired": 85,
+  "days_wanted": 85,
+  "discovery_days_evaluable": 71,
+  "detector_semantic_hash": "49ed3b935527f1fb000ad348c411c5049070b672eb01eea69e4f457e97022f73",
+  "artifact_set_sha256": "1b2ef8c2fb5a8d258fdbf21a19e1ec23b42258e3ee59e526e43fc1cca39a2d85",
+  "occupancy_distribution": {
+    "n": 85,
+    "mean": 7.5765,
+    "median": 8.0,
+    "variance": 6.9971,
+    "stdev": 2.6452,
+    "mad": 1.0,
+    "minimum": 3.0,
+    "p10": 4.0,
+    "p25": 6.0,
+    "p75": 9.0,
+    "p90": 10.0,
+    "maximum": 16.0
+  },
+  "residual_distribution": {
+    "n": 71,
+    "mean": 0.317,
+    "median": 0.0,
+    "variance": 4.1202,
+    "stdev": 2.0298,
+    "mad": 1.5,
+    "minimum": -3.0,
+    "p10": -2.0,
+    "p25": -1.0,
+    "p75": 1.5,
+    "p90": 3.0,
+    "maximum": 7.0
+  },
+  "threshold_reachability": {
+    "threshold": 3.0,
+    "max_observed_residual": 7.0,
+    "p99_residual": 7.0,
+    "p95_residual": 4.3333,
+    "days_at_or_above_threshold": 10,
+    "share_at_or_above_threshold": 0.1408,
+    "reachable": true
+  },
+  "coverage_regime_counts": {
+    "stable": 54,
+    "abrupt_measurement_shift": 13,
+    "gradual_shift": 2,
+    "uncertain": 2
+  },
+  "trigger_count": 1,
+  "trigger_windows": [
+    {
+      "start": "2021-06-06",
+      "peak_date": "2021-06-08",
+      "end": "2021-06-09",
+      "duration_days": 4,
+      "peak_residual": 7.0,
+      "mean_residual": 5.3333,
+      "peak_occupancy": 16.0,
+      "baseline_at_peak": 9.0,
+      "occupancy_trajectory": [
+        14.0,
+        14.0,
+        16.0,
+        16.0
+      ],
+      "coverage_regime": "stable",
+      "candidate_class": "candidate_port_anomaly",
+      "regime_days": {
+        "stable": 4
+      },
+      "residual_trajectory": [
+        5.0,
+        5.0,
+        7.0,
+        4.3333
+      ],
+      "recovery_observed": true,
+      "recovery_completed_on": "2021-06-17"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "id": "socal_queue_2021",
+  "title": "Container ships at anchor, San Pedro Bay (Los Angeles / Long Beach), June-October 2021",
+
+  "_note": "Used to falsify or support H1 (queue-as-stock) WITHOUT any simulation. Every value below comes from a single source that was fetched and read in full, so the series has one consistent measurement definition. Values reported by other outlets under different definitions are listed in `excluded` rather than spliced in.",
+
+  "definition": "Container ships at anchor in San Pedro Bay, monthly. Single source, single definition across all five points.",
+
+  "observations": [
+    {
+      "period": "2021-06", "index": 0, "value": 9, "unit": "vessels",
+      "source_id": "usc_seagrant_queuing_2023", "status": "observed",
+      "definition": "container ships at anchor",
+      "note": "'in June 2021, nine container ships were at anchor'"
+    },
+    {
+      "period": "2021-07", "index": 1, "value": 18, "unit": "vessels",
+      "source_id": "usc_seagrant_queuing_2023", "status": "observed",
+      "definition": "container ships at anchor",
+      "note": "'by the beginning of July ... that queue rose to 18'"
+    },
+    {
+      "period": "2021-08", "index": 2, "value": 29, "unit": "vessels",
+      "source_id": "usc_seagrant_queuing_2023", "status": "observed",
+      "definition": "container ships at anchor",
+      "note": "'By August, eleven more joined the queue, for a total of 29'"
+    },
+    {
+      "period": "2021-09", "index": 3, "value": 40, "unit": "vessels",
+      "source_id": "usc_seagrant_queuing_2023", "status": "observed",
+      "definition": "container ships at anchor",
+      "note": "'One month later, the total was 40'"
+    },
+    {
+      "period": "2021-10", "index": 4, "value": 61, "unit": "vessels",
+      "source_id": "usc_seagrant_queuing_2023", "status": "observed",
+      "definition": "container ships at anchor",
+      "note": "'and by October, 61 vessels were swinging on anchors'"
+    }
+  ],
+
+  "driver_context": {
+    "claim": "Port of Los Angeles loaded import volume was flat to declining across this window, not rising.",
+    "figures_attributed_to_port_of_los_angeles_releases": {
+      "2021-05": 535714,
+      "2021-06": 467763,
+      "2021-08": 485672,
+      "2021-10": 467287,
+      "2021-11": 403444
+    },
+    "unit": "loaded import TEU per month",
+    "provenance_tier": "ATTRIBUTED BUT NOT DIRECTLY VERIFIED",
+    "provenance_note": "These figures were reported by search results as coming from Port of Los Angeles monthly cargo releases. portoflosangeles.org returns HTTP 403 to automated fetching, so the primary pages could NOT be read directly and these numbers are held to a lower provenance tier than the queue series. They are used only for a qualitative claim (flat vs several-fold growth), which is robust to their exact values: the test's conclusion would be unchanged if every figure were wrong by 20%.",
+    "why_it_matters": "Relaxation can only produce the observed queue if the driver rose several-fold over the same months. Whether imports were flat or mildly declining does not change that comparison."
+  },
+
+  "excluded": [
+    {
+      "value": 73, "date": "2021-09-19", "source_id": "freightwaves_record_73",
+      "reason": "Different definition — 'container ships in the queue in San Pedro Bay' counts vessels at anchor AND in drift zones, so it is not comparable with the at-anchor series. Splicing the two would manufacture a jump that did not occur."
+    },
+    {
+      "value": 109, "date": "2022-01-09", "source_id": "usc_seagrant_queuing_2023",
+      "reason": "The all-time peak, but recorded under the post-November-2021 queuing regime in which ships were required to wait far offshore. The same source notes only 12 vessels were loitering or anchored off the ports that day. The measurement definition changed mid-series; including this point would confound a regime change with a dynamic."
+    },
+    {
+      "value": 0, "date": "2022-11-22", "source_id": "freightwaves_zero_ships",
+      "reason": "End of the backlog, under the 'in queue' definition. Retained as context for the drain phase but not mixed into the at-anchor series."
+    }
+  ],
+
+  "limitations": [
+    "Five monthly points. Enough to test the SHAPE of accumulation, not to estimate a drain rate.",
+    "The series covers the BUILD phase only. The drain phase is measured under a different definition after the queuing system changed in November 2021, so onset/recovery asymmetry (hysteresis) cannot be tested on a consistent basis.",
+    "The shock here is demand-side, not a capacity loss. This tests whether a port queue INTEGRATES an imbalance; it does not test the port_disruption model's own event path.",
+    "The driver figures are attributed but not directly verified (see driver_context)."
+  ]
+}

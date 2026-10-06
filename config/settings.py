@@ -32,7 +32,18 @@ _cfg = _load_config_file()
 
 
 def _from_env(key: str, env_key: str | None = None) -> str | None:
-    name = env_key or f"OWE_{key.upper()}"
+    """
+    Read an env override for `key`, which is namespaced as OWE_<KEY>.
+
+    Callers may pass either the bare key ("PRODUCT_MODE") or the already-namespaced one
+    ("OWE_PRODUCT_MODE"). Both resolve to OWE_PRODUCT_MODE; without this, a pre-prefixed
+    key produced OWE_OWE_PRODUCT_MODE and the documented override silently did nothing.
+    """
+    if env_key:
+        name = env_key
+    else:
+        upper = key.upper()
+        name = upper if upper.startswith("OWE_") else f"OWE_{upper}"
     v = _env.get(name)
     return v.strip() if isinstance(v, str) and v.strip() else None
 
@@ -351,6 +362,20 @@ DASHBOARD_ENABLED: bool = (
     else bool(_cfg.get("dashboard_enabled", True))
 )
 
+# --- Decision journal (file-backed persistence for analyzed decisions)
+_journal_env = _from_env("ENABLE_DECISION_JOURNAL")
+ENABLE_DECISION_JOURNAL: bool = (
+    _journal_env.lower() in ("true", "1", "yes") if _journal_env is not None
+    else bool(_cfg.get("enable_decision_journal", True))
+)
+
+# --- Product mode: hide engineering surfaces (/advanced, /dashboard, /viewer) from founders
+_product_mode_env = _from_env("OWE_PRODUCT_MODE")
+PRODUCT_MODE: bool = (
+    _product_mode_env.lower() in ("true", "1", "yes") if _product_mode_env is not None
+    else bool(_cfg.get("product_mode", True))
+)
+
 # --- Enterprise positioning (tier label only; no billing)
 _enterprise_tier = _from_env("ENTERPRISE_TIER") or _cfg.get("enterprise_tier")
 ENTERPRISE_TIER: str = str(_enterprise_tier or "Research Edition").strip()
@@ -464,6 +489,7 @@ def get_settings() -> dict[str, Any]:
         "lang": LANG,
         "dashboard_history_size": DASHBOARD_HISTORY_SIZE,
         "dashboard_enabled": DASHBOARD_ENABLED,
+        "enable_decision_journal": ENABLE_DECISION_JOURNAL,
         "enterprise_tier": ENTERPRISE_TIER,
         "simulation_mode": SIMULATION_MODE,
         "shock_intensity": SHOCK_INTENSITY,

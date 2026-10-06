@@ -1,0 +1,527 @@
+{
+  "_note": "Every source in this file was actually retrieved and read while building the Yantian 2021 replay. Nothing was cited from memory. `accessed_at` is the date the page was fetched. Where a figure originates with a third party (e.g. a carrier advisory quoted by a trade publication), the source recorded here is the document that was actually read, and `notes` states the attribution chain.",
+  "sources": [
+    {
+      "id": "si_glp_2021_03",
+      "type": "press_release",
+      "title": "Schedule reliability improves in March 2021",
+      "publisher": "Sea-Intelligence",
+      "url": "https://www.sea-intelligence.com/press-room/64-schedule-reliability-improves-in-march-2021",
+      "published_at": "2021-04-27",
+      "publication_year": 2021,
+      "accessed_at": "2026-08-08",
+      "frequency": "monthly",
+      "geography": [
+        "global"
+      ],
+      "coverage_period": "2021-03",
+      "variables_used": [
+        "global_schedule_reliability_pct",
+        "average_delay_late_vessel_arrivals_days"
+      ],
+      "license": "public press release; headline figures quoted, underlying Global Liner Performance dataset is commercial",
+      "redistributable": false,
+      "access_note": "Only the headline figures published in the press release are stored in this repository. The underlying GLP report is a paid product and is not redistributed.",
+      "notes": "Reports March 2021 global schedule reliability 40.4% and average delay for LATE vessel arrivals 6.16 days. This is the most recent delay figure that was publicly available on the Yantian event start date (2021-05-25), so it is the only admissible baseline under the no-hindsight rule.",
+      "supports": {
+        "variable": "shipping_delay"
+      }
+    },
+    {
+      "id": "si_glp_2021_04",
+      "type": "press_release",
+      "title": "Schedule reliability decreases slightly in April 2021",
+      "publisher": "Sea-Intelligence",
+      "url": "https://www.sea-intelligence.com/press-room/69-schedule-reliability-decreases-slightly-in-april-2021",
+      "published_at": "2021-05-31",
+      "publication_year": 2021,
+      "accessed_at": "2026-08-08",
+      "frequency": "monthly",
+      "geography": [
+        "global"
+      ],
+      "coverage_period": "2021-04",
+      "variables_used": [
+        "global_schedule_reliability_pct",
+        "average_delay_late_vessel_arrivals_days"
+      ],
+      "license": "public press release; underlying dataset commercial",
+      "redistributable": false,
+      "notes": "April 2021: schedule reliability 39.2%, average delay 5.68 days. NOTE a cross-release inconsistency: this release describes April as 0.59 days lower M/M (implying 5.57 from March's 6.16), while the May release describes May as 0.05 days above April (implying April 5.81). The published absolute value 5.68 is what is recorded; the discrepancy is retained as a data-quality note rather than silently reconciled.",
+      "supports": {
+        "variable": "shipping_delay"
+      }
+    },
+    {
+      "id": "si_glp_2021_05",
+      "type": "press_release",
+      "title": "Schedule reliability continues to be low in May 2021",
+      "publisher": "Sea-Intelligence",
+      "url": "https://www.sea-intelligence.com/press-room/79-schedule-reliability-continues-to-be-low-in-may-2021",
+      "published_at": "2021-06-30",
+      "publication_year": 2021,
+      "accessed_at": "2026-08-08",
+      "frequency": "monthly",
+      "geography": [
+        "global"
+      ],
+      "coverage_period": "2021-05",
+      "variables_used": [
+        "global_schedule_reliability_pct",
+        "average_delay_late_vessel_arrivals_days"
+      ],
+      "license": "public press release; underlying dataset commercial",
+      "redistributable": false,
+      "notes": "May 2021: schedule reliability 38.8%, average delay 5.86 days.",
+      "supports": {
+        "variable": "shipping_delay"
+      }
+    },
+    {
+      "id": "si_glp_2021_06",
+      "type": "press_release",
+      "title": "Schedule reliability continues to be low in June 2021",
+      "publisher": "Sea-Intelligence",
+      "url": "https://www.sea-intelligence.com/press-room/84-schedule-reliability-continues-to-be-low-in-june-2021",
+      "published_at": "2021-07-28",
+      "publication_year": 2021,
+      "accessed_at": "2026-08-08",
+      "frequency": "monthly",
+      "geography": [
+        "global"
+      ],
+      "coverage_period": "2021-06",
+      "variables_used": [
+        "global_schedule_reliability_pct",
+        "average_delay_late_vessel_arrivals_days"
+      ],
+      "license": "public press release; underlying dataset commercial",
+      "redistributable": false,
+      "notes": "June 2021: schedule reliability 39.5%, average delay 6.41 days.",
+      "supports": {
+        "variable": "shipping_delay"
+      }
+    },
+    {
+      "id": "si_glp_2021_07",
+      "type": "press_release",
+      "title": "Schedule reliability continues to be low in July 2021",
+      "publisher": "Sea-Intelligence",
+      "url": "https://sea-intelligence.com/press-room/92-schedule-reliability-continues-to-be-low-in-july-2021",
+      "published_at": "2021-08-26",
+      "publication_year": 2021,
+      "accessed_at": "2026-08-08",
+      "frequency": "monthly",
+      "geography": [
+        "global"
+      ],
+      "coverage_period": "2021-07",
+      "variables_used": [
+        "global_schedule_reliability_pct",
+        "average_delay_late_vessel_arrivals_days"
+      ],
+      "license": "public press release; underlying dataset commercial",
+      "redistributable": false,
+      "notes": "July 2021: schedule reliability 35.6%, average delay 6.88 days.",
+      "supports": {
+        "variable": "shipping_delay"
+      }
+    },
+    {
+      "id": "si_glp_2021_08",
+      "type": "press_release",
+      "title": "Schedule reliability drops to all-time low 33.6% in August 2021",
+      "publisher": "Sea-Intelligence",
+      "url": "https://www.sea-intelligence.com/press-room/97-schedule-reliability-drops-to-all-time-low-33-6-in-august-2021",
+      "published_at": "2021-09-27",
+      "publication_year": 2021,
+      "accessed_at": "2026-08-08",
+      "frequency": "monthly",
+      "geography": [
+        "global"
+      ],
+      "coverage_period": "2021-08",
+      "variables_used": [
+        "global_schedule_reliability_pct",
+        "average_delay_late_vessel_arrivals_days"
+      ],
+      "license": "public press release; underlying dataset commercial",
+      "redistributable": false,
+      "notes": "August 2021: schedule reliability 33.6% (a 10-year low at the time), average delay 7.57 days.",
+      "supports": {
+        "variable": "shipping_delay"
+      }
+    },
+    {
+      "id": "scdive_yantian_2021",
+      "type": "news_report",
+      "title": "6 charts show the effects of Yantian port congestion",
+      "publisher": "Supply Chain Dive",
+      "url": "https://www.supplychaindive.com/news/yantian-china-port-covid-charts-data-congestion-ships-supply-chain/602014/",
+      "publication_year": 2021,
+      "accessed_at": "2026-08-08",
+      "geography": [
+        "Yantian",
+        "South China"
+      ],
+      "license": "news article; figures quoted, charts not redistributed",
+      "redistributable": false,
+      "notes": "Reports Yantian operating at 30% of normal capacity during the peak of the disruption and around 70% after partial recovery; ~16 days average vessel waiting time (attributed to a Maersk customer update); ~300,000 TEU awaiting export (attributed to CNBC); ~50 vessels waiting (attributed to Hapag-Lloyd via WSJ). The capacity percentages are the primary basis for the injected event magnitude. Attribution chain retained: this article is what was read; the underlying carrier advisories were not fetched directly.",
+      "supports": {
+        "variable": "port_capacity"
+      }
+    },
+    {
+      "id": "flexport_yantian_2021",
+      "type": "technical_report",
+      "title": "Yantian Port Congestion Scrambles Shipments After Covid Outbreak",
+      "publisher": "Flexport",
+      "url": "https://www.flexport.com/blog/yantian-port-congestion-scrambles-shipments-after-covid-outbreak/",
+      "published_at": "2021-06-14",
+      "publication_year": 2021,
+      "accessed_at": "2026-08-08",
+      "geography": [
+        "Yantian",
+        "South China"
+      ],
+      "license": "public freight-forwarder market update",
+      "redistributable": false,
+      "notes": "Establishes the event timeline: portions of the port shuttered since the last week of May 2021; partial reopening of a closed section as of 10 June 2021 after nearly two weeks. Reports a cargo backlog of more than 400,000 TEU and approximately 70 container vessels at anchor off the South China coast on the morning of 14 June 2021. Yantian handled approximately 13.3 million TEU in 2020 (~36,400 TEU/day).",
+      "supports": {
+        "variable": "port_capacity"
+      }
+    },
+    {
+      "id": "pemp_baltimore_2024",
+      "type": "technical_report",
+      "title": "Impacts of the Baltimore Bridge Collapse on Access to Its Main Port Terminal Facilities, 2024",
+      "publisher": "Port Economics, Management and Policy (Hofstra University)",
+      "url": "https://porteconomicsmanagement.org/pemp/contents/part10/port-resilience/baltimore-bridge-collapse/",
+      "publication_year": 2024,
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "Baltimore",
+        "US East Coast"
+      ],
+      "license": "public academic reference resource",
+      "redistributable": false,
+      "notes": "Primary source for the channel-restoration timeline used as observed milestones: 11-foot temporary channel 1 April 2024; 14-foot second temporary channel 3 April; 35-foot limited access channel 25 April; first containership (2,800 TEU feeder) 27 April; 50-foot by 400-foot channel reopened 20 May allowing return of regular commercial services; navigation channel fully reopened 11 June 2024, two and a half months after the event. Explicitly states no monthly 2024 throughput figures.",
+      "supports": {
+        "variable": "port_capacity"
+      }
+    },
+    {
+      "id": "fortune_baltimore_normal_july_2024",
+      "type": "news_report",
+      "title": "Baltimore's busy port expected back to normal in July after Francis Scott Key Bridge collapse",
+      "publisher": "Fortune",
+      "url": "https://www.fortune.com/2024/06/13/baltimores-busy-port-normal-july-francis-scott-key-bridge-collapse",
+      "publication_year": 2024,
+      "published_at": "2024-06-13",
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "Baltimore"
+      ],
+      "license": "news article; figures quoted only",
+      "redistributable": false,
+      "notes": "Basis for the 'normal operations' milestone: commercial shipping through the Port of Baltimore was expected to return to normal levels in July 2024 after the channel fully reopened in June, with the port operating at normal capacity by mid-July. NOTE this is an EXPECTATION published in June 2024, not a measured outcome; it is recorded as a reported milestone with that caveat and is scored accordingly.",
+      "supports": {
+        "variable": "port_capacity"
+      }
+    },
+    {
+      "id": "maritime_exec_baltimore_2024_volumes",
+      "type": "news_report",
+      "title": "Port of Baltimore Celebrates Recovery of its Container Business",
+      "publisher": "The Maritime Executive",
+      "url": "https://maritime-executive.com/article/port-of-baltimore-celebrates-recovery-of-its-container-business",
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "Baltimore"
+      ],
+      "license": "news article; figures quoted only",
+      "redistributable": false,
+      "notes": "Annual context only: Baltimore containerised volume fell about 41% in 2024 to roughly 740,000 TEU. NOTE a conflict across secondary sources — another outlet reports a 32% container decline for the same year. The conflict is retained rather than resolved, and neither figure is used as an observation because annual totals cannot test weekly dynamics.",
+      "supports": {
+        "variable": "port_capacity"
+      }
+    },
+    {
+      "id": "panynj_may_2024_volumes",
+      "type": "press_release",
+      "title": "Port of NY/NJ Was the Busiest US Container Port in May and Second for 2024",
+      "publisher": "The Maritime Executive (reporting Port Authority of NY & NJ figures)",
+      "url": "https://maritime-executive.com/article/port-of-ny-nj-was-the-busiest-us-container-port-in-may-and-second-for-2024",
+      "publication_year": 2024,
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "New York",
+        "New Jersey"
+      ],
+      "frequency": "monthly",
+      "license": "news article reporting port authority statistics",
+      "redistributable": false,
+      "notes": "Neighbouring-port diversion context: NY/NJ handled 790,758 TEU in May 2024, up 16.9% from 676,311 TEU in May 2023; about 709,000 TEU in April 2024. Port officials did not quantify how much was Baltimore diversion, so this is NOT used as an observation of any model variable — it is recorded to document that the diverted volume was measured locally while the disrupted port's own weekly throughput was not.",
+      "supports": {
+        "variable": "order_backlog"
+      }
+    },
+    {
+      "id": "portofvirginia_may_2024_record",
+      "type": "press_release",
+      "title": "Port Sets New Monthly Cargo Volume Record in May as it Processes More Than 340,000 TEUs",
+      "publisher": "The Port of Virginia",
+      "url": "https://www.portofvirginia.com/who-we-are/newsroom/port-sets-new-monthly-cargo-volume-record-in-may-as-it-processes-more-than-340000-teus/",
+      "publication_year": 2024,
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "Virginia"
+      ],
+      "frequency": "monthly",
+      "license": "port authority press release",
+      "redistributable": false,
+      "notes": "Diversion context: Port of Virginia handled more than 340,000 TEU in May 2024, its most productive month on record, with March-May combined above 978,000 TEU, while handling cargo diverted from Baltimore. Not used as an observation of a model variable, for the same reason as the NY/NJ figures.",
+      "supports": {
+        "variable": "order_backlog"
+      }
+    },
+    {
+      "id": "acp_advisory_a48_2023",
+      "type": "official_statistics",
+      "title": "Advisory To Shipping No. A-48-2023: Reduction in Transits Due to the Ongoing Deficit in Precipitation in the Canal Watershed",
+      "publisher": "Autoridad del Canal de Panama (Panama Canal Authority), Vice Presidency for Operations",
+      "url": "https://pancanal.com/wp-content/uploads/2023/01/ADV48-2023-Reduction-in-Transits-Due-to-the-Ongoing-Deficit-in-Precipitation-in-the-Canal-Watershed.pdf",
+      "published_at": "2023-10-30",
+      "publication_year": 2023,
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "Panama Canal"
+      ],
+      "frequency": "event-driven advisory",
+      "license": "official public advisory of the canal authority",
+      "redistributable": false,
+      "variables_used": [
+        "daily_booking_slots"
+      ],
+      "notes": "PRIMARY SOURCE, read in full. Official schedule of booking-slot reductions: transit capacity reduced to approximately 32 vessels/day since 30 July 2023; 25 slots 3-6 Nov 2023; 24 slots 7-30 Nov 2023; 22 slots 1-31 Dec 2023; 20 slots 1-31 Jan 2024; 18 slots per day from 1 Feb 2024 until further notice. CAUTION: these are BOOKING SLOTS (the reservable portion), not total daily transits, and the schedule is a forward PLAN that was later revised upward. Do not treat either as a measurement of realised throughput.",
+      "supports": {
+        "variable": "port_capacity"
+      }
+    },
+    {
+      "id": "eia_panama_2024",
+      "type": "official_statistics",
+      "title": "Panama Canal transit restrictions and their effect on energy trade",
+      "publisher": "U.S. Energy Information Administration",
+      "url": "https://www.eia.gov/todayinEnergy/detail.php?id=61443",
+      "publication_year": 2024,
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "Panama Canal"
+      ],
+      "license": "US government publication, public domain",
+      "redistributable": true,
+      "notes": "Independent official confirmation of the booking-slot schedule (32 from end of July 2023, 24 for most of November, 22 in December, raised mid-December to 24 for January against the planned 20, 18 planned for February) and — critically — explicitly distinguishes BOOKING SLOTS from ACTUAL TRANSITS. This is the source that establishes the measurement trap: the obvious capacity proxy is wrong by roughly a factor of two.",
+      "supports": {
+        "variable": "port_capacity"
+      }
+    },
+    {
+      "id": "desteia_panama_waits",
+      "type": "news_report",
+      "title": "Panama Canal Traffic, Revenue and Wait Time",
+      "publisher": "Desteia",
+      "url": "https://desteia.com/blog/panama-canal-drought",
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "Panama Canal"
+      ],
+      "license": "commercial blog quoting the Panama Canal Authority dashboard",
+      "redistributable": false,
+      "notes": "Average vessel wait times attributed to the Panama Canal Authority dashboard: 2.44 days in June 2023, peaking at 9.09 days in August 2023, settling to 3.1 days by the end of 2023. Only three dated points; the underlying dashboard series was not obtainable. Secondary source quoting a primary dashboard, so the attribution chain is retained.",
+      "supports": {
+        "variable": "shipping_delay"
+      }
+    },
+    {
+      "id": "usc_seagrant_queuing_2023",
+      "type": "academic_study",
+      "title": "Solving Containership Queuing at West Coast Ports",
+      "publisher": "USC Sea Grant, University of Southern California",
+      "url": "https://dornsife.usc.edu/uscseagrant/2023/06/30/24-solving-containership-queuing-at-west-coast-ports/",
+      "published_at": "2023-06-30",
+      "publication_year": 2023,
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "San Pedro Bay",
+        "Los Angeles",
+        "Long Beach"
+      ],
+      "frequency": "monthly",
+      "coverage_period": "2021-06 to 2022-02",
+      "license": "public university publication",
+      "redistributable": false,
+      "variables_used": [
+        "container_ships_at_anchor"
+      ],
+      "notes": "Fetched and read in full. Sole source for the at-anchor monthly series used in the H1 mechanism test: 9 (June 2021), 18 (beginning of July), 29 (August), 40 (September), 61 (October). Also records the 9 January 2022 peak of 109 container ships in the queue while only 12 were loitering or anchored off the ports, and the last loitering container ship on 3 February 2022 — the evidence that the measurement definition changed with the new queuing regime.",
+      "supports": {
+        "variable": "order_backlog"
+      }
+    },
+    {
+      "id": "freightwaves_record_73",
+      "type": "news_report",
+      "title": "Record shattered: 73 container ships stuck waiting off California",
+      "publisher": "FreightWaves",
+      "publication_year": 2021,
+      "url": "https://www.freightwaves.com/news/record-shattered-61-container-ships-stuck-waiting-off-california",
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "San Pedro Bay"
+      ],
+      "license": "news article; figures quoted only",
+      "redistributable": false,
+      "notes": "Reports 73 container ships in the queue in San Pedro Bay on 19 September 2021 (69 two days later), citing the Marine Exchange of Southern California. EXCLUDED from the fitted series: 'in the queue' counts anchored plus drifting vessels and is not comparable with the at-anchor definition. Retained to document the definitional conflict.",
+      "supports": {
+        "variable": "order_backlog"
+      }
+    },
+    {
+      "id": "freightwaves_zero_ships",
+      "type": "news_report",
+      "title": "Zero ships waiting off Southern California for first time since 2020",
+      "publisher": "FreightWaves",
+      "url": "https://www.freightwaves.com/news/zero-ships-waiting-off-southern-california-59-off-other-ports",
+      "published_at": "2022-11-23",
+      "publication_year": 2022,
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "San Pedro Bay"
+      ],
+      "license": "news article; figures quoted only",
+      "redistributable": false,
+      "notes": "Fetched and read. No container ship waited off Los Angeles or Long Beach on 22-23 November 2022; an average of seven ships per day in the queue since 24 August 2022; the all-time high of 109 on 9 January 2022. Cites the Marine Exchange of Southern California. Used as drain-phase context only, under the 'in queue' definition.",
+      "supports": {
+        "variable": "order_backlog"
+      }
+    },
+    {
+      "id": "fred_amxtuo",
+      "type": "official_statistics",
+      "title": "Manufacturers' Unfilled Orders: Manufacturing Excluding Transportation Equipment (AMXTUO)",
+      "publisher": "U.S. Census Bureau, Manufacturers' Shipments, Inventories and Orders (M3), retrieved from FRED (Federal Reserve Bank of St. Louis)",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=AMXTUO",
+      "accessed_at": "2026-08-09",
+      "frequency": "monthly",
+      "geography": [
+        "United States"
+      ],
+      "coverage_period": "1992-01 to present; 2018-01 to 2024-12 stored",
+      "license": "US federal government statistics, public domain",
+      "redistributable": true,
+      "variables_used": [
+        "unfilled_orders_musd"
+      ],
+      "dataset_version": "as retrieved 2026-08-09",
+      "notes": "The backlog stock series used for the H2 test. Excludes transportation equipment, which is about 59% of total manufacturing unfilled orders and carries an aircraft order-book cycle unrelated to supply disruption. IMPORTANT: Census M3 derives New Orders as Shipments + change in Unfilled Orders, so New Orders must NOT be used as an independent driver against this series — the relationship would be an accounting identity. Verified empirically: the identity holds to about 1.1% median relative error.",
+      "supports": {
+        "variable": "order_backlog"
+      }
+    },
+    {
+      "id": "fred_amxtvs",
+      "type": "official_statistics",
+      "title": "Manufacturers' Value of Shipments: Manufacturing Excluding Transportation Equipment (AMXTVS)",
+      "publisher": "U.S. Census Bureau (M3), retrieved from FRED",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=AMXTVS",
+      "accessed_at": "2026-08-09",
+      "frequency": "monthly",
+      "geography": [
+        "United States"
+      ],
+      "license": "US federal government statistics, public domain",
+      "redistributable": true,
+      "variables_used": [
+        "shipments_musd"
+      ],
+      "notes": "Outflow series, used as the denominator for scale-free backlog cover (months of shipments). Directly reported by respondents rather than derived.",
+      "supports": {
+        "variable": "order_backlog"
+      }
+    },
+    {
+      "id": "fred_mcumfn",
+      "type": "official_statistics",
+      "title": "Capacity Utilization: Manufacturing (NAICS) (MCUMFN)",
+      "publisher": "Board of Governors of the Federal Reserve System (G.17), retrieved from FRED",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=MCUMFN",
+      "accessed_at": "2026-08-09",
+      "frequency": "monthly",
+      "geography": [
+        "United States"
+      ],
+      "license": "US federal government statistics, public domain",
+      "redistributable": true,
+      "variables_used": [
+        "capacity_utilisation_pct"
+      ],
+      "notes": "The INDEPENDENTLY measured pressure variable for the H2 hysteresis test. Compiled by the Federal Reserve, not by the Census M3 survey, so it carries no accounting relationship to unfilled orders. Chosen precisely to avoid the circularity that New Orders would introduce.",
+      "supports": {
+        "variable": "port_capacity"
+      }
+    },
+    {
+      "id": "dadosgov_antaq_ea",
+      "type": "official_statistics",
+      "title": "Estatístico Aquaviário (EA) — dataset entry on the Brazilian federal open-data portal",
+      "publisher": "Portal Brasileiro de Dados Abertos (dados.gov.br) / ANTAQ",
+      "url": "https://dados.gov.br/dados/conjuntos-dados/estatistico-aquaviario-ea",
+      "accessed_at": "2026-08-09",
+      "geography": [
+        "Brazil"
+      ],
+      "frequency": "monthly",
+      "coverage_period": "2010 to current",
+      "license": "Open Data Commons Open Database License (ODbL) — stated explicitly on the catalog entry",
+      "redistributable": true,
+      "variables_used": [],
+      "notes": "Read in-browser; the page-level public metadata API response was read from the page's own network traffic. Establishes: licence ODbL; format TXT-in-ZIP; monthly updates since 2010; data resource https://web3.antaq.gov.br/ea/txt/estatistico.zip and dictionary resource https://web3.antaq.gov.br/ea/txt/MetadadosMovimentacao.zip (typed DICIONARIO_DE_DADOS). CRITICAL: the portal's own link monitor reports 'Erro na conexão' / urlDisponivel=false for BOTH resources, and web3.antaq.gov.br is NXDOMAIN — the officially designated download endpoint no longer exists. No data was obtained from this source; it provides catalog metadata only. See docs/replays/ANTAQ_ACQUISITION_BLOCKER.md.",
+      "supports": {
+        "variable": "order_backlog"
+      }
+    }
+  ],
+  "_not_obtained": [
+    {
+      "wanted": "Weekly Drewry World Container Index / Freightos FBX series covering May-September 2021",
+      "for_variable": "freight_cost",
+      "status": "not obtained",
+      "reason": "Full historical weekly series are commercial products. Individual weekly values appear in trade press but assembling a continuous series from scattered secondary quotes was judged unreliable, so freight_cost carries NO observations and is not evaluated in the replay."
+    },
+    {
+      "wanted": "Yantian port weekly throughput in TEU during May-July 2021",
+      "for_variable": "port_capacity",
+      "status": "not obtained",
+      "reason": "Port-level weekly throughput was not found in a public, citable form. The event magnitude therefore rests on reported operating-capacity percentages, not measured throughput."
+    },
+    {
+      "wanted": "Any public series for inventory_availability, production_capacity or service_level attributable to this disruption",
+      "for_variable": "downstream half of the model",
+      "status": "does not exist publicly",
+      "reason": "These are firm-internal metrics. See docs/PORT_DISRUPTION_EVIDENCE_AUDIT.md section 3 and docs/FITTING_FINDINGS.md."
+    },
+    {
+      "wanted": "Monthly or weekly container throughput (TEU) for the Port of Baltimore during March-August 2024",
+      "for_variable": "port_capacity",
+      "status": "not obtained",
+      "reason": "Not found in any public secondary source, and the Maryland Port Administration's monthly series was not publicly retrievable. This is a significant negative result in its own right: even for a major US port with an active public port authority, the disrupted port's own monthly throughput during the disruption was not obtainable, while the NEIGHBOURING ports' monthly volumes were published promptly. Observability is asymmetric — the disrupted node is the hardest one to see."
+    },
+    {
+      "wanted": "A weekly or daily local time series for BOTH a throughput/capacity variable AND a queue/delay variable, for a single port disruption",
+      "for_variable": "the hard condition for historical event #3",
+      "status": "not obtained after a third search",
+      "reason": "See docs/replays/EVENT3_SEARCH.md. Three candidates were assessed. Panama Canal 2023-24 has an outstanding official capacity schedule but only three dated delay points, and was rejected on mechanism grounds. US West Coast 2021-22 has the densest queue series in container shipping (daily vessels at anchor) but its shock is demand-side, which this model cannot inject. No port disruption was found with dense local series on two variables."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "baltimore_2024",
+  "title": "Port of Baltimore closure after the Francis Scott Key Bridge collapse, March-June 2024",
+  "modules": ["port_disruption"],
+  "time_unit": "weeks",
+
+  "start_date": "2024-03-26",
+  "knowledge_cutoff": "2024-03-26",
+  "evaluation_window": {"from": "2024-03-26", "to": "2024-08-05"},
+  "turns": 22,
+
+  "why_this_event": [
+    "BENCHMARK #2, chosen to test whether the Yantian failure pattern is a property of the MODEL or of the Yantian proxy. It differs from Yantian on every dimension that could have caused a spurious result: different year (2024 vs 2021), different continent, different trigger (physical channel blockage vs COVID labour absence), and critically OUTSIDE the 2021 global congestion wave that confounded the Yantian observations.",
+    "The capacity loss is near-total and unambiguous — the navigation channel was physically blocked — so the injected shock needs no estimation of an operating percentage.",
+    "The restoration timeline is documented to the day by a public academic reference source, which gives DATED MILESTONES even though no weekly throughput series exists.",
+    "Duration (~11 weeks to full channel reopening) is long enough to resolve recovery dynamics at weekly resolution, and is about twice Yantian's, so a 'recovery too fast' error should be easier to see.",
+    "Chosen despite a known weakness: the disrupted port's own monthly throughput could not be obtained publicly. That weakness is itself part of the finding."
+  ],
+
+  "initial_state": {},
+  "initial_state_provenance": {
+    "port_capacity": {
+      "value": 100.0,
+      "unit": "index (100 = normal weekly throughput)",
+      "source_id": null,
+      "available_at": "2024-03-26",
+      "note": "Baseline by construction: the index is defined so that normal pre-event operation is 100. Not an observation. No other variable is initialised from data, because no admissible pre-cutoff series for this port was obtainable — so the model runs on module defaults downstream, and that is stated rather than hidden."
+    }
+  },
+
+  "event": {
+    "id": "baltimore_channel_blocked",
+    "label": "Federal navigation channel blocked; container throughput to zero",
+    "description": "At about 01:30 on 26 March 2024 the containership MV Dali lost steering and struck a support pier of the Francis Scott Key Bridge, collapsing it across the Fort McHenry federal navigation channel and closing the Port of Baltimore's main terminals to deep-draught container traffic.",
+    "targets": {"port_capacity": -100.0},
+    "start_turn": 1,
+    "duration": 1,
+    "shape": "step",
+    "status": "expert_assumption",
+    "evidence": [
+      {
+        "type": "technical_report",
+        "reference": "source:pemp_baltimore_2024",
+        "year": 2024,
+        "note": "Channel blocked by the collapsed span; container access to the main terminals cut."
+      }
+    ]
+  },
+
+  "additional_events": [],
+
+  "event_status_note": "DESIGN DECISION, and the point of this replay: only the INITIATING shock is injected, for a single week. The phased channel restoration is deliberately NOT injected. Everything after week 1 — including the entire recovery path of port_capacity — is a pure model OUTPUT, so the observed restoration milestones are a genuine falsification test of the model's recovery dynamics rather than a check on an input we supplied. This is the opposite of the Yantian setup, where the capacity path was injected in phases and therefore untestable.",
+
+  "sources": [
+    {"type": "technical_report", "reference": "source:pemp_baltimore_2024"},
+    {"type": "news_report", "reference": "source:fortune_baltimore_normal_july_2024"},
+    {"type": "news_report", "reference": "source:maritime_exec_baltimore_2024_volumes"}
+  ],
+
+  "description": "Weekly replay of the 2024 Baltimore port closure. Week 1 begins 2024-03-26. A single one-week shock takes port_capacity to zero; the model must then recover on its own. Evaluation is by DATED MILESTONES rather than a level series, because no weekly or monthly throughput series for the port was publicly obtainable."
+}

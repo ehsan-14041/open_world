@@ -1,0 +1,27 @@
+{
+  "description": "Path A threshold fixture. churn_rate is the only bounded variable (max 0.5); its initial value sits right on 0.9*max = 0.45. State-jitter perturbation straddles that boundary, so detect_regime flips some runs to FRAGILE and leaves others NORMAL => a genuinely bimodal regime distribution, with NO change to engine code. The negative churn->mrr and churn->system_stability links carry the consequence. NOTE: linear propagation only moves a variable when something injects a delta into it; a *catastrophic* (bimodal goal_score) failure needs the non-linear rule from Path B (core/threshold_rules.py). Engine schema: initial_state for values, variable_specs for bounds, from/to+polarity/strength for links, objectives as a dict.",
+  "initial_state": {
+    "churn_rate": 0.45,
+    "mrr": 10000.0,
+    "system_stability": 70.0
+  },
+  "variable_specs": {
+    "churn_rate": { "min": 0.0, "max": 0.5 }
+  },
+  "initial_agents": [
+    { "name": "founder", "role": "Founder", "objectives": { "mrr": 1.0 } }
+  ],
+  "causal_links": [
+    { "from": "churn_rate", "to": "mrr", "polarity": "negative", "strength": 0.8 },
+    { "from": "churn_rate", "to": "system_stability", "polarity": "negative", "strength": 0.5 }
+  ],
+  "rules": [
+    {
+      "id": "churn_cliff",
+      "condition_key": "var_above",
+      "effect_key": "scale_var",
+      "params": { "var": "churn_rate", "threshold": 0.45, "target": "mrr", "factor": 0.6 }
+    }
+  ],
+  "allowed_actions": ["steady"]
+}

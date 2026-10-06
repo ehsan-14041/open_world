@@ -1,0 +1,15 @@
+{
+ "wedges": [
+  "cafe",
+  "salon",
+  "shop"
+ ],
+ "variants": [
+  "bakery",
+  "fastfood"
+ ],
+ "variant_base": {
+  "bakery": "cafe",
+  "fastfood": "cafe"
+ }
+}

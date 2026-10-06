@@ -1,0 +1,111 @@
+{
+  "semantic_hash": "94ed22b2c19a876009e464f557cdd1f56ce5cb991a88dfe8fcae406ad27817f0",
+  "parameters": {
+    "occupancy": {
+      "LOOKBACK_DAYS": 14,
+      "MIN_LOOKBACK_PRESENT": 10,
+      "SCALE_FLOOR": 1.0,
+      "RESIDUAL_THRESHOLD": 3.0,
+      "PERSISTENCE_DAYS": 4
+    },
+    "coverage_regime": {
+      "V_SHIFT": 3.5,
+      "M_ABRUPT": 4.0,
+      "S_ABRUPT": 4.5,
+      "M_STABLE": 2.0,
+      "S_STABLE": 2.5,
+      "WINDOW_REGIME_MIN_DAYS": 2,
+      "SEVERITY": [
+        "stable",
+        "gradual_shift",
+        "uncertain",
+        "abrupt_measurement_shift"
+      ],
+      "REGIME_TO_CANDIDATE": {
+        "stable": "candidate_port_anomaly",
+        "gradual_shift": "candidate_with_context",
+        "abrupt_measurement_shift": "measurement_confounded",
+        "uncertain": "uncertain"
+      }
+    },
+    "validity": {
+      "V2_MAX_TRIGGER_DAY_SHARE": 0.15,
+      "V3_MAX_UNCERTAIN_DAY_SHARE": 0.25,
+      "V4_MAX_ABRUPT_DAY_SHARE": 0.15,
+      "V6_MEDIAN_RESIDUAL_BOUND": 0.5,
+      "V6_MAX_THIRD_DRIFT": 1.0,
+      "STOP_HAMPTON_ROADS_OUTCOMES": [
+        "DETECTOR_V3_MEASUREMENT_UNSTABLE",
+        "DETECTOR_V3_TOO_MANY_UNCERTAIN_DAYS"
+      ]
+    },
+    "measurement": {
+      "SOG_STATIONARY_KTS": 0.5,
+      "DEEP_DRAFT_TYPES": [
+        70,
+        90
+      ],
+      "BBOX_MARGIN_DEG": 0.02,
+      "bbox": [
+        36.8227,
+        37.3394,
+        -76.4727,
+        -76.0633
+      ],
+      "FOOTPRINT_CELL_DEG": 0.01,
+      "geometry_file": "hampton_roads_110.168_2022-01-01.json"
+    },
+    "discovery": {
+      "GEOMETRY_ERA_START": "2020-07-01",
+      "AIS_UNAVAILABLE_SPANS": [
+        [
+          "2024-01-01",
+          "2024-06-30"
+        ]
+      ],
+      "AIS_LAST_AVAILABLE_DAY": "2024-12-31",
+      "BLOCK_DISCOVERY_DAYS": 90,
+      "BLOCK_WARMUP_DAYS": 14,
+      "MIN_DISCOVERY_DAYS": 45,
+      "MAX_DISCOVERY_BLOCKS": 11,
+      "RECOVERY_RESIDUAL_BAND": 1.0,
+      "RECOVERY_DAYS": 7,
+      "EXTENSION_INCREMENT_DAYS": 14,
+      "MAX_EXTENSION_DAYS": 56,
+      "MAX_DISCOVERY_BLOCKS_ORIGINAL": 8
+    }
+  },
+  "file_hashes": {
+    "event_sim/detect/detector_v2.py": "3d2fa42f1ae17089e78ceae02f1c74b18f7ec4f2eb2954fcdf9c15b38288c7b7",
+    "event_sim/detect/detector_v3.py": "8ba6b472df62cbde1dd369a6422d3d54ecd1ec1980b1c909d10f7fdef90a4291",
+    "event_sim/detect/series.py": "65412a51e93ab690fe604130b8cb75354e8724f8f37690a72c3b5acaaa8e2999",
+    "event_sim/detect/discovery.py": "e83de77bedc49b3d6a06adb5814514e1603b4f56fee40c9bd46a1abab9f48a98",
+    "event_sim/ingest/ais.py": "705bda4507e1b8f0218aad3679574f6e3451386cffc038dd0105bf4529b81216",
+    "event_sim/ingest/cfr_anchorage.py": "a139969441a5ca6243ec6bb3797360134b640f8401dbbeb16e242d9055e44348",
+    "event_sim/historical/dataset_contract.py": "84a2f8c3df296d0b1ef5f65b6500de38bdb3dd8f02568ec800870a58251c9a64",
+    "data/external/ais/geometry/hampton_roads_110.168_2022-01-01.json": "7baa46a782ede9dd7fd760a13e164a05246844158f4004c408f55032546dfce7"
+  },
+  "instrument_semantic_hash": "b79b6909f48d384c661818eb1e390e1cabc41704798014fb17a8789b1c5ef472",
+  "search_protocol_hash": "8ac1c174bb2839f89477258c3b9fe0486b6e27406ac11b792cff0543bae59e0a",
+  "amendments": [
+    {
+      "id": "budget-exhaustion-2026-08-18",
+      "field": "MAX_DISCOVERY_BLOCKS",
+      "old_value": 8,
+      "new_value": 11,
+      "reason": "The original cap was a round bound chosen before the eligible universe had been enumerated, and it mechanically truncated that universe, leaving 3 blocks and 220 eligible unseen discovery days unreachable. Setting the cap to the exact exhaustion count removes an arbitrary right-censoring of the search while preserving blind chronological selection.",
+      "discovery_detection_outcomes_inspected_at_amendment_time": 0,
+      "discovery_result_artifacts_present_at_amendment_time": [],
+      "combined_semantic_hash_before": "49ed3b935527f1fb000ad348c411c5049070b672eb01eea69e4f457e97022f73",
+      "combined_semantic_hash_after": "94ed22b2c19a876009e464f557cdd1f56ce5cb991a88dfe8fcae406ad27817f0",
+      "instrument_semantic_hash": "b79b6909f48d384c661818eb1e390e1cabc41704798014fb17a8789b1c5ef472",
+      "instrument_changed": false,
+      "search_protocol_hash_before": "11993ce1f548d1b4be7763989bc29d41f10e6752da2b4a21523399ae4b7ab03c",
+      "search_protocol_hash_after": "8ac1c174bb2839f89477258c3b9fe0486b6e27406ac11b792cff0543bae59e0a",
+      "additional_blocks": 3,
+      "additional_discovery_days": 220,
+      "additional_acquisition_days_including_warmup": 262,
+      "additional_acquisition_estimate_gb": 86
+    }
+  ]
+}

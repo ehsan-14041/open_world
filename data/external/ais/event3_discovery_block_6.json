@@ -1,0 +1,97 @@
+{
+  "block": 6,
+  "span": [
+    "2021-11-22",
+    "2022-02-14"
+  ],
+  "warmup": [
+    "2021-11-22",
+    "2021-12-05"
+  ],
+  "discovery": [
+    "2021-12-06",
+    "2022-02-14"
+  ],
+  "days_acquired": 83,
+  "days_wanted": 85,
+  "discovery_days_evaluable": 70,
+  "detector_semantic_hash": "49ed3b935527f1fb000ad348c411c5049070b672eb01eea69e4f457e97022f73",
+  "artifact_set_sha256": "514728d49cf2c5c6804fdab44008b707fe12f0c2d436bb5913445178b8e7b9d5",
+  "occupancy_distribution": {
+    "n": 83,
+    "mean": 18.8554,
+    "median": 18.0,
+    "variance": 12.0755,
+    "stdev": 3.475,
+    "mad": 2.0,
+    "minimum": 11.0,
+    "p10": 15.0,
+    "p25": 16.0,
+    "p75": 21.0,
+    "p90": 24.0,
+    "maximum": 27.0
+  },
+  "residual_distribution": {
+    "n": 70,
+    "mean": -0.0996,
+    "median": -0.25,
+    "variance": 6.5388,
+    "stdev": 2.5571,
+    "mad": 1.7143,
+    "minimum": -6.0,
+    "p10": -3.0,
+    "p25": -2.0,
+    "p75": 1.4286,
+    "p90": 3.0,
+    "maximum": 8.0
+  },
+  "threshold_reachability": {
+    "threshold": 3.0,
+    "max_observed_residual": 8.0,
+    "p99_residual": 8.0,
+    "p95_residual": 4.3333,
+    "days_at_or_above_threshold": 8,
+    "share_at_or_above_threshold": 0.1143,
+    "reachable": true
+  },
+  "coverage_regime_counts": {
+    "abrupt_measurement_shift": 13,
+    "gradual_shift": 5,
+    "stable": 47,
+    "uncertain": 5
+  },
+  "trigger_count": 1,
+  "trigger_windows": [
+    {
+      "start": "2022-01-06",
+      "peak_date": "2022-01-07",
+      "end": "2022-01-10",
+      "duration_days": 5,
+      "peak_residual": 8.0,
+      "mean_residual": 5.2,
+      "peak_occupancy": 24.0,
+      "baseline_at_peak": 16.0,
+      "occupancy_trajectory": [
+        19.0,
+        24.0,
+        24.0,
+        21.0,
+        20.0
+      ],
+      "coverage_regime": "stable",
+      "candidate_class": "candidate_port_anomaly",
+      "regime_days": {
+        "stable": 5
+      },
+      "residual_trajectory": [
+        3.0,
+        8.0,
+        8.0,
+        4.0,
+        3.0
+      ],
+      "recovery_observed": true,
+      "recovery_completed_on": "2022-01-20"
+    }
+  ]
+}

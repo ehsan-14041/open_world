@@ -1,0 +1,117 @@
+[
+  {
+    "id": "balanced_regional_dc",
+    "label_en": "Stable — balanced regional DC",
+    "description_en": "Healthy buffer and predictable demand — room to optimize cost vs service",
+    "outlook": "stable",
+    "profile": {
+      "site_name": "Midwest DC",
+      "business_unit_type": "distribution",
+      "product_family": "Industrial components",
+      "planning_horizon_weeks": 8,
+      "inventory_on_hand": 14000,
+      "safety_stock": 3200,
+      "weekly_demand": 750,
+      "lead_time_days": 12,
+      "fill_rate": 0.96,
+      "unit_cost": 11.2,
+      "holding_cost_pct": 0.16,
+      "supplier_risk": 0.18,
+      "capacity_utilization": 0.72,
+      "primary_constraint": "balancing holding cost with 96% fill target",
+      "planning_goal": "maintain service level while trimming excess buffer"
+    }
+  },
+  {
+    "id": "demand_spike_capacity",
+    "label_en": "Strained — demand spike, capacity tight",
+    "description_en": "Demand up 25% while plant runs hot — service level at risk without a clear lever",
+    "outlook": "strained",
+    "profile": {
+      "site_name": "East Coast Plant",
+      "business_unit_type": "manufacturing",
+      "product_family": "Consumer durables",
+      "planning_horizon_weeks": 8,
+      "inventory_on_hand": 8200,
+      "safety_stock": 2800,
+      "weekly_demand": 1100,
+      "lead_time_days": 16,
+      "fill_rate": 0.89,
+      "unit_cost": 18.5,
+      "holding_cost_pct": 0.2,
+      "supplier_risk": 0.32,
+      "capacity_utilization": 0.93,
+      "primary_constraint": "capacity ceiling with rising demand",
+      "planning_goal": "restore fill rate above 94% within 4 weeks"
+    }
+  },
+  {
+    "id": "supplier_delay_margin",
+    "label_en": "Uncertain — supplier delay, margin pressure",
+    "description_en": "Lead times stretching and landed costs rising — hard tradeoff between buffer and margin",
+    "outlook": "uncertain",
+    "profile": {
+      "site_name": "Global Sourcing Hub",
+      "business_unit_type": "multi_echelon",
+      "product_family": "Electronics assemblies",
+      "planning_horizon_weeks": 12,
+      "inventory_on_hand": 10500,
+      "safety_stock": 3500,
+      "weekly_demand": 680,
+      "lead_time_days": 28,
+      "fill_rate": 0.91,
+      "unit_cost": 24.0,
+      "holding_cost_pct": 0.22,
+      "supplier_risk": 0.48,
+      "capacity_utilization": 0.68,
+      "primary_constraint": "extended lead times and cost volatility",
+      "planning_goal": "protect service level without eroding gross margin"
+    }
+  },
+  {
+    "id": "high_utilization_plant",
+    "label_en": "Strained — high utilization, bottleneck risk",
+    "description_en": "Plant above 90% utilization — backlog building, any demand shock hits service fast",
+    "outlook": "strained",
+    "profile": {
+      "site_name": "Central Manufacturing",
+      "business_unit_type": "manufacturing",
+      "product_family": "Packaged goods",
+      "planning_horizon_weeks": 4,
+      "inventory_on_hand": 6000,
+      "safety_stock": 2200,
+      "weekly_demand": 920,
+      "lead_time_days": 10,
+      "fill_rate": 0.87,
+      "unit_cost": 8.4,
+      "holding_cost_pct": 0.15,
+      "supplier_risk": 0.22,
+      "capacity_utilization": 0.94,
+      "primary_constraint": "production bottleneck and rising backlog",
+      "planning_goal": "clear backlog without over-building inventory"
+    }
+  },
+  {
+    "id": "supplier_mix_imbalance",
+    "label_en": "Uncertain — supplier mix imbalance",
+    "description_en": "Split across three suppliers with uneven reliability — allocation decisions drive risk",
+    "outlook": "uncertain",
+    "profile": {
+      "site_name": "National Replenishment",
+      "business_unit_type": "retail",
+      "product_family": "Seasonal apparel",
+      "planning_horizon_weeks": 12,
+      "inventory_on_hand": 22000,
+      "safety_stock": 5500,
+      "weekly_demand": 1800,
+      "lead_time_days": 21,
+      "fill_rate": 0.92,
+      "unit_cost": 9.8,
+      "holding_cost_pct": 0.25,
+      "supplier_risk": 0.38,
+      "capacity_utilization": 0.75,
+      "primary_constraint": "uneven supplier performance across regions",
+      "planning_goal": "rebalance supplier mix to stabilize lead times"
+    }
+  }
+]

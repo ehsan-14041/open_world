@@ -121,6 +121,10 @@ class RoleAgent(BaseAgent):
         """
         # Dry-run: deterministic variable-driven or allowed_actions[:4]
         if not self.llm_client:
+            turn = int(world_snapshot.get("turn", 0) or 0)
+            product_action = world_snapshot.get("product_decision_action")
+            if product_action and turn == 0 and self.name == "ops_director":
+                return [str(product_action)]
             if self.allowed_actions:
                 return self.allowed_actions[:4]
             variables = world_snapshot.get("variables") or world_snapshot.get("global_state") or {}

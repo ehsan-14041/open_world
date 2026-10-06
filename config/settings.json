@@ -1,1 +1,62 @@
-{"scenario_path":"config/scenarios/demo_scenario.json","dry_run":false,"max_llm_calls_per_turn":20,"snapshot_path":null,"meta_proposal_auto_approve_max_agents":1,"debug_llm":false,"multi_stage_compiler":false,"lang":"auto","enable_belief_layer":false,"enable_oracle":false,"enable_shocks":false,"enable_meta_actions":false,"enable_causal_learning":false,"checkpoint_enabled":false,"enable_environment_agent":false,"enable_llm_redundancy_check":false,"llm_provider":"groq","openai":{"api_key":"","base_url":"https://api.openai.com/v1","model":"gpt-4o-mini"},"avalai":{"api_key":"aa-d4fw9NdKtdEWumam4IvYdsIoJhI4e6A9T7dYbplMgaOcJFd8","base_url":"https://api.avalai.ir/v1","model":"gpt-4o","temperature":0.2,"max_tokens":4096,"timeout":120},"groq":{"api_key":"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","base_url":"https://api.groq.com/openai/v1","model":"llama-3.3-70b-versatile","temperature":0.2,"max_tokens":2048,"timeout":60},"llm_usage_tiers":{"agent_reasoning":{"temperature":0.2,"max_tokens":1024},"delta_normalization":{"temperature":0.1,"max_tokens":512},"oracle_full":{"temperature":0.1,"max_tokens":1200},"scenario_pipeline":{"temperature":0.2,"max_tokens":1536},"narrative_longform":{"temperature":0.4,"max_tokens":2048},"ontology_suggestion":{"temperature":0.2,"max_tokens":512}}}
+{
+  "scenario_path": "config/scenarios/demo_scenario.json",
+  "robustness": {
+    "default_runs": 20,
+    "default_steps": 5,
+    "causal_jitter": 0.4,
+    "objective_jitter": 0.3,
+    "state_jitter": 0.15,
+    "max_workers": 1,
+    "llm_run_cap": 5,
+    "live_delay_between_rounds": 0.5,
+    "live_inter_member_delay": 1.0
+  },
+  "dry_run": true,
+  "max_llm_calls_per_turn": 20,
+  "snapshot_path": null,
+  "meta_proposal_auto_approve_max_agents": 1,
+  "debug_llm": false,
+  "multi_stage_compiler": false,
+  "lang": "auto",
+  "max_delta": 25,
+  "enable_belief_layer": false,
+  "enable_oracle": false,
+  "enable_shocks": false,
+  "enable_meta_actions": false,
+  "enable_causal_learning": false,
+  "checkpoint_enabled": false,
+  "enable_decision_journal": true,
+  "product_mode": true,
+  "enable_environment_agent": false,
+  "enable_llm_redundancy_check": false,
+  "llm_provider": "groq",
+  "openai": {
+    "api_key": "",
+    "base_url": "https://api.openai.com/v1",
+    "model": "gpt-4o-mini"
+  },
+  "avalai": {
+    "api_key": "",
+    "base_url": "https://api.avalai.ir/v1",
+    "model": "gpt-4o",
+    "temperature": 0.2,
+    "max_tokens": 4096,
+    "timeout": 120
+  },
+  "groq": {
+    "api_key": "",
+    "base_url": "https://api.groq.com/openai/v1",
+    "model": "llama-3.3-70b-versatile",
+    "temperature": 0.2,
+    "max_tokens": 2048,
+    "timeout": 60
+  },
+  "llm_usage_tiers": {
+    "agent_reasoning": {"temperature": 0.2, "max_tokens": 1024},
+    "delta_normalization": {"temperature": 0.1, "max_tokens": 512},
+    "oracle_full": {"temperature": 0.1, "max_tokens": 1200},
+    "scenario_pipeline": {"temperature": 0.2, "max_tokens": 1536},
+    "narrative_longform": {"temperature": 0.4, "max_tokens": 2048},
+    "ontology_suggestion": {"temperature": 0.2, "max_tokens": 512}
+  }
+}

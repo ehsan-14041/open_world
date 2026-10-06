@@ -1,0 +1,440 @@
+<title>انجین زیر شوک گیم · نسخهٔ فنی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column of findings, each a figure with its caption and a table under it. */
+:root{
+  --bg:#F3F5F3; --surface:#FFFFFF; --ink:#16201C; --muted:#56635E; --faint:#7C8984; --rule:#DFE4E1; --grid:#ECEFED;
+  --band:#EAEEF2; --band2:#F3EEE4;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --line:#2E3B37; --good:#0F7A4F; --warn:#9A6400; --bad:#B23B3B;
+  --good-bg:#E4F2EA; --warn-bg:#F6EEDC; --bad-bg:#F7E4E2;
+  --body:"Vazirmatn","Segoe UI",Tahoma,sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#121615; --surface:#1A1F1D; --ink:#E7ECE9; --muted:#A3AFAA; --faint:#7F8B86; --rule:#2B3330; --grid:#232A27;
+  --band:#1E2630; --band2:#2A2519;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --line:#D5DDD9; --good:#5FC795; --warn:#E0A84A; --bad:#EE7C7C;
+  --good-bg:#16291F; --warn-bg:#2B2416; --bad-bg:#2E1B1B; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#121615; --surface:#1A1F1D; --ink:#E7ECE9; --muted:#A3AFAA; --faint:#7F8B86; --rule:#2B3330; --grid:#232A27;
+  --band:#1E2630; --band2:#2A2519;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --line:#D5DDD9; --good:#5FC795; --warn:#E0A84A; --bad:#EE7C7C;
+  --good-bg:#16291F; --warn-bg:#2B2416; --bad-bg:#2E1B1B; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.85;
+  font-variant-numeric:tabular-nums}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px;padding-block:28px 64px}
+@media (max-width:600px){.wrap{padding-inline:16px}}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-size:clamp(26px,4.4vw,38px);font-weight:800;line-height:1.35}
+h2{font-size:21px;font-weight:800;line-height:1.5}
+h3{font-size:15px;font-weight:600;color:var(--muted)}
+p{margin:0;max-width:68ch}
+.eyebrow{font-size:13px;font-weight:600;color:var(--muted)}
+.lede{color:var(--muted);margin-top:10px}
+.status{display:inline-flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{font-size:12.5px;font-weight:600;padding:3px 11px;border-radius:999px;border:1px solid var(--rule);color:var(--muted);background:var(--surface)}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+@media (max-width:760px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;min-width:0}
+.tile .v{font-size:28px;font-weight:800;line-height:1.3}
+.tile .k{font-size:13.5px;color:var(--muted);line-height:1.6}
+section.fig{margin-top:44px;display:grid;gap:12px}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:16px;min-width:0}
+.cap{color:var(--muted);font-size:14.5px}
+.read{font-size:15.5px}
+.read b{font-weight:600}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--body);fill:var(--muted);font-size:12px}
+.ax line,.ax path{stroke:var(--grid);stroke-width:1}
+.zero{stroke:var(--faint);stroke-width:1}
+.multi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.multi{grid-template-columns:1fr}}
+.multi .panel h3{margin-bottom:4px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:16px;height:3px;border-radius:2px;display:inline-block}
+.legend i.sq{width:11px;height:11px;border-radius:3px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:inherit;font-size:13.5px;padding:5px 12px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink);cursor:pointer;min-height:36px}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chips button:focus-visible,summary:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.tip{position:fixed;pointer-events:none;z-index:9;background:var(--surface);border:1px solid var(--rule);border-radius:10px;
+  padding:8px 11px;font-size:13px;line-height:1.7;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:150px}
+.tip[hidden]{display:none}
+.tip .r{display:flex;justify-content:space-between;gap:14px}
+.tip .r i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-inline-end:6px}
+details.tbl summary{cursor:pointer;font-size:13.5px;color:var(--muted);font-weight:600;padding-block:4px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;font-size:13.5px;width:100%;margin-top:8px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--rule);text-align:start;white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+td.n{text-align:end}
+.grid3{display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));gap:6px;align-items:stretch;font-size:13.5px}
+.grid3 .h{color:var(--muted);font-weight:600;align-self:end;padding:2px 4px}
+.grid3 .rh{color:var(--muted);font-weight:600;align-self:center;padding-inline-end:6px}
+.cell{border-radius:10px;padding:10px;min-height:76px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;border:1px solid var(--rule)}
+.cell .w{font-weight:600}
+.cell .bar{display:flex;gap:2px;height:8px}
+.cell .bar span{border-radius:3px}
+.verdict{font-size:12.5px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.v-good{color:var(--good);background:var(--good-bg)} .v-warn{color:var(--warn);background:var(--warn-bg)} .v-bad{color:var(--bad);background:var(--bad-bg)}
+.bench{display:grid;gap:18px}
+.brow{display:grid;gap:4px}
+.brow .t{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.notes{grid-template-columns:1fr}}
+.notes ul{margin:6px 0 0;padding-inline-start:18px;font-size:14.5px;color:var(--muted)}
+.notes li{margin-block:3px}
+.src{font-size:13px;color:var(--muted)}
+.src a{color:inherit}
+code{font-family:var(--mono);font-size:12.5px;direction:ltr;unicode-bidi:isolate}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap" dir="rtl" lang="fa">
+  <header>
+    <p class="eyebrow">آزمون اکتشافی انجین OWE · صنعت بازی ایران · مهر ۱۴۰۵ · نسخهٔ فنی (نسخهٔ اول)</p>
+    <h1>یک استودیوی بازی موبایل زیر جهش دلار و قطعی اینترنت</h1>
+    <p class="lede">انجین OWE یک سال کامل را برای استودیویی نمونه با چهار گزینه، در هشت سناریو و ۷۲۹ ترکیب فرض اجرا کرد.
+      همهٔ ضرایب فرض کارشناسی‌اند و عددهای مالی استودیو نمونه‌اند. هرچه این‌جا می‌بینید شمارش حالت‌های آزموده است، نه پیش‌بینی و نه احتمال.</p>
+    <div class="status">
+      <span class="chip">اکتشافی · اعتبارسنجی‌نشده</span>
+      <span class="chip">مدل <code id="sha"></code></span>
+      <span class="chip">واحد پول: میلیون تومان</span>
+    </div>
+  </header>
+
+  <div class="tiles" id="tiles"></div>
+
+  <section class="fig" aria-labelledby="h-mech">
+    <h2 id="h-mech">انجین یک شوک را این‌طور می‌بیند</h2>
+    <p class="cap">سناریوی ترکیبی جنگ: ۱۰ روز قطع تقریباً کامل، بعد ۷۸ روز اختلال شدید، و دلار ۶۰٪ گران‌تر از روز اول.
+      گزینه: هیچ کاری نکن. ۱۰۰ یعنی وضعیت قبل از شوک. نوار آبی: قطع کامل؛ نوار کرم: اختلال.</p>
+    <div class="multi" id="mech"></div>
+    <p class="read">بازیکنان با اینترنت برمی‌گردند، ولی <b>عادت بازی دیرتر از خود شبکه ترمیم می‌شود</b>. سهم پرداخت‌کننده‌ها
+      بعد از اختلال حتی از قبل هم بالاتر می‌رود: قیمت‌های تومانیِ ثابت در کنار تورم نسبتاً ارزان شده‌اند. این خروجی یک فرض است و باید آزموده شود.</p>
+  </section>
+
+  <section class="fig" aria-labelledby="h-cash">
+    <h2 id="h-cash">نقدینگی استودیو در طول یک سال</h2>
+    <p class="cap">با فرض‌های میانی. یک سناریو را انتخاب کنید. خط صفر یعنی تمام‌شدن نقدینگی.</p>
+    <div class="chips" id="scen-chips" role="group" aria-label="سناریو"></div>
+    <div class="panel">
+      <div class="legend" id="opt-legend"></div>
+      <div id="cash"></div>
+    </div>
+    <p class="read" id="cash-read"></p>
+    <details class="tbl"><summary>جدول: نقدینگی پایان سال و روز تمام‌شدن نقدینگی</summary><div class="tw"><table id="cash-tbl"></table></div></details>
+  </section>
+
+  <section class="fig" aria-labelledby="h-census">
+    <h2 id="h-census">کدام گزینه در چند حالت از ۷۲۹ اول است</h2>
+    <p class="cap">هر ردیف یک سناریو است و هر ترکیب فرض یک بار شمرده شده. «هیچ کاری نکن» در هیچ‌کدام از ۵٬۸۳۲ حالت اول نیست.</p>
+    <div class="panel">
+      <div class="legend" id="census-legend"></div>
+      <div id="census"></div>
+    </div>
+    <details class="tbl"><summary>جدول: اول‌شدن و حالت‌هایی که نقدینگی منفی نمی‌شود</summary><div class="tw"><table id="census-tbl"></table></div></details>
+  </section>
+
+  <section class="fig" aria-labelledby="h-decide">
+    <h2 id="h-decide">چه چیزی جواب را تعیین می‌کند</h2>
+    <p class="cap">سناریوی ترکیبی جنگ. هر خانه ۸۱ حالت دارد؛ در هر خانه فقط دو فرض ثابت است و بقیه جارو شده‌اند.</p>
+    <div class="panel"><div class="grid3" id="grid"></div></div>
+    <p class="read"><b>کوچک‌کردن تیم</b> فقط وقتی برنده است که بازی به محتوای تازه کم وابسته باشد. در بقیهٔ حالت‌ها،
+      <b>تبلیغ بیشتر</b> جلو است و <b>گران‌کردن</b> فقط وقتی حساسیت قیمتی کم باشد گاهی برنده می‌شود.
+      عمق قطعی، سرعت برگشت عادت و سهم دلار در تورم اندازهٔ آسیب را عوض می‌کنند، ولی ترتیب گزینه‌ها را تقریباً هیچ‌وقت نه.</p>
+  </section>
+
+  <section class="fig" aria-labelledby="h-ads">
+    <h2 id="h-ads">برتری تبلیغ بیشتر به یک فرض ثابت بسته است</h2>
+    <p class="cap">محور افقی: هر واحد تبلیغ اضافه چقدر از عادت بازگشت کم می‌کند. این فرض در شمارش جارو نشده است.
+      خط افقی: نقدینگی بهترین گزینهٔ دیگر.</p>
+    <div class="multi" id="ads"></div>
+  </section>
+
+  <section class="fig" aria-labelledby="h-bench">
+    <h2 id="h-bench">محک با تاریخ</h2>
+    <p class="cap">بازهٔ انجین (نوار) در برابر واقعیت گزارش‌شده (لوزی، یا نوار روشن وقتی خود واقعیت یک بازه است).
+      عددهای محک را قبل از ساختن مدل دیده بودم، ولی ضرایب را با آن‌ها تنظیم نکردم.</p>
+    <div class="panel"><div class="bench" id="bench"></div></div>
+  </section>
+
+  <section class="fig" aria-labelledby="h-limits">
+    <h2 id="h-limits">آنچه مدل نمی‌بیند و آنچه باید اندازه گرفت</h2>
+    <div class="notes">
+      <div class="panel"><h3>بیرون از مدل</h3><ul>
+        <li>ریزش دائمی بازیکن بعد از قطعی؛ در مدل عادت همیشه کامل برمی‌گردد.</li>
+        <li>رقابت بازی خارجی: سهم بومی از ۴۰٪ به ۶٪ رسید.</li>
+        <li>مهاجرت و تعدیل به‌عنوان نتیجهٔ خود بحران، نه شوک بیرونی.</li>
+        <li>فروش خارجی و درآمد دلاری (تحریم پرداخت).</li>
+        <li>مدل خطی است؛ در تورم سه‌سالهٔ نزدیک ۱۹۰٪ فقط جهت‌ها قابل اتکاست.</li>
+      </ul></div>
+      <div class="panel"><h3>سه آزمایش با دادهٔ خود استودیو</h3><ul>
+        <li>وابستگی به محتوا: درآمد هفته‌های رویداد در برابر هفته‌های عادی، ۶ ماه گذشته.</li>
+        <li>هزینهٔ تبلیغ: ۵۰٪ تبلیغ بیشتر برای گروهی تصادفی؛ ماندگاری ۷ و ۳۰ روزه در برابر گروه شاهد.</li>
+        <li>حساسیت قیمتی: چند آیتم گران‌تر و چند آیتم شاهد، خرید قبل و بعد.</li>
+      </ul></div>
+    </div>
+    <p class="src">برابری: نسخهٔ سریع با خود انجین در همهٔ ۳۲ اجرای یک‌ساله مقایسه شد؛ بیشترین اختلاف <span id="par"></span>.
+      منابع: بنیاد ملی بازی‌های رایانه‌ای به نقل
+      <a href="https://www.mehrnews.com/news/6657793/">مهر</a>،
+      <a href="https://peivast.com/p/154213">پیوست</a> و
+      <a href="https://www.zoomit.ir/tech-iran/452199-gamers-in-iran-report-1402/">زومیت</a>؛
+      گزارش‌های سالانهٔ کافه‌بازار
+      (<a href="https://www.zoomit.ir/tech-iran/374706-annual-report-of-bazaar-cafe-99/">۹۹</a>،
+      <a href="https://www.zoomit.ir/tech-iran/424276-bazaar-annual-report-1402">۱۴۰۲</a>)؛
+      <a href="https://peivast.com/p/98069">کمیسیون کافه‌بازار</a>؛ افت فروش آنلاین و خسارت قطعی به نقل دیدبان؛ تعدیل نیرو به نقل شرق.
+      تورم: مرکز آمار به نقل رسانه‌ها.</p>
+  </section>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script id="viz" type="application/json">__VIZ__</script>
+<script>
+(function(){
+"use strict";
+var V = JSON.parse(document.getElementById('viz').textContent);
+var NF = new Intl.NumberFormat('fa-IR', {maximumFractionDigits: 0});
+var NF1 = new Intl.NumberFormat('fa-IR', {maximumFractionDigits: 1});
+function n(v){ return NF.format(Math.round(v)); }
+function pct(v){ return (v > 0 ? '+' : v < 0 ? '−' : '') + NF1.format(Math.abs(v)) + '٪'; }
+var OPT = {A:'هیچ کاری نکن', B:'قیمت +۳۰٪', C:'تیم −۲۵٪', D:'تبلیغ +۵۰٪'};
+var OPTC = {A:'var(--s1)', B:'var(--s2)', C:'var(--s3)', D:'var(--s4)'};
+var SC = {S0_calm:'بی‌حادثه', S1_fx50:'دلار +۵۰٪', S2_fx100:'دلار دو برابر', S3_shutdown10:'قطع ۱۰ روزه',
+  S4_throttle88:'اختلال ۸۸ روزه', S5_war_combo:'ترکیب جنگ', S6_brain_drain:'رفتن یک‌پنجم تیم', S7_commission15:'کمیسیون ۱۵٪'};
+var NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent){ var e = document.createElementNS(NS, tag);
+  for(var k in attrs) e.setAttribute(k, attrs[k]); if(parent) parent.appendChild(e); return e; }
+function txt(parent, x, y, s, attrs){ var t = el('text', Object.assign({x:x, y:y}, attrs || {}), parent); t.textContent = s; return t; }
+function niceTicks(lo, hi, k){ var span = hi - lo, raw = span / k, mag = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / mag;
+  var st = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * mag, out = [];
+  for(var v = Math.ceil(lo / st) * st; v <= hi + 1e-9; v += st) out.push(Math.round(v * 1e6) / 1e6); return out; }
+var tip = document.getElementById('tip');
+function showTip(ev, html){ tip.innerHTML = html; tip.hidden = false;
+  var w = tip.offsetWidth, h = tip.offsetHeight, x = ev.clientX + 14, y = ev.clientY + 14;
+  if(x + w > innerWidth - 8) x = ev.clientX - w - 14; if(y + h > innerHeight - 8) y = ev.clientY - h - 14;
+  tip.style.left = Math.max(8, x) + 'px'; tip.style.top = Math.max(8, y) + 'px'; }
+function hideTip(){ tip.hidden = true; }
+function legend(box, keys, sq){ box.innerHTML = keys.map(function(k){
+  return '<span><i class="' + (sq ? 'sq' : '') + '" style="background:' + OPTC[k] + '"></i>' + OPT[k] + '</span>'; }).join(''); }
+
+document.getElementById('sha').textContent = V.sha;
+document.getElementById('par').textContent = NF1.format(V.parity);
+
+/* ---- tiles */
+var war = V.census.S5_war_combo;
+document.getElementById('tiles').innerHTML = [
+  [n(5832), 'حالت آزموده: ۸ سناریو × ۷۲۹ ترکیب فرض'],
+  [n(0), 'بار که «هیچ کاری نکن» اول شد'],
+  [n(war.never_negative.B) + ' از ' + n(war.n), 'حالتِ سناریوی جنگ که با گران‌کردن، نقدینگی منفی نمی‌شود'],
+  ['۳ محک', 'یکی هم‌خوان، یکی داخل بازه (ضعیف)، یکی شکست']
+].map(function(t){ return '<div class="tile"><div class="v">' + t[0] + '</div><div class="k">' + t[1] + '</div></div>'; }).join('');
+
+/* ---- small multiples: the mechanism */
+(function(){
+  var M = V.mech, step = 2, panels = [['connectivity','اینترنت قابل‌استفاده'], ['active_players','بازیکنان فعال روزانه'],
+    ['play_habit','عادت بازگشت به بازی'], ['payer_conversion','سهم بازیکنانی که پول می‌دهند']];
+  var box = document.getElementById('mech');
+  panels.forEach(function(p){
+    var div = document.createElement('div'); div.className = 'panel';
+    div.innerHTML = '<h3>' + p[1] + '</h3>'; box.appendChild(div);
+    var W = 420, Hh = 170, L = 34, R = 10, T = 8, B = 24, s = M[p[0]];
+    var svg = el('svg', {viewBox: '0 0 ' + W + ' ' + Hh, role: 'img', 'aria-label': p[1], direction: 'ltr'}, div);
+    var x = function(d){ return L + (W - L - R) * d / 365; }, y = function(v){ return T + (Hh - T - B) * (1 - v / 140); };
+    el('rect', {x: x(1), y: T, width: x(10) - x(1), height: Hh - T - B, fill: 'var(--band)'}, svg);
+    el('rect', {x: x(11), y: T, width: x(88) - x(11), height: Hh - T - B, fill: 'var(--band2)'}, svg);
+    var g = el('g', {'class': 'ax'}, svg);
+    [0, 50, 100].forEach(function(v){ el('line', {x1: L, x2: W - R, y1: y(v), y2: y(v)}, g);
+      txt(svg, L - 6, y(v) + 4, n(v), {'text-anchor': 'end'}); });
+    [0, 90, 180, 270, 365].forEach(function(d){ txt(svg, x(d), Hh - 6, n(d), {'text-anchor': 'middle'}); });
+    el('line', {x1: L, x2: W - R, y1: y(100), y2: y(100), 'class': 'zero'}, svg);
+    el('path', {d: s.map(function(v, i){ return (i ? 'L' : 'M') + x(i * step).toFixed(1) + ' ' + y(Math.min(140, v)).toFixed(1); }).join(''),
+      fill: 'none', stroke: 'var(--line)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    var mi = s.indexOf(Math.min.apply(null, s)), last = s[s.length - 1];
+    el('circle', {cx: x(mi * step), cy: y(s[mi]), r: 4, fill: 'var(--line)', stroke: 'var(--surface)', 'stroke-width': 2}, svg);
+    txt(svg, x(mi * step) + 8, y(s[mi]) + 14, 'کمینه ' + n(s[mi]), {'font-size': 11.5});
+    txt(svg, W - R, y(Math.min(140, last)) - 8, 'روز ۳۶۵: ' + n(last), {'text-anchor': 'end', 'font-size': 11.5});
+    var hit = el('rect', {x: L, y: T, width: W - L - R, height: Hh - T - B, fill: 'transparent'}, svg);
+    var cross = el('line', {y1: T, y2: Hh - B, stroke: 'var(--faint)', 'stroke-width': 1, opacity: 0}, svg);
+    hit.addEventListener('mousemove', function(ev){
+      var r = svg.getBoundingClientRect(), d = Math.round(((ev.clientX - r.left) / r.width * W - L) / (W - L - R) * 365);
+      d = Math.max(0, Math.min(364, d)); var i = Math.round(d / step);
+      cross.setAttribute('x1', x(i * step)); cross.setAttribute('x2', x(i * step)); cross.setAttribute('opacity', 1);
+      showTip(ev, '<div>روز ' + n(i * step) + '</div><div class="r"><span>' + p[1] + '</span><b>' + n(s[i]) + '</b></div>'); });
+    hit.addEventListener('mouseleave', function(){ cross.setAttribute('opacity', 0); hideTip(); });
+  });
+})();
+
+/* ---- cash over a year */
+var curScen = 'S5_war_combo';
+legend(document.getElementById('opt-legend'), ['A','B','C','D']);
+document.getElementById('scen-chips').innerHTML = V.scen.map(function(s){
+  return '<button type="button" id="sc-' + s.id + '" data-s="' + s.id + '" aria-pressed="' + (s.id === curScen) + '">' + SC[s.id] + '</button>'; }).join('');
+document.getElementById('scen-chips').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return; curScen = b.dataset.s;
+  [].forEach.call(this.querySelectorAll('button'), function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+  drawCash(); });
+var allMax = Math.max.apply(null, V.scen.map(function(s){ return Math.max.apply(null, ['A','B','C','D'].map(function(o){ return Math.max.apply(null, s.cash[o]); })); }));
+var allMin = Math.min.apply(null, V.scen.map(function(s){ return Math.min.apply(null, ['A','B','C','D'].map(function(o){ return Math.min.apply(null, s.cash[o]); })); }));
+function drawCash(){
+  var s = V.scen.filter(function(x){ return x.id === curScen; })[0], box = document.getElementById('cash');
+  box.innerHTML = '';
+  var W = 900, Hh = 330, L = 58, R = 96, T = 14, B = 28, step = 3, lo = Math.min(-1000, allMin), hi = allMax * 1.04;
+  var svg = el('svg', {viewBox: '0 0 ' + W + ' ' + Hh, role: 'img', 'aria-label': 'نقدینگی در ' + SC[s.id], direction: 'ltr'}, box);
+  var x = function(d){ return L + (W - L - R) * d / 365; }, y = function(v){ return T + (Hh - T - B) * (hi - v) / (hi - lo); };
+  var g = el('g', {'class': 'ax'}, svg);
+  niceTicks(lo, hi, 5).forEach(function(v){ el('line', {x1: L, x2: W - R, y1: y(v), y2: y(v)}, g);
+    txt(svg, L - 8, y(v) + 4, n(v), {'text-anchor': 'end'}); });
+  [0, 60, 120, 180, 240, 300, 365].forEach(function(d){ txt(svg, x(d), Hh - 8, 'روز ' + n(d), {'text-anchor': 'middle'}); });
+  el('line', {x1: L, x2: W - R, y1: y(0), y2: y(0), stroke: 'var(--ink)', 'stroke-width': 1}, svg);
+  var ends = [];
+  ['A','B','C','D'].forEach(function(o){
+    var c = s.cash[o];
+    el('path', {d: c.map(function(v, i){ return (i ? 'L' : 'M') + x(Math.min(365, i * step)).toFixed(1) + ' ' + y(v).toFixed(1); }).join(''),
+      fill: 'none', stroke: OPTC[o], 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    var lx = x(Math.min(365, (c.length - 1) * step)), ly = y(c[c.length - 1]);
+    el('circle', {cx: lx, cy: ly, r: 4, fill: OPTC[o], stroke: 'var(--surface)', 'stroke-width': 2}, svg);
+    ends.push({o: o, y: ly, v: s.end[o]});
+  });
+  ends.sort(function(a, b){ return a.y - b.y; });
+  for(var i = 1; i < ends.length; i++) if(ends[i].y - ends[i - 1].y < 15) ends[i].y = ends[i - 1].y + 15;
+  ends.forEach(function(e){ txt(svg, W - R + 10, e.y + 4, OPT[e.o] + ' ' + n(e.v), {'font-size': 11.5, fill: 'var(--ink)'}); });
+  var hit = el('rect', {x: L, y: T, width: W - L - R, height: Hh - T - B, fill: 'transparent'}, svg);
+  var cross = el('line', {y1: T, y2: Hh - B, stroke: 'var(--faint)', 'stroke-width': 1, opacity: 0}, svg);
+  hit.addEventListener('mousemove', function(ev){
+    var r = svg.getBoundingClientRect(), d = ((ev.clientX - r.left) / r.width * W - L) / (W - L - R) * 365;
+    var k = Math.max(0, Math.min(s.cash.A.length - 1, Math.round(d / step)));
+    cross.setAttribute('x1', x(k * step)); cross.setAttribute('x2', x(k * step)); cross.setAttribute('opacity', 1);
+    showTip(ev, '<div>روز ' + n(Math.min(365, k * step)) + '</div>' + ['A','B','C','D'].map(function(o){
+      return '<div class="r"><span><i style="background:' + OPTC[o] + '"></i>' + OPT[o] + '</span><b>' + n(s.cash[o][k]) + '</b></div>'; }).join('')); });
+  hit.addEventListener('mouseleave', function(){ cross.setAttribute('opacity', 0); hideTip(); });
+  var best = ['A','B','C','D'].reduce(function(a, b){ return s.end[b] > s.end[a] ? b : a; });
+  var broke = ['A','B','C','D'].filter(function(o){ return s.neg[o] !== null; });
+  document.getElementById('cash-read').innerHTML = 'در «' + SC[s.id] + '» با فرض‌های میانی، <b>' + OPT[best] + '</b> با '
+    + n(s.end[best]) + ' میلیون تومان سال را تمام می‌کند. کمترین درآمد روزانه نسبت به قبل از شوک: <b>' + pct(s.floor) + '</b>.'
+    + (broke.length ? ' نقدینگی ' + broke.map(function(o){ return '«' + OPT[o] + '» روز ' + n(s.neg[o]); }).join(' و ') + ' منفی می‌شود.' : '');
+}
+drawCash();
+document.getElementById('cash-tbl').innerHTML = '<tr><th>سناریو</th>' + ['A','B','C','D'].map(function(o){ return '<th>' + OPT[o] + '</th>'; }).join('')
+  + '<th>کمترین درآمد روزانه</th></tr>' + V.scen.map(function(s){ return '<tr><td>' + SC[s.id] + '</td>' + ['A','B','C','D'].map(function(o){
+    return '<td class="n">' + n(s.end[o]) + (s.neg[o] !== null ? ' (منفی از روز ' + n(s.neg[o]) + ')' : '') + '</td>'; }).join('')
+    + '<td class="n">' + pct(s.floor) + '</td></tr>'; }).join('');
+
+/* ---- census: stacked bars of first places */
+(function(){
+  legend(document.getElementById('census-legend'), ['A','B','C','D'], true);
+  var ids = V.scen.map(function(s){ return s.id; }), box = document.getElementById('census');
+  var W = 900, rowH = 34, L = 132, R = 12, T = 4, Hh = T + ids.length * rowH + 26;
+  var svg = el('svg', {viewBox: '0 0 ' + W + ' ' + Hh, role: 'img', 'aria-label': 'شمارش اول‌شدن', direction: 'ltr'}, box);
+  var x = function(v){ return L + (W - L - R) * v / 729; };
+  var g = el('g', {'class': 'ax'}, svg);
+  [0, 243, 486, 729].forEach(function(v){ el('line', {x1: x(v), x2: x(v), y1: T, y2: Hh - 22}, g);
+    txt(svg, x(v), Hh - 6, n(v), {'text-anchor': 'middle'}); });
+  ids.forEach(function(id, r){
+    var c = V.census[id], y0 = T + r * rowH + 7, acc = 0;
+    txt(svg, L - 10, y0 + 15, SC[id], {'text-anchor': 'end', fill: 'var(--ink)', 'font-size': 12.5});
+    ['A','B','C','D'].forEach(function(o){
+      var w = c.wins[o]; if(!w) return;
+      var x0 = x(acc) + (acc ? 1 : 0), x1 = x(acc + w) - 1;
+      var rect = el('rect', {x: x0, y: y0, width: Math.max(1, x1 - x0), height: 20, rx: 3, fill: OPTC[o]}, svg);
+      rect.addEventListener('mousemove', function(ev){ showTip(ev, '<div>' + SC[id] + '</div><div class="r"><span><i style="background:' + OPTC[o] + '"></i>'
+        + OPT[o] + '</span><b>' + n(w) + ' از ' + n(c.n) + '</b></div>'); });
+      rect.addEventListener('mouseleave', hideTip);
+      if(x1 - x0 > 46) txt(svg, (x0 + x1) / 2, y0 + 15, n(w), {'text-anchor': 'middle', 'font-size': 11.5,
+        fill: (o === 'A' ? '#fff' : '#111'), 'font-weight': 600});
+      acc += w;
+    });
+  });
+  document.getElementById('census-tbl').innerHTML = '<tr><th>سناریو</th>' + ['A','B','C','D'].map(function(o){ return '<th>اول: ' + OPT[o] + '</th>'; }).join('')
+    + ['A','B','C','D'].map(function(o){ return '<th>بی‌منفی: ' + OPT[o] + '</th>'; }).join('') + '</tr>'
+    + ids.map(function(id){ var c = V.census[id]; return '<tr><td>' + SC[id] + '</td>'
+      + ['A','B','C','D'].map(function(o){ return '<td class="n">' + n(c.wins[o]) + '</td>'; }).join('')
+      + ['A','B','C','D'].map(function(o){ return '<td class="n">' + n(c.never_negative[o]) + '</td>'; }).join('') + '</tr>'; }).join('');
+})();
+
+/* ---- what decides: content dependence x price sensitivity */
+(function(){
+  var lab = {low: 'کم', central: 'میانی', high: 'زیاد'}, box = document.getElementById('grid');
+  var h = '<div class="h"></div>' + ['low','central','high'].map(function(p){ return '<div class="h">حساسیت قیمتی ' + lab[p] + '</div>'; }).join('');
+  ['low','central','high'].forEach(function(c){
+    h += '<div class="rh">وابستگی به محتوا: ' + lab[c] + '</div>';
+    ['low','central','high'].forEach(function(p){
+      var cell = V.grid[c + '|' + p] || {}, keys = Object.keys(cell).sort(function(a, b){ return cell[b] - cell[a]; });
+      h += '<div class="cell"><div><span class="w">' + OPT[keys[0]] + '</span> · ' + n(cell[keys[0]]) + ' از ۸۱'
+        + (keys[1] ? '<br><span class="cap">' + OPT[keys[1]] + ' · ' + n(cell[keys[1]]) + '</span>' : '') + '</div><div class="bar">'
+        + keys.map(function(k){ return '<span style="flex:' + cell[k] + ';background:' + OPTC[k] + '"></span>'; }).join('') + '</div></div>';
+    });
+  });
+  box.innerHTML = h;
+})();
+
+/* ---- ad annoyance */
+(function(){
+  var box = document.getElementById('ads'), K = [0.1, 0.2, 0.3, 0.4, 0.5];
+  [['S2_fx100','دلار دو برابر'], ['S5_war_combo','ترکیب جنگ']].forEach(function(p){
+    var a = V.ann[p[0]], div = document.createElement('div'); div.className = 'panel';
+    div.innerHTML = '<h3>' + p[1] + '</h3>'; box.appendChild(div);
+    var W = 420, Hh = 200, L = 46, R = 14, T = 12, B = 30, hi = 2200, lo = 0;
+    var svg = el('svg', {viewBox: '0 0 ' + W + ' ' + Hh, role: 'img', 'aria-label': 'تبلیغ بیشتر در ' + p[1], direction: 'ltr'}, div);
+    var x = function(k){ return L + (W - L - R) * (k - 0.1) / 0.4; }, y = function(v){ return T + (Hh - T - B) * (hi - v) / (hi - lo); };
+    var g = el('g', {'class': 'ax'}, svg);
+    [0, 500, 1000, 1500, 2000].forEach(function(v){ el('line', {x1: L, x2: W - R, y1: y(v), y2: y(v)}, g);
+      txt(svg, L - 6, y(v) + 4, n(v), {'text-anchor': 'end'}); });
+    K.forEach(function(k){ txt(svg, x(k), Hh - 10, NF1.format(k), {'text-anchor': 'middle'}); });
+    el('line', {x1: L, x2: W - R, y1: y(a.best), y2: y(a.best), stroke: OPTC[a.best_opt], 'stroke-width': 2}, svg);
+    txt(svg, W - R, y(a.best) - 7, OPT[a.best_opt] + ' ' + n(a.best), {'text-anchor': 'end', 'font-size': 11.5, fill: 'var(--ink)'});
+    el('path', {d: a.d.map(function(v, i){ return (i ? 'L' : 'M') + x(K[i]) + ' ' + y(v); }).join(''), fill: 'none',
+      stroke: OPTC.D, 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+    a.d.forEach(function(v, i){ var c = el('circle', {cx: x(K[i]), cy: y(v), r: 5, fill: OPTC.D, stroke: 'var(--surface)', 'stroke-width': 2}, svg);
+      c.addEventListener('mousemove', function(ev){ showTip(ev, '<div>هزینهٔ تبلیغ ' + NF1.format(K[i]) + '</div><div class="r"><span><i style="background:'
+        + OPTC.D + '"></i>' + OPT.D + '</span><b>' + n(v) + '</b></div><div class="r"><span><i style="background:' + OPTC[a.best_opt] + '"></i>'
+        + OPT[a.best_opt] + '</span><b>' + n(a.best) + '</b></div>'); });
+      c.addEventListener('mouseleave', hideTip); });
+    txt(svg, x(0.1) + 8, y(a.d[0]) - 9, OPT.D, {'font-size': 11.5, fill: 'var(--ink)'});
+  });
+})();
+
+/* ---- benchmark */
+(function(){
+  var B = V.bench, box = document.getElementById('bench');
+  var rows = [
+    {t: 'افت درآمد روزانه در قطعی (۱۴۰۴–۱۴۰۵)', e: [-65.4, -41.7], o: [-70, -40], ol: 'گزارش‌ها: −۴۰ تا −۷۰٪ فروش آنلاین',
+     el: 'انجین: −۴۲٪ (اختلال) تا −۶۵٪ (قطع کامل)', v: ['v-warn', 'هم‌خوان، ولی غیرمستقل']},
+    {t: 'درآمد اسمی بازی بومی، ۱۴۰۲ نسبت به ۱۴۰۰', e: [B['hold prices'].revenue_y1402_vs_y1400_pct, B['index half of inflation'].revenue_y1402_vs_y1400_pct],
+     o: [42, 42], ol: 'بنیاد: ۲۰۲ → ۲۸۷ میلیارد تومان (+۴۲٪)', el: 'انجین: بسته به سیاست قیمت', v: ['v-warn', 'داخل بازه، آزمون ضعیف']},
+    {t: 'تعداد بازیکنان، ۱۴۰۲ نسبت به ۱۴۰۰', e: [B['hold prices'].players_y1402_vs_y1400_pct, B['hold prices'].players_y1402_vs_y1400_pct],
+     o: [-13.8, -13.8], ol: 'بنیاد: ۳۴ → ۲۹٫۳ میلیون (−۱۴٪)', el: 'انجین: −۴٪', v: ['v-bad', 'شکست: افت را کم دید']}
+  ];
+  rows.forEach(function(r){
+    var div = document.createElement('div'); div.className = 'brow';
+    div.innerHTML = '<div class="t"><span>' + r.t + '</span><span class="verdict ' + r.v[0] + '">' + r.v[1] + '</span></div>';
+    box.appendChild(div);
+    var W = 900, Hh = 74, L = 14, R = 14, lo = -80, hi = 90;
+    var svg = el('svg', {viewBox: '0 0 ' + W + ' ' + Hh, role: 'img', 'aria-label': r.t, direction: 'ltr'}, div);
+    var x = function(v){ return L + (W - L - R) * (v - lo) / (hi - lo); };
+    var g = el('g', {'class': 'ax'}, svg);
+    [-80, -40, 0, 40, 80].forEach(function(v){ el('line', {x1: x(v), x2: x(v), y1: 4, y2: 50}, g);
+      txt(svg, x(v), 68, pct(v), {'text-anchor': 'middle'}); });
+    el('line', {x1: x(0), x2: x(0), y1: 4, y2: 50, 'class': 'zero'}, svg);
+    var e0 = Math.min(r.e[0], r.e[1]), e1 = Math.max(r.e[0], r.e[1]);
+    if(r.o[0] !== r.o[1]) el('rect', {x: x(r.o[0]), y: 30, width: x(r.o[1]) - x(r.o[0]), height: 10, rx: 3, fill: 'var(--grid)', stroke: 'var(--faint)', 'stroke-width': 1}, svg);
+    el('rect', {x: x(e0) - (e1 === e0 ? 3 : 0), y: 12, width: Math.max(6, x(e1) - x(e0)), height: 10, rx: 3, fill: 'var(--line)'}, svg);
+    if(r.o[0] === r.o[1]){ var ox = x(r.o[0]);
+      el('path', {d: 'M' + ox + ' 27 L' + (ox + 7) + ' 35 L' + ox + ' 43 L' + (ox - 7) + ' 35 Z', fill: 'var(--bad)', stroke: 'var(--surface)', 'stroke-width': 2}, svg); }
+    var cap = document.createElement('p'); cap.className = 'cap';
+    cap.textContent = r.el + ' · ' + r.ol; div.appendChild(cap);
+  });
+  var lg = document.createElement('div'); lg.className = 'legend';
+  lg.innerHTML = '<span><i style="background:var(--line);height:8px"></i>بازهٔ انجین</span><span><i class="sq" style="background:var(--grid);border:1px solid var(--faint)"></i>بازهٔ گزارش‌شده</span>'
+    + '<span><i class="sq" style="background:var(--bad);transform:rotate(45deg);width:9px;height:9px"></i>مقدار گزارش‌شده</span>';
+  box.appendChild(lg);
+})();
+})();
+</script>

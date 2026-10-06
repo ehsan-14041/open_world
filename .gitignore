@@ -25,3 +25,43 @@ owe.zip
 # Runtime outputs
 data/feedback/
 data/snapshots/last_snapshot.json
+
+# Runtime decision-journal / ensemble outputs
+output/
+
+# Downloaded external datasets (public, fetched on demand)
+data/external/*
+
+# ...except frozen anchorage geometry. It is small, it is the *definition* of the AIS
+# measurement rather than an observation, and the ANTAQ round showed why a frozen artifact
+# must not depend on an external service staying reachable: the endpoint the Brazilian
+# federal catalog designated for that dataset is now NXDOMAIN.
+!data/external/ais/
+!data/external/ais/*
+!data/external/ais/geometry/
+!data/external/ais/geometry/*.json
+
+# AIS extracts and per-day download receipts stay out of the repository. Reproduce them with
+#     python scripts/fetch_ais_baseline.py
+# which re-fetches the days named by the frozen sampling rule (~34 min, 17.1GB transferred,
+# ~100MB retained). Only the frozen geometry above is tracked, because that is the definition
+# of the measurement rather than an observation of it.
+data/external/ais/daily/
+data/external/ais/metadata/
+
+# built upload bundles (may contain a config.php with a password)
+dist/
+
+# PHP bundle runtime state (never part of the template)
+deploy/php/config.php
+deploy/php/data/settings.json
+deploy/php/data/llm_usage.json
+deploy/php/data/i18n/
+deploy/php/data/cache/*.gz
+# What owners send to a host: answers, contacts, measurements, questions. Never committed.
+deploy/php/data/feedback/
+deploy/php/data/contrib/
+deploy/php/data/questions/
+
+# Customer-pilot session notes: business figures and personal details. Never committed.
+pilot_sessions/

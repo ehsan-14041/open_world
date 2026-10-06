@@ -1,0 +1,25 @@
+# Apache / LiteSpeed. Ignored by nginx — see README_DEPLOY.md for the nginx note.
+
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(data|lib|assets)/ - [F,L]
+</IfModule>
+
+<IfModule mod_authz_core.c>
+  <FilesMatch "\.(gz|json|sample\.php)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+  <FilesMatch "\.(gz|json|sample\.php)$">
+    Order allow,deny
+    Deny from all
+  </FilesMatch>
+</IfModule>
+
+# index.php sets its own encoding and cache headers; don't let the server re-compress.
+<IfModule mod_deflate.c>
+  SetEnvIfNoCase Request_URI \.php$ no-gzip
+</IfModule>
