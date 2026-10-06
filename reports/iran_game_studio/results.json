@@ -1,0 +1,539 @@
+{
+ "module": "iran_mobile_studio_v0",
+ "module_sha256_12": "06e8bfc7eb22",
+ "studio": {
+  "iap_gross": 1600.0,
+  "commission": 0.3,
+  "ads": 300.0,
+  "wages": 900.0,
+  "usd_costs": 250.0,
+  "other": 150.0,
+  "cash": 4000.0
+ },
+ "options": {
+  "A": "Hold: keep prices, team and ads",
+  "B": "Raise in-app prices 30%",
+  "C": "Cut the team 25%",
+  "D": "Show 50% more ads"
+ },
+ "scenarios": {
+  "S0_calm": "Nothing happens",
+  "S1_fx50": "Dollar +50%, stays",
+  "S2_fx100": "Dollar doubles, stays",
+  "S3_shutdown10": "Near-total shutdown, 10 days",
+  "S4_throttle88": "Heavy throttling, 88 days",
+  "S5_war_combo": "Shutdown 10d, then throttling 78d, dollar +60%",
+  "S6_brain_drain": "A fifth of the team leaves, not replaced",
+  "S7_commission15": "Store share falls from 30% to 15%"
+ },
+ "central": {
+  "S0_calm": {
+   "A": {
+    "cash_end": 5439.999999999959,
+    "real_cash_end": 5439.999999999959,
+    "first_negative_day": null,
+    "rev_change_pct": 0.0,
+    "cost_change_pct": 0.0,
+    "players_min_pct": 0.0,
+    "rev_min_pct": 0.0,
+    "players_end_pct": 0.0,
+    "last_month_net": 118.35616438356148
+   },
+   "B": {
+    "cash_end": 4388.366027397267,
+    "real_cash_end": 4388.366027397267,
+    "first_negative_day": null,
+    "rev_change_pct": -7.0985915492957075,
+    "cost_change_pct": 0.0,
+    "players_min_pct": 0.0,
+    "rev_min_pct": -7.0985915492957075,
+    "players_end_pct": 0.0,
+    "last_month_net": 18.936986301370595
+   },
+   "C": {
+    "cash_end": 5844.164223510973,
+    "real_cash_end": 5844.164223510973,
+    "first_negative_day": null,
+    "rev_change_pct": -15.26759700198096,
+    "cost_change_pct": -17.307692307692314,
+    "players_min_pct": -5.99999042407271,
+    "rev_min_pct": -15.26759700198096,
+    "players_end_pct": -5.99999042407271,
+    "last_month_net": 126.44406802156817
+   },
+   "D": {
+    "cash_end": 6866.641095890332,
+    "real_cash_end": 6866.641095890332,
+    "first_negative_day": null,
+    "rev_change_pct": -2.0000000000000018,
+    "cost_change_pct": 0.0,
+    "players_min_pct": -1.9999999999999907,
+    "rev_min_pct": -2.0000000000000018,
+    "players_end_pct": -1.9999999999999907,
+    "last_month_net": 235.3315068493149
+   }
+  },
+  "S1_fx50": {
+   "A": {
+    "cash_end": 2880.65261377791,
+    "real_cash_end": 2304.5396853806274,
+    "first_negative_day": null,
+    "rev_change_pct": 16.955190833384528,
+    "cost_change_pct": 31.519987349695388,
+    "players_min_pct": -2.1553759587715104,
+    "rev_min_pct": -1.8915875538111582,
+    "players_end_pct": -0.648126159264617,
+    "last_month_net": -49.49703806831909
+   },
+   "B": {
+    "cash_end": 2214.257159418473,
+    "real_cash_end": 1771.4192517041429,
+    "first_negative_day": null,
+    "rev_change_pct": 14.247030040369468,
+    "cost_change_pct": 31.519987349695388,
+    "players_min_pct": -2.1553759587715104,
+    "rev_min_pct": -8.845749090468203,
+    "players_end_pct": -0.648126159264617,
+    "last_month_net": -87.73298111713265
+   },
+   "C": {
+    "cash_end": 3721.6433619275654,
+    "real_cash_end": 2977.337420476861,
+    "first_negative_day": null,
+    "rev_change_pct": 0.6884061116401163,
+    "cost_change_pct": 9.457270675786301,
+    "players_min_pct": -7.871132840755724,
+    "rev_min_pct": -16.394017072256382,
+    "players_end_pct": -6.648116583337327,
+    "last_month_net": 5.615730332512783
+   },
+   "D": {
+    "cash_end": 4405.4660026125475,
+    "real_cash_end": 3524.399709654995,
+    "first_negative_day": null,
+    "rev_change_pct": 14.336235906295979,
+    "cost_change_pct": 31.519987349695388,
+    "players_min_pct": -4.155375958771534,
+    "rev_min_pct": -3.867792813029758,
+    "players_end_pct": -2.648126159264619,
+    "last_month_net": 82.92377308409789
+   }
+  },
+  "S2_fx100": {
+   "A": {
+    "cash_end": 292.7735816847471,
+    "real_cash_end": 195.18487140408192,
+    "first_negative_day": null,
+    "rev_change_pct": 33.68070969800372,
+    "cost_change_pct": 63.039974699390754,
+    "players_min_pct": -4.3107519175430316,
+    "rev_min_pct": -3.786815215127337,
+    "players_end_pct": -1.2962523185292452,
+    "last_month_net": -220.59147974711163
+   },
+   "B": {
+    "cash_end": 4.854944588659656,
+    "real_cash_end": 3.236670910532659,
+    "first_negative_day": null,
+    "rev_change_pct": 35.30629760712429,
+    "cost_change_pct": 63.039974699390754,
+    "players_min_pct": -4.3107519175430316,
+    "rev_min_pct": -10.600439757557877,
+    "players_end_pct": -1.2962523185292452,
+    "last_month_net": -198.4438110229462
+   },
+   "C": {
+    "cash_end": 1570.590854473094,
+    "real_cash_end": 1047.0738930565499,
+    "first_negative_day": null,
+    "rev_change_pct": 16.414737256495847,
+    "cost_change_pct": 36.22223365926489,
+    "players_min_pct": -9.988560631882336,
+    "rev_min_pct": -18.048198635490653,
+    "players_end_pct": -7.296242742601966,
+    "last_month_net": -118.45384658345453
+   },
+   "D": {
+    "cash_end": 1912.7629421613433,
+    "real_cash_end": 1275.1915208465189,
+    "first_negative_day": null,
+    "rev_change_pct": 30.446322917479375,
+    "cost_change_pct": 63.039974699390754,
+    "players_min_pct": -6.310751917543045,
+    "rev_min_pct": -5.738803453375574,
+    "players_end_pct": -3.296252318529236,
+    "last_month_net": -73.0131140874891
+   }
+  },
+  "S3_shutdown10": {
+   "A": {
+    "cash_end": 4993.435629057652,
+    "real_cash_end": 4993.435629057652,
+    "first_negative_day": null,
+    "rev_change_pct": -4.424659749702187e-06,
+    "cost_change_pct": 0.0,
+    "players_min_pct": -57.59882742574105,
+    "rev_min_pct": -65.44044214279927,
+    "players_end_pct": -4.424659716395496e-06,
+    "last_month_net": 118.35604525301915
+   },
+   "B": {
+    "cash_end": 3893.478806383372,
+    "real_cash_end": 3893.478806383372,
+    "first_negative_day": null,
+    "rev_change_pct": -7.098595659867046,
+    "cost_change_pct": 0.0,
+    "players_min_pct": -57.59882742574105,
+    "rev_min_pct": -65.74974932936301,
+    "players_end_pct": -4.424659716395496e-06,
+    "last_month_net": 18.936875627417415
+   },
+   "C": {
+    "cash_end": 5401.881412930292,
+    "real_cash_end": 5401.881412930292,
+    "first_negative_day": null,
+    "rev_change_pct": -15.267600990406628,
+    "cost_change_pct": -17.307692307692314,
+    "players_min_pct": -57.59882742574105,
+    "rev_min_pct": -65.44044214279927,
+    "players_end_pct": -5.999994848732437,
+    "last_month_net": 126.44396063629102
+   },
+   "D": {
+    "cash_end": 6385.2832478192395,
+    "real_cash_end": 6385.2832478192395,
+    "first_negative_day": null,
+    "rev_change_pct": -2.0000044246597515,
+    "cost_change_pct": 0.0,
+    "players_min_pct": -59.542332375941044,
+    "rev_min_pct": -66.30965945780407,
+    "players_end_pct": -2.000004424659718,
+    "last_month_net": 235.3313751345604
+   }
+  },
+  "S4_throttle88": {
+   "A": {
+    "cash_end": 3691.9232793743013,
+    "real_cash_end": 3691.9232793743013,
+    "first_negative_day": null,
+    "rev_change_pct": -0.00013776976477419822,
+    "cost_change_pct": 0.0,
+    "players_min_pct": -33.29500856223373,
+    "rev_min_pct": -41.712198901843614,
+    "players_end_pct": -0.00013776976180990275,
+    "last_month_net": 118.35245503897586
+   },
+   "B": {
+    "cash_end": 2597.066466119079,
+    "real_cash_end": 2597.066466119079,
+    "first_negative_day": null,
+    "rev_change_pct": -7.098719539348764,
+    "cost_change_pct": 0.0,
+    "players_min_pct": -33.29500856223373,
+    "rev_min_pct": -48.97032675974577,
+    "players_end_pct": -0.00013776976180990275,
+    "last_month_net": 18.933540267901144
+   },
+   "C": {
+    "cash_end": 4206.662785585689,
+    "real_cash_end": 4206.662785585689,
+    "first_negative_day": null,
+    "rev_change_pct": -15.2677211888113,
+    "cost_change_pct": -17.307692307692314,
+    "players_min_pct": -38.551443716464476,
+    "rev_min_pct": -52.34068899648323,
+    "players_end_pct": -6.000128193834531,
+    "last_month_net": 126.44072438700147
+   },
+   "D": {
+    "cash_end": 4983.044488564367,
+    "real_cash_end": 4983.044488564367,
+    "first_negative_day": null,
+    "rev_change_pct": -2.000137769764454,
+    "cost_change_pct": 0.0,
+    "players_min_pct": -35.29500856223372,
+    "rev_min_pct": -42.67974995610084,
+    "players_end_pct": -2.0001377697618117,
+    "last_month_net": 235.32740567259017
+   }
+  },
+  "S5_war_combo": {
+   "A": {
+    "cash_end": 396.7896760958562,
+    "real_cash_end": 305.2255165628565,
+    "first_negative_day": null,
+    "rev_change_pct": 20.3184983209467,
+    "cost_change_pct": 37.82398481963449,
+    "players_min_pct": -57.59882742574105,
+    "rev_min_pct": -65.44044214279927,
+    "players_end_pct": -0.7778916190236296,
+    "last_month_net": -83.46120088484034
+   },
+   "B": {
+    "cash_end": -254.78366508707296,
+    "real_cash_end": -195.98916119277484,
+    "first_negative_day": 298,
+    "rev_change_pct": 18.481624428693387,
+    "cost_change_pct": 37.82398481963449,
+    "players_min_pct": -57.59882742574105,
+    "rev_min_pct": -65.74974932936301,
+    "players_end_pct": -0.7778916190236296,
+    "last_month_net": -109.55638058388439
+   },
+   "C": {
+    "cash_end": 1438.0996565190176,
+    "real_cash_end": 1106.2402501214365,
+    "first_negative_day": null,
+    "rev_change_pct": 3.8518898805362634,
+    "cost_change_pct": 14.81026327248205,
+    "players_min_pct": -57.59882742574105,
+    "rev_min_pct": -65.44044214279927,
+    "players_end_pct": -6.7778820430963505,
+    "last_month_net": -18.943087296278
+   },
+   "D": {
+    "cash_end": 1785.403085995666,
+    "real_cash_end": 1373.3990877935457,
+    "first_negative_day": null,
+    "rev_change_pct": 17.576175634628232,
+    "cost_change_pct": 37.82398481963449,
+    "players_min_pct": -59.542332375941044,
+    "rev_min_pct": -66.30965945780407,
+    "players_end_pct": -2.7778916190236314,
+    "last_month_net": 52.01368455945968
+   }
+  },
+  "S6_brain_drain": {
+   "A": {
+    "cash_end": 5744.938484733442,
+    "real_cash_end": 5744.938484733442,
+    "first_negative_day": null,
+    "rev_change_pct": -12.308709341523949,
+    "cost_change_pct": -13.846153846153852,
+    "players_min_pct": -4.799974973214704,
+    "rev_min_pct": -12.308709341523949,
+    "players_end_pct": -4.799974973214704,
+    "last_month_net": 123.50133300875191
+   },
+   "B": {
+    "cash_end": 4418.269804689253,
+    "real_cash_end": 4418.269804689253,
+    "first_negative_day": null,
+    "rev_change_pct": -21.319190583495573,
+    "cost_change_pct": -13.846153846153852,
+    "players_min_pct": -4.799974973214704,
+    "rev_min_pct": -21.319190583495573,
+    "players_end_pct": -4.799974973214704,
+    "last_month_net": -2.694807479848599
+   },
+   "C": {
+    "cash_end": 6274.806295555681,
+    "real_cash_end": 6274.806295555681,
+    "first_negative_day": null,
+    "rev_change_pct": -26.62983069297954,
+    "cost_change_pct": -31.153846153846153,
+    "players_min_pct": -10.799965397287437,
+    "rev_min_pct": -26.62983069297954,
+    "players_end_pct": -10.799965397287437,
+    "last_month_net": 144.84504028863293
+   },
+   "D": {
+    "cash_end": 7128.329578398458,
+    "real_cash_end": 7128.329578398458,
+    "first_negative_day": null,
+    "rev_change_pct": -13.448639178946653,
+    "cost_change_pct": -13.846153846153852,
+    "players_min_pct": -6.799974973214706,
+    "rev_min_pct": -13.448639178946653,
+    "players_end_pct": -6.799974973214706,
+    "last_month_net": 235.58469185887526
+   }
+  },
+  "S7_commission15": {
+   "A": {
+    "cash_end": 8319.99999999989,
+    "real_cash_end": 8319.99999999989,
+    "first_negative_day": null,
+    "rev_change_pct": 0.0,
+    "cost_change_pct": 0.0,
+    "players_min_pct": 0.0,
+    "rev_min_pct": 0.0,
+    "players_end_pct": 0.0,
+    "last_month_net": 355.06849315068484
+   },
+   "B": {
+    "cash_end": 7043.015890410966,
+    "real_cash_end": 7043.015890410966,
+    "first_negative_day": null,
+    "rev_change_pct": -7.3734939759035445,
+    "cost_change_pct": 0.0,
+    "players_min_pct": 0.0,
+    "rev_min_pct": -7.3734939759035445,
+    "players_end_pct": 0.0,
+    "last_month_net": 234.34520547945306
+   },
+   "C": {
+    "cash_end": 8270.961062956254,
+    "real_cash_end": 8270.961062956254,
+    "first_negative_day": null,
+    "rev_change_pct": -15.626497428836261,
+    "cost_change_pct": -17.307692307692314,
+    "players_min_pct": -5.99999042407271,
+    "rev_min_pct": -15.626497428836261,
+    "players_end_pct": -5.99999042407271,
+    "last_month_net": 321.1399965614939
+   },
+   "D": {
+    "cash_end": 9689.567123287765,
+    "real_cash_end": 9689.567123287765,
+    "first_negative_day": null,
+    "rev_change_pct": -1.9999999999999907,
+    "cost_change_pct": 0.0,
+    "players_min_pct": -1.9999999999999907,
+    "rev_min_pct": -1.9999999999999907,
+    "players_end_pct": -1.9999999999999907,
+    "last_month_net": 467.30958904109593
+   }
+  }
+ },
+ "parity_worst_abs_diff": 0.0,
+ "benchmark": {
+  "hold prices": {
+   "revenue_y1402_vs_y1400_pct": 28.94573010984418,
+   "players_y1402_vs_y1400_pct": -4.269777829564891,
+   "cpi_end": 287.60712119999965
+  },
+  "index half of inflation": {
+   "revenue_y1402_vs_y1400_pct": 77.04531259497196,
+   "players_y1402_vs_y1400_pct": -4.269777829564891,
+   "cpi_end": 287.60712119999965
+  },
+  "index fully": {
+   "revenue_y1402_vs_y1400_pct": 37.29589022918922,
+   "players_y1402_vs_y1400_pct": -4.269777829564891,
+   "cpi_end": 287.60712119999965
+  }
+ },
+ "census": {
+  "S0_calm": {
+   "n": 729,
+   "wins": {
+    "A": 0,
+    "B": 162,
+    "C": 243,
+    "D": 324
+   },
+   "never_negative": {
+    "A": 729,
+    "B": 729,
+    "C": 729,
+    "D": 729
+   }
+  },
+  "S1_fx50": {
+   "n": 729,
+   "wins": {
+    "A": 0,
+    "B": 54,
+    "C": 243,
+    "D": 432
+   },
+   "never_negative": {
+    "A": 702,
+    "B": 702,
+    "C": 720,
+    "D": 729
+   }
+  },
+  "S2_fx100": {
+   "n": 729,
+   "wins": {
+    "A": 0,
+    "B": 54,
+    "C": 246,
+    "D": 429
+   },
+   "never_negative": {
+    "A": 405,
+    "B": 405,
+    "C": 534,
+    "D": 567
+   }
+  },
+  "S3_shutdown10": {
+   "n": 729,
+   "wins": {
+    "A": 0,
+    "B": 162,
+    "C": 243,
+    "D": 324
+   },
+   "never_negative": {
+    "A": 729,
+    "B": 729,
+    "C": 729,
+    "D": 729
+   }
+  },
+  "S4_throttle88": {
+   "n": 729,
+   "wins": {
+    "A": 0,
+    "B": 54,
+    "C": 243,
+    "D": 432
+   },
+   "never_negative": {
+    "A": 729,
+    "B": 567,
+    "C": 729,
+    "D": 729
+   }
+  },
+  "S5_war_combo": {
+   "n": 729,
+   "wins": {
+    "A": 0,
+    "B": 36,
+    "C": 243,
+    "D": 450
+   },
+   "never_negative": {
+    "A": 438,
+    "B": 306,
+    "C": 575,
+    "D": 648
+   }
+  },
+  "S6_brain_drain": {
+   "n": 729,
+   "wins": {
+    "A": 0,
+    "B": 0,
+    "C": 243,
+    "D": 486
+   },
+   "never_negative": {
+    "A": 729,
+    "B": 729,
+    "C": 729,
+    "D": 729
+   }
+  },
+  "S7_commission15": {
+   "n": 729,
+   "wins": {
+    "A": 0,
+    "B": 243,
+    "C": 162,
+    "D": 324
+   },
+   "never_negative": {
+    "A": 729,
+    "B": 729,
+    "C": 729,
+    "D": 729
+   }
+  }
+ }
+}
