@@ -396,9 +396,8 @@ owe/
 From the project root:
 
 ```bash
-pip install -r requirements.txt
-pip install pytest
-pytest tests/ -v
+pip install -r requirements-dev.txt
+pytest -v
 ```
 
 Test coverage includes: determinism, dry-run environment, scenario compiler, pipeline stages, narrative synthesizer, **ops schema/builder/E2E path guard**, **operations outcome language**, decision schema/brief/presets, kill criteria, calibration, LLM budget, V2 engine, and more.
