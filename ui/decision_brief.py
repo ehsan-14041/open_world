@@ -33,7 +33,7 @@ from ui.dashboard_payload import build_dashboard_payload
 from core.narrative_engine import outcome_label_display, _humanize_var
 from core.kill_criteria import derive_kill_criteria
 from core.trace_compression import compress_trace_to_causal_chain
-from ui.ops_outcomes import build_ops_outcomes, humanize_var, ops_kill_summary
+from ui.ops_outcomes import build_ops_outcomes, humanize_var, ops_kill_summary, provenance_initial_state
 
 try:
     from core.world_summarizer import detect_language
@@ -454,13 +454,12 @@ def build_decision_brief(
     ops_profile = (scenario or {}).get("ops_profile")
     if ops_profile:
         try:
-            initial = provenance[0].get("pre_state") if provenance else None
             outcomes = build_ops_outcomes(
                 final_snapshot or {},
                 provenance,
                 ops_profile,
                 brief_core,
-                initial_snapshot=initial if isinstance(initial, dict) else None,
+                initial_snapshot=provenance_initial_state(provenance),
             )
             brief_core["best_case"] = outcomes.get("best_case", "")
             brief_core["worst_case"] = outcomes.get("worst_case", "")

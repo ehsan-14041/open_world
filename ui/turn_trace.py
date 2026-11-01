@@ -76,6 +76,10 @@ def build_turn_trace(
     for entry in provenance or []:
         if not isinstance(entry, dict):
             continue
+        # The loop keeps pre/post state, propagation and fired events in turn_record.
+        record = entry.get("turn_record")
+        if isinstance(record, dict):
+            entry = {**record, **entry}
         turn = entry.get("turn") or len(trace) + 1
         propagation = entry.get("propagation_trace") or []
         chain = compress_trace_to_causal_chain(propagation) if propagation else []
@@ -92,6 +96,10 @@ def build_turn_trace(
                 events.extend(str(x) for x in val[:3])
 
         action = entry.get("selected_action") or entry.get("action") or entry.get("action_type") or ""
+        if not action:
+            actions = entry.get("actions")
+            if isinstance(actions, list) and actions and isinstance(actions[0], dict):
+                action = actions[0].get("action_type") or ""
         summary = _narrative_summary(entry)
         if not summary and action:
             summary = f"Action: {action}"

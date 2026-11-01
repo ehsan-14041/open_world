@@ -112,3 +112,21 @@ def test_comparison_card() -> None:
     )
     assert card["service_level_headline"]
     assert card["decision_id"] == "expedite_reorder"
+
+
+def test_provenance_initial_state_reads_turn_record() -> None:
+    from ui.ops_outcomes import provenance_initial_state
+
+    pre = {"variables": {"fill_rate": 0.89}}
+    assert provenance_initial_state([{"turn": 1, "turn_record": {"pre_state": pre}}]) == pre
+    assert provenance_initial_state([{"pre_state": pre}]) == pre
+    assert provenance_initial_state([{"turn": 1}]) is None
+    assert provenance_initial_state([]) is None
+
+
+def test_outcomes_use_turn_record_start_not_final() -> None:
+    initial = {"variables": {"fill_rate": 0.89, "holding_cost_weekly": 3000, "stockout_risk": 0.11}}
+    final = {"variables": {"fill_rate": 0.95, "holding_cost_weekly": 3400, "stockout_risk": 0.05}}
+    brief = {"regime": {"level": "NORMAL"}, "confidence": {"level": "moderate"}, "kill_criteria": [], "top_drivers": []}
+    out = build_ops_outcomes(final, [{"turn": 1, "turn_record": {"pre_state": initial}}], {}, brief)
+    assert out["fill_rate_delta_pts"] == 6.0

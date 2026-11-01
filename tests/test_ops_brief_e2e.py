@@ -116,3 +116,32 @@ def test_brief_saves_journal(client, tmp_path, monkeypatch) -> None:
     data = r.get_json()
     assert data.get("journal_id")
     assert data.get("check_in_due_days") == 30
+
+
+def test_ops_brief_measures_change_from_the_starting_profile(client, tmp_path, monkeypatch) -> None:
+    """The reported change is final minus the profile the owner entered, not final minus final."""
+    monkeypatch.setattr(ui_app, "_get_snapshot_dir", lambda: tmp_path)
+    preset = json.loads(
+        (Path(__file__).resolve().parent.parent / "config" / "ops_presets.json").read_text(encoding="utf-8")
+    )[1]
+    body = {
+        "ops_profile": preset["profile"],
+        "decision_id": "increase_safety_stock",
+        "compare_decision_id": "expedite_reorder",
+        "steps": 4,
+        "dry_run": True,
+        "save_snapshot": False,
+    }
+    r = client.post("/api/brief", json=body)
+    assert r.status_code == 200
+    data = r.get_json()
+    outcomes = data["outcomes"]
+    start = preset["profile"]["fill_rate"]
+    assert outcomes["fill_rate"] != start, "the simulation should move fill rate for this preset"
+    assert outcomes["fill_rate_delta_pts"] == pytest.approx((outcomes["fill_rate"] - start) * 100, abs=0.11)
+
+    # The "compare with" decision is measured from the same starting profile.
+    assert data["decision_comparison"]["alternative"]["fill_rate_delta_pts"] != 0.0
+
+    assert any(t["key_changes"] for t in data["turn_trace"]), "turn trace should show what changed"
+    assert any(t["action"] for t in data["turn_trace"])

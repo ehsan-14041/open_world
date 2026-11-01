@@ -79,6 +79,15 @@ def _vars(snapshot: dict[str, Any]) -> dict[str, float]:
     return {k: float(val) for k, val in v.items() if isinstance(val, (int, float))}
 
 
+def provenance_initial_state(provenance: list[dict[str, Any]] | None) -> dict[str, Any] | None:
+    """World state before the first turn. The loop keeps it in turn_record; older callers put it top-level."""
+    first = (provenance or [None])[0]
+    if not isinstance(first, dict):
+        return None
+    pre = first.get("pre_state") or (first.get("turn_record") or {}).get("pre_state")
+    return pre if isinstance(pre, dict) and pre else None
+
+
 def _regime_level(brief: dict[str, Any]) -> str:
     regime = brief.get("regime") or {}
     if isinstance(regime, dict):
@@ -547,7 +556,7 @@ def build_ops_outcomes(
     final_vars = _vars(final_snapshot)
     initial_vars = _vars(initial_snapshot) if initial_snapshot else {}
     if not initial_vars and provenance:
-        initial_vars = _vars((provenance[0] or {}).get("pre_state") or {}) or final_vars
+        initial_vars = _vars(provenance_initial_state(provenance) or {}) or final_vars
 
     fill_rate = final_vars.get("fill_rate", 0)
     holding = final_vars.get("holding_cost_weekly", 0)
