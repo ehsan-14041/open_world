@@ -24,7 +24,7 @@ owe.zip
 =*
 # Runtime outputs
 data/feedback/
-data/snapshots/last_snapshot.json
+data/snapshots/*.json
 
 # Runtime decision-journal / ensemble outputs
 output/

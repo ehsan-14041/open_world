@@ -55,7 +55,7 @@ from ui.dashboard import register_routes as register_dashboard_routes
 from event_sim.api import register_routes as register_event_sim_routes
 from ui.dashboard import build_dashboard_payload, on_turn_complete as dashboard_on_turn_complete, set_last_provenance, set_last_scenario
 from ui.decision_brief import build_decision_brief
-from ui.ops_outcomes import build_ops_outcomes, build_comparison_card
+from ui.ops_outcomes import build_ops_outcomes, build_comparison_card, provenance_initial_state
 from ui.turn_trace import build_turn_trace
 from schemas.decision_schema import validate_decision_input, decision_to_scenario_text, normalize_decision_input
 from schemas.ops_schema import validate_ops_profile, normalize_ops_profile
@@ -566,7 +566,7 @@ def api_brief():
         decision_comparison: dict[str, Any] | None = None
         if ops_profile:
             try:
-                initial = (result.get("provenance") or [{}])[0].get("pre_state")
+                initial = provenance_initial_state(result.get("provenance"))
                 primary_label = (decision_template or {}).get("label_en") or decision_id or "Your decision"
                 assumptions_used = scenario.get("assumptions_used") or []
                 outcomes = build_ops_outcomes(
@@ -574,7 +574,7 @@ def api_brief():
                     result.get("provenance") or [],
                     ops_profile,
                     brief,
-                    initial_snapshot=initial if isinstance(initial, dict) else None,
+                    initial_snapshot=initial,
                     decision_id=decision_id or str(scenario.get("decision_template_id") or ""),
                     decision_label=primary_label,
                     assumptions=assumptions_used,
@@ -640,13 +640,13 @@ def api_brief():
                         assumption_overrides=assumption_overrides,
                     )
                     _r, b = _run_and_brief(alt_scenario)
-                    alt_initial = (_r.get("provenance") or [{}])[0].get("pre_state")
+                    alt_initial = provenance_initial_state(_r.get("provenance"))
                     alt_label = alt_template.get("label_en") or alt_id
                     card = build_comparison_card(
                         alt_id, alt_label,
                         _r.get("final") or {}, _r.get("provenance") or [],
                         ops_profile, b,
-                        initial_snapshot=alt_initial if isinstance(alt_initial, dict) else None,
+                        initial_snapshot=alt_initial,
                     )
                     comparison.append({
                         "option": alt_label,
