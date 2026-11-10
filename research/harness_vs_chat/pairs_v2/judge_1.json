@@ -1,0 +1,12 @@
+{"phone_ban": {"X": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+               "Y": {"behaviour": 3, "consistency": 4, "insight": 3, "usefulness": 3},
+               "prefer": "X", "why": "X captures realistic second-round effects (foreign makers repricing below the cap, later FX shock, customs revenue recovering via quota). Y is numerically tighter but has a static environment and end-of-game artifacts (stockpiling or expanding because it is the last stage)."},
+ "free_coder": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 4, "insight": 2, "usefulness": 3},
+                "prefer": "X", "why": "X shows a turning point: a downturn on top of free AI leads to contract cuts, layoffs and emigration, then a niche for complex and review work. Y is a smooth, shock-free glide where developers upskill every stage and employment barely moves."},
+ "water_ration": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                  "Y": {"behaviour": 3, "consistency": 4, "insight": 2, "usefulness": 3},
+                  "prefer": "X", "why": "X stress-tests the plan with rumour, heat, a pipe burst and rain, and shows anger peaking when the tariff hike coincides with the burst. Y has no events at all, flat health risk, and tanker hikes driven by last-stage logic."},
+ "truck_strike": {"X": {"behaviour": 3, "consistency": 3, "insight": 2, "usefulness": 2},
+                  "Y": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                  "prefer": "Y", "why": "Y shows escalation (panic buying, blockades, ports), shelf depletion and prices staying high after the deal. X keeps shelves full throughout a nationwide strike, settles within days, and then has two empty stages where every actor holds."}}

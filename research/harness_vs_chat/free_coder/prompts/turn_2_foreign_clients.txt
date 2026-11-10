@@ -1,0 +1,54 @@
+=== CONTEXT (added by the harness) ===
+Situation: یک شرکت بزرگ هوش مصنوعی قوی‌ترین مدل کدنویسی خود را برای همه رایگان می‌کند و پرسش این است که شرکت‌های برون‌سپاری نرم‌افزار (فروشندگان ساعت برنامه‌نویس به مشتریان خارجی) چه می‌شوند. آزمایشگاه هوش مصنوعی، شرکت‌های برون‌سپاری، مشتریان خارجی، برنامه‌نویس‌ها و محیط بیرونی هر کدام واکنش نشان می‌دهند. هر مرحله یک ماه است.
+Each stage lasts: یک ماه. This is stage 2 of 5.
+Your seat: foreign_clients (مشتریان خارجی). Goals: {"lower_dev_cost": 0.6, "delivery_quality": 0.4}. Character: شرکت‌ها و استارتاپ‌های کشورهای ثروتمند که کار برنامه‌نویسی می‌خرند؛ با ابزار رایگان گزینهٔ انجام کار در داخل را جدی می‌گیرند ولی از خطای کد و ریسک امنیتی می‌ترسند.
+Other seats: environment (محیط و رویدادهای بیرونی), frontier_lab (آزمایشگاه پیشروی هوش مصنوعی), outsourcers (شرکت‌های برون‌سپاری نرم‌افزار), developers (برنامه‌نویس‌های شاغل در برون‌سپاری)
+What each action does to the variables in one stage: {"make_coding_model_free": {"free_ai_access": 40, "inhouse_ai_adoption": 6, "ai_code_trust": 3}, "limit_free_usage": {"free_ai_access": -20, "inhouse_ai_adoption": -4, "ai_code_trust": -2}, "launch_agentic_coding_tool": {"ai_code_trust": 6, "inhouse_ai_adoption": 8, "free_ai_access": 3}, "offer_enterprise_deal": {"inhouse_ai_adoption": 5, "ai_code_trust": 3, "client_hours": -2}, "adopt_ai_in_delivery": {"firm_margin": 6, "hourly_rates": -4, "dev_employment": -3, "ai_code_trust": 2}, "cut_hourly_rates": {"client_hours": 5, "hourly_rates": -12, "firm_margin": -7}, "pivot_to_ai_review_services": {"firm_margin": -3, "ai_code_trust": 4, "client_hours": 3, "hourly_rates": 2}, "lay_off_junior_staff": {"firm_margin": 6, "dev_employment": -12, "client_hours": -2}, "shift_work_to_inhouse_ai": {"inhouse_ai_adoption": 10, "client_hours": -6, "ai_code_trust": 1}, "cut_outsourcing_contracts": {"client_hours": -12, "firm_margin": -5, "inhouse_ai_adoption": 3}, "renegotiate_rates_down": {"hourly_rates": -10, "firm_margin": -4, "client_hours": 2}, "keep_complex_work_outsourced": {"client_hours": 5, "hourly_rates": 2, "inhouse_ai_adoption": -3}, "upskill_as_ai_reviewers": {"ai_code_trust": 3, "firm_margin": 2, "dev_employment": 2, "client_hours": -1}, "freelance_directly_with_ai": {"dev_employment": -5, "client_hours": -3, "inhouse_ai_adoption": 2}, "leave_the_field_or_emigrate": {"dev_employment": -8, "firm_margin": -2, "hourly_rates": 2}, "rival_lab_matches_free": {"free_ai_access": 6, "inhouse_ai_adoption": 4, "ai_code_trust": 2}, "visible_ai_code_failure": {"ai_code_trust": -14, "inhouse_ai_adoption": -5, "client_hours": 3}, "client_economy_downturn": {"client_hours": -10, "hourly_rates": -5, "firm_margin": -4}, "rival_tool_price_hike": {"free_ai_access": -8, "inhouse_ai_adoption": -3, "firm_margin": -1}, "hold_position": {}}
+Which seat each action belongs to: {"make_coding_model_free": "frontier_lab", "limit_free_usage": "frontier_lab", "launch_agentic_coding_tool": "frontier_lab", "offer_enterprise_deal": "frontier_lab", "adopt_ai_in_delivery": "outsourcers", "cut_hourly_rates": "outsourcers", "pivot_to_ai_review_services": "outsourcers", "lay_off_junior_staff": "outsourcers", "shift_work_to_inhouse_ai": "foreign_clients", "cut_outsourcing_contracts": "foreign_clients", "renegotiate_rates_down": "foreign_clients", "keep_complex_work_outsourced": "foreign_clients", "upskill_as_ai_reviewers": "developers", "freelance_directly_with_ai": "developers", "leave_the_field_or_emigrate": "developers", "rival_lab_matches_free": "environment", "visible_ai_code_failure": "environment", "client_economy_downturn": "environment", "rival_tool_price_hike": "environment", "hold_position": "any"}
+Variable meanings: {"free_ai_access": "دسترسی رایگان به قوی‌ترین مدل کدنویسی؛ مقدار بالا یعنی همه رایگان و بدون محدودیت دسترسی دارند", "ai_code_trust": "اعتماد مشتریان به کد تولیدشده با هوش مصنوعی؛ مقدار بالا یعنی اعتماد زیاد", "inhouse_ai_adoption": "سهم کارهای نرم‌افزاری که مشتریان خارجی خودشان با هوش مصنوعی انجام می‌دهند؛ مقدار بالا یعنی انجام بیشتر کار در داخل", "client_hours": "حجم ساعت‌های برون‌سپاری‌شدهٔ سفارش‌داده‌شده؛ مقدار بالا یعنی سفارش زیاد", "hourly_rates": "نرخ ساعتی که برون‌سپارها می‌گیرند؛ مقدار بالا یعنی نرخ بالا", "firm_margin": "حاشیهٔ سود و سلامت مالی شرکت‌های برون‌سپاری؛ مقدار بالا یعنی سودآوری خوب", "dev_employment": "اشتغال برنامه‌نویس‌ها در این شرکت‌ها؛ مقدار بالا یعنی اشتغال کامل"}
+Stage 1: environment -> rival_lab_matches_free (رایگان شدن قوی‌ترین مدل، رقبا را زیر فشار می‌گذارد تا در همان ماه نخست پیشنهاد رایگان مشابه بدهند؛ واکنش رقابتی رایج در بازار هوش مصنوعی.); frontier_lab -> make_coding_model_free (هدف اصلی آزمایشگاه تصاحب بازار و عادت‌دادن توسعه‌دهندگان است؛ رایگان‌کردن مدل قوی‌ترین ابزار جذب کاربر است و هزینه محاسبه را می‌توان بعداً با سقف مصرف کنترل کرد.); outsourcers -> adopt_ai_in_delivery (با رایگان شدن مدل، شرکت‌ها ناچارند هوش مصنوعی را در تحویل پروژه به کار ببرند تا حاشیه سود حفظ شود؛ این کار از کاهش نرخ یا اخراج گسترده محتاطانه‌تر است.); foreign_clients -> shift_work_to_inhouse_ai (مدل رایگان هزینه را کم می‌کند. کارهای ساده و کم‌ریسک را داخلی با هوش مصنوعی انجام می‌دهیم و کارهای حساس را فعلاً به برون‌سپار می‌سپاریم.); developers -> upskill_as_ai_reviewers (با رایگان شدن مدل، نوشتن کد ساده ارزش خود را از دست می‌دهد. جونیورها با رفتن به بازبینی و طراحی کدِ هوش مصنوعی، درآمد پایدار و ارزش مهارت خود را حفظ می‌کنند، بدون ریسک رها کردن شغل.)
+  state after stage 1: {"free_ai_access": 65, "ai_code_trust": 56, "inhouse_ai_adoption": 58, "client_hours": 58, "hourly_rates": 51, "firm_margin": 62, "dev_employment": 68}
+Choose only an action that your own seat could really take. Set expected_effect to the listed effect of the action you choose. Write justification and causal_chain in Persian.
+
+=== SYSTEM ===
+You are an autonomous strategic agent participating in a numeric multi-agent simulation.
+Respond with ### ACTION_JSON on one line, then a single JSON object (no markdown, no extra text). The JSON must strictly follow the schema below and be valid JSON.
+
+Schema (required fields):
+{
+  "chosen_action": "string",
+  "primary_variable": "string",
+  "probability": 0.0,
+  "justification": "string",
+  "causal_chain": "string",
+  "expected_effect": {
+      "<variable_name>": -5.0
+  },
+  "relation_updates": [
+      {"from": "actor_name", "to": "actor_name", "type": "string", "rationale": "short"}
+  ]
+}
+
+CONSTRAINTS:
+1. primary_variable cannot be null and must be one of the world variables.
+2. probability must be a real between 0 and 1.
+3. Each expected_effect delta must be within allowed per-turn bounds: ABS(delta) <= MAX_DELTA, where MAX_DELTA is provided in the prompt. If you want a larger effect, propose it but it will be clipped by the WorldModelAgent.
+4. justification max length: 60 words. Keep it concise.
+5. causal_chain must map to existing causal_links or be a plausible single-step causal inference.
+6. If you cannot produce a valid response, return JSON with field "error": "short explanation", not other keys.
+
+=== PROMPT ===
+You are: مشتریان خارجی (name: foreign_clients)
+Actor profile: {"risk_tolerance": 0.5, "aggressiveness": 0.5}
+World variables (0-100): {"free_ai_access": 65.0, "ai_code_trust": 56.0, "inhouse_ai_adoption": 58.304, "client_hours": 58.244928, "hourly_rates": 51.427269632, "firm_margin": 62.274918187008, "dev_employment": 68.3590235136}
+Causal links: [{"from": "free_ai_access", "to": "inhouse_ai_adoption", "weight": 0.35}, {"from": "ai_code_trust", "to": "inhouse_ai_adoption", "weight": 0.3}, {"from": "inhouse_ai_adoption", "to": "client_hours", "weight": -0.35}, {"from": "client_hours", "to": "hourly_rates", "weight": 0.3}, {"from": "free_ai_access", "to": "hourly_rates", "weight": -0.15}, {"from": "hourly_rates", "to": "firm_margin", "weight": 0.3}, {"from": "client_hours", "to": "firm_margin", "weight": 0.25}, {"from": "free_ai_access", "to": "firm_margin", "weight": 0.1}, {"from": "firm_margin", "to": "dev_employment", "weight": 0.3}, {"from": "client_hours", "to": "dev_employment", "weight": 0.3}]
+Allowed actions: ["make_coding_model_free", "limit_free_usage", "launch_agentic_coding_tool", "offer_enterprise_deal", "adopt_ai_in_delivery", "cut_hourly_rates", "pivot_to_ai_review_services", "lay_off_junior_staff", "shift_work_to_inhouse_ai", "cut_outsourcing_contracts", "renegotiate_rates_down", "keep_complex_work_outsourced", "upskill_as_ai_reviewers", "freelance_directly_with_ai", "leave_the_field_or_emigrate", "rival_lab_matches_free", "visible_ai_code_failure", "client_economy_downturn", "rival_tool_price_hike", "hold_position"]
+Config:
+  MAX_DELTA: 40.0
+  INSTABILITY_MODE: false
+  OBS_NOISE_SCALE: 0.0
+
+Task:
+Choose ONE action this turn from Allowed actions that best advances your objectives while respecting risk_tolerance and INSTABILITY_MODE. Produce the JSON object described in SYSTEM. Focus on realistic, conservative moves if INSTABILITY_MODE is true and avoid actions that would increase 'tension' above current value unless probability > 0.8 and risk_tolerance > 0.7.
+
+Remember: Output ### ACTION_JSON then valid JSON matching the schema exactly. No other text.

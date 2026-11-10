@@ -1,0 +1,382 @@
+{
+ "states": [
+  {
+   "free_ai_access": 25.0,
+   "ai_code_trust": 45.0,
+   "inhouse_ai_adoption": 30.0,
+   "client_hours": 70.0,
+   "hourly_rates": 60.0,
+   "firm_margin": 55.0,
+   "dev_employment": 70.0
+  },
+  {
+   "free_ai_access": 65.0,
+   "ai_code_trust": 56.0,
+   "inhouse_ai_adoption": 58.3,
+   "client_hours": 58.2,
+   "hourly_rates": 51.4,
+   "firm_margin": 62.3,
+   "dev_employment": 68.4
+  },
+  {
+   "free_ai_access": 68.0,
+   "ai_code_trust": 55.0,
+   "inhouse_ai_adoption": 61.7,
+   "client_hours": 64.7,
+   "hourly_rates": 43.4,
+   "firm_margin": 57.1,
+   "dev_employment": 70.5
+  },
+  {
+   "free_ai_access": 68.0,
+   "ai_code_trust": 63.0,
+   "inhouse_ai_adoption": 64.8,
+   "client_hours": 66.2,
+   "hourly_rates": 41.6,
+   "firm_margin": 65.1,
+   "dev_employment": 70.9
+  },
+  {
+   "free_ai_access": 63.0,
+   "ai_code_trust": 77.0,
+   "inhouse_ai_adoption": 79.8,
+   "client_hours": 59.4,
+   "hourly_rates": 43.0,
+   "firm_margin": 62.2,
+   "dev_employment": 71.5
+  },
+  {
+   "free_ai_access": 63.0,
+   "ai_code_trust": 73.0,
+   "inhouse_ai_adoption": 76.2,
+   "client_hours": 67.4,
+   "hourly_rates": 48.3,
+   "firm_margin": 63.0,
+   "dev_employment": 74.9
+  }
+ ],
+ "turns": [
+  {
+   "environment": {
+    "chosen_action": "rival_lab_matches_free",
+    "primary_variable": "free_ai_access",
+    "probability": 0.5,
+    "justification": "رایگان شدن قوی‌ترین مدل، رقبا را زیر فشار می‌گذارد تا در همان ماه نخست پیشنهاد رایگان مشابه بدهند؛ واکنش رقابتی رایج در بازار هوش مصنوعی.",
+    "causal_chain": "همسان‌سازی رقیب دسترسی رایگان را گسترده‌تر می‌کند؛ دسترسی بیشتر پذیرش هوش مصنوعی در داخل مشتریان را بالا می‌برد و اعتماد به کد تولیدشده اندکی افزایش می‌یابد.",
+    "expected_effect": {
+     "free_ai_access": 6,
+     "inhouse_ai_adoption": 4,
+     "ai_code_trust": 2
+    }
+   },
+   "frontier_lab": {
+    "chosen_action": "make_coding_model_free",
+    "primary_variable": "free_ai_access",
+    "probability": 0.8,
+    "justification": "هدف اصلی آزمایشگاه تصاحب بازار و عادت‌دادن توسعه‌دهندگان است؛ رایگان‌کردن مدل قوی‌ترین ابزار جذب کاربر است و هزینه محاسبه را می‌توان بعداً با سقف مصرف کنترل کرد.",
+    "causal_chain": "دسترسی رایگان گسترده می‌شود؛ مشتریان خارجی بیشتر کارها را خودشان با هوش مصنوعی انجام می‌دهند و اعتماد به کد تولیدشده با تجربه مستقیم بالا می‌رود و سهم بازار آزمایشگاه رشد می‌کند.",
+    "expected_effect": {
+     "free_ai_access": 40,
+     "inhouse_ai_adoption": 6,
+     "ai_code_trust": 3
+    }
+   },
+   "outsourcers": {
+    "chosen_action": "adopt_ai_in_delivery",
+    "primary_variable": "firm_margin",
+    "probability": 0.7,
+    "justification": "با رایگان شدن مدل، شرکت‌ها ناچارند هوش مصنوعی را در تحویل پروژه به کار ببرند تا حاشیه سود حفظ شود؛ این کار از کاهش نرخ یا اخراج گسترده محتاطانه‌تر است.",
+    "causal_chain": "استفاده از هوش مصنوعی در تحویل هزینه را کم و حاشیه سود را بالا می‌برد، ولی نرخ ساعتی و اشتغال برنامه‌نویسان اندکی کاهش می‌یابد و اعتماد به کد کمی زیاد می‌شود.",
+    "expected_effect": {
+     "firm_margin": 6,
+     "hourly_rates": -4,
+     "dev_employment": -3,
+     "ai_code_trust": 2
+    }
+   },
+   "foreign_clients": {
+    "chosen_action": "shift_work_to_inhouse_ai",
+    "primary_variable": "inhouse_ai_adoption",
+    "probability": 0.55,
+    "justification": "مدل رایگان هزینه را کم می‌کند. کارهای ساده و کم‌ریسک را داخلی با هوش مصنوعی انجام می‌دهیم و کارهای حساس را فعلاً به برون‌سپار می‌سپاریم.",
+    "causal_chain": "دسترسی رایگان ← افزایش انجام کار داخلی با هوش مصنوعی ← کاهش ساعت‌های برون‌سپاری‌شده و هزینه کمتر.",
+    "expected_effect": {
+     "inhouse_ai_adoption": 10,
+     "client_hours": -6,
+     "ai_code_trust": 1
+    }
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "primary_variable": "ai_code_trust",
+    "probability": 0.7,
+    "justification": "با رایگان شدن مدل، نوشتن کد ساده ارزش خود را از دست می‌دهد. جونیورها با رفتن به بازبینی و طراحی کدِ هوش مصنوعی، درآمد پایدار و ارزش مهارت خود را حفظ می‌کنند، بدون ریسک رها کردن شغل.",
+    "causal_chain": "ارتقای مهارت به بازبینی، اعتماد به کد هوش مصنوعی و حاشیهٔ شرکت را اندکی بالا می‌برد و با حفظ نقش برنامه‌نویس، اشتغال را حمایت می‌کند.",
+    "expected_effect": {
+     "ai_code_trust": 3,
+     "firm_margin": 2,
+     "dev_employment": 2,
+     "client_hours": -1
+    },
+    "relation_updates": []
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "visible_ai_code_failure",
+    "primary_variable": "ai_code_trust",
+    "probability": 0.35,
+    "justification": "با دسترسی رایگان گسترده، شمار زیادی کد تولیدشده با هوش مصنوعی وارد تولید می‌شود و بروز یک شکست دیدنی در ماه دوم محتمل است.",
+    "causal_chain": "شکست دیدنی کد هوش مصنوعی اعتماد مشتریان را کم می‌کند؛ اعتماد کمتر پذیرش داخلی را پایین می‌آورد و ساعت‌های برون‌سپاری را اندکی بالا می‌برد.",
+    "expected_effect": {
+     "ai_code_trust": -14,
+     "inhouse_ai_adoption": -5,
+     "client_hours": 3
+    },
+    "relation_updates": []
+   },
+   "frontier_lab": {
+    "chosen_action": "launch_agentic_coding_tool",
+    "primary_variable": "inhouse_ai_adoption",
+    "probability": 0.7,
+    "justification": "مدل رایگان شده و رقیب هم همین کار را کرده است. عرضهٔ ابزار کدنویسی عاملی اعتماد مشتریان را بالا می‌برد و استفادهٔ داخلی را عمیق‌تر می‌کند و سهم بازار را بدون افزایش مصرف رایگان محکم می‌کند.",
+    "causal_chain": "ابزار عاملی اعتماد به کد هوش مصنوعی را بالا می‌برد و اعتماد بیشتر پذیرش داخلی مشتریان را افزایش می‌دهد.",
+    "expected_effect": {
+     "ai_code_trust": 6,
+     "inhouse_ai_adoption": 8,
+     "free_ai_access": 3
+    },
+    "relation_updates": []
+   },
+   "outsourcers": {
+    "chosen_action": "pivot_to_ai_review_services",
+    "primary_variable": "client_hours",
+    "probability": 0.65,
+    "justification": "با رایگان شدن مدل و رشد کار داخلی مشتریان، فروش خدمات بازبینی و تضمین کیفیت کد هوش مصنوعی ساعت سفارش و نرخ را حفظ می‌کند، هرچند حاشیه اندکی کم می‌شود.",
+    "causal_chain": "تغییر به خدمات بازبینی ← افزایش اعتماد مشتریان و ساعت سفارش ← حفظ درآمد و نرخ ساعتی ← پشتیبانی از حاشیه سود",
+    "expected_effect": {
+     "firm_margin": -3,
+     "ai_code_trust": 4,
+     "client_hours": 3,
+     "hourly_rates": 2
+    }
+   },
+   "foreign_clients": {
+    "chosen_action": "renegotiate_rates_down",
+    "primary_variable": "hourly_rates",
+    "probability": 0.65,
+    "justification": "ابزار رایگان قدرت چانه‌زنی ما را بالا برده است. کارهای حساس را نگه می‌داریم اما نرخ ساعتی را پایین می‌آوریم تا هزینه توسعه کم شود و کیفیت تحویل حفظ شود.",
+    "causal_chain": "دسترسی رایگان به هوش مصنوعی و گزینه داخلی -> فشار برای کاهش نرخ -> نرخ ساعتی کمتر و هزینه توسعه پایین‌تر",
+    "expected_effect": {
+     "hourly_rates": -10,
+     "firm_margin": -4,
+     "client_hours": 2
+    }
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "primary_variable": "dev_employment",
+    "probability": 0.7,
+    "justification": "با دسترسی رایگان گسترده و رشد کار داخلی مشتریان، نوشتن کد ساده ارزش کمتری دارد. ادامهٔ حرکت به بازبینی و طراحی کد هوش مصنوعی درآمد پایدار و ارزش مهارت را بدون ریسک حفظ می‌کند.",
+    "causal_chain": "ارتقای مهارت به بازبینی کد هوش مصنوعی اشتغال و حاشیه سود شرکت را اندکی بالا می‌برد و اعتماد به کد تولیدشده را افزایش می‌دهد؛ ساعت سفارش کمی کاهش می‌یابد.",
+    "expected_effect": {
+     "ai_code_trust": 3,
+     "firm_margin": 2,
+     "dev_employment": 2,
+     "client_hours": -1
+    }
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "primary_variable": "ai_code_trust",
+    "probability": 0.5,
+    "justification": "دو ماه شوک پشت سر هم رخ داده و وضعیت نسبتاً پایدار است؛ رویداد بیرونی تازه‌ای محتمل‌تر از ادامه روند جاری نیست، پس محیط این ماه دخالت مشخصی نمی‌کند.",
+    "causal_chain": "نبود رویداد بیرونی تازه ← متغیرها بر اساس روابط علّی موجود به حرکت آرام ادامه می‌دهند",
+    "expected_effect": {}
+   },
+   "frontier_lab": {
+    "chosen_action": "offer_enterprise_deal",
+    "primary_variable": "inhouse_ai_adoption",
+    "probability": 0.6,
+    "justification": "دسترسی رایگان بالاست و هزینهٔ محاسبه سنگین است. قرارداد سازمانی پس از شکست دیدنی، اعتماد را ترمیم می‌کند، مشتریان بزرگ را به مدل قفل می‌کند و درآمد پایدار برای هزینه‌ها می‌سازد.",
+    "causal_chain": "قرارداد سازمانی ← اعتماد بیشتر به کد هوش مصنوعی و پذیرش داخلی بیشتر ← سهم بازار بالاتر و هزینهٔ پایدارتر",
+    "expected_effect": {
+     "inhouse_ai_adoption": 5,
+     "ai_code_trust": 3,
+     "client_hours": -2
+    }
+   },
+   "outsourcers": {
+    "chosen_action": "adopt_ai_in_delivery",
+    "primary_variable": "firm_margin",
+    "probability": 0.6,
+    "justification": "نرخ ساعتی به ۴۳ افت کرده و حاشیه سود در حال کاهش است. استفاده از هوش مصنوعی در تحویل پروژه هزینه را پایین می‌آورد و حاشیه را حفظ می‌کند، در حالی که ساعت سفارش هنوز مناسب است.",
+    "causal_chain": "به‌کارگیری هوش مصنوعی در تحویل هزینه تولید را کم و حاشیه سود را بالا می‌برد؛ در مقابل نرخ ساعتی و اشتغال کمی پایین می‌آید و اعتماد به کد اندکی بالا می‌رود.",
+    "expected_effect": {
+     "firm_margin": 6,
+     "hourly_rates": -4,
+     "dev_employment": -3,
+     "ai_code_trust": 2
+    }
+   },
+   "foreign_clients": {
+    "chosen_action": "keep_complex_work_outsourced",
+    "primary_variable": "client_hours",
+    "probability": 0.6,
+    "justification": "پس از شکست دیدنی کد هوش مصنوعی، کارهای پیچیده و حساس را نزد برون‌سپار نگه می‌داریم تا کیفیت و امنیت حفظ شود؛ نرخ‌ها قبلاً کاهش یافته است.",
+    "causal_chain": "نگه‌داشتن کار پیچیده در برون‌سپاری ساعت سفارش را بالا می‌برد و سهم کار داخلی را کم می‌کند؛ کیفیت تحویل با نرخ‌های پایین‌شده حفظ می‌شود.",
+    "expected_effect": {
+     "client_hours": 5,
+     "hourly_rates": 2,
+     "inhouse_ai_adoption": -3
+    }
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "primary_variable": "ai_code_trust",
+    "probability": 0.7,
+    "justification": "اشتغال نسبتاً خوب است اما نرخ‌ها افتاده و کار داخلی مشتریان رشد می‌کند. ادامه حرکت به بازبینی و طراحی کد هوش مصنوعی درآمد پایدار و ارزش مهارت را بدون ریسک ترک شغل حفظ می‌کند.",
+    "causal_chain": "ارتقای مهارت به بازبینی باعث افزایش اعتماد به کد هوش مصنوعی و اشتغال و حاشیه شرکت می‌شود؛ ساعت سفارش کمی کم می‌شود.",
+    "expected_effect": {
+     "ai_code_trust": 3,
+     "firm_margin": 2,
+     "dev_employment": 2,
+     "client_hours": -1
+    }
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "rival_tool_price_hike",
+    "primary_variable": "free_ai_access",
+    "probability": 0.35,
+    "justification": "هزینهٔ سنگین محاسبه و دسترسی رایگان بالا (۶۸) رقبا را زیر فشار مالی می‌گذارد؛ افزایش قیمت ابزار رقیب واکنشی محتمل و ملایم است و دسترسی رایگان و پذیرش داخلی را اندکی کم می‌کند.",
+    "causal_chain": "افزایش قیمت ابزار رقیب، دسترسی رایگان را کم می‌کند و طبق پیوند علّی پذیرش داخلی مشتریان اندکی پایین می‌آید.",
+    "expected_effect": {
+     "free_ai_access": -8,
+     "inhouse_ai_adoption": -3,
+     "firm_margin": -1
+    }
+   },
+   "frontier_lab": {
+    "chosen_action": "launch_agentic_coding_tool",
+    "primary_variable": "inhouse_ai_adoption",
+    "probability": 0.6,
+    "justification": "دسترسی رایگان ۶۸ است و کاهش آن به سهم بازار آسیب می‌زند. ابزار عاملی اعتماد و استفادهٔ داخلی را عمیق‌تر می‌کند و مشتریان را به اکوسیستم ما قفل می‌کند، بدون افزایش چشمگیر مصرف رایگان.",
+    "causal_chain": "ابزار عاملی اعتماد به کد هوش مصنوعی را بالا می‌برد و اعتماد بیشتر به پذیرش داخلی هوش مصنوعی توسط مشتریان می‌انجامد.",
+    "expected_effect": {
+     "ai_code_trust": 6,
+     "inhouse_ai_adoption": 8,
+     "free_ai_access": 3
+    },
+    "relation_updates": []
+   },
+   "outsourcers": {
+    "chosen_action": "pivot_to_ai_review_services",
+    "primary_variable": "client_hours",
+    "probability": 0.6,
+    "justification": "حاشیه سود نسبتاً خوب است اما نرخ ساعتی ۴۲ پایین مانده و کار داخلی مشتریان رشد می‌کند. فروش بازبینی و تضمین کیفیت کد هوش مصنوعی ساعت سفارش و نرخ را حفظ می‌کند.",
+    "causal_chain": "خدمات بازبینی کد هوش مصنوعی ← افزایش اعتماد و ساعت سفارش ← بهبود نرخ ساعتی ← حفظ درآمد",
+    "expected_effect": {
+     "firm_margin": -3,
+     "ai_code_trust": 4,
+     "client_hours": 3,
+     "hourly_rates": 2
+    },
+    "relation_updates": []
+   },
+   "foreign_clients": {
+    "chosen_action": "shift_work_to_inhouse_ai",
+    "primary_variable": "inhouse_ai_adoption",
+    "probability": 0.6,
+    "justification": "اعتماد به کد هوش مصنوعی به ۶۳ رسیده و نرخ برون‌سپار هنوز بالاتر از هزینه ابزار رایگان است. کارهای ساده و کم‌ریسک بیشتری را داخلی می‌کنیم و کارهای حساس را نگه می‌داریم.",
+    "causal_chain": "افزایش اعتماد و دسترسی رایگان، انجام کار داخلی با هوش مصنوعی را بالا می‌برد و در نتیجه ساعت‌های برون‌سپاری‌شده کم می‌شود.",
+    "expected_effect": {
+     "inhouse_ai_adoption": 10,
+     "client_hours": -6,
+     "ai_code_trust": 1
+    }
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "primary_variable": "dev_employment",
+    "probability": 0.7,
+    "justification": "نرخ‌ها پایین و کار داخلی مشتریان در حال رشد است. ادامهٔ حرکت به بازبینی و طراحی کد هوش مصنوعی درآمد پایدار و ارزش مهارت را بدون ریسک ترک شغل حفظ می‌کند.",
+    "causal_chain": "ارتقای مهارت به بازبینی ← اعتماد مشتری و حاشیهٔ شرکت اندکی بالاتر ← اشتغال برنامه‌نویس‌ها پایدارتر",
+    "expected_effect": {
+     "ai_code_trust": 3,
+     "firm_margin": 2,
+     "dev_employment": 2,
+     "client_hours": -1
+    }
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "visible_ai_code_failure",
+    "primary_variable": "ai_code_trust",
+    "probability": 0.4,
+    "justification": "اعتماد ۷۷ و پذیرش داخلی ۸۰ بالا رفته و حجم زیادی کد تولیدی وارد محیط واقعی شده است؛ بروز یک شکست دیدنی در این مرحله محتمل و واقع‌بینانه است.",
+    "causal_chain": "رشد استفاده از کد هوش مصنوعی ← شکست دیدنی ← افت اعتماد مشتریان ← کاهش پذیرش داخلی و بازگشت بخشی ساعت‌ها به برون‌سپار",
+    "expected_effect": {
+     "ai_code_trust": -14,
+     "inhouse_ai_adoption": -5,
+     "client_hours": 3
+    }
+   },
+   "frontier_lab": {
+    "chosen_action": "offer_enterprise_deal",
+    "primary_variable": "inhouse_ai_adoption",
+    "probability": 0.6,
+    "justification": "اعتماد ۷۷ و پذیرش داخلی ۸۰ بالاست و هزینهٔ محاسبه سنگین است. قرارداد سازمانی مشتریان بزرگ را به مدل قفل می‌کند و درآمد پایدار می‌سازد، بدون محدود کردن دسترسی رایگان و آسیب به سهم بازار.",
+    "causal_chain": "قرارداد سازمانی پذیرش داخلی مدل نزد مشتریان را بالا می‌برد و اعتماد را تقویت می‌کند و درآمد پایدار برای هزینهٔ محاسبه فراهم می‌شود؛ ساعت سفارش برون‌سپاری کمی کم می‌شود.",
+    "expected_effect": {
+     "inhouse_ai_adoption": 5,
+     "ai_code_trust": 3,
+     "client_hours": -2
+    }
+   },
+   "outsourcers": {
+    "chosen_action": "pivot_to_ai_review_services",
+    "primary_variable": "client_hours",
+    "probability": 0.6,
+    "justification": "کار داخلی مشتریان ۸۰ شده و ساعت سفارش افت می‌کند. فروش بازبینی و تضمین کیفیت کد هوش مصنوعی ساعت سفارش و نرخ را حفظ می‌کند و حاشیه هنوز قابل تحمل است.",
+    "causal_chain": "خدمات بازبینی کد هوش مصنوعی ← افزایش ساعت سفارش و اعتماد ← حفظ نرخ ساعتی و درآمد شرکت‌ها",
+    "expected_effect": {
+     "firm_margin": -3,
+     "ai_code_trust": 4,
+     "client_hours": 3,
+     "hourly_rates": 2
+    }
+   },
+   "foreign_clients": {
+    "chosen_action": "keep_complex_work_outsourced",
+    "primary_variable": "client_hours",
+    "probability": 0.6,
+    "justification": "کار داخلی با هوش مصنوعی از ۸۰ درصد گذشته و اشباع شده است. کارهای پیچیده و امنیتی را برای حفظ کیفیت نزد برون‌سپار نگه می‌داریم؛ نرخ‌ها هم از قبل پایین است.",
+    "causal_chain": "نگه داشتن کار پیچیده نزد برون‌سپار ساعت سفارش را بالا می‌برد، با افزایش ساعت سفارش نرخ ساعتی اندکی بالا می‌رود و سهم کار داخلی با هوش مصنوعی کمی کاهش می‌یابد.",
+    "expected_effect": {
+     "client_hours": 5,
+     "hourly_rates": 2,
+     "inhouse_ai_adoption": -3
+    }
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "primary_variable": "dev_employment",
+    "probability": 0.7,
+    "justification": "پذیرش داخلی مشتریان ۸۰ و اعتماد به کد هوش مصنوعی ۷۷ است. ادامهٔ حرکت به بازبینی و طراحی کد هوش مصنوعی درآمد پایدار و ارزش مهارت را بدون ریسک ترک شغل حفظ می‌کند.",
+    "causal_chain": "ارتقای مهارت به بازبینی کد هوش مصنوعی اشتغال و حاشیهٔ شرکت را اندکی بالا می‌برد و اعتماد به کد را تقویت می‌کند؛ ساعت سفارش کمی کم می‌شود.",
+    "expected_effect": {
+     "ai_code_trust": 3,
+     "firm_margin": 2,
+     "dev_employment": 2,
+     "client_hours": -1
+    }
+   }
+  }
+ ],
+ "flagged": []
+}

@@ -1,0 +1,12 @@
+{"phone_ban": {"X": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 2, "insight": 3, "usefulness": 3},
+               "prefer": "X", "why": "Y's consumer wait-then-grey-market reaction and FX spiral are interesting, but legal supply and FX pressure both hit 100 under an active ban, which breaks the story. X stays plausible with a clear quota turning point."},
+ "free_coder": {"X": {"behaviour": 3, "consistency": 3, "insight": 2, "usefulness": 2},
+                "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "prefer": "Y", "why": "X is rosy and repetitive: developers upskill every stage while employment and client hours rise despite 80% in-house AI. Y shows downturn compounding free AI, layoffs, emigration, then a partial review-services recovery."},
+ "water_ration": {"X": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 3},
+                  "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                  "prefer": "Y", "why": "Y exposes the trade-off: protecting the reservoir by tightening drives supply hours to 28, anger and health risk up, and the utility budget toward collapse. X leans on convenient rain for a generic recovery."},
+ "truck_strike": {"X": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 4},
+                  "Y": {"behaviour": 2, "consistency": 3, "insight": 3, "usefulness": 3},
+                  "prefer": "X", "why": "X has a coherent arc: fuel cut and tariff floor lead to a deal and recovery. Y repeats the same actions for four stages; freight recovers while the strike continues; fuel is never addressed; prices climb to 93."}}

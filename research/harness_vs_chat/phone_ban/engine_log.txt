@@ -1,0 +1,4 @@
+SurpriseAnalysis: SurpriseAnalysis: relative_error=0.1030 (threshold 0.2); 2 vars exceeded deviation threshold 2.0
+SurpriseAnalysis: SurpriseAnalysis: relative_error=0.0679 (threshold 0.2); 1 vars exceeded deviation threshold 2.0
+SurpriseAnalysis: SurpriseAnalysis: relative_error=0.1016 (threshold 0.2); 1 vars exceeded deviation threshold 2.0
+SurpriseAnalysis: SurpriseAnalysis: relative_error=0.2013 (threshold 0.2); 0 vars exceeded deviation threshold 2.0

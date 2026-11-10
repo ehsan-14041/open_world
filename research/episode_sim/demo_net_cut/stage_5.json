@@ -1,0 +1,4 @@
+{"moves": [
+ {"actor": "players", "move": "بازیکنانی که در ماه قطعی آمده بودند، با کم‌شدن رویدادها کم‌کم می‌روند", "why": "آپدیت بزرگ تمام شده و چیز تازه‌ای نمی‌آید", "stages": 1, "effects": [{"variable": "players", "direction": "-", "size": "small"}]},
+ {"actor": "studios", "move": "چند استودیو برای استخدام مشترک و سرور مشترک با هم توافق می‌کنند", "why": "هیچ‌کدام به‌تنهایی نمی‌توانند تیم کامل نگه دارند", "stages": 1, "effects": [{"variable": "team", "direction": "+", "size": "small"}, {"variable": "cash", "direction": "+", "size": "small"}]},
+ {"actor": "regulator", "move": "وعدهٔ بستهٔ حمایتی می‌دهد، ولی هنوز پولی پرداخت نشده", "why": "فشار صنف‌ها بالا رفته است", "stages": 1, "effects": []}]}

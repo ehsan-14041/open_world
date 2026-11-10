@@ -1,0 +1,59 @@
+{
+ "environment": {
+  "chosen_action": "public_mood_turns_hostile",
+  "primary_variable": "discontent",
+  "probability": 0.45,
+  "justification": "فشار ارزی ۹۲ و نارضایتی ۵۱ پس از پنج ماه محدودیت و تورم انتظاری، فضای عمومی را به سمت خصومت می‌برد؛ اثر متوسط و محتمل است.",
+  "causal_chain": "فشار ارزی بالا ← گرانی و بی‌اعتمادی ← افزایش نارضایتی عمومی و فشار بیشتر بر بازار ارز",
+  "expected_effect": {
+   "discontent": 8,
+   "fx_pressure": 3
+  }
+ },
+ "government": {
+  "chosen_action": "crack_down_on_smuggling",
+  "primary_variable": "smuggling",
+  "probability": 0.6,
+  "justification": "فشار ارزی ۹۲ بسیار بالاست و عرضهٔ قانونی ۹۸ اشباع شده؛ لغو یا تعدیل بیشتر فشار ارزی را بدتر می‌کند. برخورد با قاچاق ارز و درآمد گمرک را حفظ می‌کند و ریسک نارضایتی محدود است.",
+  "causal_chain": "برخورد با قاچاق باعث کاهش سهم قاچاق می‌شود و کاهش قاچاق درآمد گمرک را بالا می‌برد و فشار بر بازار ارز را اندکی کم می‌کند.",
+  "expected_effect": {
+   "smuggling": -8,
+   "phone_price": 4,
+   "customs_revenue": 3,
+   "discontent": 4
+  }
+ },
+ "importers": {
+  "chosen_action": "stockpile_phones",
+  "primary_variable": "fx_pressure",
+  "probability": 0.6,
+  "justification": "فشار ارزی ۹۲ است و کاهش بیشتر ارزش پول محتمل است. انبار کردن موجودی سرمایه و حاشیه سود را حفظ می‌کند و ریسک سیاسی کمتری از گران‌فروشی دارد.",
+  "causal_chain": "انبار کردن موجودی ← افزایش تقاضای ارزی ← فشار ارزی و قیمت اندکی بالاتر ← حفظ ارزش سرمایه و حاشیه سود واردکنندگان",
+  "expected_effect": {
+   "phone_price": 3,
+   "fx_pressure": 3,
+   "customs_revenue": 2
+  }
+ },
+ "consumers": {
+  "chosen_action": "hold_position",
+  "primary_variable": "phone_price",
+  "probability": 0.6,
+  "justification": "عرضه قانونی تقریباً کامل شده و قیمت رسمی در حال کاهش است. دیگر به بازار قاچاق پرریسک نیاز نیست؛ گوشی را از کانال رسمی می‌خرم و اقدام تازه‌ای لازم نیست.",
+  "causal_chain": "عرضه قانونی بالا (۹۸) قیمت گوشی را کاهش می‌دهد و با کاهش قیمت، فشار نارضایتی و انگیزه خرید غیررسمی کم می‌شود؛ بنابراین بدون اقدام اضافی خرید رسمی ممکن است.",
+  "expected_effect": {}
+ },
+ "local_assemblers": {
+  "chosen_action": "assemble_from_imported_kits",
+  "primary_variable": "local_assembly",
+  "probability": 0.7,
+  "justification": "فشار ارزی ۹۲ است و توسعهٔ بزرگ پرخطر می‌ماند. ادامهٔ مونتاژ از کیت وارداتی بدون سرمایه‌گذاری سنگین، سهم را بالا می‌برد و دسترسی به قطعات را حفظ می‌کند.",
+  "causal_chain": "مونتاژ از کیت وارداتی تولید داخلی را بالا می‌برد، عرضه قانونی را اندکی زیاد و قیمت گوشی را کم می‌کند؛ هزینهٔ آن فشار ارزی کمی بیشتر است.",
+  "expected_effect": {
+   "local_assembly": 6,
+   "legal_supply": 4,
+   "phone_price": -2,
+   "fx_pressure": 3
+  }
+ }
+}

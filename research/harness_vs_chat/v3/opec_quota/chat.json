@@ -1,0 +1,57 @@
+{"stages":[
+{"actions":{
+"saudi_arabia":{"chosen_action":"propose_collective_cut","justification":"با سقوط برنت به حدود ۶۸ دلار و کسری بودجه، ریاض می‌خواهد پیش از نشست ۲۹ نوامبر کاهش جمعی تا یک میلیون بشکه با سهم روسیه بگذارد و پیش‌دستی کند."},
+"russia":{"chosen_action":"demand_higher_baseline","justification":"مسکو روی کاهش تحریم Rosneft تا ژانویه حساب کرده و پایه بالاتر ۲۰۲۷ می‌خواهد؛ کاهش کاغذی کم‌هزینه است، اما بدون پایه بالاتر نمی‌پذیرد."},
+"uae":{"chosen_action":"signal_informal_restraint","justification":"ابوظبی ظرفیت واقعی ۴.۴ میلیون را می‌داند و می‌خواهد با پیام غیرعلنی، بدون تعهد مکتوب، ریاض را از شکستن قیمت رسمی فروش بازدارد."},
+"us_government":{"chosen_action":"announce_spr_refill","justification":"با برنت نزدیک ۶۸ دلار، خرید ذخیره راهبردی کف قیمت نرم می‌سازد، شیل را حفظ می‌کند و بدون درگیری علنی با ریاض است."}},
+"messages":[
+{"from":"saudi_arabia","to":"russia","text":"آماده کاهش جمعی تا یک میلیون بشکه هستیم؛ انتظار داریم مسکو دست‌کم سی درصد آن را بپذیرد. پاسخ را پیش از نشست بدهید."},
+{"from":"russia","to":"saudi_arabia","text":"مسکو همکاری می‌کند، اما پایه تولید ۲۰۲۷ روسیه باید بازنگری و بالا برده شود؛ بدون آن، سهم کاهش را نمی‌پذیریم."},
+{"from":"uae","to":"saudi_arabia","text":"ابوظبی چند ماه تولید را بالاتر نمی‌برد، به شرط آنکه قیمت رسمی فروش به آسیا شکسته نشود. تعهد رسمی در کار نیست."}],
+"summary":"نشست ۲۹ نوامبر اوپک‌پلاس بدون توافق بر کاهش جمعی پایان یافت؛ عربستان کاهش یک‌میلیونی را مطرح کرد و روسیه پایه بالاتر خواست. واشنگتن خرید ذخیره راهبردی را اعلام کرد و برنت نزدیک ۷۰ دلار ماند.",
+"state":{"brent_price_level":31,"opec_plus_cohesion":50,"saudi_fiscal_space":39,"russia_oil_revenue":50,"uae_market_share":56,"us_gasoline_affordability":58,"us_shale_activity":57,"riyadh_washington_alignment":60}},
+{"actions":{
+"saudi_arabia":{"chosen_action":"roll_over_and_delay","justification":"بدون سهم ۳۰ درصدی روسیه، کاهش جمعی ممکن نیست و کاهش یک‌جانبه بالای ۵۰۰ هزار خط قرمز است؛ تمدید سقف‌ها زمان می‌خرد."},
+"russia":{"chosen_action":"push_rollover_and_delay","justification":"مسکو منتظر نتیجه مذاکرات اوکراین و تحریم Rosneft است و نمی‌خواهد پیش از آن تعهدی بپذیرد؛ برای تعویق تا بهار رأی جمع می‌کند."},
+"uae":{"chosen_action":"lock_asian_term_contracts","justification":"با ضعف تقاضای چین، رقابت بر سر پالایشگاه‌های آسیایی تند می‌شود؛ ابوظبی مشتری هند، ژاپن و کره را با قرارداد بلندمدت قفل می‌کند."},
+"us_government":{"chosen_action":"adjust_iran_waiver_pace","justification":"پیوست محرمانه صادرات ایران را ۱.۵ میلیون محدود می‌کند؛ واشنگتن اجرای معافیت را کند نگه می‌دارد تا برنت از کف شیل پایین‌تر نرود."}},
+"messages":[
+{"from":"saudi_arabia","to":"us_government","text":"ریاض بازار را رصد می‌کند. خرید ذخیره راهبردی را مثبت می‌دانیم؛ هماهنگی تولید با بسته امنیتی روشن‌تر پیوند دارد."},
+{"from":"russia","to":"us_government","text":"مسکو انتظار دارد کاهش تحریم Rosneft در چارچوب بسته اوکراین تا ژانویه بررسی شود."},
+{"from":"us_government","to":"uae","text":"واشنگتن از عرضه پایدار و سرمایه‌گذاری آمریکایی در ADNOC استقبال می‌کند؛ جزئیات را در کانال دوجانبه بررسی کنیم."}],
+"summary":"داده‌های ضعیف واردات و تولید صنعتی چین مازاد ۲۰۲۷ را پررنگ‌تر کرد و برنت به حدود ۶۴ دلار افت کرد. اوپک‌پلاس سقف‌های فعلی را برای سه ماه اول ۲۰۲۷ تمدید کرد. رقابت بر سر مشتریان آسیایی بالا گرفت و شیل آمریکا کند شد.",
+"state":{"brent_price_level":24,"opec_plus_cohesion":47,"saudi_fiscal_space":35,"russia_oil_revenue":46,"uae_market_share":54,"us_gasoline_affordability":62,"us_shale_activity":52,"riyadh_washington_alignment":60}},
+{"actions":{
+"saudi_arabia":{"chosen_action":"bilateral_understanding_with_uae","justification":"ریاض از مشتریان شنیده امارات تا بهار به ۵ میلیون می‌رسد؛ پیش از مهلت پایان ژانویه می‌خواهد با ابوظبی هماهنگی غیررسمی بسازد و از جنگ سهم بازار بپرهیزد."},
+"russia":{"chosen_action":"trade_with_washington","justification":"مسکو هنوز روی کاهش تحریم Rosneft حساب می‌کند و در گفت‌وگوهای اوکراین آن را بخشی از معامله می‌خواهد تا پایه تولید و درآمد بالاتر بگیرد."},
+"uae":{"chosen_action":"seek_us_investment_and_guarantees","justification":"ابوظبی در ازای عرضه پایدار و عدم جنگ قیمت، سرمایه‌گذاری آمریکایی در ADNOC و تضمین امنیتی بیشتر می‌خواهد و خط لوله دوم را پوشش می‌دهد."},
+"us_government":{"chosen_action":"offer_security_package","justification":"با برنت زیر ۶۵ دلار، واشنگتن می‌خواهد ریاض از جنگ قیمت دور بماند؛ بسته امنیتی و فروش سلاح ابزار هماهنگی بدون فشار علنی است."}},
+"messages":[
+{"from":"saudi_arabia","to":"uae","text":"ریاض آماده تفاهم غیررسمی است: تولید تا مارس زیر ۴.۳ میلیون بماند تا قیمت رسمی فروش به آسیا نشکند."},
+{"from":"uae","to":"saudi_arabia","text":"موافقیم تولید را بی‌سروصدا نگه داریم، اما نظارت، جبران یا بازگشت به سهمیه برای ما غیرقابل قبول است."},
+{"from":"us_government","to":"russia","text":"کاهش تحریم Rosneft پیش از آتش‌بس در اوکراین مطرح نیست؛ گفت‌وگو درباره بسته گسترده‌تر ادامه دارد."}],
+"summary":"پایان ژانویه برنت حدود ۶۵ دلار بود و ریاض جنگ سهم بازار را شروع نکرد. ابوظبی و ریاض تفاهم غیررسمی ساکت بستند. آمریکا بسته امنیتی پیشنهاد کرد؛ مسکو پاسخ روشنی درباره Rosneft نگرفت و فشار درآمدی‌اش بیشتر شد.",
+"state":{"brent_price_level":26,"opec_plus_cohesion":50,"saudi_fiscal_space":37,"russia_oil_revenue":44,"uae_market_share":55,"us_gasoline_affordability":60,"us_shale_activity":50,"riyadh_washington_alignment":66}},
+{"actions":{
+"saudi_arabia":{"chosen_action":"propose_collective_cut","justification":"با تفاهم امارات و تثبیت قیمت، ریاض کاهش کوچک جمعی حدود ۷۰۰ هزار بشکه را با سهم ۳۰ درصدی روسیه مطرح می‌کند تا انضباط گروه حفظ شود."},
+"russia":{"chosen_action":"join_collective_cut","justification":"تولید واقعی روسیه حدود ۳۰۰ هزار زیر سهمیه است، پس سهم کاهش عملاً کاغذی است؛ مسکو با پذیرش آن اعتبار نزد ریاض می‌خرد و پایه بعدی را چانه می‌زند."},
+"uae":{"chosen_action":"explore_consultative_link","justification":"ابوظبی بدون سهمیه، با تبادل داده و نشست‌های منظم با اوپک‌پلاس رابطه کاری نگه می‌دارد و از خط قرمز جبران و نظارت دور می‌ماند."},
+"us_government":{"chosen_action":"announce_spr_refill","justification":"خرید حدود ۶۰ میلیون بشکه برای ذخیره راهبردی اجرا می‌شود؛ کف قیمت را نگه می‌دارد و شیل و سناتورهای نفتی را آرام می‌کند، بدون مخالفت علنی با کاهش."}},
+"messages":[
+{"from":"saudi_arabia","to":"russia","text":"کاهش جمعی کوچک پیشنهاد شده است؛ سهم روسیه حدود ۳۰ درصد. علنی بپذیرید تا بازار ثبات ببیند."},
+{"from":"russia","to":"saudi_arabia","text":"مسکو سهم کاهش را می‌پذیرد، مشروط به بازنگری پایه ۲۰۲۷ در نشست بعدی."},
+{"from":"uae","to":"saudi_arabia","text":"ابوظبی آماده تبادل داده و نشست‌های مشورتی است؛ ساز و کار نظارتی یا سهمیه نمی‌پذیرد."}],
+"summary":"اوپک‌پلاس کاهش جمعی کوچکی را اعلام کرد و روسیه علناً سهم خود را پذیرفت. امارات به گفت‌وگوی مشورتی بدون سهمیه علاقه نشان داد. آمریکا خرید ذخیره راهبردی را در قیمت‌های پایین انجام داد و برنت کمی بالاتر رفت.",
+"state":{"brent_price_level":29,"opec_plus_cohesion":56,"saudi_fiscal_space":40,"russia_oil_revenue":46,"uae_market_share":57,"us_gasoline_affordability":58,"us_shale_activity":52,"riyadh_washington_alignment":68}},
+{"actions":{
+"saudi_arabia":{"chosen_action":"bilateral_understanding_with_uae","justification":"ریاض می‌خواهد تفاهم غیررسمی با ابوظبی را پس از مارس تمدید کند و پایه تولید بالاتر امارات را بدون بازگشت رسمی قبول کند تا جنگ قیمت پیش نیاید."},
+"russia":{"chosen_action":"refuse_compensation_cuts","justification":"مسکو توان واقعی زیر سهمیه دارد و جبران اضافه‌تولید گذشته برایش هزینه سیاسی دارد؛ پایبندی را فقط به سقف جدید محدود می‌کند و تمدید را مطرح می‌کند."},
+"uae":{"chosen_action":"signal_informal_restraint","justification":"با خط لوله دوم هنوز آماده نیست و ظرفیت واقعی ۴.۴ میلیون است؛ ابوظبی امتیاز غیررسمی ریاض را با نگه داشتن تولید زیر ۴.۳ میلیون ادامه می‌دهد."},
+"us_government":{"chosen_action":"adjust_iran_waiver_pace","justification":"با زمستان سرد و برنت نزدیک ۷۲ دلار، فشار قیمتی کم شده؛ واشنگتن اجرای معافیت ایران را اندکی تند می‌کند تا از ۹۰ دلار تابستان فاصله بگیرد."}},
+"messages":[
+{"from":"saudi_arabia","to":"uae","text":"تفاهم تا مارس را در بهار هم ادامه دهیم؛ در برابر آن، قیمت رسمی آسیا حفظ می‌شود."},
+{"from":"uae","to":"saudi_arabia","text":"چند ماه دیگر تولید را بالا نمی‌بریم؛ بیش از این وعده مکتوب نمی‌دهیم."},
+{"from":"russia","to":"saudi_arabia","text":"جبران اضافه‌تولیدهای گذشته را اجرا نمی‌کنیم؛ فقط سقف جدید. پایه ۲۰۲۷ را در نشست بهار بازنگری کنید."}],
+"summary":"زمستان سخت‌تر از معمول تقاضای فرآورده و نفت خام را بالا برد و برنت به حدود ۷۲ دلار رسید. ریاض و ابوظبی بی‌سروصدا تفاهم را تمدید کردند. مسکو اجرای جبران را رد کرد و چارچوب ۲۰۲۷ هنوز بلاتکلیف ماند.",
+"state":{"brent_price_level":38,"opec_plus_cohesion":57,"saudi_fiscal_space":46,"russia_oil_revenue":55,"uae_market_share":58,"us_gasoline_affordability":53,"us_shale_activity":57,"riyadh_washington_alignment":66}}
+]}

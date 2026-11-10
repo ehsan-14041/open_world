@@ -1,0 +1,12 @@
+{"opec_quota": {"X": {"behaviour": 3, "consistency": 2, "insight": 3, "usefulness": 2},
+                "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "prefer": "Y", "why": "X stays frozen before the 29 November meeting across five monthly stages and its numbers drift from the prices it states. Y moves forward in time, keeps Brent levels consistent, and makes Russia's paper cut visible."},
+ "chip_controls": {"X": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                   "Y": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                   "prefer": "Y", "why": "X has TSMC self-report four times and Nvidia write down its inventory twice. Y gives the actors varied, believable moves: subsidies, offshore compute, quiet imports, rationing. One flaw: Nvidia's access ticks up while licences are still denied."},
+ "app_store": {"X": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+               "prefer": "Y", "why": "Y holds the take rate flat until Apple actually offers something, imposes penalties after the January summit, and shows the hidden Siri withholding driving parity down. X lowers the take rate and parity with no matching action."},
+ "ev_tariffs": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 4, "consistency": 3, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X uses the hidden information: BYD front-loads shipments, Beijing licenses battery technology, and the quota converges near 290k, with import flows matching. In Y, imports fall before any measure applies, and its talks stall without using hidden levers."}}

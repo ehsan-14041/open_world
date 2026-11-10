@@ -1,0 +1,27 @@
+{"title": "اگر اینترنت بین‌الملل یک ماه قطع شود، صنعت بازی موبایل داخلی چه می‌شود؟",
+ "stage_label": "هر مرحله = دو هفته. همهٔ متغیرها از ۰ تا ۱۰۰ هستند. نویسندهٔ سناریو و واکنش‌ها: مدل زبانی (در این نمونه، Claude در همین گفت‌وگو).",
+ "variables": [
+  {"id": "intl_net", "label": "اینترنت بین‌الملل", "initial": 90, "meaning": "۱۰۰ یعنی دسترسی کامل"},
+  {"id": "dom_net", "label": "شبکهٔ داخلی", "initial": 90, "meaning": "۱۰۰ یعنی پایدار و سریع"},
+  {"id": "players", "label": "بازیکنان فعال بازی‌های داخلی", "initial": 60, "meaning": "۱۰۰ یعنی اوج تاریخی"},
+  {"id": "payments", "label": "خرید درون‌برنامه‌ای", "initial": 55, "meaning": "۱۰۰ یعنی اوج تاریخی"},
+  {"id": "cash", "label": "نقدینگی استودیوها", "initial": 50, "meaning": "۱۰۰ یعنی ذخیرهٔ راحت"},
+  {"id": "team", "label": "توان کاری تیم‌ها", "initial": 70, "meaning": "۱۰۰ یعنی تیم کامل با ابزار کامل"},
+  {"id": "content", "label": "محتوا و آپدیت تازه", "initial": 60, "meaning": "۱۰۰ یعنی انتشار منظم"}],
+ "links": [
+  {"from": "dom_net", "to": "players", "direction": "+", "strength": "strong", "delay": 0, "why": "بازی آنلاین بدون شبکه اجرا نمی‌شود"},
+  {"from": "intl_net", "to": "players", "direction": "-", "strength": "weak", "delay": 0, "why": "وقتی بازی‌های خارجی در دسترس نیستند، بخشی از بازیکنان سراغ بازی داخلی می‌آیند"},
+  {"from": "dom_net", "to": "payments", "direction": "+", "strength": "strong", "delay": 0, "why": "پرداخت به درگاه و فروشگاه نیاز دارد"},
+  {"from": "players", "to": "payments", "direction": "+", "strength": "medium", "delay": 0, "why": "بازیکن بیشتر، خرید بیشتر"},
+  {"from": "payments", "to": "cash", "direction": "+", "strength": "strong", "delay": 1, "why": "درآمد با تأخیر تسویه می‌شود"},
+  {"from": "intl_net", "to": "team", "direction": "+", "strength": "medium", "delay": 0, "why": "ابزارها، سرورها و سرویس‌های خارجی"},
+  {"from": "cash", "to": "team", "direction": "+", "strength": "medium", "delay": 1, "why": "بدون پول، تیم کوچک می‌شود"},
+  {"from": "team", "to": "content", "direction": "+", "strength": "strong", "delay": 1, "why": "محتوا را تیم می‌سازد"},
+  {"from": "content", "to": "players", "direction": "+", "strength": "medium", "delay": 1, "why": "بدون رویداد و آپدیت، بازیکن برنمی‌گردد"}],
+ "actors": [
+  {"id": "studios", "label": "استودیوها", "goal": "زنده‌ماندن و نگه‌داشتن بازیکن"},
+  {"id": "stores", "label": "فروشگاه‌های داخلی", "goal": "نگه‌داشتن تراکنش و توسعه‌دهنده"},
+  {"id": "players", "label": "بازیکنان", "goal": "سرگرمی در دسترس و ارزان"},
+  {"id": "regulator", "label": "نهاد تنظیم‌گر", "goal": "پایداری شبکهٔ داخلی و آرام‌کردن کسب‌وکارها"},
+  {"id": "talent", "label": "نیروی متخصص", "goal": "درآمد پایدار و ابزار کار"}],
+ "shock": {"label": "قطع اینترنت بین‌الملل؛ شبکهٔ داخلی کند ولی برقرار", "targets": {"intl_net": -80, "dom_net": -25}, "stages": 2}}

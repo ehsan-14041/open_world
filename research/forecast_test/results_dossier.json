@@ -1,0 +1,35 @@
+{
+ "model": "Claude Opus 5.5 as sub-agents, batches of 30",
+ "n_sampled": 300,
+ "n_scored": 298,
+ "share_yes": 0.547,
+ "brier": {
+  "half": 0.25,
+  "market_on_priced": 0.2099,
+  "n_priced": 298,
+  "L": 0.2699,
+  "L2": 0.2714,
+  "D": 0.2764
+ },
+ "D_minus_L": {
+  "difference": 0.0065,
+  "ci95": [
+   -0.0022,
+   0.0152
+  ]
+ },
+ "D_minus_L2": {
+  "difference": 0.005,
+  "ci95": [
+   -0.0029,
+   0.013
+  ]
+ },
+ "mean_abs_change_L_to_D": 0.054,
+ "share_extreme_forecasts": {
+  "L": 0.215,
+  "L2": 0.218,
+  "D": 0.245
+ },
+ "verdict": "no detectable difference"
+}

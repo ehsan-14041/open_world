@@ -1,0 +1,12 @@
+{"phone_ban": {"X": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 3, "consistency": 3, "insight": 4, "usefulness": 3},
+               "prefer": "X", "why": "X stays plausible: smuggling fades as quota and sub-threshold models arrive. Y shows workarounds driving FX pressure to 100, but legal supply reaching 100 under a ban is absurd, and assemblers repeat one action."},
+ "free_coder": {"X": {"behaviour": 3, "consistency": 4, "insight": 2, "usefulness": 2},
+                "Y": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                "prefer": "Y", "why": "Y shows a downturn turning rate cuts into layoffs and emigration, a real turning point for outsourcers. X has employment and hours rising while in-house AI hits 80, a generic and implausibly rosy story."},
+ "water_ration": {"X": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 3},
+                  "Y": {"behaviour": 3, "consistency": 4, "insight": 4, "usefulness": 4},
+                  "prefer": "Y", "why": "Y exposes the trade-off that free tankers drain the utility budget, so repairs stop and rationing tightens. Its tanker vendors are oddly passive, but it is more decision-relevant than X's rain-assisted easing."},
+ "truck_strike": {"X": {"behaviour": 4, "consistency": 3, "insight": 3, "usefulness": 4},
+                  "Y": {"behaviour": 2, "consistency": 3, "insight": 3, "usefulness": 3},
+                  "prefer": "X", "why": "X has a believable arc: concessions (fuel cut, tariff floor) lead to a deal and recovery. Y repeats escorts and union holding, and prices climb to 93 with little explanation, so the path reads mechanical."}}

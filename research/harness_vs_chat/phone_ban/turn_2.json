@@ -1,0 +1,73 @@
+{
+ "environment": {
+  "chosen_action": "currency_depreciation_shock",
+  "primary_variable": "fx_pressure",
+  "probability": 0.45,
+  "justification": "ارز ضعیف و فشار ارزی بالا (۵۹) همراه با قاچاق گسترده و انتظارات تورمی، نوسان منفی نرخ ارز را در ماه دوم محتمل می‌کند.",
+  "causal_chain": "افت ارزش پول، فشار ارزی را بالا می‌برد و بر قیمت گوشی اثر می‌گذارد؛ قیمت بالاتر قاچاق و نارضایتی را افزایش می‌دهد.",
+  "expected_effect": {
+   "fx_pressure": 12,
+   "phone_price": 7,
+   "smuggling": 3,
+   "discontent": 5
+  },
+  "relation_updates": []
+ },
+ "government": {
+  "chosen_action": "soften_ban_with_quota",
+  "primary_variable": "smuggling",
+  "probability": 0.7,
+  "justification": "قاچاق و نارضایتی بالا رفته و فشار ارزی همچنان زیاد است. سهمیه، عرضهٔ قانونی و درآمد گمرک را برمی‌گرداند و قاچاق و خشم را کم می‌کند، بی‌آنکه ممنوعیت کاملاً لغو شود.",
+  "causal_chain": "سهمیه عرضهٔ قانونی را بالا می‌برد، قیمت گوشی پایین می‌آید، قاچاق و نارضایتی کم می‌شود و درآمد گمرک بیشتر می‌شود.",
+  "expected_effect": {
+   "legal_supply": 12,
+   "phone_price": -5,
+   "smuggling": -5,
+   "fx_pressure": 3,
+   "customs_revenue": 6,
+   "local_assembly": -2,
+   "discontent": -5
+  },
+  "relation_updates": []
+ },
+ "importers": {
+  "chosen_action": "import_just_below_threshold",
+  "primary_variable": "legal_supply",
+  "probability": 0.7,
+  "justification": "واردات مدل‌های زیر آستانه ۶۰۰ دلار بدون ریسک قانونی جریان موجودی و حاشیه سود را حفظ می‌کند و در شرایط بی‌ثباتی محتاطانه‌تر از انبار کردن یا گران‌فروشی است.",
+  "causal_chain": "واردات زیر آستانه ← افزایش عرضه قانونی ← کاهش قیمت گوشی و افزایش اندک درآمد گمرکی ← حفظ جریان موجودی و حاشیه سود",
+  "expected_effect": {
+   "legal_supply": 6,
+   "phone_price": -3,
+   "customs_revenue": 3,
+   "fx_pressure": 2
+  }
+ },
+ "consumers": {
+  "chosen_action": "buy_grey_market_phones",
+  "primary_variable": "smuggling",
+  "probability": 0.6,
+  "justification": "یک ماه صبر کردم و قیمت رسمی پایین نیامده است. نیاز به گوشی مهم‌تر است و بازار غیررسمی با قیمت کمتر در دسترس است؛ ریسک را می‌پذیرم.",
+  "causal_chain": "قیمت رسمی بالا و عرضه قانونی محدود -> خرید از بازار غیررسمی -> قاچاق بیشتر، قیمت اندکی پایین‌تر و نارضایتی کمتر",
+  "expected_effect": {
+   "smuggling": 8,
+   "customs_revenue": -3,
+   "phone_price": -2,
+   "fx_pressure": 3,
+   "discontent": -2
+  }
+ },
+ "local_assemblers": {
+  "chosen_action": "assemble_from_imported_kits",
+  "primary_variable": "local_assembly",
+  "probability": 0.7,
+  "justification": "ممنوعیت رقیب وارداتی را کنار زده؛ مونتاژ از کیت وارداتی بدون سرمایه‌گذاری سنگین سهم را بالا می‌برد و دسترسی به قطعات را حفظ می‌کند. فشار ارزی بالاست و توسعهٔ بزرگ پرخطر است.",
+  "causal_chain": "مونتاژ از کیت‌های وارداتی باعث افزایش تولید داخلی می‌شود؛ تولید داخلی عرضهٔ قانونی را کمی بالا می‌برد و قیمت گوشی را اندکی پایین می‌آورد، هرچند فشار ارزی کمی بیشتر می‌شود.",
+  "expected_effect": {
+   "local_assembly": 6,
+   "legal_supply": 4,
+   "phone_price": -2,
+   "fx_pressure": 3
+  }
+ }
+}

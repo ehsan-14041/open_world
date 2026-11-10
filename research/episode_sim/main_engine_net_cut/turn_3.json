@@ -1,0 +1,7 @@
+{
+ "regulator": {"chosen_action": "restore_international_internet", "primary_variable": "intl_net", "probability": 0.9, "justification": "بعد از حدود یک ماه، اینترنت بین‌الملل وصل می‌شود.", "causal_chain": "وصل‌شدن -> ابزارها و سرویس‌های خارجی برمی‌گردند", "expected_effect": {"intl_net": 70, "dom_net": 20}},
+ "studios": {"chosen_action": "ship_big_update", "primary_variable": "content", "probability": 0.7, "justification": "پنجرهٔ نگه‌داشتن بازیکنِ تازه کوتاه است؛ همهٔ توان باقی‌مانده روی یک آپدیت بزرگ می‌رود.", "causal_chain": "آپدیت -> دلیل ماندن بازیکن", "expected_effect": {"content": 10, "cash": -4, "team": -2}},
+ "stores": {"chosen_action": "weekly_payouts", "primary_variable": "cash", "probability": 0.7, "justification": "استودیوها برای حقوق این ماه پول نقد لازم دارند؛ تسویه هفتگی می‌شود.", "causal_chain": "تسویهٔ سریع‌تر -> نقدینگی", "expected_effect": {"cash": 4}},
+ "players": {"chosen_action": "return_to_foreign_games", "primary_variable": "players", "probability": 0.75, "justification": "بازی‌های خارجی دوباره در دسترس‌اند؛ بخشی از بازیکنان برمی‌گردند.", "causal_chain": "دسترسی دوباره -> ترک بازی داخلی", "expected_effect": {"players": -6}},
+ "talent": {"chosen_action": "seek_remote_or_emigrate", "primary_variable": "team", "probability": 0.6, "justification": "یک ماه بی‌کاری اجباری نشان داد ابزار کار و درآمد پایدار نیست؛ چند نیروی ارشد می‌روند.", "causal_chain": "بی‌ثباتی -> خروج نیروی ارشد", "expected_effect": {"team": -8}}
+}

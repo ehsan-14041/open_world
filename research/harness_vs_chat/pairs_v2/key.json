@@ -1,0 +1,18 @@
+{
+ "phone_ban": {
+  "X": "chat",
+  "Y": "harness"
+ },
+ "free_coder": {
+  "X": "chat",
+  "Y": "harness"
+ },
+ "water_ration": {
+  "X": "chat",
+  "Y": "harness"
+ },
+ "truck_strike": {
+  "X": "harness",
+  "Y": "chat"
+ }
+}

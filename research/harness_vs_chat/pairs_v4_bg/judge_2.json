@@ -1,0 +1,12 @@
+{"opec_quota": {"X": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                "Y": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                "prefer": "Y", "why": "Y shows plausible hidden-information dynamics: Russia's paper cut below quota, a quiet Saudi-UAE understanding, SPR buying as a soft floor, slow Iran waiver. X's Saudi threat-then-cut arc and winter SPR release at $70 feel generic and less coherent."},
+ "chip_controls": {"X": {"behaviour": 3, "consistency": 3, "insight": 4, "usefulness": 3},
+                   "Y": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 4},
+                   "prefer": "Y", "why": "Y has China retaliating with mineral leverage and then refusing US chips, which is believable, and its numbers track that. X has interesting bargaining details, but China quietly buying H200s right after re-denial contradicts the trigger, and it skips retaliation."},
+ "app_store": {"X": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+               "prefer": "Y", "why": "Y captures Apple's real playbook (interim relief, withheld Siri features), the Commission's quiet deadline extension under trade pressure, Epic's weak finances, and Google tightening developer verification. X is plausible but more linear, and its steering-freedom jump from a mere rename is overstated."},
+ "ev_tariffs": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "Both reach a similar quota deal. X adds non-obvious levers: China licensing battery-cell tech to stall Szeged, an EU value-added exemption pulling production local, WTO risk shaping the quota size. Y is believable but more generic."}}

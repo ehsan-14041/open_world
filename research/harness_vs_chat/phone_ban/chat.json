@@ -1,0 +1,37 @@
+{"stages": [
+{"actions": {
+"environment": {"chosen_action": "smuggling_route_expands", "justification": "با بسته شدن کانال رسمی، سود قاچاق بالا می‌رود و مسیرهای غیررسمی بلافاصله فعال و گسترده می‌شوند."},
+"government": {"chosen_action": "impose_phone_import_ban", "justification": "رویداد از همین مرحله آغاز می‌شود؛ دولت برای حفظ ذخیرهٔ ارزی واردات گوشی‌های بالای ۶۰۰ دلار را ممنوع می‌کند."},
+"importers": {"chosen_action": "stockpile_phones", "justification": "واردکنندگان موجودی دارند و انتظار کمبود دارند؛ نگه‌داشتن گوشی‌ها حاشیهٔ سود آینده را حفظ می‌کند."},
+"consumers": {"chosen_action": "buy_grey_market_phones", "justification": "کانال رسمی بسته شده و مصرف‌کنندگان برای رسیدن به گوشی سراغ بازار غیررسمی می‌روند."},
+"local_assemblers": {"chosen_action": "expand_local_assembly", "justification": "رقیب وارداتی حذف شده و فرصت سهم بازار پیش آمده؛ مونتاژکاران ظرفیت را تا حد توان گسترش می‌دهند."}
+}, "state": {"legal_supply": 52, "smuggling": 42, "phone_price": 64, "fx_pressure": 60, "customs_revenue": 33, "local_assembly": 31, "discontent": 42}},
+{"actions": {
+"environment": {"chosen_action": "hold_position", "justification": "شوک بیرونی تازه‌ای رخ نمی‌دهد و محیط در همین وضعیت می‌ماند."},
+"government": {"chosen_action": "crack_down_on_smuggling", "justification": "رشد قاچاق درآمد گمرک را می‌خورد؛ دولت بدون لغو ممنوعیت برخورد با قاچاق را تشدید می‌کند."},
+"importers": {"chosen_action": "import_just_below_threshold", "justification": "واردات مدل‌های کمی زیر سقف ۶۰۰ دلار قانونی است و جریان موجودی و حاشیهٔ سود را حفظ می‌کند."},
+"consumers": {"chosen_action": "delay_phone_purchase", "justification": "قیمت‌ها بالا رفته و قاچاق ریسک دارد؛ بسیاری خرید را به تعویق می‌اندازند."},
+"local_assemblers": {"chosen_action": "assemble_from_imported_kits", "justification": "ظرفیت محدود است؛ مونتاژ از کیت وارداتی سریع‌ترین راه افزایش عرضه و سهم بازار است."}
+}, "state": {"legal_supply": 58, "smuggling": 36, "phone_price": 62, "fx_pressure": 62, "customs_revenue": 36, "local_assembly": 35, "discontent": 46}},
+{"actions": {
+"environment": {"chosen_action": "foreign_maker_cuts_models_below_threshold", "justification": "سازندگان خارجی برای حفظ بازار مدل‌هایی با قیمت زیر سقف عرضه می‌کنند و عرضهٔ قانونی بیشتر می‌شود."},
+"government": {"chosen_action": "soften_ban_with_quota", "justification": "نارضایتی و افت درآمد گمرک بالا رفته؛ دولت با سهمیه ممنوعیت را نرم می‌کند تا فشار اجتماعی کم شود."},
+"importers": {"chosen_action": "lobby_for_exemptions", "justification": "با نشانهٔ نرمی دولت، واردکنندگان برای گرفتن معافیت و سهمیهٔ بیشتر رایزنی می‌کنند."},
+"consumers": {"chosen_action": "protest_online", "justification": "گرانی و کمبود ادامه دارد؛ مصرف‌کنندگان اعتراض خود را در شبکه‌های اجتماعی بلند می‌کنند."},
+"local_assemblers": {"chosen_action": "raise_local_prices", "justification": "با نزدیک شدن رقیب وارداتی و وابستگی به قطعات گران، مونتاژکاران حاشیهٔ سود را با افزایش قیمت حفظ می‌کنند."}
+}, "state": {"legal_supply": 70, "smuggling": 32, "phone_price": 57, "fx_pressure": 64, "customs_revenue": 44, "local_assembly": 32, "discontent": 49}},
+{"actions": {
+"environment": {"chosen_action": "hold_position", "justification": "رویداد بیرونی مهمی رخ نمی‌دهد و بازار ارز و مسیرهای قاچاق در روند قبلی می‌مانند."},
+"government": {"chosen_action": "hold_position", "justification": "سهمیه برقرار است و دولت منتظر می‌ماند اثر آن بر عرضه، قاچاق و درآمد گمرک روشن شود."},
+"importers": {"chosen_action": "import_just_below_threshold", "justification": "مسیر قانونی زیر سقف و سهمیه باز است؛ واردات از این کانال بیشترین جریان موجودی را می‌دهد."},
+"consumers": {"chosen_action": "delay_phone_purchase", "justification": "قیمت‌ها هنوز بالاست و با بهبود تدریجی عرضه، مصرف‌کنندگان برای خرید ارزان‌تر صبر می‌کنند."},
+"local_assemblers": {"chosen_action": "expand_local_assembly", "justification": "تقاضا هنوز به داخل متمایل است و مونتاژکاران برای حفظ سهم پیش از بازگشت رقبا ظرفیت را بیشتر می‌کنند."}
+}, "state": {"legal_supply": 73, "smuggling": 30, "phone_price": 53, "fx_pressure": 65, "customs_revenue": 44, "local_assembly": 36, "discontent": 47}},
+{"actions": {
+"environment": {"chosen_action": "currency_depreciation_shock", "justification": "با افزایش واردات قانونی و فشار ارزی انباشته، نرخ ارز دوباره جهش می‌کند."},
+"government": {"chosen_action": "soften_ban_with_quota", "justification": "دولت سهمیه را ادامه می‌دهد تا عرضهٔ قانونی و درآمد گمرک حفظ شود، بی‌آنکه ممنوعیت کاملاً لغو شود."},
+"importers": {"chosen_action": "import_just_below_threshold", "justification": "با جهش ارز، واردات مدل‌های ارزان‌تر زیر سقف تنها راه عملی حفظ جریان موجودی و حاشیهٔ سود است."},
+"consumers": {"chosen_action": "delay_phone_purchase", "justification": "جهش ارز قدرت خرید را کاهش داده؛ مصرف‌کنندگان خرید غیرضروری را عقب می‌اندازند."},
+"local_assemblers": {"chosen_action": "assemble_from_imported_kits", "justification": "برای تأمین قطعات و پاسخ به تقاضا، مونتاژ از کیت‌های وارداتی ادامه می‌یابد هرچند ارز گران‌تر شده است."}
+}, "state": {"legal_supply": 78, "smuggling": 29, "phone_price": 51, "fx_pressure": 70, "customs_revenue": 47, "local_assembly": 37, "discontent": 46}}
+]}

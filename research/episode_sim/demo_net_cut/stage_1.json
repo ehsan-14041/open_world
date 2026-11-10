@@ -1,0 +1,4 @@
+{"moves": [
+ {"actor": "studios", "move": "سرورهای بازی را با عجله به دیتاسنتر داخلی منتقل می‌کنند", "why": "بازی‌هایی که سرور خارجی دارند از کار افتاده‌اند", "stages": 5, "effects": [{"variable": "players", "direction": "+", "size": "small"}, {"variable": "cash", "direction": "-", "size": "small"}]},
+ {"actor": "players", "move": "بازی‌های خارجیِ ازدسترس‌رفته را با بازی‌های داخلی جایگزین می‌کنند", "why": "گزینهٔ دیگری در دسترس نیست", "stages": 2, "effects": [{"variable": "players", "direction": "+", "size": "medium"}]},
+ {"actor": "talent", "move": "کار با ابزارهای ابری خارجی متوقف می‌شود و تیم‌ها نیمه‌تعطیل می‌شوند", "why": "مخزن کد، ابزار طراحی و سرویس‌های ابری در دسترس نیستند", "stages": 2, "effects": [{"variable": "content", "direction": "-", "size": "medium"}]}]}

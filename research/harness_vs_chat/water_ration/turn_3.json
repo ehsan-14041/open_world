@@ -1,0 +1,60 @@
+{
+ "environment": {
+  "chosen_action": "main_pipe_burst",
+  "primary_variable": "supply_hours",
+  "probability": 0.35,
+  "justification": "شبکه فرسوده است و جیره‌بندی با قطع و وصل مکرر فشار، ترکیدگی خطوط را محتمل می‌کند؛ باران در خشکسالی بعید است و این رویداد واقع‌بینانه‌تر است.",
+  "causal_chain": "ترکیدگی لوله ← کاهش ساعت‌های آب ← افزایش خطر بهداشتی و فشار بر بودجه شرکت آب",
+  "expected_effect": {
+   "supply_hours": -10,
+   "health_risk": 5,
+   "utility_budget": -4,
+   "reservoir": -3
+  }
+ },
+ "water_utility": {
+  "chosen_action": "tighten_rationing",
+  "primary_variable": "reservoir",
+  "probability": 0.6,
+  "justification": "ذخیرهٔ سد پس از موج گرما به ۲۵ رسیده و اولویت اصلی حفاظت از آن است. خانوارها ذخیرهٔ خانگی ۶۵ دارند، پس سخت‌گیری بیشتر قابل تحمل است؛ خشم مردم افزایش می‌یابد ولی مهار می‌شود.",
+  "causal_chain": "کاهش ساعت‌های آب ← حفظ و افزایش ذخیرهٔ سد؛ هزینه: افزایش خشم مردم و کاهش اندک بودجه",
+  "expected_effect": {
+   "supply_hours": -12,
+   "reservoir": 4,
+   "public_anger": 8,
+   "utility_budget": -3
+  }
+ },
+ "city_government": {
+  "chosen_action": "launch_conservation_campaign",
+  "primary_variable": "reservoir",
+  "probability": 0.65,
+  "justification": "ذخیره سد ۲۵ است و بودجه شرکت آب ضعیف (۳۳)؛ تانکر رایگان بیشتر بودجه را می‌سوزاند. کمپین صرفه‌جویی ارزان است، ذخیره را بالا می‌برد و خشم را بدون تنش تازه کم می‌کند.",
+  "causal_chain": "پیام‌رسانی صرفه‌جویی مصرف را کم می‌کند و ذخیره سد را اندکی بالا می‌برد؛ با هزینه کم بودجه، خشم مردم کمی کاهش می‌یابد.",
+  "expected_effect": {
+   "reservoir": 3,
+   "public_anger": -2,
+   "utility_budget": -2
+  }
+ },
+ "households": {
+  "chosen_action": "cut_use_voluntarily",
+  "primary_variable": "reservoir",
+  "probability": 0.55,
+  "justification": "ذخیره خانگی نسبتاً بالاست و قیمت تانکر در حال افزایش است؛ خرید بیشتر گران است. مصرف را داوطلبانه کم می‌کنیم تا سد حفظ شود و جیره‌بندی سخت‌تر نشود.",
+  "causal_chain": "کاهش مصرف خانگی ذخیره سد را اندکی بالا می‌برد و فشار برای قطعی بیشتر کم می‌شود؛ بدون خرید تانکر گران، هزینه هم پایین می‌ماند.",
+  "expected_effect": {
+   "reservoir": 3,
+   "home_storage": -3,
+   "public_anger": 2
+  }
+ },
+ "tanker_vendors": {
+  "chosen_action": "hold_position",
+  "primary_variable": "tanker_price",
+  "probability": 0.6,
+  "justification": "قیمت پس از افزایش قبلی بالا رفته، ذخیره خانگی ۶۵ تقاضا را کم می‌کند و تانکر رایگان شهرداری رقیب است. افزایش دوباره خشم و نظارت را بالا می‌برد؛ حفظ مشتری و صبر محتاطانه‌تر است.",
+  "causal_chain": "با ثابت نگه داشتن قیمت و ناوگان، مشتریان حفظ می‌شوند و خشم عمومی از قیمت تانکر افزایش نمی‌یابد.",
+  "expected_effect": {}
+ }
+}

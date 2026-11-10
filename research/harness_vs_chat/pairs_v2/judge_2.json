@@ -1,0 +1,12 @@
+{"phone_ban": {"X": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 3, "insight": 3, "usefulness": 4},
+               "prefer": "Y", "why": "Y's actors visibly react to each other and to thresholds (consumers delay, then grey market, then protest; government waits, then gives a quota). X unwinds the ban too smoothly, and its stage-5 currency shock barely moves the numbers."},
+ "free_coder": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 3, "insight": 2, "usefulness": 3},
+                "prefer": "X", "why": "X's numbers track the actions closely, and its shocks (code failure, downturn, rival going free) cascade into rate cuts, junior layoffs and emigration. Y is a flat, monotone drift. Its environment never acts and developers repeat the same action five times."},
+ "water_ration": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                  "Y": {"behaviour": 3, "consistency": 4, "insight": 2, "usefulness": 3},
+                  "prefer": "X", "why": "X has realistic shocks (rumour, heat wave, pipe burst, rain), an anger peak followed by easing, and a steady drain on the utility budget, all with closely matching numbers. Y is static, health risk sits flat, and the actors give meta 'last stage' reasons."},
+ "truck_strike": {"X": {"behaviour": 3, "consistency": 3, "insight": 2, "usefulness": 3},
+                  "Y": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                  "prefer": "Y", "why": "Y shows escalation (panic buying, blockades, ports), rationing and price hikes, then a deal after which prices stay high: a useful finding that prices do not fall back. X's strike ends quickly with shelves barely touched, and stages 4-5 are all holds."}}

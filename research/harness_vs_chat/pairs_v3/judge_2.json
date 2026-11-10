@@ -1,0 +1,12 @@
+{"opec_quota": {"X": {"behaviour": 3, "consistency": 2, "insight": 3, "usefulness": 2},
+                "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "prefer": "Y", "why": "X freezes time (still 'before 29 November' after five months), Russia flip-flops, gasoline affordability jumps while Brent rises. Y advances the calendar, tests Saudi's January trigger, lands a small cut with Russia's paper share, and its numbers track prices."},
+ "chip_controls": {"X": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                   "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                   "prefer": "Y", "why": "X repeats TSMC self-reporting four times and writes down Nvidia inventory twice. Y varies plausibly: TSMC reports then cuts, China subsidises, shifts compute offshore and quietly allows imports, which shows second-round effects of the cloud rule."},
+ "app_store": {"X": {"behaviour": 3, "consistency": 2, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+               "prefer": "Y", "why": "X keeps a 60-day deadline 'pending' for ten months, and feature parity and tension drift without cause. Y sequences court relief, penalties after the January summit, Siri withholding (parity drops), Google's pivot, and converges toward 8% and twelve months."},
+ "ev_tariffs": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 4, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X has a believable arc: an initial probe, front-loading, China's misread of Germany, the battery-licence lever, a coalition revolt, then a deal of about 290k. Y jumps straight to deal-making and haggles repetitively, leaving hidden levers (inventory, battery licence, retaliation) unused."}}

@@ -1,0 +1,12 @@
+{"opec_quota": {"X": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 4, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X shows hidden-information levers (Russia's paper cut below quota, UAE's real capacity limit, US slowing Iran waiver to protect shale) and a quiet UAE-Saudi understanding; some template repetition (Nov 29 meeting reused). Y's price war is coherent but generic."},
+ "chip_controls": {"X": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                   "Y": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                   "prefer": "X", "why": "X treats the cloud ban as a bargaining chip traded for rare-earth licences, with legal-risk reasoning and Nvidia's write-down timing. Some confusing details (quiet H200 approvals). Y is a generic escalate-thaw-escalate story with implausibly fast Chinese self-reliance gains."},
+ "app_store": {"X": {"behaviour": 3, "consistency": 4, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+               "prefer": "Y", "why": "Y captures the Commission quietly extending the deadline under US trade pressure, Google's confidential positioning, time-limited fee bargaining (10% to 8%), Epic's financial fragility and Siri withholding. X is plausible but a tidier, more generic settlement arc."},
+ "ev_tariffs": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 4, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X has concrete trade-offs: dropping the BYD hike to keep votes, China licensing battery-cell tech transfer as leverage on Szeged, local value-added exemption, a ~290k corporate-commitment quota. Y is coherent but more generic negotiation-to-price-undertaking story."}}

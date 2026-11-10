@@ -1,0 +1,212 @@
+[
+ {
+  "id": "3231182",
+  "question": "Idaho passes ballot measure legalizing abortion?",
+  "rules": "Idaho Proposition 1 is a ballot measure scheduled to appear in the statewide general election currently scheduled for November 3, 2026, which would create a right to abortion and other reproductive choices in the State of Idaho. \n\nThis market will resolve to “Yes” if this ballot measure is approved as a result of the Idaho statewide general election currently scheduled for November 3, 2026. Otherwise, this market will resolve to “No.”\n\nIf voting on the specified ballot measure does not occur, or the results thereof are not known definitively, by March 31, 2027, this market will resolve to “No”.\n\nSubsequent litigation or any failure to implement the measure will have no impact on the resolution of this market. \n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve solely based on official information from the State of Idaho, including the Idaho Secretary of State (https://sos.idaho.gov/).",
+  "start": "2026-07-30",
+  "close": "2026-11-04"
+ },
+ {
+  "id": "3231188",
+  "question": "Will Ralph Norman place second in first round of the South Carolina Republican Senate special primary?",
+  "rules": "The first round of the 2026 special Republican Party primary for the United States Senate election in South Carolina will be held on August 11, 2026, with a potential runoff on August 25, 2026.\n\nThis market will resolve according to the candidate that wins the second-most votes in the first round of the special Republican Primary for US Senator from South Carolina.\n\nCandidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidates' first names, as listed in this market group. This market will resolve to the candidate that occupies the second highest finishing position after applying this ranking.\n\nIf the results of this election are not definitively known by December 31, 2026, this market will resolve to “Other.”\n\nThe primary resolution source for this market will be information from the State of South Carolina, such as official statewide results published by the South Carolina Election Commission (https://scvotes.gov/); however, an overwhelming consensus of credible reporting may suffice.\n",
+  "start": "2026-07-30",
+  "close": "2026-08-14"
+ },
+ {
+  "id": "3231771",
+  "question": "Trump out as President by August 31?",
+  "rules": "This market will resolve to “Yes” if Donald Trump resigns or is removed as President or otherwise ceases to be the President of the United States for any period of time by August 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to “No”.\n\nAn announcement of Donald Trump's resignation/removal before this market's end date will immediately resolve this market to \"Yes\", regardless of when the announced resignation/removal goes into effect.\n\nOnly permanent removal from office will qualify. Temporary removal (e.g. temporary invocation of the 25th Amendment under Section 3 or a Section 4 invocation not sustained by both Houses of Congress) or impeachment without removal will not count.\n\nA sustained invocation of the Twenty-Fifth Amendment, Section 4 (i.e., if both Houses of Congress, by two-thirds vote, uphold the Vice President and Cabinet’s determination of presidential inability) will qualify for a \"Yes\" resolution. \n\nThe resolution source for this market will be a consensus of credible reporting.",
+  "start": "2026-07-30",
+  "close": "2026-09-01"
+ },
+ {
+  "id": "3240715",
+  "question": "Will Donald Trump publicly insult Candace Owens by August 31, 2026?",
+  "rules": "This market will resolve to \"Yes\" if Donald Trump makes any public statement in which he insults the listed individual between market creation and the specified date (ET). Otherwise, this market will resolve to \"No\". \n\nA public statement is any written, verbal, or recorded statement which is either made in a public setting, published by the speaker, or on the record to media, and the direct language of which is made publicly available. Statements made in private that are subsequently leaked will not qualify, even if credibly reported. Narrations and paraphrasings do not qualify.\n\nImages and videos posted on verified social media accounts will only qualify if they contain insulting language clearly directed at the individual, whether within the content itself or in an accompanying caption. A quote post will only qualify if added language independently qualifies as an insult; a repost of another account's post will not qualify.\n\nA public statement qualifies as an insult if it mocks, degrades, or disparages the individual either personally or professionally. This includes calling the individual a clearly insulting trait (e.g., weak, stupid, disloyal, a failure), using an insulting nickname (e.g., Crooked Hillary), using other clearly derogatory language, or using the negative form of a positive trait in a clearly derogatory manner (e.g., “He isn’t smart”, “He has no judgment”). Disparaging the individual in their professional capacity will qualify (e.g., \"He is a disaster candidate,\" \"He is terrible at his job\"); however, negative comments directed at the individual's specific actions, policies, or decisions will not qualify (e.g., \"He has bad policies,\" \"He is wrong about healthcare\").\n\nA statement made in direct reference to the individual will qualify even if they are not named, so long as it is reasonably clear from context that they are the subject.\n\nThe resolution sources will be public statements made by Donald Trump and a consensus of credible reporting.",
+  "start": "2026-07-31",
+  "close": "2026-09-01"
+ },
+ {
+  "id": "3241177",
+  "question": "Will Trump praise Xi Jinping in August?",
+  "rules": "This market will resolve to \"Yes\" if Donald Trump publicly praises the listed individual between August 1, 2026, 12:00 AM ET and August 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nA qualifying statement includes any remark by Trump that expresses approval, admiration, respect, or endorsement of the listed individual personally or professionally. This can include direct praise (e.g., “He/She is smart,” “He’s/She's a great leader”) or equivalent positive descriptions (“impressive,” “strong,” “brilliant,” “doing a great job”) made in reference to the listed individual.\n\nAny statement that clearly expresses approval, admiration, or endorsement of the listed individual personally qualifies for this market regardless of context (e.g., \"He/She is very smart, but he/she doesn’t seem to know that this policy will harm more of his/her constituents.\" would qualify).\n\nGeneral neutrality or polite diplomatic language (e.g., “We had a good meeting”) will not qualify unless it contains a clear element of positive evaluation.\n\nA direct reference will qualify even if the individual is not named, so long as it is reasonably clear from context that he is the subject.\n\nAny written, verbal, or recorded usage will qualify.\n\nThe resolution source for this market will be public statements from Donald Trump.",
+  "start": "2026-07-31",
+  "close": "2026-08-30"
+ },
+ {
+  "id": "3242383",
+  "question": "Will a new country join the Abraham Accords by August 31?",
+  "rules": "This market will resolve to \"Yes\" if any country not already a part of the Abraham Accords formally signs a normalization agreement with Israel under the framework of the Abraham Accords by August 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nA formal signing refers to an official agreement between Israel and another country that is publicly acknowledged by both governments and clearly attributed to the Abraham Accords or their continuation. Such a signing will qualify regardless of whether a country had an established diplomatic relationship with Israel predating this event; their becoming a signatory of the Abraham Accords qualifies as normalizing relations under the framework of that agreement.\n\nFor the purposes of this market, Somaliland will count as a country.\n\nCountries already part of the Abraham Accords as of market creation—including the United Arab Emirates, Bahrain, Morocco, and Sudan—will not count.\n\nThe resolution source will be official government statements, however a consensus for credible reporting may also be used.",
+  "start": "2026-07-31",
+  "close": "2026-09-01"
+ },
+ {
+  "id": "3243198",
+  "question": "Todd Blanche nomination withdrawn by August 31?",
+  "rules": "This market will resolve to \"Yes\" if Todd Blanche's nomination to be Attorney General of the United States is announced as withdrawn, or is formally withdrawn, by August 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to \"No.\"\n\nThe withdrawal will be considered announced when Donald Trump, Todd Blanche, or their authorized representatives publicly and definitively announce that Todd Blanche's nomination will be or is being withdrawn. Such an announcement will qualify regardless of when the withdrawal is formally communicated to the United States Senate, and regardless of whether the withdrawal is described as temporary.\n\nThe following will not qualify: statements that a withdrawal is being considered or is possible; conditional statements that the nomination will be withdrawn only if specified conditions are met; media reports that a withdrawal is planned; the Senate postponing, declining to advance, or voting down the nomination; the return of the nomination to the President upon adjournment of the Senate; and statements by persons other than those listed above.\n\nThe resolution source for this market will be official information from the White House and Todd Blanche; however, a consensus of credible reporting may also be used.",
+  "start": "2026-07-31",
+  "close": "2026-09-01"
+ },
+ {
+  "id": "3246710",
+  "question": "Will Trump meet with Volodymyr Zelenskyy in August 2026?",
+  "rules": "This market will resolve to \"Yes\" if the listed individual meets with Donald Trump between August 1 and August 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nA meeting is defined as any encounter where both the listed individual and Trump are present and interact with each other in person.\n\nThe resolution source will be a consensus of credible reporting.",
+  "start": "2026-07-31",
+  "close": "2026-09-01"
+ },
+ {
+  "id": "3246748",
+  "question": "Will Trump speak to Pope Leo XIV in August?",
+  "rules": "This market will resolve to \"Yes\" if the listed individual speaks with Donald Trump between August 1 and August 31, 2026, 11:59 PM ET. Otherwise, it will resolve to \"No\".\n\nSpeaking is defined as any verbal interaction between the listed individual and Donald Trump, occurring either in person or through verbal communication by phone or video call.\n\nThe resolution source will be credible media reporting. However, in the absence of definitive or in the case of contradictory media reporting, statements by either of the specified individuals or their official representatives will also be considered.\n\nStatements by the specified individuals or their official representatives will only be considered conclusive if the claims explicitly, or in context unambiguously, indicate that a qualifying talk occurred within the specified timeframe and took place via verbal communication, and provided that such claims are not contradicted by the other specified individual, their representatives, or credible media reporting by the end of the third calendar date (ET) following the statement in question.\n\nThis market will resolve at the earlier of i) a qualifying verbal interaction being confirmed under the above rules or ii) 11:59 PM ET on the third calendar day following this market's above-specified timeframe.\n\nIf the date and time of a qualifying talk cannot be confirmed by a consensus of credible reporting by 11:59 PM ET on the third calendar day following this market's above-specified timeframe, it will resolve to \"No\" regardless of whether it was later confirmed to have taken place.",
+  "start": "2026-07-31",
+  "close": "2026-09-04"
+ },
+ {
+  "id": "3392894",
+  "question": "Will Łukasz Gibała win the 2026 Kraków mayoral election?",
+  "rules": "The Kraków mayoral election is scheduled to be held on September 27, 2026, to elect the Mayor of Kraków, Poland. A runoff election is scheduled for October 11, 2026, if no candidate receives more than half of the valid votes in the first round.\n\nThis market will resolve according to the candidate who becomes the next mayor of Kraków as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by December 31, 2026, 11:59 PM ET, the market will resolve to “Other.”\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from the City of Kraków, including its election office and Municipal Electoral Commission.",
+  "start": "2026-08-07",
+  "close": "2026-10-12"
+ },
+ {
+  "id": "3393022",
+  "question": "Will AfD win an absolute majority of seats in Mecklenburg-Vorpommern?",
+  "rules": "Parliamentary elections to elect the Landtag of Mecklenburg-Vorpommern are scheduled to take place on September 20, 2026.\n\nThis market will resolve to \"Yes\" if the party Alternative for Germany (AfD) wins an absolute majority of seats in the state parliament of Mecklenburg-Vorpommern (Landtag) as a result of this election. Otherwise, this market will resolve to \"No\".\n\nIf voting in the Mecklenburg-Vorpommern election for the Landtag does not occur by January 31, 2027, this market will resolve to \"No\".\n\nThis market's resolution will be based solely on the number of seats won by the named party.\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as published on the official Mecklenburg-Vorpommern elections page of the Landesamt für innere Verwaltung (www.laiv-mv.de/Wahlen/Landtagswahlen/2026/).",
+  "start": "2026-08-07",
+  "close": "2026-09-21"
+ },
+ {
+  "id": "3393041",
+  "question": "Will AfD win the second-most seats in the 2026 Mecklenburg-Vorpommern parliamentary elections?",
+  "rules": "Parliamentary elections to elect the Landtag of Mecklenburg-Vorpommern are scheduled to take place on September 20, 2026.\n\nThis market will resolve to the political party that wins the second-greatest number of seats in the state parliament of Mecklenburg-Vorpommern (Landtag) as a result of this election.\n\nIf voting in the Mecklenburg-Vorpommern election for the Landtag does not occur by January 31, 2027, this market will resolve to \"Other\".\n\nThe named parties or coalitions will be primarily ranked by the number of seats won in the specified election. If two or more parties are tied on seats, ties will be broken by the total number of valid second votes (Zweitstimme) received, with higher vote totals ranking higher. If parties remain tied, ties will be broken by alphabetical order of the listed party names/abbreviations. This market will resolve to the party that occupies the second finishing position after applying this ranking.\n\nThis market's resolution will be based solely on the number of seats won by the named party or coalition.\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as published on the official Mecklenburg-Vorpommern elections page of the Landesamt für innere Verwaltung (www.laiv-mv.de/Wahlen/Landtagswahlen/2026/).",
+  "start": "2026-08-07",
+  "close": "2026-09-21"
+ },
+ {
+  "id": "3393069",
+  "question": "Will Linke win the third-most seats in the 2026 Mecklenburg-Vorpommern parliamentary elections?",
+  "rules": "Parliamentary elections to elect the Landtag of Mecklenburg-Vorpommern are scheduled to take place on September 20, 2026.\n\nThis market will resolve to the political party that wins the third-greatest number of seats in the state parliament of Mecklenburg-Vorpommern (Landtag) as a result of this election.\n\nIf voting in the Mecklenburg-Vorpommern election for the Landtag does not occur by January 31, 2027, this market will resolve to \"Other\".\n\nThe named parties or coalitions will be primarily ranked by the number of seats won in the specified election. If two or more parties are tied on seats, ties will be broken by the total number of valid second votes (Zweitstimme) received, with higher vote totals ranking higher. If parties remain tied, ties will be broken by alphabetical order of the listed party names/abbreviations. This market will resolve to the party that occupies the third finishing position after applying this ranking.\n\nThis market's resolution will be based solely on the number of seats won by the named party or coalition.\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as published on the official Mecklenburg-Vorpommern elections page of the Landesamt für innere Verwaltung (www.laiv-mv.de/Wahlen/Landtagswahlen/2026/).",
+  "start": "2026-08-07",
+  "close": "2026-09-21"
+ },
+ {
+  "id": "3393091",
+  "question": "Will AfD win 28-31 seats in the 2026 Mecklenburg-Vorpommern parliamentary elections?",
+  "rules": "Parliamentary elections to elect the Landtag of Mecklenburg-Vorpommern are scheduled to take place on September 20, 2026.\n\nThis market will resolve according to the number of seats won by the AfD party in the Landtag of Mecklenburg-Vorpommern as a result of this election.\n\nThis market will resolve according to the total number of seats officially attributed to the specified party as a result of the election. This includes all seats attributed to that party, regardless of whether they are won directly or allocated through party lists, compensatory mechanisms, or any other component of the applicable electoral system.\n\nIf the specified party contests the election as part of a joint candidate list with one or more parties, all seats won by the joint candidate list will be counted. If the specified party merges with another party prior to the election, all seats won by the resultant merged party, or any joint candidate list through which it contests the election, will be counted.\n\nIf the results of this election are not definitively known by January 31, 2027, 11:59 PM ET, this market will resolve to the lowest range bracket.\n\nThis market's resolution will be based solely on the number of seats won by the specified party in this election.\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as published on the official Mecklenburg-Vorpommern elections page of the Landesamt für innere Verwaltung (www.laiv-mv.de/Wahlen/Landtagswahlen/2026/).",
+  "start": "2026-08-07",
+  "close": "2026-09-30"
+ },
+ {
+  "id": "3393097",
+  "question": "Will SPD win 26-29 seats in the 2026 Mecklenburg-Vorpommern parliamentary elections?",
+  "rules": "Parliamentary elections to elect the Landtag of Mecklenburg-Vorpommern are scheduled to take place on September 20, 2026.\n\nThis market will resolve according to the number of seats won by the SPD party in the Landtag of Mecklenburg-Vorpommern as a result of this election.\n\nThis market will resolve according to the total number of seats officially attributed to the specified party as a result of the election. This includes all seats attributed to that party, regardless of whether they are won directly or allocated through party lists, compensatory mechanisms, or any other component of the applicable electoral system.\n\nIf the specified party contests the election as part of a joint candidate list with one or more parties, all seats won by the joint candidate list will be counted. If the specified party merges with another party prior to the election, all seats won by the resultant merged party, or any joint candidate list through which it contests the election, will be counted.\n\nIf the results of this election are not definitively known by January 31, 2027, 11:59 PM ET, this market will resolve to the lowest range bracket.\n\nThis market's resolution will be based solely on the number of seats won by the specified party in this election.\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as published on the official Mecklenburg-Vorpommern elections page of the Landesamt für innere Verwaltung (www.laiv-mv.de/Wahlen/Landtagswahlen/2026/).",
+  "start": "2026-08-07",
+  "close": "2026-09-30"
+ },
+ {
+  "id": "3393122",
+  "question": "Will Linke win 40 or more seats in the 2026 Berlin state elections?",
+  "rules": "Parliamentary elections to elect the Abgeordnetenhaus of Berlin are scheduled to take place on September 20, 2026.\n\nThis market will resolve according to the number of seats won by the Linke party in the Abgeordnetenhaus of Berlin as a result of this election.\n\nThis market will resolve according to the total number of seats officially attributed to the specified party as a result of the election. This includes all seats attributed to that party, regardless of whether they are won directly or allocated through party lists, compensatory mechanisms, or any other component of the applicable electoral system.\n\nIf the specified party contests the election as part of a joint candidate list with one or more parties, all seats won by the joint candidate list will be counted. If the specified party merges with another party prior to the election, all seats won by the resultant merged party, or any joint candidate list through which it contests the election, will be counted.\n\nIf the results of this election are not definitively known by December 31, 2026, 11:59 PM ET, this market will resolve to the lowest range bracket.\n\nThis market's resolution will be based solely on the number of seats won by the specified party in this election.\n\nThis market will resolve based on the election results, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Election Office of Berlin (Landeswahlleiter Berlin https://www.berlin.de/wahlen/).",
+  "start": "2026-08-07",
+  "close": "2026-09-22"
+ },
+ {
+  "id": "3393165",
+  "question": "Will AfD win 35 or more seats in the 2026 Berlin state elections?",
+  "rules": "Parliamentary elections to elect the Abgeordnetenhaus of Berlin are scheduled to take place on September 20, 2026.\n\nThis market will resolve according to the number of seats won by the AfD party in the Abgeordnetenhaus of Berlin as a result of this election.\n\nThis market will resolve according to the total number of seats officially attributed to the specified party as a result of the election. This includes all seats attributed to that party, regardless of whether they are won directly or allocated through party lists, compensatory mechanisms, or any other component of the applicable electoral system.\n\nIf the specified party contests the election as part of a joint candidate list with one or more parties, all seats won by the joint candidate list will be counted. If the specified party merges with another party prior to the election, all seats won by the resultant merged party, or any joint candidate list through which it contests the election, will be counted.\n\nIf the results of this election are not definitively known by December 31, 2026, 11:59 PM ET, this market will resolve to the lowest range bracket.\n\nThis market's resolution will be based solely on the number of seats won by the specified party in this election.\n\nThis market will resolve based on the election results, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Election Office of Berlin (Landeswahlleiter Berlin https://www.berlin.de/wahlen/).",
+  "start": "2026-08-07",
+  "close": "2026-09-21"
+ },
+ {
+  "id": "3399197",
+  "question": "Russia Elections: United Russia Wins Every Region?",
+  "rules": "Parliamentary elections are scheduled to be held in Russia on September 20, 2026.\n\nThis market will resolve to \"Yes\" if the United Russia party list receives the greatest number of valid votes of any party list in each individual region in the 2026 Russian legislative elections. Otherwise, this market will resolve to \"No\".\n\nFor the purposes of this market, a region means any federal subject of the Russian Federation for which results of the federal party-list vote are separately reported by the Central Election Commission of the Russian Federation.\n\nThis market will resolve solely according to the valid votes received by each party list in each region. The number of seats won by any party, including any seats won in single-member constituencies, will have no bearing on resolution.\n\nIf the United Russia party list is tied with multiple party lists for the greatest number of valid votes in a region, United Russia will be considered to have received the greatest number of valid votes in that region for the purposes of this market.\n\nIf the results of this election are not known definitively by September 30, 2027, 11:59 PM ET, this market will resolve to \"No\".\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results reported by Russian government sources such as the Central Election Commission of the Russian Federation.",
+  "start": "2026-08-07",
+  "close": "2026-09-25"
+ },
+ {
+  "id": "3399203",
+  "question": "Russia Elections: Yabloko Clears Duma Threshold?",
+  "rules": "Parliamentary elections are scheduled to be held in Russia on September 20, 2026.\n\nThis market will resolve to \"Yes\" if the Yabloko party list receives a percentage of valid votes greater than or equal to the threshold to gain seats in the State Duma from the proportional representation system in the 2026 Russian parliamentary elections. Otherwise, this market will resolve to \"No\".\n\nThis market will resolve solely according to the percentage of valid votes received by the Yabloko party list. Whether Yabloko is awarded any seats in the State Duma will have no bearing on resolution.\n\nThe applicable threshold will be the threshold in effect at the time of the specified election. As of the creation of this market, that threshold is 5% of valid votes.\n\nIf the Yabloko party list is not present on the nationwide ballot, or is otherwise excluded from the results of the specified election, this market will resolve to \"No\".\n\nIf the results of this election are not known definitively by September 30, 2027, 11:59 PM ET, this market will resolve to \"No\".\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results reported by Russian government sources such as the Central Election Commission of the Russian Federation.",
+  "start": "2026-08-07",
+  "close": "2026-09-18"
+ },
+ {
+  "id": "3409453",
+  "question": "Will Republicans win the Texas Governor election and Democrats win the Texas Senate election?",
+  "rules": "This market will resolve according to the outcome of both the Gubernatorial and United States Senate general elections in Texas that are currently scheduled for November 3, 2026. \n\nA candidate will be considered to represent a party by their ballot-listed affiliation or if they are the nominee of that party. Candidates who run as independents will not be encompassed by the “Democrat” or “Republican” options regardless of any affiliation they may have with the party.\n\nIf the results of these elections are not conclusively known by March 31, 2027, or if an independent or third-party candidate wins one of these elections, this market will resolve to \"Other\". \n\nThe resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources have conclusively called the relevant Senate and Gubernatorial elections. If all three sources do not achieve consensus in calling the relevant races for this market, it will resolve based on the official certification.\n",
+  "start": "2026-08-07",
+  "close": "2026-11-04"
+ },
+ {
+  "id": "3409505",
+  "question": "Trump tries to fire Lisa Cook by September 30?",
+  "rules": "This market will resolve to \"Yes\" if Donald Trump publicly and unequivocally announces that he is removing Lisa Cook as a member of the Federal Reserve Board of Governors, or takes formal action toward doing so, such as issuing a directive or formal request, between market creation and the listed date, 11:59 PM ET. Otherwise, this market will resolve to “No”.\n\nStatements which are contingent (e.g. “Cook must step down”), statements of intent (e.g.“I am planning to fire Cook) or other informal statements which are not unequivocal will not qualify.\n\nIf Lisa Cook resigns or otherwise formally departs her role as a member of the Federal Reserve Board of Governors prior to a qualifying action, this market will immediately resolve to \"No\".\n\nThe resolution source will be official information from Donald Trump; however, a consensus of credible reporting may also be used.\n",
+  "start": "2026-08-07",
+  "close": "2026-10-01"
+ },
+ {
+  "id": "3478546",
+  "question": "Will Rob Howard win the 2026 Richmond mayoral election?",
+  "rules": "The 2026 Richmond, BC mayoral election is currently scheduled to be held on October 17, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Richmond as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Richmond.",
+  "start": "2026-08-10",
+  "close": "2026-10-18"
+ },
+ {
+  "id": "3478645",
+  "question": "Will Tom Dyas win the 2026 Kelowna mayoral election?",
+  "rules": "The 2026 Kelowna mayoral election is currently scheduled to be held on October 17, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Kelowna as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Kelowna.",
+  "start": "2026-08-10",
+  "close": "2026-10-18"
+ },
+ {
+  "id": "3478793",
+  "question": "Will Scott Gillingham win the 2026 Winnipeg mayoral election?",
+  "rules": "The 2026 Winnipeg mayoral election is currently scheduled to be held on October 28, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Winnipeg as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Winnipeg.",
+  "start": "2026-08-10",
+  "close": "2026-10-29"
+ },
+ {
+  "id": "3479009",
+  "question": "Will Lars Markus Hildingsson be the next Regional Board Chair of Region Blekinge?",
+  "rules": "Local elections to elect the Regional Council of Region Blekinge, Sweden are scheduled to take place on September 13, 2026.\n\nThis market will resolve to the next individual who officially assumes the office of Chair of the Regional Board of Region Blekinge following the 2026 Swedish local elections.\n\nTo count for resolution, the individual must be formally elected by the relevant regional council as Chair of the Regional Board. Any interim or caretaker Chair will not count toward the resolution of this market.\n\nIf no such Chair takes office by March 31, 2027, 11:59 PM ET, this market will resolve to “Other”.\n\nThe primary resolution source for this market will be official information from the government of Sweden and Region Blekinge; however, a consensus of credible reporting may also be used.",
+  "start": "2026-08-10",
+  "close": "2026-10-20"
+ },
+ {
+  "id": "3480216",
+  "question": "Will Angelica Katsanidou be the next Regional Board Chair of Region Kalmar County?",
+  "rules": "Regional elections to elect the Regional Council of Region Kalmar, Sweden are scheduled to take place on September 13, 2026.\n\nThis market will resolve to the next individual who officially assumes the office of Chair of the Regional Board of Region Kalmar County following the 2026 Swedish regional elections.\n\nTo count for resolution, the individual must be formally elected by the relevant regional council as Chair of the Regional Board. Any interim or caretaker Chair will not count toward the resolution of this market.\n\nIf no such Chair takes office by March 31, 2027, 11:59 PM ET, this market will resolve to “Other”.\n\nThe primary resolution source for this market will be official information from the government of Sweden and Region Kalmar County; however, a consensus of credible reporting may also be used.",
+  "start": "2026-08-10",
+  "close": "2026-10-19"
+ },
+ {
+  "id": "3480554",
+  "question": "Will Henrik Fritzon be the next Regional Board Chair of Region Skåne?",
+  "rules": "Regional elections to elect the Regional Council of Skåne, Sweden are scheduled to take place on September 13, 2026.\n\nThis market will resolve to the next individual who officially assumes the office of Chair of the Regional Board of Region Skåne following the 2026 Swedish regional elections.\n\nTo count for resolution, the individual must be formally elected by the relevant regional council as Chair of the Regional Board. Any interim or caretaker Chair will not count toward the resolution of this market.\n\nIf no such Chair takes office by March 31, 2027, 11:59 PM ET, this market will resolve to “Other”.\n\nThe primary resolution source for this market will be official information from the government of Sweden and Region Skåne; however, a consensus of credible reporting may also be used.",
+  "start": "2026-08-10",
+  "close": "2026-10-20"
+ },
+ {
+  "id": "3499316",
+  "question": "Will Christoffer Öqvist be the next Regional Board Chair of Region Sörmland?",
+  "rules": "Regional elections to elect the Regional Council of Sörmland, Sweden are scheduled to take place on September 13, 2026.\n\nThis market will resolve to the next individual who officially assumes the office of Chair of the Regional Board of Region Sörmland following the 2026 Swedish regional elections.\n\nTo count for resolution, the individual must be formally elected by the relevant regional council as Chair of the Regional Board. Any interim or caretaker Chair will not count toward the resolution of this market.\n\nIf no such Chair takes office by March 31, 2027, 11:59 PM ET, this market will resolve to “Other”.\n\nThe primary resolution source for this market will be official information from the government of Sweden and Region Sörmland; however, a consensus of credible reporting may also be used.",
+  "start": "2026-08-11",
+  "close": "2026-10-17"
+ },
+ {
+  "id": "3499559",
+  "question": "Will My Alnebratt be the next Regional Board Chair of Region Västra Götaland?",
+  "rules": "Regional elections to elect the Regional Council of Västra Götaland, Sweden are scheduled to take place on September 13, 2026.\n\nThis market will resolve to the next individual who officially assumes the office of Chair of the Regional Board of Region Västra Götaland following the 2026 Swedish regional elections.\n\nTo count for resolution, the individual must be formally elected by the relevant regional council as Chair of the Regional Board. Any interim or caretaker Chair will not count toward the resolution of this market.\n\nIf no such Chair takes office by March 31, 2027, 11:59 PM ET, this market will resolve to “Other”.\n\nThe primary resolution source for this market will be official information from the government of Sweden and Region Västra Götaland; however, a consensus of credible reporting may also be used.",
+  "start": "2026-08-11",
+  "close": "2026-10-20"
+ },
+ {
+  "id": "3499640",
+  "question": "Will Marie Morell be the next Regional Board Chair of Region Östergötland?",
+  "rules": "Regional elections to elect the Regional Council of Östergötland, Sweden are scheduled to take place on September 13, 2026.\n\nThis market will resolve to the next individual who officially assumes the office of Chair of the Regional Board of Region Östergötland following the 2026 Swedish regional elections.\n\nTo count for resolution, the individual must be formally elected by the relevant regional council as Chair of the Regional Board. Any interim or caretaker Chair will not count toward the resolution of this market.\n\nIf no such Chair takes office by March 31, 2027, 11:59 PM ET, this market will resolve to “Other”.\n\nThe primary resolution source for this market will be official information from the government of Sweden and Region Östergötland; however, a consensus of credible reporting may also be used.",
+  "start": "2026-08-11",
+  "close": "2026-11-05"
+ }
+]

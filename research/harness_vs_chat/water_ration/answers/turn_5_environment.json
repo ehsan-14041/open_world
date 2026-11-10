@@ -1,0 +1,1 @@
+{"chosen_action": "hold_position", "primary_variable": "reservoir", "probability": 0.5, "justification": "در چهار مرحلهٔ پیاپی شوک رخ داده و ذخیره ۲۶ و بودجه ۱۶ است؛ باران در خشکسالی بعید است و رویداد تازه از ادامهٔ روند محتمل‌تر نیست.", "causal_chain": "نبود رویداد بیرونی مشخص ← روند فعلی ذخیره و ساعت آب بدون شوک اضافی ادامه می‌یابد", "expected_effect": {}}

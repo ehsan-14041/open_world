@@ -1,0 +1,171 @@
+{"answers": {
+"3663244": {"tendency": 0.5, "drivers": [
+ {"name": "DF voted strongly Bolsonaro in 2022", "toward": "yes", "strength": "strong", "level": 0.9, "delay_weeks": 0},
+ {"name": "Flavio is the consolidated right-wing nominee", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Lula incumbency and national lead", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Other right candidates splitting the vote", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 2}],
+ "probability": 0.74},
+"3663284": {"tendency": 0.5, "drivers": [
+ {"name": "Espirito Santo voted strongly Bolsonaro in 2022", "toward": "yes", "strength": "strong", "level": 0.85, "delay_weeks": 0},
+ {"name": "Flavio inherits the Bolsonaro brand", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Lula national lead", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Right-wing vote split", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 2}],
+ "probability": 0.73},
+"3663332": {"tendency": 0.1, "drivers": [
+ {"name": "Goias is strongly right-leaning", "toward": "yes", "strength": "strong", "level": 0.85, "delay_weeks": 0},
+ {"name": "Caiado home-state candidacy could split the right", "toward": "no", "strength": "strong", "level": 0.5, "delay_weeks": 0},
+ {"name": "Lula national lead", "toward": "no", "strength": "weak", "level": 0.5, "delay_weeks": 0},
+ {"name": "Bolsonaro brand loyalty", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0}],
+ "probability": 0.55},
+"3663414": {"tendency": 0.3, "drivers": [
+ {"name": "Lula narrowly won Minas in 2022", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Zema home-state candidacy splits the right", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Anti-PT sentiment and Flavio consolidation", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Government approval level", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 2}],
+ "probability": 0.64},
+"3663534": {"tendency": 0.5, "drivers": [
+ {"name": "Lula won Para in 2022", "toward": "yes", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Barbalho MDB machine allied with Lula", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Agribusiness right-wing interior", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0}],
+ "probability": 0.76},
+"3663584": {"tendency": 0.9, "drivers": [
+ {"name": "Northeast PT stronghold", "toward": "yes", "strength": "strong", "level": 0.95, "delay_weeks": 0},
+ {"name": "Social program beneficiaries", "toward": "yes", "strength": "medium", "level": 0.8, "delay_weeks": 0},
+ {"name": "Evangelical right growth", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 0}],
+ "probability": 0.95},
+"3663636": {"tendency": 0.95, "drivers": [
+ {"name": "Lula home state", "toward": "yes", "strength": "strong", "level": 0.95, "delay_weeks": 0},
+ {"name": "Northeast PT stronghold", "toward": "yes", "strength": "strong", "level": 0.9, "delay_weeks": 0},
+ {"name": "Evangelical right growth", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 0}],
+ "probability": 0.97},
+"3663834": {"tendency": 0.8, "drivers": [
+ {"name": "Rondonia among strongest Bolsonaro states", "toward": "yes", "strength": "strong", "level": 0.95, "delay_weeks": 0},
+ {"name": "Agribusiness electorate", "toward": "yes", "strength": "medium", "level": 0.8, "delay_weeks": 0},
+ {"name": "Right-wing vote split", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 2}],
+ "probability": 0.88},
+"3663914": {"tendency": 0.2, "drivers": [
+ {"name": "Bolsonaro won RS in 2022", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Possible home-state centre-right candidate (Leite) or split", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 0},
+ {"name": "Strong PT base in Porto Alegre", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Flavio weaker than Jair", "toward": "no", "strength": "weak", "level": 0.5, "delay_weeks": 0}],
+ "probability": 0.6},
+"3664068": {"tendency": 0.0, "drivers": [
+ {"name": "Tocantins was close in 2022", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Agribusiness right-wing interior", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Lula incumbency and northern social programs", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Flavio weaker than Jair", "toward": "no", "strength": "weak", "level": 0.5, "delay_weeks": 0}],
+ "probability": 0.5},
+"3669979": {"tendency": -0.3, "drivers": [
+ {"name": "Trump administration appetite for land strikes on cartels", "toward": "yes", "strength": "strong", "level": 0.6, "delay_weeks": 2},
+ {"name": "Maritime strikes excluded by rules", "toward": "no", "strength": "medium", "level": 0.8, "delay_weeks": 0},
+ {"name": "Mexican sovereignty opposition", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Cooperative partners (Ecuador etc.) allowing joint action", "toward": "yes", "strength": "medium", "level": 0.4, "delay_weeks": 2},
+ {"name": "Strict confirmation requirement for direct participation", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Short window (about 6 weeks)", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0}],
+ "probability": 0.33},
+"3698019": {"tendency": 0.7, "drivers": [
+ {"name": "Multiple TV debates scheduled (Band, Globo etc.)", "toward": "yes", "strength": "strong", "level": 0.9, "delay_weeks": 1},
+ {"name": "Challenger incentive to debate Lula", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Bolsonaro family history of skipping debates", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0},
+ {"name": "Health or legal disruption", "toward": "no", "strength": "weak", "level": 0.1, "delay_weeks": 0}],
+ "probability": 0.87},
+"3701623": {"tendency": -0.9, "drivers": [
+ {"name": "Leavitt remains in role", "toward": "no", "strength": "strong", "level": 0.85, "delay_weeks": 0},
+ {"name": "Maternity leave or personal departure", "toward": "yes", "strength": "weak", "level": 0.3, "delay_weeks": 0},
+ {"name": "Interim/acting appointments excluded", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Very short window", "toward": "no", "strength": "strong", "level": 0.9, "delay_weeks": 0}],
+ "probability": 0.06},
+"3708435": {"tendency": -0.1, "drivers": [
+ {"name": "Republicans start with 26-24 edge", "toward": "no", "strength": "strong", "level": 0.9, "delay_weeks": 0},
+ {"name": "Midterm penalty against president's party", "toward": "yes", "strength": "strong", "level": 0.75, "delay_weeks": 0},
+ {"name": "Likely loss of Kansas open seat", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Pickup chances in GA, NV, IA, NH, OH", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 4},
+ {"name": "Dem defenses in AZ, MI, WI", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 4}],
+ "probability": 0.42},
+"3728838": {"tendency": -0.5, "drivers": [
+ {"name": "LR group currently around 130 seats", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Senate electorate of local officials is stable", "toward": "no", "strength": "medium", "level": 0.8, "delay_weeks": 0},
+ {"name": "Possible losses to RN or centre after 2026 municipals", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 0},
+ {"name": "Narrow 4-seat bracket", "toward": "no", "strength": "medium", "level": 0.9, "delay_weeks": 0}],
+ "probability": 0.16},
+"3729337": {"tendency": -0.2, "drivers": [
+ {"name": "Ossoff incumbency and fundraising", "toward": "yes", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Open governor seat favors GOP baseline", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Midterm environment favoring Democrats", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Runoff requirement at 50%", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 4},
+ {"name": "Correlation between both races", "toward": "yes", "strength": "weak", "level": 0.6, "delay_weeks": 0}],
+ "probability": 0.36},
+"3729379": {"tendency": 0.7, "drivers": [
+ {"name": "Minnesota leans Democratic statewide", "toward": "yes", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Klobuchar strong for governor", "toward": "yes", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Midterm environment favoring Democrats", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Open Senate seat and fraud scandal fallout", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0}],
+ "probability": 0.83},
+"3741437": {"tendency": -0.2, "drivers": [
+ {"name": "Multi-party competitive seat (NDP, Liberal, PC)", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Candidate party strength in Scarborough", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Low by-election turnout favors organized campaigns", "toward": "yes", "strength": "weak", "level": 0.5, "delay_weeks": 0},
+ {"name": "Uncertainty about candidate profile", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0}],
+ "probability": 0.3},
+"3748337": {"tendency": -0.4, "drivers": [
+ {"name": "CDU polling around 22-25%", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Wegner incumbency erosion", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Linke and AfD competition", "toward": "yes", "strength": "weak", "level": 0.5, "delay_weeks": 2}],
+ "probability": 0.24},
+"3748343": {"tendency": -0.6, "drivers": [
+ {"name": "Linke polling high teens in Berlin", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Linke national momentum with young voters", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Polling error for surging parties", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 0}],
+ "probability": 0.15},
+"3748347": {"tendency": -0.7, "drivers": [
+ {"name": "AfD polling about 14-17% in Berlin", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "West Berlin and inner city resist AfD", "toward": "no", "strength": "medium", "level": 0.8, "delay_weeks": 0},
+ {"name": "National AfD strength", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0}],
+ "probability": 0.1},
+"3748348": {"tendency": 0.0, "drivers": [
+ {"name": "Greens polling about 13-16%", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Linke draining progressive voters", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Strong Green inner-city base", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0}],
+ "probability": 0.45},
+"3748352": {"tendency": -0.5, "drivers": [
+ {"name": "SPD polling about 11-14%", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "SPD national weakness", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Losses to Linke", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0}],
+ "probability": 0.16},
+"3748409": {"tendency": -0.3, "drivers": [
+ {"name": "AfD polling near 38-40%", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "AfD upward momentum in the East", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "CDU rally-round incumbent effect (Schulze)", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 1},
+ {"name": "Narrow 3-point bracket", "toward": "no", "strength": "medium", "level": 0.9, "delay_weeks": 0}],
+ "probability": 0.25},
+"3748412": {"tendency": -0.5, "drivers": [
+ {"name": "CDU polling mid-to-high 20s", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Tactical anti-AfD consolidation behind CDU", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 1},
+ {"name": "AfD surge squeezing CDU", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0}],
+ "probability": 0.15},
+"3748582": {"tendency": -0.2, "drivers": [
+ {"name": "AfD polling about 35-38%", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "SPD incumbent rally (Schwesig)", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 1},
+ {"name": "AfD eastern momentum", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0}],
+ "probability": 0.37},
+"3748586": {"tendency": -0.8, "drivers": [
+ {"name": "SPD polling around 20-25%", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Schwesig incumbency and late tactical voting", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 1},
+ {"name": "National SPD weakness", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0}],
+ "probability": 0.07},
+"3748590": {"tendency": -0.8, "drivers": [
+ {"name": "CDU polling low teens", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Squeeze between SPD and AfD", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 1},
+ {"name": "Federal CDU-led government unpopularity", "toward": "yes", "strength": "weak", "level": 0.5, "delay_weeks": 0}],
+ "probability": 0.06},
+"3748594": {"tendency": -0.6, "drivers": [
+ {"name": "Linke polling around 10-12%", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Linke national revival", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Tactical voting for SPD against AfD", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 1}],
+ "probability": 0.18},
+"3748600": {"tendency": -0.2, "drivers": [
+ {"name": "BSW polling around 4-6%", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "BSW national decline after 2025", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Eastern base for BSW", "toward": "yes", "strength": "weak", "level": 0.5, "delay_weeks": 0}],
+ "probability": 0.32}
+}, "other_tools_used": false}

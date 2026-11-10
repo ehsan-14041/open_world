@@ -1,0 +1,1165 @@
+[
+ {
+  "id": "5332466",
+  "question": "Will Yashar win the second-most seats in the 2026 Israeli legislative election?",
+  "rules": "Legislative elections are expected to be held in Israel on October 27, 2026.\n\nThis market will resolve according to the political party or coalition that wins the second-greatest number of seats in the Israeli Knesset as a result of this election.\n\nThe named parties and coalitions will be primarily ranked by the number of seats won in the specified election. If two or more parties or coalitions are tied on seats, ties will be broken by the total number of valid votes received by each party or coalition, with higher vote totals ranking higher. If parties or coalitions remain tied, ties will be broken by alphabetical order of the listed party or coalition names. This market will resolve to the party or coalition that occupies the second finishing position after applying this ranking.\n\nIf the results of this election are not definitively known by June 30, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market's resolution will be based solely on the number of seats won by the named party or coalition in the Israeli Knesset.\n\nThis market will resolve based on the election results, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Israeli government, including the Central Election Committee (Va'adet HaBehirot HaMerkazit) (https://www.gov.il/en/departments/central-elections-committee/govil-landing-page).",
+  "start": "2026-10-05",
+  "close": "2026-10-31",
+  "your_drivers": [
+   {
+    "name": "Together (Bennett-Lapid) polling ahead of Yashar",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Eisenkot personal popularity",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Late tactical consolidation to largest anti-Netanyahu list",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Likud firmly first",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.8,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5332539",
+  "question": "Will Together win the third-most seats in the 2026 Israeli legislative election?",
+  "rules": "Legislative elections are expected to be held in Israel on October 27, 2026.\n\nThis market will resolve according to the political party or coalition that wins the third-greatest number of seats in the Israeli Knesset as a result of this election.\n\nThe named parties and coalitions will be primarily ranked by the number of seats won in the specified election. If two or more parties or coalitions are tied on seats, ties will be broken by the total number of valid votes received by each party or coalition, with higher vote totals ranking higher. If parties or coalitions remain tied, ties will be broken by alphabetical order of the listed party or coalition names. This market will resolve to the party or coalition that occupies the third finishing position after applying this ranking.\n\nIf the results of this election are not definitively known by June 30, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market's resolution will be based solely on the number of seats won by the named party or coalition in the Israeli Knesset.\n\nThis market will resolve based on the election results, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Israeli government, including the Central Election Committee (Va'adet HaBehirot HaMerkazit) (https://www.gov.il/en/departments/central-elections-committee/govil-landing-page).",
+  "start": "2026-10-05",
+  "close": "2026-10-31",
+  "your_drivers": [
+   {
+    "name": "Together polling as second-largest list",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possible Together underperformance vs Yashar",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Fragmentation of center-left vote",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5340069",
+  "question": "Will Flávio Bolsonaro win the second round of the 2026 Brazilian presidential election by 8–12%?",
+  "rules": "The second round of the presidential election is scheduled to take place in Brazil on October 25, 2026.\n\nThis market will resolve according to the margin of victory between the top two candidates in the second round of the next Brazil Presidential Election.\n\nFor the purpose of this market, the “margin of victory” is defined as the absolute difference between the percentages of valid votes received by the first- and second-place candidates. Percentages of the valid votes received by each candidate will be determined by dividing the total number of valid votes each of the top two candidates receives by the sum of all valid votes cast in the election.\n\nIf the reported value falls exactly between two brackets, then this market will resolve to the higher range bracket.\n\nIf a candidate other than Flávio Bolsonaro or Luiz Inácio Lula da Silva receives the most valid votes in the second round, or if the top two candidates receive exactly the same number of valid votes, this market will resolve to \"Other\".\n\nThis market will resolve based on the official vote count once the vote count has been made official.\n\nIf a recount is initiated before the vote total has been made official, the market will remain open until the recount is completed and the vote is made official.\n\nIf the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",
+  "start": "2026-10-05",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Polls show close Lula vs Flavio race",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Narrow bracket width",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 1.0,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Anti-incumbent mood and economy",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 1
+   },
+   {
+    "name": "First-round result momentum",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5401781",
+  "question": "Israel Election: Any Coalition Wins a Majority?",
+  "rules": "Legislative elections are expected to be held in Israel on October 27, 2026.\n\nThis market will resolve to “Yes” if either of the following groups of parties wins a combined total of 61 seats or more in the Israeli Knesset as a result of this election: (a) The Democrats, Yashar, Together, and Yisrael Beiteinu; or (b) Likud, Otzma Yehudit, RZP-Zehut, Amcha Yisrael, United Torah Judaism, and Shas. Otherwise, this market will resolve to “No”.\n\nIf the results of this election are not definitively known by June 30, 2027, 11:59 PM ET, this market will resolve to “No”.\n\nThis market's resolution will be based solely on the number of seats won by the named parties in the Israeli Knesset.\n\nThis market will resolve based on the election results, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by Israel’s Central Election Committee (Va'adet HaBehirot HaMerkazit) (https://www.gov.il/en/departments/central-elections-committee/govil-landing-page).",
+  "start": "2026-10-07",
+  "close": "2026-10-31",
+  "your_drivers": [
+   {
+    "name": "Opposition bloc without Arab parties polling near 58-61",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Netanyahu bloc stuck around 50-52",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Arab Joint List taking 10+ seats",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Small parties falling below threshold",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 3
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5420672",
+  "question": "Will Democrats win the Ohio, Iowa, and Maine Senate seats?",
+  "rules": "This market will resolve according to the outcome of the United States Senate general elections in Ohio, Iowa, and Maine (including the special election in Ohio) that are currently scheduled for November 3, 2026, inclusive of any potential runoffs. \n\nA candidate will be considered to represent a party by their ballot-listed affiliation or if they are the nominee of that party. Candidates who run as independents will not be encompassed by the “Democrat” or “Republican” options regardless of any affiliation they may have with the party.\n\nIf the results of one of these elections are not conclusively known by March 31, 2027, or if an independent or third-party candidate wins one of these elections, this market will resolve to \"Other\". \n\nFor purposes of this market, a \"sweep\" is when a party wins all races. \n\nThe resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources have conclusively called the relevant elections. If all three sources do not achieve consensus in calling the relevant races for this market, it will resolve based on the official certification.\n",
+  "start": "2026-10-08",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Ohio Brown competitive but R-leaning state",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Iowa leans Republican",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.65,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Maine Democratic pickup chance vs Collins",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.65,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5420682",
+  "question": "Will Democrats win the Michigan, Minnesota, and New Hampshire Senate seats?",
+  "rules": "This market will resolve according to the outcome of the United States Senate general elections in Michigan, Minnesota, and New Hampshire that are currently scheduled for November 3, 2026, inclusive of any potential runoffs. \n\nA candidate will be considered to represent a party by their ballot-listed affiliation or if they are the nominee of that party. Candidates who run as independents will not be encompassed by the “Democrat” or “Republican” options regardless of any affiliation they may have with the party.\n\nIf the results of one of these elections are not conclusively known by March 31, 2027, or if an independent or third-party candidate wins one of these elections, this market will resolve to \"Other\". \n\nFor purposes of this market, a \"sweep\" is when a party wins all races. \n\nThe resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources have conclusively called the relevant elections. If all three sources do not achieve consensus in calling the relevant races for this market, it will resolve based on the official certification.\n",
+  "start": "2026-10-08",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Favorable midterm environment for Democrats",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.65,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Michigan open seat competitive",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "New Hampshire open seat competitive",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Minnesota lean D",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.75,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5475240",
+  "question": "Will \"Remain\" win the Alberta independence referendum by 60–80%?",
+  "rules": "Alberta is scheduled to hold a provincial referendum on October 19, 2026. Question 10 asks: \"Should Alberta remain a province in Canada, or should the Government of Alberta commence the legal process required under the Canadian Constitution to hold a binding provincial referendum on whether or not Alberta should separate from Canada?\"\n\nFor the purposes of this market, \"Remain\" refers to the option that Alberta should remain a province in Canada, and \"Leave\" refers to the option that the Government of Alberta should commence the legal process required under the Canadian Constitution to hold a binding provincial referendum on separation.\n\nThis market will resolve according to the margin of victory between \"Remain\" and \"Leave\" on Question 10.\n\nThe “margin of victory” is defined as the absolute difference between the percentages of valid votes received by \"Remain\" and \"Leave\". Percentages will be determined by dividing the number of valid votes each option receives by the sum of all valid votes cast on Question 10.\n\nIf \"Leave\" receives more valid votes than \"Remain\", this market will resolve to \"Leave wins\".\n\nIf the reported value falls exactly between two brackets, then this market will resolve to the higher margin bracket.\n\nIf \"Remain\" and \"Leave\" receive the exact same number of valid votes, this market will resolve to \"Remain <20%\".\n\nThis market will resolve based on the results of the vote once the count has been made official. If a recount is initiated before the vote total has been made official, the market will remain open until the recount is completed and the vote is made official.\n\nIf the referendum is officially rescheduled to a date prior to December 31, 2026, 11:59 PM ET, the same rule applies to the new ballot and its corresponding deadlines. If the results of the referendum are not known definitively, or no qualifying referendum vote occurs, by December 31, 2026, 11:59 PM ET, this market will resolve to “Other.”\n\nThe primary resolution source for this market will be the official results of the vote as published by the Government of Alberta, including Elections Alberta (https://www.elections.ab.ca/); however, an overwhelming consensus of credible reporting may suffice.",
+  "start": "2026-10-09",
+  "close": "2026-10-29",
+  "your_drivers": [
+   {
+    "name": "Polls show Remain ~60-70%, margin 20-40",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Committed separatist base ~25-35%",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Separatist boycott or low turnout of Leave voters",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.25,
+    "delay_weeks": 1
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5567008",
+  "question": "Will there be no Hormuz agreement and the Republicans win the Senate?",
+  "rules": "This market will resolve to \"Yes\" if no Hormuz Agreement is announced by October 23, 2026, 11:59 PM ET, and the Republican Party wins control of the United States Senate in the 2026 United States midterm election. Otherwise, this market will resolve to \"No\".\n\nIf a Hormuz Agreement is announced by October 23, 2026, 11:59 PM ET, this market will resolve to \"No\" immediately.\n\nHormuz Agreement: A \"Hormuz Agreement\" will be considered to have occurred if a diplomatic agreement between the United States and Iran over traffic in the Strait of Hormuz is announced by October 23, 2026, 11:59 PM ET.\n\nA diplomatic agreement refers to an official agreement, treaty, deal, or substantially similar diplomatic instrument that establishes agreed actions, policies, obligations, or commitments between the United States and Iran.\n\nA qualifying diplomatic agreement must establish Iranian policies, obligations, or commitments aimed at permitting, restoring, or increasing vessel or shipping traffic through the Strait of Hormuz.\n\nAll listed countries must announce their acceptance of the same qualifying diplomatic agreement for the Hormuz Agreement component to be met. A joint announcement will qualify, as will separate announcements from each entity of its own acceptance of an agreement which, taken together, directly indicate that all the listed countries accepted the same agreement. Separate announcements of individual policies will not qualify if the policies are not announced as part of a diplomatic agreement.\n\nEach announcement must be a declarative statement that clearly and unambiguously communicates acceptance of an agreement. Statements that reference ongoing negotiations or a prospective agreement, or that allude to or express support for an agreement without confirming acceptance of the agreement, do not qualify. A qualifying announcement need not reference the agreement by name or use specific terminology, provided it clearly communicates acceptance of an agreement.\n\nWhether announcements from the listed countries represent a diplomatic agreement and whether such an agreement qualifies will be primarily determined through the announcements themselves. Where an announcement is made by all listed countries but, based on the announcements, it remains ambiguous whether the announcements represent a qualifying diplomatic agreement between the countries, the Hormuz Agreement component will remain undetermined until either i) definitive confirmation that the announcements represent a qualifying diplomatic agreement between the listed entities is achieved through further announcements from the listed countries or a consensus of credible reporting or ii) 14 calendar days (ET) have passed after the date that the last country made their first potentially qualifying announcement. If, at the end of the fourteenth calendar day, no definitive confirmation has been achieved, the Hormuz Agreement component will be determined based on the totality of information available fro",
+  "start": "2026-10-11",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "US-Iran talks unresolved, agreement unlikely by Oct 23",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Republican structural Senate map advantage",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Democratic midterm wave",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Pre-election diplomatic push",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 1
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5567026",
+  "question": "Will oil be below $80 on November 2 and the Republicans win the Senate?",
+  "rules": "This market will resolve to \"Yes\" if oil is less than $80 at the close of trading on November 2, 2026, and the Republican Party wins control of the United States Senate in the 2026 United States midterm election. Otherwise, this market will resolve to \"No\".\n\nOil price: This market will resolve based on the Close price for the Active Month of ICE Futures Europe WTI Crude Futures (denoted by Pyth as \"CLL\") for the November 2, 2026 trading day.\n\nFor a standard full trading session, the closing price refers to the Pyth \"Close\" value of the 1-minute candle corresponding to the final minute of regular trading hours on the primary exchange. Closing prices will be used exactly as published by Pyth, without rounding.\n\nIf the Active Month contract does not trade at all during the relevant trading session, or if the listed date is not a trading day under the applicable trading-hours schedule, the market will resolve 50-50.\n\nFor the purposes of this market, trading days will be determined according to the applicable trading hours schedule for the underlying market (See: \"Trading Hours\" at https://www.ice.com/products/213/WTI-Crude-Futures). The trading session for a given business day typically begins at 8:00 PM ET on the prior calendar date, except for the session dated Monday, which begins at 6:00 PM ET on the preceding Sunday, and where modified by holiday or other special hours (See: https://www.ice.com/holiday-hours).\n\nThe Active Month is the nearest listed contract, except during that contract's final three trading sessions. At the open of the third-to-last trading session, the next listed contract becomes the Active Month.\n\nEach contract's last trading day will be determined by ICE Futures Europe per the WTI Crude Futures contract specification (generally the 4th US business day prior to the 25th calendar day of the month preceding the contract month, or five US business days prior if the 25th calendar day is not a US business day). The last trading day for each contract is posted at https://www.ice.com/products/213/WTI-Crude-Futures/expiry.\n\nFor example, if the last trading session for the nearest listed contract is the session for Monday the 20th, the next listed contract would become the Active Month at the start of the trading session for Thursday the 16th (8:00 PM ET on Wednesday), assuming a standard trading calendar.\n\nIf the specified day has no valid Pyth Close value for the 1-minute candle corresponding to the end of regular trading hours on the primary exchange, the market will use the last valid Pyth price achieved during the regular trading hours of the primary exchange as the effective closing price. If no valid Pyth price exists for that trading day due to a system outage, data failure, or other disruption, the official close price published for the Active Month WTI Crude Oil Futures contract by ICE Futures Europe will be used to determine the closing price for that day (See: https://www.ice.com/report/10 with \"T-West Texas Intermediate ",
+  "start": "2026-10-11",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Oil near $80 with Gulf risk premium",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Republican Senate map advantage",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Democratic midterm wave",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Hormuz de-escalation lowering oil",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5572739",
+  "question": "Will there be no Hormuz agreement?",
+  "rules": "This market will resolve to \"Hormuz Agreement; R Senate\" if a Hormuz Agreement is announced by November 2, 2026, 11:59 PM ET, and the Republican Party wins control of the United States Senate in the 2026 United States midterm election.\n\nThis market will resolve to \"Hormuz Agreement; D Senate\" if a Hormuz Agreement is announced by November 2, 2026, 11:59 PM ET, and the Democratic Party wins control of the United States Senate in the 2026 United States midterm election.\n\nThis market will resolve to \"No Hormuz Agreement\" immediately if a Hormuz Agreement is not announced by November 2, 2026, 11:59 PM ET.\n\nHormuz Agreement: A \"Hormuz Agreement\" will be considered to have occurred if a diplomatic agreement between the United States and Iran over traffic in the Strait of Hormuz is announced by November 2, 2026, 11:59 PM ET.\n\nA diplomatic agreement refers to an official agreement, treaty, deal, or substantially similar diplomatic instrument that establishes agreed actions, policies, obligations, or commitments between the United States and Iran.\n\nA qualifying diplomatic agreement must establish Iranian policies, obligations, or commitments aimed at permitting, restoring, or increasing vessel or shipping traffic through the Strait of Hormuz.\n\nAll listed countries must announce their acceptance of the same qualifying diplomatic agreement for the Hormuz Agreement component to be met. A joint announcement will qualify, as will separate announcements from each entity of its own acceptance of an agreement which, taken together, directly indicate that all the listed countries accepted the same agreement. Separate announcements of individual policies will not qualify if the policies are not announced as part of a diplomatic agreement.\n\nEach announcement must be a declarative statement that clearly and unambiguously communicates acceptance of an agreement. Statements that reference ongoing negotiations or a prospective agreement, or that allude to or express support for an agreement without confirming acceptance of the agreement, do not qualify. A qualifying announcement need not reference the agreement by name or use specific terminology, provided it clearly communicates acceptance of an agreement.\n\nWhether announcements from the listed countries represent a diplomatic agreement and whether such an agreement qualifies will be primarily determined through the announcements themselves. Where an announcement is made by all listed countries but, based on the announcements, it remains ambiguous whether the announcements represent a qualifying diplomatic agreement between the countries, the Hormuz Agreement component will remain undetermined until either i) definitive confirmation that the announcements represent a qualifying diplomatic agreement between the listed entities is achieved through further announcements from the listed countries or a consensus of credible reporting or ii) 14 calendar days (ET) have passed after the date that the last country made their fi",
+  "start": "2026-10-11",
+  "close": "2026-11-03",
+  "your_drivers": [
+   {
+    "name": "Stalled US-Iran diplomacy",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.65,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Strict announcement criteria",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Pre-election incentive for a deal",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Mediator activity (Oman/Qatar)",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 1
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5611043",
+  "question": "Will oil be below $80 on November 2 and the Democrats win the Senate?",
+  "rules": "This market will resolve to \"Oil < $80; R Senate\" if oil is less than $80 at the close of trading on November 2, 2026, and the Republican Party wins control of the United States Senate in the 2026 United States midterm election.\n\nThis market will resolve to \"Oil < $80; D Senate\" if oil is less than $80 at the close of trading on November 2, 2026, and the Democratic Party wins control of the United States Senate in the 2026 United States midterm election.\n\nThis market will resolve to \"Oil ≥ $80; R Senate\" if oil is greater than or equal to $80 at the close of trading on November 2, 2026, and the Republican Party wins control of the United States Senate in the 2026 United States midterm election.\n\nThis market will resolve to \"Oil ≥ $80; D Senate\" if oil is greater than or equal to $80 at the close of trading on November 2, 2026, and the Democratic Party wins control of the United States Senate in the 2026 United States midterm election.\n\nOil price: The oil price component will be determined based on the Close price for the Active Month of ICE Futures Europe WTI Crude Futures (denoted by Pyth as \"CLL\") for the November 2, 2026 trading day.\n\nFor a standard full trading session, the closing price refers to the Pyth \"Close\" value of the 1-minute candle corresponding to the final minute of regular trading hours on the primary exchange. Closing prices will be used exactly as published by Pyth, without rounding.\n\nIf the Active Month contract does not trade at all during the relevant trading session, or if the listed date is not a trading day under the applicable trading-hours schedule, the oil price component will be determined based on the Close price for the most recent prior trading day.\n\nFor the purposes of this market, trading days will be determined according to the applicable trading hours schedule for the underlying market (See: \"Trading Hours\" at https://www.ice.com/products/213/WTI-Crude-Futures). The trading session for a given business day typically begins at 8:00 PM ET on the prior calendar date, except for the session dated Monday, which begins at 6:00 PM ET on the preceding Sunday, and where modified by holiday or other special hours (See: https://www.ice.com/holiday-hours).\n\nThe Active Month is the nearest listed contract, except during that contract's final three trading sessions. At the open of the third-to-last trading session, the next listed contract becomes the Active Month.\n\nEach contract's last trading day will be determined by ICE Futures Europe per the WTI Crude Futures contract specification (generally the 4th US business day prior to the 25th calendar day of the month preceding the contract month, or five US business days prior if the 25th calendar day is not a US business day). The last trading day for each contract is posted at https://www.ice.com/products/213/WTI-Crude-Futures/expiry.\n\nFor example, if the last trading session for the nearest listed contract is the session for Monday the 20th, the next listed contract would b",
+  "start": "2026-10-12",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Oil near $80 threshold",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Democrats need net +4 seats",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Democratic midterm wave",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Hormuz de-escalation",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5611879",
+  "question": "Will oil be below $85 on November 2 and the Republicans win the Senate?",
+  "rules": "This market will resolve to \"Oil < $85; R Senate\" if oil is less than $85 at the close of trading on November 2, 2026, and the Republican Party wins control of the United States Senate in the 2026 United States midterm election.\n\nThis market will resolve to \"Oil < $85; D Senate\" if oil is less than $85 at the close of trading on November 2, 2026, and the Democratic Party wins control of the United States Senate in the 2026 United States midterm election.\n\nThis market will resolve to \"Oil ≥ $85; R Senate\" if oil is greater than or equal to $85 at the close of trading on November 2, 2026, and the Republican Party wins control of the United States Senate in the 2026 United States midterm election.\n\nThis market will resolve to \"Oil ≥ $85; D Senate\" if oil is greater than or equal to $85 at the close of trading on November 2, 2026, and the Democratic Party wins control of the United States Senate in the 2026 United States midterm election.\n\nOil price: The oil price component will be determined based on the Close price for the Active Month of ICE Futures Europe WTI Crude Futures (denoted by Pyth as \"CLL\") for the November 2, 2026 trading day.\n\nFor a standard full trading session, the closing price refers to the Pyth \"Close\" value of the 1-minute candle corresponding to the final minute of regular trading hours on the primary exchange. Closing prices will be used exactly as published by Pyth, without rounding.\n\nIf the Active Month contract does not trade at all during the relevant trading session, or if the listed date is not a trading day under the applicable trading-hours schedule, the oil price component will be determined based on the Close price for the most recent prior trading day.\n\nFor the purposes of this market, trading days will be determined according to the applicable trading hours schedule for the underlying market (See: \"Trading Hours\" at https://www.ice.com/products/213/WTI-Crude-Futures). The trading session for a given business day typically begins at 8:00 PM ET on the prior calendar date, except for the session dated Monday, which begins at 6:00 PM ET on the preceding Sunday, and where modified by holiday or other special hours (See: https://www.ice.com/holiday-hours).\n\nThe Active Month is the nearest listed contract, except during that contract's final three trading sessions. At the open of the third-to-last trading session, the next listed contract becomes the Active Month.\n\nEach contract's last trading day will be determined by ICE Futures Europe per the WTI Crude Futures contract specification (generally the 4th US business day prior to the 25th calendar day of the month preceding the contract month, or five US business days prior if the 25th calendar day is not a US business day). The last trading day for each contract is posted at https://www.ice.com/products/213/WTI-Crude-Futures/expiry.\n\nFor example, if the last trading session for the nearest listed contract is the session for Monday the 20th, the next listed contract would b",
+  "start": "2026-10-12",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Oil likely below $85",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.65,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Republican Senate map advantage",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Democratic midterm wave",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Gulf supply shock risk",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 1
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.963,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5612092",
+  "question": "Will there be a Hormuz agreement, oil below $80, and the Republicans win the Senate?",
+  "rules": "The rules for this market are this: https://polymarket-upload.s3.us-east-2.amazonaws.com/urg.pdf",
+  "start": "2026-10-12",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Hormuz agreement unlikely before election",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.65,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Oil near $80",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Republican Senate odds slightly favored",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Deal would push oil lower (correlation)",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 1
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5621734",
+  "question": "Will Joint List win the fourth-most seats in the 2026 Israeli legislative election?",
+  "rules": "Legislative elections are expected to be held in Israel on October 27, 2026.\n\nThis market will resolve according to the political party or coalition that wins the fourth-greatest number of seats in the Israeli Knesset as a result of this election.\n\nThe named parties and coalitions will be primarily ranked by the number of seats won in the specified election. If two or more parties or coalitions are tied on seats, ties will be broken by the total number of valid votes received by each party or coalition, with higher vote totals ranking higher. If parties or coalitions remain tied, ties will be broken by alphabetical order of the listed party or coalition names. This market will resolve to the party or coalition that occupies the fourth finishing position after applying this ranking.\n\nIf the results of this election are not definitively known by June 30, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market's resolution will be based solely on the number of seats won by the named party or coalition in the Israeli Knesset.\n\nThis market will resolve based on the election results, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Israeli government, including the Central Election Committee (Va'adet HaBehirot HaMerkazit) (https://www.gov.il/en/departments/central-elections-committee/govil-landing-page).",
+  "start": "2026-10-12",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "Reunited Joint List polling ~10-12 seats",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Competition from Yashar, Shas, Democrats for 3rd-5th",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Arab turnout uncertainty",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Could finish third instead of fourth",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.037,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5649615",
+  "question": "Will AP call US House control by November 6, 11:59 PM?",
+  "rules": "This market will resolve to “Yes” if the Associated Press has, by the specified date and time (ET), called control of the United States House of Representatives for the Congress that will convene following the midterm elections. Otherwise it will resolve to “No”.\n\nControl of the House of Representatives will be considered to have been called when the Associated Press has either 1) issued a call that House control has been determined, or 2) issued race calls declaring winners in at least 218 districts for candidates of the same party, with all such calls standing at the same time for 1 hour without retraction. Independents will not be considered members of a party for purposes of this count.\n\nUnder condition 1, no subsequent withdrawal of a control call will be relevant to this market.\n\nUnder condition 2, this market will remain open for one hour following the race call that brings a party’s standing calls to 218. If, within that hour, the Associated Press retracts any of those calls such that the party’s standing calls fall below 218, condition 2 will not be considered satisfied by that call. If no such retraction occurs within the hour, condition 2 will be considered satisfied as of the time of the 218th call, regardless of any later retraction. For resolution, the relevant time is the time of the 218th call, not the end of the one-hour period.\n\nThe resolution source for this market will be the Associated Press.",
+  "start": "2026-10-13",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Wave size: clear D wave enables fast call",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Slow California/West counts",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "2022/2024 calls took 1-2 weeks",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Redistricting changes adding uncertainty",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.037,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5676475",
+  "question": "Blue mega-tsunami in 2026?",
+  "rules": "This market will resolve to “Yes” if both of the following conditions are met as a result of the 2026 midterm elections:\n\n- Democrats have a seat count of 250 or more in the House\n- Democrats have a seat count of 54 or more in the Senate\n\nOtherwise, this market will resolve to “No”.\n\nThe Senate seat count includes all regular and special Senate elections that determine representation in the upcoming 120th Congress and are scheduled to take place in November 2026 as of October 31, 2026. Vacant Senate seats for which no election or special election to fill the seat is scheduled to take place in November 2026 as of October 31, 2026 will be treated as held by the party affiliation of the most recent member to hold that seat. The House seat count includes all House elections in the 2026 United States midterm election that elect voting members and determine representation in the upcoming 120th Congress. Where a Senate or House seat is decided by a runoff, the runoff result will determine attribution of that seat, even if it takes place after November 2026.\n\nFor seats contested in the specified election, seats are attributed to the party under which the member was elected. If a member-elect changes party affiliation, or vacates their seat, between election day and the formal organization of Congress, the seat is attributed to the party under which the member was elected. \n\nFor seats not contested in the specified election, seats are attributed to the party that holds the seat as of the date of the election. If a current sitting member of the U.S. Senate who is not up for election changes party affiliation or vacates their seat after the date of the election, the seat is attributed to the party under which the member was affiliated at the time of the election.\n\nSenate and House members elected as independents who formally caucus with, or, for newly elected members, who announce their intent to caucus with a party are included in that party’s count. If the caucus decisions of members of the Senate or House elected as independents cannot be determined on the date of the election, this market may remain open until the earlier of (i) an announcement from the relevant members of their intents to caucus, or (ii) January 4th, 11:59 PM ET of the following calendar year. If no such announcement is made by January 4th, 11:59 PM ET of the following calendar year, the member will not count towards the seat count of any party.\n\nThe resolution sources for this market will be official information from relevant state electoral authorities, the United States Congress, and a consensus of credible reporting",
+  "start": "2026-10-14",
+  "close": "2026-11-06",
+  "your_drivers": [
+   {
+    "name": "54 Senate seats needs net +7 D on R-leaning map",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "250 House seats needs large wave amid redistricting",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Unpopular president midterm penalty",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5685262",
+  "question": "Will voter turnout be 74% or higher in the 2026 Israeli legislative election?",
+  "rules": "Legislative elections are scheduled to be held in Israel on October 27, 2026.\n\nThis market will resolve according to the official voter turnout rate for the 2026 Israeli legislative election to the Knesset, defined as the total number of votes cast (סה\"כ קולות שהוזנו) divided by the total number of eligible voters (סה\"כ בעלי זכות בחירה). (see 2022 example: https://votes25.bechirot.gov.il/)\n\nIf the reported value falls exactly between two brackets, this market will resolve to the higher bracket.\n\nIf the results of this election are not definitively known by June 30, 2027, 11:59 PM ET, this market will resolve to the lowest bracket.\n\nThe primary resolution source for this market will be official election results reported by the Israeli government, including the Central Election Committee (Va'adet HaBehirot HaMerkazit) (https://www.gov.il/en/departments/central-elections-committee/govil-landing-page); however, a consensus of credible reporting may also be used if official results are not available.",
+  "start": "2026-10-14",
+  "close": "2026-11-02",
+  "your_drivers": [
+   {
+    "name": "2022 turnout 70.6%, recent range 67-72%",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "High-stakes post-war referendum on Netanyahu",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Joint List boosting Arab turnout",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Voters abroad and roll inflation depress rate",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5704300",
+  "question": "Will Democrats win the Texas and Kansas Senate seats, and an independent win Nebraska?",
+  "rules": "This market will resolve according to the outcome of the United States Senate general elections in Texas, Kansas, and Nebraska that are currently scheduled for November 3, 2026, inclusive of any potential runoffs. \n\nA candidate will be considered to represent a party by their ballot-listed affiliation or if they are the nominee of that party. Candidates who run as independents will not be encompassed by the “Democrat” or “Republican” options regardless of any affiliation they may have with the party.\n\nBecause no Democratic candidate is on the ballot in Nebraska, the Nebraska race is represented by “Republican” and “Independent” (Ind) options. The “Independent” option refers to a win by a candidate running as an independent in the Nebraska Senate election. For purposes of this market, Dan Osborn will be considered to be an Independent regardless of any affiliation that he may have with any party. \n\nIf the results of one of these elections are not conclusively known by March 31, 2027, or if an independent or third-party candidate wins the Texas or Kansas election, or a third-party candidate wins the Nebraska election, this market will resolve to \"Other\". \n\nFor purposes of this market, a \"sweep\" is when a party wins all races. \n\nThe resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources have conclusively called the relevant elections. If all three sources do not achieve consensus in calling the relevant races for this market, it will resolve based on the official certification.\n",
+  "start": "2026-10-14",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Kansas safely Republican",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Texas leans Republican",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Nebraska leans Ricketts",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Democratic wave environment",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5713528",
+  "question": "Will Warsh say \"Good Day\" during October Press Conference?",
+  "rules": "Kevin Warsh is currently scheduled to give an FOMC Introductory Statement and press conference on October 28, 2026, at 2:30 PM ET. This market pertains to his Introductory Statement as well as the following Q&A session.\n\nThis market will resolve to \"Yes\" if Warsh says the listed term during the FOMC Press Conference. Otherwise, this market will resolve to \"No\".\n\nThe resolution source will be video and transcripts of the FOMC Press conference.\n\nFor full rules, see: https://polymarket-upload.s3.us-east-2.amazonaws.com/market_products/Mentions/Event+Mentions+Contract+DeFi.pdf",
+  "start": "2026-10-14",
+  "close": "2026-10-28",
+  "your_drivers": [
+   {
+    "name": "Fed chair convention is 'Good afternoon'",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Warsh's unscripted style in Q&A",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Closing pleasantries ('have a good day')",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.2,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5765879",
+  "question": "Husted flips Brown for Ohio Senate by November 2?",
+  "rules": "This market will resolve to \"Yes\" if Jon Husted (R)'s hourly odds value is higher than Sherrod Brown (D)'s hourly odds value in the \"Ohio Senate Special Election 2026\" listing on PredictionMarketOdds.com for 4 consecutive hourly odds values, all published for a datapoint between market creation and November 3, 2026, 12:00 AM ET. Otherwise, this market will resolve to \"No\".\n\nAn hourly odds value is the value in the \"Odds of Happening\" column that PredictionMarketOdds.com publishes for an option for a one-hour \"Time Window (ET)\", as shown on the listing page and in the \"Odds History\" graph. Hourly odds values are compared at the precision published by PredictionMarketOdds.com (one tenth of a percent). An hour in which the two values are equal does not count as Jon Husted (R) being higher and ends any run of consecutive hourly odds values.\n\nHours for which PredictionMarketOdds.com publishes no hourly odds value for either option (shown as \"NO_PRINT\") will be disregarded and will neither count toward nor end a run of consecutive hourly odds values. If PredictionMarketOdds.com permanently ceases publishing hourly odds values for Jon Husted (R) or Sherrod Brown (D) in the \"Ohio Senate Special Election 2026\" listing before November 3, 2026, 12:00 AM ET, including by removing either option from the listing, this market will resolve based on the hourly odds values published up to that point.\n\nIf no hourly odds values have been published for both Jon Husted (R) and Sherrod Brown (D) between market creation and November 3, 2026, 12:00 AM ET, this market will resolve to \"No\".\n\nIf the underlying market is officially decided before the listed date and time, this market will resolve to \"Yes\" if Jon Husted (R) is the outcome of the underlying market and otherwise to \"No\".\n\nIf a published hourly odds value is clearly erroneous as a result of a technical or operational error, this market may remain open for up to an additional 48 hours after that value is first published to allow for a correction. A corrected value will be used in place of the original. If no correction is published within that period, the original value will stand, and revisions published after that period will not be considered.\n\nThe resolution source for this market is PredictionMarketOdds.com, specifically the hourly odds values for Jon Husted (R) and Sherrod Brown (D) in the \"Ohio Senate Special Election 2026\" listing at https://predictionmarketodds.com/senate-ohio-2026.html and on each option's detail page, reached by clicking the option's name in the listing. Prices shown on any individual prediction market will not be considered.",
+  "start": "2026-10-16",
+  "close": "2026-11-03",
+  "your_drivers": [
+   {
+    "name": "Brown currently favored in odds",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.65,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Ohio R lean and late polling tightening",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 1
+   },
+   {
+    "name": "Only 4 consecutive hours needed (volatility)",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "D national environment",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5765881",
+  "question": "Paxton flips Talarico for Texas Senate by November 2?",
+  "rules": "This market will resolve to \"Yes\" if Ken Paxton (R)'s hourly odds value is higher than James Talarico (D)'s hourly odds value in the \"Texas Senate Election 2026\" listing on PredictionMarketOdds.com for 4 consecutive hourly odds values, all published for a datapoint between market creation and November 3, 2026, 12:00 AM ET. Otherwise, this market will resolve to \"No\".\n\nAn hourly odds value is the value in the \"Odds of Happening\" column that PredictionMarketOdds.com publishes for an option for a one-hour \"Time Window (ET)\", as shown on the listing page and in the \"Odds History\" graph. Hourly odds values are compared at the precision published by PredictionMarketOdds.com (one tenth of a percent). An hour in which the two values are equal does not count as Ken Paxton (R) being higher and ends any run of consecutive hourly odds values.\n\nHours for which PredictionMarketOdds.com publishes no hourly odds value for either option (shown as \"NO_PRINT\") will be disregarded and will neither count toward nor end a run of consecutive hourly odds values. If PredictionMarketOdds.com permanently ceases publishing hourly odds values for Ken Paxton (R) or James Talarico (D) in the \"Texas Senate Election 2026\" listing before November 3, 2026, 12:00 AM ET, including by removing either option from the listing, this market will resolve based on the hourly odds values published up to that point.\n\nIf no hourly odds values have been published for both Ken Paxton (R) and James Talarico (D) between market creation and November 3, 2026, 12:00 AM ET, this market will resolve to \"No\".\n\nIf the underlying market is officially decided before the listed date and time, this market will resolve to \"Yes\" if Ken Paxton (R) is the outcome of the underlying market and otherwise to \"No\".\n\nIf a published hourly odds value is clearly erroneous as a result of a technical or operational error, this market may remain open for up to an additional 48 hours after that value is first published to allow for a correction. A corrected value will be used in place of the original. If no correction is published within that period, the original value will stand, and revisions published after that period will not be considered.\n\nThe resolution source for this market is PredictionMarketOdds.com, specifically the hourly odds values for Ken Paxton (R) and James Talarico (D) in the \"Texas Senate Election 2026\" listing at https://predictionmarketodds.com/senate-texas-2026.html and on each option's detail page, reached by clicking the option's name in the listing. Prices shown on any individual prediction market will not be considered.",
+  "start": "2026-10-16",
+  "close": "2026-11-03",
+  "your_drivers": [
+   {
+    "name": "Talarico currently favored in odds",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Texas partisan baseline favors R",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 1
+   },
+   {
+    "name": "Odds volatility, 4-hour threshold",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Paxton scandals",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5765885",
+  "question": "Turek flips Hinson for Iowa Senate by November 2?",
+  "rules": "This market will resolve to \"Yes\" if Josh Turek (D)'s hourly odds value is higher than Ashley Hinson (R)'s hourly odds value in the \"Iowa Senate Election 2026\" listing on PredictionMarketOdds.com for 4 consecutive hourly odds values, all published for a datapoint between market creation and November 3, 2026, 12:00 AM ET. Otherwise, this market will resolve to \"No\".\n\nAn hourly odds value is the value in the \"Odds of Happening\" column that PredictionMarketOdds.com publishes for an option for a one-hour \"Time Window (ET)\", as shown on the listing page and in the \"Odds History\" graph. Hourly odds values are compared at the precision published by PredictionMarketOdds.com (one tenth of a percent). An hour in which the two values are equal does not count as Josh Turek (D) being higher and ends any run of consecutive hourly odds values.\n\nHours for which PredictionMarketOdds.com publishes no hourly odds value for either option (shown as \"NO_PRINT\") will be disregarded and will neither count toward nor end a run of consecutive hourly odds values. If PredictionMarketOdds.com permanently ceases publishing hourly odds values for Josh Turek (D) or Ashley Hinson (R) in the \"Iowa Senate Election 2026\" listing before November 3, 2026, 12:00 AM ET, including by removing either option from the listing, this market will resolve based on the hourly odds values published up to that point.\n\nIf no hourly odds values have been published for both Josh Turek (D) and Ashley Hinson (R) between market creation and November 3, 2026, 12:00 AM ET, this market will resolve to \"No\".\n\nIf the underlying market is officially decided before the listed date and time, this market will resolve to \"Yes\" if Josh Turek (D) is the outcome of the underlying market and otherwise to \"No\".\n\nIf a published hourly odds value is clearly erroneous as a result of a technical or operational error, this market may remain open for up to an additional 48 hours after that value is first published to allow for a correction. A corrected value will be used in place of the original. If no correction is published within that period, the original value will stand, and revisions published after that period will not be considered.\n\nThe resolution source for this market is PredictionMarketOdds.com, specifically the hourly odds values for Josh Turek (D) and Ashley Hinson (R) in the \"Iowa Senate Election 2026\" listing at https://predictionmarketodds.com/senate-iowa-2026.html and on each option's detail page, reached by clicking the option's name in the listing. Prices shown on any individual prediction market will not be considered.",
+  "start": "2026-10-16",
+  "close": "2026-11-03",
+  "your_drivers": [
+   {
+    "name": "Hinson favored in Iowa",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "D wave environment",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Odds volatility, 4-hour threshold",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5765886",
+  "question": "Hamilton flips Marshall for Kansas Senate by November 2?",
+  "rules": "This market will resolve to \"Yes\" if Adam Hamilton (D)'s hourly odds value is higher than Roger Marshall (R)'s hourly odds value in the \"Kansas Senate Election 2026\" listing on PredictionMarketOdds.com for 4 consecutive hourly odds values, all published for a datapoint between market creation and November 3, 2026, 12:00 AM ET. Otherwise, this market will resolve to \"No\".\n\nAn hourly odds value is the value in the \"Odds of Happening\" column that PredictionMarketOdds.com publishes for an option for a one-hour \"Time Window (ET)\", as shown on the listing page and in the \"Odds History\" graph. Hourly odds values are compared at the precision published by PredictionMarketOdds.com (one tenth of a percent). An hour in which the two values are equal does not count as Adam Hamilton (D) being higher and ends any run of consecutive hourly odds values.\n\nHours for which PredictionMarketOdds.com publishes no hourly odds value for either option (shown as \"NO_PRINT\") will be disregarded and will neither count toward nor end a run of consecutive hourly odds values. If PredictionMarketOdds.com permanently ceases publishing hourly odds values for Adam Hamilton (D) or Roger Marshall (R) in the \"Kansas Senate Election 2026\" listing before November 3, 2026, 12:00 AM ET, including by removing either option from the listing, this market will resolve based on the hourly odds values published up to that point.\n\nIf no hourly odds values have been published for both Adam Hamilton (D) and Roger Marshall (R) between market creation and November 3, 2026, 12:00 AM ET, this market will resolve to \"No\".\n\nIf the underlying market is officially decided before the listed date and time, this market will resolve to \"Yes\" if Adam Hamilton (D) is the outcome of the underlying market and otherwise to \"No\".\n\nIf a published hourly odds value is clearly erroneous as a result of a technical or operational error, this market may remain open for up to an additional 48 hours after that value is first published to allow for a correction. A corrected value will be used in place of the original. If no correction is published within that period, the original value will stand, and revisions published after that period will not be considered.\n\nThe resolution source for this market is PredictionMarketOdds.com, specifically the hourly odds values for Adam Hamilton (D) and Roger Marshall (R) in the \"Kansas Senate Election 2026\" listing at https://predictionmarketodds.com/senate-kansas-2026.html and on each option's detail page, reached by clicking the option's name in the listing. Prices shown on any individual prediction market will not be considered.",
+  "start": "2026-10-16",
+  "close": "2026-10-30",
+  "your_drivers": [
+   {
+    "name": "Kansas strongly Republican; Marshall heavy favorite",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Short window to Oct 30 close",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Thin-market odds spikes",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.2,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5765915",
+  "question": "Osborn flips Ricketts for Nebraska Senate by November 2?",
+  "rules": "This market will resolve to \"Yes\" if Dan Osborn (I)'s hourly odds value is higher than Pete Ricketts (R)'s hourly odds value in the \"Nebraska Senate Election 2026\" listing on PredictionMarketOdds.com for 4 consecutive hourly odds values, all published for a datapoint between market creation and November 3, 2026, 12:00 AM ET. Otherwise, this market will resolve to \"No\".\n\nAn hourly odds value is the value in the \"Odds of Happening\" column that PredictionMarketOdds.com publishes for an option for a one-hour \"Time Window (ET)\", as shown on the listing page and in the \"Odds History\" graph. Hourly odds values are compared at the precision published by PredictionMarketOdds.com (one tenth of a percent). An hour in which the two values are equal does not count as Dan Osborn (I) being higher and ends any run of consecutive hourly odds values.\n\nHours for which PredictionMarketOdds.com publishes no hourly odds value for either option (shown as \"NO_PRINT\") will be disregarded and will neither count toward nor end a run of consecutive hourly odds values. If PredictionMarketOdds.com permanently ceases publishing hourly odds values for Dan Osborn (I) or Pete Ricketts (R) in the \"Nebraska Senate Election 2026\" listing before November 3, 2026, 12:00 AM ET, including by removing either option from the listing, this market will resolve based on the hourly odds values published up to that point.\n\nIf no hourly odds values have been published for both Dan Osborn (I) and Pete Ricketts (R) between market creation and November 3, 2026, 12:00 AM ET, this market will resolve to \"No\".\n\nIf the underlying market is officially decided before the listed date and time, this market will resolve to \"Yes\" if Dan Osborn (I) is the outcome of the underlying market and otherwise to \"No\".\n\nIf a published hourly odds value is clearly erroneous as a result of a technical or operational error, this market may remain open for up to an additional 48 hours after that value is first published to allow for a correction. A corrected value will be used in place of the original. If no correction is published within that period, the original value will stand, and revisions published after that period will not be considered.\n\nThe resolution source for this market is PredictionMarketOdds.com, specifically the hourly odds values for Dan Osborn (I) and Pete Ricketts (R) in the \"Nebraska Senate Election 2026\" listing at https://predictionmarketodds.com/senate-nebraska-2026.html and on each option's detail page, reached by clicking the option's name in the listing. Prices shown on any individual prediction market will not be considered.",
+  "start": "2026-10-16",
+  "close": "2026-11-03",
+  "your_drivers": [
+   {
+    "name": "Ricketts favored in Nebraska",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Osborn's 2024 overperformance",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Odds volatility",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5790794",
+  "question": "Will the Republicans win Sedgwick County in the Kansas Senate race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Sedgwick County in the election for United States Senator from Kansas, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to \"Other.\"\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of Kansas, including the Office of the Secretary of State and the government of Sedgwick County.",
+  "start": "2026-10-16",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Sedgwick County R lean in federal races",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Marshall incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Wichita suburban shift to D in wave year",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.45,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5939179",
+  "question": "Will Gadi Eizenkot receive the first mandate to form a government after the 2026 Israeli election?",
+  "rules": "Legislative elections are schedule to be held in Israel on October 27, 2026. \n\nThis market will resolve to the first individual who is officially tasked by the President of Israel with forming a government following the 2026 parliamentary election. If an election is called early, this market will immediately resolve to the first individual who is officially tasked with forming a government after that election.\n\nTo count for resolution, the individual must be formally tasked with forming a government by the President of Israel. Recommendations made to the President by parties or members of the Knesset, and the President's consultations, will not count toward the resolution of this market.\n\nIf no individual is tasked with forming a government by December 31, 2027, 11:59 PM ET, this market will resolve to “Other”.\n\nThe primary resolution source for this market will be official information from the Government of Israel; however, a consensus of credible reporting may also be used.",
+  "start": "2026-10-19",
+  "close": "2026-11-08",
+  "your_drivers": [
+   {
+    "name": "Netanyahu/Likud largest party, recommendations",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Bennett leads opposition as Together head",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Eisenkot as compromise candidate",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.15,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5972006",
+  "question": "Will the Republicans win Greenville County in the South Carolina Senate race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Greenville County in the election for United States Senator from South Carolina, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to \"Other.\"\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of South Carolina, including the Election Commission and the government of Greenville County.",
+  "start": "2026-10-20",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Greenville deeply Republican",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Graham incumbency/nominee",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "D wave suburban shift",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "6016014",
+  "question": "Will Vivek Ramaswamy pull the Amy Acton mother ad?",
+  "rules": "This market will resolve to \"Yes\" if the Vivek Ramaswamy campaign pulls its advertisement featuring Amy Acton's mother between market creation and October 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to \"No.\"\n\nThe advertisement will be considered pulled if either of the following occurs within this market's timeframe: Vivek Ramaswamy or an authorized representative of his campaign publicly announces that the campaign has stopped, or will stop, airing the advertisement; or a consensus of credible reporting confirms that the campaign has pulled, withdrawn, or stopped airing the advertisement on television.\n\nReplacing the advertisement with a new or edited version that no longer features Amy Acton's mother will qualify. Editing the advertisement while it continues to feature Amy Acton's mother will not qualify.\n\nThe following will not qualify: removal of the advertisement from social media or other online platforms while it continues to air on television; a reduction in spending or airtime that does not stop the advertisement from airing; the advertisement leaving the air because its previously scheduled ad buy has ended, unless the campaign or a consensus of credible reporting describes the advertisement as having been pulled or withdrawn; removal by a television station, platform, or court order rather than by the campaign; and the airing or removal of any advertisement by a third party not affiliated with the Ramaswamy campaign.\n\nIf the campaign announces that it will stop airing the advertisement, this market will resolve to \"Yes\" regardless of when the advertisement actually stops airing. A subsequent decision to resume airing the advertisement will not change a \"Yes\" resolution.\n\nThe primary resolution source for this market will be official statements from Vivek Ramaswamy and his campaign, including official websites, verified social media accounts, interviews, and press conferences; however, a consensus of credible reporting may also be used.",
+  "start": "2026-10-21",
+  "close": "2026-11-05",
+  "your_drivers": [
+   {
+    "name": "Campaigns rarely pull ads under criticism",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Media backlash over ad",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Natural rotation to new ads before Oct 31",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 1
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "6028083",
+  "question": "Will AP call US Senate control by November 3, 10:59 PM?",
+  "rules": "This market will resolve to “Yes” if the Associated Press calls control of the United States Senate for the Congress that will convene following the 2026 midterm elections by the specified date and time (ET). Otherwise it will resolve to “No”.\n\nOnly calls that Senate control has been determined will qualify. Individual race calls that do not state that Senate control has been determined will not qualify.\n\nThe resolution source for this market will be the Associated Press.",
+  "start": "2026-10-21",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Close Senate races in late-counting states",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Very early deadline (10:59 PM ET election night)",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lopsided result enabling early call",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.2,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ }
+]

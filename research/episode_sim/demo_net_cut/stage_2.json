@@ -1,0 +1,4 @@
+{"moves": [
+ {"actor": "stores", "move": "کارمزد را برای سه ماه نصف می‌کنند و بازی‌های داخلی را در صفحهٔ اول می‌گذارند", "why": "بازیکنِ تازه آمده، ولی خرید بالا نرفته و توسعه‌دهنده‌ها زیر فشارند", "stages": 4, "effects": [{"variable": "cash", "direction": "+", "size": "small"}, {"variable": "players", "direction": "+", "size": "small"}]},
+ {"actor": "studios", "move": "رویدادهای درون‌بازی را با محتوای آماده و تخفیف‌های کوتاه سرپا نگه می‌دارند", "why": "تیم نمی‌تواند محتوای تازه بسازد، ولی بازیکنِ تازه را باید نگه داشت", "stages": 2, "effects": [{"variable": "payments", "direction": "+", "size": "small"}, {"variable": "content", "direction": "+", "size": "small"}]},
+ {"actor": "regulator", "move": "ظرفیت دیتاسنترهای داخلی را برای سرویس‌های پرمصرف اولویت‌بندی می‌کند", "why": "شبکهٔ داخلی زیر بار کند شده است", "stages": 2, "effects": [{"variable": "dom_net", "direction": "+", "size": "small"}]}]}

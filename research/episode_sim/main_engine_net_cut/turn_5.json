@@ -1,0 +1,7 @@
+{
+ "regulator": {"chosen_action": "hold_position", "primary_variable": "dom_net", "probability": 0.7, "justification": "شبکه پایدار شده؛ اقدام تازه‌ای نمی‌کند.", "causal_chain": "بدون تغییر", "expected_effect": {}},
+ "studios": {"chosen_action": "pool_hiring_and_servers", "primary_variable": "team", "probability": 0.65, "justification": "هیچ استودیویی به‌تنهایی نمی‌تواند جای ارشدهای رفته را پر کند؛ چند استودیو استخدام و سرور را مشترک می‌کنند.", "causal_chain": "اشتراک منابع -> تیم و نقدینگی بهتر", "expected_effect": {"team": 5, "cash": 3}},
+ "stores": {"chosen_action": "hold_position", "primary_variable": "cash", "probability": 0.7, "justification": "وضعیت تراکنش‌ها بهتر از قبل از قطعی است؛ سیاست فعلی ادامه دارد.", "causal_chain": "بدون تغییر", "expected_effect": {}},
+ "players": {"chosen_action": "return_to_foreign_games", "primary_variable": "players", "probability": 0.6, "justification": "هیجان آپدیت تمام شده و بازی‌های خارجی کاملاً در دسترس‌اند؛ موج دوم برگشت.", "causal_chain": "دسترسی کامل -> ترک تدریجی", "expected_effect": {"players": -6}},
+ "talent": {"chosen_action": "hold_position", "primary_variable": "team", "probability": 0.7, "justification": "آن‌هایی که مانده‌اند سر کارند.", "causal_chain": "بدون تغییر", "expected_effect": {}}
+}

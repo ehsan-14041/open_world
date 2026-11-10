@@ -1,0 +1,67 @@
+{
+ "environment": {
+  "chosen_action": "heat_wave",
+  "primary_variable": "reservoir",
+  "probability": 0.4,
+  "justification": "پس از خشکسالی شدید و ذخیرهٔ ۲۸ درصدی، موج گرما در دو هفتهٔ دوم محتمل است و تبخیر و مصرف را بالا می‌برد.",
+  "causal_chain": "موج گرما ذخیرهٔ منابع را کم می‌کند، خطر بهداشتی را بالا می‌برد و خشم مردم را افزایش می‌دهد.",
+  "expected_effect": {
+   "reservoir": -6,
+   "health_risk": 5,
+   "public_anger": 3
+  },
+  "relation_updates": []
+ },
+ "water_utility": {
+  "chosen_action": "fix_leaks_and_pressure",
+  "primary_variable": "reservoir",
+  "probability": 0.7,
+  "justification": "ذخیرهٔ مخزن فقط ۲۸ است و خشم مردم بالاست. سختگیری بیشتر جیره‌بندی خشم را بالاتر می‌برد. رفع نشتی و تنظیم فشار، هدر رفت را کم و ساعت آب را اندکی بیشتر می‌کند، هرچند بودجه کمی کم می‌شود.",
+  "causal_chain": "رفع نشتی هدررفت را کم می‌کند، ذخیرهٔ مخزن و ساعت‌های برقراری آب اندکی بیشتر می‌شود و بودجه هزینه می‌دهد.",
+  "expected_effect": {
+   "reservoir": 3,
+   "supply_hours": 3,
+   "utility_budget": -6
+  },
+  "relation_updates": []
+ },
+ "city_government": {
+  "chosen_action": "deploy_free_tankers",
+  "primary_variable": "public_anger",
+  "probability": 0.7,
+  "justification": "با جیره‌بندی و ذخیره پایین سد، تانکر رایگان از آسیب‌پذیران حمایت می‌کند، قیمت تانکر و خشم مردم را کم می‌کند و نظم را بدون تنش تازه نگه می‌دارد؛ هزینه بودجه پذیرفتنی است.",
+  "causal_chain": "تانکر رایگان ← افزایش ذخیره خانگی و کاهش قیمت تانکری ← کاهش خشم و خطر بهداشتی ← حفظ نظم عمومی",
+  "expected_effect": {
+   "home_storage": 6,
+   "tanker_price": -5,
+   "public_anger": -5,
+   "health_risk": -2,
+   "utility_budget": -5
+  }
+ },
+ "households": {
+  "chosen_action": "buy_from_tankers",
+  "primary_variable": "home_storage",
+  "probability": 0.6,
+  "justification": "قطعی روزانه ادامه دارد و ذخیره خانگی برای شرب و بهداشت کافی نیست. قیمت تانکر هنوز پایین است، پس خرید حالا امن‌تر و ارزان‌تر از انتظار برای قیمت بالاتر است.",
+  "causal_chain": "قطع بخشی از روز و کاهش ساعت آب لوله -> خرید آب تانکری -> افزایش ذخیره خانگی، کمی افزایش قیمت تانکر و خشم کمتر",
+  "expected_effect": {
+   "home_storage": 8,
+   "tanker_price": 6,
+   "public_anger": -2,
+   "health_risk": 1
+  }
+ },
+ "tanker_vendors": {
+  "chosen_action": "raise_tanker_prices",
+  "primary_variable": "tanker_price",
+  "probability": 0.6,
+  "justification": "جیره‌بندی آغاز شده و قطعی آب تقاضای تانکر را بالا می‌برد، اما قیمت هنوز پایین است. ناوگان گسترش یافته؛ حالا افزایش قیمت سود را بالا می‌برد، با جهش محدود تا مشتری نرود.",
+  "causal_chain": "افزایش قیمت تانکر قیمت آب تانکری را بالا می‌برد و سود تانکرکش‌ها را زیاد می‌کند؛ قیمت بالاتر خشم عمومی را بیشتر و ذخیرهٔ خانگی خرید را کمی کم می‌کند.",
+  "expected_effect": {
+   "tanker_price": 12,
+   "public_anger": 5,
+   "home_storage": -3
+  }
+ }
+}

@@ -1,0 +1,77 @@
+{
+ "judgments": 12,
+ "preferred": {
+  "harness": 1,
+  "chat": 11,
+  "tie": 0
+ },
+ "mean_scores": {
+  "harness": {
+   "behaviour": 3.17,
+   "consistency": 3.5,
+   "insight": 2.33,
+   "usefulness": 3.0
+  },
+  "chat": {
+   "behaviour": 3.92,
+   "consistency": 3.5,
+   "insight": 3.92,
+   "usefulness": 3.92
+  }
+ },
+ "rule_outcome": "plain chat is at least as good",
+ "by_scenario": [
+  {
+   "scenario": "phone_ban",
+   "preferences": [
+    "chat",
+    "harness",
+    "chat"
+   ],
+   "reasons": [
+    "X captures realistic second-round effects (foreign makers repricing below the cap, later FX shock, customs revenue recovering via quota). Y is numerically tighter but has a static environment and end-of-game artifacts (stockpiling or expanding because it is the last stage).",
+    "Y's actors visibly react to each other and to thresholds (consumers delay, then grey market, then protest; government waits, then gives a quota). X unwinds the ban too smoothly, and its stage-5 currency shock barely moves the numbers.",
+    "X shows the ban leaking through below-threshold models and foreign makers, supply recovering while FX pressure ends higher, defeating the ban's purpose. Y is careful but muted, with a passive environment and small numeric responses to the quota."
+   ]
+  },
+  {
+   "scenario": "free_coder",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "X shows a turning point: a downturn on top of free AI leads to contract cuts, layoffs and emigration, then a niche for complex and review work. Y is a smooth, shock-free glide where developers upskill every stage and employment barely moves.",
+    "X's numbers track the actions closely, and its shocks (code failure, downturn, rival going free) cascade into rate cuts, junior layoffs and emigration. Y is a flat, monotone drift. Its environment never acts and developers repeat the same action five times.",
+    "X has turning points: a trust shock, a downturn, junior layoffs, emigration, and complex work staying outsourced. Y is a smooth, repetitive erosion where developers upskill every stage and the environment never moves."
+   ]
+  },
+  {
+   "scenario": "water_ration",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "X stress-tests the plan with rumour, heat, a pipe burst and rain, and shows anger peaking when the tariff hike coincides with the burst. Y has no events at all, flat health risk, and tanker hikes driven by last-stage logic.",
+    "X has realistic shocks (rumour, heat wave, pipe burst, rain), an anger peak followed by easing, and a steady drain on the utility budget, all with closely matching numbers. Y is static, health risk sits flat, and the actors give meta 'last stage' reasons.",
+    "X adds plausible drought shocks (rumour, heat, pipe burst, rain), shows the tariff anger spike and steady budget drain, and lets rain open the way to easing. Y keeps the environment idle and has end-of-horizon artefacts in tanker and household moves."
+   ]
+  },
+  {
+   "scenario": "truck_strike",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "Y shows escalation (panic buying, blockades, ports), shelf depletion and prices staying high after the deal. X keeps shelves full throughout a nationwide strike, settles within days, and then has two empty stages where every actor holds.",
+    "Y shows escalation (panic buying, blockades, ports), rationing and price hikes, then a deal after which prices stay high: a useful finding that prices do not fall back. X's strike ends quickly with shelves barely touched, and stages 4-5 are all holds.",
+    "Y shows the real risks: panic buying, a blockade, escalation to the ports, and prices that stay high after the deal. X settles fast, shelves barely move despite halved freight, and the last two stages are all holds."
+   ]
+  }
+ ]
+}

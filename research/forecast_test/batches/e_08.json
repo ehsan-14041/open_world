@@ -1,0 +1,1324 @@
+[
+ {
+  "id": "4663000",
+  "question": "Will the UK Budget include an increase to capital gains tax?",
+  "rules": "The UK Autumn Budget 2026 is scheduled to be delivered to Parliament by Chancellor of the Exchequer John Healey on October 28, 2026.\n\nThis market will resolve to \"Yes\" if the listed measure is announced in the 2026 Autumn Budget. Otherwise, this market will resolve to \"No\".\n\nFor the purposes of this market, the listed options are defined as follows:\n\n- Wealth tax: the introduction of an annual percentage-based levy on the value of a person's assets.\n- Land value tax: the introduction of a percentage-based levy on the value of a person's home.\n- Fuel duty increase: an increase to the rate of fuel duty.\n- CGT increase: an increase to any rate of capital gains tax.\n\nA measure will only count if it is announced in the Chancellor's Budget speech or contained in the official Budget documents published by HM Treasury on the day of the Budget. Measures that are only consulted on, reviewed, or otherwise not announced as government policy will not count.\n\nFor the fuel duty option, the ending or non-renewal of the existing fuel duty freeze, such that the rate of fuel duty rises, will count as an increase.\n\nIf the 2026 Autumn Budget is delayed beyond October 28, 2026, this market will resolve according to the Budget whenever it is delivered, provided it is delivered by December 31, 2026, 11:59 PM ET. If no Budget is delivered by that date, this market will resolve to \"No\".\n\nThe primary resolution source for this market will be official information from HM Treasury and the UK government, including the published Budget documents; however, a consensus of credible reporting will also be used.",
+  "start": "2026-09-17",
+  "close": "2026-10-28",
+  "your_drivers": [
+   {
+    "name": "Fiscal hole and need for revenue",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "CGT already raised in 2024 Budget",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Investor and growth backlash concerns",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "New chancellor signalling priorities",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Labour backbench pressure to tax wealth",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 1
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.033,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4733881",
+  "question": "Will Lauren Boebert resign by October 31, 2026?",
+  "rules": "This market will resolve to \"Yes\" if Lauren Boebert announces, on or before the date specified in the market title, 11:59 PM ET, that she has resigned or will resign as United States Representative for Colorado's 4th congressional district. Otherwise, this market will resolve to \"No\".\n\nThe deadline applies to the timing of the announcement, not the effective date of the resignation. An announcement made by the deadline that she will resign on a later date, including a date after the specified deadline, will qualify.\n\nIf it becomes impossible for Lauren Boebert to resign or to announce her resignation (e.g., due to her removal from office by other means, etc.), this market will immediately resolve to \"No\".\n\nFor this market to resolve to \"Yes\", it is only necessary that Lauren Boebert announce that she has resigned or will resign. Whether she actually resigns will have no bearing on the resolution of this market. An announcement that she will not seek re-election, or that she is ending her 2026 campaign, will not qualify on its own.\n\nThe primary resolution source for this market will be official information from Lauren Boebert or the United States House of Representatives; however, a consensus of credible reporting will also be used.",
+  "start": "2026-09-19",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "Base rate of sitting member resignations",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.95,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Active re-election campaign",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Scandal or administration appointment",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.05,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4824602",
+  "question": "Will Student List – Students Win win the most seats in the 2026 Serbian parliamentary election?",
+  "rules": "Parliamentary elections to elect the 250 members of the National Assembly of Serbia are scheduled to take place on October 25, 2026.\n\nThis market will resolve to the electoral list that wins the greatest number of seats in the National Assembly of Serbia as a result of this election.\n\nElectoral lists will be primarily ranked by the number of seats won in the specified election. If two or more lists are tied on seats, ties will be broken by the total number of valid votes received, with higher vote totals ranking higher. If lists remain tied, ties will be broken by alphabetical order of the listed names. This market will resolve to the list that occupies the highest finishing position after applying this ranking.\n\nThis market's resolution will be based solely on the number of seats won by the named electoral list, as it appears on the ballot and official proclamations, regardless of which parties make up the list or how its members later organize themselves in the National Assembly.\n\nIf the results of the specified election are not definitively known by March 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of the elections, as indicated by a consensus of credible reporting. In the case of ambiguity, this market will resolve solely based on the results as reported by the Republic Electoral Commission of Serbia (https://www.rik.parlament.gov.rs/).",
+  "start": "2026-09-21",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Student protest movement momentum",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "SNS incumbency and media control",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Opposition consolidation behind one list",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Electoral irregularities and voter pressure",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Diaspora and youth turnout",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 4
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.062,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4826344",
+  "question": "Republicans flip Democrats for Senate by November 2?",
+  "rules": "This market will resolve to \"Yes\" if the Republican Party's hourly odds value is higher than the Democratic Party's hourly odds value in the \"Senate Control 2026\" listing on PredictionMarketOdds.com for 4 consecutive hourly odds values, all published for a datapoint between market creation and November 3, 2026, 12:00 AM ET. Otherwise, this market will resolve to \"No\".\n\nAn hourly odds value is the value in the \"Odds of Happening\" column that PredictionMarketOdds.com publishes for an option for a one-hour \"Time Window (ET)\", as shown on the listing page and in the \"Odds History\" graph. Hourly odds values are compared at the precision published by PredictionMarketOdds.com (one tenth of a percent). An hour in which the two values are equal does not count as the Republican Party being higher and ends any run of consecutive hourly odds values.\n\nHours for which PredictionMarketOdds.com publishes no hourly odds value for either option (shown as \"NO_PRINT\") will be disregarded and will neither count toward nor end a run of consecutive hourly odds values. If PredictionMarketOdds.com permanently ceases publishing hourly odds values for the Republican Party or the Democratic Party in the \"Senate Control 2026\" listing before November 3, 2026, 12:00 AM ET, including by removing either option from the listing, this market will resolve based on the hourly odds values published up to that point.\n\nIf no hourly odds values have been published for both the Republican Party and the Democratic Party between market creation and November 3, 2026, 12:00 AM ET, this market will resolve to \"No\".\n\nIf the underlying market is officially decided before the listed date and time, this market will resolve to \"Yes\" if the Republican Party is the outcome of the underlying market and otherwise to \"No\".\n\nIf a published hourly odds value is clearly erroneous as a result of a technical or operational error, this market may remain open for up to an additional 48 hours after that value is first published to allow for a correction. A corrected value will be used in place of the original. If no correction is published within that period, the original value will stand, and revisions published after that period will not be considered.\n\nThe resolution source for this market is PredictionMarketOdds.com, specifically the hourly odds values for the Republican Party and the Democratic Party in the \"Senate Control 2026\" listing at https://predictionmarketodds.com/senate-control-2026.html and on each option's detail page, reached by clicking the option's name in the listing. Prices shown on any individual prediction market will not be considered.",
+  "start": "2026-09-22",
+  "close": "2026-11-03",
+  "your_drivers": [
+   {
+    "name": "Republican-favorable Senate map",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm penalty on president's party",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Volatility of odds close to election",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Democrats currently leading in odds",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Late polling shifts in key races",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 4
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.346,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "Republican-favorable Senate map",
+    "Midterm penalty on president's party",
+    "Democrats currently leading in odds"
+   ]
+  }
+ },
+ {
+  "id": "4843543",
+  "question": "Trump declassifies new UFO files by October 31?",
+  "rules": "This market will resolve to \"Yes\" if the Trump administration declassifies any files pertaining to extraterrestrial life and/or unexplained aerial phenomena which were not previously publicly available between market creation and the specified date, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nFor purposes of this market, the “Trump administration” includes the Executive Office of the President and all executive branch departments, agencies, and subordinate offices under presidential authority during the Trump presidency, including the Department of Defense and its components.\n\nAnnouncements of declassifications that are not implemented within this market’s timeframe will not count.\n\nThe primary resolution source for declassification will be official information from the government of the United States; however, a consensus of credible reporting will also be used.",
+  "start": "2026-09-22",
+  "close": "2026-10-23",
+  "your_drivers": [
+   {
+    "name": "Administration's stated transparency pushes",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Short window",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "AARO and agency release cadence",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Competing midterm priorities",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4844470",
+  "question": "Will the Democrats win Denton County in the Texas Senate race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Denton County in the general election for United States Senator from Texas, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to \"Other.\"\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of Texas, including the Office of the Secretary of State and the government of Denton County.",
+  "start": "2026-09-22",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Denton County Republican lean",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Suburban shift toward Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment against president's party",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Weak or polarizing GOP nominee",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Democratic nominee strength",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.218,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "Denton County Republican lean"
+   ]
+  }
+ },
+ {
+  "id": "4844538",
+  "question": "Republican Senate odds dip to 30% by October 31?",
+  "rules": "This market will resolve to \"Yes\" if the Republican Party's hourly odds value in the \"Senate Control 2026\" listing on PredictionMarketOdds.com is equal to or below 30% for 4 consecutive hourly odds values, all published for a datapoint between market creation and November 1, 2026, 12:00 AM ET. Otherwise, this market will resolve to \"No\".\n\nAn hourly odds value is the value in the \"Odds of Happening\" column that PredictionMarketOdds.com publishes for an option for a one-hour \"Time Window (ET)\", as shown on the listing page and in the \"Odds History\" graph on that option's detail page. Hourly odds values are compared at the precision published by PredictionMarketOdds.com (one tenth of a percent). An hour in which the Republican Party's hourly odds value is above 30% ends any run of consecutive hourly odds values.\n\nHours for which PredictionMarketOdds.com publishes no hourly odds value for the Republican Party (shown as \"NO_PRINT\") will be disregarded and will neither count toward nor end a run of consecutive hourly odds values. If PredictionMarketOdds.com permanently ceases publishing hourly odds values for the Republican Party in the \"Senate Control 2026\" listing before November 1, 2026, 12:00 AM ET, including by removing the Republican Party from the listing, this market will resolve based on the hourly odds values published up to that point.\n\nIf no hourly odds values have been published for the Republican Party between market creation and November 1, 2026, 12:00 AM ET, this market will resolve to \"No\".\n\nIf the underlying market is officially decided before the listed end date, this market will resolve to \"Yes\" if the Republican Party is the outcome of the underlying market and otherwise to \"No\".\n\nIf a published hourly odds value is clearly erroneous as a result of a technical or operational error, this market may remain open for up to an additional 48 hours after that value is first published to allow for a correction. A corrected value will be used in place of the original. If no correction is published within that period, the original value will stand, and revisions published after that period will not be considered.\n\nThe resolution source for this market is PredictionMarketOdds.com, specifically the hourly odds values for the Republican Party in the \"Senate Control 2026\" listing at https://predictionmarketodds.com/senate-control-2026.html and on the Republican Party's detail page, reached by clicking the option's name in the listing. Prices shown on any individual prediction market will not be considered.",
+  "start": "2026-09-22",
+  "close": "2026-10-30",
+  "your_drivers": [
+   {
+    "name": "Current Republican odds well above 30%",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Favorable GOP Senate map floor",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Democratic momentum in polling",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Odds volatility and brief dips",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4852406",
+  "question": "Will any presidential candidate win outright in the first round of the Bulgaria election?",
+  "rules": "Presidential elections are scheduled to be held in Bulgaria on October 25, 2026, with a second round on November 1, 2026. A second round will be held if no candidate secures more than half of the valid votes in the first round, or if a candidate secures more than half of the valid votes but voter turnout is not more than half of registered voters.\n\nThis market will resolve to \"Yes\" if any candidate wins this election outright in the first round. Otherwise, this market will resolve to \"No\".\n\nIf the result of the first round of this election isn't known by December 31, 2026, 11:59 PM ET, the market will resolve to \"No\".\n\nThis market will resolve based on the result of the election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Bulgarian government, specifically the Central Election Commission (Centralna izbiratelna komisia, CEC) (www.cik.bg/).",
+  "start": "2026-09-22",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Turnout must exceed 50%",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Fragmented candidate field",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Historical runoffs in every election",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Dominant front-runner with popular backing",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4867567",
+  "question": "JD Vance Republican nomination odds leader on October 31?",
+  "rules": "This market will resolve according to the option with the highest hourly odds value in the \"2028 Republican Nomination\" listing on PredictionMarketOdds.com for the \"Time Window (ET)\" ending at 12:00 PM ET on October 31, 2026. If that option is not a listed outcome of this market, this market will resolve to \"Other\".\n\nAn hourly odds value is the value in the \"Odds of Happening\" column that PredictionMarketOdds.com publishes for an option for a one-hour \"Time Window (ET)\", as shown on the listing page and in the \"Odds History\" graph on that option's detail page. Hourly odds values are compared at the precision published by PredictionMarketOdds.com (one tenth of a percent).\n\nIf PredictionMarketOdds.com publishes \"NO_PRINT\" for an option for the specified window, that option's most recent published hourly odds value before the specified window will be used. If PredictionMarketOdds.com has not published anything for the specified window for an option (neither an hourly odds value nor \"NO_PRINT\"), this market will remain open until a value or \"NO_PRINT\" for that window is published, and may remain open until November 7, 2026, 11:59 PM ET for that purpose. If nothing has been published for the specified window by that time, that option's most recent published hourly odds value before the specified window will be used. An option with no hourly odds value published in that period will not be considered.\n\nIf two or more options are tied for the highest value, the tie will be broken in favor of the tied option with the higher value in the most recent earlier window in which their values differed. If the tie persists, this market will resolve in favor of the tied option whose listed name comes first alphabetically.\n\nIf the underlying market is officially decided before the listed end date, this market will resolve in favor of the outcome of the underlying market if it is a listed outcome, and otherwise to \"Other\".\n\nIf a published hourly odds value is clearly erroneous as a result of a technical or operational error, this market may remain open for up to an additional 48 hours after that value is first published to allow for a correction. A corrected value will be used in place of the original. If no correction is published within that period, the original value will stand, and revisions published after that period will not be considered.\n\nThe resolution source for this market is PredictionMarketOdds.com, specifically the hourly odds values for the options in the \"2028 Republican Nomination\" listing at https://predictionmarketodds.com/gop-nomination-2028.html and on each option's detail page, reached by clicking the option's name in the listing. Prices shown on any individual prediction market will not be considered.",
+  "start": "2026-09-22",
+  "close": "2026-10-31",
+  "your_drivers": [
+   {
+    "name": "Vance as sitting VP and heir apparent",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Large existing odds lead",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Rival surges (Rubio, Trump Jr.)",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.2,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Trump third-term talk",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.15,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4881548",
+  "question": "Will Conservative win the most seats in the 2026 British Columbia general election?",
+  "rules": "General elections to elect the 93 members of the Legislative Assembly of British Columbia are scheduled to take place on October 24, 2026.\n\nThis market will resolve according to the political party that wins the greatest number of seats in the Legislative Assembly of British Columbia as a result of this election.\n\nIf the results of the specified election are not definitively known by March 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nParties will be primarily ranked by the number of seats won in the specified election. If two or more parties are tied on seats, ties will be broken by the total number of valid votes received, with higher vote totals ranking higher. If parties remain tied, ties will be broken by alphabetical order of the listed party names. This market will resolve to the party that occupies the highest finishing position after applying this ranking.\n\nThis market's resolution will be based solely on the number of seats won by the named party. A candidate will be considered a member of the party they contest the election under.\n\nThis market will resolve based on the results of the elections, as indicated by a consensus of credible reporting. In the case of ambiguity, this market will resolve solely based on the results as reported by Elections BC (https://elections.bc.ca/).",
+  "start": "2026-09-23",
+  "close": "2026-10-25",
+  "your_drivers": [
+   {
+    "name": "NDP calling snap election from position of strength",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Conservatives near-win in 2024",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Conservative caucus turmoil",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Campaign dynamics and debates",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Rural-urban seat efficiency",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4881579",
+  "question": "Will NDP win the second most seats in the 2026 British Columbia general election?",
+  "rules": "General elections to elect the 93 members of the Legislative Assembly of British Columbia are scheduled to take place on October 24, 2026.\n\nThis market will resolve according to the political party that wins the second-greatest number of seats in the Legislative Assembly of British Columbia as a result of this election.\n\nIf the results of the specified election are not definitively known by March 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nParties will be primarily ranked by the number of seats won in the specified election. If two or more parties are tied on seats, ties will be broken by the total number of valid votes received, with higher vote totals ranking higher. If parties remain tied, ties will be broken by alphabetical order of the listed party names. This market will resolve to the party that occupies the second finishing position after applying this ranking.\n\nThis market's resolution will be based solely on the number of seats won by the named party. A candidate will be considered a member of the party they contest the election under.\n\nThis market will resolve based on the results of the elections, as indicated by a consensus of credible reporting. In the case of ambiguity, this market will resolve solely based on the results as reported by Elections BC (https://elections.bc.ca/).",
+  "start": "2026-09-23",
+  "close": "2026-10-25",
+  "your_drivers": [
+   {
+    "name": "NDP likely to win most seats",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.65,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Two-party race means loser is second",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Conservative surge possibility",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Greens too small to be second",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.9,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.198,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "NDP likely to win most seats"
+   ]
+  }
+ },
+ {
+  "id": "4881816",
+  "question": "Will Atsumi Harasawa win the 2026 Yokohama mayoral election?",
+  "rules": "The next Yokohama mayoral election is scheduled to be held on October 18, 2026, to elect the mayor of Yokohama, Japan (横浜市長). The election is being held following the resignation of Mayor Takeharu Yamanaka on September 7, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Yokohama as a result of this election.\n\nTemporary, interim, or placeholder mayors will not be considered.\n\nIf the result of this election isn't known by April 30, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as declared by the Yokohama City Election Administration Commission (https://www.city.yokohama.lg.jp/).",
+  "start": "2026-09-23",
+  "close": "2026-10-18",
+  "your_drivers": [
+   {
+    "name": "Party endorsements",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 1
+   },
+   {
+    "name": "Multi-candidate field",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Name recognition",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Context of mayor's resignation",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4890270",
+  "question": "Will Andrey Gyurov win the 2026 Bulgarian presidential first round by 20%-30%?",
+  "rules": "The first round of the 2026 Bulgarian presidential election is currently expected to be held on October 25, 2026.\n\nThis market will resolve according to the margin of victory between the top two candidates in the first round of the specified election.\n\nThe \"margin of victory\" is defined as the absolute difference between the percentages of valid votes received by the first-place and second-place candidates. Percentages of the valid votes received by each candidate will be determined by dividing the total number of valid votes each of the top two candidates receives by the sum of all valid votes cast in the election.\n\nThe candidates named in this market are individual candidates appearing on the first round ballot. They do not represent party options, and this market will not resolve based on the party affiliation of any candidate.\n\nIf the reported value falls exactly between two brackets, then this market will resolve to the higher margin bracket.\n\nIf two or more candidates tie for the most valid votes in this election, and the tie is between two candidates listed, this market will resolve to the lowest margin bracket for the candidate whose ballot-listed last name comes first in alphabetical order. If the tie is between a listed candidate and an unlisted candidate, this market will resolve to the lowest margin bracket for the listed candidate. If the tie is between two or more unlisted candidates, this market will resolve to \"Other.\"\n\nThis market will resolve based on the official vote count once the count has been made official.\n\nIf the election results are not known definitively by June 30, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nIf a recount is initiated before the vote total has been made official, the market will remain open until the recount is completed and the vote is made official.\n\nThe primary resolution source for this market will be the official results of the 2026 Bulgarian presidential election as published by the Central Election Commission of Bulgaria (Централна избирателна комисия); however, an overwhelming consensus of credible reporting may also be used.",
+  "start": "2026-09-23",
+  "close": "2026-10-27",
+  "your_drivers": [
+   {
+    "name": "Gyurov as front-runner with Radev-aligned support",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Narrow bracket width",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Fragmented opposition field",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possibility of other margins or loss",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4913739",
+  "question": "Lula flips Bolsonaro for Brazil president by October 15?",
+  "rules": "This market will resolve to \"Yes\" if Luiz Inácio Lula da Silva's hourly odds value is higher than Flávio Bolsonaro's hourly odds value in the \"Brazil Presidential Election 2026\" listing on PredictionMarketOdds.com for 4 consecutive hourly odds values, all published for a datapoint between market creation and October 16, 2026, 12:00 AM ET. Otherwise, this market will resolve to \"No\".\n\nAn hourly odds value is the value in the \"Odds of Happening\" column that PredictionMarketOdds.com publishes for an option for a one-hour \"Time Window (ET)\", as shown on the listing page and in the \"Odds History\" graph. Hourly odds values are compared at the precision published by PredictionMarketOdds.com (one tenth of a percent). An hour in which the two values are equal does not count as Luiz Inácio Lula da Silva being higher and ends any run of consecutive hourly odds values.\n\nHours for which PredictionMarketOdds.com publishes no hourly odds value for either option (shown as \"NO_PRINT\") will be disregarded and will neither count toward nor end a run of consecutive hourly odds values. If PredictionMarketOdds.com permanently ceases publishing hourly odds values for Luiz Inácio Lula da Silva or Flávio Bolsonaro in the \"Brazil Presidential Election 2026\" listing before October 16, 2026, 12:00 AM ET, including by removing either option from the listing, this market will resolve based on the hourly odds values published up to that point.\n\nIf no hourly odds values have been published for both Luiz Inácio Lula da Silva and Flávio Bolsonaro between market creation and October 16, 2026, 12:00 AM ET, this market will resolve to \"No\".\n\nIf the underlying market is officially decided before the listed date and time, this market will resolve to \"Yes\" if Luiz Inácio Lula da Silva is the outcome of the underlying market and otherwise to \"No\".\n\nIf a published hourly odds value is clearly erroneous as a result of a technical or operational error, this market may remain open for up to an additional 48 hours after that value is first published to allow for a correction. A corrected value will be used in place of the original. If no correction is published within that period, the original value will stand, and revisions published after that period will not be considered.\n\nThe resolution source for this market is PredictionMarketOdds.com, specifically the hourly odds values for Luiz Inácio Lula da Silva and Flávio Bolsonaro in the \"Brazil Presidential Election 2026\" listing at https://predictionmarketodds.com/brazil-president-2026.html and on each option's detail page, reached by clicking the option's name in the listing. Prices shown on any individual prediction market will not be considered.",
+  "start": "2026-09-24",
+  "close": "2026-10-16",
+  "your_drivers": [
+   {
+    "name": "Flávio currently leads odds",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "First-round result on Oct 4",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Lula incumbency and Northeast base",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lula age and approval",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Runoff polling",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4927096",
+  "question": "Will Republicans win white voters in the midterms?",
+  "rules": "The 2026 midterm elections are scheduled to be held on November 3, 2026.\n\nThis market will resolve according to the party that wins the greatest share of white voters in the midterm elections according to exit polling provided by CNN.\n\nThis market will resolve according to the national exit polling for the United States House, as viewed on the applicable cnn.com webpage at 12:00PM ET on November 6, 2026.\n\nIn the event of a tie for first place, this market will resolve based on the party, among those tied, whose name comes first alphabetically.\n\nIn the event that CNN provides applicable exit polling but it is not available at the time specified above, this market will await an update for one full calendar day before moving to the media organizations listed below.\n\nIn the event that CNN does not provide applicable exit polling, this market will resolve according to the exit polling provided by CBS or, should CBS also not provide applicable polling, ABC. \n\nIf none of the listed organizations provide applicable exit polling by November 7, 2026 at 11:59PM ET, this market will resolve to \"Other\".",
+  "start": "2026-09-24",
+  "close": "2026-11-08",
+  "your_drivers": [
+   {
+    "name": "Persistent GOP advantage among white voters",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.95,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Democratic midterm wave",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Exit poll availability",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.95,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4960837",
+  "question": "Will voter turnout in the 2026 Serbian parliamentary election be 70% or more?",
+  "rules": "Parliamentary elections to elect the 250 members of the National Assembly of Serbia are scheduled to take place on October 25, 2026.\n\nThis market will resolve according to the official voter turnout rate in the specified election, defined as the total number of votes cast divided by the total number of eligible voters (see 2023 example: https://publikacije.stat.gov.rs/G2024/Pdf/G20246006.pdf).\n\nIf the reported value falls exactly between two brackets, this market will resolve to the higher bracket.\n\nIf the results of this election are not known by March 31, 2027, 11:59 PM ET, this market will resolve to the lowest bracket.\n\nThe resolution source for this market will be official information published by the Republic Electoral Commission of Serbia (Republička izborna komisija, https://www.rik.parlament.gov.rs/).",
+  "start": "2026-09-25",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Historical turnout near 55-60%",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "High political mobilization from protests",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Inflated voter rolls with emigrants",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Polarized two-bloc contest",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4961813",
+  "question": "Will Alliance of Vojvodina Hungarians – Dr Bálint Pásztor win the third most seats in the 2026 Serbian parliamentary election?",
+  "rules": "Parliamentary elections to elect the 250 members of the National Assembly of Serbia are scheduled to take place on October 25, 2026.\n\nThis market will resolve to the electoral list that wins the third-greatest number of seats in the National Assembly of Serbia as a result of this election.\n\nElectoral lists will be primarily ranked by the number of seats won in the specified election. If two or more lists are tied on seats, ties will be broken by the total number of valid votes received, with higher vote totals ranking higher. If lists remain tied, ties will be broken by alphabetical order of the listed names. This market will resolve to the list that occupies the third finishing position after applying this ranking.\n\nThis market's resolution will be based solely on the number of seats won by the named electoral list, as it appears on the ballot and official proclamations, regardless of which parties make up the list or how its members later organize themselves in the National Assembly.\n\nIf the results of the specified election are not definitively known by March 31, 2027, 11:59 PM ET, this market will resolve to “Other”.\n\nThis market will resolve based on the results of the elections, as indicated by a consensus of credible reporting. In the case of ambiguity, this market will resolve solely based on the results as reported by the Republic Electoral Commission of Serbia (https://www.rik.parlament.gov.rs/).",
+  "start": "2026-09-25",
+  "close": "2026-11-02",
+  "your_drivers": [
+   {
+    "name": "Two-bloc concentration of votes",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "SPS and other lists likely larger",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Minority list lower threshold",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Stable SVM vote share ~1.5-2%",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4962444",
+  "question": "Will the Student List win 50% or more of the vote in the 2026 Serbian parliamentary election?",
+  "rules": "Parliamentary elections to elect the 250 members of the National Assembly of Serbia are scheduled to take place on October 25, 2026.\n\nThis market will resolve according to the percentage of the valid vote won by the electoral list “Student List – Students Win” (Student List) in the 2026 Serbian parliamentary election.\n\nThe percentage will be measured as the number of valid votes received by “Student List – Students Win” (Student List) divided by the total number of valid votes cast in the election.\n\nVotes will be counted only where the official results attribute them to the named electoral list. Votes attributed to another list or electoral designation will not count, regardless of electoral cooperation, endorsements, coalition agreements, or subsequent parliamentary-group arrangements.\n\nIf the reported value falls exactly on a bracket boundary, this market will resolve to the higher range bracket.\n\nIf the results of this election are not definitively known by March 31, 2027, 11:59 PM ET, this market will resolve to the lowest range bracket.\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results reported by the Republic Electoral Commission of Serbia (https://www.rik.parlament.gov.rs/).",
+  "start": "2026-09-25",
+  "close": "2026-11-02",
+  "your_drivers": [
+   {
+    "name": "SNS retains large base",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Student movement popularity",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Other opposition lists splitting vote",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Irregularities",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5087613",
+  "question": "Will CNN fly with Trump by October 31?",
+  "rules": "This market will resolve to \"Yes\" if a journalist representing CNN is aboard an airplane carrying Donald Trump at the time of takeoff between market creation and the specified date, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nThe journalist must be representing CNN at the time of the flight. Journalists representing other agencies at the time of the flight will not qualify, regardless of any previous work done for CNN.\n\nThe primary resolution source for this market will be a consensus of credible reporting.",
+  "start": "2026-09-28",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "White House control of press pool",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Trump hostility to CNN",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Pool rotation and frequent travel",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm campaign travel volume",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 1
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.049,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5162106",
+  "question": "Cornell President out by October 31?",
+  "rules": "This market resolves to “Yes” if Michael Kotlikoff’s departure as President of Cornell University is officially announced by October 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to “No”.\n\nThe departure will be considered to be announced when Michael Kotlikoff, Cornell University, or their authorized representatives publicly and definitively announce that Michael Kotlikoff has ceased or will cease to hold the position of President of Cornell University. Such an announcement will qualify regardless of when Michael Kotlikoff formally leaves the position. Announcements of Michael Kotlikoff’s resignation, removal, or departure through other means all qualify.\n\nOnly announcements which are framed as announcing a departure intended to be effective within 18 months of the date of the announcement will qualify (e.g., neither “I will leave office in 2 years,” nor “I will not be in office forever,” would qualify).\n\nAnnouncements of temporary leaves of absence, dated suspensions, indefinite suspensions, administrative leaves, or other temporary changes to Michael Kotlikoff’s duties as President of Cornell University do not qualify.\n\nThe following do not qualify as public and definitive announcements: statements that Michael Kotlikoff is considering or open to departing; conditional statements that Michael Kotlikoff will depart only if certain conditions are met; the announcement of an offer of resignation that requires acceptance and remains pending or has been refused; media reports that Michael Kotlikoff plans to depart; statements made in sarcasm or jest; and statements by persons other than Michael Kotlikoff, Cornell University, or their respective authorized representatives.\n\nIf Michael Kotlikoff formally ceases to hold the position of President of Cornell University without a qualifying announcement, the market will resolve to “Yes” if a consensus of credible reporting confirms the departure by October 31, 2026, 11:59 PM ET.\n\nThe primary resolution sources for this market will be official information from Michael Kotlikoff and Cornell University; however, a consensus of credible reporting may also be used.",
+  "start": "2026-09-30",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "Recently installed president",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Federal funding pressure on Ivies",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Campus controversy",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Short window",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5164767",
+  "question": "FlyDubai co-pilot transferred to Israel by Oct. 31?",
+  "rules": "On September 30, 2026, FlyDubai flight FZ1073 from Dubai to Tel Aviv diverted to Saudi Arabia following an incident in the cockpit in which the co-pilot allegedly stabbed the captain. The co-pilot was taken into custody in Saudi Arabia (see: https://www.reuters.com/world/middle-east/diverted-flydubai-flight-israel-was-not-hijacking-incident-israeli-prime-2026-09-30/).\n\nThis market will resolve to “Yes” if the referenced co-pilot is transported to Israeli custody within the territory of Israel between market creation and October 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to “No”.\n\nThe co-pilot must actually enter Israeli territory for this market to resolve to “Yes.” Announcements or statements of intent will not qualify.\n\nThe primary resolution sources for this market will be official information from the governments of Saudi Arabia and Israel; however, a consensus of credible reporting may also be used.",
+  "start": "2026-09-30",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "No Saudi-Israel diplomatic relations or extradition",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Co-pilot likely non-Israeli; UAE jurisdiction claims",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Israeli pressure if Israeli passengers targeted",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Slow legal processes",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5167225",
+  "question": "Will Trump speak to Ahmed al-Sharaa by October 31?",
+  "rules": "This market will resolve to \"Yes\" if the listed individual speaks with Donald Trump between market creation and October 31, 2026, 11:59 PM ET. Otherwise, it will resolve to \"No\".\n\nSpeaking is defined as any verbal interaction between the listed individual and Donald Trump, occurring either in person or through verbal communication by phone or video call.\n\nThe resolution source will be credible media reporting. However, in the absence of definitive or in the case of contradictory media reporting, statements by either of the specified individuals or their official representatives will also be considered.\n\nStatements by the specified individuals or their official representatives will only be considered conclusive if the claims explicitly, or in context unambiguously, indicate that a qualifying talk occurred within the specified timeframe and took place via verbal communication, and provided that such claims are not contradicted by the other specified individual, their representatives, or credible media reporting by the end of the third calendar date (ET) following the statement in question.\n\nThis market will resolve at the earlier of i) a qualifying verbal interaction being confirmed under the above rules or ii) 11:59 PM ET on the third calendar day following this market's above-specified timeframe.\n\nIf the date and time of a qualifying talk cannot be confirmed by a consensus of credible reporting by 11:59 PM ET on the third calendar day following this market's above-specified timeframe, it will resolve to \"No\" regardless of whether it was later confirmed to have taken place.",
+  "start": "2026-10-01",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Established Trump-Sharaa relationship",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Syria-Israel security talks needing US push",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "No scheduled meeting in window",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Calls often unreported",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5211868",
+  "question": "Flávio Bolsonaro charged or arrested by October 31?",
+  "rules": "This market will resolve to \"Yes\" if Flávio Bolsonaro is charged with a crime or arrested by Brazilian authorities, including by authorities of any state or other subdivision of Brazil, by October 31, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nThe primary resolution source for this market will be official information from the government involved in any action against Bolsonaro and information from Bolsonaro and/or his legal representatives, however a consensus of credible reporting may also be used.",
+  "start": "2026-10-02",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "Active presidential candidate protections and optics",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Senatorial immunity limits arrest",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Ongoing investigations (rachadinha etc.)",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 3
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5329569",
+  "question": "Will Lula win the most votes in the second round of the Brazil presidential election from Alagoas?",
+  "rules": "The second round of the presidential election is scheduled to take place in Alagoas, Brazil on October 25, 2026.\n\nThis market will resolve according to the listed candidate who receives the most valid votes in the second round of this election from Alagoas.\n\nCandidates will be primarily ranked by order of valid votes won in Alagoas. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",
+  "start": "2026-10-05",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Northeast strong Lula base",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lula won Alagoas comfortably in 2022",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "National swing toward right",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5329576",
+  "question": "Will Flavio Bolsonaro win the most votes in the second round of the Brazil presidential election from Amapá?",
+  "rules": "The second round of the presidential election is scheduled to take place in Amapá, Brazil on October 25, 2026.\n\nThis market will resolve according to the listed candidate who receives the most valid votes in the second round of this election from Amapá.\n\nCandidates will be primarily ranked by order of valid votes won in Amapá. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",
+  "start": "2026-10-05",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Bolsonaro narrowly won Amapá in 2022",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "National swing toward Flávio",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Local political alliances (Alcolumbre)",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Flávio weaker than father with evangelicals",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5329588",
+  "question": "Will Lula win the most votes in the second round of the Brazil presidential election from Amazonas?",
+  "rules": "The second round of the presidential election is scheduled to take place in Amazonas, Brazil on October 25, 2026.\n\nThis market will resolve according to the listed candidate who receives the most valid votes in the second round of this election from Amazonas.\n\nCandidates will be primarily ranked by order of valid votes won in Amazonas. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",
+  "start": "2026-10-05",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Bolsonaro won Amazonas in 2022",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Flávio leading nationally",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lula historically strong in Manaus interior",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Close margin state",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5329676",
+  "question": "Will Flavio Bolsonaro win the most votes in the second round of the Brazil presidential election from Pará?",
+  "rules": "The second round of the presidential election is scheduled to take place in Pará, Brazil on October 25, 2026.\n\nThis market will resolve according to the listed candidate who receives the most valid votes in the second round of this election from Pará.\n\nCandidates will be primarily ranked by order of valid votes won in Pará. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",
+  "start": "2026-10-05",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Lula won Pará in 2022",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Helder Barbalho alliance with Lula",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "National swing toward Flávio",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Agribusiness south Pará",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5329910",
+  "question": "Will Flavio Bolsonaro win the most votes in the second round of the Brazil presidential election from São Paulo?",
+  "rules": "The second round of the presidential election is scheduled to take place in São Paulo, Brazil on October 25, 2026.\n\nThis market will resolve according to the listed candidate who receives the most valid votes in the second round of this election from São Paulo.\n\nCandidates will be primarily ranked by order of valid votes won in São Paulo. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",
+  "start": "2026-10-05",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Bolsonaro won São Paulo in 2022",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Tarcísio and state machine support",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Flávio leading nationally",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lula strength in capital city",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "5330020",
+  "question": "Will Lula win the most votes in the second round of the Brazil presidential election from abroad?",
+  "rules": "The second round of the presidential election is scheduled to take place in Brazil on October 25, 2026.\n\nThis market will resolve according to the listed candidate who receives the most valid votes in the second round of this election from voters abroad, meaning votes cast outside Brazil and reported by the Superior Electoral Court (TSE) under “Exterior”.\n\nCandidates will be primarily ranked by order of valid votes won abroad. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",
+  "start": "2026-10-05",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Lula narrowly won abroad in 2022",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Strong Bolsonarista diaspora in US",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "European diaspora leaning Lula",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "National swing toward Flávio",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.55,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.741,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": [
+    "Strong Bolsonarista diaspora in US",
+    "European diaspora leaning Lula"
+   ]
+  }
+ },
+ {
+  "id": "5330802",
+  "question": "U.S. anti-cartel operation outside of the U.S. by October 31?",
+  "rules": "This market will resolve to \"Yes\" if U.S. personnel directly participate on the ground in an anti-cartel operation or conduct a kinetic action directed against a cartel on foreign soil between market creation and the specified date, 11:59 PM ET. Otherwise, this market will resolve to “No”.\n\n\"U.S. personnel” refers to members of the U.S. Armed Forces and officers or employees of any U.S. government department or agency acting in an official capacity.\n\nAn anti-cartel operation or kinetic action is “directed against a cartel” if it explicitly targets a cartel, a narcotics-trafficking organization, a narco-terrorist organization, or the personnel, assets, infrastructure, or activities of any such group or organization. A specific cartel or organization need not be named.\n\n“Foreign soil” means the terrestrial territory of a country other than the United States, including internal waters within that territory. Territorial seas, other maritime zones, and airspace are excluded. Where borders are disputed, territory claimed by and under the de facto control of a foreign country as of market creation will qualify.\n\nA qualifying anti-cartel operation refers to an operation in  which U.S. personnel are physically present as part of the force directly engaging cartel personnel, assets, or infrastructure on foreign soil. For example, qualifying operations may include a raid; entry, breach, or search of a target site; a search, arrest, apprehension, detention, boarding, interdiction, or seizure; disabling or destroying cartel assets or infrastructure; or direct ground combat against cartel personnel.U.S. personnel must be physically present on foreign soil at the target site or its immediate perimeter as part of the force carrying out or attempting a qualifying operational action against a cartel target. Such presence qualifies regardless of whether U.S. personnel themselves enter the target site or carry out the action. Mere presence on foreign soil, indirect participation in a joint operation, or involvement limited to training, intelligence, surveillance, logistics, support, advisory, command-and-control, coordination, reconnaissance, patrols, transportation, force protection, inspections, demonstrations, media or information campaigns, or similar activities will not count unless the requirement for physical presence at the target site or its immediate perimeter as part of the force conducting the qualifying action is met.\n\nOnly operations in which direct U.S. participation is confirmed by official statements from the U.S. government or by an overwhelming consensus of credible reporting, will qualify. For example, previous operations such as the 2014 capture of Joaquín \"El Chapo\" Guzmán, in which U.S. forces were rumored to have been embedded with Mexican Marines, would not qualify.\n\nQualifying kinetic actions include air strikes and surface-to-surface missile strikes, initiated by U.S. personnel, directed against a cartel target located on foreign soil. An ",
+  "start": "2026-10-05",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "Trump administration escalation against cartels",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Strict on-land requirement excludes maritime strikes",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Mexican sovereignty resistance",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Venezuela-related operations",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Pre-midterm show of force incentive",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ }
+]

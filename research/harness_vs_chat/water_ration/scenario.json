@@ -1,0 +1,357 @@
+{
+ "description": "پس از یک خشکسالی شدید، شهری چندمیلیون‌نفره جیره‌بندی آب لوله‌کشی را آغاز می‌کند و آب بخشی از هر روز قطع می‌شود. شرکت آب، شهرداری و دولت شهری، خانوارها و تانکرکش‌های خصوصی هر کدام واکنش نشان می‌دهند و باران، موج گرما یا ترکیدگی خطوط نیز اثر می‌گذارد. هر مرحله دو هفته است.",
+ "initial_agents": [
+  {
+   "name": "environment",
+   "role": "محیط و رویدادهای بیرونی",
+   "objectives": {
+    "external_events": 0.5,
+    "random_shocks": 0.5
+   },
+   "personality": "نمایندهٔ رویدادهایی که از کنترل چهار بازیگر بیرون است: باران یا نبود آن، موج گرما، ترکیدگی لوله و پخش شایعه؛ هر رویداد ممکن است رخ دهد یا ندهد."
+  },
+  {
+   "name": "water_utility",
+   "role": "شرکت آب و فاضلاب شهری",
+   "objectives": {
+    "protect_reservoir": 0.6,
+    "keep_service_running": 0.4
+   },
+   "personality": "تصمیم جیره‌بندی، سختگیری و تخفیف آن با اوست؛ نگران ته‌نشینی مخازن است و با شبکهٔ فرسوده و بودجهٔ محدود کار می‌کند."
+  },
+  {
+   "name": "city_government",
+   "role": "شهرداری و دولت شهری",
+   "objectives": {
+    "public_order": 0.5,
+    "protect_vulnerable": 0.5
+   },
+   "personality": "اختیار تعرفه، جریمه، تانکر امدادی و پیام‌رسانی عمومی را دارد؛ هم از خشم مردم می‌ترسد و هم از اتمام آب."
+  },
+  {
+   "name": "households",
+   "role": "خانوارهای شهری",
+   "objectives": {
+    "reliable_water": 0.7,
+    "low_cost": 0.3
+   },
+   "personality": "برای آب شرب و بهداشت به لوله و مخزن خانگی وابسته‌اند؛ بخشی ذخیره می‌کنند، بخشی از تانکر می‌خرند و بخشی اعتراض می‌کنند."
+  },
+  {
+   "name": "tanker_vendors",
+   "role": "تانکرکش‌ها و فروشندگان خصوصی آب",
+   "objectives": {
+    "profit": 0.7,
+    "keep_customers": 0.3
+   },
+   "personality": "از کمبود آب لوله سود می‌برند؛ قیمت و ناوگان را با تقاضا تنظیم می‌کنند و گاهی از منابع کم‌کیفیت برداشت می‌کنند."
+  }
+ ],
+ "initial_state": {
+  "reservoir": 25,
+  "supply_hours": 95,
+  "home_storage": 40,
+  "tanker_price": 25,
+  "public_anger": 25,
+  "health_risk": 15,
+  "utility_budget": 55
+ },
+ "variable_labels": {
+  "reservoir": "سطح ذخیرهٔ سدها و منابع آب شهر؛ مقدار بالا یعنی ذخیرهٔ بیشتر",
+  "supply_hours": "ساعت‌های برقراری آب لوله در روز؛ مقدار بالا یعنی آب بیشتر و بدون قطع",
+  "home_storage": "ذخیرهٔ آب در مخزن و ظرف خانوارها؛ مقدار بالا یعنی ذخیرهٔ بیشتر",
+  "tanker_price": "قیمت آب تانکری در بازار آزاد؛ مقدار بالا یعنی گران‌تر",
+  "public_anger": "نارضایتی و اعتراض مردم؛ مقدار بالا یعنی خشم بیشتر",
+  "health_risk": "خطر بهداشتی و بیماری ناشی از آب؛ مقدار بالا یعنی خطر بیشتر",
+  "utility_budget": "توان مالی شرکت آب؛ مقدار بالا یعنی بودجه و درآمد بیشتر"
+ },
+ "relations": [
+  {
+   "from": "water_utility",
+   "to": "households",
+   "type": "supplies"
+  },
+  {
+   "from": "tanker_vendors",
+   "to": "households",
+   "type": "supplies"
+  },
+  {
+   "from": "city_government",
+   "to": "water_utility",
+   "type": "regulates"
+  },
+  {
+   "from": "city_government",
+   "to": "tanker_vendors",
+   "type": "regulates"
+  }
+ ],
+ "causal_links": [
+  {
+   "from": "reservoir",
+   "to": "supply_hours",
+   "weight": 0.2
+  },
+  {
+   "from": "supply_hours",
+   "to": "home_storage",
+   "weight": 0.3
+  },
+  {
+   "from": "supply_hours",
+   "to": "tanker_price",
+   "weight": -0.3
+  },
+  {
+   "from": "home_storage",
+   "to": "tanker_price",
+   "weight": -0.15
+  },
+  {
+   "from": "supply_hours",
+   "to": "public_anger",
+   "weight": -0.3
+  },
+  {
+   "from": "tanker_price",
+   "to": "public_anger",
+   "weight": 0.25
+  },
+  {
+   "from": "supply_hours",
+   "to": "health_risk",
+   "weight": -0.15
+  },
+  {
+   "from": "tanker_price",
+   "to": "health_risk",
+   "weight": 0.1
+  },
+  {
+   "from": "home_storage",
+   "to": "health_risk",
+   "weight": 0.1
+  },
+  {
+   "from": "supply_hours",
+   "to": "utility_budget",
+   "weight": 0.2
+  },
+  {
+   "from": "public_anger",
+   "to": "utility_budget",
+   "weight": -0.1
+  }
+ ],
+ "allowed_actions": [
+  "rain_arrives",
+  "heat_wave",
+  "main_pipe_burst",
+  "rationing_rumor_spreads",
+  "start_rationing",
+  "tighten_rationing",
+  "ease_rationing",
+  "fix_leaks_and_pressure",
+  "deploy_free_tankers",
+  "raise_water_tariff",
+  "launch_conservation_campaign",
+  "fine_excess_users",
+  "hoard_water_in_tanks",
+  "buy_from_tankers",
+  "cut_use_voluntarily",
+  "protest_and_complain",
+  "raise_tanker_prices",
+  "expand_tanker_fleet",
+  "sell_unsafe_well_water",
+  "hold_position"
+ ],
+ "action_owner": {
+  "rain_arrives": "environment",
+  "heat_wave": "environment",
+  "main_pipe_burst": "environment",
+  "rationing_rumor_spreads": "environment",
+  "start_rationing": "water_utility",
+  "tighten_rationing": "water_utility",
+  "ease_rationing": "water_utility",
+  "fix_leaks_and_pressure": "water_utility",
+  "deploy_free_tankers": "city_government",
+  "raise_water_tariff": "city_government",
+  "launch_conservation_campaign": "city_government",
+  "fine_excess_users": "city_government",
+  "hoard_water_in_tanks": "households",
+  "buy_from_tankers": "households",
+  "cut_use_voluntarily": "households",
+  "protest_and_complain": "households",
+  "raise_tanker_prices": "tanker_vendors",
+  "expand_tanker_fleet": "tanker_vendors",
+  "sell_unsafe_well_water": "tanker_vendors",
+  "hold_position": "any"
+ },
+ "action_tradeoffs": {
+  "rain_arrives": {
+   "reservoir": 8,
+   "public_anger": -3
+  },
+  "heat_wave": {
+   "reservoir": -6,
+   "health_risk": 5,
+   "public_anger": 3
+  },
+  "main_pipe_burst": {
+   "supply_hours": -10,
+   "health_risk": 5,
+   "utility_budget": -4,
+   "reservoir": -3
+  },
+  "rationing_rumor_spreads": {
+   "tanker_price": 6,
+   "public_anger": 6,
+   "home_storage": 3
+  },
+  "start_rationing": {
+   "supply_hours": -35,
+   "reservoir": 5,
+   "public_anger": 12,
+   "utility_budget": -5,
+   "tanker_price": 6
+  },
+  "tighten_rationing": {
+   "supply_hours": -12,
+   "reservoir": 4,
+   "public_anger": 8,
+   "utility_budget": -3
+  },
+  "ease_rationing": {
+   "supply_hours": 12,
+   "reservoir": -4,
+   "public_anger": -6,
+   "utility_budget": 3
+  },
+  "fix_leaks_and_pressure": {
+   "reservoir": 3,
+   "supply_hours": 3,
+   "utility_budget": -6
+  },
+  "deploy_free_tankers": {
+   "home_storage": 6,
+   "tanker_price": -5,
+   "public_anger": -5,
+   "health_risk": -2,
+   "utility_budget": -5
+  },
+  "raise_water_tariff": {
+   "utility_budget": 8,
+   "reservoir": 2,
+   "public_anger": 8
+  },
+  "launch_conservation_campaign": {
+   "reservoir": 3,
+   "public_anger": -2,
+   "utility_budget": -2
+  },
+  "fine_excess_users": {
+   "reservoir": 3,
+   "public_anger": 7,
+   "utility_budget": 3
+  },
+  "hoard_water_in_tanks": {
+   "home_storage": 12,
+   "reservoir": -3,
+   "tanker_price": 3,
+   "health_risk": 3
+  },
+  "buy_from_tankers": {
+   "home_storage": 8,
+   "tanker_price": 6,
+   "public_anger": -2,
+   "health_risk": 1
+  },
+  "cut_use_voluntarily": {
+   "reservoir": 3,
+   "home_storage": -3,
+   "public_anger": 2
+  },
+  "protest_and_complain": {
+   "public_anger": 5,
+   "supply_hours": 2,
+   "utility_budget": -2
+  },
+  "raise_tanker_prices": {
+   "tanker_price": 12,
+   "public_anger": 5,
+   "home_storage": -3
+  },
+  "expand_tanker_fleet": {
+   "tanker_price": -8,
+   "home_storage": 4,
+   "reservoir": -2,
+   "health_risk": 2
+  },
+  "sell_unsafe_well_water": {
+   "tanker_price": -6,
+   "home_storage": 5,
+   "health_risk": 12,
+   "reservoir": -2
+  },
+  "hold_position": {}
+ },
+ "variable_tradeoffs": {},
+ "variable_specs": {
+  "reservoir": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "supply_hours": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "home_storage": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "tanker_price": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "public_anger": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "health_risk": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "utility_budget": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  }
+ },
+ "rules": [],
+ "events": [],
+ "enable_meta_actions": false,
+ "agent_response_format": "strategic",
+ "max_delta": 40,
+ "stage_length": "دو هفته"
+}

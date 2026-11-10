@@ -1,0 +1,12 @@
+{"opec_quota": {"X": {"behaviour": 3, "consistency": 4, "insight": 3, "usefulness": 3},
+                "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "prefer": "Y", "why": "Y shows Russia's paper cut below its actual output, the UAE's quiet capacity-bound understanding and US SPR buying as a price floor. X is coherent but generic, and a US SPR release at $70 is odd. Y has small template glitches."},
+ "chip_controls": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                   "Y": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 3},
+                   "prefer": "X", "why": "X makes the cloud rule an explicit bargaining chip against rare-earth licences, and shows TSMC self-reporting, Nvidia's write-off and a shift to Middle East data centres. Y has a believable escalate-then-truce arc but is generic."},
+ "app_store": {"X": {"behaviour": 4, "consistency": 3, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 4, "insight": 5, "usefulness": 4},
+               "prefer": "Y", "why": "Y adds the Commission quietly extending the deadline under trade pressure, Google's hidden 12-month offer, Epic's financial fragility splitting the coalition, and the Siri hold-back. X is plausible, but its take-rate drop is steep and the story more generic."},
+ "ev_tariffs": {"X": {"behaviour": 3, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X shows China licensing battery-tech transfer as leverage on Szeged, an exemption for EU value-added, and a quota with a figure. VW publicly backing the measures is less believable. Y is realistic but generic."}}

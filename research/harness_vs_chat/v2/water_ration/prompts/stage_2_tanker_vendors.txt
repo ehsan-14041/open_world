@@ -1,0 +1,51 @@
+You are playing one seat in a step-by-step scenario exercise. Play it the way this actor really would.
+
+Situation: پس از یک خشکسالی شدید، شهری چندمیلیون‌نفره جیره‌بندی آب لوله‌کشی را آغاز می‌کند و آب بخشی از هر روز قطع می‌شود. شرکت آب، شهرداری و دولت شهری، خانوارها و تانکرکش‌های خصوصی هر کدام واکنش نشان می‌دهند و باران، موج گرما یا ترکیدگی خطوط نیز اثر می‌گذارد. هر مرحله دو هفته است.
+Each stage lasts: دو هفته. This is stage 2 of 5.
+
+Variables (0 to 100), meaning, current value:
+- reservoir: سطح ذخیرهٔ سدها و منابع آب شهر؛ مقدار بالا یعنی ذخیرهٔ بیشتر = 29.0
+- supply_hours: ساعت‌های برقراری آب لوله در روز؛ مقدار بالا یعنی آب بیشتر و بدون قطع = 62.0
+- home_storage: ذخیرهٔ آب در مخزن و ظرف خانوارها؛ مقدار بالا یعنی ذخیرهٔ بیشتر = 50.0
+- tanker_price: قیمت آب تانکری در بازار آزاد؛ مقدار بالا یعنی گران‌تر = 42.0
+- public_anger: نارضایتی و اعتراض مردم؛ مقدار بالا یعنی خشم بیشتر = 40.0
+- health_risk: خطر بهداشتی و بیماری ناشی از آب؛ مقدار بالا یعنی خطر بیشتر = 19.0
+- utility_budget: توان مالی شرکت آب؛ مقدار بالا یعنی بودجه و درآمد بیشتر = 47.0
+
+Conditions in force now: ["جیره‌بندی آب لوله‌کشی برقرار است", "کمپین ملی صرفه‌جویی ادامه دارد", "قیمت بالای آب تانکری"]
+
+History so far:
+Stage 1:
+  environment -> hold_position: جیره‌بندی تازه اعلام شده و برنامهٔ قطعی منتشر می‌شود؛ در دو هفته بارش جدی یا ترکیدگی بزرگ محتمل‌تر از وضع عادی نیست، پس رویداد بیرونی مهمی رخ نمی‌دهد.
+  water_utility -> start_rationing: ذخیرهٔ سدها تنها ۲۵ است و حفاظت از مخزن اولویت اصلی ماست؛ جیره‌بندی اکنون از ته‌نشینی جلوگیری می‌کند و خشم مردم را با اطلاع‌رسانی مدیریت می‌کنیم.
+  city_government -> launch_conservation_campaign: ذخیرهٔ سدها فقط ۲۵ است و جیره‌بندی تازه شروع شده. کمپین مصرف، بدون افزایش خشم مردم و با هزینهٔ کم، ذخیره را حفظ می‌کند و فشار را روی اقشار آسیب‌پذیر نمی‌گذارد.
+  households -> hoard_water_in_tanks: ذخیرهٔ سدها کم است و جیره‌بندی تازه شروع شده. آب شرب و بهداشت اولویت ماست، پس تا قبل از گران‌شدن تانکر، مخزن خانه را پر می‌کنیم.
+  tanker_vendors -> raise_tanker_prices: جیره‌بندی تقاضا را بالا می‌برد و ذخیرهٔ خانوارها هنوز متوسط است؛ افزایش قیمت بیشترین سود را دارد، ولی باید در حدی بماند که مشتریان دائمی از دست نروند و خشم عمومی تنظیم‌کننده‌ها را نیاورد.
+  message from water_utility to households: جیره‌بندی برای بقای ذخیرهٔ شهر ضروری است؛ لطفاً مصرف را کم کنید و برنامهٔ قطعی را از ما پیگیری کنید.
+  message from city_government to households: جیره‌بندی موقت و برای همه است؛ با کاهش مصرف، قطعی‌ها کوتاه‌تر می‌شود. برنامهٔ قطع آب شفاف اعلام می‌شود.
+  message from households to water_utility: برنامهٔ دقیق ساعت قطع آب را از قبل اعلام کنید تا خانوارها بدون ذخیره‌سازی هراسان برنامه‌ریزی کنند.
+  message from tanker_vendors to households: قیمت‌ها با کمبود و هزینهٔ سوخت و دورتر شدن منابع بالا رفته؛ مشتریان دائمی نوبت و تحویل مطمئن دارند.
+  referee summary: جیره‌بندی آغاز شد و ساعت‌های آب شدیداً کم شد. خانوارها ذخیره کردند و تانکرکش‌ها قیمت را بالا بردند. خشم مردم افزایش یافت، ذخیرهٔ سدها کمی بهتر شد و رویداد بیرونی مهمی رخ نداد.
+  state after stage 1: {"reservoir": 29.0, "supply_hours": 62.0, "home_storage": 50.0, "tanker_price": 42.0, "public_anger": 40.0, "health_risk": 19.0, "utility_budget": 47.0}
+
+Your seat: tanker_vendors (تانکرکش‌ها و فروشندگان خصوصی آب). Goals: {"profit": 0.7, "keep_customers": 0.3}. Character: از کمبود آب لوله سود می‌برند؛ قیمت و ناوگان را با تقاضا تنظیم می‌کنند و گاهی از منابع کم‌کیفیت برداشت می‌کنند.
+Other seats: environment (محیط و رویدادهای بیرونی), water_utility (شرکت آب و فاضلاب شهری), city_government (شهرداری و دولت شهری), households (خانوارهای شهری)
+
+Your own actions, with the typical direct effect of each in one stage:
+- raise_tanker_prices: {"tanker_price": 12, "public_anger": 5, "home_storage": -3}
+- expand_tanker_fleet: {"tanker_price": -8, "home_storage": 4, "reservoir": -2, "health_risk": 2}
+- sell_unsafe_well_water: {"tanker_price": -6, "home_storage": 5, "health_risk": 12, "reservoir": -2}
+- hold_position: {}
+
+Actions of the other seats (for reference): {"environment": ["rain_arrives", "heat_wave", "main_pipe_burst", "rationing_rumor_spreads"], "water_utility": ["start_rationing", "tighten_rationing", "ease_rationing", "fix_leaks_and_pressure"], "city_government": ["deploy_free_tankers", "raise_water_tariff", "launch_conservation_campaign", "fine_excess_users"], "households": ["hoard_water_in_tanks", "buy_from_tankers", "cut_use_voluntarily", "protest_and_complain"]}
+
+Your private plan note from the previous stage: اگر دولت تانکر رایگان فرستاد یا خشم بالا رفت، قیمت را نگه دارم یا ناوگان را گسترش دهم. از آب ناسالم پرهیز کنم مگر فشار شدید؛ خطر بهداشتی و جریمه دارد. مشتریان وفادار را با تحویل مطمئن حفظ کنم.
+
+Task: choose the ONE action your seat takes in this stage (one of your own actions, or hold_position).
+Think about where you want to be by stage 5, not only about this stage. Do not keep repeating an action
+that has stopped working. Consider what the others want and whether a deal, a threat or a concession
+would serve your goals; you may send one short public message to one other seat.
+
+Reply with one JSON object only:
+{"chosen_action": "...", "justification": "<Persian, at most 40 words>", "message_to": "<seat name or empty>",
+ "message": "<Persian, at most 25 words, or empty>", "plan": "<Persian, at most 50 words: private note to your later self>"}

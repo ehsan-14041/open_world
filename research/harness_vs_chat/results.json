@@ -1,0 +1,77 @@
+{
+ "judgments": 12,
+ "preferred": {
+  "harness": 3,
+  "chat": 9,
+  "tie": 0
+ },
+ "mean_scores": {
+  "harness": {
+   "behaviour": 3.0,
+   "consistency": 3.17,
+   "insight": 3.0,
+   "usefulness": 2.92
+  },
+  "chat": {
+   "behaviour": 4.0,
+   "consistency": 3.83,
+   "insight": 3.25,
+   "usefulness": 3.58
+  }
+ },
+ "rule_outcome": "plain chat is at least as good",
+ "by_scenario": [
+  {
+   "scenario": "phone_ban",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "X stays plausible: smuggling fades as quota and sub-threshold models arrive. Y shows workarounds driving FX pressure to 100, but legal supply reaching 100 under a ban is absurd, and assemblers repeat one action.",
+    "X shows a plausible arc: ban circumvented via sub-threshold models, quota softening, gradual recovery. Y saturates legal supply at 100 under a ban and fx pressure at 100, with repetitive assembler and consumer moves.",
+    "Y's consumer wait-then-grey-market reaction and FX spiral are interesting, but legal supply and FX pressure both hit 100 under an active ban, which breaks the story. X stays plausible with a clear quota turning point."
+   ]
+  },
+  {
+   "scenario": "free_coder",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "Y shows a downturn turning rate cuts into layoffs and emigration, a real turning point for outsourcers. X has employment and hours rising while in-house AI hits 80, a generic and implausibly rosy story.",
+    "Y has a real turning point: downturn plus free tools trigger rate cuts, contract cuts, layoffs and emigration, then a partial review-services recovery. X is a rosy, repetitive path where employment rises despite 80 in-house adoption.",
+    "X is rosy and repetitive: developers upskill every stage while employment and client hours rise despite 80% in-house AI. Y shows downturn compounding free AI, layoffs, emigration, then a partial review-services recovery."
+   ]
+  },
+  {
+   "scenario": "water_ration",
+   "preferences": [
+    "harness",
+    "harness",
+    "harness"
+   ],
+   "reasons": [
+    "Y exposes the trade-off that free tankers drain the utility budget, so repairs stop and rationing tightens. Its tanker vendors are oddly passive, but it is more decision-relevant than X's rain-assisted easing.",
+    "Y surfaces the trade-off: free tankers and repairs drain the utility budget to near zero while supply hours fall and anger and health risk climb. X is coherent but a fairly generic recovery leaning on convenient rain.",
+    "Y exposes the trade-off: protecting the reservoir by tightening drives supply hours to 28, anger and health risk up, and the utility budget toward collapse. X leans on convenient rain for a generic recovery."
+   ]
+  },
+  {
+   "scenario": "truck_strike",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "X has a believable arc: concessions (fuel cut, tariff floor) lead to a deal and recovery. Y repeats escorts and union holding, and prices climb to 93 with little explanation, so the path reads mechanical.",
+    "X has a clear arc: escalation, fuel cut and tariff floor, then a deal ending the strike. Y repeats the same moves for five stages, never addresses fuel, and lets prices climb to 93 while supply recovers.",
+    "X has a coherent arc: fuel cut and tariff floor lead to a deal and recovery. Y repeats the same actions for four stages; freight recovers while the strike continues; fuel is never addressed; prices climb to 93."
+   ]
+  }
+ ]
+}

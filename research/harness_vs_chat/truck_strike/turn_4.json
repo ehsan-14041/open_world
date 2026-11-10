@@ -1,0 +1,58 @@
+{
+ "environment": {
+  "chosen_action": "hold_position",
+  "primary_variable": "freight_flow",
+  "probability": 0.6,
+  "justification": "در سه مرحله دو بار خرید هراسی و پیوستن صنف دیگر رخ داده و جریان بار نسبتاً بازگشته است. در حالت بی‌ثباتی، رویداد تازهٔ بیرونی محتمل‌تر از ادامهٔ روند نیست و محیط دخالت نمی‌کند.",
+  "causal_chain": "بدون شوک تازه، جریان بار و موجودی قفسه‌ها طبق پیوندهای علّی موجود و کنش بازیگران رانش می‌کنند.",
+  "expected_effect": {}
+ },
+ "drivers_union": {
+  "chosen_action": "hold_position",
+  "primary_variable": "driver_margin",
+  "probability": 0.6,
+  "justification": "همبستگی ۷۰ بالاست و حاشیه با کف تعرفه و افزایش کرایه از ۲۸ به ۳۴ رسیده، اما هنوز کم است. پذیرش توافق زودهنگام همبستگی را می‌شکند و تشدید جاده‌ای نظم را بحرانی می‌کند؛ صبر می‌کنیم.",
+  "causal_chain": "ادامهٔ اعتصاب فعلی با جریان بار پایین فشار چانه‌زنی را حفظ می‌کند و افزایش کرایه حاشیهٔ رانندگان را بالاتر می‌برد، بدون هزینهٔ تازه برای همبستگی.",
+  "expected_effect": {},
+  "relation_updates": []
+ },
+ "government": {
+  "chosen_action": "deploy_police_escorts",
+  "primary_variable": "freight_flow",
+  "probability": 0.6,
+  "justification": "جریان بار ۴۹ و قیمت‌ها ۸۷ است و بودجه برای یارانه بزرگ نیست. اسکورت پلیس کم‌هزینه است، بار را باز نگه می‌دارد و بدون دستگیری رهبران نظم را اندکی بهتر می‌کند.",
+  "causal_chain": "اسکورت پلیس ← افزایش جریان بار ← بهبود موجودی قفسه‌ها و کاهش فشار قیمت ← حفظ نظم عمومی",
+  "expected_effect": {
+   "freight_flow": 8,
+   "public_order": 4,
+   "driver_unity": 3,
+   "driver_margin": -2
+  },
+  "relation_updates": []
+ },
+ "shippers": {
+  "chosen_action": "raise_freight_rates",
+  "primary_variable": "freight_flow",
+  "probability": 0.6,
+  "justification": "جریان بار ۴۹ است و همبستگی رانندگان ۷۰ هنوز بالاست. کرایه را بیشتر بالا می‌بریم، کمتر از خواسته رانندگان، تا حمل برگردد و اتحاد سست شود؛ کار با استخدام شکن‌اعتصاب پرتنش‌تر است.",
+  "causal_chain": "افزایش کرایه حاشیه رانندگان را بالا می‌برد و همبستگی را کم می‌کند، که جریان بار را بهتر می‌کند؛ هزینه آن فشار قیمت است.",
+  "expected_effect": {
+   "driver_margin": 7,
+   "price_level": 5,
+   "freight_flow": 3,
+   "driver_unity": -3
+  }
+ },
+ "retailers": {
+  "chosen_action": "draw_down_inventory_buffer",
+  "primary_variable": "shelf_supply",
+  "probability": 0.7,
+  "justification": "موجودی قفسه‌ها ۵۶ و قیمت‌ها ۸۷ است و اعتصاب ادامه دارد. برداشت از ذخیرهٔ انبار قفسه‌ها را پر نگه می‌دارد و بدون گران‌فروشی زیر نگاه ناظر قیمت را مهار می‌کند.",
+  "causal_chain": "برداشت از ذخیرهٔ انبار ← افزایش موجودی قفسه ← کاهش فشار قیمت و آرام‌ماندن مصرف‌کننده",
+  "expected_effect": {
+   "shelf_supply": 8,
+   "price_level": -3,
+   "driver_unity": 2
+  }
+ }
+}

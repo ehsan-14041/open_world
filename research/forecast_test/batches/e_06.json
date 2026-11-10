@@ -1,0 +1,1223 @@
+[
+ {
+  "id": "4063198",
+  "question": "Will the Democrats win Miami-Dade County in the Florida Senate race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Miami-Dade County in the general special election for United States Senator from Florida, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to “Other.”\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of Florida, including the Office of the Secretary of State and the government of Miami-Dade County.",
+  "start": "2026-09-01",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Miami-Dade 2022-2024 rightward Hispanic shift",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm backlash against party in White House",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Hispanic rebound toward Democrats (2025 local results)",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Appointed GOP incumbent Moody advantage",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Weak Florida Democratic infrastructure",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4063831",
+  "question": "Will the Democrats win Genesee County in the Michigan Senate race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Genesee County in the general election for United States Senator from Michigan, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to \"Other.\"\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of Michigan, including the Office of the Secretary of State and the government of Genesee County.",
+  "start": "2026-09-01",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Genesee historical Democratic lean (Flint)",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Working-class shift toward GOP in 2024",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Mike Rogers name recognition",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4063889",
+  "question": "Will the Democrats win Oakland County in the Michigan Senate race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Oakland County in the general election for United States Senator from Michigan, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to \"Other.\"\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of Michigan, including the Office of the Secretary of State and the government of Oakland County.",
+  "start": "2026-09-01",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Oakland suburban Democratic trend",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Rogers suburban appeal",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4063957",
+  "question": "Will the Democrats win Tarrant County in the Texas Senate race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Tarrant County in the general election for United States Senator from Texas, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to \"Other.\"\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of Texas, including the Office of the Secretary of State and the government of Tarrant County.",
+  "start": "2026-09-01",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Tarrant narrow GOP lean in 2024",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "GOP nominee quality (Paxton vs Cornyn)",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Suburban drift toward Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Hispanic shift toward GOP",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.272,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "Tarrant narrow GOP lean in 2024"
+   ]
+  }
+ },
+ {
+  "id": "4063993",
+  "question": "Will the Democrats win Collin County in the Texas Senate race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Collin County in the general election for United States Senator from Texas, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to \"Other.\"\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of Texas, including the Office of the Secretary of State and the government of Collin County.",
+  "start": "2026-09-01",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Collin GOP margin ~10 in 2024",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Educated suburban drift toward Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Weak GOP nominee could alienate suburbs",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.049,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4064440",
+  "question": "Will the Democrats win Washoe County in the Nevada governor race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Washoe County in the general election for Governor of Nevada, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to \"Other.\"\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of Nevada, including the Office of the Secretary of State and the government of Washoe County.",
+  "start": "2026-09-01",
+  "close": "2026-11-07",
+  "your_drivers": [
+   {
+    "name": "Lombardo incumbency and popularity",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lombardo carried Washoe in 2022",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Washoe swing-county Democratic trend",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.025,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4064647",
+  "question": "Will the Democrats win Maricopa County in the Arizona governor race in 2026?",
+  "rules": "This market will resolve according to the party nominee or independent candidate that receives the most valid votes from Maricopa County in the general election for Governor of Arizona, which is scheduled to be held on November 3, 2026.\n\nThe candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidate last names. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nThe nominees of the Democratic and Republican parties are named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election in the specified county are not definitively known by March 31, 2027, this market will resolve to \"Other.\"\n\nThis market will resolve based on a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the government of Arizona, including the Office of the Secretary of State and the government of Maricopa County.",
+  "start": "2026-09-01",
+  "close": "2026-11-07",
+  "your_drivers": [
+   {
+    "name": "Hobbs incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Maricopa narrow margins historically",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "MAGA-aligned GOP nominee (Biggs)",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4096418",
+  "question": "Will the Russian Ecological Party “The Greens” win at least one seat in the next Russian State Duma election?",
+  "rules": "Parliamentary elections are scheduled to be held in Russia in September 2026.\n\nThis market will resolve to “Yes” if the listed party receives at least one seat in the Russian State Duma as a result of the 2026 Russian parliamentary election. Otherwise, that market will resolve to “No”.\n\nSeats will be counted only where the Central Election Commission of the Russian Federation attributes them to the named party. Seats attributed to another party or electoral designation will not count, regardless of electoral cooperation, endorsements, coalition agreements, or subsequent parliamentary-group arrangements. If a named party formally merges into a successor party before the election and does not contest separately, seats officially attributed to that successor party will count.\n\nIf the results of this election are not definitively known by September 30, 2027, 11:59 PM ET, each market will resolve to “No”.\n\nThese markets will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, they will resolve based solely on the official results reported by Russian government sources such as the Central Election Commission of the Russian Federation.",
+  "start": "2026-09-02",
+  "close": "2026-09-25",
+  "your_drivers": [
+   {
+    "name": "Greens far below 5% list threshold",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.95,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Kremlin-allotted single-member seat possibility",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.15,
+    "delay_weeks": 0
+   },
+   {
+    "name": "No single-member seat won in 2021",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4096539",
+  "question": "Will the Liberal Democratic Party of Russia (LDPR) win 95 or more seats in the next Russian State Duma election?",
+  "rules": "Legislative elections are scheduled to be held in Russia in September 2026.\n\nThis market will resolve according to the number of seats held by the Liberal Democratic Party of Russia (LDPR) in the State Duma as a result of the next Russian legislative election.\n\nIf results are not known definitively by September 30, 2027, 11:59 PM ET, this market will resolve to the lowest bracket.\n\nThis market’s resolution will be based solely on the number of seats won by the named party in the State Duma.\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results reported by Russian government sources such as the Central Election Commission of the Russian Federation.",
+  "start": "2026-09-02",
+  "close": "2026-09-21",
+  "your_drivers": [
+   {
+    "name": "LDPR won 21 seats in 2021",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.95,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Post-Zhirinovsky decline",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "United Russia dominance of single-member seats",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4096543",
+  "question": "Will New People (NL) win fewer than 35 seats in the next Russian State Duma election?",
+  "rules": "Legislative elections are scheduled to be held in Russia in September 2026.\n\nThis market will resolve according to the number of seats held by New People (NL) in the State Duma as a result of the next Russian legislative election.\n\nIf results are not known definitively by September 30, 2027, 11:59 PM ET, this market will resolve to the lowest bracket.\n\nThis market’s resolution will be based solely on the number of seats won by the named party in the State Duma.\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results reported by Russian government sources such as the Central Election Commission of the Russian Federation.",
+  "start": "2026-09-02",
+  "close": "2026-09-22",
+  "your_drivers": [
+   {
+    "name": "New People won 13 seats in 2021",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Polling ~5-9% implies ~15-25 list seats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possible Kremlin-managed boost as liberal outlet",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4118938",
+  "question": "Russia-Ukraine peace talks by November 30, 2026?",
+  "rules": "This market will resolve to \"Yes\" if there is a diplomatic meeting between representatives of Russia and Ukraine aimed at discussing a ceasefire, peace agreement, or other substantive de-escalation of the ongoing conflict by the listed date, 11:59 PM ET. Otherwise, this market will resolve to “No”.\n\nA diplomatic meeting refers to a deliberate meeting between representatives of the listed countries who are acting in an official capacity and are authorized to engage in negotiation or diplomacy regarding Russia-Ukraine relations on behalf of their governments. Meetings conducted indirectly, for example, through designated mediators, facilitators, or interlocutors acting with the knowledge and authorization of the relevant governments, will qualify. \n\nMeetings or talks limited to humanitarian issues will not qualify unless they also include substantive negotiation regarding broader Russia-Ukraine peace terms, such as a ceasefire, peace agreement, territorial issues, security guarantees, or similar.\n\nBrief greetings, chance encounters, or talks otherwise not deliberately aimed at diplomacy or negotiation will not count.\n\nThe meeting must be in-person (including indirect in-person meetings) and must be publicly acknowledged by either government or reported by a consensus of credible media. Remote meetings, phone calls, or other meetings where the relevant parties are not present will not count.\n\nThe resolution sources for this market will be official information from the governments of Russia and Ukraine, and a consensus of credible reporting.",
+  "start": "2026-09-02",
+  "close": "2026-11-10",
+  "your_drivers": [
+   {
+    "name": "US-brokered negotiation process ongoing",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Indirect mediated meetings qualify",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Stalemate over territory",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "US attention diverted (Iran, midterms)",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4148956",
+  "question": "Iran blockade lifted before Xi visits US?",
+  "rules": "On July 13, 2026, Trump announced the United States would reinstate its naval blockade of Iran, targeting Iranian ships and customers.\n\nThis market will resolve to “Yes” if the United States government, or an authorized representative of the United States government, publicly and officially announces the end, termination, lifting, or suspension of the United States’ naval blockade on Iranian ships and ships of Iranian customers before Xi Jinping visits the United States. Otherwise, this market will resolve to “No”.\n\nIf neither a qualifying announcement nor a Xi Jinping visit to the United States occurs by December 31, 2026, 11:59 PM ET, this market will resolve to \"No\".\n\nAn announcement qualifies if it communicates that the United States will generally cease blocking vessel traffic for Iranian ships and customers, including an announcement that the blockade will not take effect at all, even if some restrictions remain (for example, an imposition of fees). An announcement does not qualify if it reflects only a limited or partial change that stops short of a general end or suspension of the blockade, for example, an exemption for a specific vessel, cargo, or port.\n\nA qualifying announcement must be a declarative statement of the United States government’s present termination or suspension of the blockade, previously-unannounced prior termination or suspension of the blockade, or definitive decision to terminate or suspend the blockade.\n\nA qualifying announcement must clearly and unambiguously identify the end or suspension of the blockade. Statements that merely allude to, reference, or describe an end to the blockade, without clearly communicating it, do not qualify. The announcement need not use specific terminology or reference the end of a blockade by name; an announcement of a resumption of prior obligations, the maintenance of a status quo, or a return to a previously agreed baseline qualifies, provided the substantive policy of ending or suspending the blockade is clearly and unambiguously communicated.\n\nA qualifying announcement must be made through official channels, by an individual acting in an official capacity. Statements made incidentally or informally in a context not intended for official communication do not qualify.\n\nThe following do not qualify:\n\nAnonymous, unattributed, or leaked statements not confirmed as official;\nStatements by persons not authorized to speak for the United States government;\nThird-party speculation, analysis, or predictions that the United States government will announce or implement an end to the blockade;\nSatirical, fabricated, hacked, or impersonated communications; and\nStatements that describe a prospective, contingent, probable, or conditional end to the blockade rather than announcing a present and decided position.\n\nOnce a qualifying announcement is made before Xi Jinping visits the United States, this market will resolve to “Yes” regardless of whether it is later reversed, or whether the blockade act",
+  "start": "2026-09-02",
+  "close": "2026-09-24",
+  "your_drivers": [
+   {
+    "name": "Short window to close (~3 weeks)",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "US-Iran deal negotiations",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Trump volatility and quick reversals",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Strict official-announcement requirement",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4155307",
+  "question": "Will Republicans win young men in the midterms?",
+  "rules": "The 2026 midterm elections are scheduled to be held on November 3, 2026.\n\nThis market will resolve according to the party that wins the greatest share of men in the age range of 18-24 in the midterm elections according to exit polling provided by CNN.\n\nThis market will resolve according to the national exit polling for the United States House, as viewed on the applicable cnn.com webpage at 12:00PM ET on November 6, 2026.\n\nIn the event that CNN does not provide numbers for men in the 18-24 age range, this market will resolve based on the narrowest age range that begins with the youngest age for which data is available. \n\nIn the event of a tie for first place, this market will resolve based on the party, among those tied, whose name comes first alphabetically.\n\nIn the event that CNN provides applicable exit polling but it is not available at the time specified above, this market will await an update for one full calendar day before moving to the media organizations listed below. \n\nIn the event that CNN does not provide applicable exit polling, this market will resolve according to the exit polling provided by cbsnews.com or, should cbsnews.com also not provide applicable polling, foxnews.com.\n\nIf none of the listed organizations provide applicable exit polling by November 7, 2026 at 11:59PM ET, this market will resolve to \"Other\". ",
+  "start": "2026-09-02",
+  "close": "2026-11-08",
+  "your_drivers": [
+   {
+    "name": "Young men swung to Trump in 2024",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm backlash and young men souring on Trump",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Exit poll small-sample noise / age fallback",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lower young turnout in midterms",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.617,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": [
+    "Young men swung to Trump in 2024",
+    "Midterm backlash and young men souring on Trump"
+   ]
+  }
+ },
+ {
+  "id": "4155318",
+  "question": "Will Democrats win Latino men in the midterms?",
+  "rules": "The 2026 midterm elections are scheduled to be held on November 3, 2026.\n\nThis market will resolve according to the party that wins the greatest share of Latino men in the midterm elections according to exit polling provided by CNN.\n\nThis market will resolve according to the national exit polling for the United States House, as viewed on the applicable cnn.com webpage at 12:00PM ET on November 6, 2026.\n\nIn the event of a tie for first place, this market will resolve based on the party, among those tied, whose name comes first alphabetically.\n\nIn the event that CNN provides applicable exit polling but it is not available at the time specified above, this market will await an update for one full calendar day before moving to the media organizations listed below. \n\nIn the event that CNN does not provide applicable exit polling, this market will resolve according to the exit polling provided by CBS or, should CBS also not provide applicable polling, ABC. \n\nFor purposes of this market, Latino and Hispanic will be considered synonymous; it will not matter which term is used by the resolution source. \n\nIf none of the listed organizations provide applicable exit polling by November 7, 2026 at 11:59PM ET, this market will resolve to \"Other\". ",
+  "start": "2026-09-02",
+  "close": "2026-11-07",
+  "your_drivers": [
+   {
+    "name": "Latino men went to Trump in 2024",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Latino rebound toward Democrats in 2025 elections",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Immigration enforcement / economy backlash",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4188128",
+  "question": "Pete Hegseth out as Secretary of Defense by September 30?",
+  "rules": "This market will resolve to “Yes” if Pete Hegseth ceases to be U.S. Secretary of Defense for any period of time between market creation and the specified date, 11:59 PM ET. Otherwise, this market will resolve to “No”.\n\nAn announcement of Pete Hegseth's resignation/removal by this market's end date will immediately resolve this market to \"Yes\", regardless of when the announced resignation/removal goes into effect.\n\nThe resolution source for this market will be official information from Pete Hegseth and the U.S. government; however, a consensus of credible reporting may also be used.",
+  "start": "2026-09-03",
+  "close": "2026-10-01",
+  "your_drivers": [
+   {
+    "name": "Trump loyalty to Hegseth",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Recurring scandals and controversies",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Short window",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4188133",
+  "question": "Pete Hegseth out as Secretary of Defense by October 31?",
+  "rules": "This market will resolve to “Yes” if Pete Hegseth ceases to be U.S. Secretary of Defense for any period of time between market creation and the specified date, 11:59 PM ET. Otherwise, this market will resolve to “No”.\n\nAn announcement of Pete Hegseth's resignation/removal by this market's end date will immediately resolve this market to \"Yes\", regardless of when the announced resignation/removal goes into effect.\n\nThe resolution source for this market will be official information from Pete Hegseth and the U.S. government; however, a consensus of credible reporting may also be used.",
+  "start": "2026-09-03",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "Trump loyalty to Hegseth",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Recurring scandals and controversies",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Pre-midterm reshuffle unlikely",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Two-month window",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4196367",
+  "question": "Will Alison Jarman win the next Devonport mayoral election?",
+  "rules": "Local government elections are scheduled to be held across Tasmania on October 27, 2026.\n\nThis market will resolve according to the candidate who becomes the next Mayor of the City of Devonport as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by March 31, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as declared by the Tasmanian Electoral Commission (https://www.tec.tas.gov.au/).",
+  "start": "2026-09-03",
+  "close": "2026-10-28",
+  "your_drivers": [
+   {
+    "name": "Jarman incumbent mayor",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Whether she recontests",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Strength of challengers",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4196434",
+  "question": "Will Cheryl Fuller win the next Central Coast mayoral election?",
+  "rules": "Local government elections are scheduled to be held across Tasmania on October 27, 2026.\n\nThis market will resolve according to the candidate who becomes the next Mayor of the Central Coast Council area as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by March 31, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as declared by the Tasmanian Electoral Commission (https://www.tec.tas.gov.au/).",
+  "start": "2026-09-03",
+  "close": "2026-10-28",
+  "your_drivers": [
+   {
+    "name": "Fuller incumbent mayor",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Whether she recontests",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Challenger field",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.963,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4196736",
+  "question": "Will Sally Doyle win the next Huon Valley mayoral election?",
+  "rules": "Local government elections are scheduled to be held across Tasmania on October 27, 2026.\n\nThis market will resolve according to the candidate who becomes the next Mayor of the Huon Valley Council area as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by March 31, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as declared by the Tasmanian Electoral Commission (https://www.tec.tas.gov.au/).",
+  "start": "2026-09-03",
+  "close": "2026-10-29",
+  "your_drivers": [
+   {
+    "name": "Doyle incumbent mayor",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Huon Valley council turbulence history",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Whether she recontests",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.481,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "Doyle incumbent mayor",
+    "Huon Valley council turbulence history",
+    "Whether she recontests"
+   ]
+  }
+ },
+ {
+  "id": "4196860",
+  "question": "Will Peter Freshney win the next Latrobe mayoral election?",
+  "rules": "Local government elections are scheduled to be held across Tasmania on October 27, 2026.\n\nThis market will resolve according to the candidate who becomes the next Mayor of the Latrobe Council area as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by March 31, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as declared by the Tasmanian Electoral Commission (https://www.tec.tas.gov.au/).",
+  "start": "2026-09-03",
+  "close": "2026-10-29",
+  "your_drivers": [
+   {
+    "name": "Freshney long-serving incumbent",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possible retirement",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Small-council low competition",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4198830",
+  "question": "Renan Santos participates in debate before first round?",
+  "rules": "This market will resolve to “Yes” if Renan Santos participates in a televised Brazilian presidential debate between market creation and October 3, 2026, 11:59 PM Brasilia time. Otherwise, this market will resolve to “No”.\n\nTo qualify, Renan Santos must speak at least once as a participant in a Brazilian Presidential debate with at least one other registered Brazilian presidential candidate present, broadcast live.\n\nVirtual live participation will qualify. Prerecorded appearances will not qualify.\n\nThe primary resolution source for this market will be footage of the debate, however a consensus of credible reporting will also be used.",
+  "start": "2026-09-03",
+  "close": "2026-10-04",
+  "your_drivers": [
+   {
+    "name": "Debate invitation rules tied to congressional representation",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Broadcaster discretion to invite polling candidates",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Santos polling and online visibility",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Number of debates scheduled",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 1
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.358,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "Debate invitation rules tied to congressional representation",
+    "Broadcaster discretion to invite polling candidates",
+    "Santos polling and online visibility"
+   ]
+  }
+ },
+ {
+  "id": "4199057",
+  "question": "Will Together win 17-19 seats in the 2026 Knesset elections?",
+  "rules": "Legislative elections are expected to be held in Israel on October 27, 2026.\n\nThis market will resolve according to the number of seats won by Together in the Israeli Knesset as a result of this election.\n\nIf Together contests this election as part of a joint candidate list with one or more parties, all seats won by the joint candidate list will be counted. If Together merges with another party prior to the election, all seats won by the resultant merged party, or any joint candidate list through which it contests the election, will be counted.\n\nIf the results of this election are not definitively known by October 31, 2027, 11:59 PM ET, this market will resolve to the lowest range bracket.\n\nThis market's resolution will be based solely on the number of seats won by Together in this election.\n\nThis market will resolve based on the election results, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by Israel’s Central Election Committee (Va'adet HaBehirot HaMerkazit) (https://www.gov.il/en/departments/central-elections-committee/govil-landing-page).",
+  "start": "2026-09-03",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "Narrow 3-seat bracket",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Polling level near bracket",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Campaign volatility and list mergers",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4199214",
+  "question": "Will Republicans win white women in the midterms?",
+  "rules": "The 2026 midterm elections are scheduled to be held on November 3, 2026.\n\nThis market will resolve according to the party that wins the greatest share of white women in the midterm elections according to exit polling provided by CNN.\n\nThis market will resolve according to the national exit polling for the United States House, as viewed on the applicable cnn.com webpage at 12:00PM ET on November 6, 2026.\n\nIn the event of a tie for first place, this market will resolve based on the party, among those tied, whose name comes first alphabetically.\n\nIn the event that CNN provides applicable exit polling but it is not available at the time specified above, this market will await an update for one full calendar day before moving to the media organizations listed below.\n\nIn the event that CNN does not provide applicable exit polling, this market will resolve according to the exit polling provided by CBS or, should CBS also not provide applicable polling, ABC. \n\nIf none of the listed organizations provide applicable exit polling by November 7, 2026 at 11:59PM ET, this market will resolve to \"Other\".",
+  "start": "2026-09-03",
+  "close": "2026-11-07",
+  "your_drivers": [
+   {
+    "name": "White women R+8 in 2022 and 2024",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "2018 precedent: roughly tied",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Tie broken alphabetically to Democrats",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.2,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.741,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": [
+    "White women R+8 in 2022 and 2024"
+   ]
+  }
+ },
+ {
+  "id": "4202006",
+  "question": "Will Florian Dinger win the next Göttingen mayoral election?",
+  "rules": "The next Göttingen mayoral election is scheduled to be held on September 13, 2026, to elect the mayor of Göttingen, Germany (Oberbürgermeister der Stadt Göttingen). A runoff election is scheduled for September 27, 2026, if no candidate receives more than half of the valid votes in the first round.\n\nThis market will resolve according to the candidate who becomes the next mayor of Göttingen as a result of this election.\n\nTemporary, interim, or placeholder mayors will not be considered.\n\nIf the result of this election isn't known by April 30, 2027, 11:59 PM ET, the market will resolve to “Other.”\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from the Stadt Göttingen, including its election office and municipal election committee.",
+  "start": "2026-09-04",
+  "close": "2026-09-27",
+  "your_drivers": [
+   {
+    "name": "Multi-candidate field with runoff",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Candidate party backing in Göttingen",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Incumbent or establishment candidate advantage",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4221710",
+  "question": "Will the Democratic Party candidate win the 2026 Arizona Attorney General election?",
+  "rules": "This market will resolve according to the party of the candidate who wins the 2026 Arizona Attorney General election currently scheduled for November 3, 2026.\n\nThe nominees of the Democratic and Republican parties may be named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election are not definitively known by July 31, 2027, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of the election according to a consensus of credible reporting. In case of ambiguity, this market will resolve based on the official results as reported by the electoral authority responsible for certifying the results of the election.",
+  "start": "2026-09-04",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Mayes incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Mayes won 2022 by only ~280 votes",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Arizona GOP registration edge",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.889,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4221855",
+  "question": "Will the Republican Party candidate win the 2026 Florida Attorney General election?",
+  "rules": "This market will resolve according to the party of the candidate who wins the 2026 Florida Attorney General election currently scheduled for November 3, 2026.\n\nThe nominees of the Democratic and Republican parties may be named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election are not definitively known by July 31, 2027, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of the election according to a consensus of credible reporting. In case of ambiguity, this market will resolve based on the official results as reported by the electoral authority responsible for certifying the results of the election.",
+  "start": "2026-09-04",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Florida strong GOP lean",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Uthmeier incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4222149",
+  "question": "Will the Democratic Party candidate win the 2026 Minnesota Attorney General election?",
+  "rules": "This market will resolve according to the party of the candidate who wins the 2026 Minnesota Attorney General election currently scheduled for November 3, 2026.\n\nThe nominees of the Democratic and Republican parties may be named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election are not definitively known by July 31, 2027, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of the election according to a consensus of credible reporting. In case of ambiguity, this market will resolve based on the official results as reported by the electoral authority responsible for certifying the results of the election.",
+  "start": "2026-09-04",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Ellison incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Ellison narrow 2022 win and fraud-scandal attacks",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Minnesota Democratic lean",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4222171",
+  "question": "Will the Democratic Party candidate win the 2026 New York Attorney General election?",
+  "rules": "This market will resolve according to the party of the candidate who wins the 2026 New York Attorney General election currently scheduled for November 3, 2026.\n\nThe nominees of the Democratic and Republican parties may be named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election are not definitively known by July 31, 2027, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of the election according to a consensus of credible reporting. In case of ambiguity, this market will resolve based on the official results as reported by the electoral authority responsible for certifying the results of the election.",
+  "start": "2026-09-04",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "New York strong Democratic lean",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "James incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Federal prosecution attempts against James",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4222345",
+  "question": "Will the Republican Party candidate win the 2026 Indiana Secretary of State election?",
+  "rules": "This market will resolve according to the party of the candidate who wins the 2026 Indiana Secretary of State election currently scheduled for November 3, 2026.\n\nThe nominees of the Democratic and Republican parties may be named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election are not definitively known by July 31, 2027, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of the election according to a consensus of credible reporting. In case of ambiguity, this market will resolve based on the official results as reported by the electoral authority responsible for certifying the results of the election.",
+  "start": "2026-09-04",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Indiana strong GOP lean",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.95,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Low-salience downballot partisanship",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4222441",
+  "question": "Will the Republican Party candidate win the 2026 Texas Lieutenant Governor election?",
+  "rules": "This market will resolve according to the party of the candidate who wins the 2026 Texas Lieutenant Governor election currently scheduled for November 3, 2026.\n\nThe nominees of the Democratic and Republican parties may be named in the contract for the convenience of traders. In the event that any named candidate is replaced as the nominee of their respective party prior to election day, the name in the contract will be updated and the market will resolve based on the replacement nominee of the party.\n\nIf the results of the election are not definitively known by July 31, 2027, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of the election according to a consensus of credible reporting. In case of ambiguity, this market will resolve based on the official results as reported by the electoral authority responsible for certifying the results of the election.",
+  "start": "2026-09-04",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Texas GOP statewide streak since 1994",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Patrick incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Midterm environment favoring Democrats",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Democratic turnout surge via Senate race",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ }
+]

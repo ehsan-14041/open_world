@@ -1,0 +1,77 @@
+{
+ "judgments": 12,
+ "preferred": {
+  "harness": 10,
+  "chat": 1,
+  "tie": 1
+ },
+ "mean_scores": {
+  "harness": {
+   "behaviour": 3.75,
+   "consistency": 3.5,
+   "insight": 4.08,
+   "usefulness": 3.83
+  },
+  "chat": {
+   "behaviour": 3.58,
+   "consistency": 3.42,
+   "insight": 3.0,
+   "usefulness": 3.08
+  }
+ },
+ "rule_outcome": "build",
+ "by_scenario": [
+  {
+   "scenario": "opec_quota",
+   "preferences": [
+    "harness",
+    "harness",
+    "harness"
+   ],
+   "reasons": [
+    "Y shows Russia's paper cut below its actual output, the UAE's quiet capacity-bound understanding and US SPR buying as a price floor. X is coherent but generic, and a US SPR release at $70 is odd. Y has small template glitches.",
+    "Y shows plausible hidden-information dynamics: Russia's paper cut below quota, a quiet Saudi-UAE understanding, SPR buying as a soft floor, slow Iran waiver. X's Saudi threat-then-cut arc and winter SPR release at $70 feel generic and less coherent.",
+    "Y shows non-obvious levers: SPR buying as a soft price floor, Russia's paper cut below actual output, a quiet Saudi-UAE understanding, US pacing Iran waivers. X is coherent but generic; its SPR release at about $70 is odd. Y repeats some action labels."
+   ]
+  },
+  {
+   "scenario": "chip_controls",
+   "preferences": [
+    "harness",
+    "chat",
+    "tie"
+   ],
+   "reasons": [
+    "X makes the cloud rule an explicit bargaining chip against rare-earth licences, and shows TSMC self-reporting, Nvidia's write-off and a shift to Middle East data centres. Y has a believable escalate-then-truce arc but is generic.",
+    "Y has China retaliating with mineral leverage and then refusing US chips, which is believable, and its numbers track that. X has interesting bargaining details, but China quietly buying H200s right after re-denial contradicts the trigger, and it skips retaliation.",
+    "X has sharper levers (cloud rule traded for minerals, Middle East workaround, Nvidia write-off) but China never retaliates and the stage 5 H200 claim jars. Y's mineral retaliation is more believable but its story is generic."
+   ]
+  },
+  {
+   "scenario": "app_store",
+   "preferences": [
+    "harness",
+    "harness",
+    "harness"
+   ],
+   "reasons": [
+    "Y adds the Commission quietly extending the deadline under trade pressure, Google's hidden 12-month offer, Epic's financial fragility splitting the coalition, and the Siri hold-back. X is plausible, but its take-rate drop is steep and the story more generic.",
+    "Y captures Apple's real playbook (interim relief, withheld Siri features), the Commission's quiet deadline extension under trade pressure, Epic's weak finances, and Google tightening developer verification. X is plausible but more linear, and its steering-freedom jump from a mere rename is overstated.",
+    "Y covers the quiet deadline extension, US trade politics, Google's confidential positioning, Epic's financial fragility and Apple holding back Siri features, and its take rate stays flat until real concessions. In X, take rate falls despite only cosmetic changes."
+   ]
+  },
+  {
+   "scenario": "ev_tariffs",
+   "preferences": [
+    "harness",
+    "harness",
+    "harness"
+   ],
+   "reasons": [
+    "X shows China licensing battery-tech transfer as leverage on Szeged, an exemption for EU value-added, and a quota with a figure. VW publicly backing the measures is less believable. Y is realistic but generic.",
+    "Both reach a similar quota deal. X adds non-obvious levers: China licensing battery-cell tech to stall Szeged, an EU value-added exemption pulling production local, WTO risk shaping the quota size. Y is believable but more generic.",
+    "X shows concrete mechanisms: China licensing battery-cell technology as leverage over Szeged, an exemption for EU-made cars, BYD co-production and a specific quota range. Y is plausible (dairy and cognac retaliation) but reaches the same deal more generically."
+   ]
+  }
+ ]
+}

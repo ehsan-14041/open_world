@@ -1,0 +1,37 @@
+{"stages": [
+{"actions": {
+"environment": {"chosen_action": "rationing_rumor_spreads", "justification": "با اعلام جیره‌بندی، شایعه کمبود شدید پخش می‌شود و مردم برای خرید و ذخیره هجوم می‌آورند."},
+"water_utility": {"chosen_action": "start_rationing", "justification": "ذخیرهٔ سدها بسیار پایین است و شرکت آب برای جلوگیری از ته‌نشینی مخازن ناچار به آغاز جیره‌بندی است."},
+"city_government": {"chosen_action": "deploy_free_tankers", "justification": "برای مهار خشم اولیه و حمایت از گروه‌های آسیب‌پذیر، تانکر امدادی رایگان به محله‌ها فرستاده می‌شود."},
+"households": {"chosen_action": "buy_from_tankers", "justification": "با قطع آب لوله، خانوارها برای تأمین آب شرب و بهداشت از تانکر می‌خرند."},
+"tanker_vendors": {"chosen_action": "raise_tanker_prices", "justification": "تقاضای ناگهانی بالاست و فروشندگان فرصت را برای افزایش قیمت مغتنم می‌شمارند."}
+}, "state": {"reservoir": 30, "supply_hours": 62, "home_storage": 52, "tanker_price": 46, "public_anger": 38, "health_risk": 14, "utility_budget": 45}},
+{"actions": {
+"environment": {"chosen_action": "heat_wave", "justification": "موج گرما مصرف را بالا می‌برد، تبخیر مخازن را زیاد می‌کند و خطر بهداشتی را افزایش می‌دهد."},
+"water_utility": {"chosen_action": "fix_leaks_and_pressure", "justification": "شبکه فرسوده است و کاهش نشتی بدون سخت‌تر کردن جیره‌بندی کمی آب بیشتر فراهم می‌کند، هرچند بودجه کم می‌شود."},
+"city_government": {"chosen_action": "launch_conservation_campaign", "justification": "کمپین صرفه‌جویی ارزان‌ترین راه کاهش مصرف و آرام نگه‌داشتن افکار عمومی در شرایط گرماست."},
+"households": {"chosen_action": "hoard_water_in_tanks", "justification": "از ترس قطع بیشتر، خانوارها هر آبی که می‌رسد را در مخزن و ظرف ذخیره می‌کنند."},
+"tanker_vendors": {"chosen_action": "expand_tanker_fleet", "justification": "تقاضا بالاست و افزودن ناوگان هم فروش را بیشتر می‌کند و هم مشتریان را نگه می‌دارد."}
+}, "state": {"reservoir": 25, "supply_hours": 65, "home_storage": 60, "tanker_price": 42, "public_anger": 39, "health_risk": 22, "utility_budget": 37}},
+{"actions": {
+"environment": {"chosen_action": "main_pipe_burst", "justification": "شبکهٔ فرسوده زیر فشار تغییر برنامه و گرما است و ترکیدگی خط اصلی ساعات آب را کم می‌کند."},
+"water_utility": {"chosen_action": "fix_leaks_and_pressure", "justification": "با ترکیدگی خط اصلی، اولویت تعمیر و کنترل فشار است تا اتلاف آب از ذخیرهٔ کم‌مایه کاسته شود."},
+"city_government": {"chosen_action": "raise_water_tariff", "justification": "بودجهٔ شرکت آب رو به پایان است و تعرفهٔ بیشتر هم درآمد و هم انگیزهٔ صرفه‌جویی می‌آورد، با هزینهٔ خشم."},
+"households": {"chosen_action": "protest_and_complain", "justification": "با قطعی، گرانی تانکر و تعرفهٔ بالاتر، خانوارها اعتراض می‌کنند تا فشار برای وصل آب بیشتر شود."},
+"tanker_vendors": {"chosen_action": "raise_tanker_prices", "justification": "ترکیدگی لوله و قطع آب تقاضا را بالا برده و فروشندگان می‌توانند قیمت را دوباره بالا ببرند."}
+}, "state": {"reservoir": 27, "supply_hours": 60, "home_storage": 56, "tanker_price": 50, "public_anger": 52, "health_risk": 26, "utility_budget": 33}},
+{"actions": {
+"environment": {"chosen_action": "rain_arrives", "justification": "بارانی متوسط می‌آید و کمی به ذخیره می‌افزاید و تنش را اندکی کاهش می‌دهد."},
+"water_utility": {"chosen_action": "ease_rationing", "justification": "با بارندگی و خشم بالا، تخفیف محدود جیره‌بندی ممکن است و درآمد هم با فروش بیشتر کمی بهتر می‌شود."},
+"city_government": {"chosen_action": "deploy_free_tankers", "justification": "خشم و خطر بهداشتی بالاست و تانکر رایگان به آسیب‌پذیران کمک می‌کند و قیمت بازار را پایین می‌آورد."},
+"households": {"chosen_action": "cut_use_voluntarily", "justification": "با نشانه‌های بهبود، خانوارها مصرف را کم می‌کنند تا ذخیرهٔ شهر بیشتر شود و جیره‌بندی طولانی نشود."},
+"tanker_vendors": {"chosen_action": "expand_tanker_fleet", "justification": "با تانکر رایگان و رقابت، فروشندگان برای حفظ مشتری ناوگان را گسترش و قیمت را کم می‌کنند."}
+}, "state": {"reservoir": 32, "supply_hours": 71, "home_storage": 60, "tanker_price": 38, "public_anger": 42, "health_risk": 25, "utility_budget": 31}},
+{"actions": {
+"environment": {"chosen_action": "hold_position", "justification": "در این مرحله رویداد بیرونی مهمی رخ نمی‌دهد و شرایط جوی تقریباً عادی می‌ماند."},
+"water_utility": {"chosen_action": "fix_leaks_and_pressure", "justification": "حفظ ساعات فعلی و کاهش اتلاف شبکه با وجود بودجهٔ محدود بهترین راه تثبیت وضعیت است."},
+"city_government": {"chosen_action": "launch_conservation_campaign", "justification": "پیام‌رسانی ارزان صرفه‌جویی را ادامه می‌دهد و به آرامش افکار عمومی کمک می‌کند بدون فشار مالی بزرگ."},
+"households": {"chosen_action": "cut_use_voluntarily", "justification": "خانوارها که ذخیرهٔ کافی دارند مصرف را محدود نگه می‌دارند تا از جیره‌بندی سخت‌تر جلوگیری شود."},
+"tanker_vendors": {"chosen_action": "hold_position", "justification": "با افت تقاضا و تانکر امدادی، فروشندگان قیمت و ناوگان را ثابت نگه می‌دارند تا مشتری را از دست ندهند."}
+}, "state": {"reservoir": 38, "supply_hours": 74, "home_storage": 57, "tanker_price": 35, "public_anger": 40, "health_risk": 23, "utility_budget": 27}}
+]}

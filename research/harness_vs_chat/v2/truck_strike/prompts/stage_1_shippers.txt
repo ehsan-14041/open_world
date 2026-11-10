@@ -1,0 +1,41 @@
+You are playing one seat in a step-by-step scenario exercise. Play it the way this actor really would.
+
+Situation: رانندگان کامیون در سراسر کشور در اعتراض به قیمت سوخت و نرخ کرایهٔ حمل اعتصاب سراسری را آغاز می‌کنند. اتحادیهٔ رانندگان، دولت، صاحبان بار و خرده‌فروشی‌ها هر کدام واکنش نشان می‌دهند و رویدادهای بیرونی هم مسیر را عوض می‌کنند. هر مرحله سه روز است.
+Each stage lasts: سه روز. This is stage 1 of 5.
+
+Variables (0 to 100), meaning, current value:
+- freight_flow: میزان حمل‌ونقل جاده‌ای در جریان؛ مقدار بالا یعنی کامیون‌ها عادی کار می‌کنند = 85
+- fuel_cost: فشار هزینهٔ سوخت بر رانندگان؛ مقدار بالا یعنی سوخت گران‌تر و سنگین‌تر = 65
+- driver_margin: حاشیهٔ سود رانندگان پس از کسر سوخت؛ مقدار بالا یعنی درآمد بهتر = 35
+- shelf_supply: موجودی کالا در قفسه‌ها و انبارهای توزیع؛ مقدار بالا یعنی عرضه کافی است = 80
+- price_level: سطح قیمت کالاهای مصرفی؛ مقدار بالا یعنی گرانی بیشتر = 55
+- public_order: آرامش و نظم عمومی در جاده‌ها و شهرها؛ مقدار بالا یعنی آرام‌تر = 75
+- driver_unity: همبستگی و آمادگی رانندگان برای ادامهٔ اعتصاب؛ مقدار بالا یعنی متحدتر = 45
+
+Conditions in force now: none
+
+History so far:
+(nothing has happened yet; the event in the situation begins in stage 1)
+
+Your seat: shippers (صاحبان بار و کارخانه‌ها). Goals: {"keep_flow": 0.6, "limit_cost": 0.4}. Character: تولیدکنندگان و توزیع‌کنندگان عمده که با توقف حمل انبارشان پر و خط تولیدشان خالی می‌شود؛ حاضرند کرایه را بالا ببرند ولی نه به اندازهٔ خواستهٔ رانندگان.
+Other seats: environment (محیط و رویدادهای بیرونی), drivers_union (اتحادیهٔ رانندگان کامیون), government (دولت), retailers (خرده‌فروشی‌ها و فروشگاه‌های زنجیره‌ای)
+
+Your own actions, with the typical direct effect of each in one stage:
+- raise_freight_rates: {"driver_margin": 7, "price_level": 5, "freight_flow": 3, "driver_unity": -3}
+- use_rail_and_own_fleet: {"freight_flow": 6, "shelf_supply": 3, "driver_margin": -4, "price_level": 2}
+- hire_strikebreaker_drivers: {"freight_flow": 7, "driver_unity": 6, "public_order": -6, "driver_margin": -2}
+- pause_shipments: {"freight_flow": -6, "shelf_supply": -4, "price_level": 3, "driver_margin": -3}
+- hold_position: {}
+
+Actions of the other seats (for reference): {"environment": ["violent_road_incident", "panic_buying", "severe_weather", "other_union_joins"], "drivers_union": ["start_nationwide_strike", "extend_strike_to_ports", "blockade_highways", "accept_deal_end_strike"], "government": ["cut_fuel_price", "raise_freight_tariff_floor", "deploy_police_escorts", "arrest_strike_leaders"], "retailers": ["ration_stock", "hike_shelf_prices", "draw_down_inventory_buffer"]}
+
+Your private plan note from the previous stage: none
+
+Task: choose the ONE action your seat takes in this stage (one of your own actions, or hold_position).
+Think about where you want to be by stage 5, not only about this stage. Do not keep repeating an action
+that has stopped working. Consider what the others want and whether a deal, a threat or a concession
+would serve your goals; you may send one short public message to one other seat.
+
+Reply with one JSON object only:
+{"chosen_action": "...", "justification": "<Persian, at most 40 words>", "message_to": "<seat name or empty>",
+ "message": "<Persian, at most 25 words, or empty>", "plan": "<Persian, at most 50 words: private note to your later self>"}

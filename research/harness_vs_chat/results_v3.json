@@ -1,0 +1,77 @@
+{
+ "judgments": 12,
+ "preferred": {
+  "harness": 0,
+  "chat": 12,
+  "tie": 0
+ },
+ "mean_scores": {
+  "harness": {
+   "behaviour": 3.17,
+   "consistency": 2.75,
+   "insight": 2.92,
+   "usefulness": 2.75
+  },
+  "chat": {
+   "behaviour": 4.0,
+   "consistency": 3.83,
+   "insight": 4.0,
+   "usefulness": 4.0
+  }
+ },
+ "rule_outcome": "plain chat is at least as good",
+ "by_scenario": [
+  {
+   "scenario": "opec_quota",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "X stays frozen before the 29 November meeting across five monthly stages and its numbers drift from the prices it states. Y moves forward in time, keeps Brent levels consistent, and makes Russia's paper cut visible.",
+    "X freezes time (still 'before 29 November' after five months), Russia flip-flops, gasoline affordability jumps while Brent rises. Y advances the calendar, tests Saudi's January trigger, lands a small cut with Russia's paper share, and its numbers track prices.",
+    "Y moves through time (failed Nov 29 meeting, rollover, January price test, small cut with Russia's paper share) and its Brent figures match the dollar narrative. X stays stuck before Nov 29 for five months, repeats itself, and its gasoline jump has no cause."
+   ]
+  },
+  {
+   "scenario": "chip_controls",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "X has TSMC self-report four times and Nvidia write down its inventory twice. Y gives the actors varied, believable moves: subsidies, offshore compute, quiet imports, rationing. One flaw: Nvidia's access ticks up while licences are still denied.",
+    "X repeats TSMC self-reporting four times and writes down Nvidia inventory twice. Y varies plausibly: TSMC reports then cuts, China subsidises, shifts compute offshore and quietly allows imports, which shows second-round effects of the cloud rule.",
+    "X reaches the cloud-for-rare-earths deal but has TSMC self-report four times in a row and Nvidia write down inventory twice. Y's actors adapt more realistically (offshore compute, subsidies, TSMC rationing and Arizona), giving a richer view of second-round effects."
+   ]
+  },
+  {
+   "scenario": "app_store",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "Y holds the take rate flat until Apple actually offers something, imposes penalties after the January summit, and shows the hidden Siri withholding driving parity down. X lowers the take rate and parity with no matching action.",
+    "X keeps a 60-day deadline 'pending' for ten months, and feature parity and tension drift without cause. Y sequences court relief, penalties after the January summit, Siri withholding (parity drops), Google's pivot, and converges toward 8% and twelve months.",
+    "Y respects the January delay and only then imposes penalties. It uses Apple's hidden Siri withholding, and its variables track the events (parity falls, credibility and certainty rise). In X, parity falls with no action behind it, the timeline is stale, and Google's moves are muddled."
+   ]
+  },
+  {
+   "scenario": "ev_tariffs",
+   "preferences": [
+    "chat",
+    "chat",
+    "chat"
+   ],
+   "reasons": [
+    "X uses the hidden information: BYD front-loads shipments, Beijing licenses battery technology, and the quota converges near 290k, with import flows matching. In Y, imports fall before any measure applies, and its talks stall without using hidden levers.",
+    "X has a believable arc: an initial probe, front-loading, China's misread of Germany, the battery-licence lever, a coalition revolt, then a deal of about 290k. Y jumps straight to deal-making and haggles repetitively, leaving hidden levers (inventory, battery licence, retaliation) unused.",
+    "X uses its hidden levers (front-loading, the battery-licence squeeze on Szeged, localization exemption) and lands a deal of about 290k inside the overlap, with matching variable moves. Y is believable but repetitive, never uses the battery plan, and imports drop before any measure."
+   ]
+  }
+ ]
+}

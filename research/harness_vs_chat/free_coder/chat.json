@@ -1,0 +1,37 @@
+{"stages": [
+{"actions": {
+"environment": {"chosen_action": "hold_position", "justification": "در ماه اول رقیب‌ها هنوز واکنش نشان نداده‌اند و شوک بیرونی مشخصی رخ نمی‌دهد."},
+"frontier_lab": {"chosen_action": "make_coding_model_free", "justification": "هدف اصلی تصاحب بازار و عادت‌دادن توسعه‌دهنده‌هاست؛ رایگان‌کردن سریع‌ترین راه جذب کاربر است."},
+"outsourcers": {"chosen_action": "adopt_ai_in_delivery", "justification": "برای حفظ حاشیه سود باید هزینه تحویل را با هوش مصنوعی پایین بیاورند و از ابزار رایگان بهره ببرند."},
+"foreign_clients": {"chosen_action": "shift_work_to_inhouse_ai", "justification": "ابزار رایگان است و مشتریان کارهای ساده را داخلی و ارزان با هوش مصنوعی انجام می‌دهند."},
+"developers": {"chosen_action": "upskill_as_ai_reviewers", "justification": "برای حفظ درآمد و ارزش مهارت، مسیر بازبینی و طراحی کد هوش مصنوعی امن‌ترین انتخاب است."}},
+"state": {"free_ai_access": 60, "ai_code_trust": 51, "inhouse_ai_adoption": 42, "client_hours": 64, "hourly_rates": 57, "firm_margin": 60, "dev_employment": 69}},
+{"actions": {
+"environment": {"chosen_action": "visible_ai_code_failure", "justification": "با گسترش ناگهانی استفاده، بروز یک شکست یا نقص امنیتی دیدنی در کد تولیدشده محتمل است."},
+"frontier_lab": {"chosen_action": "launch_agentic_coding_tool", "justification": "برای ترمیم اعتماد پس از شکست و تعمیق وابستگی، ابزار عامل‌محور عرضه می‌کند."},
+"outsourcers": {"chosen_action": "pivot_to_ai_review_services", "justification": "با افت اعتماد مشتریان، فروش بازبینی و تضمین کیفیت کد هوش مصنوعی فرصت تازه‌ای است."},
+"foreign_clients": {"chosen_action": "renegotiate_rates_down", "justification": "مشتریان با ابزار رایگان قدرت چانه‌زنی دارند و نرخ پایین‌تر می‌خواهند، بی‌آنکه قرارداد را قطع کنند."},
+"developers": {"chosen_action": "upskill_as_ai_reviewers", "justification": "شکست دیدنی نشان می‌دهد بازبینی انسانی ارزشمند است؛ ادامه ارتقای مهارت منطقی است."}},
+"state": {"free_ai_access": 62, "ai_code_trust": 47, "inhouse_ai_adoption": 44, "client_hours": 66, "hourly_rates": 50, "firm_margin": 54, "dev_employment": 68}},
+{"actions": {
+"environment": {"chosen_action": "client_economy_downturn", "justification": "رکود در اقتصاد کشورهای ثروتمند بودجه نرم‌افزار را کم می‌کند و فشار مضاعفی بر برون‌سپارها می‌آورد."},
+"frontier_lab": {"chosen_action": "offer_enterprise_deal", "justification": "برای جبران هزینه محاسبه، به سراغ قراردادهای سازمانی پولی می‌رود."},
+"outsourcers": {"chosen_action": "cut_hourly_rates", "justification": "برای نگه‌داشتن مشتریان در رکود، ناچارند نرخ را کم کنند هرچند حاشیه سود آسیب می‌بیند."},
+"foreign_clients": {"chosen_action": "cut_outsourcing_contracts", "justification": "در رکود و با ابزار رایگان، قطع قراردادهای برون‌سپاری ساده‌ترین راه صرفه‌جویی است."},
+"developers": {"chosen_action": "freelance_directly_with_ai", "justification": "با کاهش سفارش‌ها، برخی مستقیم و با کمک هوش مصنوعی برای مشتری کار می‌کنند تا درآمدشان قطع نشود."}},
+"state": {"free_ai_access": 62, "ai_code_trust": 48, "inhouse_ai_adoption": 51, "client_hours": 48, "hourly_rates": 36, "firm_margin": 40, "dev_employment": 62}},
+{"actions": {
+"environment": {"chosen_action": "rival_lab_matches_free", "justification": "رقیب برای حفظ سهم بازار مدل خود را رایگان می‌کند و فشار رقابتی بالا می‌رود."},
+"frontier_lab": {"chosen_action": "limit_free_usage", "justification": "هزینه محاسبه بالاست؛ سقف مصرف می‌گذارد تا پایداری مالی حفظ شود، هرچند رقیب هم رایگان است."},
+"outsourcers": {"chosen_action": "lay_off_junior_staff", "justification": "با افت شدید سفارش و حاشیه، برای بقا نیروی جونیور را کم می‌کنند."},
+"foreign_clients": {"chosen_action": "keep_complex_work_outsourced", "justification": "پروژه‌های پیچیده و پرریسک هنوز به تیم‌های باتجربه نیاز دارد و مشتریان آن را برون‌سپاری نگه می‌دارند."},
+"developers": {"chosen_action": "leave_the_field_or_emigrate", "justification": "با اخراج‌ها و درآمد ناپایدار، بخشی از برنامه‌نویس‌ها مهاجرت می‌کنند یا حوزه را ترک می‌کنند."}},
+"state": {"free_ai_access": 50, "ai_code_trust": 48, "inhouse_ai_adoption": 48, "client_hours": 51, "hourly_rates": 40, "firm_margin": 44, "dev_employment": 46}},
+{"actions": {
+"environment": {"chosen_action": "hold_position", "justification": "در این ماه رویداد بیرونی تازه‌ای رخ نمی‌دهد و روند قبلی ادامه می‌یابد."},
+"frontier_lab": {"chosen_action": "launch_agentic_coding_tool", "justification": "برای رقابت با رقیب رایگان، به‌جای دسترسی بیشتر، ابزار عامل‌محور قوی‌تر عرضه می‌کند."},
+"outsourcers": {"chosen_action": "pivot_to_ai_review_services", "justification": "بازار فروش ساعت ساده از بین رفته؛ خدمات بازبینی و تضمین کیفیت مسیر بقای باقی‌مانده است."},
+"foreign_clients": {"chosen_action": "keep_complex_work_outsourced", "justification": "کارهای پیچیده و حساس را همچنان برون‌سپاری می‌کنند چون از خطای کد می‌ترسند."},
+"developers": {"chosen_action": "upskill_as_ai_reviewers", "justification": "برنامه‌نویس‌های باقی‌مانده با ارتقا به بازبینی و طراحی، ارزش مهارت و درآمد خود را حفظ می‌کنند."}},
+"state": {"free_ai_access": 53, "ai_code_trust": 56, "inhouse_ai_adoption": 51, "client_hours": 55, "hourly_rates": 43, "firm_margin": 44, "dev_employment": 47}}
+]}

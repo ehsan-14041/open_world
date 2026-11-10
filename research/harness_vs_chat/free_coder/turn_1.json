@@ -1,0 +1,65 @@
+{
+ "environment": {
+  "chosen_action": "rival_lab_matches_free",
+  "primary_variable": "free_ai_access",
+  "probability": 0.5,
+  "justification": "رایگان شدن قوی‌ترین مدل، رقبا را زیر فشار می‌گذارد تا در همان ماه نخست پیشنهاد رایگان مشابه بدهند؛ واکنش رقابتی رایج در بازار هوش مصنوعی.",
+  "causal_chain": "همسان‌سازی رقیب دسترسی رایگان را گسترده‌تر می‌کند؛ دسترسی بیشتر پذیرش هوش مصنوعی در داخل مشتریان را بالا می‌برد و اعتماد به کد تولیدشده اندکی افزایش می‌یابد.",
+  "expected_effect": {
+   "free_ai_access": 6,
+   "inhouse_ai_adoption": 4,
+   "ai_code_trust": 2
+  }
+ },
+ "frontier_lab": {
+  "chosen_action": "make_coding_model_free",
+  "primary_variable": "free_ai_access",
+  "probability": 0.8,
+  "justification": "هدف اصلی آزمایشگاه تصاحب بازار و عادت‌دادن توسعه‌دهندگان است؛ رایگان‌کردن مدل قوی‌ترین ابزار جذب کاربر است و هزینه محاسبه را می‌توان بعداً با سقف مصرف کنترل کرد.",
+  "causal_chain": "دسترسی رایگان گسترده می‌شود؛ مشتریان خارجی بیشتر کارها را خودشان با هوش مصنوعی انجام می‌دهند و اعتماد به کد تولیدشده با تجربه مستقیم بالا می‌رود و سهم بازار آزمایشگاه رشد می‌کند.",
+  "expected_effect": {
+   "free_ai_access": 40,
+   "inhouse_ai_adoption": 6,
+   "ai_code_trust": 3
+  }
+ },
+ "outsourcers": {
+  "chosen_action": "adopt_ai_in_delivery",
+  "primary_variable": "firm_margin",
+  "probability": 0.7,
+  "justification": "با رایگان شدن مدل، شرکت‌ها ناچارند هوش مصنوعی را در تحویل پروژه به کار ببرند تا حاشیه سود حفظ شود؛ این کار از کاهش نرخ یا اخراج گسترده محتاطانه‌تر است.",
+  "causal_chain": "استفاده از هوش مصنوعی در تحویل هزینه را کم و حاشیه سود را بالا می‌برد، ولی نرخ ساعتی و اشتغال برنامه‌نویسان اندکی کاهش می‌یابد و اعتماد به کد کمی زیاد می‌شود.",
+  "expected_effect": {
+   "firm_margin": 6,
+   "hourly_rates": -4,
+   "dev_employment": -3,
+   "ai_code_trust": 2
+  }
+ },
+ "foreign_clients": {
+  "chosen_action": "shift_work_to_inhouse_ai",
+  "primary_variable": "inhouse_ai_adoption",
+  "probability": 0.55,
+  "justification": "مدل رایگان هزینه را کم می‌کند. کارهای ساده و کم‌ریسک را داخلی با هوش مصنوعی انجام می‌دهیم و کارهای حساس را فعلاً به برون‌سپار می‌سپاریم.",
+  "causal_chain": "دسترسی رایگان ← افزایش انجام کار داخلی با هوش مصنوعی ← کاهش ساعت‌های برون‌سپاری‌شده و هزینه کمتر.",
+  "expected_effect": {
+   "inhouse_ai_adoption": 10,
+   "client_hours": -6,
+   "ai_code_trust": 1
+  }
+ },
+ "developers": {
+  "chosen_action": "upskill_as_ai_reviewers",
+  "primary_variable": "ai_code_trust",
+  "probability": 0.7,
+  "justification": "با رایگان شدن مدل، نوشتن کد ساده ارزش خود را از دست می‌دهد. جونیورها با رفتن به بازبینی و طراحی کدِ هوش مصنوعی، درآمد پایدار و ارزش مهارت خود را حفظ می‌کنند، بدون ریسک رها کردن شغل.",
+  "causal_chain": "ارتقای مهارت به بازبینی، اعتماد به کد هوش مصنوعی و حاشیهٔ شرکت را اندکی بالا می‌برد و با حفظ نقش برنامه‌نویس، اشتغال را حمایت می‌کند.",
+  "expected_effect": {
+   "ai_code_trust": 3,
+   "firm_margin": 2,
+   "dev_employment": 2,
+   "client_hours": -1
+  },
+  "relation_updates": []
+ }
+}

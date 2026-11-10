@@ -1,0 +1,12 @@
+{"phone_ban": {"X": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 4},
+               "Y": {"behaviour": 3, "consistency": 2, "insight": 3, "usefulness": 3},
+               "prefer": "X", "why": "X shows a plausible arc: ban circumvented via sub-threshold models, quota softening, gradual recovery. Y saturates legal supply at 100 under a ban and fx pressure at 100, with repetitive assembler and consumer moves."},
+ "free_coder": {"X": {"behaviour": 3, "consistency": 3, "insight": 2, "usefulness": 2},
+                "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "prefer": "Y", "why": "Y has a real turning point: downturn plus free tools trigger rate cuts, contract cuts, layoffs and emigration, then a partial review-services recovery. X is a rosy, repetitive path where employment rises despite 80 in-house adoption."},
+ "water_ration": {"X": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 3},
+                  "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                  "prefer": "Y", "why": "Y surfaces the trade-off: free tankers and repairs drain the utility budget to near zero while supply hours fall and anger and health risk climb. X is coherent but a fairly generic recovery leaning on convenient rain."},
+ "truck_strike": {"X": {"behaviour": 4, "consistency": 4, "insight": 3, "usefulness": 4},
+                  "Y": {"behaviour": 2, "consistency": 3, "insight": 2, "usefulness": 2},
+                  "prefer": "X", "why": "X has a clear arc: escalation, fuel cut and tariff floor, then a deal ending the strike. Y repeats the same moves for five stages, never addresses fuel, and lets prices climb to 93 while supply recovers."}}
