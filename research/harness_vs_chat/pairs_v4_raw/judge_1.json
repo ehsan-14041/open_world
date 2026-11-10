@@ -1,0 +1,12 @@
+{"opec_quota": {"X": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X treats the UAE correctly as outside OPEC+, uses plausible hidden facts (Russia under quota, quiet UAE understanding, SPR floor). Y repeats 2020's price war quickly and wrongly gives the UAE a quota. X reuses the 29 November meeting date in stage 4."},
+ "chip_controls": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                   "Y": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                   "prefer": "X", "why": "X shows a believable transactional trade: cloud-rule delay for rare-earth licences, Nvidia's write-off, and TSMC self-reporting. Its moves are measured. Y is a generic escalation spiral, and its self-reliance jump from 30 to 56 in five quarters is implausibly fast."},
+ "app_store": {"X": {"behaviour": 3, "consistency": 3, "insight": 2, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+               "prefer": "Y", "why": "Y has realistic bargaining: the Commission quietly extends the deadline under US trade pressure, Google holds a secret benchmark, the steering fee goes 10% then 8% for 12 months, and Epic's weak finances split the coalition. X is generic, and Apple calling turnover-based daily fines trivial is unbelievable."},
+ "ev_tariffs": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 4, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X has specific, plausible levers: the BYD increase dropped after the revolt, Chinese licensing of battery-tech transfer hitting Szeged, and a company-level quota near 290k. Y is believable but generic: retaliation threat, then softer duties, then localisation."}}

@@ -1,0 +1,40 @@
+You are playing one seat in a step-by-step scenario exercise. Play it the way this actor really would.
+
+Situation: یک شرکت بزرگ هوش مصنوعی قوی‌ترین مدل کدنویسی خود را برای همه رایگان می‌کند و پرسش این است که شرکت‌های برون‌سپاری نرم‌افزار (فروشندگان ساعت برنامه‌نویس به مشتریان خارجی) چه می‌شوند. آزمایشگاه هوش مصنوعی، شرکت‌های برون‌سپاری، مشتریان خارجی، برنامه‌نویس‌ها و محیط بیرونی هر کدام واکنش نشان می‌دهند. هر مرحله یک ماه است.
+Each stage lasts: یک ماه. This is stage 1 of 5.
+
+Variables (0 to 100), meaning, current value:
+- free_ai_access: دسترسی رایگان به قوی‌ترین مدل کدنویسی؛ مقدار بالا یعنی همه رایگان و بدون محدودیت دسترسی دارند = 25
+- ai_code_trust: اعتماد مشتریان به کد تولیدشده با هوش مصنوعی؛ مقدار بالا یعنی اعتماد زیاد = 45
+- inhouse_ai_adoption: سهم کارهای نرم‌افزاری که مشتریان خارجی خودشان با هوش مصنوعی انجام می‌دهند؛ مقدار بالا یعنی انجام بیشتر کار در داخل = 30
+- client_hours: حجم ساعت‌های برون‌سپاری‌شدهٔ سفارش‌داده‌شده؛ مقدار بالا یعنی سفارش زیاد = 70
+- hourly_rates: نرخ ساعتی که برون‌سپارها می‌گیرند؛ مقدار بالا یعنی نرخ بالا = 60
+- firm_margin: حاشیهٔ سود و سلامت مالی شرکت‌های برون‌سپاری؛ مقدار بالا یعنی سودآوری خوب = 55
+- dev_employment: اشتغال برنامه‌نویس‌ها در این شرکت‌ها؛ مقدار بالا یعنی اشتغال کامل = 70
+
+Conditions in force now: none
+
+History so far:
+(nothing has happened yet; the event in the situation begins in stage 1)
+
+Your seat: developers (برنامه‌نویس‌های شاغل در برون‌سپاری). Goals: {"stable_income": 0.6, "skill_value": 0.4}. Character: بیشترشان جونیور و میان‌رده‌اند؛ می‌توانند مهارت خود را به بازبینی و طراحی ببرند، مستقیم برای مشتری کار کنند یا شغل را رها کنند.
+Other seats: environment (محیط و رویدادهای بیرونی), frontier_lab (آزمایشگاه پیشروی هوش مصنوعی), outsourcers (شرکت‌های برون‌سپاری نرم‌افزار), foreign_clients (مشتریان خارجی)
+
+Your own actions, with the typical direct effect of each in one stage:
+- upskill_as_ai_reviewers: {"ai_code_trust": 3, "firm_margin": 2, "dev_employment": 2, "client_hours": -1}
+- freelance_directly_with_ai: {"dev_employment": -5, "client_hours": -3, "inhouse_ai_adoption": 2}
+- leave_the_field_or_emigrate: {"dev_employment": -8, "firm_margin": -2, "hourly_rates": 2}
+- hold_position: {}
+
+Actions of the other seats (for reference): {"environment": ["rival_lab_matches_free", "visible_ai_code_failure", "client_economy_downturn", "rival_tool_price_hike"], "frontier_lab": ["make_coding_model_free", "limit_free_usage", "launch_agentic_coding_tool", "offer_enterprise_deal"], "outsourcers": ["adopt_ai_in_delivery", "cut_hourly_rates", "pivot_to_ai_review_services", "lay_off_junior_staff"], "foreign_clients": ["shift_work_to_inhouse_ai", "cut_outsourcing_contracts", "renegotiate_rates_down", "keep_complex_work_outsourced"]}
+
+Your private plan note from the previous stage: none
+
+Task: choose the ONE action your seat takes in this stage (one of your own actions, or hold_position).
+Think about where you want to be by stage 5, not only about this stage. Do not keep repeating an action
+that has stopped working. Consider what the others want and whether a deal, a threat or a concession
+would serve your goals; you may send one short public message to one other seat.
+
+Reply with one JSON object only:
+{"chosen_action": "...", "justification": "<Persian, at most 40 words>", "message_to": "<seat name or empty>",
+ "message": "<Persian, at most 25 words, or empty>", "plan": "<Persian, at most 50 words: private note to your later self>"}

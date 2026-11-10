@@ -1,0 +1,7 @@
+{
+ "regulator": {"chosen_action": "cut_international_internet", "primary_variable": "intl_net", "probability": 0.95, "justification": "اینترنت بین‌الملل قطع می‌شود؛ شبکهٔ داخلی زیر بار کند می‌شود.", "causal_chain": "قطع بین‌الملل -> بار روی شبکهٔ داخلی", "expected_effect": {"intl_net": -80, "dom_net": -25}},
+ "studios": {"chosen_action": "migrate_servers_home", "primary_variable": "players", "probability": 0.7, "justification": "بازی‌هایی که سرور خارجی دارند از کار افتاده‌اند؛ با عجله به دیتاسنتر داخلی منتقل می‌شوند.", "causal_chain": "سرور داخلی -> بازی در دسترس -> بازیکن می‌ماند", "expected_effect": {"players": 5, "cash": -4}},
+ "stores": {"chosen_action": "feature_domestic_games", "primary_variable": "players", "probability": 0.7, "justification": "بازی‌های خارجی باز نمی‌شوند؛ صفحهٔ اول را به بازی‌های داخلیِ سالم می‌دهند.", "causal_chain": "دیده‌شدن -> نصب -> بازیکن", "expected_effect": {"players": 5}},
+ "players": {"chosen_action": "switch_to_domestic_games", "primary_variable": "players", "probability": 0.8, "justification": "بازی‌های خارجی در دسترس نیستند؛ سراغ بازی‌های داخلی می‌روند.", "causal_chain": "نبودِ جایگزین -> بازی داخلی", "expected_effect": {"players": 10}},
+ "talent": {"chosen_action": "stop_work_no_tools", "primary_variable": "team", "probability": 0.85, "justification": "مخزن کد، ابزار طراحی و سرویس‌های ابری خارجی در دسترس نیستند؛ کار نیمه‌تعطیل می‌شود.", "causal_chain": "نبودِ ابزار -> توقف کار -> محتوای کمتر", "expected_effect": {"team": -10, "content": -6}}
+}

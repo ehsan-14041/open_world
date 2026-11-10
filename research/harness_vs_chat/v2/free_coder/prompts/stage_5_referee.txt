@@ -1,0 +1,125 @@
+You are the neutral referee of a step-by-step scenario exercise, and you also play the outside world.
+Four actors have each chosen an action for this stage. You decide what actually happens.
+
+Situation: یک شرکت بزرگ هوش مصنوعی قوی‌ترین مدل کدنویسی خود را برای همه رایگان می‌کند و پرسش این است که شرکت‌های برون‌سپاری نرم‌افزار (فروشندگان ساعت برنامه‌نویس به مشتریان خارجی) چه می‌شوند. آزمایشگاه هوش مصنوعی، شرکت‌های برون‌سپاری، مشتریان خارجی، برنامه‌نویس‌ها و محیط بیرونی هر کدام واکنش نشان می‌دهند. هر مرحله یک ماه است.
+Each stage lasts: یک ماه. This is stage 5 of 5.
+
+Variables (0 to 100), meaning, current value:
+- free_ai_access: دسترسی رایگان به قوی‌ترین مدل کدنویسی؛ مقدار بالا یعنی همه رایگان و بدون محدودیت دسترسی دارند = 67.0
+- ai_code_trust: اعتماد مشتریان به کد تولیدشده با هوش مصنوعی؛ مقدار بالا یعنی اعتماد زیاد = 63.0
+- inhouse_ai_adoption: سهم کارهای نرم‌افزاری که مشتریان خارجی خودشان با هوش مصنوعی انجام می‌دهند؛ مقدار بالا یعنی انجام بیشتر کار در داخل = 53.0
+- client_hours: حجم ساعت‌های برون‌سپاری‌شدهٔ سفارش‌داده‌شده؛ مقدار بالا یعنی سفارش زیاد = 57.0
+- hourly_rates: نرخ ساعتی که برون‌سپارها می‌گیرند؛ مقدار بالا یعنی نرخ بالا = 41.0
+- firm_margin: حاشیهٔ سود و سلامت مالی شرکت‌های برون‌سپاری؛ مقدار بالا یعنی سودآوری خوب = 46.0
+- dev_employment: اشتغال برنامه‌نویس‌ها در این شرکت‌ها؛ مقدار بالا یعنی اشتغال کامل = 66.0
+
+Conditions in force now: ["مدل کدنویسی رایگان برای همه در دسترس است", "مذاکرهٔ مجدد نرخ‌ها در جریان است", "برون‌سپارها به خدمات بازبینی کد هوش مصنوعی می‌روند", "نسخهٔ تازهٔ ابزار عاملی کدنویسی عرضه شده است", "قرارداد سازمانی برای پروژه‌های بزرگ عرضه شده است", "کارهای ساده بیشتر به داخل مشتریان منتقل می‌شود"]
+
+History so far:
+Stage 1:
+  environment -> hold_position: در یک ماه اول رویداد بیرونی خاصی لزوماً رخ نمی‌دهد؛ اثر اصلی از خود رایگان‌شدن و واکنش بازیگران می‌آید و رقیب یا شکست آشکار الزامی نیست.
+  frontier_lab -> make_coding_model_free: هدف اصلی تصاحب بازار و عادت‌دادن توسعه‌دهنده‌هاست؛ دسترسی رایگان اکنون سهم بازار را سریع می‌سازد و بعداً با سقف مصرف هزینه را کنترل می‌کنیم.
+  outsourcers -> pivot_to_ai_review_services: کد رایگان هوش مصنوعی ساعت‌های ساده را حذف می‌کند. بازبینی، امنیت و یکپارچه‌سازی کد تولیدشده با هوش مصنوعی ارزش جدیدی برای مشتریان است و بدون اخراج، درآمد و اعتماد را حفظ می‌کند.
+  foreign_clients -> renegotiate_rates_down: ابزار رایگان قدرت چانه‌زنی ما را بالا برده است. نرخ‌ها را پایین می‌آوریم ولی کار پیچیده و حساس را بیرون نگه می‌داریم، چون از خطای کد و ریسک امنیتی نگرانیم.
+  developers -> upskill_as_ai_reviewers: درآمد ثابت و ارزش مهارت هر دو با رفتن به بازبینی و طراحی کد هوش مصنوعی حفظ می‌شود؛ این مسیر اشتغال را کمی بالا می‌برد و ریسک ترک شغل یا کار مستقیم بی‌پشتوانه را ندارد.
+  message from frontier_lab to foreign_clients: مدل کدنویسی اکنون برای همه رایگان است؛ بعداً برای کارهای بزرگ‌تر، قراردادهای سازمانی با پشتیبانی ویژه عرضه می‌کنیم.
+  message from outsourcers to foreign_clients: ما کد هوش مصنوعی شما را بازبینی و تضمین می‌کنیم؛ با قراردادهای بلندمدت، کیفیت و امنیت را با نرخ منصفانه تحویل می‌دهیم.
+  message from foreign_clients to outsourcers: با ابزار رایگان، نرخ فعلی قابل دفاع نیست. با نرخ پایین‌تر و بازبینی کد با هوش مصنوعی، قراردادها را ادامه می‌دهیم.
+  message from developers to outsourcers: ما را برای بازبینی و کنترل کیفیت کد هوش مصنوعی آموزش دهید تا خدمات باارزش‌تری به مشتریان بفروشیم.
+  referee summary: مدل رایگان شد و مشتریان نرخ‌ها را پایین آوردند. پذیرش داخلی کمی بالا رفت اما کار پیچیده برون‌سپاری ماند. حاشیهٔ سود افت کرد؛ اشتغال با تأخیر و کم تغییر کرد.
+  state after stage 1: {"free_ai_access": 64.0, "ai_code_trust": 50.0, "inhouse_ai_adoption": 35.0, "client_hours": 67.0, "hourly_rates": 51.0, "firm_margin": 49.0, "dev_employment": 69.0}
+Stage 2:
+  environment -> hold_position: وضعیت بازار در جریان تعدیل است و نشانه‌ای از شکست بزرگ کد، رقیب جدید، رکود مشتریان یا افزایش قیمت ابزار نیست.
+  frontier_lab -> launch_agentic_coding_tool: دسترسی رایگان ۶۴ است و سهم بازار شکل گرفته. ابزار عاملی اعتماد و پذیرش را بالا می‌برد و پایهٔ درآمد بعدی است، بدون هزینهٔ فوری محدودکردن سقف رایگان.
+  outsourcers -> adopt_ai_in_delivery: مشتریان نرخ را پایین آورده‌اند و حاشیه افت کرده است. بازبینی را ادامه می‌دهیم اما با هوش مصنوعی در تحویل، هزینه کم می‌شود و بدون اخراج، حاشیه و رقابت‌پذیری حفظ می‌شود.
+  foreign_clients -> shift_work_to_inhouse_ai: نرخ‌ها پایین آمد و برون‌سپارها بازبینی عرضه کردند. حالا کارهای ساده را با ابزار رایگان خودمان انجام می‌دهیم تا هزینه کم شود؛ کار پیچیده و حساس بیرون می‌ماند.
+  developers -> upskill_as_ai_reviewers: اشتغال هنوز بالاست و شرکت‌ها به بازبینی کد هوش مصنوعی رفته‌اند. تعمیق مهارت بازبینی و امنیت هم درآمد را حفظ می‌کند و هم ارزش مهارت را بالا می‌برد.
+  message from frontier_lab to foreign_clients: ابزار عاملی کدنویسی با بازبینی و ردگیری کامل عرضه می‌شود؛ برای پروژه‌های بزرگ، قرارداد سازمانی با پشتیبانی آماده است.
+  message from outsourcers to foreign_clients: با هوش مصنوعی در تحویل، نرخ رقابتی و کد بازبینی‌شده می‌دهیم؛ قرارداد بلندمدت ببندیم تا ساعت‌ها نزد ما بماند.
+  message from foreign_clients to outsourcers: کار ساده را داخلی می‌کنیم؛ کار پیچیده و بازبینی امنیتی کد هوش مصنوعی را با نرخ پایین و تضمین کیفیت نگه می‌داریم.
+  message from developers to outsourcers: ما را رسماً در تیم بازبینی و امنیت کد هوش مصنوعی بگذارید؛ در عوض کیفیت تحویل و اعتماد مشتری بالا می‌رود.
+  referee summary: ابزار عاملی عرضه شد و اعتماد و پذیرش داخلی بالا رفت. مشتریان کارهای ساده را داخلی کردند و ساعت‌ها و نرخ‌ها افت کردند. برون‌سپارها با هوش مصنوعی حاشیه را حفظ کردند؛ اشتغال کمی کم شد.
+  state after stage 2: {"free_ai_access": 66.0, "ai_code_trust": 54.0, "inhouse_ai_adoption": 42.0, "client_hours": 62.0, "hourly_rates": 48.0, "firm_margin": 49.0, "dev_employment": 68.0}
+Stage 3:
+  environment -> hold_position: نشانهٔ شکست آشکار کد، رقیب تازه، رکود مشتریان یا افزایش قیمت ابزار نیست؛ بازار در حال تعدیل است و رویداد بیرونی مشخصی محتمل‌تر نیست.
+  frontier_lab -> offer_enterprise_deal: دسترسی رایگان ۶۶ و ابزار عاملی عرضه شده است؛ تکرار آن بازده کمی دارد. قرارداد سازمانی درآمد می‌آورد، هزینهٔ محاسبه را متعادل می‌کند و سهم بازار را تثبیت می‌کند.
+  outsourcers -> pivot_to_ai_review_services: ساعت‌ها و نرخ افت کرده و درآمد اولویت اصلی است. بازبینی و امنیت کد هوش مصنوعی ساعت‌های پیچیده را نزد ما نگه می‌دارد و اعتماد را بالا می‌برد؛ حاشیه فعلاً تحمل‌پذیر است.
+  foreign_clients -> renegotiate_rates_down: برون‌سپارها با هوش مصنوعی هزینه‌شان کم شده؛ نرخ ۴۸ هنوز جای کاهش دارد. کار ساده داخلی است و کار حساس را با نرخ پایین‌تر و بازبینی نگه می‌داریم، بدون قطع قرارداد.
+  developers -> upskill_as_ai_reviewers: اشتغال هنوز ۶۸ است و ساعت‌ها فقط کمی افت کرده. ترک شغل یا کار مستقیم درآمد ثابت را به خطر می‌اندازد؛ مهارت بازبینی و امنیت هم ارزش من را حفظ می‌کند.
+  message from frontier_lab to foreign_clients: برای پروژه‌های بزرگ، قرارداد سازمانی با سقف مصرف بالاتر، پشتیبانی و ردگیری کامل عرضه می‌کنیم؛ نسخهٔ رایگان همچنان باز می‌ماند.
+  message from outsourcers to foreign_clients: بازبینی امنیتی کد هوش مصنوعی را با ضمانت کیفیت و قرارداد بلندمدت می‌دهیم؛ کار پیچیده را نزد ما نگه دارید.
+  message from foreign_clients to outsourcers: صرفه‌جویی هوش مصنوعی در تحویل را به نرخ منعکس کنید؛ در برابر، قرارداد بازبینی و امنیت را ادامه می‌دهیم.
+  message from developers to outsourcers: ما را رسماً در تیم بازبینی و امنیت کد هوش مصنوعی بگذارید؛ در برابر آن، کیفیت تحویل و اعتماد مشتری بالا می‌رود.
+  referee summary: آزمایشگاه قرارداد سازمانی عرضه کرد و اعتماد و پذیرش داخلی بالا رفت. مشتریان نرخ را باز هم پایین‌تر چانه زدند و حاشیه افت کرد. ساعت‌ها و اشتغال با بازبینی کم‌تغییر ماندند.
+  state after stage 3: {"free_ai_access": 66.0, "ai_code_trust": 59.0, "inhouse_ai_adoption": 45.0, "client_hours": 61.0, "hourly_rates": 42.0, "firm_margin": 45.0, "dev_employment": 67.0}
+Stage 4:
+  environment -> hold_position: نشانهٔ شکست آشکار کد، رقیب تازه، رکود مشتریان یا افزایش قیمت ابزار نیست؛ بازار در حال تعدیل است و رویداد بیرونی مشخصی محتمل‌تر نیست.
+  frontier_lab -> launch_agentic_coding_tool: سهم بازار هدف اصلی است و پذیرش داخلی ۴۵ هنوز جا دارد. نسخهٔ تازهٔ ابزار عاملی اعتماد و پذیرش را بالا می‌برد و پایهٔ قراردادهای سازمانی مرحلهٔ آخر می‌شود.
+  outsourcers -> adopt_ai_in_delivery: حاشیه ۴۵ و نرخ‌ها پایین‌اند و بازبینی تنها آن را نجات نمی‌دهد. هوش مصنوعی در تحویل هزینه را کم و حاشیه را بالا می‌برد، بدون اخراج و بدون قطع ساعت‌ها.
+  foreign_clients -> shift_work_to_inhouse_ai: نرخ‌ها دو بار پایین آمده و حاشیهٔ برون‌سپارها نزدیک حد تحمل است؛ فشار بیشتر کیفیت را تهدید می‌کند. اعتماد به کد هوش مصنوعی بالا رفته، پس کارهای ساده‌تر بیشتر داخلی می‌شود.
+  developers -> upskill_as_ai_reviewers: اشتغال ۶۷ هنوز بالاست و ارتقای مهارت بازبینی و امنیت درآمد ثابت را حفظ می‌کند. کار مستقیم یا ترک شغل ریسک درآمد دارد و اشتغال را کم می‌کند.
+  message from frontier_lab to foreign_clients: نسخهٔ تازهٔ ابزار عاملی با بازبینی و ردگیری کامل آمد؛ برای پروژه‌های بزرگ، قرارداد سازمانی با پشتیبانی و سقف مصرف بالاتر آماده است.
+  message from outsourcers to foreign_clients: با هوش مصنوعی در تحویل، صرفه‌جویی را بخشی به نرخ منعکس می‌کنیم؛ در برابر، قرارداد بلندمدت بازبینی و امنیت را نزد ما نگه دارید.
+  message from foreign_clients to outsourcers: کار ساده بیشتر داخلی می‌شود؛ کار حساس و بازبینی امنیتی را با همین نرخ و ضمانت کیفیت نزد شما نگه می‌داریم.
+  message from developers to outsourcers: ما را رسماً در تیم بازبینی و امنیت کد هوش مصنوعی بگذارید؛ کیفیت تحویل بالا می‌رود و ساعت‌ها نزد شما می‌ماند.
+  referee summary: ابزار عاملی تازه عرضه شد و اعتماد و پذیرش داخلی بالا رفت. مشتریان کارهای ساده بیشتری را داخلی کردند و ساعت‌ها کم شد. برون‌سپارها با هوش مصنوعی در تحویل حاشیه را اندکی بالا بردند؛ اشتغال کمی افت کرد.
+  state after stage 4: {"free_ai_access": 67.0, "ai_code_trust": 63.0, "inhouse_ai_adoption": 53.0, "client_hours": 57.0, "hourly_rates": 41.0, "firm_margin": 46.0, "dev_employment": 66.0}
+
+Seats and their goals:
+- frontier_lab (آزمایشگاه پیشروی هوش مصنوعی): {"market_share": 0.6, "sustainable_costs": 0.4}
+- outsourcers (شرکت‌های برون‌سپاری نرم‌افزار): {"keep_revenue": 0.6, "keep_margin": 0.4}
+- foreign_clients (مشتریان خارجی): {"lower_dev_cost": 0.6, "delivery_quality": 0.4}
+- developers (برنامه‌نویس‌های شاغل در برون‌سپاری): {"stable_income": 0.6, "skill_value": 0.4}
+
+Typical direct effect of each action in one stage (guidance, not arithmetic):
+- make_coding_model_free [frontier_lab]: {"free_ai_access": 40, "inhouse_ai_adoption": 6, "ai_code_trust": 3}
+- limit_free_usage [frontier_lab]: {"free_ai_access": -20, "inhouse_ai_adoption": -4, "ai_code_trust": -2}
+- launch_agentic_coding_tool [frontier_lab]: {"ai_code_trust": 6, "inhouse_ai_adoption": 8, "free_ai_access": 3}
+- offer_enterprise_deal [frontier_lab]: {"inhouse_ai_adoption": 5, "ai_code_trust": 3, "client_hours": -2}
+- adopt_ai_in_delivery [outsourcers]: {"firm_margin": 6, "hourly_rates": -4, "dev_employment": -3, "ai_code_trust": 2}
+- cut_hourly_rates [outsourcers]: {"client_hours": 5, "hourly_rates": -12, "firm_margin": -7}
+- pivot_to_ai_review_services [outsourcers]: {"firm_margin": -3, "ai_code_trust": 4, "client_hours": 3, "hourly_rates": 2}
+- lay_off_junior_staff [outsourcers]: {"firm_margin": 6, "dev_employment": -12, "client_hours": -2}
+- shift_work_to_inhouse_ai [foreign_clients]: {"inhouse_ai_adoption": 10, "client_hours": -6, "ai_code_trust": 1}
+- cut_outsourcing_contracts [foreign_clients]: {"client_hours": -12, "firm_margin": -5, "inhouse_ai_adoption": 3}
+- renegotiate_rates_down [foreign_clients]: {"hourly_rates": -10, "firm_margin": -4, "client_hours": 2}
+- keep_complex_work_outsourced [foreign_clients]: {"client_hours": 5, "hourly_rates": 2, "inhouse_ai_adoption": -3}
+- upskill_as_ai_reviewers [developers]: {"ai_code_trust": 3, "firm_margin": 2, "dev_employment": 2, "client_hours": -1}
+- freelance_directly_with_ai [developers]: {"dev_employment": -5, "client_hours": -3, "inhouse_ai_adoption": 2}
+- leave_the_field_or_emigrate [developers]: {"dev_employment": -8, "firm_margin": -2, "hourly_rates": 2}
+- rival_lab_matches_free [environment]: {"free_ai_access": 6, "inhouse_ai_adoption": 4, "ai_code_trust": 2}
+- visible_ai_code_failure [environment]: {"ai_code_trust": -14, "inhouse_ai_adoption": -5, "client_hours": 3}
+- client_economy_downturn [environment]: {"client_hours": -10, "hourly_rates": -5, "firm_margin": -4}
+- rival_tool_price_hike [environment]: {"free_ai_access": -8, "inhouse_ai_adoption": -3, "firm_margin": -1}
+- hold_position [any]: {}
+
+Known influences between variables (direction only): free_ai_access raises inhouse_ai_adoption; ai_code_trust raises inhouse_ai_adoption; inhouse_ai_adoption lowers client_hours; client_hours raises hourly_rates; free_ai_access lowers hourly_rates; hourly_rates raises firm_margin; client_hours raises firm_margin; free_ai_access raises firm_margin; firm_margin raises dev_employment; client_hours raises dev_employment
+
+Actions chosen in stage 5:
+- frontier_lab -> offer_enterprise_deal: ابزار عاملی دو بار عرضه شده و تکرارش بازده کمی دارد. قرارداد سازمانی سهم و پذیرش را بالا می‌برد، اعتماد را تقویت می‌کند و هزینهٔ محاسبه را با درآمد متعادل می‌کند.
+  message from frontier_lab to foreign_clients: برای پروژه‌های بزرگ، قرارداد سازمانی با سقف مصرف بالاتر، پشتیبانی و ردگیری کامل آماده است؛ نسخهٔ رایگان باز می‌ماند.
+- outsourcers -> adopt_ai_in_delivery: حاشیه ۴۶ هنوز پایین و نرخ‌ها افت کرده است. هوش مصنوعی در تحویل هزینه را کم و حاشیه را بالا می‌برد؛ بازبینی ادامه دارد و اخراج آخرین گزینه است.
+  message from outsourcers to foreign_clients: با هوش مصنوعی در تحویل، نرخ رقابتی می‌دهیم؛ کار پیچیده و بازبینی امنیتی را با قرارداد بلندمدت نزد ما نگه دارید.
+- foreign_clients -> hold_position: نرخ ۴۱ و حاشیهٔ برون‌سپارها نزدیک حد تحمل است؛ کاهش بیشتر کیفیت را تهدید می‌کند. کار ساده داخلی شده و قراردادهای حساس را بدون تغییر نگه می‌دارم.
+  message from foreign_clients to outsourcers: با همین نرخ و ضمانت کیفیت، قراردادهای بازبینی و امنیت را نزد شما نگه می‌داریم.
+- developers -> upskill_as_ai_reviewers: اشتغال ۶۶ هنوز بالاتر از آستانهٔ ۶۰ است و ارتقای مهارت بازبینی و امنیت درآمد ثابت را حفظ می‌کند و ارزش مهارت را بالا می‌برد. کار مستقیم یا ترک شغل ریسک دارد.
+  message from developers to outsourcers: ما را رسماً در تیم بازبینی و امنیت کد هوش مصنوعی بگذارید؛ کیفیت تحویل و ساعت‌های شما حفظ می‌شود.
+
+Your tasks:
+1. Outside event: choose one of ["rival_lab_matches_free", "visible_ai_code_failure", "client_economy_downturn", "rival_tool_price_hike"] or hold_position. Choose what would most plausibly happen in this
+   stage given the state, not what makes a good story; in many stages nothing notable happens.
+2. State after this stage: a new value for EVERY variable, with the cause.
+   - Values stay within 0 to 100.
+   - No variable moves more than 25 points in one stage, unless a chosen action's listed effect on it is larger.
+   - A condition in force keeps acting every stage until an action ends it (a ban keeps holding legal supply
+     down while it stands; a strike keeps holding freight down while it lasts).
+   - Effects can be delayed, saturate, reinforce or cancel one another. Use judgment about how such a
+     situation really moves in a stage of this length; do not just add up the listed effects.
+   - Do not favour any seat, and do not invent convenient rescues.
+3. Conditions in force after this stage: short Persian phrases (measures, deals, shortages that persist).
+4. A summary of the stage in Persian, at most 50 words.
+
+Reply with one JSON object only:
+{"environment": {"chosen_action": "...", "justification": "<Persian, at most 40 words>"},
+ "state": {"<variable>": {"value": <number>, "why": "<Persian, at most 20 words>"}, ... every variable ...},
+ "conditions": ["...", ...], "summary": "..."}

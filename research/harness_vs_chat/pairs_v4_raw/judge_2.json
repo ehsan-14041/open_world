@@ -1,0 +1,12 @@
+{"opec_quota": {"X": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X shows non-obvious mechanics: Russia's paper cut below actual output, a quiet Saudi-UAE understanding, SPR buying as a soft floor. Y is a standard 2020-style price war, too fast. X has a stage-4 'Nov 29 meeting' timing slip."},
+ "chip_controls": {"X": {"behaviour": 3, "consistency": 3, "insight": 4, "usefulness": 4},
+                   "Y": {"behaviour": 4, "consistency": 3, "insight": 3, "usefulness": 3},
+                   "prefer": "X", "why": "X treats the cloud rule as a bargaining chip for minerals and adds Gulf data-centre workarounds and the inventory write-off. But China quietly buying H200s contradicts its own setup. Y is plausible but generic, and self-reliance rises too fast."},
+ "app_store": {"X": {"behaviour": 3, "consistency": 4, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 3, "insight": 5, "usefulness": 5},
+               "prefer": "Y", "why": "Y has realistic bargaining (10% then 8% time-limited fees), the Commission quietly extending the deadline for US trade talks, Google's hidden offer and its real red line, and the coalition fracturing. X is a generic fight-then-settle arc."},
+ "ev_tariffs": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X adds Beijing's licensing of battery-tech transfer as leverage over its own firms' EU plants, a concrete quota-and-price-floor deal and VW's hedging. Y follows a plausible but generic arc to a softer duty, with very fast local-production growth."}}

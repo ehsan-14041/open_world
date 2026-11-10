@@ -1,0 +1,67 @@
+{
+ "environment": {
+  "chosen_action": "other_union_joins",
+  "primary_variable": "freight_flow",
+  "probability": 0.35,
+  "justification": "حاشیهٔ سود پایین و گرانی سوخت در سراسر صنف‌های حمل‌ونقل مشترک است؛ پیوستن صنف دیگر در روزهای بعد از آغاز اعتصاب محتمل است.",
+  "causal_chain": "پیوستن صنف دیگر همبستگی را بالا می‌برد؛ همبستگی بیشتر جریان بار را کم می‌کند و قیمت‌ها و ناآرامی را افزایش می‌دهد.",
+  "expected_effect": {
+   "freight_flow": -12,
+   "driver_unity": 10,
+   "public_order": -4,
+   "price_level": 3
+  },
+  "relation_updates": []
+ },
+ "drivers_union": {
+  "chosen_action": "extend_strike_to_ports",
+  "primary_variable": "driver_unity",
+  "probability": 0.6,
+  "justification": "حاشیهٔ سود هنوز ۳۲ است و کرایهٔ پیشنهادی کمتر از خواستهٔ ماست. گسترش اعتصاب به بنادر فشار چانه‌زنی را بیشتر می‌کند و همبستگی را حفظ می‌کند، بدون درگیری جاده‌ای و بحران نظم.",
+  "causal_chain": "گسترش اعتصاب به بنادر جریان بار را کم و همبستگی را بیشتر می‌کند و فشار بر دولت و صاحبان بار برای پذیرش مطالبات بالا می‌رود.",
+  "expected_effect": {
+   "freight_flow": -12,
+   "shelf_supply": -5,
+   "driver_margin": -6,
+   "driver_unity": 5
+  },
+  "relation_updates": []
+ },
+ "government": {
+  "chosen_action": "raise_freight_tariff_floor",
+  "primary_variable": "driver_unity",
+  "probability": 0.6,
+  "justification": "بودجه برای یارانه بزرگ نیست؛ کف تعرفه کرایه حاشیه رانندگان را بدون هزینه مالی مستقیم بالا می‌برد، همبستگی اعتصاب را سست می‌کند و بدون خشونت امنیتی جریان بار را بازمی‌گرداند.",
+  "causal_chain": "افزایش کف کرایه ← بهبود حاشیه رانندگان ← کاهش همبستگی اعتصاب ← بازگشت جریان بار و نظم",
+  "expected_effect": {
+   "driver_margin": 8,
+   "price_level": 4,
+   "driver_unity": -4
+  }
+ },
+ "shippers": {
+  "chosen_action": "use_rail_and_own_fleet",
+  "primary_variable": "freight_flow",
+  "probability": 0.6,
+  "justification": "جریان بار ۵۶ است و انبارها پر می‌شود. با قطار و ناوگان خودی بار حیاتی را بدون تشدید تنش جابه‌جا می‌کنیم؛ هزینه‌اش بالاتر است ولی کمتر از توقف تولید.",
+  "causal_chain": "حمل جایگزین -> جریان بار بیشتر -> موجودی قفسه بیشتر و فشار قیمت کمتر؛ هزینه اضافه و حاشیه رانندگان کمتر",
+  "expected_effect": {
+   "freight_flow": 6,
+   "shelf_supply": 3,
+   "driver_margin": -4,
+   "price_level": 2
+  }
+ },
+ "retailers": {
+  "chosen_action": "draw_down_inventory_buffer",
+  "primary_variable": "shelf_supply",
+  "probability": 0.65,
+  "justification": "جریان بار افت کرده و موجودی قفسه‌ها به ۵۹ رسیده است. برداشت از ذخیرهٔ انبار قفسه‌ها را پر نگه می‌دارد و قیمت را بدون جلب خشم ناظر و مصرف‌کننده مهار می‌کند.",
+  "causal_chain": "برداشت از ذخیرهٔ انبار موجودی قفسه را بالا می‌برد؛ موجودی بیشتر فشار قیمت را کم می‌کند و نظم عمومی را حفظ می‌کند.",
+  "expected_effect": {
+   "shelf_supply": 8,
+   "price_level": -3,
+   "driver_unity": 2
+  }
+ }
+}

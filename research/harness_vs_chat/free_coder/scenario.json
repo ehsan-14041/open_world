@@ -1,0 +1,345 @@
+{
+ "description": "یک شرکت بزرگ هوش مصنوعی قوی‌ترین مدل کدنویسی خود را برای همه رایگان می‌کند و پرسش این است که شرکت‌های برون‌سپاری نرم‌افزار (فروشندگان ساعت برنامه‌نویس به مشتریان خارجی) چه می‌شوند. آزمایشگاه هوش مصنوعی، شرکت‌های برون‌سپاری، مشتریان خارجی، برنامه‌نویس‌ها و محیط بیرونی هر کدام واکنش نشان می‌دهند. هر مرحله یک ماه است.",
+ "initial_agents": [
+  {
+   "name": "environment",
+   "role": "محیط و رویدادهای بیرونی",
+   "objectives": {
+    "external_shocks": 0.5,
+    "background_drift": 0.5
+   },
+   "personality": "آنچه از کنترل چهار بازیگر بیرون است: حرکت رقیب‌های هوش مصنوعی، شکست دیدنی کد تولیدشده با هوش مصنوعی و وضعیت اقتصاد عمومی؛ ممکن است رخ بدهد یا ندهد."
+  },
+  {
+   "name": "frontier_lab",
+   "role": "آزمایشگاه پیشروی هوش مصنوعی",
+   "objectives": {
+    "market_share": 0.6,
+    "sustainable_costs": 0.4
+   },
+   "personality": "مدل را برای تصاحب بازار و عادت‌دادن توسعه‌دهنده‌ها رایگان کرده؛ هزینهٔ محاسبه بالاست و می‌تواند سقف مصرف را محدود کند."
+  },
+  {
+   "name": "outsourcers",
+   "role": "شرکت‌های برون‌سپاری نرم‌افزار",
+   "objectives": {
+    "keep_revenue": 0.6,
+    "keep_margin": 0.4
+   },
+   "personality": "درآمدشان از فروش ساعت برنامه‌نویس به مشتریان خارجی است؛ حاشیهٔ سود کم و وابستگی به چند مشتری بزرگ دارند."
+  },
+  {
+   "name": "foreign_clients",
+   "role": "مشتریان خارجی",
+   "objectives": {
+    "lower_dev_cost": 0.6,
+    "delivery_quality": 0.4
+   },
+   "personality": "شرکت‌ها و استارتاپ‌های کشورهای ثروتمند که کار برنامه‌نویسی می‌خرند؛ با ابزار رایگان گزینهٔ انجام کار در داخل را جدی می‌گیرند ولی از خطای کد و ریسک امنیتی می‌ترسند."
+  },
+  {
+   "name": "developers",
+   "role": "برنامه‌نویس‌های شاغل در برون‌سپاری",
+   "objectives": {
+    "stable_income": 0.6,
+    "skill_value": 0.4
+   },
+   "personality": "بیشترشان جونیور و میان‌رده‌اند؛ می‌توانند مهارت خود را به بازبینی و طراحی ببرند، مستقیم برای مشتری کار کنند یا شغل را رها کنند."
+  }
+ ],
+ "initial_state": {
+  "free_ai_access": 25,
+  "ai_code_trust": 45,
+  "inhouse_ai_adoption": 30,
+  "client_hours": 70,
+  "hourly_rates": 60,
+  "firm_margin": 55,
+  "dev_employment": 70
+ },
+ "variable_labels": {
+  "free_ai_access": "دسترسی رایگان به قوی‌ترین مدل کدنویسی؛ مقدار بالا یعنی همه رایگان و بدون محدودیت دسترسی دارند",
+  "ai_code_trust": "اعتماد مشتریان به کد تولیدشده با هوش مصنوعی؛ مقدار بالا یعنی اعتماد زیاد",
+  "inhouse_ai_adoption": "سهم کارهای نرم‌افزاری که مشتریان خارجی خودشان با هوش مصنوعی انجام می‌دهند؛ مقدار بالا یعنی انجام بیشتر کار در داخل",
+  "client_hours": "حجم ساعت‌های برون‌سپاری‌شدهٔ سفارش‌داده‌شده؛ مقدار بالا یعنی سفارش زیاد",
+  "hourly_rates": "نرخ ساعتی که برون‌سپارها می‌گیرند؛ مقدار بالا یعنی نرخ بالا",
+  "firm_margin": "حاشیهٔ سود و سلامت مالی شرکت‌های برون‌سپاری؛ مقدار بالا یعنی سودآوری خوب",
+  "dev_employment": "اشتغال برنامه‌نویس‌ها در این شرکت‌ها؛ مقدار بالا یعنی اشتغال کامل"
+ },
+ "relations": [
+  {
+   "from": "outsourcers",
+   "to": "foreign_clients",
+   "type": "sells_to"
+  },
+  {
+   "from": "foreign_clients",
+   "to": "outsourcers",
+   "type": "depends_on"
+  },
+  {
+   "from": "outsourcers",
+   "to": "developers",
+   "type": "employs"
+  },
+  {
+   "from": "frontier_lab",
+   "to": "foreign_clients",
+   "type": "supplies"
+  }
+ ],
+ "causal_links": [
+  {
+   "from": "free_ai_access",
+   "to": "inhouse_ai_adoption",
+   "weight": 0.35
+  },
+  {
+   "from": "ai_code_trust",
+   "to": "inhouse_ai_adoption",
+   "weight": 0.3
+  },
+  {
+   "from": "inhouse_ai_adoption",
+   "to": "client_hours",
+   "weight": -0.35
+  },
+  {
+   "from": "client_hours",
+   "to": "hourly_rates",
+   "weight": 0.3
+  },
+  {
+   "from": "free_ai_access",
+   "to": "hourly_rates",
+   "weight": -0.15
+  },
+  {
+   "from": "hourly_rates",
+   "to": "firm_margin",
+   "weight": 0.3
+  },
+  {
+   "from": "client_hours",
+   "to": "firm_margin",
+   "weight": 0.25
+  },
+  {
+   "from": "free_ai_access",
+   "to": "firm_margin",
+   "weight": 0.1
+  },
+  {
+   "from": "firm_margin",
+   "to": "dev_employment",
+   "weight": 0.3
+  },
+  {
+   "from": "client_hours",
+   "to": "dev_employment",
+   "weight": 0.3
+  }
+ ],
+ "allowed_actions": [
+  "make_coding_model_free",
+  "limit_free_usage",
+  "launch_agentic_coding_tool",
+  "offer_enterprise_deal",
+  "adopt_ai_in_delivery",
+  "cut_hourly_rates",
+  "pivot_to_ai_review_services",
+  "lay_off_junior_staff",
+  "shift_work_to_inhouse_ai",
+  "cut_outsourcing_contracts",
+  "renegotiate_rates_down",
+  "keep_complex_work_outsourced",
+  "upskill_as_ai_reviewers",
+  "freelance_directly_with_ai",
+  "leave_the_field_or_emigrate",
+  "rival_lab_matches_free",
+  "visible_ai_code_failure",
+  "client_economy_downturn",
+  "rival_tool_price_hike",
+  "hold_position"
+ ],
+ "action_owner": {
+  "make_coding_model_free": "frontier_lab",
+  "limit_free_usage": "frontier_lab",
+  "launch_agentic_coding_tool": "frontier_lab",
+  "offer_enterprise_deal": "frontier_lab",
+  "adopt_ai_in_delivery": "outsourcers",
+  "cut_hourly_rates": "outsourcers",
+  "pivot_to_ai_review_services": "outsourcers",
+  "lay_off_junior_staff": "outsourcers",
+  "shift_work_to_inhouse_ai": "foreign_clients",
+  "cut_outsourcing_contracts": "foreign_clients",
+  "renegotiate_rates_down": "foreign_clients",
+  "keep_complex_work_outsourced": "foreign_clients",
+  "upskill_as_ai_reviewers": "developers",
+  "freelance_directly_with_ai": "developers",
+  "leave_the_field_or_emigrate": "developers",
+  "rival_lab_matches_free": "environment",
+  "visible_ai_code_failure": "environment",
+  "client_economy_downturn": "environment",
+  "rival_tool_price_hike": "environment",
+  "hold_position": "any"
+ },
+ "action_tradeoffs": {
+  "make_coding_model_free": {
+   "free_ai_access": 40,
+   "inhouse_ai_adoption": 6,
+   "ai_code_trust": 3
+  },
+  "limit_free_usage": {
+   "free_ai_access": -20,
+   "inhouse_ai_adoption": -4,
+   "ai_code_trust": -2
+  },
+  "launch_agentic_coding_tool": {
+   "ai_code_trust": 6,
+   "inhouse_ai_adoption": 8,
+   "free_ai_access": 3
+  },
+  "offer_enterprise_deal": {
+   "inhouse_ai_adoption": 5,
+   "ai_code_trust": 3,
+   "client_hours": -2
+  },
+  "adopt_ai_in_delivery": {
+   "firm_margin": 6,
+   "hourly_rates": -4,
+   "dev_employment": -3,
+   "ai_code_trust": 2
+  },
+  "cut_hourly_rates": {
+   "client_hours": 5,
+   "hourly_rates": -12,
+   "firm_margin": -7
+  },
+  "pivot_to_ai_review_services": {
+   "firm_margin": -3,
+   "ai_code_trust": 4,
+   "client_hours": 3,
+   "hourly_rates": 2
+  },
+  "lay_off_junior_staff": {
+   "firm_margin": 6,
+   "dev_employment": -12,
+   "client_hours": -2
+  },
+  "shift_work_to_inhouse_ai": {
+   "inhouse_ai_adoption": 10,
+   "client_hours": -6,
+   "ai_code_trust": 1
+  },
+  "cut_outsourcing_contracts": {
+   "client_hours": -12,
+   "firm_margin": -5,
+   "inhouse_ai_adoption": 3
+  },
+  "renegotiate_rates_down": {
+   "hourly_rates": -10,
+   "firm_margin": -4,
+   "client_hours": 2
+  },
+  "keep_complex_work_outsourced": {
+   "client_hours": 5,
+   "hourly_rates": 2,
+   "inhouse_ai_adoption": -3
+  },
+  "upskill_as_ai_reviewers": {
+   "ai_code_trust": 3,
+   "firm_margin": 2,
+   "dev_employment": 2,
+   "client_hours": -1
+  },
+  "freelance_directly_with_ai": {
+   "dev_employment": -5,
+   "client_hours": -3,
+   "inhouse_ai_adoption": 2
+  },
+  "leave_the_field_or_emigrate": {
+   "dev_employment": -8,
+   "firm_margin": -2,
+   "hourly_rates": 2
+  },
+  "rival_lab_matches_free": {
+   "free_ai_access": 6,
+   "inhouse_ai_adoption": 4,
+   "ai_code_trust": 2
+  },
+  "visible_ai_code_failure": {
+   "ai_code_trust": -14,
+   "inhouse_ai_adoption": -5,
+   "client_hours": 3
+  },
+  "client_economy_downturn": {
+   "client_hours": -10,
+   "hourly_rates": -5,
+   "firm_margin": -4
+  },
+  "rival_tool_price_hike": {
+   "free_ai_access": -8,
+   "inhouse_ai_adoption": -3,
+   "firm_margin": -1
+  },
+  "hold_position": {}
+ },
+ "variable_tradeoffs": {},
+ "variable_specs": {
+  "free_ai_access": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "ai_code_trust": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "inhouse_ai_adoption": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "client_hours": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "hourly_rates": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "firm_margin": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "dev_employment": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  }
+ },
+ "rules": [],
+ "events": [],
+ "enable_meta_actions": false,
+ "agent_response_format": "strategic",
+ "max_delta": 40,
+ "stage_length": "یک ماه"
+}

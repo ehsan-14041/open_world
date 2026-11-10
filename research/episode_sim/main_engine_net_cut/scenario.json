@@ -1,0 +1,273 @@
+{
+ "description": "اینترنت بین‌الملل در ایران حدود یک ماه قطع می‌شود و شبکهٔ داخلی کند ولی برقرار می‌ماند. بازی‌های موبایل داخلی، فروشگاه‌های داخلی، بازیکنان، نیروی متخصص و نهاد تنظیم‌گر هر کدام واکنش نشان می‌دهند. هر مرحله حدود دو هفته است.",
+ "initial_agents": [
+  {
+   "name": "regulator",
+   "role": "نهاد تنظیم‌گر",
+   "objectives": {
+    "keep_domestic_network_stable": 0.6,
+    "calm_businesses": 0.4
+   },
+   "personality": "تصمیم قطع و وصل اینترنت بین‌الملل با اوست؛ پایداری شبکهٔ داخلی را در اولویت می‌گذارد."
+  },
+  {
+   "name": "studios",
+   "role": "استودیوهای بازی",
+   "objectives": {
+    "survive": 0.5,
+    "keep_players": 0.5
+   },
+   "personality": "تیم‌های کوچک با نقدینگی کم؛ به ابزارها و سرورهای خارجی وابسته‌اند."
+  },
+  {
+   "name": "stores",
+   "role": "فروشگاه‌های داخلی",
+   "objectives": {
+    "keep_transactions": 0.5,
+    "keep_developers_alive": 0.5
+   },
+   "personality": "درآمدشان از کارمزد خرید درون‌برنامه‌ای است."
+  },
+  {
+   "name": "players",
+   "role": "بازیکنان",
+   "objectives": {
+    "available_entertainment": 0.7,
+    "low_cost": 0.3
+   },
+   "personality": "هر چه در دسترس و سرگرم‌کننده باشد بازی می‌کنند."
+  },
+  {
+   "name": "talent",
+   "role": "نیروی متخصص",
+   "objectives": {
+    "stable_income": 0.6,
+    "working_tools": 0.4
+   },
+   "personality": "برنامه‌نویس‌ها و طراح‌هایی که گزینهٔ دورکاری خارجی و مهاجرت دارند."
+  }
+ ],
+ "initial_state": {
+  "intl_net": 90,
+  "dom_net": 90,
+  "players": 60,
+  "payments": 55,
+  "cash": 50,
+  "team": 70,
+  "content": 60
+ },
+ "relations": [
+  {
+   "from": "studios",
+   "to": "stores",
+   "type": "depends_on"
+  },
+  {
+   "from": "stores",
+   "to": "studios",
+   "type": "depends_on"
+  },
+  {
+   "from": "studios",
+   "to": "talent",
+   "type": "employs"
+  },
+  {
+   "from": "regulator",
+   "to": "studios",
+   "type": "regulates"
+  }
+ ],
+ "causal_links": [
+  {
+   "from": "dom_net",
+   "to": "players",
+   "weight": 0.3
+  },
+  {
+   "from": "intl_net",
+   "to": "players",
+   "weight": -0.1
+  },
+  {
+   "from": "dom_net",
+   "to": "payments",
+   "weight": 0.3
+  },
+  {
+   "from": "players",
+   "to": "payments",
+   "weight": 0.3
+  },
+  {
+   "from": "payments",
+   "to": "cash",
+   "weight": 0.4
+  },
+  {
+   "from": "intl_net",
+   "to": "team",
+   "weight": 0.3
+  },
+  {
+   "from": "cash",
+   "to": "team",
+   "weight": 0.2
+  },
+  {
+   "from": "team",
+   "to": "content",
+   "weight": 0.4
+  },
+  {
+   "from": "content",
+   "to": "players",
+   "weight": 0.2
+  }
+ ],
+ "allowed_actions": [
+  "cut_international_internet",
+  "restore_international_internet",
+  "prioritize_domestic_capacity",
+  "promise_support_package",
+  "migrate_servers_home",
+  "run_events_with_existing_content",
+  "ship_big_update",
+  "cut_side_projects",
+  "pool_hiring_and_servers",
+  "halve_commission",
+  "weekly_payouts",
+  "feature_domestic_games",
+  "switch_to_domestic_games",
+  "return_to_foreign_games",
+  "churn_without_new_content",
+  "stop_work_no_tools",
+  "seek_remote_or_emigrate",
+  "return_to_work",
+  "hold_position"
+ ],
+ "action_tradeoffs": {
+  "cut_international_internet": {
+   "intl_net": -80,
+   "dom_net": -25
+  },
+  "restore_international_internet": {
+   "intl_net": 70,
+   "dom_net": 20
+  },
+  "prioritize_domestic_capacity": {
+   "dom_net": 8
+  },
+  "promise_support_package": {
+   "cash": 1
+  },
+  "migrate_servers_home": {
+   "players": 5,
+   "cash": -4
+  },
+  "run_events_with_existing_content": {
+   "payments": 4,
+   "content": 3,
+   "players": 2
+  },
+  "ship_big_update": {
+   "content": 10,
+   "cash": -4,
+   "team": -2
+  },
+  "cut_side_projects": {
+   "cash": 5,
+   "content": -4
+  },
+  "pool_hiring_and_servers": {
+   "team": 5,
+   "cash": 3
+  },
+  "halve_commission": {
+   "cash": 5
+  },
+  "weekly_payouts": {
+   "cash": 4
+  },
+  "feature_domestic_games": {
+   "players": 5
+  },
+  "switch_to_domestic_games": {
+   "players": 10
+  },
+  "return_to_foreign_games": {
+   "players": -6
+  },
+  "churn_without_new_content": {
+   "players": -5
+  },
+  "stop_work_no_tools": {
+   "team": -10,
+   "content": -6
+  },
+  "seek_remote_or_emigrate": {
+   "team": -8
+  },
+  "return_to_work": {
+   "team": 8
+  },
+  "hold_position": {}
+ },
+ "variable_tradeoffs": {},
+ "variable_specs": {
+  "intl_net": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 90,
+   "behavior_type": "FLOW"
+  },
+  "dom_net": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "players": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 25,
+   "behavior_type": "FLOW"
+  },
+  "payments": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 25,
+   "behavior_type": "FLOW"
+  },
+  "cash": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 25,
+   "behavior_type": "FLOW"
+  },
+  "team": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 30,
+   "behavior_type": "FLOW"
+  },
+  "content": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 25,
+   "behavior_type": "FLOW"
+  }
+ },
+ "rules": [],
+ "events": [],
+ "enable_meta_actions": false,
+ "agent_response_format": "strategic",
+ "max_delta": 90
+}

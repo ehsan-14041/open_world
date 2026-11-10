@@ -1,0 +1,75 @@
+You are playing one seat in a step-by-step scenario exercise. Play it the way this actor really would.
+
+Situation: یک کشور میان‌اندازه با ارز ضعیف ناگهان واردات گوشی‌های با قیمت بالای ۶۰۰ دلار را ممنوع می‌کند. دولت، واردکنندگان، مصرف‌کنندگان و مونتاژکاران داخلی هر کدام واکنش نشان می‌دهند و محیط بیرونی (نرخ ارز، مسیرهای قاچاق، واکنش سازندگان خارجی) اثر می‌گذارد. هر مرحله یک ماه است.
+Each stage lasts: یک ماه. This is stage 4 of 5.
+
+Variables (0 to 100), meaning, current value:
+- legal_supply: عرضهٔ قانونی گوشی در بازار؛ مقدار بالا یعنی گوشی فراوان و رسمی = 62.0
+- smuggling: سهم گوشی قاچاق و غیررسمی؛ مقدار بالا یعنی قاچاق گسترده = 36.0
+- phone_price: سطح قیمت گوشی برای مصرف‌کننده؛ مقدار بالا یعنی گران‌تر = 62.0
+- fx_pressure: فشار بر بازار ارز؛ مقدار بالا یعنی ارز ضعیف‌تر و فشار بیشتر = 61.0
+- customs_revenue: درآمد گمرکی دولت؛ مقدار بالا یعنی درآمد بیشتر = 35.0
+- local_assembly: تولید و مونتاژ گوشی در داخل؛ مقدار بالا یعنی تولید داخلی قوی‌تر = 36.0
+- discontent: نارضایتی عمومی؛ مقدار بالا یعنی ناراضی‌تر = 52.0
+
+Conditions in force now: ["ممنوعیت واردات گوشی بالای ۶۰۰ دلار برقرار است", "مسیرهای قاچاق گسترش یافته", "واردات زیر سقف ۶۰۰ دلار ادامه دارد", "مونتاژ از کیت وارداتی ادامه دارد", "سهمیه‌ای اعلام نشده است"]
+
+History so far:
+Stage 1:
+  environment -> smuggling_route_expands: با ارز ضعیف و ممنوعیت ناگهانی، شکاف قیمت داخلی و خارجی بزرگ می‌شود و مسیرهای قاچاق سریع‌ترین پاسخ بازار است؛ اثر آن را در حد متوسط گرفتم.
+  government -> impose_phone_import_ban: حفظ ذخیرهٔ ارزی اولویت اصلی است؛ ممنوعیت فشار ارزی را کم می‌کند. نارضایتی و قاچاق را از نزدیک رصد می‌کنیم و در صورت لزوم سهمیه می‌دهیم.
+  importers -> import_just_below_threshold: واردات گوشی‌های زیر سقف ۶۰۰ دلار قانونی است و جریان موجودی و حاشیهٔ سود را حفظ می‌کند؛ ریسک سیاسی کمتری از قاچاق یا احتکار دارد و درآمد گمرکی دولت را هم تأمین می‌کند.
+  consumers -> delay_phone_purchase: ارز ضعیف و ممنوعیت، خرید رسمی را گران کرده است. فعلاً خرید را عقب می‌اندازیم تا روشن شود دولت سهمیه می‌دهد یا قاچاق ارزان‌تر می‌شود؛ ریسک گوشی قاچاق را هم نمی‌پذیریم.
+  local_assemblers -> assemble_from_imported_kits: با حذف رقیب وارداتی، سریع‌ترین راه افزایش سهم، مونتاژ از کیت‌های وارداتی است؛ ظرفیت محدود و وابستگی به قطعات اجازه توسعهٔ پرهزینه نمی‌دهد و این مسیر هم عرضه می‌دهد هم قطعات را تثبیت می‌کند.
+  message from government to importers: ممنوعیت موقتی است؛ واردکنندگانی که با قوانین همکاری کنند در تعدیل بعدی و سهمیه‌بندی اولویت دارند.
+  message from importers to government: ما قانونی و زیر سقف وارد می‌کنیم و گمرک درآمد می‌گیرد؛ سهمیهٔ مشخص بدهید تا قاچاق گسترش نیابد.
+  message from consumers to government: خرید رسمی گوشی برای مردم ممکن نیست؛ با سهمیه یا استثنای مدل‌های میان‌رده ممنوعیت را نرم کنید تا سراغ بازار غیررسمی نرویم.
+  message from local_assemblers to government: ما آمادهٔ پر کردن خلأ بازار هستیم؛ برای ادامهٔ مونتاژ، تخصیص ارز و ترخیص روان قطعات و کیت‌ها ضروری است.
+  referee summary: ممنوعیت اجرا شد؛ عرضهٔ قانونی افت کرد و قیمت بالا رفت. مسیر قاچاق گسترش یافت و درآمد گمرکی کم شد. مونتاژ کمی رشد کرد و نارضایتی بالا رفت.
+  state after stage 1: {"legal_supply": 58.0, "smuggling": 37.0, "phone_price": 63.0, "fx_pressure": 58.0, "customs_revenue": 34.0, "local_assembly": 31.0, "discontent": 46.0}
+Stage 2:
+  environment -> hold_position: مسیرهای قاچاق همین ماه قبل گسترش یافته و شوک ارزی یا تغییر مدل سازندگان نشانه‌ای ندارد؛ رویداد بیرونی مشخصی محتمل‌تر نیست.
+  government -> crack_down_on_smuggling: قاچاق ۳۷ و نارضایتی ۴۶ هنوز زیر آستانه‌های سهمیه است. تشدید مبارزه با قاچاق درآمد گمرک را بالا می‌برد و ذخیرهٔ ارزی را حفظ می‌کند، بدون نرم‌کردن ممنوعیت.
+  importers -> lobby_for_exemptions: ورود زیر سقف ادامه دارد اما حاشیه محدود است. دولت قول اولویت به همکاران داده؛ حالا باید برای معافیت و سهمیهٔ رسمی فشار آورد تا تا مرحلهٔ پنجم جریان موجودی حفظ شود.
+  consumers -> buy_grey_market_phones: یک ماه تعویق نتیجه نداد؛ قیمت رسمی بالاست و سهمیه‌ای اعلام نشده. تکرار تعویق جواب نمی‌دهد و برای داشتن گوشی ناچار به بازار غیررسمی می‌روم.
+  local_assemblers -> expand_local_assembly: رقیب وارداتی کنار رفته و بازار خالی است؛ سهم را باید قبل از بازگشت واردات یا نرم‌شدن ممنوعیت بزرگ کنیم. فشار ارزی کمی بالا می‌رود ولی توسعه ارزش دارد.
+  message from government to importers: واردکنندگان قانونی زیر سقف در سهمیه و تعدیل بعدی اولویت دارند؛ قاچاق را شدیداً پیگیری می‌کنیم.
+  message from importers to government: ما همکاری کرده‌ایم و زیر سقف وارد می‌کنیم؛ سهمیهٔ مشخص یا معافیت مدل‌های میان‌رده بدهید تا قاچاق گسترش نیابد.
+  message from consumers to government: اگر سهمیه یا استثنای مدل‌های میان‌رده بدهید، مردم به بازار رسمی برمی‌گردند؛ وگرنه قاچاق تنها راه می‌ماند.
+  message from local_assemblers to government: ما خلأ بازار را پر می‌کنیم؛ در برابر آن، تخصیص ارز و ترخیص سریع قطعات و کیت‌ها را تضمین کنید.
+  referee summary: دولت مبارزه با قاچاق را تشدید کرد اما مصرف‌کنندگان به بازار غیررسمی رفتند و قاچاق ثابت ماند. عرضهٔ قانونی و مونتاژ کمی رشد کردند، فشار ارزی بالا رفت، قیمت و نارضایتی تقریباً ثابت ماندند.
+  state after stage 2: {"legal_supply": 60.0, "smuggling": 37.0, "phone_price": 63.0, "fx_pressure": 60.0, "customs_revenue": 34.0, "local_assembly": 35.0, "discontent": 47.0}
+Stage 3:
+  environment -> hold_position: نشانهٔ تازه‌ای از شوک ارزی، تغییر مدل سازندگان یا خشم عمومی ناگهانی نیست؛ مسیرهای قاچاق پیش‌تر گسترش یافته‌اند و این ماه رویداد بیرونی مشخصی محتمل‌تر نیست.
+  government -> hold_position: مبارزه با قاچاق اثر نداشت و فشار ارزی بالا رفت؛ تکرارش بی‌فایده است. قاچاق ۳۷ و نارضایتی ۴۷ هنوز زیر آستانه‌های سهمیه‌اند و سهمیه فشار ارزی را بیشتر می‌کند.
+  importers -> import_just_below_threshold: لابی دو ماه نتیجه نداده و دولت سهمیه نداده است. واردات قانونی زیر سقف جریان موجودی و حاشیه را حفظ می‌کند و گمرک را هم راضی نگه می‌دارد.
+  consumers -> protest_online: خرید غیررسمی قیمت را پایین نیاورد و سهمیه‌ای نیامده. نارضایتی ۴۷ نزدیک آستانهٔ سهمیه است؛ فشار آنلاین دولت را به نرم‌کردن ممنوعیت می‌کشاند تا خرید رسمی ممکن شود.
+  local_assemblers -> assemble_from_imported_kits: دولت تضمین ارز و قطعات نداده و فشار ارزی ۶۰ است. توسعهٔ پرهزینه را متوقف می‌کنم و با مونتاژ از کیت، عرضه و سهم را با ریسک ارزی کمتر نگه می‌دارم.
+  message from government to importers: ممنوعیت پابرجاست؛ واردکنندگان همکار زیر سقف، در صورت بالا رفتن قاچاق یا نارضایتی، در سهمیهٔ بعدی اولویت دارند.
+  message from importers to government: ما قانونی وارد می‌کنیم و درآمد گمرک را بالا می‌بریم؛ سهمیهٔ مدل‌های میان‌رده را اعلام کنید تا قاچاق کم شود.
+  message from consumers to government: نارضایتی بالا می‌رود. سهمیه یا معافیت مدل‌های میان‌رده بدهید تا مردم به بازار رسمی برگردند و قاچاق کم شود.
+  message from local_assemblers to government: مونتاژ داخلی خلأ بازار را پر می‌کند؛ با تخصیص ارز و ترخیص سریع کیت و قطعات، توسعه را از سر می‌گیریم.
+  referee summary: دولت موضع خود را حفظ کرد و واردات زیر سقف و مونتاژ از کیت عرضه را کمی بالا بردند. قاچاق اندکی کم شد، اما اعتراض آنلاین و قیمت بالا نارضایتی و فشار ارزی را بالا برد.
+  state after stage 3: {"legal_supply": 62.0, "smuggling": 36.0, "phone_price": 62.0, "fx_pressure": 61.0, "customs_revenue": 35.0, "local_assembly": 36.0, "discontent": 52.0}
+
+Your seat: local_assemblers (مونتاژکاران و تولیدکنندگان داخلی). Goals: {"grow_share": 0.6, "secure_parts": 0.4}. Character: از حذف رقیب وارداتی سود می‌برند ولی به قطعات وارداتی و ارز وابسته‌اند و ظرفیتشان محدود است.
+Other seats: environment (محیط و رویدادهای بیرونی), government (دولت و گمرک), importers (واردکنندگان و عمده‌فروشان گوشی), consumers (مصرف‌کنندگان گوشی)
+
+Your own actions, with the typical direct effect of each in one stage:
+- expand_local_assembly: {"local_assembly": 8, "legal_supply": 3, "phone_price": -2, "fx_pressure": 2, "customs_revenue": -2}
+- assemble_from_imported_kits: {"local_assembly": 6, "legal_supply": 4, "phone_price": -2, "fx_pressure": 3}
+- raise_local_prices: {"local_assembly": 2, "phone_price": 4, "discontent": 3}
+- hold_position: {}
+
+Actions of the other seats (for reference): {"environment": ["currency_depreciation_shock", "smuggling_route_expands", "foreign_maker_cuts_models_below_threshold", "public_mood_turns_hostile"], "government": ["impose_phone_import_ban", "soften_ban_with_quota", "lift_ban", "crack_down_on_smuggling"], "importers": ["lobby_for_exemptions", "import_just_below_threshold", "stockpile_phones", "raise_retail_prices"], "consumers": ["buy_grey_market_phones", "delay_phone_purchase", "protest_online"]}
+
+Your private plan note from the previous stage: اگر دولت ارز و ترخیص قطعات را تضمین کرد، دوباره توسعه بدهم. اگر ممنوعیت نرم شد، قیمت را محتاطانه تنظیم کنم و افزایش ندهم. پیش از مرحلهٔ پنجم سهم را حفظ کنم و به ارز وابسته نشوم.
+
+Task: choose the ONE action your seat takes in this stage (one of your own actions, or hold_position).
+Think about where you want to be by stage 5, not only about this stage. Do not keep repeating an action
+that has stopped working. Consider what the others want and whether a deal, a threat or a concession
+would serve your goals; you may send one short public message to one other seat.
+
+Reply with one JSON object only:
+{"chosen_action": "...", "justification": "<Persian, at most 40 words>", "message_to": "<seat name or empty>",
+ "message": "<Persian, at most 25 words, or empty>", "plan": "<Persian, at most 50 words: private note to your later self>"}

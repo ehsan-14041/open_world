@@ -1,0 +1,54 @@
+=== CONTEXT (added by the harness) ===
+Situation: پس از یک خشکسالی شدید، شهری چندمیلیون‌نفره جیره‌بندی آب لوله‌کشی را آغاز می‌کند و آب بخشی از هر روز قطع می‌شود. شرکت آب، شهرداری و دولت شهری، خانوارها و تانکرکش‌های خصوصی هر کدام واکنش نشان می‌دهند و باران، موج گرما یا ترکیدگی خطوط نیز اثر می‌گذارد. هر مرحله دو هفته است.
+Each stage lasts: دو هفته. This is stage 2 of 5.
+Your seat: tanker_vendors (تانکرکش‌ها و فروشندگان خصوصی آب). Goals: {"profit": 0.7, "keep_customers": 0.3}. Character: از کمبود آب لوله سود می‌برند؛ قیمت و ناوگان را با تقاضا تنظیم می‌کنند و گاهی از منابع کم‌کیفیت برداشت می‌کنند.
+Other seats: environment (محیط و رویدادهای بیرونی), water_utility (شرکت آب و فاضلاب شهری), city_government (شهرداری و دولت شهری), households (خانوارهای شهری)
+What each action does to the variables in one stage: {"rain_arrives": {"reservoir": 8, "public_anger": -3}, "heat_wave": {"reservoir": -6, "health_risk": 5, "public_anger": 3}, "main_pipe_burst": {"supply_hours": -10, "health_risk": 5, "utility_budget": -4, "reservoir": -3}, "rationing_rumor_spreads": {"tanker_price": 6, "public_anger": 6, "home_storage": 3}, "start_rationing": {"supply_hours": -35, "reservoir": 5, "public_anger": 12, "utility_budget": -5, "tanker_price": 6}, "tighten_rationing": {"supply_hours": -12, "reservoir": 4, "public_anger": 8, "utility_budget": -3}, "ease_rationing": {"supply_hours": 12, "reservoir": -4, "public_anger": -6, "utility_budget": 3}, "fix_leaks_and_pressure": {"reservoir": 3, "supply_hours": 3, "utility_budget": -6}, "deploy_free_tankers": {"home_storage": 6, "tanker_price": -5, "public_anger": -5, "health_risk": -2, "utility_budget": -5}, "raise_water_tariff": {"utility_budget": 8, "reservoir": 2, "public_anger": 8}, "launch_conservation_campaign": {"reservoir": 3, "public_anger": -2, "utility_budget": -2}, "fine_excess_users": {"reservoir": 3, "public_anger": 7, "utility_budget": 3}, "hoard_water_in_tanks": {"home_storage": 12, "reservoir": -3, "tanker_price": 3, "health_risk": 3}, "buy_from_tankers": {"home_storage": 8, "tanker_price": 6, "public_anger": -2, "health_risk": 1}, "cut_use_voluntarily": {"reservoir": 3, "home_storage": -3, "public_anger": 2}, "protest_and_complain": {"public_anger": 5, "supply_hours": 2, "utility_budget": -2}, "raise_tanker_prices": {"tanker_price": 12, "public_anger": 5, "home_storage": -3}, "expand_tanker_fleet": {"tanker_price": -8, "home_storage": 4, "reservoir": -2, "health_risk": 2}, "sell_unsafe_well_water": {"tanker_price": -6, "home_storage": 5, "health_risk": 12, "reservoir": -2}, "hold_position": {}}
+Which seat each action belongs to: {"rain_arrives": "environment", "heat_wave": "environment", "main_pipe_burst": "environment", "rationing_rumor_spreads": "environment", "start_rationing": "water_utility", "tighten_rationing": "water_utility", "ease_rationing": "water_utility", "fix_leaks_and_pressure": "water_utility", "deploy_free_tankers": "city_government", "raise_water_tariff": "city_government", "launch_conservation_campaign": "city_government", "fine_excess_users": "city_government", "hoard_water_in_tanks": "households", "buy_from_tankers": "households", "cut_use_voluntarily": "households", "protest_and_complain": "households", "raise_tanker_prices": "tanker_vendors", "expand_tanker_fleet": "tanker_vendors", "sell_unsafe_well_water": "tanker_vendors", "hold_position": "any"}
+Variable meanings: {"reservoir": "سطح ذخیرهٔ سدها و منابع آب شهر؛ مقدار بالا یعنی ذخیرهٔ بیشتر", "supply_hours": "ساعت‌های برقراری آب لوله در روز؛ مقدار بالا یعنی آب بیشتر و بدون قطع", "home_storage": "ذخیرهٔ آب در مخزن و ظرف خانوارها؛ مقدار بالا یعنی ذخیرهٔ بیشتر", "tanker_price": "قیمت آب تانکری در بازار آزاد؛ مقدار بالا یعنی گران‌تر", "public_anger": "نارضایتی و اعتراض مردم؛ مقدار بالا یعنی خشم بیشتر", "health_risk": "خطر بهداشتی و بیماری ناشی از آب؛ مقدار بالا یعنی خطر بیشتر", "utility_budget": "توان مالی شرکت آب؛ مقدار بالا یعنی بودجه و درآمد بیشتر"}
+Stage 1: environment -> rationing_rumor_spreads (با آغاز جیره‌بندی و قطع روزانه آب، شایعه‌های تشدید قطعی سریع پخش می‌شود؛ خانوارها نگران می‌شوند، ذخیره می‌کنند و قیمت تانکری بالا می‌رود.); water_utility -> start_rationing (ذخیره مخازن ۲۵ درصد است و اولویت اصلی شرکت آب حفاظت از آن است؛ جیره‌بندی منظم و برنامه‌ریزی‌شده بهتر از افت کنترل‌نشده است، هرچند خشم مردم و قیمت تانکر بالا می‌رود.); city_government -> launch_conservation_campaign (ذخیره سد پایین است اما آب هنوز برقرار است؛ پیام‌رسانی و صرفه‌جویی با هزینه کم، ذخیره را بالا می‌برد و خشم مردم را بدون تنش تازه کم می‌کند.); households -> hoard_water_in_tanks (با شروع جیره‌بندی قطعی آب قطعی است. پر کردن مخزن و ظرف‌ها ارزان‌ترین راه تضمین آب شرب و بهداشت است و به تانکر گران نیاز نمی‌ماند.); tanker_vendors -> expand_tanker_fleet (آب لوله هنوز برقرار است و قیمت پایین است؛ گران کردن مشتری را می‌رانَد. با جیره‌بندی در راه است، گسترش ناوگان برای جذب تقاضای آینده و حفظ مشتری، محافظه‌کارانه و سودآور است.)
+  state after stage 1: {"reservoir": 28, "supply_hours": 60, "home_storage": 54, "tanker_price": 36, "public_anger": 47, "health_risk": 24, "utility_budget": 44}
+Choose only an action that your own seat could really take. Set expected_effect to the listed effect of the action you choose. Write justification and causal_chain in Persian.
+
+=== SYSTEM ===
+You are an autonomous strategic agent participating in a numeric multi-agent simulation.
+Respond with ### ACTION_JSON on one line, then a single JSON object (no markdown, no extra text). The JSON must strictly follow the schema below and be valid JSON.
+
+Schema (required fields):
+{
+  "chosen_action": "string",
+  "primary_variable": "string",
+  "probability": 0.0,
+  "justification": "string",
+  "causal_chain": "string",
+  "expected_effect": {
+      "<variable_name>": -5.0
+  },
+  "relation_updates": [
+      {"from": "actor_name", "to": "actor_name", "type": "string", "rationale": "short"}
+  ]
+}
+
+CONSTRAINTS:
+1. primary_variable cannot be null and must be one of the world variables.
+2. probability must be a real between 0 and 1.
+3. Each expected_effect delta must be within allowed per-turn bounds: ABS(delta) <= MAX_DELTA, where MAX_DELTA is provided in the prompt. If you want a larger effect, propose it but it will be clipped by the WorldModelAgent.
+4. justification max length: 60 words. Keep it concise.
+5. causal_chain must map to existing causal_links or be a plausible single-step causal inference.
+6. If you cannot produce a valid response, return JSON with field "error": "short explanation", not other keys.
+
+=== PROMPT ===
+You are: تانکرکش‌ها و فروشندگان خصوصی آب (name: tanker_vendors)
+Actor profile: {"risk_tolerance": 0.5, "aggressiveness": 0.5}
+World variables (0-100): {"reservoir": 28.0, "supply_hours": 60.0, "home_storage": 54.001472, "tanker_price": 35.990422016, "public_anger": 47.31737864192, "health_risk": 23.698874912768, "utility_budget": 43.59639662592}
+Causal links: [{"from": "reservoir", "to": "supply_hours", "weight": 0.2}, {"from": "supply_hours", "to": "home_storage", "weight": 0.3}, {"from": "supply_hours", "to": "tanker_price", "weight": -0.3}, {"from": "home_storage", "to": "tanker_price", "weight": -0.15}, {"from": "supply_hours", "to": "public_anger", "weight": -0.3}, {"from": "tanker_price", "to": "public_anger", "weight": 0.25}, {"from": "supply_hours", "to": "health_risk", "weight": -0.15}, {"from": "tanker_price", "to": "health_risk", "weight": 0.1}, {"from": "home_storage", "to": "health_risk", "weight": 0.1}, {"from": "supply_hours", "to": "utility_budget", "weight": 0.2}, {"from": "public_anger", "to": "utility_budget", "weight": -0.1}]
+Allowed actions: ["rain_arrives", "heat_wave", "main_pipe_burst", "rationing_rumor_spreads", "start_rationing", "tighten_rationing", "ease_rationing", "fix_leaks_and_pressure", "deploy_free_tankers", "raise_water_tariff", "launch_conservation_campaign", "fine_excess_users", "hoard_water_in_tanks", "buy_from_tankers", "cut_use_voluntarily", "protest_and_complain", "raise_tanker_prices", "expand_tanker_fleet", "sell_unsafe_well_water", "hold_position"]
+Config:
+  MAX_DELTA: 40.0
+  INSTABILITY_MODE: true
+  OBS_NOISE_SCALE: 0.0
+
+Task:
+Choose ONE action this turn from Allowed actions that best advances your objectives while respecting risk_tolerance and INSTABILITY_MODE. Produce the JSON object described in SYSTEM. Focus on realistic, conservative moves if INSTABILITY_MODE is true and avoid actions that would increase 'tension' above current value unless probability > 0.8 and risk_tolerance > 0.7.
+
+Remember: Output ### ACTION_JSON then valid JSON matching the schema exactly. No other text.

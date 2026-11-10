@@ -1,0 +1,170 @@
+{
+ "states": [
+  {
+   "legal_supply": 80,
+   "smuggling": 20,
+   "phone_price": 55,
+   "fx_pressure": 60,
+   "customs_revenue": 50,
+   "local_assembly": 25,
+   "discontent": 35
+  },
+  {
+   "legal_supply": 58.0,
+   "smuggling": 37.0,
+   "phone_price": 63.0,
+   "fx_pressure": 58.0,
+   "customs_revenue": 34.0,
+   "local_assembly": 31.0,
+   "discontent": 46.0
+  },
+  {
+   "legal_supply": 60.0,
+   "smuggling": 37.0,
+   "phone_price": 63.0,
+   "fx_pressure": 60.0,
+   "customs_revenue": 34.0,
+   "local_assembly": 35.0,
+   "discontent": 47.0
+  },
+  {
+   "legal_supply": 62.0,
+   "smuggling": 36.0,
+   "phone_price": 62.0,
+   "fx_pressure": 61.0,
+   "customs_revenue": 35.0,
+   "local_assembly": 36.0,
+   "discontent": 52.0
+  },
+  {
+   "legal_supply": 66.0,
+   "smuggling": 35.0,
+   "phone_price": 60.0,
+   "fx_pressure": 63.0,
+   "customs_revenue": 37.0,
+   "local_assembly": 38.0,
+   "discontent": 51.0
+  },
+  {
+   "legal_supply": 67.0,
+   "smuggling": 33.0,
+   "phone_price": 60.0,
+   "fx_pressure": 64.0,
+   "customs_revenue": 38.0,
+   "local_assembly": 44.0,
+   "discontent": 50.0
+  }
+ ],
+ "turns": [
+  {
+   "environment": {
+    "chosen_action": "smuggling_route_expands",
+    "justification": "با ارز ضعیف و ممنوعیت ناگهانی، شکاف قیمت داخلی و خارجی بزرگ می‌شود و مسیرهای قاچاق سریع‌ترین پاسخ بازار است؛ اثر آن را در حد متوسط گرفتم."
+   },
+   "government": {
+    "chosen_action": "impose_phone_import_ban",
+    "justification": "حفظ ذخیرهٔ ارزی اولویت اصلی است؛ ممنوعیت فشار ارزی را کم می‌کند. نارضایتی و قاچاق را از نزدیک رصد می‌کنیم و در صورت لزوم سهمیه می‌دهیم."
+   },
+   "importers": {
+    "chosen_action": "import_just_below_threshold",
+    "justification": "واردات گوشی‌های زیر سقف ۶۰۰ دلار قانونی است و جریان موجودی و حاشیهٔ سود را حفظ می‌کند؛ ریسک سیاسی کمتری از قاچاق یا احتکار دارد و درآمد گمرکی دولت را هم تأمین می‌کند."
+   },
+   "consumers": {
+    "chosen_action": "delay_phone_purchase",
+    "justification": "ارز ضعیف و ممنوعیت، خرید رسمی را گران کرده است. فعلاً خرید را عقب می‌اندازیم تا روشن شود دولت سهمیه می‌دهد یا قاچاق ارزان‌تر می‌شود؛ ریسک گوشی قاچاق را هم نمی‌پذیریم."
+   },
+   "local_assemblers": {
+    "chosen_action": "assemble_from_imported_kits",
+    "justification": "با حذف رقیب وارداتی، سریع‌ترین راه افزایش سهم، مونتاژ از کیت‌های وارداتی است؛ ظرفیت محدود و وابستگی به قطعات اجازه توسعهٔ پرهزینه نمی‌دهد و این مسیر هم عرضه می‌دهد هم قطعات را تثبیت می‌کند."
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "justification": "مسیرهای قاچاق همین ماه قبل گسترش یافته و شوک ارزی یا تغییر مدل سازندگان نشانه‌ای ندارد؛ رویداد بیرونی مشخصی محتمل‌تر نیست."
+   },
+   "government": {
+    "chosen_action": "crack_down_on_smuggling",
+    "justification": "قاچاق ۳۷ و نارضایتی ۴۶ هنوز زیر آستانه‌های سهمیه است. تشدید مبارزه با قاچاق درآمد گمرک را بالا می‌برد و ذخیرهٔ ارزی را حفظ می‌کند، بدون نرم‌کردن ممنوعیت."
+   },
+   "importers": {
+    "chosen_action": "lobby_for_exemptions",
+    "justification": "ورود زیر سقف ادامه دارد اما حاشیه محدود است. دولت قول اولویت به همکاران داده؛ حالا باید برای معافیت و سهمیهٔ رسمی فشار آورد تا تا مرحلهٔ پنجم جریان موجودی حفظ شود."
+   },
+   "consumers": {
+    "chosen_action": "buy_grey_market_phones",
+    "justification": "یک ماه تعویق نتیجه نداد؛ قیمت رسمی بالاست و سهمیه‌ای اعلام نشده. تکرار تعویق جواب نمی‌دهد و برای داشتن گوشی ناچار به بازار غیررسمی می‌روم."
+   },
+   "local_assemblers": {
+    "chosen_action": "expand_local_assembly",
+    "justification": "رقیب وارداتی کنار رفته و بازار خالی است؛ سهم را باید قبل از بازگشت واردات یا نرم‌شدن ممنوعیت بزرگ کنیم. فشار ارزی کمی بالا می‌رود ولی توسعه ارزش دارد."
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "justification": "نشانهٔ تازه‌ای از شوک ارزی، تغییر مدل سازندگان یا خشم عمومی ناگهانی نیست؛ مسیرهای قاچاق پیش‌تر گسترش یافته‌اند و این ماه رویداد بیرونی مشخصی محتمل‌تر نیست."
+   },
+   "government": {
+    "chosen_action": "hold_position",
+    "justification": "مبارزه با قاچاق اثر نداشت و فشار ارزی بالا رفت؛ تکرارش بی‌فایده است. قاچاق ۳۷ و نارضایتی ۴۷ هنوز زیر آستانه‌های سهمیه‌اند و سهمیه فشار ارزی را بیشتر می‌کند."
+   },
+   "importers": {
+    "chosen_action": "import_just_below_threshold",
+    "justification": "لابی دو ماه نتیجه نداده و دولت سهمیه نداده است. واردات قانونی زیر سقف جریان موجودی و حاشیه را حفظ می‌کند و گمرک را هم راضی نگه می‌دارد."
+   },
+   "consumers": {
+    "chosen_action": "protest_online",
+    "justification": "خرید غیررسمی قیمت را پایین نیاورد و سهمیه‌ای نیامده. نارضایتی ۴۷ نزدیک آستانهٔ سهمیه است؛ فشار آنلاین دولت را به نرم‌کردن ممنوعیت می‌کشاند تا خرید رسمی ممکن شود."
+   },
+   "local_assemblers": {
+    "chosen_action": "assemble_from_imported_kits",
+    "justification": "دولت تضمین ارز و قطعات نداده و فشار ارزی ۶۰ است. توسعهٔ پرهزینه را متوقف می‌کنم و با مونتاژ از کیت، عرضه و سهم را با ریسک ارزی کمتر نگه می‌دارم."
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "justification": "مسیرهای قاچاق از پیش گسترده‌اند و نشانه‌ای از شوک ارزی تازه، تغییر مدل سازندگان یا خشم ناگهانی نیست؛ رویداد بیرونی مشخصی محتمل‌تر نیست."
+   },
+   "government": {
+    "chosen_action": "soften_ban_with_quota",
+    "justification": "نارضایتی ۵۲ و رو به رشد است و مرحلهٔ پایانی نزدیک است. سهمیه برای همکاران قانونی، قیمت و قاچاق را کم و درآمد گمرک را بالا می‌برد؛ هزینهٔ ارزی آن اندک است."
+   },
+   "importers": {
+    "chosen_action": "import_just_below_threshold",
+    "justification": "لابی دو ماه نتیجه نداد. واردات زیر سقف تنها مسیر کارآمد است: عرضه و جریان موجودی را نگه می‌دارد، گمرک را راضی می‌کند و ریسک سیاسی ندارد."
+   },
+   "consumers": {
+    "chosen_action": "buy_grey_market_phones",
+    "justification": "اعتراض و تعویق جواب نداده و سهمیه‌ای نیامده است. طبق برنامه برای داشتن گوشی تا مرحلهٔ آخر ناچار فقط مدل میان‌رده را از بازار غیررسمی می‌خرم و اعتراض را متوقف می‌کنم."
+   },
+   "local_assemblers": {
+    "chosen_action": "assemble_from_imported_kits",
+    "justification": "دولت هنوز ارز و ترخیص قطعات را تضمین نکرده و فشار ارزی ۶۱ است. مونتاژ از کیت عرضه و سهم را بدون توسعهٔ پرهزینه بالا نگه می‌دارد و تا مرحلهٔ پنجم جواب می‌دهد."
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "justification": "نشانهٔ شوک ارزی تازه، تغییر مدل سازندگان یا خشم ناگهانی نیست و مسیرهای قاچاق از پیش گسترده‌اند؛ رویداد بیرونی مشخصی محتمل‌تر نیست."
+   },
+   "government": {
+    "chosen_action": "hold_position",
+    "justification": "فشار ارزی ۶۳ است و نزدیک آستانهٔ ۶۵؛ سهمیهٔ بیشتر آن را بالاتر می‌برد. نارضایتی ۵۱ در حال کاهش است. در مرحلهٔ آخر موضع فعلی ذخیرهٔ ارزی را بهتر حفظ می‌کند."
+   },
+   "importers": {
+    "chosen_action": "stockpile_phones",
+    "justification": "مرحلهٔ آخر است؛ جریان قانونی زیر سقف برقرار است و سهمیه کوچک. انباشت موجودی قیمت و حاشیه را بالا نگه می‌دارد و موجودی ارزشمند را برای بعد حفظ می‌کند، بی‌آنکه نارضایتی را مستقیم بالا ببرد."
+   },
+   "consumers": {
+    "chosen_action": "hold_position",
+    "justification": "سهمیهٔ میان‌رده اعلام شده است؛ طبق برنامه به خرید رسمی برمی‌گردم و دیگر به بازار غیررسمی نمی‌روم. اعتراض هم لازم نیست."
+   },
+   "local_assemblers": {
+    "chosen_action": "expand_local_assembly",
+    "justification": "مرحلهٔ آخر است و هزینهٔ ارزی توسعه دیگر به مراحل بعد نمی‌رسد. سهمیهٔ میان‌رده واردات را محدود نگه می‌دارد؛ حالا بیشترین رشد سهم تولید داخلی را می‌گیرم."
+   }
+  }
+ ]
+}

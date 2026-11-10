@@ -1,0 +1,57 @@
+{
+ "environment": {
+  "chosen_action": "hold_position",
+  "primary_variable": "reservoir",
+  "probability": 0.5,
+  "justification": "در چهار مرحلهٔ پیاپی شوک رخ داده و ذخیره ۲۶ و بودجه ۱۶ است؛ باران در خشکسالی بعید است و رویداد تازه از ادامهٔ روند محتمل‌تر نیست.",
+  "causal_chain": "نبود رویداد بیرونی مشخص ← روند فعلی ذخیره و ساعت آب بدون شوک اضافی ادامه می‌یابد",
+  "expected_effect": {}
+ },
+ "water_utility": {
+  "chosen_action": "tighten_rationing",
+  "primary_variable": "reservoir",
+  "probability": 0.55,
+  "justification": "ذخیرهٔ سد پس از موج گرما دوباره به ۲۶ افتاده و حفاظت از آن اولویت اصلی است. بودجه ۱۶ است و تعمیر پرهزینه؛ خانوارها ذخیرهٔ خانگی ۷۳ دارند، پس سخت‌گیری بیشتر قابل تحمل است.",
+  "causal_chain": "سخت‌تر شدن جیره‌بندی مصرف را کم می‌کند و ذخیرهٔ سد بالا می‌رود؛ در عوض ساعت آب لوله کمتر و خشم مردم و فشار بر بودجه بیشتر می‌شود.",
+  "expected_effect": {
+   "supply_hours": -12,
+   "reservoir": 4,
+   "public_anger": 8,
+   "utility_budget": -3
+  }
+ },
+ "city_government": {
+  "chosen_action": "deploy_free_tankers",
+  "primary_variable": "public_anger",
+  "probability": 0.6,
+  "justification": "ساعت آب ۴۰ و خطر بهداشتی ۴۰ و خشم ۵۷ است. تانکر رایگان از آسیب‌پذیران حمایت می‌کند و خشم و قیمت تانکر را کم می‌کند؛ هزینه بودجه پذیرفتنی است.",
+  "causal_chain": "تانکر رایگان ← کاهش قیمت تانکر و افزایش ذخیره خانگی ← کاهش خشم مردم و خطر بهداشتی",
+  "expected_effect": {
+   "home_storage": 6,
+   "tanker_price": -5,
+   "public_anger": -5,
+   "health_risk": -2,
+   "utility_budget": -5
+  }
+ },
+ "households": {
+  "chosen_action": "cut_use_voluntarily",
+  "primary_variable": "reservoir",
+  "probability": 0.6,
+  "justification": "ذخیره خانگی بالاست (۷۳) و قیمت تانکر هنوز گران است، پس خرید بیشتر توجیه ندارد. کاهش داوطلبانه مصرف ذخیره سد را حفظ می‌کند و از سخت‌تر شدن جیره‌بندی جلوگیری می‌کند.",
+  "causal_chain": "کاهش مصرف داوطلبانه ذخیره سد را بالا می‌برد و با بهتر شدن ذخیره، ساعت برقراری آب لوله در آینده بیشتر می‌شود؛ هزینه آن کاهش اندک ذخیره خانگی و کمی خشم است.",
+  "expected_effect": {
+   "reservoir": 3,
+   "home_storage": -3,
+   "public_anger": 2
+  }
+ },
+ "tanker_vendors": {
+  "chosen_action": "hold_position",
+  "primary_variable": "tanker_price",
+  "probability": 0.65,
+  "justification": "ذخیرهٔ خانگی ۷۳ تقاضای تانکر را کم کرده و تانکر رایگان شهرداری رقیب است. افزایش قیمت خشم و نظارت را بالا می‌برد؛ صبر و حفظ مشتری محتاطانه‌تر است.",
+  "causal_chain": "ذخیرهٔ خانگی بالا فشار قیمتی تانکر را کم می‌کند و افزایش دوباره قیمت خشم مردم را بالا می‌برد؛ با ثابت ماندن، مشتری و قیمت فعلی حفظ می‌شود.",
+  "expected_effect": {}
+ }
+}

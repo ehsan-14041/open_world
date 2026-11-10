@@ -1,0 +1,161 @@
+{"answers": {
+"3499793": {"tendency": -0.5, "drivers": [
+ {"name": "Incumbent Horwath advantage", "toward": "no", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "Loomis name recognition from 2022 run", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Business community backing", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 2},
+ {"name": "Fragmented field", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 4},
+ {"name": "Local discontent with council/taxes", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 4}], "probability": 0.22},
+"3501950": {"tendency": -0.5, "drivers": [
+ {"name": "Persisting Iran-related security threat", "toward": "no", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "Insurance and shipowner caution", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 2},
+ {"name": "Ceasefire or de-escalation deal", "toward": "yes", "strength": "strong", "level": 0.4, "delay_weeks": 3},
+ {"name": "Naval escort operations", "toward": "yes", "strength": "medium", "level": 0.4, "delay_weeks": 2},
+ {"name": "Pent-up export demand from Gulf producers", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 1}], "probability": 0.25},
+"3502066": {"tendency": 0.3, "drivers": [
+ {"name": "Ongoing US-mediated talks/mechanism", "toward": "yes", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "Indirect meetings qualify", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Hezbollah pressure on Lebanese government", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 1},
+ {"name": "Escalation of Israeli strikes", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 1},
+ {"name": "Short window (3 weeks)", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0}], "probability": 0.62},
+"3502076": {"tendency": -0.2, "drivers": [
+ {"name": "Trump public pledge to release UAP files", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Agency/AARO bureaucratic slowness", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Congressional UAP disclosure pressure", "toward": "yes", "strength": "weak", "level": 0.5, "delay_weeks": 2},
+ {"name": "Broad definition (any new file counts)", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Competing political priorities", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0}], "probability": 0.33},
+"3504048": {"tendency": -0.85, "drivers": [
+ {"name": "Greens polling well below 2023 18.4%", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Linke surge taking left votes", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Overhang/leveling enlarging chamber", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 6},
+ {"name": "Late campaign swing", "toward": "yes", "strength": "weak", "level": 0.3, "delay_weeks": 4}], "probability": 0.04},
+"3504056": {"tendency": -0.7, "drivers": [
+ {"name": "CDU polling low-to-mid 20s, below 2023's 28%", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Incumbent mayor Wegner profile", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Direct mandates causing overhang seats", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 6},
+ {"name": "AfD and Linke fragmentation", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Federal CDU-led government unpopularity", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0}], "probability": 0.12},
+"3504081": {"tendency": -0.6, "drivers": [
+ {"name": "S polling ~33-35%", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Opposition benefit vs Kristersson government", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Polling error / late swing to right bloc", "toward": "yes", "strength": "medium", "level": 0.3, "delay_weeks": 4},
+ {"name": "Votes leaking to V/MP", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 2}], "probability": 0.12},
+"3515223": {"tendency": 0.1, "drivers": [
+ {"name": "Baseline 9D-3R delegation", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Midterm environment favoring Democrats", "toward": "yes", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "NJ-7 Kean competitiveness", "toward": "yes", "strength": "strong", "level": 0.6, "delay_weeks": 8},
+ {"name": "Possible additional flip (NJ-2) making 11", "toward": "no", "strength": "weak", "level": 0.2, "delay_weeks": 8},
+ {"name": "Hispanic swing to GOP in north NJ", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0}], "probability": 0.5},
+"3515259": {"tendency": -0.6, "drivers": [
+ {"name": "Current 0D-4R delegation", "toward": "no", "strength": "strong", "level": 0.9, "delay_weeks": 0},
+ {"name": "Democratic midterm wave", "toward": "yes", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "IA-1 and IA-3 competitive", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 8},
+ {"name": "Open IA-2 (Hinson to Senate)", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 8},
+ {"name": "Iowa's rightward lean", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0}], "probability": 0.12},
+"3515266": {"tendency": 0.0, "drivers": [
+ {"name": "Mid-decade redistricting referendum/new map", "toward": "yes", "strength": "strong", "level": 0.5, "delay_weeks": 0},
+ {"name": "Court challenges to new map", "toward": "no", "strength": "strong", "level": 0.5, "delay_weeks": 0},
+ {"name": "Democratic midterm environment", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Old map 6-5 baseline caps Dems", "toward": "no", "strength": "strong", "level": 0.4, "delay_weeks": 0}], "probability": 0.45},
+"3515270": {"tendency": -0.2, "drivers": [
+ {"name": "Current 3D-6R delegation", "toward": "no", "strength": "medium", "level": 0.8, "delay_weeks": 0},
+ {"name": "Open AZ-1 (Schweikert)", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 8},
+ {"name": "AZ-6 Ciscomani vulnerable", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 8},
+ {"name": "Democratic midterm wave", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Need both flips exactly", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0}], "probability": 0.33},
+"3515278": {"tendency": -0.4, "drivers": [
+ {"name": "Current 6D-7R delegation", "toward": "no", "strength": "medium", "level": 0.8, "delay_weeks": 0},
+ {"name": "MI-7, MI-10 open/competitive", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 8},
+ {"name": "Need three net flips", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Democratic midterm wave", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "MI-8 open D seat hold risk", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 8}], "probability": 0.18},
+"3515293": {"tendency": -0.7, "drivers": [
+ {"name": "Current 7D-10R delegation", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "PA-7, PA-8, PA-10 competitive", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 8},
+ {"name": "Need four net flips incl. PA-1", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Democratic midterm wave", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0}], "probability": 0.07},
+"3515949": {"tendency": -0.2, "drivers": [
+ {"name": "Rob Sand strong Dem gubernatorial candidate", "toward": "yes", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "Open Senate seat R lean (Hinson)", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Iowa R partisan lean", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Correlation: Dem wave could flip Senate too", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 8},
+ {"name": "Ticket splitting tradition", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 8}], "probability": 0.32},
+"3516003": {"tendency": 0.0, "drivers": [
+ {"name": "Collins incumbency and crossover appeal", "toward": "no", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "Democratic midterm environment", "toward": "yes", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Maine Dem lean for open governor seat", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Independent candidates splitting/winning", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 4},
+ {"name": "Dem Senate nominee quality/controversy", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 2}], "probability": 0.42},
+"3516134": {"tendency": -0.6, "drivers": [
+ {"name": "Ohio R partisan lean", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Sherrod Brown comeback strength", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Ramaswamy favored for governor", "toward": "no", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "Democratic midterm wave", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Need both races", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0}], "probability": 0.17},
+"3532624": {"tendency": 0.0, "drivers": [
+ {"name": "Primary held Aug 11; early returns indicate close race", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Crowley must be the winner", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Fragmented multi-candidate field", "toward": "yes", "strength": "weak", "level": 0.6, "delay_weeks": 0},
+ {"name": "Canvass/recount shifting margin", "toward": "no", "strength": "weak", "level": 0.2, "delay_weeks": 2}], "probability": 0.42},
+"3534088": {"tendency": -0.4, "drivers": [
+ {"name": "Narrow 0.2pt bracket width", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Race appears very close", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Crowley must be the winner", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Canvass adjustments", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 2}], "probability": 0.17},
+"3542662": {"tendency": -0.1, "drivers": [
+ {"name": "Incumbency of Tamaki", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "All Okinawa coalition weakening in local races", "toward": "no", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "LDP-Komeito/conservative unified candidate", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Anti-base sentiment (Henoko)", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Third-term fatigue", "toward": "no", "strength": "weak", "level": 0.5, "delay_weeks": 0}], "probability": 0.42},
+"3543008": {"tendency": -0.7, "drivers": [
+ {"name": "Highly fragmented Peruvian municipal field", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Candidate visibility/party backing", "toward": "yes", "strength": "medium", "level": 0.3, "delay_weeks": 2},
+ {"name": "Anti-incumbent local mood", "toward": "no", "strength": "weak", "level": 0.5, "delay_weeks": 0},
+ {"name": "JNE candidate exclusions", "toward": "no", "strength": "weak", "level": 0.2, "delay_weeks": 3}], "probability": 0.1},
+"3543033": {"tendency": -0.7, "drivers": [
+ {"name": "Highly fragmented Peruvian municipal field", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Candidate visibility/party backing", "toward": "yes", "strength": "medium", "level": 0.3, "delay_weeks": 2},
+ {"name": "Anti-incumbent local mood", "toward": "no", "strength": "weak", "level": 0.5, "delay_weeks": 0},
+ {"name": "JNE candidate exclusions", "toward": "no", "strength": "weak", "level": 0.2, "delay_weeks": 3}], "probability": 0.1},
+"3561659": {"tendency": 0.7, "drivers": [
+ {"name": "V polling ~7-8%, clear of C/KD/MP", "toward": "yes", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "C/KD/MP clustered at 5-6%", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Late tactical voting for small parties", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 3},
+ {"name": "V overtaking M (unlikely)", "toward": "no", "strength": "weak", "level": 0.05, "delay_weeks": 0}], "probability": 0.84},
+"3561738": {"tendency": 0.0, "drivers": [
+ {"name": "MP, C, KD clustered for places 5-7", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "MP polling near middle of cluster", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Possible MP finishing 5th", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 0},
+ {"name": "Risk of a cluster party dropping below 4%", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 4}], "probability": 0.35},
+"3561916": {"tendency": -0.4, "drivers": [
+ {"name": "L polling below 4% threshold for long time", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Support/tactical votes from M voters", "toward": "yes", "strength": "medium", "level": 0.4, "delay_weeks": 3},
+ {"name": "Historical late recovery of small parties", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 4},
+ {"name": "Leadership turmoil", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0}], "probability": 0.3},
+"3562235": {"tendency": -0.85, "drivers": [
+ {"name": "S polling ~33-35%", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Large polling error needed", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Late swing to V/MP", "toward": "yes", "strength": "weak", "level": 0.2, "delay_weeks": 3}], "probability": 0.04},
+"3562254": {"tendency": -0.3, "drivers": [
+ {"name": "M polling ~17-19%", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "PM incumbency rally late in campaign", "toward": "yes", "strength": "medium", "level": 0.4, "delay_weeks": 3},
+ {"name": "Tactical inflow from L/KD voters", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 3},
+ {"name": "Competition from SD on right", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0}], "probability": 0.28},
+"3562256": {"tendency": -0.2, "drivers": [
+ {"name": "V polling ~7-8%, near upper edge", "toward": "no", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "2022 result 6.75% inside bracket", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Late tactical shift to S", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 3}], "probability": 0.35},
+"3562261": {"tendency": -0.6, "drivers": [
+ {"name": "MP polling ~5-6%", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Climate issue salience", "toward": "yes", "strength": "weak", "level": 0.3, "delay_weeks": 2},
+ {"name": "Young voter turnout", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 4}], "probability": 0.14},
+"3562309": {"tendency": -0.7, "drivers": [
+ {"name": "C polling ~4.5-6%", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Leadership change effect", "toward": "yes", "strength": "weak", "level": 0.3, "delay_weeks": 0},
+ {"name": "Rural/centrist tactical votes", "toward": "yes", "strength": "weak", "level": 0.3, "delay_weeks": 3}], "probability": 0.09},
+"3566306": {"tendency": -0.8, "drivers": [
+ {"name": "Leavitt must depart and be replaced by Dec 31", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Many alternative candidates (deputies, comms staff)", "toward": "no", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Jennings' TV-defender profile liked by Trump", "toward": "yes", "strength": "medium", "level": 0.4, "delay_weeks": 0},
+ {"name": "Jennings' lucrative media career", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0}], "probability": 0.06}
+}, "other_tools_used": false}

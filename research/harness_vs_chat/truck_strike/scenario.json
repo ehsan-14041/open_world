@@ -1,0 +1,352 @@
+{
+ "description": "رانندگان کامیون در سراسر کشور در اعتراض به قیمت سوخت و نرخ کرایهٔ حمل اعتصاب سراسری را آغاز می‌کنند. اتحادیهٔ رانندگان، دولت، صاحبان بار و خرده‌فروشی‌ها هر کدام واکنش نشان می‌دهند و رویدادهای بیرونی هم مسیر را عوض می‌کنند. هر مرحله سه روز است.",
+ "initial_agents": [
+  {
+   "name": "environment",
+   "role": "محیط و رویدادهای بیرونی",
+   "objectives": {
+    "random_shocks": 0.5,
+    "spillover": 0.5
+   },
+   "personality": "حوادث خشونت‌بار جاده‌ای، خرید هراسی، آب‌وهوای بد یا پیوستن صنف‌های دیگر؛ هیچ‌کدام از چهار بازیگر کنترلشان نمی‌کنند و ممکن است رخ بدهند یا ندهند."
+  },
+  {
+   "name": "drivers_union",
+   "role": "اتحادیهٔ رانندگان کامیون",
+   "objectives": {
+    "raise_margin": 0.6,
+    "keep_unity": 0.4
+   },
+   "personality": "نمایندهٔ رانندگانی که با سوخت گران و کرایهٔ ثابت حاشیهٔ سودشان تقریباً صفر شده؛ اعتصاب ابزار اصلی چانه‌زنی است ولی ماندگاری آن به همبستگی اعضا بستگی دارد."
+  },
+  {
+   "name": "government",
+   "role": "دولت",
+   "objectives": {
+    "restore_order": 0.5,
+    "limit_fiscal_cost": 0.5
+   },
+   "personality": "هم قیمت سوخت و هم نرخ کرایه در دست اوست؛ از قطع زنجیرهٔ تأمین نگران است ولی بودجهٔ کافی برای یارانهٔ بزرگ ندارد و گاهی به فشار امنیتی متوسل می‌شود."
+  },
+  {
+   "name": "shippers",
+   "role": "صاحبان بار و کارخانه‌ها",
+   "objectives": {
+    "keep_flow": 0.6,
+    "limit_cost": 0.4
+   },
+   "personality": "تولیدکنندگان و توزیع‌کنندگان عمده که با توقف حمل انبارشان پر و خط تولیدشان خالی می‌شود؛ حاضرند کرایه را بالا ببرند ولی نه به اندازهٔ خواستهٔ رانندگان."
+  },
+  {
+   "name": "retailers",
+   "role": "خرده‌فروشی‌ها و فروشگاه‌های زنجیره‌ای",
+   "objectives": {
+    "keep_shelves": 0.6,
+    "keep_margin": 0.4
+   },
+   "personality": "به موجودی انبار و تحویل روزانه وابسته‌اند؛ با کمبود، قیمت و ذخیره‌سازی را مدیریت می‌کنند و زیر نگاه مصرف‌کننده و نهاد نظارت‌اند."
+  }
+ ],
+ "initial_state": {
+  "freight_flow": 85,
+  "fuel_cost": 65,
+  "driver_margin": 35,
+  "shelf_supply": 80,
+  "price_level": 55,
+  "public_order": 75,
+  "driver_unity": 45
+ },
+ "relations": [
+  {
+   "from": "drivers_union",
+   "to": "government",
+   "type": "negotiates_with"
+  },
+  {
+   "from": "government",
+   "to": "drivers_union",
+   "type": "regulates"
+  },
+  {
+   "from": "shippers",
+   "to": "drivers_union",
+   "type": "depends_on"
+  },
+  {
+   "from": "retailers",
+   "to": "shippers",
+   "type": "depends_on"
+  }
+ ],
+ "variable_labels": {
+  "freight_flow": "میزان حمل‌ونقل جاده‌ای در جریان؛ مقدار بالا یعنی کامیون‌ها عادی کار می‌کنند",
+  "fuel_cost": "فشار هزینهٔ سوخت بر رانندگان؛ مقدار بالا یعنی سوخت گران‌تر و سنگین‌تر",
+  "driver_margin": "حاشیهٔ سود رانندگان پس از کسر سوخت؛ مقدار بالا یعنی درآمد بهتر",
+  "shelf_supply": "موجودی کالا در قفسه‌ها و انبارهای توزیع؛ مقدار بالا یعنی عرضه کافی است",
+  "price_level": "سطح قیمت کالاهای مصرفی؛ مقدار بالا یعنی گرانی بیشتر",
+  "public_order": "آرامش و نظم عمومی در جاده‌ها و شهرها؛ مقدار بالا یعنی آرام‌تر",
+  "driver_unity": "همبستگی و آمادگی رانندگان برای ادامهٔ اعتصاب؛ مقدار بالا یعنی متحدتر"
+ },
+ "causal_links": [
+  {
+   "from": "freight_flow",
+   "to": "shelf_supply",
+   "weight": 0.4
+  },
+  {
+   "from": "shelf_supply",
+   "to": "price_level",
+   "weight": -0.3
+  },
+  {
+   "from": "fuel_cost",
+   "to": "price_level",
+   "weight": 0.2
+  },
+  {
+   "from": "fuel_cost",
+   "to": "driver_margin",
+   "weight": -0.3
+  },
+  {
+   "from": "freight_flow",
+   "to": "driver_margin",
+   "weight": 0.2
+  },
+  {
+   "from": "driver_margin",
+   "to": "driver_unity",
+   "weight": -0.2
+  },
+  {
+   "from": "driver_unity",
+   "to": "freight_flow",
+   "weight": -0.2
+  },
+  {
+   "from": "shelf_supply",
+   "to": "public_order",
+   "weight": 0.2
+  },
+  {
+   "from": "price_level",
+   "to": "public_order",
+   "weight": -0.2
+  },
+  {
+   "from": "public_order",
+   "to": "freight_flow",
+   "weight": 0.1
+  }
+ ],
+ "allowed_actions": [
+  "violent_road_incident",
+  "panic_buying",
+  "severe_weather",
+  "other_union_joins",
+  "start_nationwide_strike",
+  "extend_strike_to_ports",
+  "blockade_highways",
+  "accept_deal_end_strike",
+  "cut_fuel_price",
+  "raise_freight_tariff_floor",
+  "deploy_police_escorts",
+  "arrest_strike_leaders",
+  "raise_freight_rates",
+  "use_rail_and_own_fleet",
+  "hire_strikebreaker_drivers",
+  "pause_shipments",
+  "ration_stock",
+  "hike_shelf_prices",
+  "draw_down_inventory_buffer",
+  "hold_position"
+ ],
+ "action_owner": {
+  "violent_road_incident": "environment",
+  "panic_buying": "environment",
+  "severe_weather": "environment",
+  "other_union_joins": "environment",
+  "start_nationwide_strike": "drivers_union",
+  "extend_strike_to_ports": "drivers_union",
+  "blockade_highways": "drivers_union",
+  "accept_deal_end_strike": "drivers_union",
+  "cut_fuel_price": "government",
+  "raise_freight_tariff_floor": "government",
+  "deploy_police_escorts": "government",
+  "arrest_strike_leaders": "government",
+  "raise_freight_rates": "shippers",
+  "use_rail_and_own_fleet": "shippers",
+  "hire_strikebreaker_drivers": "shippers",
+  "pause_shipments": "shippers",
+  "ration_stock": "retailers",
+  "hike_shelf_prices": "retailers",
+  "draw_down_inventory_buffer": "retailers",
+  "hold_position": "any"
+ },
+ "action_tradeoffs": {
+  "violent_road_incident": {
+   "public_order": -12,
+   "driver_unity": 6,
+   "freight_flow": -5
+  },
+  "panic_buying": {
+   "shelf_supply": -15,
+   "price_level": 8,
+   "public_order": -4
+  },
+  "severe_weather": {
+   "freight_flow": -10,
+   "shelf_supply": -4,
+   "public_order": -2
+  },
+  "other_union_joins": {
+   "freight_flow": -12,
+   "driver_unity": 10,
+   "public_order": -4,
+   "price_level": 3
+  },
+  "start_nationwide_strike": {
+   "freight_flow": -40,
+   "driver_unity": 10,
+   "driver_margin": -5,
+   "public_order": -5
+  },
+  "extend_strike_to_ports": {
+   "freight_flow": -12,
+   "shelf_supply": -5,
+   "driver_margin": -6,
+   "driver_unity": 5
+  },
+  "blockade_highways": {
+   "freight_flow": -10,
+   "public_order": -12,
+   "price_level": 3,
+   "driver_unity": 4
+  },
+  "accept_deal_end_strike": {
+   "freight_flow": 30,
+   "driver_margin": 6,
+   "driver_unity": -12,
+   "public_order": 5
+  },
+  "cut_fuel_price": {
+   "fuel_cost": -12,
+   "price_level": 2,
+   "public_order": 2
+  },
+  "raise_freight_tariff_floor": {
+   "driver_margin": 8,
+   "price_level": 4,
+   "driver_unity": -4
+  },
+  "deploy_police_escorts": {
+   "freight_flow": 8,
+   "public_order": 4,
+   "driver_unity": 3,
+   "driver_margin": -2
+  },
+  "arrest_strike_leaders": {
+   "driver_unity": -6,
+   "public_order": -8,
+   "freight_flow": -3
+  },
+  "raise_freight_rates": {
+   "driver_margin": 7,
+   "price_level": 5,
+   "freight_flow": 3,
+   "driver_unity": -3
+  },
+  "use_rail_and_own_fleet": {
+   "freight_flow": 6,
+   "shelf_supply": 3,
+   "driver_margin": -4,
+   "price_level": 2
+  },
+  "hire_strikebreaker_drivers": {
+   "freight_flow": 7,
+   "driver_unity": 6,
+   "public_order": -6,
+   "driver_margin": -2
+  },
+  "pause_shipments": {
+   "freight_flow": -6,
+   "shelf_supply": -4,
+   "price_level": 3,
+   "driver_margin": -3
+  },
+  "ration_stock": {
+   "shelf_supply": -4,
+   "price_level": 3,
+   "public_order": -3
+  },
+  "hike_shelf_prices": {
+   "price_level": 8,
+   "public_order": -4,
+   "shelf_supply": 2
+  },
+  "draw_down_inventory_buffer": {
+   "shelf_supply": 8,
+   "price_level": -3,
+   "driver_unity": 2
+  },
+  "hold_position": {}
+ },
+ "variable_tradeoffs": {},
+ "variable_specs": {
+  "freight_flow": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "fuel_cost": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "driver_margin": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "shelf_supply": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "price_level": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "public_order": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  },
+  "driver_unity": {
+   "min": 0,
+   "max": 100,
+   "clip": true,
+   "rate_limit": 40,
+   "behavior_type": "FLOW"
+  }
+ },
+ "rules": [],
+ "events": [],
+ "enable_meta_actions": false,
+ "agent_response_format": "strategic",
+ "max_delta": 40,
+ "stage_length": "سه روز"
+}

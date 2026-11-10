@@ -1,0 +1,12 @@
+{"phone_ban": {"X": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+               "Y": {"behaviour": 4, "consistency": 3, "insight": 3, "usefulness": 3},
+               "prefer": "X", "why": "X shows the ban leaking through below-threshold models and foreign makers, supply recovering while FX pressure ends higher, defeating the ban's purpose. Y is careful but muted, with a passive environment and small numeric responses to the quota."},
+ "free_coder": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 4, "insight": 2, "usefulness": 3},
+                "prefer": "X", "why": "X has turning points: a trust shock, a downturn, junior layoffs, emigration, and complex work staying outsourced. Y is a smooth, repetitive erosion where developers upskill every stage and the environment never moves."},
+ "water_ration": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                  "Y": {"behaviour": 3, "consistency": 4, "insight": 3, "usefulness": 3},
+                  "prefer": "X", "why": "X adds plausible drought shocks (rumour, heat, pipe burst, rain), shows the tariff anger spike and steady budget drain, and lets rain open the way to easing. Y keeps the environment idle and has end-of-horizon artefacts in tanker and household moves."},
+ "truck_strike": {"X": {"behaviour": 3, "consistency": 3, "insight": 2, "usefulness": 3},
+                  "Y": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                  "prefer": "Y", "why": "Y shows the real risks: panic buying, a blockade, escalation to the ports, and prices that stay high after the deal. X settles fast, shelves barely move despite halved freight, and the last two stages are all holds."}}

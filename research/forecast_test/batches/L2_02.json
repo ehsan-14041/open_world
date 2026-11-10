@@ -1,0 +1,151 @@
+{"answers": {
+"3567575": {"tendency": -0.6, "drivers": [
+ {"name": "Narrow bracket width", "toward": "no", "strength": "strong", "level": 0.9, "delay_weeks": 0},
+ {"name": "Peltola consolidates Democratic/independent vote", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Sullivan consolidates Republican vote", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Multiple Republicans splitting vote widens margin", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0},
+ {"name": "Low-turnout primary electorate skews Republican", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0}], "probability": 0.15},
+"3591977": {"tendency": 0.9, "drivers": [
+ {"name": "Safe Republican district", "toward": "yes", "strength": "strong", "level": 0.9, "delay_weeks": 0},
+ {"name": "Two-candidate general election", "toward": "yes", "strength": "strong", "level": 0.85, "delay_weeks": 0},
+ {"name": "Open-seat turmoil after Greene exit", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0},
+ {"name": "Third-party/independent candidates", "toward": "no", "strength": "weak", "level": 0.15, "delay_weeks": 0}], "probability": 0.94},
+"3591982": {"tendency": 0.95, "drivers": [
+ {"name": "Safe Republican district", "toward": "yes", "strength": "strong", "level": 0.95, "delay_weeks": 0},
+ {"name": "Two-candidate general election", "toward": "yes", "strength": "strong", "level": 0.9, "delay_weeks": 0},
+ {"name": "Third-party candidates", "toward": "no", "strength": "weak", "level": 0.1, "delay_weeks": 0}], "probability": 0.96},
+"3591988": {"tendency": 0.95, "drivers": [
+ {"name": "Safe Republican district", "toward": "yes", "strength": "strong", "level": 0.95, "delay_weeks": 0},
+ {"name": "Two-candidate general election", "toward": "yes", "strength": "strong", "level": 0.9, "delay_weeks": 0},
+ {"name": "Third-party candidates", "toward": "no", "strength": "weak", "level": 0.1, "delay_weeks": 0}], "probability": 0.96},
+"3592023": {"tendency": 0.7, "drivers": [
+ {"name": "Safe Republican district", "toward": "yes", "strength": "strong", "level": 0.9, "delay_weeks": 0},
+ {"name": "New closed party primary system yields head-to-head general", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Election-format uncertainty after Callais/redistricting", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 2},
+ {"name": "Open seat crowded field if jungle format applies", "toward": "no", "strength": "medium", "level": 0.3, "delay_weeks": 0}], "probability": 0.84},
+"3592027": {"tendency": 0.7, "drivers": [
+ {"name": "Safe Democratic district with incumbent Carter", "toward": "yes", "strength": "strong", "level": 0.85, "delay_weeks": 0},
+ {"name": "Closed party primary yields head-to-head general", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Possible redistricting after Callais", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 2},
+ {"name": "Multi-candidate field if jungle format applies", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0}], "probability": 0.84},
+"3659919": {"tendency": 0.1, "drivers": [
+ {"name": "Furlan popularity as Macapa mayor", "toward": "yes", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Incumbent Clecio Luis with Alcolumbre machine", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Federal/state alliances and resources", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 2},
+ {"name": "Runoff dynamics", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 6}], "probability": 0.48},
+"3659958": {"tendency": 0.5, "drivers": [
+ {"name": "Incumbency and state machine", "toward": "yes", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Right-leaning state alignment", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Competing right candidates (PL split)", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 0},
+ {"name": "Left/PT challenger strength", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0}], "probability": 0.7},
+"3659986": {"tendency": -0.2, "drivers": [
+ {"name": "Fagundes name recognition as senator", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Mendes-backed successor (Pivetta) machine", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Bolsonarist endorsement", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 2},
+ {"name": "Runoff consolidation", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 6}], "probability": 0.35},
+"3660015": {"tendency": 0.8, "drivers": [
+ {"name": "Popular PT incumbent", "toward": "yes", "strength": "strong", "level": 0.85, "delay_weeks": 0},
+ {"name": "Lula strength in Northeast", "toward": "yes", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Opposition candidate (Silvio Mendes/Ciro Nogueira camp)", "toward": "no", "strength": "medium", "level": 0.3, "delay_weeks": 0}], "probability": 0.87},
+"3660165": {"tendency": -0.3, "drivers": [
+ {"name": "Fragmented open-seat field", "toward": "no", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Professora Dorinha strength", "toward": "no", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "Vicentinho Jr base and alliances", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "State government backing", "toward": "yes", "strength": "medium", "level": 0.4, "delay_weeks": 2},
+ {"name": "Runoff realignment", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 6}], "probability": 0.33},
+"3660305": {"tendency": 0.4, "drivers": [
+ {"name": "Incumbency after Ibaneis resignation", "toward": "yes", "strength": "strong", "level": 0.75, "delay_weeks": 0},
+ {"name": "Right-leaning DF electorate", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Left challenger (Leandro Grass/PT)", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 0},
+ {"name": "BRB/administration scandals", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 2},
+ {"name": "Competing right candidates", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0}], "probability": 0.63},
+"3660467": {"tendency": 0.5, "drivers": [
+ {"name": "Incumbent Mitidieri seeking reelection", "toward": "yes", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Broad alliance incl. Lula camp", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Opposition challenger", "toward": "no", "strength": "medium", "level": 0.35, "delay_weeks": 0}], "probability": 0.75},
+"3660496": {"tendency": -0.5, "drivers": [
+ {"name": "Gladson Cameli running for Senate", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Bittar incumbency", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Right-leaning Acre electorate", "toward": "yes", "strength": "weak", "level": 0.6, "delay_weeks": 0},
+ {"name": "Multiple right candidates splitting", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0}], "probability": 0.2},
+"3660574": {"tendency": 0.0, "drivers": [
+ {"name": "Lira political machine and resources", "toward": "yes", "strength": "strong", "level": 0.75, "delay_weeks": 0},
+ {"name": "Renan Calheiros incumbency and base", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Gubernatorial alliances (JHC/Paulo Dantas)", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 2},
+ {"name": "Two-seat race splits votes", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 0}], "probability": 0.47},
+"3660613": {"tendency": -0.1, "drivers": [
+ {"name": "Renan strong base makes top-two likely", "toward": "yes", "strength": "strong", "level": 0.75, "delay_weeks": 0},
+ {"name": "Renan may finish first instead", "toward": "no", "strength": "medium", "level": 0.45, "delay_weeks": 0},
+ {"name": "Third candidate could beat Renan", "toward": "no", "strength": "medium", "level": 0.3, "delay_weeks": 0},
+ {"name": "Age/fatigue of Renan", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0}], "probability": 0.4},
+"3660660": {"tendency": -0.3, "drivers": [
+ {"name": "Bolsonarist vote in Amazonas", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Competing incumbents (Braga, Plinio Valerio)", "toward": "no", "strength": "strong", "level": 0.6, "delay_weeks": 0},
+ {"name": "Crowded right field splits votes", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Could finish first instead of second", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0}], "probability": 0.3},
+"3660698": {"tendency": -0.2, "drivers": [
+ {"name": "Braga incumbency and MDB machine", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Bolsonarist candidates strong in state", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Alliance with governor/Lula", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 2},
+ {"name": "Crowded field", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0}], "probability": 0.35},
+"3660739": {"tendency": -0.1, "drivers": [
+ {"name": "Randolfe incumbency and name recognition", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Rayssa Furlan likely first", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Lucas Barreto/Alcolumbre-backed rivals", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Randolfe could finish first or third", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0}], "probability": 0.4},
+"3660775": {"tendency": 0.0, "drivers": [
+ {"name": "Furlan family popularity", "toward": "yes", "strength": "strong", "level": 0.65, "delay_weeks": 0},
+ {"name": "Randolfe and incumbents competing", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Alcolumbre machine opposition", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 2},
+ {"name": "Coattails from Furlan governor bid", "toward": "yes", "strength": "medium", "level": 0.5, "delay_weeks": 2}], "probability": 0.45},
+"3660850": {"tendency": 0.0, "drivers": [
+ {"name": "PT dominance in Bahia", "toward": "yes", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Jaques Wagner on same ticket competing for first", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Rui Costa popularity as ex-governor", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "ACM Neto opposition candidates", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 0}], "probability": 0.45},
+"3660882": {"tendency": 0.0, "drivers": [
+ {"name": "Cid incumbency and alliance with PT government", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Lula strength in Ceara", "toward": "yes", "strength": "medium", "level": 0.7, "delay_weeks": 0},
+ {"name": "Other government-allied candidate (PT) competing", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Opposition (Capitao Wagner/Ciro camp)", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0}], "probability": 0.42},
+"3660883": {"tendency": -0.2, "drivers": [
+ {"name": "Wagner strong opposition name in Fortaleza", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Two government-allied candidates could take top two", "toward": "no", "strength": "strong", "level": 0.55, "delay_weeks": 0},
+ {"name": "Opposition vote split with other right candidates", "toward": "no", "strength": "medium", "level": 0.4, "delay_weeks": 0},
+ {"name": "Could finish first", "toward": "no", "strength": "weak", "level": 0.2, "delay_weeks": 0}], "probability": 0.33},
+"3660963": {"tendency": 0.5, "drivers": [
+ {"name": "Michelle Bolsonaro high profile in right-leaning DF", "toward": "yes", "strength": "strong", "level": 0.8, "delay_weeks": 0},
+ {"name": "Ibaneis Rocha competing for Senate", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Uncertainty whether she runs for Senate", "toward": "no", "strength": "medium", "level": 0.3, "delay_weeks": 0},
+ {"name": "Left candidate consolidating anti-Bolsonaro vote", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 0}], "probability": 0.6},
+"3660967": {"tendency": -0.5, "drivers": [
+ {"name": "Bolsonarist base in DF", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Michelle and Ibaneis likely top two", "toward": "no", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Right vote split among PL candidates", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Left candidate strength", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 0}], "probability": 0.15},
+"3661045": {"tendency": 0.4, "drivers": [
+ {"name": "Casagrande popularity as two-term governor", "toward": "yes", "strength": "strong", "level": 0.75, "delay_weeks": 0},
+ {"name": "Bolsonarist/right challengers", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Meneguelli popularity", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Two-seat vote allocation", "toward": "yes", "strength": "weak", "level": 0.4, "delay_weeks": 0}], "probability": 0.58},
+"3661062": {"tendency": -0.1, "drivers": [
+ {"name": "Meneguelli strong local popularity", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Casagrande likely first", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Other right candidates (Magno Malta, Contarato etc.)", "toward": "no", "strength": "medium", "level": 0.55, "delay_weeks": 0},
+ {"name": "Could finish first instead", "toward": "no", "strength": "weak", "level": 0.25, "delay_weeks": 0}], "probability": 0.38},
+"3661115": {"tendency": 0.1, "drivers": [
+ {"name": "Caiado machine and popularity", "toward": "yes", "strength": "strong", "level": 0.7, "delay_weeks": 0},
+ {"name": "Bolsonarist candidates (Gayer, Wilder) in right-leaning state", "toward": "no", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Gracinha as first-time candidate", "toward": "no", "strength": "weak", "level": 0.4, "delay_weeks": 0},
+ {"name": "Caiado presidential bid visibility", "toward": "yes", "strength": "weak", "level": 0.5, "delay_weeks": 2}], "probability": 0.5},
+"3661151": {"tendency": -0.2, "drivers": [
+ {"name": "Bolsonarist base in Goias", "toward": "yes", "strength": "medium", "level": 0.65, "delay_weeks": 0},
+ {"name": "Competing right candidates (Wilder Morais, Vanderlan)", "toward": "no", "strength": "medium", "level": 0.55, "delay_weeks": 0},
+ {"name": "Legal issues/controversies", "toward": "no", "strength": "weak", "level": 0.3, "delay_weeks": 0},
+ {"name": "Could finish first", "toward": "no", "strength": "weak", "level": 0.2, "delay_weeks": 0}], "probability": 0.33},
+"3661197": {"tendency": -0.2, "drivers": [
+ {"name": "Weverton incumbency", "toward": "yes", "strength": "medium", "level": 0.6, "delay_weeks": 0},
+ {"name": "Governor Brandao or allies running for Senate", "toward": "no", "strength": "strong", "level": 0.55, "delay_weeks": 0},
+ {"name": "Crowded field with Eliziane Gama and others", "toward": "no", "strength": "medium", "level": 0.5, "delay_weeks": 0},
+ {"name": "Could finish first", "toward": "no", "strength": "weak", "level": 0.25, "delay_weeks": 0}], "probability": 0.35}
+}, "other_tools_used": false}

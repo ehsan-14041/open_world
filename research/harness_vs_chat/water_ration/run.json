@@ -1,0 +1,371 @@
+{
+ "states": [
+  {
+   "reservoir": 25.0,
+   "supply_hours": 95.0,
+   "home_storage": 40.0,
+   "tanker_price": 25.0,
+   "public_anger": 25.0,
+   "health_risk": 15.0,
+   "utility_budget": 55.0
+  },
+  {
+   "reservoir": 28.0,
+   "supply_hours": 60.0,
+   "home_storage": 54.0,
+   "tanker_price": 36.0,
+   "public_anger": 47.3,
+   "health_risk": 23.7,
+   "utility_budget": 43.6
+  },
+  {
+   "reservoir": 25.0,
+   "supply_hours": 62.7,
+   "home_storage": 65.4,
+   "tanker_price": 49.0,
+   "public_anger": 49.3,
+   "health_risk": 28.6,
+   "utility_budget": 32.8
+  },
+  {
+   "reservoir": 32.0,
+   "supply_hours": 40.7,
+   "home_storage": 59.3,
+   "tanker_price": 52.5,
+   "public_anger": 60.8,
+   "health_risk": 35.0,
+   "utility_budget": 21.2
+  },
+  {
+   "reservoir": 26.0,
+   "supply_hours": 40.1,
+   "home_storage": 73.3,
+   "tanker_price": 52.6,
+   "public_anger": 56.9,
+   "health_risk": 39.7,
+   "utility_budget": 16.3
+  },
+  {
+   "reservoir": 33.0,
+   "supply_hours": 28.1,
+   "home_storage": 74.7,
+   "tanker_price": 49.1,
+   "public_anger": 63.1,
+   "health_risk": 38.5,
+   "utility_budget": 6.9
+  }
+ ],
+ "turns": [
+  {
+   "environment": {
+    "chosen_action": "rationing_rumor_spreads",
+    "primary_variable": "tanker_price",
+    "probability": 0.6,
+    "justification": "با آغاز جیره‌بندی و قطع روزانه آب، شایعه‌های تشدید قطعی سریع پخش می‌شود؛ خانوارها نگران می‌شوند، ذخیره می‌کنند و قیمت تانکری بالا می‌رود.",
+    "causal_chain": "شایعه جیره‌بندی شدیدتر ترس خانوارها را بالا می‌برد؛ تقاضای آب تانکری و ذخیره‌سازی زیاد می‌شود؛ قیمت تانکر و خشم عمومی افزایش می‌یابد.",
+    "expected_effect": {
+     "tanker_price": 6,
+     "public_anger": 6,
+     "home_storage": 3
+    }
+   },
+   "water_utility": {
+    "chosen_action": "start_rationing",
+    "primary_variable": "reservoir",
+    "probability": 0.8,
+    "justification": "ذخیره مخازن ۲۵ درصد است و اولویت اصلی شرکت آب حفاظت از آن است؛ جیره‌بندی منظم و برنامه‌ریزی‌شده بهتر از افت کنترل‌نشده است، هرچند خشم مردم و قیمت تانکر بالا می‌رود.",
+    "causal_chain": "کاهش ساعت‌های آب لوله مصرف را پایین می‌آورد و افت ذخیره مخازن کند می‌شود؛ در مقابل کمبود ساعت آب، قیمت تانکر و نارضایتی را بالا می‌برد و بودجه شرکت اندکی کم می‌شود.",
+    "expected_effect": {
+     "supply_hours": -35,
+     "reservoir": 5,
+     "public_anger": 12,
+     "utility_budget": -5,
+     "tanker_price": 6
+    }
+   },
+   "city_government": {
+    "chosen_action": "launch_conservation_campaign",
+    "primary_variable": "reservoir",
+    "probability": 0.7,
+    "justification": "ذخیره سد پایین است اما آب هنوز برقرار است؛ پیام‌رسانی و صرفه‌جویی با هزینه کم، ذخیره را بالا می‌برد و خشم مردم را بدون تنش تازه کم می‌کند.",
+    "causal_chain": "کمپین صرفه‌جویی مصرف را کم می‌کند و ذخیره منابع را اندکی بالا می‌برد؛ شفافیت پیام خشم عمومی را کمی پایین می‌آورد، با هزینه کوچک برای بودجه شرکت آب.",
+    "expected_effect": {
+     "reservoir": 3,
+     "public_anger": -2,
+     "utility_budget": -2
+    }
+   },
+   "households": {
+    "chosen_action": "hoard_water_in_tanks",
+    "primary_variable": "home_storage",
+    "probability": 0.65,
+    "justification": "با شروع جیره‌بندی قطعی آب قطعی است. پر کردن مخزن و ظرف‌ها ارزان‌ترین راه تضمین آب شرب و بهداشت است و به تانکر گران نیاز نمی‌ماند.",
+    "causal_chain": "ذخیره‌سازی ← افزایش موجودی خانگی ← پایداری آب در ساعت‌های قطع؛ با اثر منفی جزئی بر منابع و خطر بهداشتی.",
+    "expected_effect": {
+     "home_storage": 12,
+     "reservoir": -3,
+     "tanker_price": 3,
+     "health_risk": 3
+    }
+   },
+   "tanker_vendors": {
+    "chosen_action": "expand_tanker_fleet",
+    "primary_variable": "tanker_price",
+    "probability": 0.6,
+    "justification": "آب لوله هنوز برقرار است و قیمت پایین است؛ گران کردن مشتری را می‌رانَد. با جیره‌بندی در راه است، گسترش ناوگان برای جذب تقاضای آینده و حفظ مشتری، محافظه‌کارانه و سودآور است.",
+    "causal_chain": "گسترش ناوگان عرضهٔ تانکری را بیشتر و قیمت را کمی پایین‌تر می‌کند و ذخیرهٔ خانگی را بالا می‌برد؛ در عوض برداشت بیشتر فشار اندکی به منابع و خطر بهداشتی می‌افزاید.",
+    "expected_effect": {
+     "tanker_price": -8,
+     "home_storage": 4,
+     "reservoir": -2,
+     "health_risk": 2
+    },
+    "relation_updates": []
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "heat_wave",
+    "primary_variable": "reservoir",
+    "probability": 0.4,
+    "justification": "پس از خشکسالی شدید و ذخیرهٔ ۲۸ درصدی، موج گرما در دو هفتهٔ دوم محتمل است و تبخیر و مصرف را بالا می‌برد.",
+    "causal_chain": "موج گرما ذخیرهٔ منابع را کم می‌کند، خطر بهداشتی را بالا می‌برد و خشم مردم را افزایش می‌دهد.",
+    "expected_effect": {
+     "reservoir": -6,
+     "health_risk": 5,
+     "public_anger": 3
+    },
+    "relation_updates": []
+   },
+   "water_utility": {
+    "chosen_action": "fix_leaks_and_pressure",
+    "primary_variable": "reservoir",
+    "probability": 0.7,
+    "justification": "ذخیرهٔ مخزن فقط ۲۸ است و خشم مردم بالاست. سختگیری بیشتر جیره‌بندی خشم را بالاتر می‌برد. رفع نشتی و تنظیم فشار، هدر رفت را کم و ساعت آب را اندکی بیشتر می‌کند، هرچند بودجه کمی کم می‌شود.",
+    "causal_chain": "رفع نشتی هدررفت را کم می‌کند، ذخیرهٔ مخزن و ساعت‌های برقراری آب اندکی بیشتر می‌شود و بودجه هزینه می‌دهد.",
+    "expected_effect": {
+     "reservoir": 3,
+     "supply_hours": 3,
+     "utility_budget": -6
+    },
+    "relation_updates": []
+   },
+   "city_government": {
+    "chosen_action": "deploy_free_tankers",
+    "primary_variable": "public_anger",
+    "probability": 0.7,
+    "justification": "با جیره‌بندی و ذخیره پایین سد، تانکر رایگان از آسیب‌پذیران حمایت می‌کند، قیمت تانکر و خشم مردم را کم می‌کند و نظم را بدون تنش تازه نگه می‌دارد؛ هزینه بودجه پذیرفتنی است.",
+    "causal_chain": "تانکر رایگان ← افزایش ذخیره خانگی و کاهش قیمت تانکری ← کاهش خشم و خطر بهداشتی ← حفظ نظم عمومی",
+    "expected_effect": {
+     "home_storage": 6,
+     "tanker_price": -5,
+     "public_anger": -5,
+     "health_risk": -2,
+     "utility_budget": -5
+    }
+   },
+   "households": {
+    "chosen_action": "buy_from_tankers",
+    "primary_variable": "home_storage",
+    "probability": 0.6,
+    "justification": "قطعی روزانه ادامه دارد و ذخیره خانگی برای شرب و بهداشت کافی نیست. قیمت تانکر هنوز پایین است، پس خرید حالا امن‌تر و ارزان‌تر از انتظار برای قیمت بالاتر است.",
+    "causal_chain": "قطع بخشی از روز و کاهش ساعت آب لوله -> خرید آب تانکری -> افزایش ذخیره خانگی، کمی افزایش قیمت تانکر و خشم کمتر",
+    "expected_effect": {
+     "home_storage": 8,
+     "tanker_price": 6,
+     "public_anger": -2,
+     "health_risk": 1
+    }
+   },
+   "tanker_vendors": {
+    "chosen_action": "raise_tanker_prices",
+    "primary_variable": "tanker_price",
+    "probability": 0.6,
+    "justification": "جیره‌بندی آغاز شده و قطعی آب تقاضای تانکر را بالا می‌برد، اما قیمت هنوز پایین است. ناوگان گسترش یافته؛ حالا افزایش قیمت سود را بالا می‌برد، با جهش محدود تا مشتری نرود.",
+    "causal_chain": "افزایش قیمت تانکر قیمت آب تانکری را بالا می‌برد و سود تانکرکش‌ها را زیاد می‌کند؛ قیمت بالاتر خشم عمومی را بیشتر و ذخیرهٔ خانگی خرید را کمی کم می‌کند.",
+    "expected_effect": {
+     "tanker_price": 12,
+     "public_anger": 5,
+     "home_storage": -3
+    }
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "main_pipe_burst",
+    "primary_variable": "supply_hours",
+    "probability": 0.35,
+    "justification": "شبکه فرسوده است و جیره‌بندی با قطع و وصل مکرر فشار، ترکیدگی خطوط را محتمل می‌کند؛ باران در خشکسالی بعید است و این رویداد واقع‌بینانه‌تر است.",
+    "causal_chain": "ترکیدگی لوله ← کاهش ساعت‌های آب ← افزایش خطر بهداشتی و فشار بر بودجه شرکت آب",
+    "expected_effect": {
+     "supply_hours": -10,
+     "health_risk": 5,
+     "utility_budget": -4,
+     "reservoir": -3
+    }
+   },
+   "water_utility": {
+    "chosen_action": "tighten_rationing",
+    "primary_variable": "reservoir",
+    "probability": 0.6,
+    "justification": "ذخیرهٔ سد پس از موج گرما به ۲۵ رسیده و اولویت اصلی حفاظت از آن است. خانوارها ذخیرهٔ خانگی ۶۵ دارند، پس سخت‌گیری بیشتر قابل تحمل است؛ خشم مردم افزایش می‌یابد ولی مهار می‌شود.",
+    "causal_chain": "کاهش ساعت‌های آب ← حفظ و افزایش ذخیرهٔ سد؛ هزینه: افزایش خشم مردم و کاهش اندک بودجه",
+    "expected_effect": {
+     "supply_hours": -12,
+     "reservoir": 4,
+     "public_anger": 8,
+     "utility_budget": -3
+    }
+   },
+   "city_government": {
+    "chosen_action": "launch_conservation_campaign",
+    "primary_variable": "reservoir",
+    "probability": 0.65,
+    "justification": "ذخیره سد ۲۵ است و بودجه شرکت آب ضعیف (۳۳)؛ تانکر رایگان بیشتر بودجه را می‌سوزاند. کمپین صرفه‌جویی ارزان است، ذخیره را بالا می‌برد و خشم را بدون تنش تازه کم می‌کند.",
+    "causal_chain": "پیام‌رسانی صرفه‌جویی مصرف را کم می‌کند و ذخیره سد را اندکی بالا می‌برد؛ با هزینه کم بودجه، خشم مردم کمی کاهش می‌یابد.",
+    "expected_effect": {
+     "reservoir": 3,
+     "public_anger": -2,
+     "utility_budget": -2
+    }
+   },
+   "households": {
+    "chosen_action": "cut_use_voluntarily",
+    "primary_variable": "reservoir",
+    "probability": 0.55,
+    "justification": "ذخیره خانگی نسبتاً بالاست و قیمت تانکر در حال افزایش است؛ خرید بیشتر گران است. مصرف را داوطلبانه کم می‌کنیم تا سد حفظ شود و جیره‌بندی سخت‌تر نشود.",
+    "causal_chain": "کاهش مصرف خانگی ذخیره سد را اندکی بالا می‌برد و فشار برای قطعی بیشتر کم می‌شود؛ بدون خرید تانکر گران، هزینه هم پایین می‌ماند.",
+    "expected_effect": {
+     "reservoir": 3,
+     "home_storage": -3,
+     "public_anger": 2
+    }
+   },
+   "tanker_vendors": {
+    "chosen_action": "hold_position",
+    "primary_variable": "tanker_price",
+    "probability": 0.6,
+    "justification": "قیمت پس از افزایش قبلی بالا رفته، ذخیره خانگی ۶۵ تقاضا را کم می‌کند و تانکر رایگان شهرداری رقیب است. افزایش دوباره خشم و نظارت را بالا می‌برد؛ حفظ مشتری و صبر محتاطانه‌تر است.",
+    "causal_chain": "با ثابت نگه داشتن قیمت و ناوگان، مشتریان حفظ می‌شوند و خشم عمومی از قیمت تانکر افزایش نمی‌یابد.",
+    "expected_effect": {}
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "heat_wave",
+    "primary_variable": "reservoir",
+    "probability": 0.4,
+    "justification": "خشکسالی ادامه دارد و ذخیره ۳۲ است؛ باران بعید است. موج گرمای دوباره در این فصل واقع‌بینانه است و با تبخیر و مصرف بیشتر، ذخیره را کم و خطر بهداشتی و خشم را بالا می‌برد.",
+    "causal_chain": "موج گرما ذخیرهٔ سد را کم می‌کند؛ کاهش ذخیره ساعت‌های آب را پایین می‌آورد و خطر بهداشتی و خشم عمومی بالا می‌رود.",
+    "expected_effect": {
+     "reservoir": -6,
+     "health_risk": 5,
+     "public_anger": 3
+    }
+   },
+   "water_utility": {
+    "chosen_action": "hold_position",
+    "primary_variable": "reservoir",
+    "probability": 0.55,
+    "justification": "ذخیرهٔ سد از ۲۵ به ۳۲ بهبود یافته و حفاظت از آن اولویت است. بودجه ۲۱ است و تعمیر پرهزینه؛ تخفیف جیره ذخیره را می‌کاهد و سخت‌تر کردن خشم ۶۱ را بالاتر می‌برد. صبر محتاطانه‌تر است.",
+    "causal_chain": "حفظ جیره‌بندی فعلی ذخیرهٔ سد را نگه می‌دارد و از افزایش خشم مردم و فشار بیشتر بر بودجه جلوگیری می‌کند.",
+    "expected_effect": {},
+    "relation_updates": []
+   },
+   "city_government": {
+    "chosen_action": "deploy_free_tankers",
+    "primary_variable": "public_anger",
+    "probability": 0.6,
+    "justification": "ساعت آب به ۴۱ و خشم مردم به ۶۱ رسیده و ترکیدگی خط بهداشت را تهدید می‌کند. تانکر رایگان از آسیب‌پذیران حمایت می‌کند و خشم و قیمت تانکر را کم می‌کند؛ هزینه بودجه پذیرفتنی است.",
+    "causal_chain": "تانکر رایگان ← کاهش قیمت تانکر و خطر بهداشتی ← کاهش خشم مردم ← حفظ نظم و حمایت از آسیب‌پذیران",
+    "expected_effect": {
+     "home_storage": 6,
+     "tanker_price": -5,
+     "public_anger": -5,
+     "health_risk": -2,
+     "utility_budget": -5
+    },
+    "relation_updates": []
+   },
+   "households": {
+    "chosen_action": "buy_from_tankers",
+    "primary_variable": "home_storage",
+    "probability": 0.55,
+    "justification": "ساعت آب لوله به ۴۱ افت کرده و ترکیدگی خط ذخیره خانگی را می‌خورد. برای آب شرب و بهداشت، خرید تانکری را حالا انجام می‌دهیم تا قیمت بالاتر نرود؛ اعتراض خشم را بیشتر می‌کند.",
+    "causal_chain": "کاهش ساعت آب لوله ذخیره خانگی را کم می‌کند؛ خرید از تانکر ذخیره را بالا می‌برد ولی قیمت تانکری را کمی افزایش می‌دهد.",
+    "expected_effect": {
+     "home_storage": 8,
+     "tanker_price": 6,
+     "public_anger": -2,
+     "health_risk": 1
+    }
+   },
+   "tanker_vendors": {
+    "chosen_action": "hold_position",
+    "primary_variable": "tanker_price",
+    "probability": 0.6,
+    "justification": "قیمت تانکر ۵۲ و خشم مردم ۶۱ است. افزایش دوبارهٔ قیمت خشم و نظارت را بالا می‌برد و گسترش ناوگان سودی ندارد؛ صبر و حفظ مشتری محتاطانه‌تر است.",
+    "causal_chain": "عدم تغییر قیمت ← حفظ مشتریان و پرهیز از تشدید خشم عمومی ← تقاضای پایدار ناشی از قطع آب لوله",
+    "expected_effect": {}
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "primary_variable": "reservoir",
+    "probability": 0.5,
+    "justification": "در چهار مرحلهٔ پیاپی شوک رخ داده و ذخیره ۲۶ و بودجه ۱۶ است؛ باران در خشکسالی بعید است و رویداد تازه از ادامهٔ روند محتمل‌تر نیست.",
+    "causal_chain": "نبود رویداد بیرونی مشخص ← روند فعلی ذخیره و ساعت آب بدون شوک اضافی ادامه می‌یابد",
+    "expected_effect": {}
+   },
+   "water_utility": {
+    "chosen_action": "tighten_rationing",
+    "primary_variable": "reservoir",
+    "probability": 0.55,
+    "justification": "ذخیرهٔ سد پس از موج گرما دوباره به ۲۶ افتاده و حفاظت از آن اولویت اصلی است. بودجه ۱۶ است و تعمیر پرهزینه؛ خانوارها ذخیرهٔ خانگی ۷۳ دارند، پس سخت‌گیری بیشتر قابل تحمل است.",
+    "causal_chain": "سخت‌تر شدن جیره‌بندی مصرف را کم می‌کند و ذخیرهٔ سد بالا می‌رود؛ در عوض ساعت آب لوله کمتر و خشم مردم و فشار بر بودجه بیشتر می‌شود.",
+    "expected_effect": {
+     "supply_hours": -12,
+     "reservoir": 4,
+     "public_anger": 8,
+     "utility_budget": -3
+    }
+   },
+   "city_government": {
+    "chosen_action": "deploy_free_tankers",
+    "primary_variable": "public_anger",
+    "probability": 0.6,
+    "justification": "ساعت آب ۴۰ و خطر بهداشتی ۴۰ و خشم ۵۷ است. تانکر رایگان از آسیب‌پذیران حمایت می‌کند و خشم و قیمت تانکر را کم می‌کند؛ هزینه بودجه پذیرفتنی است.",
+    "causal_chain": "تانکر رایگان ← کاهش قیمت تانکر و افزایش ذخیره خانگی ← کاهش خشم مردم و خطر بهداشتی",
+    "expected_effect": {
+     "home_storage": 6,
+     "tanker_price": -5,
+     "public_anger": -5,
+     "health_risk": -2,
+     "utility_budget": -5
+    }
+   },
+   "households": {
+    "chosen_action": "cut_use_voluntarily",
+    "primary_variable": "reservoir",
+    "probability": 0.6,
+    "justification": "ذخیره خانگی بالاست (۷۳) و قیمت تانکر هنوز گران است، پس خرید بیشتر توجیه ندارد. کاهش داوطلبانه مصرف ذخیره سد را حفظ می‌کند و از سخت‌تر شدن جیره‌بندی جلوگیری می‌کند.",
+    "causal_chain": "کاهش مصرف داوطلبانه ذخیره سد را بالا می‌برد و با بهتر شدن ذخیره، ساعت برقراری آب لوله در آینده بیشتر می‌شود؛ هزینه آن کاهش اندک ذخیره خانگی و کمی خشم است.",
+    "expected_effect": {
+     "reservoir": 3,
+     "home_storage": -3,
+     "public_anger": 2
+    }
+   },
+   "tanker_vendors": {
+    "chosen_action": "hold_position",
+    "primary_variable": "tanker_price",
+    "probability": 0.65,
+    "justification": "ذخیرهٔ خانگی ۷۳ تقاضای تانکر را کم کرده و تانکر رایگان شهرداری رقیب است. افزایش قیمت خشم و نظارت را بالا می‌برد؛ صبر و حفظ مشتری محتاطانه‌تر است.",
+    "causal_chain": "ذخیرهٔ خانگی بالا فشار قیمتی تانکر را کم می‌کند و افزایش دوباره قیمت خشم مردم را بالا می‌برد؛ با ثابت ماندن، مشتری و قیمت فعلی حفظ می‌شود.",
+    "expected_effect": {}
+   }
+  }
+ ],
+ "flagged": []
+}

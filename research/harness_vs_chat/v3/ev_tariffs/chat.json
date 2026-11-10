@@ -1,0 +1,52 @@
+{"stages":[
+{"actions":{
+"european_commission":{"chosen_action":"adopt_provisional_phev_countervailing_duties","justification":"باز کردن رسمی تحقیق ضدسوبسید اهرم چانه‌زنی می‌دهد و اعتبار ابزارهای دفاع تجاری را نشان می‌دهد؛ در عمل کمیسیون سهمیه و حداقل قیمت را ترجیح می‌دهد."},
+"china_government":{"chosen_action":"lobby_member_states_bilaterally","justification":"پکن فرض می‌کند آلمان مانند ۲۰۲۴ مخالفت می‌کند؛ با وعده سرمایه‌گذاری به مجارستان و اسپانیا، توقف پیشنهاد در کمیته را قطعی‌تر می‌کند."},
+"byd":{"chosen_action":"front_load_shipments_before_measures","justification":"پیش از اعمال عوارض موقت، موجودی بنادر را بالا می‌برد تا تا شروع تولید انبوه Szeged از تعرفه ۱۰ درصدی بهره ببرد."},
+"volkswagen_group":{"chosen_action":"publicly_back_measures_with_conditions","justification":"هیبریدهای چینی با Tiguan و Passat پلاگین رقابت می‌کنند؛ فولکسواگن فقط معافیت تعهدهای قیمتی موجود را می‌خواهد و علناً مخالفت نمی‌کند."}},
+"messages":[
+{"from":"european_commission","to":"china_government","text":"باز شدن تحقیق ابزار فشار است نه هدف نهایی؛ اگر سهمیه و حداقل قیمت جدی روی میز بیاید، آماده گفتگو هستیم."},
+{"from":"china_government","to":"european_commission","text":"اقدام یک‌جانبه بر هیبرید را نمی‌پذیریم؛ تعهد شرکت‌ها به‌جای محدودیت دولتی قابل بحث است، به شرط توقف پیش‌نویس عوارض."}],
+"summary":"کمیسیون رسماً تحقیق ضدسوبسید هیبرید پلاگین را باز کرد و پیش‌نویس عوارض موقت را آماده ساخت. پکن با پایتخت‌ها رایزنی کرد، BYD محموله‌ها را شتاب داد و اختلال تراشه‌ای شبیه Nexperia خطوط تولید اروپا را کند کرد. فولکسواگن حمایت مشروط اعلام کرد.",
+"state":{"chinese_phev_import_flow":78,"eu_china_trade_tension":62,"byd_eu_market_position":52,"vw_china_business_health":37,"eu_auto_jobs_security":38,"eu_ev_affordability":53,"eu_member_state_unity":42,"chinese_production_in_eu":23}},
+{"actions":{
+"european_commission":{"chosen_action":"offer_quota_and_minimum_price_deal","justification":"با تهدید تعرفه آمریکا، جبهه دوم نمی‌خواهد؛ سهمیه ۲۸۰ تا ۳۰۰ هزار دستگاهی با حداقل قیمت بهترین نتیجه است و ضعف حقوقی پرونده را پنهان می‌کند."},
+"china_government":{"chosen_action":"offer_company_level_export_cap","justification":"سقف حدود ۳۰۰ هزار دستگاه به نام تعهد شرکت‌ها خط قرمز را حفظ می‌کند و از ثبت محدودیت دولتی مغایر WTO پرهیز دارد."},
+"byd":{"chosen_action":"submit_price_undertaking","justification":"کف قیمت حدود ۸ درصد بالاتر از قیمت فعلی را می‌پذیرد و برای حاشیه سود بهتر از عوارض بالای ۲۰ درصد است."},
+"volkswagen_group":{"chosen_action":"submit_more_price_undertakings","justification":"ثبت تعهد برای مدل‌های دیگر مشارکت‌های چینی، آن‌ها را از عوارض مصون می‌کند و رابطه با پکن را نگه می‌دارد."}},
+"messages":[
+{"from":"european_commission","to":"china_government","text":"بسته سهمیه سالانه و حداقل قیمت برای هر خودروساز آماده است؛ سقف حدود ۳۰۰ هزار دستگاه قابل بحث است."},
+{"from":"byd","to":"european_commission","text":"تعهد قیمتی برای مدل‌های اصلی هیبرید و برقی ارائه می‌شود؛ درخواست ما سهمیه‌ای متناسب با سهم فعلی بازار است."}],
+"summary":"آمریکا تعرفه یا تهدید تازه‌ای علیه خودروهای اروپایی مطرح کرد و میل بروکسل به درگیری دو جبهه‌ای کم شد. کمیسیون بسته سهمیه و حداقل قیمت را پیشنهاد کرد، پکن سقف تعهد شرکتی را مطرح کرد و BYD و فولکسواگن تعهد قیمتی ثبت کردند.",
+"state":{"chinese_phev_import_flow":75,"eu_china_trade_tension":58,"byd_eu_market_position":52,"vw_china_business_health":37,"eu_auto_jobs_security":40,"eu_ev_affordability":52,"eu_member_state_unity":40,"chinese_production_in_eu":26}},
+{"actions":{
+"european_commission":{"chosen_action":"drop_byd_bev_increase_keep_safeguard","justification":"پس از بیانیه مشترک اعضا، افزایش عوارض BYD به ۲۷ درصد خرج سیاسی زیادی دارد؛ حذف آن ارزان‌ترین عقب‌نشینی برای نگه‌داشتن رأی‌هاست."},
+"china_government":{"chosen_action":"require_licence_for_battery_tech_transfer","justification":"برنامه اعلام‌نشده ژانویه اجرا می‌شود؛ انتقال فناوری سلول مشروط به مجوز موردی می‌شود و اهرمی بر Szeged و مذاکره ایجاد می‌کند."},
+"byd":{"chosen_action":"accelerate_szeged_and_turkey_output","justification":"با معطل‌ماندن سلول‌سازی در Szeged، باید ظرفیت Manisa و مونتاژ مجارستان را زودتر راه بیندازد تا وابستگی به واردات چین کم شود."},
+"volkswagen_group":{"chosen_action":"relocate_china_built_models_to_europe","justification":"با نگرانی از تلافی پکن و فشار شورای کارگری، انتقال مدل‌های وارداتی به کارخانه‌های کم‌کار اروپا هم خطر عوارض را کم می‌کند و هم اشتغال را حفظ می‌کند."}},
+"messages":[
+{"from":"china_government","to":"byd","text":"انتقال فناوری سلول از ژانویه نیازمند مجوز موردی است؛ درخواست مجوز Szeged را زودتر بفرستید تا بررسی شود."},
+{"from":"european_commission","to":"volkswagen_group","text":"برای معافیت تعهدهای قیمتی، همکاری و داده‌های ارزش افزوده اروپایی مدل‌هایتان را سریع‌تر ارسال کنید."}],
+"summary":"چند کشور عضو در بیانیه‌ای مشترک خواستار توقف اقدامات تازه شدند و یکپارچگی پشت کمیسیون افت کرد. کمیسیون افزایش عوارض BYD را کنار گذاشت. پکن مجوز انتقال فناوری سلول باتری را الزامی کرد و Szeged معطل ماند. فولکسواگن انتقال تولید به اروپا را آغاز کرد.",
+"state":{"chinese_phev_import_flow":70,"eu_china_trade_tension":63,"byd_eu_market_position":47,"vw_china_business_health":34,"eu_auto_jobs_security":41,"eu_ev_affordability":51,"eu_member_state_unity":32,"chinese_production_in_eu":27}},
+{"actions":{
+"european_commission":{"chosen_action":"exempt_eu_localized_production","justification":"معافیت خودروهای تولیدشده در اروپا هم مخالفان را آرام می‌کند و هم تولید محلی چینی را تشویق می‌کند؛ هزینه سیاسی کمی دارد."},
+"china_government":{"chosen_action":"offer_company_level_export_cap","justification":"با اختلاف در اروپا و بسته شدن مسیر عوارض سنگین، تثبیت سقف شرکتی ۳۰۰ هزار دستگاهی بدون پذیرش محدودیت دولتی منطقی است."},
+"byd":{"chosen_action":"partner_with_european_manufacturer","justification":"با تولید انبوه Szeged در ۲۰۲۷ و ضعف زمان، استفاده از ظرفیت خالی کارخانه اروپایی راه سریع‌تر دور زدن عوارض و بدنامی سیاسی است."},
+"volkswagen_group":{"chosen_action":"deepen_in_china_for_china_strategy","justification":"برای کاهش ریسک تلافی و نگه‌داشتن Audi و Porsche در چین، همسویی با پکن و سرمایه‌گذاری بیشتر با شرکای چینی لازم است."}},
+"messages":[
+{"from":"byd","to":"european_commission","text":"آماده تولید مشترک در کارخانه‌های اروپایی با ارزش افزوده محلی هستیم؛ در ازای آن، معافیت از عوارض و سهمیه ثابت می‌خواهیم."},
+{"from":"china_government","to":"european_commission","text":"سقف ۳۰۰ هزار دستگاهی در قالب تعهد شرکت‌ها قابل ثبت است، به شرط توقف عوارض جبرانی و تحقیق حفاظتی."}],
+"summary":"کمیسیون خودروهای ساخت اروپا را از اقدامات معاف کرد و پکن سقف صادراتی شرکتی را رسماً پیشنهاد داد. BYD مذاکره برای تولید مشترک با یک خودروساز اروپایی را شروع کرد و فولکسواگن سرمایه‌گذاری در چین را بیشتر کرد. واردات هیبرید کند شد و تنش کمی کاهش یافت.",
+"state":{"chinese_phev_import_flow":58,"eu_china_trade_tension":56,"byd_eu_market_position":46,"vw_china_business_health":36,"eu_auto_jobs_security":44,"eu_ev_affordability":49,"eu_member_state_unity":38,"chinese_production_in_eu":33}},
+{"actions":{
+"european_commission":{"chosen_action":"offer_quota_and_minimum_price_deal","justification":"با ۲۸۰ تا ۳۰۰ هزار دستگاه و حداقل قیمت به خط قرمز ۳۵۰ هزار نمی‌رسد، ریسک ۴۰ درصدی شکست در WTO را کنار می‌گذارد و رأی‌ها را حفظ می‌کند."},
+"china_government":{"chosen_action":"offer_company_level_export_cap","justification":"توافق نهایی با سقف شرکتی بالای ۲۵۰ هزار دستگاه خط قرمز را حفظ می‌کند و تلافی آماده روی خودروهای بزرگ‌موتور را بایگانی می‌کند."},
+"byd":{"chosen_action":"partner_with_european_manufacturer","justification":"قرارداد تولید مشترک اروپایی، سهمیه و کف قیمت را به یک مسیر پایدار تبدیل می‌کند تا حاشیه سود حفظ شود و Szeged فرصت راه‌اندازی بگیرد."},
+"volkswagen_group":{"chosen_action":"deepen_in_china_for_china_strategy","justification":"پس از کاهش تنش، تثبیت موقعیت در چین و تأمین پایدار سلول Gotion اولویت است تا فشار فروش و سود کم شود."}},
+"messages":[
+{"from":"european_commission","to":"china_government","text":"چارچوب نهایی: سهمیه سالانه حدود ۲۹۰ هزار دستگاه با حداقل قیمت شرکتی؛ در برابر آن تحقیق ضدسوبسید تعلیق می‌شود."},
+{"from":"china_government","to":"european_commission","text":"چارچوب را با تعهد شرکت‌ها می‌پذیریم؛ مجوز انتقال فناوری باتری برای پروژه‌های دارای ارزش افزوده اروپایی سریع‌تر بررسی می‌شود."}],
+"summary":"کمیسیون و پکن به چارچوبی رسیدند: سهمیه سالانه حدود ۲۹۰ هزار هیبرید همراه حداقل قیمت و تعهد شرکتی، و تعلیق تحقیق ضدسوبسید. BYD قرارداد تولید مشترک اروپایی بست. تنش فروکش کرد، اما قیمت‌ها بالا رفت و گزینه‌های ارزان کمتر شد.",
+"state":{"chinese_phev_import_flow":50,"eu_china_trade_tension":47,"byd_eu_market_position":48,"vw_china_business_health":38,"eu_auto_jobs_security":46,"eu_ev_affordability":46,"eu_member_state_unity":45,"chinese_production_in_eu":38}}
+]}

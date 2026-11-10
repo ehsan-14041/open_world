@@ -1,0 +1,7 @@
+{
+ "regulator": {"chosen_action": "prioritize_domestic_capacity", "primary_variable": "dom_net", "probability": 0.8, "justification": "شبکهٔ داخلی زیر بار کند شده؛ ظرفیت دیتاسنترها برای سرویس‌های پرمصرف اولویت‌بندی می‌شود.", "causal_chain": "ظرفیت بیشتر -> شبکهٔ داخلی پایدارتر -> بازی و پرداخت", "expected_effect": {"dom_net": 8}},
+ "studios": {"chosen_action": "run_events_with_existing_content", "primary_variable": "payments", "probability": 0.7, "justification": "تیم نمی‌تواند محتوای تازه بسازد، ولی بازیکنِ تازه‌آمده را باید با رویداد و تخفیف نگه داشت.", "causal_chain": "رویداد -> خرید و ماندگاری", "expected_effect": {"payments": 4, "content": 3, "players": 2}},
+ "stores": {"chosen_action": "halve_commission", "primary_variable": "cash", "probability": 0.75, "justification": "بازیکن زیاد شده ولی خرید بالا نرفته و استودیوها زیر فشارند؛ کارمزد موقتاً نصف می‌شود.", "causal_chain": "کارمزد کمتر -> نقدینگی استودیو", "expected_effect": {"cash": 5}},
+ "players": {"chosen_action": "hold_position", "primary_variable": "players", "probability": 0.8, "justification": "هنوز جایگزینی در دسترس نیست؛ همان بازی‌های داخلی را ادامه می‌دهند.", "causal_chain": "بدون تغییر", "expected_effect": {}},
+ "talent": {"chosen_action": "hold_position", "primary_variable": "team", "probability": 0.7, "justification": "ابزارها هنوز برنگشته‌اند؛ منتظر می‌مانند.", "causal_chain": "بدون تغییر", "expected_effect": {}}
+}

@@ -1,0 +1,62 @@
+{
+ "environment": {
+  "chosen_action": "panic_buying",
+  "primary_variable": "shelf_supply",
+  "probability": 0.55,
+  "justification": "خبر اعتصاب سراسری کامیون‌داران معمولاً در چند روز نخست خرید هراسی ایجاد می‌کند، هرچند موجودی فعلی قفسه‌ها هنوز بالاست و اثر محدود می‌ماند.",
+  "causal_chain": "خبر اعتصاب ترس از کمبود را بالا می‌برد؛ خرید هراسی موجودی قفسه را کم می‌کند؛ کاهش عرضه قیمت‌ها را بالا و نظم عمومی را اندکی پایین می‌آورد.",
+  "expected_effect": {
+   "shelf_supply": -15,
+   "price_level": 8,
+   "public_order": -4
+  }
+ },
+ "drivers_union": {
+  "chosen_action": "start_nationwide_strike",
+  "primary_variable": "freight_flow",
+  "probability": 0.7,
+  "justification": "حاشیه سود رانندگان نزدیک صفر است و اعتصاب اصلی‌ترین ابزار چانه‌زنی اتحادیه است؛ شروع اعتصاب همبستگی را بالا می‌برد و فشار لازم برای مذاکره درباره سوخت و کرایه را ایجاد می‌کند.",
+  "causal_chain": "توقف کامیون‌ها جریان حمل را به شدت کم می‌کند و همبستگی رانندگان بالا می‌رود؛ کمبود کالا بر دولت و صاحبان بار فشار می‌آورد تا کرایه یا قیمت سوخت را اصلاح کنند، هرچند درآمد روزانه رانندگان موقتاً افت می‌کند.",
+  "expected_effect": {
+   "freight_flow": -40,
+   "driver_unity": 10,
+   "driver_margin": -5,
+   "public_order": -5
+  }
+ },
+ "government": {
+  "chosen_action": "deploy_police_escorts",
+  "primary_variable": "freight_flow",
+  "probability": 0.65,
+  "justification": "بودجه برای یارانه بزرگ نیست و باید زنجیره تأمین باز بماند؛ اسکورت پلیس بدون دستگیری رهبران، جریان بار و نظم را اندکی بهتر می‌کند و هزینه مالی کمی دارد.",
+  "causal_chain": "اسکورت پلیس کامیون‌های فعال را امن‌تر می‌کند و جریان حمل را بالا می‌برد؛ نظم عمومی بهتر می‌شود و قفسه‌ها خالی نمی‌شوند، با اندکی فشار بر حاشیه رانندگان.",
+  "expected_effect": {
+   "freight_flow": 8,
+   "public_order": 4,
+   "driver_unity": 3,
+   "driver_margin": -2
+  }
+ },
+ "shippers": {
+  "chosen_action": "raise_freight_rates",
+  "primary_variable": "driver_margin",
+  "probability": 0.6,
+  "justification": "برای ادامه جریان بار و پایان اعتصاب، کرایه را بالا می‌بریم، اما کمتر از خواسته رانندگان، تا هزینه محدود بماند و اتحاد رانندگان کمی سست شود.",
+  "causal_chain": "افزایش کرایه ← بهبود حاشیه سود رانندگان ← کاهش همبستگی و بازگشت حمل‌ونقل؛ با افزایش جزئی سطح قیمت‌ها.",
+  "expected_effect": {
+   "driver_margin": 7,
+   "price_level": 5,
+   "freight_flow": 3,
+   "driver_unity": -3
+  }
+ },
+ "retailers": {
+  "chosen_action": "hold_position",
+  "primary_variable": "shelf_supply",
+  "probability": 0.6,
+  "justification": "موجودی قفسه‌ها هنوز ۸۰ است و اعتصاب تازه آغاز شده. افزایش قیمت زیر نگاه ناظر و مصرف‌کننده پرهزینه است و مصرف ذخیره زود است؛ فعلاً صبر و پایش موجودی منطقی است.",
+  "causal_chain": "با ادامهٔ جریان کامیون‌ها و موجودی کافی، قیمت و نظم عمومی پایدار می‌ماند؛ اقدام زودهنگام فقط هزینه و ریسک نظارتی می‌آورد.",
+  "expected_effect": {},
+  "relation_updates": []
+ }
+}

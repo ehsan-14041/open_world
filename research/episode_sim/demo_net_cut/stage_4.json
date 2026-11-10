@@ -1,0 +1,4 @@
+{"moves": [
+ {"actor": "studios", "move": "استودیوهای کوچک پروژه‌های جانبی را می‌بندند و فقط بازی اصلی را نگه می‌دارند", "why": "تیم به کمتر از یک‌سوم توان رسیده و پول هم کم شده", "stages": 2, "effects": [{"variable": "cash", "direction": "+", "size": "small"}, {"variable": "content", "direction": "-", "size": "small"}]},
+ {"actor": "stores", "move": "تسویهٔ درآمد توسعه‌دهنده‌ها را از ماهانه به هفتگی تغییر می‌دهند", "why": "استودیوها برای حقوق این ماه پول نقد لازم دارند", "stages": 2, "effects": [{"variable": "cash", "direction": "+", "size": "small"}]},
+ {"actor": "talent", "move": "با برگشتن ابزارها، بیشترِ تیم‌ها سر کار برمی‌گردند؛ جای ارشدهای رفته خالی می‌ماند", "why": "ابزار برگشته، ولی آدم‌های کلیدی نه", "stages": 2, "effects": [{"variable": "team", "direction": "+", "size": "small"}]}]}

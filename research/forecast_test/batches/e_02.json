@@ -1,0 +1,1311 @@
+[
+ {
+  "id": "3567575",
+  "question": "Will Mary Peltola win the Alaska Senate primary by 3–6%?",
+  "rules": "The non-partisan primary election for US Senator from Alaska is scheduled to take place on August 18, 2026. The top four candidates in this election by number of votes won will advance to the general election for Senator from Alaska.\n\nThis market will resolve according to the margin of victory between the top two candidates in this primary election. \n\nThe “margin of victory” is defined as the absolute difference between the percentages of valid votes received by the first-place and second-place candidates. Percentages of the valid votes received by each candidate will be determined by dividing the total number of valid votes each of the top two candidates receives by the sum of all valid votes cast in the election.\n\nIf the reported value falls exactly between two brackets, then this market will resolve to the higher range bracket.\n\nIf two candidates receive the exact same highest number of valid votes and both are listed, this market will resolve to the lowest bracket for the tied candidate whose last name comes first alphabetically. If only one of the tied candidates is listed, this market will resolve to the lowest bracket for that listed candidate. If neither tied candidate is listed, this market will resolve to “Other.”\n\nThis market will resolve based on the official vote count once the count has been made official.\n\nIf the results of the specified election are not known definitively by December 31, 2026, 11:59 PM ET, this market will resolve to “Other”.\n\nThe primary resolution source for this market will be official election results published by the Alaska Division of Elections (https://www.elections.alaska.gov/); however, an overwhelming consensus of credible reporting may suffice.\n\nIf a recount is initiated before the vote total has been made official, the market will remain open until the recount is completed and the vote is made official.",
+  "start": "2026-08-13",
+  "close": "2026-09-01",
+  "your_drivers": [
+   {
+    "name": "Narrow bracket width",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Peltola consolidates Democratic/independent vote",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Sullivan consolidates Republican vote",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Multiple Republicans splitting vote widens margin",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Low-turnout primary electorate skews Republican",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3591977",
+  "question": "First Round Outright Winner in the GA-14 House Election?",
+  "rules": "The first round of the 2026 midterm GA-14 House election will be held on November 3, 2026. A candidate may win the election “outright” in the first round by winning more than 50% of the valid votes in the first round.\n\nThis market will resolve to “Yes” if any candidate wins the 2026 midterm GA-14 House election outright in the first round. Otherwise, it will resolve to “No”.\n\nIf the results of the first round of the specified election are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"No\".\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the state electoral authority responsible for certifying the results of the GA-14 House election.",
+  "start": "2026-08-14",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Safe Republican district",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Two-candidate general election",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Open-seat turmoil after Greene exit",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Third-party/independent candidates",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.15,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3591982",
+  "question": "First Round Outright Winner in the GA-09 House Election?",
+  "rules": "The first round of the 2026 midterm GA-09 House election will be held on November 3, 2026. A candidate may win the election “outright” in the first round by winning more than 50% of the valid votes in the first round.\n\nThis market will resolve to “Yes” if any candidate wins the 2026 midterm GA-09 House election outright in the first round. Otherwise, it will resolve to “No”.\n\nIf the results of the first round of the specified election are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"No\".\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the state electoral authority responsible for certifying the results of the GA-09 House election.",
+  "start": "2026-08-14",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Safe Republican district",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.95,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Two-candidate general election",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Third-party candidates",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.1,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3591988",
+  "question": "First Round Outright Winner in the GA-03 House Election?",
+  "rules": "The first round of the 2026 midterm GA-03 House election will be held on November 3, 2026. A candidate may win the election “outright” in the first round by winning more than 50% of the valid votes in the first round.\n\nThis market will resolve to “Yes” if any candidate wins the 2026 midterm GA-03 House election outright in the first round. Otherwise, it will resolve to “No”.\n\nIf the results of the first round of the specified election are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"No\".\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the state electoral authority responsible for certifying the results of the GA-03 House election.",
+  "start": "2026-08-14",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Safe Republican district",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.95,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Two-candidate general election",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Third-party candidates",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.1,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3592023",
+  "question": "First Round Outright Winner in the LA-05 House Election?",
+  "rules": "The first round of the 2026 midterm LA-05 House election will be held on November 3, 2026. A candidate may win the election “outright” in the first round by winning more than 50% of the valid votes in the first round.\n\nThis market will resolve to “Yes” if any candidate wins the 2026 midterm LA-05 House election outright in the first round. Otherwise, it will resolve to “No”.\n\nIf the results of the first round of the specified election are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"No\".\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the state electoral authority responsible for certifying the results of the LA-05 House election.",
+  "start": "2026-08-14",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Safe Republican district",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "New closed party primary system yields head-to-head general",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Election-format uncertainty after Callais/redistricting",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Open seat crowded field if jungle format applies",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3592027",
+  "question": "First Round Outright Winner in the LA-02 House Election?",
+  "rules": "The first round of the 2026 midterm LA-02 House election will be held on November 3, 2026. A candidate may win the election “outright” in the first round by winning more than 50% of the valid votes in the first round.\n\nThis market will resolve to “Yes” if any candidate wins the 2026 midterm LA-02 House election outright in the first round. Otherwise, it will resolve to “No”.\n\nIf the results of the first round of the specified election are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"No\".\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the state electoral authority responsible for certifying the results of the LA-02 House election.",
+  "start": "2026-08-14",
+  "close": "2026-11-04",
+  "your_drivers": [
+   {
+    "name": "Safe Democratic district with incumbent Carter",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Closed party primary yields head-to-head general",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possible redistricting after Callais",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Multi-candidate field if jungle format applies",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3659919",
+  "question": "Will Dr. Furlan win the 2026 Amapá gubernatorial election?",
+  "rules": "The Amapá gubernatorial election is scheduled to take place in Brazil on October 4, 2026, with a runoff on October 25, 2026, if no candidate receives a majority of the valid votes in the first round.\n\nThis market will resolve according to the candidate who wins this election.\n\nTemporary, interim, or placeholder governors appointed by any means before the specified election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Furlan popularity as Macapa mayor",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Incumbent Clecio Luis with Alcolumbre machine",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Federal/state alliances and resources",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Runoff dynamics",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 6
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.444,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "Furlan popularity as Macapa mayor",
+    "Incumbent Clecio Luis with Alcolumbre machine",
+    "Federal/state alliances and resources"
+   ]
+  }
+ },
+ {
+  "id": "3659958",
+  "question": "Will Eduardo Riedel win the 2026 Mato Grosso do Sul gubernatorial election?",
+  "rules": "The Mato Grosso do Sul gubernatorial election is scheduled to take place in Brazil on October 4, 2026, with a runoff on October 25, 2026, if no candidate receives a majority of the valid votes in the first round.\n\nThis market will resolve according to the candidate who wins this election.\n\nTemporary, interim, or placeholder governors appointed by any means before the specified election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Incumbency and state machine",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Right-leaning state alignment",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Competing right candidates (PL split)",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Left/PT challenger strength",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3659986",
+  "question": "Will Wellington Fagundes win the 2026 Mato Grosso gubernatorial election?",
+  "rules": "The Mato Grosso gubernatorial election is scheduled to take place in Brazil on October 4, 2026, with a runoff on October 25, 2026, if no candidate receives a majority of the valid votes in the first round.\n\nThis market will resolve according to the candidate who wins this election.\n\nTemporary, interim, or placeholder governors appointed by any means before the specified election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Fagundes name recognition as senator",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Mendes-backed successor (Pivetta) machine",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Bolsonarist endorsement",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Runoff consolidation",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 6
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.185,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "Mendes-backed successor (Pivetta) machine"
+   ]
+  }
+ },
+ {
+  "id": "3660015",
+  "question": "Will Rafael Fonteles win the 2026 Piauí gubernatorial election?",
+  "rules": "The Piauí gubernatorial election is scheduled to take place in Brazil on October 4, 2026, with a runoff on October 25, 2026, if no candidate receives a majority of the valid votes in the first round.\n\nThis market will resolve according to the candidate who wins this election.\n\nTemporary, interim, or placeholder governors appointed by any means before the specified election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Popular PT incumbent",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.85,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lula strength in Northeast",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Opposition candidate (Silvio Mendes/Ciro Nogueira camp)",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3660165",
+  "question": "Will Vicentinho Júnior win the 2026 Tocantins gubernatorial election?",
+  "rules": "The Tocantins gubernatorial election is scheduled to take place in Brazil on October 4, 2026, with a runoff on October 25, 2026, if no candidate receives a majority of the valid votes in the first round.\n\nThis market will resolve according to the candidate who wins this election.\n\nTemporary, interim, or placeholder governors appointed by any means before the specified election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Fragmented open-seat field",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Professora Dorinha strength",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Vicentinho Jr base and alliances",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "State government backing",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Runoff realignment",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 6
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.004,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3660305",
+  "question": "Will Celina Leão win the 2026 Federal District gubernatorial election?",
+  "rules": "The Federal District gubernatorial election is scheduled to take place in Brazil on October 4, 2026, with a runoff on October 25, 2026, if no candidate receives a majority of the valid votes in the first round.\n\nThis market will resolve according to the candidate who wins this election.\n\nTemporary, interim, or placeholder governors appointed by any means before the specified election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-26",
+  "your_drivers": [
+   {
+    "name": "Incumbency after Ibaneis resignation",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Right-leaning DF electorate",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Left challenger (Leandro Grass/PT)",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "BRB/administration scandals",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Competing right candidates",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3660467",
+  "question": "Will Fábio win the 2026 Sergipe gubernatorial election?",
+  "rules": "The Sergipe gubernatorial election is scheduled to take place in Brazil on October 4, 2026, with a runoff on October 25, 2026, if no candidate receives a majority of the valid votes in the first round.\n\nThis market will resolve according to the candidate who wins this election.\n\nTemporary, interim, or placeholder governors appointed by any means before the specified election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Incumbent Mitidieri seeking reelection",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Broad alliance incl. Lula camp",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Opposition challenger",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3660496",
+  "question": "Will Marcio Bittar win the most votes in the 2026 Acre Senate election?",
+  "rules": "The Brazilian Federal Senate election for Acre is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Gladson Cameli running for Senate",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Bittar incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Right-leaning Acre electorate",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Multiple right candidates splitting",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3660574",
+  "question": "Will Arthur Lira win the most votes in the 2026 Alagoas Senate election?",
+  "rules": "The Brazilian Federal Senate election for Alagoas is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Lira political machine and resources",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Renan Calheiros incumbency and base",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Gubernatorial alliances (JHC/Paulo Dantas)",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Two-seat race splits votes",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.704,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": [
+    "Lira political machine and resources",
+    "Renan Calheiros incumbency and base"
+   ]
+  }
+ },
+ {
+  "id": "3660613",
+  "question": "Will Renan win the second-most votes in the 2026 Alagoas Senate election?",
+  "rules": "The Brazilian Federal Senate election for Alagoas is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the second-most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the second-highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Renan strong base makes top-two likely",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Renan may finish first instead",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.45,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Third candidate could beat Renan",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Age/fatigue of Renan",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.556,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": [
+    "Renan strong base makes top-two likely",
+    "Renan may finish first instead",
+    "Third candidate could beat Renan"
+   ]
+  }
+ },
+ {
+  "id": "3660660",
+  "question": "Will Capitão Alberto Neto win the second-most votes in the 2026 Amazonas Senate election?",
+  "rules": "The Brazilian Federal Senate election for Amazonas is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the second-most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the second-highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Bolsonarist vote in Amazonas",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Competing incumbents (Braga, Plinio Valerio)",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Crowded right field splits votes",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Could finish first instead of second",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3660698",
+  "question": "Will Eduardo Braga win the most votes in the 2026 Amazonas Senate election?",
+  "rules": "The Brazilian Federal Senate election for Amazonas is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Braga incumbency and MDB machine",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Bolsonarist candidates strong in state",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Alliance with governor/Lula",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Crowded field",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.123,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3660739",
+  "question": "Will Randolfe win the second-most votes in the 2026 Amapá Senate election?",
+  "rules": "The Brazilian Federal Senate election for Amapá is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the second-most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the second-highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Randolfe incumbency and name recognition",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Rayssa Furlan likely first",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lucas Barreto/Alcolumbre-backed rivals",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Randolfe could finish first or third",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.383,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "Randolfe incumbency and name recognition",
+    "Rayssa Furlan likely first",
+    "Lucas Barreto/Alcolumbre-backed rivals",
+    "Randolfe could finish first or third"
+   ]
+  }
+ },
+ {
+  "id": "3660775",
+  "question": "Will Rayssa Furlan win the most votes in the 2026 Amapá Senate election?",
+  "rules": "The Brazilian Federal Senate election for Amapá is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Furlan family popularity",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.65,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Randolfe and incumbents competing",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Alcolumbre machine opposition",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Coattails from Furlan governor bid",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.778,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": [
+    "Furlan family popularity"
+   ]
+  }
+ },
+ {
+  "id": "3660850",
+  "question": "Will Rui Costa win the most votes in the 2026 Bahia Senate election?",
+  "rules": "The Brazilian Federal Senate election for Bahia is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "PT dominance in Bahia",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Jaques Wagner on same ticket competing for first",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Rui Costa popularity as ex-governor",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "ACM Neto opposition candidates",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.679,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": [
+    "PT dominance in Bahia",
+    "Jaques Wagner on same ticket competing for first"
+   ]
+  }
+ },
+ {
+  "id": "3660882",
+  "question": "Will Cid Gomes win the most votes in the 2026 Ceará Senate election?",
+  "rules": "The Brazilian Federal Senate election for Ceará is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Cid incumbency and alliance with PT government",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Lula strength in Ceara",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Other government-allied candidate (PT) competing",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Opposition (Capitao Wagner/Ciro camp)",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.691,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": [
+    "Cid incumbency and alliance with PT government",
+    "Lula strength in Ceara"
+   ]
+  }
+ },
+ {
+  "id": "3660883",
+  "question": "Will Capitão Wagner win the second-most votes in the 2026 Ceará Senate election?",
+  "rules": "The Brazilian Federal Senate election for Ceará is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the second-most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the second-highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Wagner strong opposition name in Fortaleza",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Two government-allied candidates could take top two",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Opposition vote split with other right candidates",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Could finish first",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.2,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3660963",
+  "question": "Will Michelle Bolsonaro win the most votes in the 2026 Federal District Senate election?",
+  "rules": "The Brazilian Federal Senate election for Federal District is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Michelle Bolsonaro high profile in right-leaning DF",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Ibaneis Rocha competing for Senate",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Uncertainty whether she runs for Senate",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Left candidate consolidating anti-Bolsonaro vote",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3660967",
+  "question": "Will Bia Kicis win the second-most votes in the 2026 Federal District Senate election?",
+  "rules": "The Brazilian Federal Senate election for Federal District is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the second-most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the second-highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Bolsonarist base in DF",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Michelle and Ibaneis likely top two",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Right vote split among PL candidates",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Left candidate strength",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3661045",
+  "question": "Will Renato Casagrande win the most votes in the 2026 Espírito Santo Senate election?",
+  "rules": "The Brazilian Federal Senate election for Espírito Santo is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-06",
+  "your_drivers": [
+   {
+    "name": "Casagrande popularity as two-term governor",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Bolsonarist/right challengers",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Meneguelli popularity",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Two-seat vote allocation",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3661062",
+  "question": "Will Sergio Meneguelli win the second-most votes in the 2026 Espírito Santo Senate election?",
+  "rules": "The Brazilian Federal Senate election for Espírito Santo is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the second-most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the second-highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-06",
+  "your_drivers": [
+   {
+    "name": "Meneguelli strong local popularity",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Casagrande likely first",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Other right candidates (Magno Malta, Contarato etc.)",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Could finish first instead",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.25,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.765,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3661115",
+  "question": "Will Gracinha Caiado win the most votes in the 2026 Goiás Senate election?",
+  "rules": "The Brazilian Federal Senate election for Goiás is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Caiado machine and popularity",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Bolsonarist candidates (Gayer, Wilder) in right-leaning state",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Gracinha as first-time candidate",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Caiado presidential bid visibility",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.901,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3661151",
+  "question": "Will Gustavo Gayer win the second-most votes in the 2026 Goiás Senate election?",
+  "rules": "The Brazilian Federal Senate election for Goiás is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the second-most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the second-highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Bolsonarist base in Goias",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.65,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Competing right candidates (Wilder Morais, Vanderlan)",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Legal issues/controversies",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Could finish first",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.2,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.086,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3661197",
+  "question": "Will Weverton Rocha win the second-most votes in the 2026 Maranhão Senate election?",
+  "rules": "The Brazilian Federal Senate election for Maranhão is scheduled to take place on October 4, 2026.\n\nThis market will resolve according to the candidate who wins the second-most valid votes of any candidate at the specified election.\n\nCandidates will be primarily ranked by order of valid votes won. If two or more candidates are tied for any position, ties will be broken by alphabetical order of the candidates’ listed full names as they appear in this market. This market will resolve to the candidate that occupies the second-highest finishing position after applying this ranking.\n\nIf the result of this election isn't definitively known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., www.tse.jus.br/eleicoes/resultados-eleicoes).",
+  "start": "2026-08-17",
+  "close": "2026-10-05",
+  "your_drivers": [
+   {
+    "name": "Weverton incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Governor Brandao or allies running for Senate",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Crowded field with Eliziane Gama and others",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Could finish first",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.25,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ }
+]

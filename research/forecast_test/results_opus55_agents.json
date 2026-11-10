@@ -1,0 +1,40 @@
+{
+ "model": "Claude Opus 5.5 as sub-agents, batches of 30",
+ "cutoff": "2026-06-30",
+ "n_sampled": 300,
+ "n_scored": 298,
+ "n_dropped": 2,
+ "share_yes": 0.547,
+ "brier": {
+  "half": 0.25,
+  "base_rate": 0.3321,
+  "market": 0.2099,
+  "L": 0.2699,
+  "L2": 0.2714,
+  "LE1": 0.3609,
+  "LE2": 0.28
+ },
+ "LE2_minus_L2": {
+  "difference": 0.0086,
+  "ci95": [
+   0.0016,
+   0.0156
+  ]
+ },
+ "LE2_minus_L": {
+  "difference": 0.01,
+  "ci95": [
+   0.0005,
+   0.0198
+  ]
+ },
+ "L2_minus_L": {
+  "difference": 0.0015,
+  "ci95": [
+   -0.0055,
+   0.0086
+  ]
+ },
+ "mean_abs_change_L2_to_LE2": 0.0441,
+ "pass": false
+}

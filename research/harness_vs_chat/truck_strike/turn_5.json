@@ -1,0 +1,52 @@
+{
+ "environment": {
+  "chosen_action": "hold_position",
+  "primary_variable": "freight_flow",
+  "probability": 0.5,
+  "justification": "جریان بار به ۶۰ بازگشته و قفسه‌ها پرتر شده‌اند؛ پس از شوک‌های پیشین، رویداد بیرونی تازه محتمل‌تر از ادامهٔ روند نیست و در حالت بی‌ثباتی محافظه‌کاری منطقی است.",
+  "causal_chain": "نبود شوک جدید ← جریان بار و موجودی قفسه‌ها با روند فعلی ادامه می‌یابند",
+  "expected_effect": {}
+ },
+ "drivers_union": {
+  "chosen_action": "hold_position",
+  "primary_variable": "driver_margin",
+  "probability": 0.6,
+  "justification": "همبستگی ۷۱ بالاست و حاشیه با کف تعرفه و افزایش کرایه به ۴۰ رسیده اما هنوز کم است. پذیرش توافق زودهنگام همبستگی را می‌شکند و تشدید جاده‌ای نظم را بحرانی می‌کند؛ صبر می‌کنیم.",
+  "causal_chain": "ادامهٔ صبر همبستگی را نگه می‌دارد و فشار اعتصاب باقی می‌ماند؛ افزایش کرایه از سوی طرف مقابل حاشیه را کم‌کم بالا می‌برد، بدون هزینهٔ تازه برای اتحادیه.",
+  "expected_effect": {}
+ },
+ "government": {
+  "chosen_action": "deploy_police_escorts",
+  "primary_variable": "freight_flow",
+  "probability": 0.6,
+  "justification": "جریان بار ۶۰ در حال بازگشت است و بودجه برای یارانه نیست. اسکورت پلیس کم‌هزینه است، بار را باز نگه می‌دارد و بدون دستگیری رهبران نظم را حفظ می‌کند.",
+  "causal_chain": "اسکورت پلیس ← افزایش جریان بار ← بهبود موجودی قفسه‌ها و نظم عمومی با هزینه مالی اندک",
+  "expected_effect": {
+   "freight_flow": 8,
+   "public_order": 4,
+   "driver_unity": 3,
+   "driver_margin": -2
+  }
+ },
+ "shippers": {
+  "chosen_action": "raise_freight_rates",
+  "primary_variable": "freight_flow",
+  "probability": 0.6,
+  "justification": "جریان بار به ۶۰ برگشته ولی همبستگی رانندگان ۷۱ است. افزایش مجدد کرایه، کمتر از خواسته رانندگان، حمل را پایدار می‌کند و از استخدام شکن‌اعتصاب پرتنش‌تر و کم‌هزینه‌تر است.",
+  "causal_chain": "افزایش کرایه حاشیه رانندگان را بالا می‌برد و با بالا رفتن حاشیه، همبستگی اعتصاب کم می‌شود و جریان بار بالا می‌رود؛ هزینه آن افزایش اندک سطح قیمت‌هاست.",
+  "expected_effect": {
+   "driver_margin": 7,
+   "price_level": 5,
+   "freight_flow": 3,
+   "driver_unity": -3
+  }
+ },
+ "retailers": {
+  "chosen_action": "hold_position",
+  "primary_variable": "shelf_supply",
+  "probability": 0.65,
+  "justification": "جریان بار به ۶۰ برگشته و موجودی قفسه‌ها ۶۷ است. ذخیرهٔ انبار در مراحل قبل مصرف شده؛ قیمت‌ها ۸۸ است و گران‌فروشی زیر نگاه ناظر پرهزینه است، پس صبر و پایش منطقی است.",
+  "causal_chain": "بازگشت جریان بار موجودی قفسه را به‌تدریج بالا می‌برد و فشار قیمتی را کم می‌کند؛ نگه داشتن ذخیرهٔ باقی‌مانده انبار برای شوک بعدی محتاطانه است.",
+  "expected_effect": {}
+ }
+}

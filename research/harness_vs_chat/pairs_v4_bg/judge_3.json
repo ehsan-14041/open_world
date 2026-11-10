@@ -1,0 +1,12 @@
+{"opec_quota": {"X": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                "Y": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                "prefer": "Y", "why": "Y shows non-obvious levers: SPR buying as a soft price floor, Russia's paper cut below actual output, a quiet Saudi-UAE understanding, US pacing Iran waivers. X is coherent but generic; its SPR release at about $70 is odd. Y repeats some action labels."},
+ "chip_controls": {"X": {"behaviour": 3, "consistency": 3, "insight": 4, "usefulness": 3},
+                   "Y": {"behaviour": 4, "consistency": 3, "insight": 3, "usefulness": 3},
+                   "prefer": "tie", "why": "X has sharper levers (cloud rule traded for minerals, Middle East workaround, Nvidia write-off) but China never retaliates and the stage 5 H200 claim jars. Y's mineral retaliation is more believable but its story is generic."},
+ "app_store": {"X": {"behaviour": 4, "consistency": 3, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+               "prefer": "Y", "why": "Y covers the quiet deadline extension, US trade politics, Google's confidential positioning, Epic's financial fragility and Apple holding back Siri features, and its take rate stays flat until real concessions. In X, take rate falls despite only cosmetic changes."},
+ "ev_tariffs": {"X": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X shows concrete mechanisms: China licensing battery-cell technology as leverage over Szeged, an exemption for EU-made cars, BYD co-production and a specific quota range. Y is plausible (dairy and cognac retaliation) but reaches the same deal more generically."}}

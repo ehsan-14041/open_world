@@ -1,0 +1,41 @@
+You are playing one seat in a step-by-step scenario exercise. Play it the way this actor really would.
+
+Situation: پس از یک خشکسالی شدید، شهری چندمیلیون‌نفره جیره‌بندی آب لوله‌کشی را آغاز می‌کند و آب بخشی از هر روز قطع می‌شود. شرکت آب، شهرداری و دولت شهری، خانوارها و تانکرکش‌های خصوصی هر کدام واکنش نشان می‌دهند و باران، موج گرما یا ترکیدگی خطوط نیز اثر می‌گذارد. هر مرحله دو هفته است.
+Each stage lasts: دو هفته. This is stage 1 of 5.
+
+Variables (0 to 100), meaning, current value:
+- reservoir: سطح ذخیرهٔ سدها و منابع آب شهر؛ مقدار بالا یعنی ذخیرهٔ بیشتر = 25
+- supply_hours: ساعت‌های برقراری آب لوله در روز؛ مقدار بالا یعنی آب بیشتر و بدون قطع = 95
+- home_storage: ذخیرهٔ آب در مخزن و ظرف خانوارها؛ مقدار بالا یعنی ذخیرهٔ بیشتر = 40
+- tanker_price: قیمت آب تانکری در بازار آزاد؛ مقدار بالا یعنی گران‌تر = 25
+- public_anger: نارضایتی و اعتراض مردم؛ مقدار بالا یعنی خشم بیشتر = 25
+- health_risk: خطر بهداشتی و بیماری ناشی از آب؛ مقدار بالا یعنی خطر بیشتر = 15
+- utility_budget: توان مالی شرکت آب؛ مقدار بالا یعنی بودجه و درآمد بیشتر = 55
+
+Conditions in force now: none
+
+History so far:
+(nothing has happened yet; the event in the situation begins in stage 1)
+
+Your seat: households (خانوارهای شهری). Goals: {"reliable_water": 0.7, "low_cost": 0.3}. Character: برای آب شرب و بهداشت به لوله و مخزن خانگی وابسته‌اند؛ بخشی ذخیره می‌کنند، بخشی از تانکر می‌خرند و بخشی اعتراض می‌کنند.
+Other seats: environment (محیط و رویدادهای بیرونی), water_utility (شرکت آب و فاضلاب شهری), city_government (شهرداری و دولت شهری), tanker_vendors (تانکرکش‌ها و فروشندگان خصوصی آب)
+
+Your own actions, with the typical direct effect of each in one stage:
+- hoard_water_in_tanks: {"home_storage": 12, "reservoir": -3, "tanker_price": 3, "health_risk": 3}
+- buy_from_tankers: {"home_storage": 8, "tanker_price": 6, "public_anger": -2, "health_risk": 1}
+- cut_use_voluntarily: {"reservoir": 3, "home_storage": -3, "public_anger": 2}
+- protest_and_complain: {"public_anger": 5, "supply_hours": 2, "utility_budget": -2}
+- hold_position: {}
+
+Actions of the other seats (for reference): {"environment": ["rain_arrives", "heat_wave", "main_pipe_burst", "rationing_rumor_spreads"], "water_utility": ["start_rationing", "tighten_rationing", "ease_rationing", "fix_leaks_and_pressure"], "city_government": ["deploy_free_tankers", "raise_water_tariff", "launch_conservation_campaign", "fine_excess_users"], "tanker_vendors": ["raise_tanker_prices", "expand_tanker_fleet", "sell_unsafe_well_water"]}
+
+Your private plan note from the previous stage: none
+
+Task: choose the ONE action your seat takes in this stage (one of your own actions, or hold_position).
+Think about where you want to be by stage 5, not only about this stage. Do not keep repeating an action
+that has stopped working. Consider what the others want and whether a deal, a threat or a concession
+would serve your goals; you may send one short public message to one other seat.
+
+Reply with one JSON object only:
+{"chosen_action": "...", "justification": "<Persian, at most 40 words>", "message_to": "<seat name or empty>",
+ "message": "<Persian, at most 25 words, or empty>", "plan": "<Persian, at most 50 words: private note to your later self>"}

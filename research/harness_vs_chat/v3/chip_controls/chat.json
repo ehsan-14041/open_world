@@ -1,0 +1,42 @@
+{"stages":[
+{"actions":{
+"us_government":{"chosen_action":"offer_truce_package","justification":"موفقیت مدل چینی تندروها را تقویت کرده؛ بخش ابری برگ چانه‌زنی است و کاخ سفید می‌خواهد تمدید مجوزهای عناصر نادر را در برابر تعویق قاعده ابری بگیرد."},
+"china_government":{"chosen_action":"negotiate_truce_extension","justification":"پکن می‌داند ذخیره HBM فقط حدود دو فصل کافی است و می‌خواهد تعویق ۱۲ ماهه قاعده ابری را در برابر تمدید آتش‌بس بگیرد."},
+"nvidia":{"chosen_action":"lobby_white_house","justification":"Nvidia باور دارد سخت‌گیری ظرف یکی دو فصل شل می‌شود؛ هنوز موجودی ۳ میلیارد دلاری را حذف نکرده و از دیدار مستقیم برای مهلت استفاده می‌کند."},
+"tsmc":{"chosen_action":"self_report_leakage","justification":"حسابرسی داخلی نشت ۷ نانومتری را نشان داده؛ گزارش داوطلبانه پیش از کشف دولت جریمه احتمالی تا ۲ میلیارد دلار را کمتر می‌کند."}},
+"messages":[{"from":"us_government","to":"china_government","text":"آماده بحث درباره تعویق قاعده ابری هستیم، مشروط به تمدید مجوزهای عمومی عناصر نادر."},{"from":"china_government","to":"us_government","text":"تمدید آتش‌بس را بررسی می‌کنیم؛ هر محدودیت تازه ابری مذاکره را مختل می‌کند."}],
+"summary":"انتشار مدل چینی آموخته با تراشه داخلی بازار تراشه را تکان داد. واشنگتن بسته تمدید آتش‌بس در برابر عناصر نادر را مطرح کرد، پکن از مذاکره استقبال کرد، Nvidia لابی کرد و TSMC نشت احتمالی را به BIS گزارش داد.",
+"state":{"us_compute_lead":70,"china_chip_self_reliance":33,"nvidia_china_access":10,"trade_truce_stability":50,"critical_minerals_flow":54,"control_enforcement":42,"tsmc_business_stability":70,"allied_alignment":55}},
+{"actions":{
+"us_government":{"chosen_action":"add_entities_to_list","justification":"افشای شبکه قاچاق فشار سیاسی ایجاد کرده؛ افزودن واسطه‌های آسیای جنوب شرقی به فهرست، بدون لمس معامله میان‌رده، سخت‌گیری قابل‌دفاع و کم‌هزینه است."},
+"china_government":{"chosen_action":"subsidize_domestic_chips","justification":"با نشت HBM و بازده زیر ۴۰ درصد، پکن منابع بیشتری به Huawei، SMIC و CXMT می‌دهد و خرید داخلی را اجباری می‌کند."},
+"nvidia":{"chosen_action":"tighten_cloud_compliance","justification":"زیر نگاه دقیق پس از افشای قاچاق، حسابرسی شرکای سنگاپوری و مالزیایی هم ریسک را کم می‌کند و هم برای حفظ مجوزهای H200 اعتبار می‌سازد."},
+"tsmc":{"chosen_action":"cut_chinese_advanced_orders","justification":"قطع بی‌سروصدای سفارش‌های ۷ نانومتر و پایین‌تر مشتریان چینی حدود ۵ درصد درآمد را می‌برد اما از جریمه و تعرفه جلوگیری می‌کند."}},
+"messages":[{"from":"nvidia","to":"us_government","text":"ممیزی ابری آغاز شد؛ خواهشمندیم مجوزهای H200 را به پایان این فصل پایدار نگه دارید."}],
+"summary":"دادستان‌ها شبکه بزرگ قاچاق تراشه Nvidia را افشا کردند. آمریکا چند واسطه جنوب شرق آسیا را فهرست کرد، چین یارانه تراشه داخلی را افزایش داد، Nvidia ممیزی ابری گرفت و TSMC سفارش‌های پیشرفته چینی را محدود کرد.",
+"state":{"us_compute_lead":70,"china_chip_self_reliance":36,"nvidia_china_access":9,"trade_truce_stability":48,"critical_minerals_flow":54,"control_enforcement":50,"tsmc_business_stability":69,"allied_alignment":57}},
+{"actions":{
+"us_government":{"chosen_action":"delay_cloud_rule","justification":"وکلا بیش از ۵۰ درصد شکست قضایی را محتمل می‌دانند؛ تعویق گره‌خورده به مذاکرات، مجوزهای عناصر نادر را می‌خرد بی‌آنکه بخش میان‌رده را تغییر دهد."},
+"china_government":{"chosen_action":"negotiate_truce_extension","justification":"تعویق قاعده ابری خط قرمز مالزی و سنگاپور را حفظ می‌کند؛ پکن آماده تمدید مجوزهای عمومی عناصر نادر است تا زمان خرید برای HBM داخلی بگیرد."},
+"nvidia":{"chosen_action":"write_down_china_inventory","justification":"مهلت تصمیم رسیده و تعدیلی از واشنگتن نیامده؛ حذف ۳ میلیارد دلار و کنار گذاشتن چین، شفافیت می‌دهد و ریسک شگفتی آینده را کم می‌کند."},
+"tsmc":{"chosen_action":"lobby_via_taipei","justification":"تمدید مجوز Nanjing تا پایان دسامبر نامعلوم است؛ TSMC از تایپه می‌خواهد مهلت انطباق و معافیت تعرفه‌ای را پیگیری کند تا خط قرمز نقض نشود."}},
+"messages":[{"from":"china_government","to":"us_government","text":"با تعویق ۱۲ ماهه قاعده ابری، مجوزهای عمومی عناصر نادر تمدید می‌شود."},{"from":"us_government","to":"china_government","text":"پذیرفته در اصل؛ تعویق به پیشرفت مذاکره مشروط است و Blackwell خارج از بحث."}],
+"summary":"آمریکا اجرای قاعده ابری را به تعویق انداخت و به مذاکره گره زد. چین مجوزهای عناصر نادر را به تمدید آتش‌بس مشروط کرد. Nvidia موجودی ۳ میلیارد دلاری چین را حذف کرد و TSMC از تایپه کمک خواست.",
+"state":{"us_compute_lead":71,"china_chip_self_reliance":39,"nvidia_china_access":7,"trade_truce_stability":55,"critical_minerals_flow":59,"control_enforcement":50,"tsmc_business_stability":69,"allied_alignment":57}},
+{"actions":{
+"us_government":{"chosen_action":"pressure_allies_alignment","justification":"افشای دوباره قاچاق نشان می‌دهد نشت از کشورهای ثالث است؛ با تعویق ابری، فشار بر هلند، ژاپن، سنگاپور و مالزی ابزار جایگزین و قابل‌دفاع‌تر است."},
+"china_government":{"chosen_action":"expand_offshore_compute","justification":"تعویق موقت است و HBM محدود؛ تشویق به مراکز داده خاورمیانه، خارج از دسترس قاعده آمریکا، ریسک آینده را پوشش می‌دهد."},
+"nvidia":{"chosen_action":"offer_downgraded_chip","justification":"پس از حذف موجودی، لحظه مناسب پیشنهاد نسخه ضعیف‌شده Blackwell زیر آستانه جدید است؛ دولت می‌تواند آن را بدون عبور از خط قرمز بپذیرد."},
+"tsmc":{"chosen_action":"accelerate_us_capacity","justification":"فشار تعرفه و بررسی نشت بالاست؛ جلو کشیدن تولید پیشرفته Arizona امتیاز سیاسی می‌دهد و تعرفه بر تراشه تایوان را دورتر می‌کند."}},
+"messages":[{"from":"nvidia","to":"us_government","text":"نسخه ضعیف‌شده، زیر آستانه جدید، با نظارت شخص ثالث و سهم درآمد ارائه می‌شود."}],
+"summary":"افشای دوباره قاچاق، آمریکا را به فشار بر متحدان کشاند. چین شرکت‌هایش را به مراکز داده خاورمیانه تشویق کرد. Nvidia تراشه ضعیف‌شده Blackwell را برای مجوز پیشنهاد داد و TSMC زمان‌بندی Arizona را جلو کشید.",
+"state":{"us_compute_lead":71,"china_chip_self_reliance":42,"nvidia_china_access":7,"trade_truce_stability":53,"critical_minerals_flow":57,"control_enforcement":55,"tsmc_business_stability":68,"allied_alignment":59}},
+{"actions":{
+"us_government":{"chosen_action":"add_entities_to_list","justification":"سومین افشای قاچاق سخت‌گیری بیشتری می‌طلبد؛ فهرست کردن واسطه‌ها، بدون عبور از خط قرمز Blackwell یا نقض معامله کنگره، پاسخ فوری است."},
+"china_government":{"chosen_action":"allow_selective_imports","justification":"ذخیره HBM رو به پایان است و ۴۰۰ هزار H200 پنهانی مجاز شده بود؛ خرید بی‌سروصدا برای شرکت‌های بزرگ، بدون مخالفت علنی، فشار را کم می‌کند."},
+"nvidia":{"chosen_action":"shift_supply_to_allies","justification":"مجوز نسخه ضعیف‌شده نامطمئن است؛ انتقال ظرفیت و تخفیف به خریداران خاورمیانه، هند و اروپا جای خالی چین را پر می‌کند."},
+"tsmc":{"chosen_action":"raise_prices_ration_capacity","justification":"با کمبود ظرفیت و افزایش نظارت، قیمت بالاتر و تخصیص به مشتریان کم‌خطر درآمد را حفظ می‌کند و ریسک واسطه‌ها را کم می‌کند."}},
+"messages":[{"from":"china_government","to":"us_government","text":"ادامه فهرست‌کردن واسطه‌ها آتش‌بس را تهدید می‌کند؛ مجوزهای عناصر نادر وابسته به خویشتنداری است."}],
+"summary":"سومین افشای قاچاق آمریکا را به فهرست کردن بیشتر واسطه‌ها کشاند. چین بی‌سروصدا خرید محدود تراشه آمریکایی را مجاز کرد. Nvidia عرضه را به خاورمیانه، هند و اروپا برد و TSMC قیمت‌ها را بالا برد و ظرفیت را سهمیه‌بندی کرد.",
+"state":{"us_compute_lead":72,"china_chip_self_reliance":44,"nvidia_china_access":9,"trade_truce_stability":52,"critical_minerals_flow":57,"control_enforcement":58,"tsmc_business_stability":66,"allied_alignment":59}}
+]}

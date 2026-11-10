@@ -1,0 +1,64 @@
+{
+ "environment": {
+  "chosen_action": "visible_ai_code_failure",
+  "primary_variable": "ai_code_trust",
+  "probability": 0.4,
+  "justification": "اعتماد ۷۷ و پذیرش داخلی ۸۰ بالا رفته و حجم زیادی کد تولیدی وارد محیط واقعی شده است؛ بروز یک شکست دیدنی در این مرحله محتمل و واقع‌بینانه است.",
+  "causal_chain": "رشد استفاده از کد هوش مصنوعی ← شکست دیدنی ← افت اعتماد مشتریان ← کاهش پذیرش داخلی و بازگشت بخشی ساعت‌ها به برون‌سپار",
+  "expected_effect": {
+   "ai_code_trust": -14,
+   "inhouse_ai_adoption": -5,
+   "client_hours": 3
+  }
+ },
+ "frontier_lab": {
+  "chosen_action": "offer_enterprise_deal",
+  "primary_variable": "inhouse_ai_adoption",
+  "probability": 0.6,
+  "justification": "اعتماد ۷۷ و پذیرش داخلی ۸۰ بالاست و هزینهٔ محاسبه سنگین است. قرارداد سازمانی مشتریان بزرگ را به مدل قفل می‌کند و درآمد پایدار می‌سازد، بدون محدود کردن دسترسی رایگان و آسیب به سهم بازار.",
+  "causal_chain": "قرارداد سازمانی پذیرش داخلی مدل نزد مشتریان را بالا می‌برد و اعتماد را تقویت می‌کند و درآمد پایدار برای هزینهٔ محاسبه فراهم می‌شود؛ ساعت سفارش برون‌سپاری کمی کم می‌شود.",
+  "expected_effect": {
+   "inhouse_ai_adoption": 5,
+   "ai_code_trust": 3,
+   "client_hours": -2
+  }
+ },
+ "outsourcers": {
+  "chosen_action": "pivot_to_ai_review_services",
+  "primary_variable": "client_hours",
+  "probability": 0.6,
+  "justification": "کار داخلی مشتریان ۸۰ شده و ساعت سفارش افت می‌کند. فروش بازبینی و تضمین کیفیت کد هوش مصنوعی ساعت سفارش و نرخ را حفظ می‌کند و حاشیه هنوز قابل تحمل است.",
+  "causal_chain": "خدمات بازبینی کد هوش مصنوعی ← افزایش ساعت سفارش و اعتماد ← حفظ نرخ ساعتی و درآمد شرکت‌ها",
+  "expected_effect": {
+   "firm_margin": -3,
+   "ai_code_trust": 4,
+   "client_hours": 3,
+   "hourly_rates": 2
+  }
+ },
+ "foreign_clients": {
+  "chosen_action": "keep_complex_work_outsourced",
+  "primary_variable": "client_hours",
+  "probability": 0.6,
+  "justification": "کار داخلی با هوش مصنوعی از ۸۰ درصد گذشته و اشباع شده است. کارهای پیچیده و امنیتی را برای حفظ کیفیت نزد برون‌سپار نگه می‌داریم؛ نرخ‌ها هم از قبل پایین است.",
+  "causal_chain": "نگه داشتن کار پیچیده نزد برون‌سپار ساعت سفارش را بالا می‌برد، با افزایش ساعت سفارش نرخ ساعتی اندکی بالا می‌رود و سهم کار داخلی با هوش مصنوعی کمی کاهش می‌یابد.",
+  "expected_effect": {
+   "client_hours": 5,
+   "hourly_rates": 2,
+   "inhouse_ai_adoption": -3
+  }
+ },
+ "developers": {
+  "chosen_action": "upskill_as_ai_reviewers",
+  "primary_variable": "dev_employment",
+  "probability": 0.7,
+  "justification": "پذیرش داخلی مشتریان ۸۰ و اعتماد به کد هوش مصنوعی ۷۷ است. ادامهٔ حرکت به بازبینی و طراحی کد هوش مصنوعی درآمد پایدار و ارزش مهارت را بدون ریسک ترک شغل حفظ می‌کند.",
+  "causal_chain": "ارتقای مهارت به بازبینی کد هوش مصنوعی اشتغال و حاشیهٔ شرکت را اندکی بالا می‌برد و اعتماد به کد را تقویت می‌کند؛ ساعت سفارش کمی کم می‌شود.",
+  "expected_effect": {
+   "ai_code_trust": 3,
+   "firm_margin": 2,
+   "dev_employment": 2,
+   "client_hours": -1
+  }
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "environment": {
+  "chosen_action": "visible_ai_code_failure",
+  "primary_variable": "ai_code_trust",
+  "probability": 0.35,
+  "justification": "با دسترسی رایگان گسترده، شمار زیادی کد تولیدشده با هوش مصنوعی وارد تولید می‌شود و بروز یک شکست دیدنی در ماه دوم محتمل است.",
+  "causal_chain": "شکست دیدنی کد هوش مصنوعی اعتماد مشتریان را کم می‌کند؛ اعتماد کمتر پذیرش داخلی را پایین می‌آورد و ساعت‌های برون‌سپاری را اندکی بالا می‌برد.",
+  "expected_effect": {
+   "ai_code_trust": -14,
+   "inhouse_ai_adoption": -5,
+   "client_hours": 3
+  },
+  "relation_updates": []
+ },
+ "frontier_lab": {
+  "chosen_action": "launch_agentic_coding_tool",
+  "primary_variable": "inhouse_ai_adoption",
+  "probability": 0.7,
+  "justification": "مدل رایگان شده و رقیب هم همین کار را کرده است. عرضهٔ ابزار کدنویسی عاملی اعتماد مشتریان را بالا می‌برد و استفادهٔ داخلی را عمیق‌تر می‌کند و سهم بازار را بدون افزایش مصرف رایگان محکم می‌کند.",
+  "causal_chain": "ابزار عاملی اعتماد به کد هوش مصنوعی را بالا می‌برد و اعتماد بیشتر پذیرش داخلی مشتریان را افزایش می‌دهد.",
+  "expected_effect": {
+   "ai_code_trust": 6,
+   "inhouse_ai_adoption": 8,
+   "free_ai_access": 3
+  },
+  "relation_updates": []
+ },
+ "outsourcers": {
+  "chosen_action": "pivot_to_ai_review_services",
+  "primary_variable": "client_hours",
+  "probability": 0.65,
+  "justification": "با رایگان شدن مدل و رشد کار داخلی مشتریان، فروش خدمات بازبینی و تضمین کیفیت کد هوش مصنوعی ساعت سفارش و نرخ را حفظ می‌کند، هرچند حاشیه اندکی کم می‌شود.",
+  "causal_chain": "تغییر به خدمات بازبینی ← افزایش اعتماد مشتریان و ساعت سفارش ← حفظ درآمد و نرخ ساعتی ← پشتیبانی از حاشیه سود",
+  "expected_effect": {
+   "firm_margin": -3,
+   "ai_code_trust": 4,
+   "client_hours": 3,
+   "hourly_rates": 2
+  }
+ },
+ "foreign_clients": {
+  "chosen_action": "renegotiate_rates_down",
+  "primary_variable": "hourly_rates",
+  "probability": 0.65,
+  "justification": "ابزار رایگان قدرت چانه‌زنی ما را بالا برده است. کارهای حساس را نگه می‌داریم اما نرخ ساعتی را پایین می‌آوریم تا هزینه توسعه کم شود و کیفیت تحویل حفظ شود.",
+  "causal_chain": "دسترسی رایگان به هوش مصنوعی و گزینه داخلی -> فشار برای کاهش نرخ -> نرخ ساعتی کمتر و هزینه توسعه پایین‌تر",
+  "expected_effect": {
+   "hourly_rates": -10,
+   "firm_margin": -4,
+   "client_hours": 2
+  }
+ },
+ "developers": {
+  "chosen_action": "upskill_as_ai_reviewers",
+  "primary_variable": "dev_employment",
+  "probability": 0.7,
+  "justification": "با دسترسی رایگان گسترده و رشد کار داخلی مشتریان، نوشتن کد ساده ارزش کمتری دارد. ادامهٔ حرکت به بازبینی و طراحی کد هوش مصنوعی درآمد پایدار و ارزش مهارت را بدون ریسک حفظ می‌کند.",
+  "causal_chain": "ارتقای مهارت به بازبینی کد هوش مصنوعی اشتغال و حاشیه سود شرکت را اندکی بالا می‌برد و اعتماد به کد تولیدشده را افزایش می‌دهد؛ ساعت سفارش کمی کاهش می‌یابد.",
+  "expected_effect": {
+   "ai_code_trust": 3,
+   "firm_margin": 2,
+   "dev_employment": 2,
+   "client_hours": -1
+  }
+ }
+}

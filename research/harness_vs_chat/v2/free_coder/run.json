@@ -1,0 +1,170 @@
+{
+ "states": [
+  {
+   "free_ai_access": 25,
+   "ai_code_trust": 45,
+   "inhouse_ai_adoption": 30,
+   "client_hours": 70,
+   "hourly_rates": 60,
+   "firm_margin": 55,
+   "dev_employment": 70
+  },
+  {
+   "free_ai_access": 64.0,
+   "ai_code_trust": 50.0,
+   "inhouse_ai_adoption": 35.0,
+   "client_hours": 67.0,
+   "hourly_rates": 51.0,
+   "firm_margin": 49.0,
+   "dev_employment": 69.0
+  },
+  {
+   "free_ai_access": 66.0,
+   "ai_code_trust": 54.0,
+   "inhouse_ai_adoption": 42.0,
+   "client_hours": 62.0,
+   "hourly_rates": 48.0,
+   "firm_margin": 49.0,
+   "dev_employment": 68.0
+  },
+  {
+   "free_ai_access": 66.0,
+   "ai_code_trust": 59.0,
+   "inhouse_ai_adoption": 45.0,
+   "client_hours": 61.0,
+   "hourly_rates": 42.0,
+   "firm_margin": 45.0,
+   "dev_employment": 67.0
+  },
+  {
+   "free_ai_access": 67.0,
+   "ai_code_trust": 63.0,
+   "inhouse_ai_adoption": 53.0,
+   "client_hours": 57.0,
+   "hourly_rates": 41.0,
+   "firm_margin": 46.0,
+   "dev_employment": 66.0
+  },
+  {
+   "free_ai_access": 67.0,
+   "ai_code_trust": 66.0,
+   "inhouse_ai_adoption": 57.0,
+   "client_hours": 55.0,
+   "hourly_rates": 39.0,
+   "firm_margin": 47.0,
+   "dev_employment": 65.0
+  }
+ ],
+ "turns": [
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "justification": "در یک ماه اول رویداد بیرونی خاصی لزوماً رخ نمی‌دهد؛ اثر اصلی از خود رایگان‌شدن و واکنش بازیگران می‌آید و رقیب یا شکست آشکار الزامی نیست."
+   },
+   "frontier_lab": {
+    "chosen_action": "make_coding_model_free",
+    "justification": "هدف اصلی تصاحب بازار و عادت‌دادن توسعه‌دهنده‌هاست؛ دسترسی رایگان اکنون سهم بازار را سریع می‌سازد و بعداً با سقف مصرف هزینه را کنترل می‌کنیم."
+   },
+   "outsourcers": {
+    "chosen_action": "pivot_to_ai_review_services",
+    "justification": "کد رایگان هوش مصنوعی ساعت‌های ساده را حذف می‌کند. بازبینی، امنیت و یکپارچه‌سازی کد تولیدشده با هوش مصنوعی ارزش جدیدی برای مشتریان است و بدون اخراج، درآمد و اعتماد را حفظ می‌کند."
+   },
+   "foreign_clients": {
+    "chosen_action": "renegotiate_rates_down",
+    "justification": "ابزار رایگان قدرت چانه‌زنی ما را بالا برده است. نرخ‌ها را پایین می‌آوریم ولی کار پیچیده و حساس را بیرون نگه می‌داریم، چون از خطای کد و ریسک امنیتی نگرانیم."
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "justification": "درآمد ثابت و ارزش مهارت هر دو با رفتن به بازبینی و طراحی کد هوش مصنوعی حفظ می‌شود؛ این مسیر اشتغال را کمی بالا می‌برد و ریسک ترک شغل یا کار مستقیم بی‌پشتوانه را ندارد."
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "justification": "وضعیت بازار در جریان تعدیل است و نشانه‌ای از شکست بزرگ کد، رقیب جدید، رکود مشتریان یا افزایش قیمت ابزار نیست."
+   },
+   "frontier_lab": {
+    "chosen_action": "launch_agentic_coding_tool",
+    "justification": "دسترسی رایگان ۶۴ است و سهم بازار شکل گرفته. ابزار عاملی اعتماد و پذیرش را بالا می‌برد و پایهٔ درآمد بعدی است، بدون هزینهٔ فوری محدودکردن سقف رایگان."
+   },
+   "outsourcers": {
+    "chosen_action": "adopt_ai_in_delivery",
+    "justification": "مشتریان نرخ را پایین آورده‌اند و حاشیه افت کرده است. بازبینی را ادامه می‌دهیم اما با هوش مصنوعی در تحویل، هزینه کم می‌شود و بدون اخراج، حاشیه و رقابت‌پذیری حفظ می‌شود."
+   },
+   "foreign_clients": {
+    "chosen_action": "shift_work_to_inhouse_ai",
+    "justification": "نرخ‌ها پایین آمد و برون‌سپارها بازبینی عرضه کردند. حالا کارهای ساده را با ابزار رایگان خودمان انجام می‌دهیم تا هزینه کم شود؛ کار پیچیده و حساس بیرون می‌ماند."
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "justification": "اشتغال هنوز بالاست و شرکت‌ها به بازبینی کد هوش مصنوعی رفته‌اند. تعمیق مهارت بازبینی و امنیت هم درآمد را حفظ می‌کند و هم ارزش مهارت را بالا می‌برد."
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "justification": "نشانهٔ شکست آشکار کد، رقیب تازه، رکود مشتریان یا افزایش قیمت ابزار نیست؛ بازار در حال تعدیل است و رویداد بیرونی مشخصی محتمل‌تر نیست."
+   },
+   "frontier_lab": {
+    "chosen_action": "offer_enterprise_deal",
+    "justification": "دسترسی رایگان ۶۶ و ابزار عاملی عرضه شده است؛ تکرار آن بازده کمی دارد. قرارداد سازمانی درآمد می‌آورد، هزینهٔ محاسبه را متعادل می‌کند و سهم بازار را تثبیت می‌کند."
+   },
+   "outsourcers": {
+    "chosen_action": "pivot_to_ai_review_services",
+    "justification": "ساعت‌ها و نرخ افت کرده و درآمد اولویت اصلی است. بازبینی و امنیت کد هوش مصنوعی ساعت‌های پیچیده را نزد ما نگه می‌دارد و اعتماد را بالا می‌برد؛ حاشیه فعلاً تحمل‌پذیر است."
+   },
+   "foreign_clients": {
+    "chosen_action": "renegotiate_rates_down",
+    "justification": "برون‌سپارها با هوش مصنوعی هزینه‌شان کم شده؛ نرخ ۴۸ هنوز جای کاهش دارد. کار ساده داخلی است و کار حساس را با نرخ پایین‌تر و بازبینی نگه می‌داریم، بدون قطع قرارداد."
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "justification": "اشتغال هنوز ۶۸ است و ساعت‌ها فقط کمی افت کرده. ترک شغل یا کار مستقیم درآمد ثابت را به خطر می‌اندازد؛ مهارت بازبینی و امنیت هم ارزش من را حفظ می‌کند."
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "justification": "نشانهٔ شکست آشکار کد، رقیب تازه، رکود مشتریان یا افزایش قیمت ابزار نیست؛ بازار در حال تعدیل است و رویداد بیرونی مشخصی محتمل‌تر نیست."
+   },
+   "frontier_lab": {
+    "chosen_action": "launch_agentic_coding_tool",
+    "justification": "سهم بازار هدف اصلی است و پذیرش داخلی ۴۵ هنوز جا دارد. نسخهٔ تازهٔ ابزار عاملی اعتماد و پذیرش را بالا می‌برد و پایهٔ قراردادهای سازمانی مرحلهٔ آخر می‌شود."
+   },
+   "outsourcers": {
+    "chosen_action": "adopt_ai_in_delivery",
+    "justification": "حاشیه ۴۵ و نرخ‌ها پایین‌اند و بازبینی تنها آن را نجات نمی‌دهد. هوش مصنوعی در تحویل هزینه را کم و حاشیه را بالا می‌برد، بدون اخراج و بدون قطع ساعت‌ها."
+   },
+   "foreign_clients": {
+    "chosen_action": "shift_work_to_inhouse_ai",
+    "justification": "نرخ‌ها دو بار پایین آمده و حاشیهٔ برون‌سپارها نزدیک حد تحمل است؛ فشار بیشتر کیفیت را تهدید می‌کند. اعتماد به کد هوش مصنوعی بالا رفته، پس کارهای ساده‌تر بیشتر داخلی می‌شود."
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "justification": "اشتغال ۶۷ هنوز بالاست و ارتقای مهارت بازبینی و امنیت درآمد ثابت را حفظ می‌کند. کار مستقیم یا ترک شغل ریسک درآمد دارد و اشتغال را کم می‌کند."
+   }
+  },
+  {
+   "environment": {
+    "chosen_action": "hold_position",
+    "justification": "نشانهٔ شکست آشکار کد، رقیب تازه، رکود مشتریان یا افزایش قیمت ابزار نیست؛ بازار در حال تعدیل است و رویداد بیرونی مشخصی محتمل‌تر نیست."
+   },
+   "frontier_lab": {
+    "chosen_action": "offer_enterprise_deal",
+    "justification": "ابزار عاملی دو بار عرضه شده و تکرارش بازده کمی دارد. قرارداد سازمانی سهم و پذیرش را بالا می‌برد، اعتماد را تقویت می‌کند و هزینهٔ محاسبه را با درآمد متعادل می‌کند."
+   },
+   "outsourcers": {
+    "chosen_action": "adopt_ai_in_delivery",
+    "justification": "حاشیه ۴۶ هنوز پایین و نرخ‌ها افت کرده است. هوش مصنوعی در تحویل هزینه را کم و حاشیه را بالا می‌برد؛ بازبینی ادامه دارد و اخراج آخرین گزینه است."
+   },
+   "foreign_clients": {
+    "chosen_action": "hold_position",
+    "justification": "نرخ ۴۱ و حاشیهٔ برون‌سپارها نزدیک حد تحمل است؛ کاهش بیشتر کیفیت را تهدید می‌کند. کار ساده داخلی شده و قراردادهای حساس را بدون تغییر نگه می‌دارم."
+   },
+   "developers": {
+    "chosen_action": "upskill_as_ai_reviewers",
+    "justification": "اشتغال ۶۶ هنوز بالاتر از آستانهٔ ۶۰ است و ارتقای مهارت بازبینی و امنیت درآمد ثابت را حفظ می‌کند و ارزش مهارت را بالا می‌برد. کار مستقیم یا ترک شغل ریسک دارد."
+   }
+  }
+ ]
+}

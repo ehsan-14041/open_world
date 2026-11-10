@@ -1,0 +1,12 @@
+{"opec_quota": {"X": {"behaviour": 3, "consistency": 2, "insight": 2, "usefulness": 2},
+                "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "prefer": "Y", "why": "Y moves through time (failed Nov 29 meeting, rollover, January price test, small cut with Russia's paper share) and its Brent figures match the dollar narrative. X stays stuck before Nov 29 for five months, repeats itself, and its gasoline jump has no cause."},
+ "chip_controls": {"X": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+                   "Y": {"behaviour": 4, "consistency": 3, "insight": 4, "usefulness": 4},
+                   "prefer": "Y", "why": "X reaches the cloud-for-rare-earths deal but has TSMC self-report four times in a row and Nvidia write down inventory twice. Y's actors adapt more realistically (offshore compute, subsidies, TSMC rationing and Arizona), giving a richer view of second-round effects."},
+ "app_store": {"X": {"behaviour": 3, "consistency": 3, "insight": 3, "usefulness": 3},
+               "Y": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+               "prefer": "Y", "why": "Y respects the January delay and only then imposes penalties. It uses Apple's hidden Siri withholding, and its variables track the events (parity falls, credibility and certainty rise). In X, parity falls with no action behind it, the timeline is stale, and Google's moves are muddled."},
+ "ev_tariffs": {"X": {"behaviour": 4, "consistency": 4, "insight": 4, "usefulness": 4},
+                "Y": {"behaviour": 4, "consistency": 3, "insight": 3, "usefulness": 3},
+                "prefer": "X", "why": "X uses its hidden levers (front-loading, the battery-licence squeeze on Szeged, localization exemption) and lands a deal of about 290k inside the overlap, with matching variable moves. Y is believable but repetitive, never uses the battery plan, and imports drop before any measure."}}

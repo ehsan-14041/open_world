@@ -1,0 +1,77 @@
+{
+ "judgments": 12,
+ "preferred": {
+  "harness": 12,
+  "chat": 0,
+  "tie": 0
+ },
+ "mean_scores": {
+  "harness": {
+   "behaviour": 3.92,
+   "consistency": 3.5,
+   "insight": 4.08,
+   "usefulness": 4.08
+  },
+  "chat": {
+   "behaviour": 3.08,
+   "consistency": 3.42,
+   "insight": 2.92,
+   "usefulness": 3.0
+  }
+ },
+ "rule_outcome": "build",
+ "by_scenario": [
+  {
+   "scenario": "opec_quota",
+   "preferences": [
+    "harness",
+    "harness",
+    "harness"
+   ],
+   "reasons": [
+    "X treats the UAE correctly as outside OPEC+, uses plausible hidden facts (Russia under quota, quiet UAE understanding, SPR floor). Y repeats 2020's price war quickly and wrongly gives the UAE a quota. X reuses the 29 November meeting date in stage 4.",
+    "X shows non-obvious mechanics: Russia's paper cut below actual output, a quiet Saudi-UAE understanding, SPR buying as a soft floor. Y is a standard 2020-style price war, too fast. X has a stage-4 'Nov 29 meeting' timing slip.",
+    "X shows hidden-information levers (Russia's paper cut below quota, UAE's real capacity limit, US slowing Iran waiver to protect shale) and a quiet UAE-Saudi understanding; some template repetition (Nov 29 meeting reused). Y's price war is coherent but generic."
+   ]
+  },
+  {
+   "scenario": "chip_controls",
+   "preferences": [
+    "harness",
+    "harness",
+    "harness"
+   ],
+   "reasons": [
+    "X shows a believable transactional trade: cloud-rule delay for rare-earth licences, Nvidia's write-off, and TSMC self-reporting. Its moves are measured. Y is a generic escalation spiral, and its self-reliance jump from 30 to 56 in five quarters is implausibly fast.",
+    "X treats the cloud rule as a bargaining chip for minerals and adds Gulf data-centre workarounds and the inventory write-off. But China quietly buying H200s contradicts its own setup. Y is plausible but generic, and self-reliance rises too fast.",
+    "X treats the cloud ban as a bargaining chip traded for rare-earth licences, with legal-risk reasoning and Nvidia's write-down timing. Some confusing details (quiet H200 approvals). Y is a generic escalate-thaw-escalate story with implausibly fast Chinese self-reliance gains."
+   ]
+  },
+  {
+   "scenario": "app_store",
+   "preferences": [
+    "harness",
+    "harness",
+    "harness"
+   ],
+   "reasons": [
+    "Y has realistic bargaining: the Commission quietly extends the deadline under US trade pressure, Google holds a secret benchmark, the steering fee goes 10% then 8% for 12 months, and Epic's weak finances split the coalition. X is generic, and Apple calling turnover-based daily fines trivial is unbelievable.",
+    "Y has realistic bargaining (10% then 8% time-limited fees), the Commission quietly extending the deadline for US trade talks, Google's hidden offer and its real red line, and the coalition fracturing. X is a generic fight-then-settle arc.",
+    "Y captures the Commission quietly extending the deadline under US trade pressure, Google's confidential positioning, time-limited fee bargaining (10% to 8%), Epic's financial fragility and Siri withholding. X is plausible but a tidier, more generic settlement arc."
+   ]
+  },
+  {
+   "scenario": "ev_tariffs",
+   "preferences": [
+    "harness",
+    "harness",
+    "harness"
+   ],
+   "reasons": [
+    "X has specific, plausible levers: the BYD increase dropped after the revolt, Chinese licensing of battery-tech transfer hitting Szeged, and a company-level quota near 290k. Y is believable but generic: retaliation threat, then softer duties, then localisation.",
+    "X adds Beijing's licensing of battery-tech transfer as leverage over its own firms' EU plants, a concrete quota-and-price-floor deal and VW's hedging. Y follows a plausible but generic arc to a softer duty, with very fast local-production growth.",
+    "X has concrete trade-offs: dropping the BYD hike to keep votes, China licensing battery-cell tech transfer as leverage on Szeged, local value-added exemption, a ~290k corporate-commitment quota. Y is coherent but more generic negotiation-to-price-undertaking story."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,59 @@
+{
+ "environment": {
+  "chosen_action": "heat_wave",
+  "primary_variable": "reservoir",
+  "probability": 0.4,
+  "justification": "خشکسالی ادامه دارد و ذخیره ۳۲ است؛ باران بعید است. موج گرمای دوباره در این فصل واقع‌بینانه است و با تبخیر و مصرف بیشتر، ذخیره را کم و خطر بهداشتی و خشم را بالا می‌برد.",
+  "causal_chain": "موج گرما ذخیرهٔ سد را کم می‌کند؛ کاهش ذخیره ساعت‌های آب را پایین می‌آورد و خطر بهداشتی و خشم عمومی بالا می‌رود.",
+  "expected_effect": {
+   "reservoir": -6,
+   "health_risk": 5,
+   "public_anger": 3
+  }
+ },
+ "water_utility": {
+  "chosen_action": "hold_position",
+  "primary_variable": "reservoir",
+  "probability": 0.55,
+  "justification": "ذخیرهٔ سد از ۲۵ به ۳۲ بهبود یافته و حفاظت از آن اولویت است. بودجه ۲۱ است و تعمیر پرهزینه؛ تخفیف جیره ذخیره را می‌کاهد و سخت‌تر کردن خشم ۶۱ را بالاتر می‌برد. صبر محتاطانه‌تر است.",
+  "causal_chain": "حفظ جیره‌بندی فعلی ذخیرهٔ سد را نگه می‌دارد و از افزایش خشم مردم و فشار بیشتر بر بودجه جلوگیری می‌کند.",
+  "expected_effect": {},
+  "relation_updates": []
+ },
+ "city_government": {
+  "chosen_action": "deploy_free_tankers",
+  "primary_variable": "public_anger",
+  "probability": 0.6,
+  "justification": "ساعت آب به ۴۱ و خشم مردم به ۶۱ رسیده و ترکیدگی خط بهداشت را تهدید می‌کند. تانکر رایگان از آسیب‌پذیران حمایت می‌کند و خشم و قیمت تانکر را کم می‌کند؛ هزینه بودجه پذیرفتنی است.",
+  "causal_chain": "تانکر رایگان ← کاهش قیمت تانکر و خطر بهداشتی ← کاهش خشم مردم ← حفظ نظم و حمایت از آسیب‌پذیران",
+  "expected_effect": {
+   "home_storage": 6,
+   "tanker_price": -5,
+   "public_anger": -5,
+   "health_risk": -2,
+   "utility_budget": -5
+  },
+  "relation_updates": []
+ },
+ "households": {
+  "chosen_action": "buy_from_tankers",
+  "primary_variable": "home_storage",
+  "probability": 0.55,
+  "justification": "ساعت آب لوله به ۴۱ افت کرده و ترکیدگی خط ذخیره خانگی را می‌خورد. برای آب شرب و بهداشت، خرید تانکری را حالا انجام می‌دهیم تا قیمت بالاتر نرود؛ اعتراض خشم را بیشتر می‌کند.",
+  "causal_chain": "کاهش ساعت آب لوله ذخیره خانگی را کم می‌کند؛ خرید از تانکر ذخیره را بالا می‌برد ولی قیمت تانکری را کمی افزایش می‌دهد.",
+  "expected_effect": {
+   "home_storage": 8,
+   "tanker_price": 6,
+   "public_anger": -2,
+   "health_risk": 1
+  }
+ },
+ "tanker_vendors": {
+  "chosen_action": "hold_position",
+  "primary_variable": "tanker_price",
+  "probability": 0.6,
+  "justification": "قیمت تانکر ۵۲ و خشم مردم ۶۱ است. افزایش دوبارهٔ قیمت خشم و نظارت را بالا می‌برد و گسترش ناوگان سودی ندارد؛ صبر و حفظ مشتری محتاطانه‌تر است.",
+  "causal_chain": "عدم تغییر قیمت ← حفظ مشتریان و پرهیز از تشدید خشم عمومی ← تقاضای پایدار ناشی از قطع آب لوله",
+  "expected_effect": {}
+ }
+}

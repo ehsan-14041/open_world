@@ -1,0 +1,60 @@
+{
+ "environment": {
+  "chosen_action": "hold_position",
+  "primary_variable": "ai_code_trust",
+  "probability": 0.5,
+  "justification": "دو ماه شوک پشت سر هم رخ داده و وضعیت نسبتاً پایدار است؛ رویداد بیرونی تازه‌ای محتمل‌تر از ادامه روند جاری نیست، پس محیط این ماه دخالت مشخصی نمی‌کند.",
+  "causal_chain": "نبود رویداد بیرونی تازه ← متغیرها بر اساس روابط علّی موجود به حرکت آرام ادامه می‌دهند",
+  "expected_effect": {}
+ },
+ "frontier_lab": {
+  "chosen_action": "offer_enterprise_deal",
+  "primary_variable": "inhouse_ai_adoption",
+  "probability": 0.6,
+  "justification": "دسترسی رایگان بالاست و هزینهٔ محاسبه سنگین است. قرارداد سازمانی پس از شکست دیدنی، اعتماد را ترمیم می‌کند، مشتریان بزرگ را به مدل قفل می‌کند و درآمد پایدار برای هزینه‌ها می‌سازد.",
+  "causal_chain": "قرارداد سازمانی ← اعتماد بیشتر به کد هوش مصنوعی و پذیرش داخلی بیشتر ← سهم بازار بالاتر و هزینهٔ پایدارتر",
+  "expected_effect": {
+   "inhouse_ai_adoption": 5,
+   "ai_code_trust": 3,
+   "client_hours": -2
+  }
+ },
+ "outsourcers": {
+  "chosen_action": "adopt_ai_in_delivery",
+  "primary_variable": "firm_margin",
+  "probability": 0.6,
+  "justification": "نرخ ساعتی به ۴۳ افت کرده و حاشیه سود در حال کاهش است. استفاده از هوش مصنوعی در تحویل پروژه هزینه را پایین می‌آورد و حاشیه را حفظ می‌کند، در حالی که ساعت سفارش هنوز مناسب است.",
+  "causal_chain": "به‌کارگیری هوش مصنوعی در تحویل هزینه تولید را کم و حاشیه سود را بالا می‌برد؛ در مقابل نرخ ساعتی و اشتغال کمی پایین می‌آید و اعتماد به کد اندکی بالا می‌رود.",
+  "expected_effect": {
+   "firm_margin": 6,
+   "hourly_rates": -4,
+   "dev_employment": -3,
+   "ai_code_trust": 2
+  }
+ },
+ "foreign_clients": {
+  "chosen_action": "keep_complex_work_outsourced",
+  "primary_variable": "client_hours",
+  "probability": 0.6,
+  "justification": "پس از شکست دیدنی کد هوش مصنوعی، کارهای پیچیده و حساس را نزد برون‌سپار نگه می‌داریم تا کیفیت و امنیت حفظ شود؛ نرخ‌ها قبلاً کاهش یافته است.",
+  "causal_chain": "نگه‌داشتن کار پیچیده در برون‌سپاری ساعت سفارش را بالا می‌برد و سهم کار داخلی را کم می‌کند؛ کیفیت تحویل با نرخ‌های پایین‌شده حفظ می‌شود.",
+  "expected_effect": {
+   "client_hours": 5,
+   "hourly_rates": 2,
+   "inhouse_ai_adoption": -3
+  }
+ },
+ "developers": {
+  "chosen_action": "upskill_as_ai_reviewers",
+  "primary_variable": "ai_code_trust",
+  "probability": 0.7,
+  "justification": "اشتغال نسبتاً خوب است اما نرخ‌ها افتاده و کار داخلی مشتریان رشد می‌کند. ادامه حرکت به بازبینی و طراحی کد هوش مصنوعی درآمد پایدار و ارزش مهارت را بدون ریسک ترک شغل حفظ می‌کند.",
+  "causal_chain": "ارتقای مهارت به بازبینی باعث افزایش اعتماد به کد هوش مصنوعی و اشتغال و حاشیه شرکت می‌شود؛ ساعت سفارش کمی کم می‌شود.",
+  "expected_effect": {
+   "ai_code_trust": 3,
+   "firm_margin": 2,
+   "dev_employment": 2,
+   "client_hours": -1
+  }
+ }
+}

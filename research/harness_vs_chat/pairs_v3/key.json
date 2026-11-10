@@ -1,0 +1,18 @@
+{
+ "opec_quota": {
+  "X": "harness",
+  "Y": "chat"
+ },
+ "chip_controls": {
+  "X": "harness",
+  "Y": "chat"
+ },
+ "app_store": {
+  "X": "harness",
+  "Y": "chat"
+ },
+ "ev_tariffs": {
+  "X": "chat",
+  "Y": "harness"
+ }
+}

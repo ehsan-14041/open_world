@@ -1,0 +1,89 @@
+You are the neutral referee of a step-by-step scenario exercise, and you also play the outside world.
+Four actors have each chosen an action for this stage. You decide what actually happens.
+
+Situation: پس از یک خشکسالی شدید، شهری چندمیلیون‌نفره جیره‌بندی آب لوله‌کشی را آغاز می‌کند و آب بخشی از هر روز قطع می‌شود. شرکت آب، شهرداری و دولت شهری، خانوارها و تانکرکش‌های خصوصی هر کدام واکنش نشان می‌دهند و باران، موج گرما یا ترکیدگی خطوط نیز اثر می‌گذارد. هر مرحله دو هفته است.
+Each stage lasts: دو هفته. This is stage 2 of 5.
+
+Variables (0 to 100), meaning, current value:
+- reservoir: سطح ذخیرهٔ سدها و منابع آب شهر؛ مقدار بالا یعنی ذخیرهٔ بیشتر = 29.0
+- supply_hours: ساعت‌های برقراری آب لوله در روز؛ مقدار بالا یعنی آب بیشتر و بدون قطع = 62.0
+- home_storage: ذخیرهٔ آب در مخزن و ظرف خانوارها؛ مقدار بالا یعنی ذخیرهٔ بیشتر = 50.0
+- tanker_price: قیمت آب تانکری در بازار آزاد؛ مقدار بالا یعنی گران‌تر = 42.0
+- public_anger: نارضایتی و اعتراض مردم؛ مقدار بالا یعنی خشم بیشتر = 40.0
+- health_risk: خطر بهداشتی و بیماری ناشی از آب؛ مقدار بالا یعنی خطر بیشتر = 19.0
+- utility_budget: توان مالی شرکت آب؛ مقدار بالا یعنی بودجه و درآمد بیشتر = 47.0
+
+Conditions in force now: ["جیره‌بندی آب لوله‌کشی برقرار است", "کمپین ملی صرفه‌جویی ادامه دارد", "قیمت بالای آب تانکری"]
+
+History so far:
+Stage 1:
+  environment -> hold_position: جیره‌بندی تازه اعلام شده و برنامهٔ قطعی منتشر می‌شود؛ در دو هفته بارش جدی یا ترکیدگی بزرگ محتمل‌تر از وضع عادی نیست، پس رویداد بیرونی مهمی رخ نمی‌دهد.
+  water_utility -> start_rationing: ذخیرهٔ سدها تنها ۲۵ است و حفاظت از مخزن اولویت اصلی ماست؛ جیره‌بندی اکنون از ته‌نشینی جلوگیری می‌کند و خشم مردم را با اطلاع‌رسانی مدیریت می‌کنیم.
+  city_government -> launch_conservation_campaign: ذخیرهٔ سدها فقط ۲۵ است و جیره‌بندی تازه شروع شده. کمپین مصرف، بدون افزایش خشم مردم و با هزینهٔ کم، ذخیره را حفظ می‌کند و فشار را روی اقشار آسیب‌پذیر نمی‌گذارد.
+  households -> hoard_water_in_tanks: ذخیرهٔ سدها کم است و جیره‌بندی تازه شروع شده. آب شرب و بهداشت اولویت ماست، پس تا قبل از گران‌شدن تانکر، مخزن خانه را پر می‌کنیم.
+  tanker_vendors -> raise_tanker_prices: جیره‌بندی تقاضا را بالا می‌برد و ذخیرهٔ خانوارها هنوز متوسط است؛ افزایش قیمت بیشترین سود را دارد، ولی باید در حدی بماند که مشتریان دائمی از دست نروند و خشم عمومی تنظیم‌کننده‌ها را نیاورد.
+  message from water_utility to households: جیره‌بندی برای بقای ذخیرهٔ شهر ضروری است؛ لطفاً مصرف را کم کنید و برنامهٔ قطعی را از ما پیگیری کنید.
+  message from city_government to households: جیره‌بندی موقت و برای همه است؛ با کاهش مصرف، قطعی‌ها کوتاه‌تر می‌شود. برنامهٔ قطع آب شفاف اعلام می‌شود.
+  message from households to water_utility: برنامهٔ دقیق ساعت قطع آب را از قبل اعلام کنید تا خانوارها بدون ذخیره‌سازی هراسان برنامه‌ریزی کنند.
+  message from tanker_vendors to households: قیمت‌ها با کمبود و هزینهٔ سوخت و دورتر شدن منابع بالا رفته؛ مشتریان دائمی نوبت و تحویل مطمئن دارند.
+  referee summary: جیره‌بندی آغاز شد و ساعت‌های آب شدیداً کم شد. خانوارها ذخیره کردند و تانکرکش‌ها قیمت را بالا بردند. خشم مردم افزایش یافت، ذخیرهٔ سدها کمی بهتر شد و رویداد بیرونی مهمی رخ نداد.
+  state after stage 1: {"reservoir": 29.0, "supply_hours": 62.0, "home_storage": 50.0, "tanker_price": 42.0, "public_anger": 40.0, "health_risk": 19.0, "utility_budget": 47.0}
+
+Seats and their goals:
+- water_utility (شرکت آب و فاضلاب شهری): {"protect_reservoir": 0.6, "keep_service_running": 0.4}
+- city_government (شهرداری و دولت شهری): {"public_order": 0.5, "protect_vulnerable": 0.5}
+- households (خانوارهای شهری): {"reliable_water": 0.7, "low_cost": 0.3}
+- tanker_vendors (تانکرکش‌ها و فروشندگان خصوصی آب): {"profit": 0.7, "keep_customers": 0.3}
+
+Typical direct effect of each action in one stage (guidance, not arithmetic):
+- rain_arrives [environment]: {"reservoir": 8, "public_anger": -3}
+- heat_wave [environment]: {"reservoir": -6, "health_risk": 5, "public_anger": 3}
+- main_pipe_burst [environment]: {"supply_hours": -10, "health_risk": 5, "utility_budget": -4, "reservoir": -3}
+- rationing_rumor_spreads [environment]: {"tanker_price": 6, "public_anger": 6, "home_storage": 3}
+- start_rationing [water_utility]: {"supply_hours": -35, "reservoir": 5, "public_anger": 12, "utility_budget": -5, "tanker_price": 6}
+- tighten_rationing [water_utility]: {"supply_hours": -12, "reservoir": 4, "public_anger": 8, "utility_budget": -3}
+- ease_rationing [water_utility]: {"supply_hours": 12, "reservoir": -4, "public_anger": -6, "utility_budget": 3}
+- fix_leaks_and_pressure [water_utility]: {"reservoir": 3, "supply_hours": 3, "utility_budget": -6}
+- deploy_free_tankers [city_government]: {"home_storage": 6, "tanker_price": -5, "public_anger": -5, "health_risk": -2, "utility_budget": -5}
+- raise_water_tariff [city_government]: {"utility_budget": 8, "reservoir": 2, "public_anger": 8}
+- launch_conservation_campaign [city_government]: {"reservoir": 3, "public_anger": -2, "utility_budget": -2}
+- fine_excess_users [city_government]: {"reservoir": 3, "public_anger": 7, "utility_budget": 3}
+- hoard_water_in_tanks [households]: {"home_storage": 12, "reservoir": -3, "tanker_price": 3, "health_risk": 3}
+- buy_from_tankers [households]: {"home_storage": 8, "tanker_price": 6, "public_anger": -2, "health_risk": 1}
+- cut_use_voluntarily [households]: {"reservoir": 3, "home_storage": -3, "public_anger": 2}
+- protest_and_complain [households]: {"public_anger": 5, "supply_hours": 2, "utility_budget": -2}
+- raise_tanker_prices [tanker_vendors]: {"tanker_price": 12, "public_anger": 5, "home_storage": -3}
+- expand_tanker_fleet [tanker_vendors]: {"tanker_price": -8, "home_storage": 4, "reservoir": -2, "health_risk": 2}
+- sell_unsafe_well_water [tanker_vendors]: {"tanker_price": -6, "home_storage": 5, "health_risk": 12, "reservoir": -2}
+- hold_position [any]: {}
+
+Known influences between variables (direction only): reservoir raises supply_hours; supply_hours raises home_storage; supply_hours lowers tanker_price; home_storage lowers tanker_price; supply_hours lowers public_anger; tanker_price raises public_anger; supply_hours lowers health_risk; tanker_price raises health_risk; home_storage raises health_risk; supply_hours raises utility_budget; public_anger lowers utility_budget
+
+Actions chosen in stage 2:
+- water_utility -> fix_leaks_and_pressure: جیره‌بندی برقرار است و خشم ۴۰ هنوز قابل‌تحمل. نشت‌گیری و کنترل فشار بدون سخت‌تر کردن قطعی‌ها هم ذخیره را حفظ می‌کند و هم ساعت آب را کمی بالا می‌برد.
+  message from water_utility to city_government: برای کاهش فشار تانکری و خشم مردم، تانکر رایگان و کارزار صرفه‌جویی را شتاب دهید؛ ما نشت‌گیری را شروع کردیم.
+- city_government -> deploy_free_tankers: ساعت‌های آب شدیداً کم شده و قیمت تانکر بالاست. تانکر رایگان برای محلات آسیب‌پذیر خشم و خطر بهداشتی را کم می‌کند و به بازار تانکری فشار می‌آورد؛ هزینه‌اش قابل تحمل است.
+  message from city_government to tanker_vendors: قیمت‌های غیرمنطقی را رصد می‌کنیم؛ تانکر امدادی در محلات نیازمند فعال است. با قیمت منصفانه همکاری کنید.
+- households -> hold_position: ذخیرهٔ خانه ۵۰ است و تانکر گران؛ ذخیرهٔ بیشتر ذخیرهٔ سدها را کم و قیمت را بالا می‌برد. فعلاً همین سطح را نگه می‌دارم و برنامهٔ قطع را می‌سنجم.
+  message from households to water_utility: برنامهٔ قطع ساعتی را دقیق و ثابت اعلام کنید؛ با برنامهٔ قابل اعتماد، خانوارها ذخیره‌سازی و خرید تانکری را کم می‌کنند.
+- tanker_vendors -> expand_tanker_fleet: قیمت یک‌بار بالا رفته و خشم مردم و نگاه تنظیم‌کنندگان بیشتر شده است. گسترش ناوگان فروش و مشتریان دائمی را حفظ می‌کند و ریسک بهداشتی آب ناسالم را ندارد.
+  message from tanker_vendors to households: ناوگان را بیشتر می‌کنیم؛ مشتریان دائمی تحویل مطمئن و نوبت مشخص دارند و قیمت‌ها را بیش از این بالا نمی‌بریم.
+
+Your tasks:
+1. Outside event: choose one of ["rain_arrives", "heat_wave", "main_pipe_burst", "rationing_rumor_spreads"] or hold_position. Choose what would most plausibly happen in this
+   stage given the state, not what makes a good story; in many stages nothing notable happens.
+2. State after this stage: a new value for EVERY variable, with the cause.
+   - Values stay within 0 to 100.
+   - No variable moves more than 25 points in one stage, unless a chosen action's listed effect on it is larger.
+   - A condition in force keeps acting every stage until an action ends it (a ban keeps holding legal supply
+     down while it stands; a strike keeps holding freight down while it lasts).
+   - Effects can be delayed, saturate, reinforce or cancel one another. Use judgment about how such a
+     situation really moves in a stage of this length; do not just add up the listed effects.
+   - Do not favour any seat, and do not invent convenient rescues.
+3. Conditions in force after this stage: short Persian phrases (measures, deals, shortages that persist).
+4. A summary of the stage in Persian, at most 50 words.
+
+Reply with one JSON object only:
+{"environment": {"chosen_action": "...", "justification": "<Persian, at most 40 words>"},
+ "state": {"<variable>": {"value": <number>, "why": "<Persian, at most 20 words>"}, ... every variable ...},
+ "conditions": ["...", ...], "summary": "..."}

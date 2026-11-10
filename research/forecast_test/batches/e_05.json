@@ -1,0 +1,1152 @@
+[
+ {
+  "id": "3760050",
+  "question": "Will Mike Derry win the 2026 Calgary-Shaw provincial by-election?",
+  "rules": "A by-election for the Alberta provincial electoral district of Calgary-Shaw is currently scheduled to be held on September 14, 2026.\n\nThis market will resolve according to the candidate who wins the 2026 Calgary-Shaw provincial by-election.\n\nIf the election results are not known definitively by December 31, 2026, 11:59 PM ET, this market will resolve to \"Other\".\n\nThe resolution source for this market will be a consensus of credible reporting. In case of ambiguity, this market will resolve solely based on official election results as published by Elections Alberta (https://www.elections.ab.ca/).",
+  "start": "2026-08-21",
+  "close": "2026-09-15",
+  "your_drivers": [
+   {
+    "name": "Calgary-Shaw historic UCP lean",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Uncertainty over candidate's party",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "By-election anti-government swing",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 3
+   },
+   {
+    "name": "Right-wing vote split (separatist parties)",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 3
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.333,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": [
+    "Calgary-Shaw historic UCP lean",
+    "Uncertainty over candidate's party"
+   ]
+  }
+ },
+ {
+  "id": "3851170",
+  "question": "Will Philip Brown win the 2026 Charlottetown mayoral election?",
+  "rules": "The 2026 Charlottetown, Prince Edward Island mayoral election is currently scheduled to be held on November 2, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Charlottetown as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from the City of Charlottetown.",
+  "start": "2026-08-24",
+  "close": "2026-11-03",
+  "your_drivers": [
+   {
+    "name": "Incumbency advantage",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Uncertainty whether he seeks re-election",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Housing and growth discontent",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 4
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3851347",
+  "question": "Will Zac de Vries win the 2026 Saanich mayoral election?",
+  "rules": "The 2026 Saanich, British Columbia mayoral election is currently scheduled to be held on October 17, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Saanich, British Columbia as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Saanich, British Columbia.",
+  "start": "2026-08-24",
+  "close": "2026-10-18",
+  "your_drivers": [
+   {
+    "name": "Incumbent mayor Murdock likely running",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Council profile and name recognition",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Housing densification backlash",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 4
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3851375",
+  "question": "Will Mike O'Reilly win the 2026 Kamloops mayoral election?",
+  "rules": "The 2026 Kamloops, British Columbia mayoral election is currently scheduled to be held on October 17, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Kamloops, British Columbia as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Kamloops, British Columbia.",
+  "start": "2026-08-24",
+  "close": "2026-10-18",
+  "your_drivers": [
+   {
+    "name": "Incumbent Hamer-Jackson's turmoil with council",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Multiple challengers splitting vote",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Council experience and establishment backing",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Populist incumbent base",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.901,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3851436",
+  "question": "Will George Harvie win the 2026 Delta mayoral election?",
+  "rules": "The 2026 Delta, British Columbia mayoral election is currently scheduled to be held on October 17, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Delta, British Columbia as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Delta, British Columbia.",
+  "start": "2026-08-24",
+  "close": "2026-10-18",
+  "your_drivers": [
+   {
+    "name": "Popular incumbent with slate",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possible retirement due to age",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.3,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Weak opposition field",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3852019",
+  "question": "Will Gary Sulz win the 2026 Revelstoke mayoral election?",
+  "rules": "The 2026 Revelstoke, British Columbia mayoral election is currently scheduled to be held on October 17, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Revelstoke, British Columbia as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Revelstoke, British Columbia.",
+  "start": "2026-08-24",
+  "close": "2026-10-18",
+  "your_drivers": [
+   {
+    "name": "Two-term incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Housing affordability anger in resort town",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 4
+   },
+   {
+    "name": "Uncertainty whether running",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.667,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": [
+    "Two-term incumbency",
+    "Housing affordability anger in resort town",
+    "Uncertainty whether running"
+   ]
+  }
+ },
+ {
+  "id": "3852127",
+  "question": "Will Frank Scarpitti win the 2026 Markham mayoral election?",
+  "rules": "The 2026 Markham, Ontario mayoral election is currently scheduled to be held on October 26, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Markham, Ontario as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Markham, Ontario.",
+  "start": "2026-08-24",
+  "close": "2026-10-27",
+  "your_drivers": [
+   {
+    "name": "Long-time dominant incumbent",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possible retirement after 20 years",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Weak challengers",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3852205",
+  "question": "Will Steven Del Duca win the 2026 Vaughan mayoral election?",
+  "rules": "The 2026 Vaughan, Ontario mayoral election is currently scheduled to be held on October 26, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Vaughan, Ontario as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Vaughan, Ontario.",
+  "start": "2026-08-24",
+  "close": "2026-10-27",
+  "your_drivers": [
+   {
+    "name": "First-term incumbency and strong-mayor powers",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Former Liberal leader profile and fundraising",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Credible challenger emerging",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 3
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3852293",
+  "question": "Will Tito-Dante Marimpietri win the 2026 Oshawa mayoral election?",
+  "rules": "The 2026 Oshawa, Ontario mayoral election is currently scheduled to be held on October 26, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Oshawa, Ontario as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Oshawa, Ontario.",
+  "start": "2026-08-24",
+  "close": "2026-10-27",
+  "your_drivers": [
+   {
+    "name": "Incumbent Dan Carter if running",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Regional councillor profile",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Open seat possibility",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.45,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.111,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3852328",
+  "question": "Will Alex Nuttall win the 2026 Barrie mayoral election?",
+  "rules": "The 2026 Barrie, Ontario mayoral election is currently scheduled to be held on October 26, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Barrie, Ontario as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Barrie, Ontario.",
+  "start": "2026-08-24",
+  "close": "2026-10-27",
+  "your_drivers": [
+   {
+    "name": "First-term incumbent, former MP",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Strong-mayor controversies",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.35,
+    "delay_weeks": 4
+   },
+   {
+    "name": "Fragmented opposition",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3852411",
+  "question": "Will Bryan Paterson win the 2026 Kingston mayoral election?",
+  "rules": "The 2026 Kingston, Ontario mayoral election is currently scheduled to be held on October 26, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Kingston, Ontario as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Kingston, Ontario.",
+  "start": "2026-08-24",
+  "close": "2026-10-27",
+  "your_drivers": [
+   {
+    "name": "Three-term incumbency",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possible retirement or higher-office run",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Homelessness/encampment discontent",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.45,
+    "delay_weeks": 4
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3852735",
+  "question": "Will Shannon Weber win the 2026 Waterloo mayoral election?",
+  "rules": "The 2026 Waterloo, Ontario mayoral election is currently scheduled to be held on October 26, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Waterloo, Ontario as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Waterloo, Ontario.",
+  "start": "2026-08-24",
+  "close": "2026-10-27",
+  "your_drivers": [
+   {
+    "name": "Incumbent McCabe if running",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Low name recognition",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Open seat possibility",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3855857",
+  "question": "Will Erwin Wiens win the 2026 Niagara-on-the-Lake mayoral election?",
+  "rules": "The 2026 Niagara-on-the-Lake, Ontario mayoral election is currently scheduled to be held on October 26, 2026.\n\nThis market will resolve according to the candidate who becomes the next mayor of Niagara-on-the-Lake, Ontario as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by June 30, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThe primary resolution source for this market will be a consensus of credible reporting; however, if there is any ambiguity in the results, this market will resolve according to official information from Niagara-on-the-Lake, Ontario.",
+  "start": "2026-08-24",
+  "close": "2026-10-27",
+  "your_drivers": [
+   {
+    "name": "Incumbent Lord Mayor Zalepa",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Deputy mayor profile and top councillor vote",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Development/heritage controversies",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 4
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.111,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3886972",
+  "question": "Sweden Parliamentary Election: Örebropartiet Win Seats?",
+  "rules": "Parliamentary elections are scheduled to be held in Sweden on September 13, 2026.\n\nThis market will resolve to “Yes” if Örebropartiet receives at least one seat in the Swedish Riksdag as a result of the 2026 Swedish parliamentary elections. Otherwise this market will resolve to “No”.\n\nSeats will be counted only where the Swedish Election Authority attributes them to Örebropartiet. Seats attributed to another party or electoral designation will not count, regardless of electoral cooperation, endorsements, coalition agreements, or subsequent parliamentary-group arrangements. If Örebropartiet formally merges into a successor party before the election and does not contest separately, seats officially attributed to that successor party will count.\n\nIf the results of this election are not definitively known by December 31, 2026, 11:59 PM ET, this market will resolve to “No”.\n\nThis market's resolution will be based solely on the number of seats won by Örebropartiet in this election.\n\nThis market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Swedish government, specifically the Swedish Election Authority (Valmyndigheten) (https://www.val.se/).",
+  "start": "2026-08-25",
+  "close": "2026-09-17",
+  "your_drivers": [
+   {
+    "name": "4% national threshold",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 1.0,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Purely local party",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 1.0,
+    "delay_weeks": 0
+   },
+   {
+    "name": "12% constituency rule in Örebro county",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.05,
+    "delay_weeks": 3
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3889223",
+  "question": "US imposes new sanctions on China by September 30?",
+  "rules": "This market will resolve to \"Yes\" if the United States officially imposes new sanctions of any form against China between market creation and September 30, 2026, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nSanctions are official government measures that restrict economic activity, financial transactions, trade, travel, or diplomatic engagement with China. Qualifying sanctions include comprehensive economic embargoes restricting most trade and financial transactions; sectoral sanctions targeting specific industries (e.g., energy, finance, defense, or technology); asset freezes and blocking of property owned by China or Chinese citizens; trade restrictions including export controls, import bans, or tariffs imposed explicitly as sanctions; financial sanctions including restrictions on banking relationships, access to financial systems, or international lending; travel bans and visa restrictions; and arms embargoes.\n\nSecondary sanctions against third-party countries or entities designated for dealings with China will qualify. The expansion in scope of previously existing sanctions against China will qualify; however, the renewal of existing sanctions without modification will not qualify.\n\nThe following will not qualify: the non-renewal or expiration of licenses or other sanction-exemptions; the designation of new specific entities to be sanctioned under an existing rule absent new sanctions; and enforcement settlements or civil penalties for past conduct.\n\nThe passage of an official act/executive order authorizing sanctions on China within this market's timeframe will qualify for a \"Yes\" resolution, regardless of when the sanctions come into effect.\n\nThe primary resolution source will be official information from the government of the United States, however a consensus of credible reporting may also be used.",
+  "start": "2026-08-25",
+  "close": "2026-10-01",
+  "your_drivers": [
+   {
+    "name": "Frequent US export controls and visa measures",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Trade truce with Beijing restraining new actions",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Exclusion of mere entity listings",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Congressional sanctions legislation",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 4
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.037,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3913254",
+  "question": "Ukraine signs peace deal with Russia by October 31?",
+  "rules": "This market will resolve to “Yes” if Ukraine signs any written instrument (e.g., treaty, ceasefire/armistice, framework/“roadmap,” exchange of letters, or mediated agreement text) that: (i) includes both Ukraine and the Russian Federation as parties, and (ii) either ends hostilities/establishes a ceasefire or commits both sides to a defined process toward ending the war (i.e., stated objective of peace/normalization plus principles, steps, and/or a timetable) by October 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to “No”. \n\nOnly Ukraine’s signature is required; Russia’s signature or ratification is not.\n\nLocalized, temporary, or issue-specific arrangements—such as airstrike-limitation or deconfliction protocols, humanitarian pauses, evacuation corridors, prisoner-exchange or trade/export arrangements, border/DMZ adjustments, or ceasefires limited to a particular sector/front/municipality—will not qualify.\n\nThe document must bear a wet-ink or officially issued electronic signature of an authorized Ukrainian representative. Unsigned agreements (e.g., the 2023 Ohrid arrangement) will not qualify regardless of if they are otherwise officially enacted. \n\nThe primary resolution source will be a consensus of credible reporting. ",
+  "start": "2026-08-26",
+  "close": "2026-11-01",
+  "your_drivers": [
+   {
+    "name": "Russian maximalist demands",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "US mediation pressure",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Ukrainian territorial red lines",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Short time window",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.8,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3915108",
+  "question": "Will Trump praise Warren Buffett in September?",
+  "rules": "This market will resolve to \"Yes\" if Donald Trump publicly praises the listed individual between September 1, 2026, 12:00 AM ET and September 30, 2026, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nA qualifying statement includes any remark by Trump that expresses approval, admiration, respect, or endorsement of the listed individual personally or professionally. This can include direct praise or equivalent positive descriptions.\n\nGeneral neutrality or polite diplomatic language will not qualify unless it contains a clear element of positive evaluation.\n\nAny written, verbal, or recorded usage will qualify.\n\nThe resolution source for this market will be public statements from Donald Trump.",
+  "start": "2026-08-26",
+  "close": "2026-10-01",
+  "your_drivers": [
+   {
+    "name": "Buffett rarely in Trump's discourse",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Buffett retirement/news hooks",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.3,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Trump's high volume of remarks",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3929997",
+  "question": "Will PLQ finish in second place in the Quebec general election?",
+  "rules": "Parliamentary elections to elect all 127 seats of the National Assembly of Quebec are scheduled to take place in Quebec on October 5, 2026.\n\nThis market will resolve to the political party that wins the second-greatest number of seats in the National Assembly of Quebec as a result of this election.\n\nIf voting in the 2026 Quebec general election does not occur, or the results thereof are not known definitively, by January 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nParties will be primarily ranked by the number of seats won in the specified election. If two or more parties are tied on seats, ties will be broken by the total number of valid votes received, with higher vote totals ranking higher. If parties remain tied, ties will be broken by alphabetical order of the listed party abbreviations. This market will resolve to the party that occupies the second finishing position after applying this ranking.\n\nThis market's resolution will be based solely on the number of seats won by the named party.\n\nThis market will resolve based on the result of the election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by Élections Québec (https://www.electionsquebec.qc.ca).",
+  "start": "2026-08-27",
+  "close": "2026-10-06",
+  "your_drivers": [
+   {
+    "name": "PLQ seat efficiency in Montreal",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "CAQ collapse after Legault",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "CAQ new-leader rebound",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 3
+   },
+   {
+    "name": "PLQ leadership turmoil",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Conservative surge in Quebec City region",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 243,
+   "share_ending_on_yes_side": 0.996,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3930566",
+  "question": "Will the PLQ win 36-39 seats in the National Assembly of Quebec in this election?",
+  "rules": "Parliamentary elections to elect all 127 seats of the National Assembly of Quebec are scheduled to take place in Quebec on October 5, 2026.\n\nThis market will resolve according to the number of seats won by the Parti libéral du Québec (PLQ) in the National Assembly of Quebec as a result of this election.\n\nThis market's resolution will be based solely on the number of seats won by candidates whose political affiliation is listed as the specified party in the official election results, not any coalition or parliamentary group of which the party may be part. Seats won by candidates listed under any other affiliation will not be counted, regardless of any endorsement or association with the specified party. Any post-election change in seat ownership or party affiliation, including floor crossings, resignations, or by-elections, will not be considered.\n\nIf the results of this election are not known definitively by January 31, 2027, 11:59 PM ET, this market will resolve to the lowest bracket.\n\nThis market will resolve based on the result of the election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by Élections Québec (https://www.electionsquebec.qc.ca).",
+  "start": "2026-08-27",
+  "close": "2026-10-27",
+  "your_drivers": [
+   {
+    "name": "Narrow 4-seat bracket",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.9,
+    "delay_weeks": 0
+   },
+   {
+    "name": "PLQ projected well below mid-30s",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Campaign volatility",
+    "toward": "yes",
+    "strength": 0.2,
+    "level": 0.5,
+    "delay_weeks": 3
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3960600",
+  "question": "Will Justina Pula be the next President of Kosovo?",
+  "rules": "Vjosa Osmani's presidential term concluded on April 4, 2026. Since that date the duties of President of Kosovo have been exercised on an acting basis by the President of the Assembly of Kosovo, pending the election of a new President by the Assembly.\n\nThis market will resolve to the next individual who begins a full, non-acting term as President of Kosovo after April 4, 2026.\n\nTo count for resolution, the individual must be elected President by the Assembly of Kosovo and take the presidential oath before the Assembly. Serving as acting, interim, or caretaker President alone will not count toward the resolution of this market, regardless of any change in who exercises those duties.\n\nIf no such President takes office by April 30, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThe primary resolution sources for this market will be official information from the Assembly of Kosovo and the Office of the President of Kosovo; however, a consensus of credible reporting may also be used.",
+  "start": "2026-08-28",
+  "close": "2026-10-07",
+  "your_drivers": [
+   {
+    "name": "Assembly two-thirds quorum deadlock",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Candidate obscurity among many possibilities",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possible consensus-candidate role",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.35,
+    "delay_weeks": 4
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "3961860",
+  "question": "NATO downs another Russian drone by September 15?",
+  "rules": "This market will resolve to \"Yes\" if a NATO military downs another Russian drone by any means (kinetic, jammer, etc.) between market creation and the specified date 11:59 PM Kyiv Time.\n\nA “Russian drone” refers to any drone that, based on a consensus of credible reporting, was launched from territory under Russia’s de facto control or was operated or directed by Russian forces. Where attribution remains ambiguous, the drone’s model and characteristics will be considered supporting evidence.\n\nThe resolution source for this market will be a consensus of credible reporting.\n\nThe occurrence, attribution, and timing of a qualifying incident will be primarily determined based on a consensus of information available from the resolution sources. Where multiple sources conflict regarding the occurrence, attribution, or timing of a relevant incident, this market will remain open until the earlier of: i) the confirmation of the occurrence, attribution, and timing of the incident based on a consensus of information available from the resolution sources or ii) 3 full calendar days (CEST) from the date of the first credibly reported evidence of the incident. If this period would extend past the end date, this market will remain open to allow for 3 full calendar days to pass. If, at the end of the third calendar day, conflicting reports remain as to the occurrence, attribution, or timing of the incident, this market will resolve based on the totality of information available from the resolution sources at that time. No single statement, denial, or presentation of evidence will govern where it is contradicted by the totality of information.",
+  "start": "2026-08-28",
+  "close": "2026-09-19",
+  "your_drivers": [
+   {
+    "name": "Ongoing Russian drone strikes near NATO borders",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "NATO air-defense readiness (Eastern Sentry)",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Short window, incidents sporadic",
+    "toward": "no",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Attribution ambiguity",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.025,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4037639",
+  "question": "Will Juraj Droba win the 2026 Bratislava Region gubernatorial election?",
+  "rules": "Gubernatorial elections are currently scheduled to be held in Bratislava Region, Slovakia on October 24, 2026.\n\nThis market will resolve according to the listed candidate who wins the 2026 Bratislava Region gubernatorial elections. Any interim or caretaker Governor will not qualify.\n\nIf the results are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of this election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve solely based on official results as reported by government sources of Bratislava Region and Slovakia, including the Statistical Office of the Slovak Republic (https://volby.statistics.sk/).",
+  "start": "2026-08-31",
+  "close": "2026-10-25",
+  "your_drivers": [
+   {
+    "name": "Two-term popular incumbent",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Single-round plurality system",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Progressive challenger consolidation",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.35,
+    "delay_weeks": 3
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4037698",
+  "question": "Will Jaroslav Baška win the 2026 Trenčín Region gubernatorial election?",
+  "rules": "Gubernatorial elections are currently scheduled to be held in Trenčín Region, Slovakia on October 24, 2026.\n\nThis market will resolve according to the listed candidate who wins the 2026 Trenčín Region gubernatorial elections. Any interim or caretaker Governor will not qualify.\n\nIf the results are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of this election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve solely based on official results as reported by government sources of Trenčín Region and Slovakia, including the Statistical Office of the Slovak Republic (https://volby.statistics.sk/).",
+  "start": "2026-08-31",
+  "close": "2026-10-25",
+  "your_drivers": [
+   {
+    "name": "Long incumbency",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Anti-Smer mood",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Plurality single round",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4037715",
+  "question": "Will Branislav Becík win the 2026 Nitra Region gubernatorial election?",
+  "rules": "Gubernatorial elections are currently scheduled to be held in Nitra Region, Slovakia on October 24, 2026.\n\nThis market will resolve according to the listed candidate who wins the 2026 Nitra Region gubernatorial elections. Any interim or caretaker Governor will not qualify.\n\nIf the results are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of this election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve solely based on official results as reported by government sources of Nitra Region and Slovakia, including the Statistical Office of the Slovak Republic (https://volby.statistics.sk/).",
+  "start": "2026-08-31",
+  "close": "2026-10-25",
+  "your_drivers": [
+   {
+    "name": "First-term incumbency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Opposition-backed coalition support",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.55,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Coalition party challenger",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.45,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4037757",
+  "question": "Will Erika Jurinová win the 2026 Žilina Region gubernatorial election?",
+  "rules": "Gubernatorial elections are currently scheduled to be held in Žilina Region, Slovakia on October 24, 2026.\n\nThis market will resolve according to the listed candidate who wins the 2026 Žilina Region gubernatorial elections. Any interim or caretaker Governor will not qualify.\n\nIf the results are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of this election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve solely based on official results as reported by government sources of Žilina Region and Slovakia, including the Statistical Office of the Slovak Republic (https://volby.statistics.sk/).",
+  "start": "2026-08-31",
+  "close": "2026-10-25",
+  "your_drivers": [
+   {
+    "name": "Two-term incumbency",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Plurality single round",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Strong government-party challenger",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.4,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4037854",
+  "question": "Will Rastislav Trnka win the 2026 Košice Region gubernatorial election?",
+  "rules": "Gubernatorial elections are currently scheduled to be held in Košice Region, Slovakia on October 24, 2026.\n\nThis market will resolve according to the listed candidate who wins the 2026 Košice Region gubernatorial elections. Any interim or caretaker Governor will not qualify.\n\nIf the results are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThis market will resolve based on the results of this election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve solely based on official results as reported by government sources of Košice Region and Slovakia, including the Statistical Office of the Slovak Republic (https://volby.statistics.sk/).",
+  "start": "2026-08-31",
+  "close": "2026-10-25",
+  "your_drivers": [
+   {
+    "name": "Two-term incumbency",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Fragmented field in plurality race",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Coalition-backed challenger",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.45,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4037887",
+  "question": "Will Matúš Vallo win the 2026 Bratislava mayoral election?",
+  "rules": "The 2026 Bratislava mayoral election is currently scheduled to be held on October 24, 2026.\n\nThis market will resolve according to the candidate who becomes the next Mayor of Bratislava as a result of this election.\n\nTemporary, interim, or placeholder mayors appointed before the election will not be considered.\n\nIf the result of this election isn't known by March 31, 2027, 11:59 PM ET, the market will resolve to \"Other\".\n\nThis market will resolve based on the results of this election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve solely based on official results as reported by government sources of Bratislava, Bratislava Region and Slovakia, including the Statistical Office of the Slovak Republic (https://volby.statistics.sk/).",
+  "start": "2026-08-31",
+  "close": "2026-10-25",
+  "your_drivers": [
+   {
+    "name": "Popular incumbent, big 2022 win",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.8,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Progressive capital electorate",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.75,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Possible switch to national politics",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.2,
+    "delay_weeks": 0
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4040588",
+  "question": "Quebec General Election: PQ Wins a Majority?",
+  "rules": "Parliamentary elections to elect all 127 seats of the National Assembly of Quebec are scheduled to take place in Quebec on October 5, 2026.\n\nThis market will resolve to \"Yes\" if the Parti Québécois (PQ) wins at least 64 of the 127 seats in the National Assembly of Quebec as a result of this election. Otherwise, this market will resolve to \"No\".\n\nThis market's resolution will be based solely on the number of seats won by candidates whose political affiliation is listed as the specified party in the official election results, not any coalition or parliamentary group of which the party may be part. Seats won by candidates listed under any other affiliation will not be counted, regardless of any endorsement or association with the specified party. Any post-election change in seat ownership or party affiliation, including floor crossings, resignations, or by-elections, will not be considered.\n\nIf the results of this election are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"No\".\n\nThis market will resolve based on the result of the election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by Élections Québec (https://www.electionsquebec.qc.ca).",
+  "start": "2026-08-31",
+  "close": "2026-10-06",
+  "your_drivers": [
+   {
+    "name": "PQ polling lead",
+    "toward": "yes",
+    "strength": 0.8,
+    "level": 0.7,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Fragmented opposition boosting seat efficiency",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Referendum promise scaring voters",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 3
+   },
+   {
+    "name": "CAQ and PLQ new-leader recoveries",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.45,
+    "delay_weeks": 3
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 1.0,
+   "side_with_drivers_as_stated": "yes",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4043319",
+  "question": "Will Patrick Paquet win the next Vanier-Les Rivières Quebec National Assembly election?",
+  "rules": "Parliamentary elections to elect all 127 seats of the National Assembly of Quebec are scheduled to take place in Quebec on October 5, 2026.\n\nThis market will resolve according to the candidate who wins the next Vanier-Les Rivières Quebec National Assembly election for a full term beginning in October 2026 or thereafter.\n\nIf the election results are not known definitively by March 31, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThe resolution source for this market will be a consensus of credible reporting. In case of ambiguity, this market will resolve solely based on official election results as published by Elections Quebec (https://www.electionsquebec.qc.ca/).",
+  "start": "2026-08-31",
+  "close": "2026-10-06",
+  "your_drivers": [
+   {
+    "name": "CAQ incumbent seat weakening",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Unknown party affiliation of candidate",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Multi-way race in Quebec City (PQ, PCQ, CAQ)",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   }
+  ],
+  "simulation": {
+   "combinations": 27,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ },
+ {
+  "id": "4061869",
+  "question": "Will Sagal Abdi-Wali win the Holborn and St Pancras by-election?",
+  "rules": "A by-election for the United Kingdom parliamentary constituency of Holborn and St Pancras is expected to be held in 2026 following the announced resignation of incumbent Sir Keir Starmer.\n\nThis market will resolve according to the candidate who wins the Holborn and St Pancras parliamentary by-election.\n\nIf the election results are not known definitively by June 30, 2027, 11:59 PM ET, this market will resolve to \"Other\".\n\nThe resolution source for this market will be a consensus of credible reporting. In case of ambiguity, this market will resolve solely based on official election results as published by Camden Council (https://www.camden.gov.uk/).",
+  "start": "2026-09-01",
+  "close": "2026-10-09",
+  "your_drivers": [
+   {
+    "name": "Labour collapse in by-elections",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Green surge in inner London",
+    "toward": "yes",
+    "strength": 0.5,
+    "level": 0.5,
+    "delay_weeks": 2
+   },
+   {
+    "name": "Uncertainty over candidate's party",
+    "toward": "no",
+    "strength": 0.5,
+    "level": 0.6,
+    "delay_weeks": 0
+   },
+   {
+    "name": "Left independents splitting vote",
+    "toward": "no",
+    "strength": 0.2,
+    "level": 0.4,
+    "delay_weeks": 3
+   }
+  ],
+  "simulation": {
+   "combinations": 81,
+   "share_ending_on_yes_side": 0.0,
+   "side_with_drivers_as_stated": "no",
+   "drivers_whose_strength_alone_flips_it": []
+  }
+ }
+]

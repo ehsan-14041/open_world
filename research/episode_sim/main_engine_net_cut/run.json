@@ -1,0 +1,185 @@
+{
+ "states": [
+  {
+   "intl_net": 90.0,
+   "dom_net": 90.0,
+   "players": 60.0,
+   "payments": 55.0,
+   "cash": 50.0,
+   "team": 70.0,
+   "content": 60.0
+  },
+  {
+   "intl_net": 10.0,
+   "dom_net": 65.0,
+   "players": 79.260265472,
+   "payments": 54.173478227968,
+   "cash": 45.847374192640004,
+   "team": 48.081837146112,
+   "content": 49.79188396032
+  },
+  {
+   "intl_net": 10.0,
+   "dom_net": 73.0,
+   "players": 82.710471786496,
+   "payments": 59.82211224780799,
+   "cash": 51.93166731264,
+   "team": 48.665929285632004,
+   "content": 52.903295815679996
+  },
+  {
+   "intl_net": 80.0,
+   "dom_net": 93.0,
+   "players": 77.191946346496,
+   "payments": 61.907444584447994,
+   "cash": 52.32691427328,
+   "team": 48.784362217472,
+   "content": 62.925790326783996
+  },
+  {
+   "intl_net": 80.0,
+   "dom_net": 93.0,
+   "players": 76.966019178496,
+   "payments": 61.87491107225599,
+   "cash": 58.320374304768,
+   "team": 56.784362217472,
+   "content": 60.572382326783995
+  },
+  {
+   "intl_net": 80.0,
+   "dom_net": 93.0,
+   "players": 70.966019178496,
+   "payments": 61.02494652415999,
+   "cash": 61.157034344448,
+   "team": 62.056436969472,
+   "content": 61.584620679168
+  }
+ ],
+ "asked": [
+  [
+   1,
+   "regulator",
+   false
+  ],
+  [
+   1,
+   "studios",
+   false
+  ],
+  [
+   1,
+   "stores",
+   false
+  ],
+  [
+   1,
+   "players",
+   false
+  ],
+  [
+   1,
+   "talent",
+   false
+  ],
+  [
+   2,
+   "regulator",
+   false
+  ],
+  [
+   2,
+   "studios",
+   false
+  ],
+  [
+   2,
+   "stores",
+   false
+  ],
+  [
+   2,
+   "players",
+   false
+  ],
+  [
+   2,
+   "talent",
+   false
+  ],
+  [
+   3,
+   "regulator",
+   false
+  ],
+  [
+   3,
+   "studios",
+   false
+  ],
+  [
+   3,
+   "stores",
+   false
+  ],
+  [
+   3,
+   "players",
+   false
+  ],
+  [
+   3,
+   "talent",
+   false
+  ],
+  [
+   4,
+   "regulator",
+   false
+  ],
+  [
+   4,
+   "studios",
+   false
+  ],
+  [
+   4,
+   "stores",
+   false
+  ],
+  [
+   4,
+   "players",
+   false
+  ],
+  [
+   4,
+   "talent",
+   false
+  ],
+  [
+   5,
+   "regulator",
+   false
+  ],
+  [
+   5,
+   "studios",
+   false
+  ],
+  [
+   5,
+   "stores",
+   false
+  ],
+  [
+   5,
+   "players",
+   false
+  ],
+  [
+   5,
+   "talent",
+   false
+  ]
+ ]
+}

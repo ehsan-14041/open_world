@@ -1,0 +1,7 @@
+{
+ "regulator": {"chosen_action": "promise_support_package", "primary_variable": "cash", "probability": 0.6, "justification": "فشار صنف‌ها بالا رفته؛ وعدهٔ بستهٔ حمایتی داده می‌شود ولی هنوز پولی پرداخت نشده.", "causal_chain": "وعده -> اثر مالی ناچیز در کوتاه‌مدت", "expected_effect": {"cash": 1}},
+ "studios": {"chosen_action": "cut_side_projects", "primary_variable": "cash", "probability": 0.7, "justification": "تیم هنوز خیلی کوچک‌تر از قبل است؛ پروژه‌های جانبی بسته می‌شوند تا بازی اصلی سرپا بماند.", "causal_chain": "تمرکز -> هزینهٔ کمتر، محتوای کمتر", "expected_effect": {"cash": 5, "content": -4}},
+ "stores": {"chosen_action": "hold_position", "primary_variable": "cash", "probability": 0.7, "justification": "کارمزد کم‌شده و تسویهٔ هفتگی ادامه دارد؛ اقدام تازه‌ای نمی‌کنند.", "causal_chain": "بدون تغییر", "expected_effect": {}},
+ "players": {"chosen_action": "hold_position", "primary_variable": "players", "probability": 0.7, "justification": "آپدیت بزرگ هنوز تازه است؛ آن‌هایی که مانده‌اند فعلاً می‌مانند.", "causal_chain": "بدون تغییر", "expected_effect": {}},
+ "talent": {"chosen_action": "return_to_work", "primary_variable": "team", "probability": 0.75, "justification": "ابزارها برگشته‌اند و بیشترِ تیم‌ها سر کار برمی‌گردند؛ جای ارشدهای رفته خالی می‌ماند.", "causal_chain": "ابزار -> کار", "expected_effect": {"team": 8}}
+}

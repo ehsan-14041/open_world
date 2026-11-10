@@ -1,0 +1,52 @@
+=== CONTEXT (added by the harness) ===
+Situation: رانندگان کامیون در سراسر کشور در اعتراض به قیمت سوخت و نرخ کرایهٔ حمل اعتصاب سراسری را آغاز می‌کنند. اتحادیهٔ رانندگان، دولت، صاحبان بار و خرده‌فروشی‌ها هر کدام واکنش نشان می‌دهند و رویدادهای بیرونی هم مسیر را عوض می‌کنند. هر مرحله سه روز است.
+Each stage lasts: سه روز. This is stage 1 of 5.
+Your seat: environment (محیط و رویدادهای بیرونی). Goals: {"random_shocks": 0.5, "spillover": 0.5}. Character: حوادث خشونت‌بار جاده‌ای، خرید هراسی، آب‌وهوای بد یا پیوستن صنف‌های دیگر؛ هیچ‌کدام از چهار بازیگر کنترلشان نمی‌کنند و ممکن است رخ بدهند یا ندهند.
+Other seats: drivers_union (اتحادیهٔ رانندگان کامیون), government (دولت), shippers (صاحبان بار و کارخانه‌ها), retailers (خرده‌فروشی‌ها و فروشگاه‌های زنجیره‌ای)
+What each action does to the variables in one stage: {"violent_road_incident": {"public_order": -12, "driver_unity": 6, "freight_flow": -5}, "panic_buying": {"shelf_supply": -15, "price_level": 8, "public_order": -4}, "severe_weather": {"freight_flow": -10, "shelf_supply": -4, "public_order": -2}, "other_union_joins": {"freight_flow": -12, "driver_unity": 10, "public_order": -4, "price_level": 3}, "start_nationwide_strike": {"freight_flow": -40, "driver_unity": 10, "driver_margin": -5, "public_order": -5}, "extend_strike_to_ports": {"freight_flow": -12, "shelf_supply": -5, "driver_margin": -6, "driver_unity": 5}, "blockade_highways": {"freight_flow": -10, "public_order": -12, "price_level": 3, "driver_unity": 4}, "accept_deal_end_strike": {"freight_flow": 30, "driver_margin": 6, "driver_unity": -12, "public_order": 5}, "cut_fuel_price": {"fuel_cost": -12, "price_level": 2, "public_order": 2}, "raise_freight_tariff_floor": {"driver_margin": 8, "price_level": 4, "driver_unity": -4}, "deploy_police_escorts": {"freight_flow": 8, "public_order": 4, "driver_unity": 3, "driver_margin": -2}, "arrest_strike_leaders": {"driver_unity": -6, "public_order": -8, "freight_flow": -3}, "raise_freight_rates": {"driver_margin": 7, "price_level": 5, "freight_flow": 3, "driver_unity": -3}, "use_rail_and_own_fleet": {"freight_flow": 6, "shelf_supply": 3, "driver_margin": -4, "price_level": 2}, "hire_strikebreaker_drivers": {"freight_flow": 7, "driver_unity": 6, "public_order": -6, "driver_margin": -2}, "pause_shipments": {"freight_flow": -6, "shelf_supply": -4, "price_level": 3, "driver_margin": -3}, "ration_stock": {"shelf_supply": -4, "price_level": 3, "public_order": -3}, "hike_shelf_prices": {"price_level": 8, "public_order": -4, "shelf_supply": 2}, "draw_down_inventory_buffer": {"shelf_supply": 8, "price_level": -3, "driver_unity": 2}, "hold_position": {}}
+Which seat each action belongs to: {"violent_road_incident": "environment", "panic_buying": "environment", "severe_weather": "environment", "other_union_joins": "environment", "start_nationwide_strike": "drivers_union", "extend_strike_to_ports": "drivers_union", "blockade_highways": "drivers_union", "accept_deal_end_strike": "drivers_union", "cut_fuel_price": "government", "raise_freight_tariff_floor": "government", "deploy_police_escorts": "government", "arrest_strike_leaders": "government", "raise_freight_rates": "shippers", "use_rail_and_own_fleet": "shippers", "hire_strikebreaker_drivers": "shippers", "pause_shipments": "shippers", "ration_stock": "retailers", "hike_shelf_prices": "retailers", "draw_down_inventory_buffer": "retailers", "hold_position": "any"}
+Variable meanings: {"freight_flow": "میزان حمل‌ونقل جاده‌ای در جریان؛ مقدار بالا یعنی کامیون‌ها عادی کار می‌کنند", "fuel_cost": "فشار هزینهٔ سوخت بر رانندگان؛ مقدار بالا یعنی سوخت گران‌تر و سنگین‌تر", "driver_margin": "حاشیهٔ سود رانندگان پس از کسر سوخت؛ مقدار بالا یعنی درآمد بهتر", "shelf_supply": "موجودی کالا در قفسه‌ها و انبارهای توزیع؛ مقدار بالا یعنی عرضه کافی است", "price_level": "سطح قیمت کالاهای مصرفی؛ مقدار بالا یعنی گرانی بیشتر", "public_order": "آرامش و نظم عمومی در جاده‌ها و شهرها؛ مقدار بالا یعنی آرام‌تر", "driver_unity": "همبستگی و آمادگی رانندگان برای ادامهٔ اعتصاب؛ مقدار بالا یعنی متحدتر"}
+Choose only an action that your own seat could really take. Set expected_effect to the listed effect of the action you choose. Write justification and causal_chain in Persian.
+
+=== SYSTEM ===
+You are an autonomous strategic agent participating in a numeric multi-agent simulation.
+Respond with ### ACTION_JSON on one line, then a single JSON object (no markdown, no extra text). The JSON must strictly follow the schema below and be valid JSON.
+
+Schema (required fields):
+{
+  "chosen_action": "string",
+  "primary_variable": "string",
+  "probability": 0.0,
+  "justification": "string",
+  "causal_chain": "string",
+  "expected_effect": {
+      "<variable_name>": -5.0
+  },
+  "relation_updates": [
+      {"from": "actor_name", "to": "actor_name", "type": "string", "rationale": "short"}
+  ]
+}
+
+CONSTRAINTS:
+1. primary_variable cannot be null and must be one of the world variables.
+2. probability must be a real between 0 and 1.
+3. Each expected_effect delta must be within allowed per-turn bounds: ABS(delta) <= MAX_DELTA, where MAX_DELTA is provided in the prompt. If you want a larger effect, propose it but it will be clipped by the WorldModelAgent.
+4. justification max length: 60 words. Keep it concise.
+5. causal_chain must map to existing causal_links or be a plausible single-step causal inference.
+6. If you cannot produce a valid response, return JSON with field "error": "short explanation", not other keys.
+
+=== PROMPT ===
+You are: محیط و رویدادهای بیرونی (name: environment)
+Actor profile: {"risk_tolerance": 0.5, "aggressiveness": 0.5}
+World variables (0-100): {"freight_flow": 85.0, "fuel_cost": 65.0, "driver_margin": 35.0, "shelf_supply": 80.0, "price_level": 55.0, "public_order": 75.0, "driver_unity": 45.0}
+Causal links: [{"from": "freight_flow", "to": "shelf_supply", "weight": 0.4}, {"from": "shelf_supply", "to": "price_level", "weight": -0.3}, {"from": "fuel_cost", "to": "price_level", "weight": 0.2}, {"from": "fuel_cost", "to": "driver_margin", "weight": -0.3}, {"from": "freight_flow", "to": "driver_margin", "weight": 0.2}, {"from": "driver_margin", "to": "driver_unity", "weight": -0.2}, {"from": "driver_unity", "to": "freight_flow", "weight": -0.2}, {"from": "shelf_supply", "to": "public_order", "weight": 0.2}, {"from": "price_level", "to": "public_order", "weight": -0.2}, {"from": "public_order", "to": "freight_flow", "weight": 0.1}]
+Allowed actions: ["violent_road_incident", "panic_buying", "severe_weather", "other_union_joins", "start_nationwide_strike", "extend_strike_to_ports", "blockade_highways", "accept_deal_end_strike", "cut_fuel_price", "raise_freight_tariff_floor", "deploy_police_escorts", "arrest_strike_leaders", "raise_freight_rates", "use_rail_and_own_fleet", "hire_strikebreaker_drivers", "pause_shipments", "ration_stock", "hike_shelf_prices", "draw_down_inventory_buffer", "hold_position"]
+Config:
+  MAX_DELTA: 40.0
+  INSTABILITY_MODE: true
+  OBS_NOISE_SCALE: 0.0
+
+Task:
+Choose ONE action this turn from Allowed actions that best advances your objectives while respecting risk_tolerance and INSTABILITY_MODE. Produce the JSON object described in SYSTEM. Focus on realistic, conservative moves if INSTABILITY_MODE is true and avoid actions that would increase 'tension' above current value unless probability > 0.8 and risk_tolerance > 0.7.
+
+Remember: Output ### ACTION_JSON then valid JSON matching the schema exactly. No other text.

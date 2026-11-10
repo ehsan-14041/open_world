@@ -1,0 +1,78 @@
+You are the neutral referee of a step-by-step scenario exercise, and you also play the outside world.
+Four actors have each chosen an action for this stage. You decide what actually happens.
+
+Situation: رانندگان کامیون در سراسر کشور در اعتراض به قیمت سوخت و نرخ کرایهٔ حمل اعتصاب سراسری را آغاز می‌کنند. اتحادیهٔ رانندگان، دولت، صاحبان بار و خرده‌فروشی‌ها هر کدام واکنش نشان می‌دهند و رویدادهای بیرونی هم مسیر را عوض می‌کنند. هر مرحله سه روز است.
+Each stage lasts: سه روز. This is stage 1 of 5.
+
+Variables (0 to 100), meaning, current value:
+- freight_flow: میزان حمل‌ونقل جاده‌ای در جریان؛ مقدار بالا یعنی کامیون‌ها عادی کار می‌کنند = 85
+- fuel_cost: فشار هزینهٔ سوخت بر رانندگان؛ مقدار بالا یعنی سوخت گران‌تر و سنگین‌تر = 65
+- driver_margin: حاشیهٔ سود رانندگان پس از کسر سوخت؛ مقدار بالا یعنی درآمد بهتر = 35
+- shelf_supply: موجودی کالا در قفسه‌ها و انبارهای توزیع؛ مقدار بالا یعنی عرضه کافی است = 80
+- price_level: سطح قیمت کالاهای مصرفی؛ مقدار بالا یعنی گرانی بیشتر = 55
+- public_order: آرامش و نظم عمومی در جاده‌ها و شهرها؛ مقدار بالا یعنی آرام‌تر = 75
+- driver_unity: همبستگی و آمادگی رانندگان برای ادامهٔ اعتصاب؛ مقدار بالا یعنی متحدتر = 45
+
+Conditions in force now: none
+
+History so far:
+(nothing has happened yet; the event in the situation begins in stage 1)
+
+Seats and their goals:
+- drivers_union (اتحادیهٔ رانندگان کامیون): {"raise_margin": 0.6, "keep_unity": 0.4}
+- government (دولت): {"restore_order": 0.5, "limit_fiscal_cost": 0.5}
+- shippers (صاحبان بار و کارخانه‌ها): {"keep_flow": 0.6, "limit_cost": 0.4}
+- retailers (خرده‌فروشی‌ها و فروشگاه‌های زنجیره‌ای): {"keep_shelves": 0.6, "keep_margin": 0.4}
+
+Typical direct effect of each action in one stage (guidance, not arithmetic):
+- violent_road_incident [environment]: {"public_order": -12, "driver_unity": 6, "freight_flow": -5}
+- panic_buying [environment]: {"shelf_supply": -15, "price_level": 8, "public_order": -4}
+- severe_weather [environment]: {"freight_flow": -10, "shelf_supply": -4, "public_order": -2}
+- other_union_joins [environment]: {"freight_flow": -12, "driver_unity": 10, "public_order": -4, "price_level": 3}
+- start_nationwide_strike [drivers_union]: {"freight_flow": -40, "driver_unity": 10, "driver_margin": -5, "public_order": -5}
+- extend_strike_to_ports [drivers_union]: {"freight_flow": -12, "shelf_supply": -5, "driver_margin": -6, "driver_unity": 5}
+- blockade_highways [drivers_union]: {"freight_flow": -10, "public_order": -12, "price_level": 3, "driver_unity": 4}
+- accept_deal_end_strike [drivers_union]: {"freight_flow": 30, "driver_margin": 6, "driver_unity": -12, "public_order": 5}
+- cut_fuel_price [government]: {"fuel_cost": -12, "price_level": 2, "public_order": 2}
+- raise_freight_tariff_floor [government]: {"driver_margin": 8, "price_level": 4, "driver_unity": -4}
+- deploy_police_escorts [government]: {"freight_flow": 8, "public_order": 4, "driver_unity": 3, "driver_margin": -2}
+- arrest_strike_leaders [government]: {"driver_unity": -6, "public_order": -8, "freight_flow": -3}
+- raise_freight_rates [shippers]: {"driver_margin": 7, "price_level": 5, "freight_flow": 3, "driver_unity": -3}
+- use_rail_and_own_fleet [shippers]: {"freight_flow": 6, "shelf_supply": 3, "driver_margin": -4, "price_level": 2}
+- hire_strikebreaker_drivers [shippers]: {"freight_flow": 7, "driver_unity": 6, "public_order": -6, "driver_margin": -2}
+- pause_shipments [shippers]: {"freight_flow": -6, "shelf_supply": -4, "price_level": 3, "driver_margin": -3}
+- ration_stock [retailers]: {"shelf_supply": -4, "price_level": 3, "public_order": -3}
+- hike_shelf_prices [retailers]: {"price_level": 8, "public_order": -4, "shelf_supply": 2}
+- draw_down_inventory_buffer [retailers]: {"shelf_supply": 8, "price_level": -3, "driver_unity": 2}
+- hold_position [any]: {}
+
+Known influences between variables (direction only): freight_flow raises shelf_supply; shelf_supply lowers price_level; fuel_cost raises price_level; fuel_cost lowers driver_margin; freight_flow raises driver_margin; driver_margin lowers driver_unity; driver_unity lowers freight_flow; shelf_supply raises public_order; price_level lowers public_order; public_order raises freight_flow
+
+Actions chosen in stage 1:
+- drivers_union -> start_nationwide_strike: حاشیهٔ سود نزدیک صفر است و اعتصاب تنها اهرم چانه‌زنی ماست؛ شروع هماهنگ و سراسری همبستگی را بالا می‌برد و دولت را به مذاکره می‌کشاند.
+  message from drivers_union to government: قیمت سوخت را کاهش دهید و کف نرخ کرایه را تعیین کنید؛ آن‌گاه آمادهٔ مذاکره و پایان اعتصاب هستیم.
+- government -> deploy_police_escorts: حمل‌ونقل هنوز بالاست و دستگیری رهبران نظم را بدتر می‌کند. اسکورت پلیس بدون هزینهٔ مالی سنگین جریان کالا را حفظ می‌کند و زمان برای مذاکره می‌خرد.
+  message from government to drivers_union: آمادهٔ گفتگو دربارهٔ کرایه و سوخت هستیم؛ اعتصاب را متوقف کنید تا بسته‌ای عادلانه و محدود بررسی شود.
+- shippers -> raise_freight_rates: ادامهٔ جریان بار مهم‌ترین هدف ماست. افزایش کرایه، حاشیهٔ رانندگان را بالا می‌برد و همبستگی اعتصاب را کم می‌کند، بدون اینکه به اندازهٔ خواستهٔ اتحادیه پیش برویم.
+  message from shippers to drivers_union: کرایه را بالا می‌بریم تا حاشیهٔ شما بهتر شود؛ در برابر آن اعتصاب را متوقف کنید و بار را عادی حمل کنید.
+- retailers -> draw_down_inventory_buffer: قفسه‌ها فعلاً پر است و اولویت اصلی حفظ قفسه‌هاست؛ استفاده از ذخیرهٔ انبار عرضه را حفظ می‌کند، قیمت را بالا نمی‌برد و ناظران و مصرف‌کنندگان را آرام نگه می‌دارد.
+  message from retailers to shippers: برای حفظ تحویل به فروشگاه‌ها، هر مسیر جایگزین مثل ریل یا ناوگان خودی را فعال کنید؛ اولویت با کالای اساسی باشد.
+
+Your tasks:
+1. Outside event: choose one of ["violent_road_incident", "panic_buying", "severe_weather", "other_union_joins"] or hold_position. Choose what would most plausibly happen in this
+   stage given the state, not what makes a good story; in many stages nothing notable happens.
+2. State after this stage: a new value for EVERY variable, with the cause.
+   - Values stay within 0 to 100.
+   - No variable moves more than 25 points in one stage, unless a chosen action's listed effect on it is larger.
+   - A condition in force keeps acting every stage until an action ends it (a ban keeps holding legal supply
+     down while it stands; a strike keeps holding freight down while it lasts).
+   - Effects can be delayed, saturate, reinforce or cancel one another. Use judgment about how such a
+     situation really moves in a stage of this length; do not just add up the listed effects.
+   - Do not favour any seat, and do not invent convenient rescues.
+3. Conditions in force after this stage: short Persian phrases (measures, deals, shortages that persist).
+4. A summary of the stage in Persian, at most 50 words.
+
+Reply with one JSON object only:
+{"environment": {"chosen_action": "...", "justification": "<Persian, at most 40 words>"},
+ "state": {"<variable>": {"value": <number>, "why": "<Persian, at most 20 words>"}, ... every variable ...},
+ "conditions": ["...", ...], "summary": "..."}

@@ -1,0 +1,52 @@
+{"stages":[
+{"actions":{
+"apple":{"chosen_action":"file_court_interim_relief","justification":"تیم حقوقی می‌خواهد پرونده طولانی شود و پرونده تعلیق تا پایان ماه دوم آماده می‌شود؛ اپل باید مهلت ۶۰ روزه را بدون تسلیم کامل بگذراند و خط قرمز صفر‌شدن کارمزد هدایت را نگه دارد."},
+"european_commission":{"chosen_action":"seek_us_deescalation","justification":"هیئت کمیسیونران جریمه روزانه را تأیید کرده، اما دفتر رئیس کمیسیون پیش از نشست ژانویه می‌خواهد تنش با واشینگتن مهار شود؛ پس همزمان مهلت را نگه می‌دارد و با آمریکا گفت‌وگو می‌کند."},
+"epic_and_large_developers":{"chosen_action":"lobby_parliament","justification":"ائتلاف می‌داند کمیسیون زیر فشار سیاسی نرم می‌شود؛ بیشترین اهرم ارزان، تحریک پارلمان و دولت‌های عضو است. دعوای خصوصی را هم برای ابزار فشار بعدی نگه می‌دارد."},
+"google":{"chosen_action":"stay_quiet_and_wait","justification":"گوگل تغییر جهت محرمانه‌اش را به کمیسیون گفته و نمی‌خواهد پیش از روشن‌شدن تکلیف اپل علنی شود؛ هم از جبهه‌بودن با اپل پرهیز می‌کند و هم معیار صفر را زودتر نمی‌پذیرد."}},
+"messages":[
+{"from":"european_commission","to":"apple","text":"اعلام رسمی بر ناسازگاری دو کارمزد است. گفت‌وگوی فنی ادامه دارد؛ پیشنهاد مستدل و محدود به زمان بدهید، نه حفظ ساختار فعلی."},
+{"from":"apple","to":"european_commission","text":"شرایط اوت با هماهنگی خود شما تدوین شد. موضع را نمی‌توانید ناگهان عوض کنید؛ حاضریم درباره سازوکار گفت‌وگو کنیم، نه حذف کامل."}],
+"summary":"کمیسیون رسماً کارمزد ۱۵٪ هدایت و ۵٪ توزیع جایگزین را ناسازگار با ماده ۵(۴) اعلام کرد و به اپل ۶۰ روز مهلت داد. اپل آماده درخواست تعلیق از دادگاه شد، ائتلاف توسعه‌دهندگان پارلمان را فعال کرد و گوگل سکوت کرد.",
+"state":{"apple_eu_take_rate":72,"steering_freedom":40,"alt_distribution_share":5,"commission_enforcement_credibility":50,"eu_us_trade_tension":52,"eu_feature_parity":60,"ios_user_trust":80,"legal_certainty":28}},
+{"actions":{
+"apple":{"chosen_action":"file_court_interim_relief","justification":"مهلت رو به پایان است و پرونده آماده شده؛ درخواست تعلیق، جریمه روزانه را به تعویق می‌اندازد و اهرم چانه‌زنی می‌دهد. اپل هنوز عدد ۱۰٪ و محدودیت ۱۲ ماهه را فاش نمی‌کند."},
+"european_commission":{"chosen_action":"extend_deadline_quietly","justification":"نشست تجاری ژانویه در راه است و دفتر رئیس کمیسیون اعلام جریمه را نمی‌خواهد. با وجود قطعنامه پارلمان، تمدید بی‌سروصدا زمان می‌خرد و گفت‌وگو درباره راه‌حل حدود ۵٪ را ادامه می‌دهد."},
+"epic_and_large_developers":{"chosen_action":"file_private_damages_suits","justification":"قطعنامه پارلمان فضا را باز کرده و تمدید مهلت نشانه نرمی کمیسیون است؛ دعوای آلمان و هلند مستقل از کمیسیون پیش می‌رود و Epic را از وابستگی به تصمیم بروکسل درمی‌آورد."},
+"google":{"chosen_action":"stay_quiet_and_wait","justification":"گوگل می‌خواهد راه‌حل نهایی اپل کمی بالاتر از پیشنهاد خودش باشد؛ تا روشن شدن نتیجه دادگاه و تمدید مهلت، موضع علنی نمی‌گیرد و گفت‌وگوی محرمانه با کمیسیون را حفظ می‌کند."}},
+"messages":[
+{"from":"epic_and_large_developers","to":"european_commission","text":"تمدید مهلت یعنی تسلیم. پارلمان پشت اجرای کامل است؛ هر کارمزد هدایت را در دادگاه به چالش می‌کشیم."},
+{"from":"google","to":"european_commission","text":"آمادگی ما برای کارمزد هدایت ۱۲ ماهه با صفر پس از آن پابرجاست؛ لطفاً هم‌ترازی را با اپل علنی نکنید."}],
+"summary":"پارلمان اروپا با اکثریت بالا قطعنامه اجرای فوری DMA را تصویب کرد. اپل درخواست تعلیق موقت را در دادگاه عمومی ثبت کرد؛ کمیسیون مهلت را بی‌سروصدا پس زد و Epic و همراهانش دعاوی خسارت را در آلمان و هلند ثبت کردند.",
+"state":{"apple_eu_take_rate":72,"steering_freedom":42,"alt_distribution_share":5,"commission_enforcement_credibility":58,"eu_us_trade_tension":55,"eu_feature_parity":58,"ios_user_trust":80,"legal_certainty":25}},
+{"actions":{
+"apple":{"chosen_action":"offer_reduced_steering_fee","justification":"با دومین قطعنامه پارلمان و خطر جریمه روزانه، اپل پیشنهاد ۱۰٪ برای ۱۲ ماه را مطرح می‌کند تا کارمزد صفر نپذیرد و همزمان روایت تمکین بسازد؛ ۵٪ توزیع جایگزین را بازتر می‌گذارد."},
+"european_commission":{"chosen_action":"impose_periodic_penalties","justification":"پس از نشست ژانویه و قطعنامه دوم، تأخیر بیشتر اعتبار کمیسیون را می‌سوزاند. جریمه روزانه رسمی اهرم می‌شود تا اپل از ۱۰٪ به حدود ۵٪ برسد، با مبلغی آغازین و قابل تعدیل."},
+"epic_and_large_developers":{"chosen_action":"shift_users_to_web","justification":"Epic برای ادامه بقا به درآمد مستقیم بیشتر نیاز دارد؛ تخفیف‌های بزرگ در وب هزینه کارمزد را دور می‌زند و برای مذاکره آینده داده نشان می‌دهد، در حالی که فروشگاه iOS زیان‌ده می‌ماند."},
+"google":{"chosen_action":"announce_lower_play_fees","justification":"گوگل با دیدن جریمه اپل خود را دروازه‌بان منطقی نشان می‌دهد: کارمزد هدایت Play فقط ۱۲ ماه اول هر مشتری و سپس صفر. این هم از جریمه می‌گریزد هم مرجع را کمی پایین‌تر از اپل نگه می‌دارد."}},
+"messages":[
+{"from":"apple","to":"european_commission","text":"آماده‌ایم هدایت به وب ۱۰٪ و فقط برای دوره‌ای مشخص باشد؛ اما معیار صفر برای ما مرز قطعی است."},
+{"from":"european_commission","to":"apple","text":"عدد قابل‌دفاع نزدیک ۵٪ و فقط برای ۱۲ ماه اول هر مشتری است. کارمزد توزیع جایگزین باید حذف شود."}],
+"summary":"پارلمان دوباره قطعنامه‌ای برای اجرای بی‌مصالحه تصویب کرد. کمیسیون جریمه روزانه رسمی علیه اپل اعلام کرد، اپل کارمزد کاهش‌یافته محدود به زمان پیشنهاد داد، گوگل کارمزد هدایت Play را کاهش داد و ائتلاف توسعه‌دهندگان خریدهای وب را تشویق کرد.",
+"state":{"apple_eu_take_rate":70,"steering_freedom":46,"alt_distribution_share":6,"commission_enforcement_credibility":66,"eu_us_trade_tension":62,"eu_feature_parity":56,"ios_user_trust":79,"legal_certainty":24}},
+{"actions":{
+"apple":{"chosen_action":"withhold_eu_features","justification":"اپل تصمیم داشت قابلیت بعدی Siri را در اروپا عرضه نکند و حالا زیر جریمه، این را اهرم و هشدار به بقیه جهان می‌کند؛ هزینه‌اش را در برابر سرایت مدل می‌پذیرد."},
+"european_commission":{"chosen_action":"accept_time_limited_fee","justification":"سرویس حقوقی هشدار داده کارمزد ۱۵٪ در دادگاه دوام ندارد. پذیرش اصولی کارمزد کمتر و محدود به ۱۲ ماه اول، همراه با حذف ۵٪ توزیع جایگزین، پرونده را نجات می‌دهد و اعتبار را حفظ می‌کند."},
+"epic_and_large_developers":{"chosen_action":"negotiate_separately_with_apple","justification":"فروشگاه Epic روی iOS زیان‌ده است و بدون حذف ۵٪ بیش از حدود یک سال دوام ندارد؛ همزمان ریزش وحدت ائتلاف نزدیک است، پس مذاکره جداگانه بازگذاشتن یک راه خروج است."},
+"google":{"chosen_action":"court_developers","justification":"گوگل با برنامه تشویقی از ابهام اپل بهره می‌برد و توسعه‌دهندگان اروپایی را به Play می‌کشد؛ در عین حال بدون هماهنگی با اپل، تغییر مسیر محرمانه‌اش را ادامه می‌دهد."}},
+"messages":[
+{"from":"epic_and_large_developers","to":"apple","text":"فروشگاه جایگزین بدون حذف ۵٪ پایدار نیست. اگر هدایت رایگان‌تر و حذف کارمزد فناوری هسته ممکن باشد، گفت‌وگو می‌کنیم."},
+{"from":"apple","to":"epic_and_large_developers","text":"فقط در چارچوب راه‌حل کمیسیون و محدود به زمان؛ پیش‌شرط، توقف دعاوی خسارت و بازگشت به نصب از طریق مسیرهای رسمی است."}],
+"summary":"کمیسیون اصولاً کارمزد کاهش‌یافته و محدود به زمان را برای هدایت پذیرفت، اما اپل انتشار قابلیت جدید Siri را در اروپا نگه داشت و برابری امکانات افت کرد. Epic گفت‌وگوی جداگانه با اپل را آغاز کرد؛ گوگل توسعه‌دهندگان اروپایی را جذب کرد.",
+"state":{"apple_eu_take_rate":66,"steering_freedom":52,"alt_distribution_share":8,"commission_enforcement_credibility":64,"eu_us_trade_tension":60,"eu_feature_parity":45,"ios_user_trust":79,"legal_certainty":32}},
+{"actions":{
+"apple":{"chosen_action":"offer_reduced_steering_fee","justification":"با ورود تنظیم‌گر خارجی، خطر سرایت جهانی جدی‌تر شده و جریمه ادامه دارد. اپل کارمزد هدایت را به حدود ۸٪ برای ۱۲ ماه رسانده و حذف ۵٪ توزیع جایگزین را می‌پذیرد."},
+"european_commission":{"chosen_action":"apply_same_standard_to_google","justification":"حرکت تنظیم‌گر خارجی مشروعیت کمیسیون را بالا برده است. اعلام معیار یکسان برای Play، اقدام اپل را قابل‌دفاع می‌کند و از ادعای تبعیض علیه شرکت‌های آمریکایی می‌کاهد."},
+"epic_and_large_developers":{"chosen_action":"public_campaign","justification":"Epic ناگزیر است عقب‌نشینی تدریجی را به‌عنوان پیروزی نیمه‌کاره روایت کند و فشار بر اجرای کامل را حفظ کند؛ کمپین علنی هم ضعف مالی را می‌پوشاند و بازیگران جداشونده را زیر فشار نگه می‌دارد."},
+"google":{"chosen_action":"tighten_android_verification","justification":"گوگل می‌داند معیار یکسان به Play می‌رسد؛ مرز واقعی‌اش الزام تأیید هویت توسعه‌دهنده است و با تأکید امنیتی آن را پیش از مذاکره نهایی تثبیت می‌کند."}},
+"messages":[
+{"from":"apple","to":"european_commission","text":"هدایت ۸٪، فقط ۱۲ ماه اول هر مشتری، و کارمزد توزیع جایگزین حذف می‌شود. این بسته را همراه با لغو جریمه‌ها می‌خواهیم."},
+{"from":"european_commission","to":"google","text":"معیار هدایت یکسان خواهد بود. پیشنهاد محرمانه‌تان را مکتوب و عمومی کنید و ربط آن را با تأیید هویت توضیح دهید."}],
+"summary":"پس از حکم مشابه یک تنظیم‌گر خارجی، اپل پیشنهاد بهتری داد: کارمزد هدایت کمتر و محدود به ۱۲ ماه و حذف کارمزد توزیع جایگزین. کمیسیون معیار یکسان را برای Google Play هم اعلام کرد. Epic کمپین را ادامه داد و گوگل تأیید هویت Android را سفت‌تر کرد.",
+"state":{"apple_eu_take_rate":58,"steering_freedom":60,"alt_distribution_share":9,"commission_enforcement_credibility":68,"eu_us_trade_tension":57,"eu_feature_parity":44,"ios_user_trust":78,"legal_certainty":45}}
+]}

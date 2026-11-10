@@ -1,0 +1,51 @@
+You are playing one seat in a step-by-step scenario exercise. Play it the way this actor really would.
+
+Situation: رانندگان کامیون در سراسر کشور در اعتراض به قیمت سوخت و نرخ کرایهٔ حمل اعتصاب سراسری را آغاز می‌کنند. اتحادیهٔ رانندگان، دولت، صاحبان بار و خرده‌فروشی‌ها هر کدام واکنش نشان می‌دهند و رویدادهای بیرونی هم مسیر را عوض می‌کنند. هر مرحله سه روز است.
+Each stage lasts: سه روز. This is stage 2 of 5.
+
+Variables (0 to 100), meaning, current value:
+- freight_flow: میزان حمل‌ونقل جاده‌ای در جریان؛ مقدار بالا یعنی کامیون‌ها عادی کار می‌کنند = 52.0
+- fuel_cost: فشار هزینهٔ سوخت بر رانندگان؛ مقدار بالا یعنی سوخت گران‌تر و سنگین‌تر = 65.0
+- driver_margin: حاشیهٔ سود رانندگان پس از کسر سوخت؛ مقدار بالا یعنی درآمد بهتر = 36.0
+- shelf_supply: موجودی کالا در قفسه‌ها و انبارهای توزیع؛ مقدار بالا یعنی عرضه کافی است = 77.0
+- price_level: سطح قیمت کالاهای مصرفی؛ مقدار بالا یعنی گرانی بیشتر = 57.0
+- public_order: آرامش و نظم عمومی در جاده‌ها و شهرها؛ مقدار بالا یعنی آرام‌تر = 72.0
+- driver_unity: همبستگی و آمادگی رانندگان برای ادامهٔ اعتصاب؛ مقدار بالا یعنی متحدتر = 55.0
+
+Conditions in force now: ["اعتصاب سراسری رانندگان ادامه دارد", "اسکورت پلیس بر مسیرهای اصلی", "کرایهٔ حمل بالا رفته است"]
+
+History so far:
+Stage 1:
+  environment -> hold_position: در سه روز نخست اعتصاب، قفسه‌ها هنوز پرند و هراس خرید یا حادثهٔ خشن بعید است؛ هوای شدید و پیوستن اتحادیهٔ دیگر هم نشانه‌ای ندارد.
+  drivers_union -> start_nationwide_strike: حاشیهٔ سود نزدیک صفر است و اعتصاب تنها اهرم چانه‌زنی ماست؛ شروع هماهنگ و سراسری همبستگی را بالا می‌برد و دولت را به مذاکره می‌کشاند.
+  government -> deploy_police_escorts: حمل‌ونقل هنوز بالاست و دستگیری رهبران نظم را بدتر می‌کند. اسکورت پلیس بدون هزینهٔ مالی سنگین جریان کالا را حفظ می‌کند و زمان برای مذاکره می‌خرد.
+  shippers -> raise_freight_rates: ادامهٔ جریان بار مهم‌ترین هدف ماست. افزایش کرایه، حاشیهٔ رانندگان را بالا می‌برد و همبستگی اعتصاب را کم می‌کند، بدون اینکه به اندازهٔ خواستهٔ اتحادیه پیش برویم.
+  retailers -> draw_down_inventory_buffer: قفسه‌ها فعلاً پر است و اولویت اصلی حفظ قفسه‌هاست؛ استفاده از ذخیرهٔ انبار عرضه را حفظ می‌کند، قیمت را بالا نمی‌برد و ناظران و مصرف‌کنندگان را آرام نگه می‌دارد.
+  message from drivers_union to government: قیمت سوخت را کاهش دهید و کف نرخ کرایه را تعیین کنید؛ آن‌گاه آمادهٔ مذاکره و پایان اعتصاب هستیم.
+  message from government to drivers_union: آمادهٔ گفتگو دربارهٔ کرایه و سوخت هستیم؛ اعتصاب را متوقف کنید تا بسته‌ای عادلانه و محدود بررسی شود.
+  message from shippers to drivers_union: کرایه را بالا می‌بریم تا حاشیهٔ شما بهتر شود؛ در برابر آن اعتصاب را متوقف کنید و بار را عادی حمل کنید.
+  message from retailers to shippers: برای حفظ تحویل به فروشگاه‌ها، هر مسیر جایگزین مثل ریل یا ناوگان خودی را فعال کنید؛ اولویت با کالای اساسی باشد.
+  referee summary: اعتصاب سراسری آغاز شد و حمل جاده‌ای به‌شدت افت کرد. پلیس اسکورت گذاشت و صاحبان بار کرایه را بالا بردند. خرده‌فروشان از ذخیره برداشتند، قفسه‌ها پر ماند و همبستگی رانندگان بیشتر شد.
+  state after stage 1: {"freight_flow": 52.0, "fuel_cost": 65.0, "driver_margin": 36.0, "shelf_supply": 77.0, "price_level": 57.0, "public_order": 72.0, "driver_unity": 55.0}
+
+Your seat: retailers (خرده‌فروشی‌ها و فروشگاه‌های زنجیره‌ای). Goals: {"keep_shelves": 0.6, "keep_margin": 0.4}. Character: به موجودی انبار و تحویل روزانه وابسته‌اند؛ با کمبود، قیمت و ذخیره‌سازی را مدیریت می‌کنند و زیر نگاه مصرف‌کننده و نهاد نظارت‌اند.
+Other seats: environment (محیط و رویدادهای بیرونی), drivers_union (اتحادیهٔ رانندگان کامیون), government (دولت), shippers (صاحبان بار و کارخانه‌ها)
+
+Your own actions, with the typical direct effect of each in one stage:
+- ration_stock: {"shelf_supply": -4, "price_level": 3, "public_order": -3}
+- hike_shelf_prices: {"price_level": 8, "public_order": -4, "shelf_supply": 2}
+- draw_down_inventory_buffer: {"shelf_supply": 8, "price_level": -3, "driver_unity": 2}
+- hold_position: {}
+
+Actions of the other seats (for reference): {"environment": ["violent_road_incident", "panic_buying", "severe_weather", "other_union_joins"], "drivers_union": ["start_nationwide_strike", "extend_strike_to_ports", "blockade_highways", "accept_deal_end_strike"], "government": ["cut_fuel_price", "raise_freight_tariff_floor", "deploy_police_escorts", "arrest_strike_leaders"], "shippers": ["raise_freight_rates", "use_rail_and_own_fleet", "hire_strikebreaker_drivers", "pause_shipments"]}
+
+Your private plan note from the previous stage: ذخیرهٔ بافر محدود است؛ اگر اعتصاب بیش از چند مرحله ادامه یافت، جیره‌بندی کالا را با دقت و افزایش قیمت را فقط در حد ضرورت به کار ببرم. از خرید هیجانی و گران‌فروشی دوری کنم و موجودی اساسی را اولویت بدهم.
+
+Task: choose the ONE action your seat takes in this stage (one of your own actions, or hold_position).
+Think about where you want to be by stage 5, not only about this stage. Do not keep repeating an action
+that has stopped working. Consider what the others want and whether a deal, a threat or a concession
+would serve your goals; you may send one short public message to one other seat.
+
+Reply with one JSON object only:
+{"chosen_action": "...", "justification": "<Persian, at most 40 words>", "message_to": "<seat name or empty>",
+ "message": "<Persian, at most 25 words, or empty>", "plan": "<Persian, at most 50 words: private note to your later self>"}
