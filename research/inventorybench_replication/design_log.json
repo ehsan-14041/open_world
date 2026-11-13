@@ -1,0 +1,884 @@
+[
+ {
+  "name": "OR",
+  "stochastic_norm": 0.152,
+  "stochastic_unclipped": 0.1514,
+  "note": "reference from the first step"
+ },
+ {
+  "name": "SupplyAware",
+  "stochastic_norm": 0.3262,
+  "stochastic_unclipped": 0.1942,
+  "note": "reference from the first step"
+ },
+ {
+  "name": "Cusum+Supply",
+  "stochastic_norm": 0.3397,
+  "stochastic_unclipped": 0.254,
+  "note": "reference from the first step"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3402,
+  "stochastic_unclipped": 0.2556,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=1.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3376,
+  "stochastic_unclipped": 0.1047,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=2.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3207,
+  "stochastic_unclipped": -0.141,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3115,
+  "stochastic_unclipped": 0.1546,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=1.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.2952,
+  "stochastic_unclipped": -0.0432,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=2.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.2726,
+  "stochastic_unclipped": -0.3481,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.2811,
+  "stochastic_unclipped": 0.0487,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=1.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.2718,
+  "stochastic_unclipped": -0.1692,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=2.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.2484,
+  "stochastic_unclipped": -0.4476,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.2577,
+  "stochastic_unclipped": -0.0254,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=1.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.2049,
+  "stochastic_unclipped": -0.5191,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=2.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.1636,
+  "stochastic_unclipped": -1.2086,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3981,
+  "stochastic_unclipped": 0.3829,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=1.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3861,
+  "stochastic_unclipped": 0.3116,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=2.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3632,
+  "stochastic_unclipped": 0.1944,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3753,
+  "stochastic_unclipped": 0.3519,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=1.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3633,
+  "stochastic_unclipped": 0.2501,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=2.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3344,
+  "stochastic_unclipped": 0.0336,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3543,
+  "stochastic_unclipped": 0.3259,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=1.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3438,
+  "stochastic_unclipped": 0.2064,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=2.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3172,
+  "stochastic_unclipped": -0.0289,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3313,
+  "stochastic_unclipped": 0.2984,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=1.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3118,
+  "stochastic_unclipped": 0.1509,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=2.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.2774,
+  "stochastic_unclipped": -0.1384,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3455,
+  "stochastic_unclipped": 0.2371,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=1.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3383,
+  "stochastic_unclipped": 0.0652,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=2.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.301,
+  "stochastic_unclipped": -0.2559,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3177,
+  "stochastic_unclipped": 0.1405,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=1.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.2991,
+  "stochastic_unclipped": -0.0932,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=2.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.2695,
+  "stochastic_unclipped": -0.4153,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.281,
+  "stochastic_unclipped": 0.0349,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=1.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.277,
+  "stochastic_unclipped": -0.1894,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=2.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.2462,
+  "stochastic_unclipped": -0.5329,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.2539,
+  "stochastic_unclipped": -0.0526,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=1.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.1995,
+  "stochastic_unclipped": -0.6003,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=2.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.1612,
+  "stochastic_unclipped": -1.3698,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4055,
+  "stochastic_unclipped": 0.376,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=1.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3718,
+  "stochastic_unclipped": 0.2478,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=2.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3479,
+  "stochastic_unclipped": 0.0862,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3772,
+  "stochastic_unclipped": 0.3354,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=1.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3612,
+  "stochastic_unclipped": 0.1961,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=2.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3219,
+  "stochastic_unclipped": -0.0851,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3543,
+  "stochastic_unclipped": 0.304,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=1.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3441,
+  "stochastic_unclipped": 0.1521,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=2.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3112,
+  "stochastic_unclipped": -0.128,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.329,
+  "stochastic_unclipped": 0.2735,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=1.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3085,
+  "stochastic_unclipped": 0.093,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=2.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.2708,
+  "stochastic_unclipped": -0.2351,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=0.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3378,
+  "stochastic_unclipped": 0.1063,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=1.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.308,
+  "stochastic_unclipped": -0.2434,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=2.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2695,
+  "stochastic_unclipped": -0.5988,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=0.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3153,
+  "stochastic_unclipped": 0.0129,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=1.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2614,
+  "stochastic_unclipped": -0.4582,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=2.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2236,
+  "stochastic_unclipped": -0.9951,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=0.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3075,
+  "stochastic_unclipped": -0.0063,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=1.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2488,
+  "stochastic_unclipped": -0.5499,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=2.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2077,
+  "stochastic_unclipped": -1.1662,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=0.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2908,
+  "stochastic_unclipped": -0.0483,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=1.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2107,
+  "stochastic_unclipped": -0.7589,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=2.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.1714,
+  "stochastic_unclipped": -1.6248,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3825,
+  "stochastic_unclipped": 0.3108,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=1.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3586,
+  "stochastic_unclipped": 0.1744,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=2.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3431,
+  "stochastic_unclipped": 0.0288,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3686,
+  "stochastic_unclipped": 0.27,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=1.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3275,
+  "stochastic_unclipped": -0.0233,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=2.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2895,
+  "stochastic_unclipped": -0.3101,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3615,
+  "stochastic_unclipped": 0.2535,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=1.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3134,
+  "stochastic_unclipped": -0.0814,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=2.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2693,
+  "stochastic_unclipped": -0.4656,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3541,
+  "stochastic_unclipped": 0.2502,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=1.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.3039,
+  "stochastic_unclipped": -0.0827,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=2.0,LEAD=mean,PIPE=expected]",
+  "stochastic_norm": 0.2457,
+  "stochastic_unclipped": -0.5655,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=0.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.3295,
+  "stochastic_unclipped": 0.0251,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=1.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2878,
+  "stochastic_unclipped": -0.3606,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=True,KAPPA=2.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2428,
+  "stochastic_unclipped": -0.7829,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=0.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.3099,
+  "stochastic_unclipped": -0.0693,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=1.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2406,
+  "stochastic_unclipped": -0.6092,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=True,KAPPA=2.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2075,
+  "stochastic_unclipped": -1.159,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=0.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2999,
+  "stochastic_unclipped": -0.095,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=1.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2338,
+  "stochastic_unclipped": -0.6731,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=True,KAPPA=2.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.1981,
+  "stochastic_unclipped": -1.2952,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=0.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2867,
+  "stochastic_unclipped": -0.1193,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=1.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2002,
+  "stochastic_unclipped": -0.9003,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=True,KAPPA=2.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.1622,
+  "stochastic_unclipped": -1.8721,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.3703,
+  "stochastic_unclipped": 0.2488,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=1.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.347,
+  "stochastic_unclipped": 0.09,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.0,INFLATE=False,KAPPA=2.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.3277,
+  "stochastic_unclipped": -0.0696,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.3566,
+  "stochastic_unclipped": 0.1819,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=1.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.3094,
+  "stochastic_unclipped": -0.1583,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=1.5,INFLATE=False,KAPPA=2.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2598,
+  "stochastic_unclipped": -0.4958,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.3493,
+  "stochastic_unclipped": 0.1613,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=1.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2921,
+  "stochastic_unclipped": -0.2408,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=2.0,INFLATE=False,KAPPA=2.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2397,
+  "stochastic_unclipped": -0.6971,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.3438,
+  "stochastic_unclipped": 0.1645,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=1.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2868,
+  "stochastic_unclipped": -0.2218,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=None,INFLATE=False,KAPPA=2.0,LEAD=max,PIPE=expected]",
+  "stochastic_norm": 0.2288,
+  "stochastic_unclipped": -0.7501,
+  "note": "grid 1"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=max,INFLATE=False,KAPPA=-0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4033,
+  "stochastic_unclipped": 0.3985,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=mean,INFLATE=False,KAPPA=-0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4204,
+  "stochastic_unclipped": 0.4102,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=max,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4107,
+  "stochastic_unclipped": 0.3997,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=mean,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4146,
+  "stochastic_unclipped": 0.3941,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=max,INFLATE=False,KAPPA=0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4045,
+  "stochastic_unclipped": 0.3782,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=mean,INFLATE=False,KAPPA=0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3973,
+  "stochastic_unclipped": 0.3561,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=max,INFLATE=False,KAPPA=-0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3969,
+  "stochastic_unclipped": 0.391,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=mean,INFLATE=False,KAPPA=-0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4183,
+  "stochastic_unclipped": 0.4067,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=max,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4062,
+  "stochastic_unclipped": 0.3943,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=mean,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4145,
+  "stochastic_unclipped": 0.3895,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=max,INFLATE=False,KAPPA=0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4026,
+  "stochastic_unclipped": 0.371,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=mean,INFLATE=False,KAPPA=0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3964,
+  "stochastic_unclipped": 0.3453,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=max,INFLATE=False,KAPPA=-0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3912,
+  "stochastic_unclipped": 0.3838,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=mean,INFLATE=False,KAPPA=-0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4165,
+  "stochastic_unclipped": 0.4035,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=max,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3981,
+  "stochastic_unclipped": 0.3829,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=mean,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4099,
+  "stochastic_unclipped": 0.3808,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=max,INFLATE=False,KAPPA=0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3987,
+  "stochastic_unclipped": 0.3613,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=mean,INFLATE=False,KAPPA=0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3948,
+  "stochastic_unclipped": 0.3356,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=max,INFLATE=False,KAPPA=-0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3878,
+  "stochastic_unclipped": 0.3797,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=mean,INFLATE=False,KAPPA=-0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4135,
+  "stochastic_unclipped": 0.3995,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=max,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3891,
+  "stochastic_unclipped": 0.3699,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=mean,INFLATE=False,KAPPA=0.0,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.4056,
+  "stochastic_unclipped": 0.3732,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=max,INFLATE=False,KAPPA=0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3897,
+  "stochastic_unclipped": 0.3475,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=mean,INFLATE=False,KAPPA=0.5,LEAD=mean,PIPE=hard]",
+  "stochastic_norm": 0.3898,
+  "stochastic_unclipped": 0.3244,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=max,INFLATE=False,KAPPA=-0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4155,
+  "stochastic_unclipped": 0.4057,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=mean,INFLATE=False,KAPPA=-0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4077,
+  "stochastic_unclipped": 0.3872,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=max,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.41,
+  "stochastic_unclipped": 0.3864,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=mean,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3995,
+  "stochastic_unclipped": 0.3593,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=max,INFLATE=False,KAPPA=0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3921,
+  "stochastic_unclipped": 0.3402,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.8,HORIZON=mean,INFLATE=False,KAPPA=0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3876,
+  "stochastic_unclipped": 0.3144,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=max,INFLATE=False,KAPPA=-0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4111,
+  "stochastic_unclipped": 0.3994,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=mean,INFLATE=False,KAPPA=-0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4054,
+  "stochastic_unclipped": 0.3791,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=max,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4099,
+  "stochastic_unclipped": 0.3843,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=mean,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.396,
+  "stochastic_unclipped": 0.3484,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=max,INFLATE=False,KAPPA=0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3916,
+  "stochastic_unclipped": 0.3317,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=0.9,HORIZON=mean,INFLATE=False,KAPPA=0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3829,
+  "stochastic_unclipped": 0.2948,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=max,INFLATE=False,KAPPA=-0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4063,
+  "stochastic_unclipped": 0.3926,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=mean,INFLATE=False,KAPPA=-0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4025,
+  "stochastic_unclipped": 0.3725,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=max,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4055,
+  "stochastic_unclipped": 0.376,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=mean,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3925,
+  "stochastic_unclipped": 0.3365,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=max,INFLATE=False,KAPPA=0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3912,
+  "stochastic_unclipped": 0.3254,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.0,HORIZON=mean,INFLATE=False,KAPPA=0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3799,
+  "stochastic_unclipped": 0.2789,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=max,INFLATE=False,KAPPA=-0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4002,
+  "stochastic_unclipped": 0.385,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=mean,INFLATE=False,KAPPA=-0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3985,
+  "stochastic_unclipped": 0.3666,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=max,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.4002,
+  "stochastic_unclipped": 0.3674,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=mean,INFLATE=False,KAPPA=0.0,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3893,
+  "stochastic_unclipped": 0.3265,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=max,INFLATE=False,KAPPA=0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3875,
+  "stochastic_unclipped": 0.3167,
+  "note": "grid 2"
+ },
+ {
+  "name": "S2[CAPM=1.1,HORIZON=mean,INFLATE=False,KAPPA=0.5,LEAD=max,PIPE=hard]",
+  "stochastic_norm": 0.3752,
+  "stochastic_unclipped": 0.2636,
+  "note": "grid 2"
+ }
+]

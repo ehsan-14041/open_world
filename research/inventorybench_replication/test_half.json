@@ -1,0 +1,1818 @@
+{
+ "n_test": 660,
+ "clusters": 140,
+ "n_stochastic": 220,
+ "levels": {
+  "all": {
+   "OR": {
+    "norm": 0.4466,
+    "unclipped": 0.366,
+    "norm_clair": 0.4843
+   },
+   "Cusum+Supply": {
+    "norm": 0.5375,
+    "unclipped": 0.4178,
+    "norm_clair": 0.5832
+   },
+   "Cusum+Supply2": {
+    "norm": 0.5577,
+    "unclipped": 0.4796,
+    "norm_clair": 0.6237
+   },
+   "GPT-5 Mini (LLM)": {
+    "norm": 0.4609,
+    "unclipped": 0.3406,
+    "norm_clair": 0.4923
+   },
+   "GPT-5 Mini (LLM→OR)": {
+    "norm": 0.4573,
+    "unclipped": 0.3586,
+    "norm_clair": 0.4955
+   },
+   "GPT-5 Mini (OR→LLM)": {
+    "norm": 0.4627,
+    "unclipped": 0.3341,
+    "norm_clair": 0.4958
+   },
+   "Gemini 3 Flash (LLM)": {
+    "norm": 0.4917,
+    "unclipped": 0.2418,
+    "norm_clair": 0.5308
+   },
+   "Gemini 3 Flash (LLM→OR)": {
+    "norm": 0.4991,
+    "unclipped": 0.4008,
+    "norm_clair": 0.5377
+   },
+   "Gemini 3 Flash (OR→LLM)": {
+    "norm": 0.5357,
+    "unclipped": 0.4523,
+    "norm_clair": 0.591
+   },
+   "Grok 4.1 Fast (LLM)": {
+    "norm": 0.4602,
+    "unclipped": 0.0683,
+    "norm_clair": 0.4977
+   },
+   "Grok 4.1 Fast (LLM→OR)": {
+    "norm": 0.4933,
+    "unclipped": 0.2304,
+    "norm_clair": 0.5221
+   },
+   "Grok 4.1 Fast (OR→LLM)": {
+    "norm": 0.5129,
+    "unclipped": 0.398,
+    "norm_clair": 0.5586
+   }
+  },
+  "stochastic": {
+   "OR": {
+    "norm": 0.1555,
+    "unclipped": 0.1547,
+    "norm_clair": 0.2276
+   },
+   "Cusum+Supply": {
+    "norm": 0.3609,
+    "unclipped": 0.2277,
+    "norm_clair": 0.4554
+   },
+   "Cusum+Supply2": {
+    "norm": 0.4166,
+    "unclipped": 0.3872,
+    "norm_clair": 0.5702
+   },
+   "GPT-5 Mini (LLM)": {
+    "norm": 0.1793,
+    "unclipped": 0.1181,
+    "norm_clair": 0.2337
+   },
+   "GPT-5 Mini (LLM→OR)": {
+    "norm": 0.1646,
+    "unclipped": 0.1511,
+    "norm_clair": 0.2398
+   },
+   "GPT-5 Mini (OR→LLM)": {
+    "norm": 0.1734,
+    "unclipped": 0.0804,
+    "norm_clair": 0.233
+   },
+   "Gemini 3 Flash (LLM)": {
+    "norm": 0.3571,
+    "unclipped": 0.1815,
+    "norm_clair": 0.4409
+   },
+   "Gemini 3 Flash (LLM→OR)": {
+    "norm": 0.2386,
+    "unclipped": 0.1526,
+    "norm_clair": 0.3113
+   },
+   "Gemini 3 Flash (OR→LLM)": {
+    "norm": 0.3846,
+    "unclipped": 0.3397,
+    "norm_clair": 0.5084
+   },
+   "Grok 4.1 Fast (LLM)": {
+    "norm": 0.3655,
+    "unclipped": 0.1748,
+    "norm_clair": 0.4554
+   },
+   "Grok 4.1 Fast (LLM→OR)": {
+    "norm": 0.2201,
+    "unclipped": -0.3735,
+    "norm_clair": 0.2625
+   },
+   "Grok 4.1 Fast (OR→LLM)": {
+    "norm": 0.333,
+    "unclipped": 0.2467,
+    "norm_clair": 0.4287
+   }
+  },
+  "fixed": {
+   "OR": {
+    "norm": 0.5922,
+    "unclipped": 0.4717,
+    "norm_clair": 0.6126
+   },
+   "Cusum+Supply": {
+    "norm": 0.6258,
+    "unclipped": 0.5128,
+    "norm_clair": 0.6471
+   },
+   "Cusum+Supply2": {
+    "norm": 0.6282,
+    "unclipped": 0.5258,
+    "norm_clair": 0.6504
+   },
+   "GPT-5 Mini (LLM)": {
+    "norm": 0.6016,
+    "unclipped": 0.4518,
+    "norm_clair": 0.6216
+   },
+   "GPT-5 Mini (LLM→OR)": {
+    "norm": 0.6037,
+    "unclipped": 0.4623,
+    "norm_clair": 0.6234
+   },
+   "GPT-5 Mini (OR→LLM)": {
+    "norm": 0.6074,
+    "unclipped": 0.4609,
+    "norm_clair": 0.6272
+   },
+   "Gemini 3 Flash (LLM)": {
+    "norm": 0.559,
+    "unclipped": 0.2719,
+    "norm_clair": 0.5757
+   },
+   "Gemini 3 Flash (LLM→OR)": {
+    "norm": 0.6293,
+    "unclipped": 0.5249,
+    "norm_clair": 0.6509
+   },
+   "Gemini 3 Flash (OR→LLM)": {
+    "norm": 0.6112,
+    "unclipped": 0.5086,
+    "norm_clair": 0.6324
+   },
+   "Grok 4.1 Fast (LLM)": {
+    "norm": 0.5075,
+    "unclipped": 0.015,
+    "norm_clair": 0.5188
+   },
+   "Grok 4.1 Fast (LLM→OR)": {
+    "norm": 0.63,
+    "unclipped": 0.5324,
+    "norm_clair": 0.6518
+   },
+   "Grok 4.1 Fast (OR→LLM)": {
+    "norm": 0.6028,
+    "unclipped": 0.4736,
+    "norm_clair": 0.6236
+   }
+  },
+  "stochastic/synthetic": {
+   "OR": {
+    "norm": 0.1082,
+    "unclipped": 0.1082,
+    "norm_clair": 0.1604
+   },
+   "Cusum+Supply": {
+    "norm": 0.3932,
+    "unclipped": 0.3647,
+    "norm_clair": 0.5195
+   },
+   "Cusum+Supply2": {
+    "norm": 0.4467,
+    "unclipped": 0.4448,
+    "norm_clair": 0.6393
+   },
+   "GPT-5 Mini (LLM)": {
+    "norm": 0.188,
+    "unclipped": 0.1781,
+    "norm_clair": 0.2545
+   },
+   "GPT-5 Mini (LLM→OR)": {
+    "norm": 0.1617,
+    "unclipped": 0.1617,
+    "norm_clair": 0.238
+   },
+   "GPT-5 Mini (OR→LLM)": {
+    "norm": 0.1608,
+    "unclipped": 0.1158,
+    "norm_clair": 0.2232
+   },
+   "Gemini 3 Flash (LLM)": {
+    "norm": 0.39,
+    "unclipped": 0.326,
+    "norm_clair": 0.4999
+   },
+   "Gemini 3 Flash (LLM→OR)": {
+    "norm": 0.2437,
+    "unclipped": 0.1744,
+    "norm_clair": 0.3327
+   },
+   "Gemini 3 Flash (OR→LLM)": {
+    "norm": 0.4053,
+    "unclipped": 0.3942,
+    "norm_clair": 0.5604
+   },
+   "Grok 4.1 Fast (LLM)": {
+    "norm": 0.3958,
+    "unclipped": 0.2896,
+    "norm_clair": 0.5121
+   },
+   "Grok 4.1 Fast (LLM→OR)": {
+    "norm": 0.2269,
+    "unclipped": -0.173,
+    "norm_clair": 0.2781
+   },
+   "Grok 4.1 Fast (OR→LLM)": {
+    "norm": 0.3496,
+    "unclipped": 0.3146,
+    "norm_clair": 0.4657
+   }
+  },
+  "stochastic/real": {
+   "OR": {
+    "norm": 0.2123,
+    "unclipped": 0.2104,
+    "norm_clair": 0.3083
+   },
+   "Cusum+Supply": {
+    "norm": 0.322,
+    "unclipped": 0.0634,
+    "norm_clair": 0.3786
+   },
+   "Cusum+Supply2": {
+    "norm": 0.3805,
+    "unclipped": 0.3181,
+    "norm_clair": 0.4873
+   },
+   "GPT-5 Mini (LLM)": {
+    "norm": 0.1688,
+    "unclipped": 0.0462,
+    "norm_clair": 0.2087
+   },
+   "GPT-5 Mini (LLM→OR)": {
+    "norm": 0.168,
+    "unclipped": 0.1383,
+    "norm_clair": 0.242
+   },
+   "GPT-5 Mini (OR→LLM)": {
+    "norm": 0.1884,
+    "unclipped": 0.038,
+    "norm_clair": 0.2447
+   },
+   "Gemini 3 Flash (LLM)": {
+    "norm": 0.3176,
+    "unclipped": 0.0081,
+    "norm_clair": 0.37
+   },
+   "Gemini 3 Flash (LLM→OR)": {
+    "norm": 0.2324,
+    "unclipped": 0.1264,
+    "norm_clair": 0.2856
+   },
+   "Gemini 3 Flash (OR→LLM)": {
+    "norm": 0.3598,
+    "unclipped": 0.2742,
+    "norm_clair": 0.4459
+   },
+   "Grok 4.1 Fast (LLM)": {
+    "norm": 0.3293,
+    "unclipped": 0.0372,
+    "norm_clair": 0.3873
+   },
+   "Grok 4.1 Fast (LLM→OR)": {
+    "norm": 0.2119,
+    "unclipped": -0.6142,
+    "norm_clair": 0.2436
+   },
+   "Grok 4.1 Fast (OR→LLM)": {
+    "norm": 0.3132,
+    "unclipped": 0.1653,
+    "norm_clair": 0.3843
+   }
+  }
+ },
+ "old_minus": {
+  "OR": {
+   "all": {
+    "diff": 0.0908,
+    "ci95": [
+     0.0767,
+     0.1046
+    ]
+   },
+   "stochastic": {
+    "diff": 0.2054,
+    "ci95": [
+     0.1746,
+     0.2324
+    ]
+   }
+  },
+  "GPT-5 Mini (LLM)": {
+   "all": {
+    "diff": 0.0766,
+    "ci95": [
+     0.0644,
+     0.0879
+    ]
+   },
+   "stochastic": {
+    "diff": 0.1816,
+    "ci95": [
+     0.1599,
+     0.2023
+    ]
+   }
+  },
+  "GPT-5 Mini (LLM→OR)": {
+   "all": {
+    "diff": 0.0801,
+    "ci95": [
+     0.0693,
+     0.0905
+    ]
+   },
+   "stochastic": {
+    "diff": 0.1963,
+    "ci95": [
+     0.169,
+     0.2215
+    ]
+   }
+  },
+  "GPT-5 Mini (OR→LLM)": {
+   "all": {
+    "diff": 0.0747,
+    "ci95": [
+     0.0624,
+     0.0859
+    ]
+   },
+   "stochastic": {
+    "diff": 0.1875,
+    "ci95": [
+     0.1616,
+     0.2103
+    ]
+   }
+  },
+  "Gemini 3 Flash (LLM)": {
+   "all": {
+    "diff": 0.0458,
+    "ci95": [
+     0.0364,
+     0.0547
+    ]
+   },
+   "stochastic": {
+    "diff": 0.0038,
+    "ci95": [
+     -0.0089,
+     0.0167
+    ]
+   }
+  },
+  "Gemini 3 Flash (LLM→OR)": {
+   "all": {
+    "diff": 0.0384,
+    "ci95": [
+     0.0295,
+     0.0469
+    ]
+   },
+   "stochastic": {
+    "diff": 0.1223,
+    "ci95": [
+     0.1024,
+     0.1416
+    ]
+   }
+  },
+  "Gemini 3 Flash (OR→LLM)": {
+   "all": {
+    "diff": 0.0018,
+    "ci95": [
+     -0.0053,
+     0.0087
+    ]
+   },
+   "stochastic": {
+    "diff": -0.0238,
+    "ci95": [
+     -0.0374,
+     -0.0103
+    ]
+   }
+  },
+  "Grok 4.1 Fast (LLM)": {
+   "all": {
+    "diff": 0.0773,
+    "ci95": [
+     0.0674,
+     0.0867
+    ]
+   },
+   "stochastic": {
+    "diff": -0.0047,
+    "ci95": [
+     -0.017,
+     0.0076
+    ]
+   }
+  },
+  "Grok 4.1 Fast (LLM→OR)": {
+   "all": {
+    "diff": 0.0441,
+    "ci95": [
+     0.0354,
+     0.0525
+    ]
+   },
+   "stochastic": {
+    "diff": 0.1408,
+    "ci95": [
+     0.1209,
+     0.1605
+    ]
+   }
+  },
+  "Grok 4.1 Fast (OR→LLM)": {
+   "all": {
+    "diff": 0.0246,
+    "ci95": [
+     0.0172,
+     0.0319
+    ]
+   },
+   "stochastic": {
+    "diff": 0.0278,
+    "ci95": [
+     0.0134,
+     0.0418
+    ]
+   }
+  }
+ },
+ "new_minus": {
+  "OR": {
+   "all": {
+    "norm": {
+     "diff": 0.111,
+     "ci95": [
+      0.0986,
+      0.1223
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1136,
+     "ci95": [
+      0.0855,
+      0.1405
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1394,
+     "ci95": [
+      0.1219,
+      0.1549
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.2611,
+     "ci95": [
+      0.2334,
+      0.2851
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2325,
+     "ci95": [
+      0.1905,
+      0.2681
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.3426,
+     "ci95": [
+      0.2975,
+      0.3813
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": 0.036,
+     "ci95": [
+      0.0221,
+      0.0508
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0541,
+     "ci95": [
+      0.0176,
+      0.092
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0378,
+     "ci95": [
+      0.0231,
+      0.0535
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.3385,
+     "ci95": [
+      0.3185,
+      0.3554
+     ]
+    },
+    "unclipped": {
+     "diff": 0.3366,
+     "ci95": [
+      0.3138,
+      0.3551
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.4788,
+     "ci95": [
+      0.4468,
+      0.506
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.1683,
+     "ci95": [
+      0.1301,
+      0.2058
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1077,
+     "ci95": [
+      0.0384,
+      0.1685
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.179,
+     "ci95": [
+      0.1211,
+      0.2329
+     ]
+    }
+   }
+  },
+  "Cusum+Supply": {
+   "all": {
+    "norm": {
+     "diff": 0.0202,
+     "ci95": [
+      0.0142,
+      0.0255
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0618,
+     "ci95": [
+      0.0459,
+      0.0798
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0404,
+     "ci95": [
+      0.0317,
+      0.0485
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.0558,
+     "ci95": [
+      0.0451,
+      0.0664
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1595,
+     "ci95": [
+      0.116,
+      0.2102
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1148,
+     "ci95": [
+      0.0951,
+      0.1346
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": 0.0024,
+     "ci95": [
+      -0.0039,
+      0.0072
+     ]
+    },
+    "unclipped": {
+     "diff": 0.013,
+     "ci95": [
+      0.0061,
+      0.0187
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0033,
+     "ci95": [
+      -0.0032,
+      0.0082
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.0535,
+     "ci95": [
+      0.044,
+      0.0626
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0801,
+     "ci95": [
+      0.0592,
+      0.1046
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1198,
+     "ci95": [
+      0.1025,
+      0.1365
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.0585,
+     "ci95": [
+      0.0381,
+      0.0792
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2547,
+     "ci95": [
+      0.1701,
+      0.3567
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1088,
+     "ci95": [
+      0.0709,
+      0.1493
+     ]
+    }
+   }
+  },
+  "GPT-5 Mini (LLM)": {
+   "all": {
+    "norm": {
+     "diff": 0.0968,
+     "ci95": [
+      0.0839,
+      0.1087
+     ]
+    },
+    "unclipped": {
+     "diff": 0.139,
+     "ci95": [
+      0.1161,
+      0.1642
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1314,
+     "ci95": [
+      0.1151,
+      0.1461
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.2373,
+     "ci95": [
+      0.218,
+      0.2557
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2691,
+     "ci95": [
+      0.231,
+      0.3118
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.3365,
+     "ci95": [
+      0.3076,
+      0.3636
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": 0.0266,
+     "ci95": [
+      0.014,
+      0.0383
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0739,
+     "ci95": [
+      0.0507,
+      0.0978
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0288,
+     "ci95": [
+      0.0154,
+      0.0412
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.2587,
+     "ci95": [
+      0.2381,
+      0.2787
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2667,
+     "ci95": [
+      0.2455,
+      0.2869
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.3847,
+     "ci95": [
+      0.3526,
+      0.4151
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.2117,
+     "ci95": [
+      0.1813,
+      0.2411
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2719,
+     "ci95": [
+      0.1936,
+      0.3635
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.2786,
+     "ci95": [
+      0.2362,
+      0.3204
+     ]
+    }
+   }
+  },
+  "GPT-5 Mini (LLM→OR)": {
+   "all": {
+    "norm": {
+     "diff": 0.1004,
+     "ci95": [
+      0.0905,
+      0.1096
+     ]
+    },
+    "unclipped": {
+     "diff": 0.121,
+     "ci95": [
+      0.1002,
+      0.1412
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1281,
+     "ci95": [
+      0.1139,
+      0.1409
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.2521,
+     "ci95": [
+      0.2274,
+      0.2739
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2361,
+     "ci95": [
+      0.1964,
+      0.272
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.3304,
+     "ci95": [
+      0.292,
+      0.364
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": 0.0245,
+     "ci95": [
+      0.0156,
+      0.0339
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0635,
+     "ci95": [
+      0.037,
+      0.092
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.027,
+     "ci95": [
+      0.0173,
+      0.0374
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.285,
+     "ci95": [
+      0.2632,
+      0.3047
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2831,
+     "ci95": [
+      0.2587,
+      0.3041
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.4013,
+     "ci95": [
+      0.3664,
+      0.4325
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.2125,
+     "ci95": [
+      0.1709,
+      0.2529
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1798,
+     "ci95": [
+      0.1029,
+      0.2512
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.2454,
+     "ci95": [
+      0.1848,
+      0.3019
+     ]
+    }
+   }
+  },
+  "GPT-5 Mini (OR→LLM)": {
+   "all": {
+    "norm": {
+     "diff": 0.0949,
+     "ci95": [
+      0.0824,
+      0.1062
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1455,
+     "ci95": [
+      0.1179,
+      0.1757
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1279,
+     "ci95": [
+      0.1114,
+      0.1426
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.2432,
+     "ci95": [
+      0.2206,
+      0.2636
+     ]
+    },
+    "unclipped": {
+     "diff": 0.3068,
+     "ci95": [
+      0.2643,
+      0.3496
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.3373,
+     "ci95": [
+      0.3033,
+      0.3672
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": 0.0208,
+     "ci95": [
+      0.0102,
+      0.0304
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0649,
+     "ci95": [
+      0.0361,
+      0.0959
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0232,
+     "ci95": [
+      0.0118,
+      0.0337
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.2859,
+     "ci95": [
+      0.2623,
+      0.3071
+     ]
+    },
+    "unclipped": {
+     "diff": 0.329,
+     "ci95": [
+      0.2954,
+      0.3695
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.4161,
+     "ci95": [
+      0.382,
+      0.4467
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.1921,
+     "ci95": [
+      0.1585,
+      0.2245
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2801,
+     "ci95": [
+      0.2014,
+      0.3636
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.2427,
+     "ci95": [
+      0.195,
+      0.2883
+     ]
+    }
+   }
+  },
+  "Gemini 3 Flash (LLM)": {
+   "all": {
+    "norm": {
+     "diff": 0.066,
+     "ci95": [
+      0.0534,
+      0.0774
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2378,
+     "ci95": [
+      0.1937,
+      0.2918
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0929,
+     "ci95": [
+      0.0769,
+      0.1076
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.0595,
+     "ci95": [
+      0.0446,
+      0.0745
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2057,
+     "ci95": [
+      0.1478,
+      0.275
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1294,
+     "ci95": [
+      0.1041,
+      0.1538
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": 0.0692,
+     "ci95": [
+      0.0545,
+      0.0827
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2539,
+     "ci95": [
+      0.1995,
+      0.3203
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0747,
+     "ci95": [
+      0.0592,
+      0.0888
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.0567,
+     "ci95": [
+      0.0409,
+      0.0702
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1188,
+     "ci95": [
+      0.0924,
+      0.1437
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1394,
+     "ci95": [
+      0.1132,
+      0.1624
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.063,
+     "ci95": [
+      0.0359,
+      0.0907
+     ]
+    },
+    "unclipped": {
+     "diff": 0.31,
+     "ci95": [
+      0.1953,
+      0.45
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1173,
+     "ci95": [
+      0.0723,
+      0.1633
+     ]
+    }
+   }
+  },
+  "Gemini 3 Flash (LLM→OR)": {
+   "all": {
+    "norm": {
+     "diff": 0.0586,
+     "ci95": [
+      0.0487,
+      0.0679
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0788,
+     "ci95": [
+      0.0577,
+      0.1004
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.086,
+     "ci95": [
+      0.0729,
+      0.0982
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.178,
+     "ci95": [
+      0.1599,
+      0.1954
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2346,
+     "ci95": [
+      0.1858,
+      0.2901
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.2589,
+     "ci95": [
+      0.2306,
+      0.2858
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": -0.0011,
+     "ci95": [
+      -0.0109,
+      0.0076
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0009,
+     "ci95": [
+      -0.016,
+      0.0168
+     ]
+    },
+    "norm_clair": {
+     "diff": -0.0005,
+     "ci95": [
+      -0.0108,
+      0.0088
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.203,
+     "ci95": [
+      0.185,
+      0.2221
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2704,
+     "ci95": [
+      0.2175,
+      0.3487
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.3066,
+     "ci95": [
+      0.2767,
+      0.3375
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.1481,
+     "ci95": [
+      0.1176,
+      0.1783
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1918,
+     "ci95": [
+      0.1163,
+      0.2771
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.2018,
+     "ci95": [
+      0.1567,
+      0.2465
+     ]
+    }
+   }
+  },
+  "Gemini 3 Flash (OR→LLM)": {
+   "all": {
+    "norm": {
+     "diff": 0.022,
+     "ci95": [
+      0.0133,
+      0.0303
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0273,
+     "ci95": [
+      0.0076,
+      0.0453
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0326,
+     "ci95": [
+      0.0207,
+      0.0441
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.032,
+     "ci95": [
+      0.0196,
+      0.0443
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0475,
+     "ci95": [
+      0.0251,
+      0.0708
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0619,
+     "ci95": [
+      0.038,
+      0.0856
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": 0.017,
+     "ci95": [
+      0.0074,
+      0.0259
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0172,
+     "ci95": [
+      -0.0084,
+      0.04
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.018,
+     "ci95": [
+      0.008,
+      0.0275
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.0414,
+     "ci95": [
+      0.0265,
+      0.0574
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0506,
+     "ci95": [
+      0.0315,
+      0.0717
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0789,
+     "ci95": [
+      0.051,
+      0.1079
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.0207,
+     "ci95": [
+      0.0012,
+      0.0407
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0439,
+     "ci95": [
+      0.0012,
+      0.0894
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0414,
+     "ci95": [
+      0.0029,
+      0.0816
+     ]
+    }
+   }
+  },
+  "Grok 4.1 Fast (LLM)": {
+   "all": {
+    "norm": {
+     "diff": 0.0975,
+     "ci95": [
+      0.0848,
+      0.1092
+     ]
+    },
+    "unclipped": {
+     "diff": 0.4113,
+     "ci95": [
+      0.334,
+      0.5035
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.126,
+     "ci95": [
+      0.1096,
+      0.141
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.0511,
+     "ci95": [
+      0.0364,
+      0.0656
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2124,
+     "ci95": [
+      0.1564,
+      0.2784
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1148,
+     "ci95": [
+      0.0901,
+      0.1393
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": 0.1207,
+     "ci95": [
+      0.1049,
+      0.1355
+     ]
+    },
+    "unclipped": {
+     "diff": 0.5108,
+     "ci95": [
+      0.4042,
+      0.6377
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1316,
+     "ci95": [
+      0.1144,
+      0.1476
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.0509,
+     "ci95": [
+      0.0343,
+      0.0674
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1552,
+     "ci95": [
+      0.1082,
+      0.2104
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1271,
+     "ci95": [
+      0.0995,
+      0.1545
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.0512,
+     "ci95": [
+      0.0261,
+      0.0767
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2809,
+     "ci95": [
+      0.1755,
+      0.403
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1,
+     "ci95": [
+      0.0579,
+      0.1443
+     ]
+    }
+   }
+  },
+  "Grok 4.1 Fast (LLM→OR)": {
+   "all": {
+    "norm": {
+     "diff": 0.0643,
+     "ci95": [
+      0.0545,
+      0.0736
+     ]
+    },
+    "unclipped": {
+     "diff": 0.2492,
+     "ci95": [
+      0.187,
+      0.3325
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1016,
+     "ci95": [
+      0.0886,
+      0.1138
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.1965,
+     "ci95": [
+      0.1769,
+      0.2155
+     ]
+    },
+    "unclipped": {
+     "diff": 0.7608,
+     "ci95": [
+      0.5827,
+      1.005
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.3077,
+     "ci95": [
+      0.2776,
+      0.337
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": -0.0017,
+     "ci95": [
+      -0.0108,
+      0.0063
+     ]
+    },
+    "unclipped": {
+     "diff": -0.0066,
+     "ci95": [
+      -0.023,
+      0.0077
+     ]
+    },
+    "norm_clair": {
+     "diff": -0.0015,
+     "ci95": [
+      -0.0109,
+      0.0071
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.2198,
+     "ci95": [
+      0.1969,
+      0.2421
+     ]
+    },
+    "unclipped": {
+     "diff": 0.6178,
+     "ci95": [
+      0.5058,
+      0.7412
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.3611,
+     "ci95": [
+      0.3267,
+      0.394
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.1686,
+     "ci95": [
+      0.1372,
+      0.2019
+     ]
+    },
+    "unclipped": {
+     "diff": 0.9323,
+     "ci95": [
+      0.5745,
+      1.4519
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.2437,
+     "ci95": [
+      0.1968,
+      0.2917
+     ]
+    }
+   }
+  },
+  "Grok 4.1 Fast (OR→LLM)": {
+   "all": {
+    "norm": {
+     "diff": 0.0448,
+     "ci95": [
+      0.0351,
+      0.0536
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0816,
+     "ci95": [
+      0.0659,
+      0.0983
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0651,
+     "ci95": [
+      0.0523,
+      0.0767
+     ]
+    }
+   },
+   "stochastic": {
+    "norm": {
+     "diff": 0.0836,
+     "ci95": [
+      0.07,
+      0.0965
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1405,
+     "ci95": [
+      0.1099,
+      0.1716
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1415,
+     "ci95": [
+      0.1166,
+      0.1649
+     ]
+    }
+   },
+   "fixed": {
+    "norm": {
+     "diff": 0.0254,
+     "ci95": [
+      0.0148,
+      0.0355
+     ]
+    },
+    "unclipped": {
+     "diff": 0.0522,
+     "ci95": [
+      0.0355,
+      0.0698
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.0268,
+     "ci95": [
+      0.0157,
+      0.0373
+     ]
+    }
+   },
+   "stochastic/synthetic": {
+    "norm": {
+     "diff": 0.0971,
+     "ci95": [
+      0.0793,
+      0.114
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1301,
+     "ci95": [
+      0.1013,
+      0.159
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1735,
+     "ci95": [
+      0.1429,
+      0.2027
+     ]
+    }
+   },
+   "stochastic/real": {
+    "norm": {
+     "diff": 0.0674,
+     "ci95": [
+      0.0489,
+      0.0867
+     ]
+    },
+    "unclipped": {
+     "diff": 0.1529,
+     "ci95": [
+      0.0978,
+      0.2114
+     ]
+    },
+    "norm_clair": {
+     "diff": 0.1031,
+     "ci95": [
+      0.0679,
+      0.1406
+     ]
+    }
+   }
+  }
+ },
+ "verdict": {
+  "Q1_first_step_holds_on_test_half": true,
+  "Q2_stochastic_new_minus_gemini_hybrid": {
+   "diff": 0.032,
+   "ci95": [
+    0.0196,
+    0.0443
+   ]
+  },
+  "Q2": "gap closed",
+  "Q2_sensitivity": {
+   "unclipped": {
+    "diff": 0.0475,
+    "ci95": [
+     0.0251,
+     0.0708
+    ]
+   },
+   "norm_clair": {
+    "diff": 0.0619,
+    "ci95": [
+     0.038,
+     0.0856
+    ]
+   }
+  },
+  "Q2_all_instances": {
+   "norm": {
+    "diff": 0.022,
+    "ci95": [
+     0.0133,
+     0.0303
+    ]
+   },
+   "unclipped": {
+    "diff": 0.0273,
+    "ci95": [
+     0.0076,
+     0.0453
+    ]
+   },
+   "norm_clair": {
+    "diff": 0.0326,
+    "ci95": [
+     0.0207,
+     0.0441
+    ]
+   }
+  }
+ }
+}

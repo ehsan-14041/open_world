@@ -1,0 +1,3101 @@
+{
+ "n": 1320,
+ "clusters": 280,
+ "primary": "Cusum+Supply",
+ "overall": {
+  "OR": {
+   "norm": 0.4447,
+   "unclipped": 0.364,
+   "norm_clair": 0.4822,
+   "service": 0.6137,
+   "reward": 30718.8,
+   "holding": 3232.7
+  },
+  "Rolling": {
+   "norm": 0.4706,
+   "unclipped": 0.4084,
+   "norm_clair": 0.5112,
+   "service": 0.6298,
+   "reward": 33188.2,
+   "holding": 2930.1
+  },
+  "Cusum": {
+   "norm": 0.4712,
+   "unclipped": 0.3984,
+   "norm_clair": 0.5098,
+   "service": 0.6369,
+   "reward": 33424.6,
+   "holding": 3144.9
+  },
+  "SupplyAware": {
+   "norm": 0.5053,
+   "unclipped": 0.3778,
+   "norm_clair": 0.5486,
+   "service": 0.7619,
+   "reward": 36674.0,
+   "holding": 4924.0
+  },
+  "Rolling+Supply": {
+   "norm": 0.5319,
+   "unclipped": 0.438,
+   "norm_clair": 0.5776,
+   "service": 0.7746,
+   "reward": 39734.8,
+   "holding": 4498.3
+  },
+  "Cusum+Supply": {
+   "norm": 0.5356,
+   "unclipped": 0.4272,
+   "norm_clair": 0.5804,
+   "service": 0.7864,
+   "reward": 40274.5,
+   "holding": 4778.3
+  },
+  "pub:Gemini 3 Flash (LLM)": {
+   "norm": 0.4945,
+   "unclipped": 0.2478,
+   "norm_clair": 0.5338,
+   "service": 0.8204,
+   "reward": 39924.1,
+   "holding": 6833.9
+  },
+  "pub:Gemini 3 Flash (LLM→OR)": {
+   "norm": 0.5009,
+   "unclipped": 0.4106,
+   "norm_clair": 0.5407,
+   "service": 0.7143,
+   "reward": 36304.9,
+   "holding": 4101.3
+  },
+  "pub:Gemini 3 Flash (OR→LLM)": {
+   "norm": 0.538,
+   "unclipped": 0.4588,
+   "norm_clair": 0.595,
+   "service": 0.7809,
+   "reward": 39841.9,
+   "holding": 4232.4
+  },
+  "pub:GPT-5 Mini (LLM)": {
+   "norm": 0.4597,
+   "unclipped": 0.3504,
+   "norm_clair": 0.4912,
+   "service": 0.6493,
+   "reward": 33927.8,
+   "holding": 3465.6
+  },
+  "pub:GPT-5 Mini (LLM→OR)": {
+   "norm": 0.4578,
+   "unclipped": 0.3629,
+   "norm_clair": 0.4955,
+   "service": 0.6366,
+   "reward": 32426.0,
+   "holding": 3470.4
+  },
+  "pub:GPT-5 Mini (OR→LLM)": {
+   "norm": 0.4611,
+   "unclipped": 0.3434,
+   "norm_clair": 0.4942,
+   "service": 0.6444,
+   "reward": 33165.5,
+   "holding": 3385.4
+  },
+  "pub:Grok 4.1 Fast (LLM)": {
+   "norm": 0.4593,
+   "unclipped": 0.0614,
+   "norm_clair": 0.4969,
+   "service": 0.8387,
+   "reward": 35874.1,
+   "holding": 12219.9
+  },
+  "pub:Grok 4.1 Fast (LLM→OR)": {
+   "norm": 0.4934,
+   "unclipped": 0.2324,
+   "norm_clair": 0.5223,
+   "service": 0.7718,
+   "reward": 36117.6,
+   "holding": 8241.2
+  },
+  "pub:Grok 4.1 Fast (OR→LLM)": {
+   "norm": 0.5139,
+   "unclipped": 0.4098,
+   "norm_clair": 0.5615,
+   "service": 0.7721,
+   "reward": 39504.9,
+   "holding": 4572.1
+  }
+ },
+ "by_cell": {
+  "synthetic/lead_time_0": {
+   "OR": 0.8179,
+   "Rolling": 0.8573,
+   "Cusum": 0.8626,
+   "SupplyAware": 0.8179,
+   "Rolling+Supply": 0.8573,
+   "Cusum+Supply": 0.8626,
+   "pub:Gemini 3 Flash (LLM)": 0.8253,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.8604,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.8391,
+   "pub:GPT-5 Mini (LLM)": 0.8371,
+   "pub:GPT-5 Mini (LLM→OR)": 0.8452,
+   "pub:GPT-5 Mini (OR→LLM)": 0.8525,
+   "pub:Grok 4.1 Fast (LLM)": 0.8387,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.8584,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.8493
+  },
+  "synthetic/lead_time_4": {
+   "OR": 0.5359,
+   "Rolling": 0.5651,
+   "Cusum": 0.5685,
+   "SupplyAware": 0.5359,
+   "Rolling+Supply": 0.5651,
+   "Cusum+Supply": 0.5685,
+   "pub:Gemini 3 Flash (LLM)": 0.4341,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.5576,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.5395,
+   "pub:GPT-5 Mini (LLM)": 0.49,
+   "pub:GPT-5 Mini (LLM→OR)": 0.5302,
+   "pub:GPT-5 Mini (OR→LLM)": 0.4937,
+   "pub:Grok 4.1 Fast (LLM)": 0.3166,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5555,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.5473
+  },
+  "synthetic/lead_time_stochastic": {
+   "OR": 0.1068,
+   "Rolling": 0.1144,
+   "Cusum": 0.1127,
+   "SupplyAware": 0.3824,
+   "Rolling+Supply": 0.3958,
+   "Cusum+Supply": 0.3934,
+   "pub:Gemini 3 Flash (LLM)": 0.3865,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.2434,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.4107,
+   "pub:GPT-5 Mini (LLM)": 0.1875,
+   "pub:GPT-5 Mini (LLM→OR)": 0.1593,
+   "pub:GPT-5 Mini (OR→LLM)": 0.1643,
+   "pub:Grok 4.1 Fast (LLM)": 0.3959,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.2364,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.3574
+  },
+  "real/lead_time_0": {
+   "OR": 0.6708,
+   "Rolling": 0.736,
+   "Cusum": 0.7561,
+   "SupplyAware": 0.6708,
+   "Rolling+Supply": 0.736,
+   "Cusum+Supply": 0.7561,
+   "pub:Gemini 3 Flash (LLM)": 0.7364,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.7716,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.7439,
+   "pub:GPT-5 Mini (LLM)": 0.7646,
+   "pub:GPT-5 Mini (LLM→OR)": 0.7319,
+   "pub:GPT-5 Mini (OR→LLM)": 0.7645,
+   "pub:Grok 4.1 Fast (LLM)": 0.7068,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.7696,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.6914
+  },
+  "real/lead_time_4": {
+   "OR": 0.3017,
+   "Rolling": 0.2966,
+   "Cusum": 0.2908,
+   "SupplyAware": 0.3017,
+   "Rolling+Supply": 0.2966,
+   "Cusum+Supply": 0.2908,
+   "pub:Gemini 3 Flash (LLM)": 0.24,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.3033,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.3071,
+   "pub:GPT-5 Mini (LLM)": 0.2879,
+   "pub:GPT-5 Mini (LLM→OR)": 0.2797,
+   "pub:GPT-5 Mini (OR→LLM)": 0.284,
+   "pub:Grok 4.1 Fast (LLM)": 0.1555,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.3085,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.2918
+  },
+  "real/lead_time_stochastic": {
+   "OR": 0.21,
+   "Rolling": 0.2294,
+   "Cusum": 0.2107,
+   "SupplyAware": 0.2792,
+   "Rolling+Supply": 0.2962,
+   "Cusum+Supply": 0.2986,
+   "pub:Gemini 3 Flash (LLM)": 0.3119,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.2375,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.3531,
+   "pub:GPT-5 Mini (LLM)": 0.1643,
+   "pub:GPT-5 Mini (LLM→OR)": 0.1681,
+   "pub:GPT-5 Mini (OR→LLM)": 0.1819,
+   "pub:Grok 4.1 Fast (LLM)": 0.3073,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.1981,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.3034
+  }
+ },
+ "by_lead": {
+  "lead_time_0": {
+   "OR": 0.751,
+   "Rolling": 0.8022,
+   "Cusum": 0.8142,
+   "SupplyAware": 0.751,
+   "Rolling+Supply": 0.8022,
+   "Cusum+Supply": 0.8142,
+   "pub:Gemini 3 Flash (LLM)": 0.7849,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.82,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.7958,
+   "pub:GPT-5 Mini (LLM)": 0.8041,
+   "pub:GPT-5 Mini (LLM→OR)": 0.7937,
+   "pub:GPT-5 Mini (OR→LLM)": 0.8125,
+   "pub:Grok 4.1 Fast (LLM)": 0.7787,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.818,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.7775
+  },
+  "lead_time_4": {
+   "OR": 0.4294,
+   "Rolling": 0.4431,
+   "Cusum": 0.4423,
+   "SupplyAware": 0.4294,
+   "Rolling+Supply": 0.4431,
+   "Cusum+Supply": 0.4423,
+   "pub:Gemini 3 Flash (LLM)": 0.3458,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.442,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.4338,
+   "pub:GPT-5 Mini (LLM)": 0.3981,
+   "pub:GPT-5 Mini (LLM→OR)": 0.4164,
+   "pub:GPT-5 Mini (OR→LLM)": 0.3984,
+   "pub:Grok 4.1 Fast (LLM)": 0.2434,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.4432,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.4312
+  },
+  "lead_time_stochastic": {
+   "OR": 0.1537,
+   "Rolling": 0.1667,
+   "Cusum": 0.1573,
+   "SupplyAware": 0.3355,
+   "Rolling+Supply": 0.3505,
+   "Cusum+Supply": 0.3503,
+   "pub:Gemini 3 Flash (LLM)": 0.3526,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.2407,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.3845,
+   "pub:GPT-5 Mini (LLM)": 0.1769,
+   "pub:GPT-5 Mini (LLM→OR)": 0.1633,
+   "pub:GPT-5 Mini (OR→LLM)": 0.1723,
+   "pub:Grok 4.1 Fast (LLM)": 0.3556,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.219,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.3329
+  }
+ },
+ "by_family": {
+  "p01_stationary_iid": {
+   "OR": 0.5664,
+   "Rolling": 0.555,
+   "Cusum": 0.5606,
+   "SupplyAware": 0.6799,
+   "Rolling+Supply": 0.6647,
+   "Cusum+Supply": 0.672,
+   "pub:Gemini 3 Flash (LLM)": 0.5733,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.6003,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6645,
+   "pub:GPT-5 Mini (LLM)": 0.5217,
+   "pub:GPT-5 Mini (LLM→OR)": 0.576,
+   "pub:GPT-5 Mini (OR→LLM)": 0.5359,
+   "pub:Grok 4.1 Fast (LLM)": 0.5518,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5947,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.6578
+  },
+  "p02_mean_increase": {
+   "OR": 0.5421,
+   "Rolling": 0.569,
+   "Cusum": 0.5639,
+   "SupplyAware": 0.644,
+   "Rolling+Supply": 0.6793,
+   "Cusum+Supply": 0.6743,
+   "pub:Gemini 3 Flash (LLM)": 0.6059,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.6072,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6651,
+   "pub:GPT-5 Mini (LLM)": 0.5371,
+   "pub:GPT-5 Mini (LLM→OR)": 0.5659,
+   "pub:GPT-5 Mini (OR→LLM)": 0.5367,
+   "pub:Grok 4.1 Fast (LLM)": 0.6063,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.6058,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.6572
+  },
+  "p03_mean_decrease": {
+   "OR": 0.4198,
+   "Rolling": 0.4839,
+   "Cusum": 0.4801,
+   "SupplyAware": 0.4899,
+   "Rolling+Supply": 0.5668,
+   "Cusum+Supply": 0.5632,
+   "pub:Gemini 3 Flash (LLM)": 0.5048,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.5293,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.5434,
+   "pub:GPT-5 Mini (LLM)": 0.4922,
+   "pub:GPT-5 Mini (LLM→OR)": 0.4547,
+   "pub:GPT-5 Mini (OR→LLM)": 0.4768,
+   "pub:Grok 4.1 Fast (LLM)": 0.453,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5328,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.517
+  },
+  "p04_increasing_trend": {
+   "OR": 0.4456,
+   "Rolling": 0.5453,
+   "Cusum": 0.5586,
+   "SupplyAware": 0.525,
+   "Rolling+Supply": 0.6334,
+   "Cusum+Supply": 0.6478,
+   "pub:Gemini 3 Flash (LLM)": 0.6406,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.6059,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6418,
+   "pub:GPT-5 Mini (LLM)": 0.55,
+   "pub:GPT-5 Mini (LLM→OR)": 0.5226,
+   "pub:GPT-5 Mini (OR→LLM)": 0.5414,
+   "pub:Grok 4.1 Fast (LLM)": 0.6046,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5826,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.6579
+  },
+  "p05_decreasing_trend": {
+   "OR": 0.3968,
+   "Rolling": 0.4803,
+   "Cusum": 0.4789,
+   "SupplyAware": 0.4571,
+   "Rolling+Supply": 0.5618,
+   "Cusum+Supply": 0.5541,
+   "pub:Gemini 3 Flash (LLM)": 0.5188,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.5276,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.5214,
+   "pub:GPT-5 Mini (LLM)": 0.5053,
+   "pub:GPT-5 Mini (LLM→OR)": 0.4451,
+   "pub:GPT-5 Mini (OR→LLM)": 0.4724,
+   "pub:Grok 4.1 Fast (LLM)": 0.4679,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5209,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.5108
+  },
+  "p06_variance_change": {
+   "OR": 0.5077,
+   "Rolling": 0.5011,
+   "Cusum": 0.5038,
+   "SupplyAware": 0.605,
+   "Rolling+Supply": 0.592,
+   "Cusum+Supply": 0.5945,
+   "pub:Gemini 3 Flash (LLM)": 0.5164,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.5216,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.5819,
+   "pub:GPT-5 Mini (LLM)": 0.4797,
+   "pub:GPT-5 Mini (LLM→OR)": 0.5153,
+   "pub:GPT-5 Mini (OR→LLM)": 0.4883,
+   "pub:Grok 4.1 Fast (LLM)": 0.4823,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5112,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.5699
+  },
+  "p07_seasonal": {
+   "OR": 0.4841,
+   "Rolling": 0.4846,
+   "Cusum": 0.4871,
+   "SupplyAware": 0.5823,
+   "Rolling+Supply": 0.5802,
+   "Cusum+Supply": 0.5833,
+   "pub:Gemini 3 Flash (LLM)": 0.513,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.5091,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.5641,
+   "pub:GPT-5 Mini (LLM)": 0.4812,
+   "pub:GPT-5 Mini (LLM→OR)": 0.5001,
+   "pub:GPT-5 Mini (OR→LLM)": 0.4689,
+   "pub:Grok 4.1 Fast (LLM)": 0.4833,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5182,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.5579
+  },
+  "p08_multi_changepoint": {
+   "OR": 0.4993,
+   "Rolling": 0.5059,
+   "Cusum": 0.5081,
+   "SupplyAware": 0.5932,
+   "Rolling+Supply": 0.5992,
+   "Cusum+Supply": 0.5986,
+   "pub:Gemini 3 Flash (LLM)": 0.5396,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.5494,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6041,
+   "pub:GPT-5 Mini (LLM)": 0.4953,
+   "pub:GPT-5 Mini (LLM→OR)": 0.5181,
+   "pub:GPT-5 Mini (OR→LLM)": 0.5001,
+   "pub:Grok 4.1 Fast (LLM)": 0.5053,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5538,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.5685
+  },
+  "p09_temp_spike_dip": {
+   "OR": 0.4676,
+   "Rolling": 0.4688,
+   "Cusum": 0.4771,
+   "SupplyAware": 0.5641,
+   "Rolling+Supply": 0.5565,
+   "Cusum+Supply": 0.5653,
+   "pub:Gemini 3 Flash (LLM)": 0.5136,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.5189,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.5617,
+   "pub:GPT-5 Mini (LLM)": 0.4785,
+   "pub:GPT-5 Mini (LLM→OR)": 0.4744,
+   "pub:GPT-5 Mini (OR→LLM)": 0.4912,
+   "pub:Grok 4.1 Fast (LLM)": 0.4734,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5231,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.5384
+  },
+  "p10_autocorrelated": {
+   "OR": 0.5391,
+   "Rolling": 0.529,
+   "Cusum": 0.5282,
+   "SupplyAware": 0.6465,
+   "Rolling+Supply": 0.6271,
+   "Cusum+Supply": 0.6287,
+   "pub:Gemini 3 Flash (LLM)": 0.5604,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.5685,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6162,
+   "pub:GPT-5 Mini (LLM)": 0.5077,
+   "pub:GPT-5 Mini (LLM→OR)": 0.5436,
+   "pub:GPT-5 Mini (OR→LLM)": 0.5235,
+   "pub:Grok 4.1 Fast (LLM)": 0.5428,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.5579,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.6116
+  }
+ },
+ "by_family_fixed_lead": {
+  "p01_stationary_iid": {
+   "OR": 0.8022,
+   "Rolling": 0.7833,
+   "Cusum": 0.7934,
+   "SupplyAware": 0.8022,
+   "Rolling+Supply": 0.7833,
+   "Cusum+Supply": 0.7934,
+   "pub:Gemini 3 Flash (LLM)": 0.6529,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.7805,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.7712,
+   "pub:GPT-5 Mini (LLM)": 0.703,
+   "pub:GPT-5 Mini (LLM→OR)": 0.7944,
+   "pub:GPT-5 Mini (OR→LLM)": 0.7283,
+   "pub:Grok 4.1 Fast (LLM)": 0.6067,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.7787,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.79
+  },
+  "p02_mean_increase": {
+   "OR": 0.7739,
+   "Rolling": 0.8099,
+   "Cusum": 0.8081,
+   "SupplyAware": 0.7739,
+   "Rolling+Supply": 0.8099,
+   "Cusum+Supply": 0.8081,
+   "pub:Gemini 3 Flash (LLM)": 0.7034,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.7998,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.7889,
+   "pub:GPT-5 Mini (LLM)": 0.7434,
+   "pub:GPT-5 Mini (LLM→OR)": 0.7892,
+   "pub:GPT-5 Mini (OR→LLM)": 0.7463,
+   "pub:Grok 4.1 Fast (LLM)": 0.6859,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.8059,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.7878
+  },
+  "p03_mean_decrease": {
+   "OR": 0.5569,
+   "Rolling": 0.6537,
+   "Cusum": 0.6489,
+   "SupplyAware": 0.5569,
+   "Rolling+Supply": 0.6537,
+   "Cusum+Supply": 0.6489,
+   "pub:Gemini 3 Flash (LLM)": 0.5672,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.6562,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6115,
+   "pub:GPT-5 Mini (LLM)": 0.6273,
+   "pub:GPT-5 Mini (LLM→OR)": 0.5821,
+   "pub:GPT-5 Mini (OR→LLM)": 0.6077,
+   "pub:Grok 4.1 Fast (LLM)": 0.4928,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.6529,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.602
+  },
+  "p04_increasing_trend": {
+   "OR": 0.6265,
+   "Rolling": 0.7592,
+   "Cusum": 0.7794,
+   "SupplyAware": 0.6265,
+   "Rolling+Supply": 0.7592,
+   "Cusum+Supply": 0.7794,
+   "pub:Gemini 3 Flash (LLM)": 0.7491,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.7907,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.7609,
+   "pub:GPT-5 Mini (LLM)": 0.7385,
+   "pub:GPT-5 Mini (LLM→OR)": 0.7087,
+   "pub:GPT-5 Mini (OR→LLM)": 0.7384,
+   "pub:Grok 4.1 Fast (LLM)": 0.6968,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.7699,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.7887
+  },
+  "p05_decreasing_trend": {
+   "OR": 0.5205,
+   "Rolling": 0.6528,
+   "Cusum": 0.6477,
+   "SupplyAware": 0.5205,
+   "Rolling+Supply": 0.6528,
+   "Cusum+Supply": 0.6477,
+   "pub:Gemini 3 Flash (LLM)": 0.5967,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.6566,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.5999,
+   "pub:GPT-5 Mini (LLM)": 0.6511,
+   "pub:GPT-5 Mini (LLM→OR)": 0.56,
+   "pub:GPT-5 Mini (OR→LLM)": 0.607,
+   "pub:Grok 4.1 Fast (LLM)": 0.522,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.6646,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.6041
+  },
+  "p06_variance_change": {
+   "OR": 0.7059,
+   "Rolling": 0.6897,
+   "Cusum": 0.6944,
+   "SupplyAware": 0.7059,
+   "Rolling+Supply": 0.6897,
+   "Cusum+Supply": 0.6944,
+   "pub:Gemini 3 Flash (LLM)": 0.5833,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.6605,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6656,
+   "pub:GPT-5 Mini (LLM)": 0.6147,
+   "pub:GPT-5 Mini (LLM→OR)": 0.6914,
+   "pub:GPT-5 Mini (OR→LLM)": 0.6444,
+   "pub:Grok 4.1 Fast (LLM)": 0.5116,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.6662,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.678
+  },
+  "p07_seasonal": {
+   "OR": 0.6762,
+   "Rolling": 0.6775,
+   "Cusum": 0.6791,
+   "SupplyAware": 0.6762,
+   "Rolling+Supply": 0.6775,
+   "Cusum+Supply": 0.6791,
+   "pub:Gemini 3 Flash (LLM)": 0.5846,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.6607,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6435,
+   "pub:GPT-5 Mini (LLM)": 0.6156,
+   "pub:GPT-5 Mini (LLM→OR)": 0.6725,
+   "pub:GPT-5 Mini (OR→LLM)": 0.6365,
+   "pub:Grok 4.1 Fast (LLM)": 0.5425,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.6542,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.6646
+  },
+  "p08_multi_changepoint": {
+   "OR": 0.6998,
+   "Rolling": 0.7029,
+   "Cusum": 0.7038,
+   "SupplyAware": 0.6998,
+   "Rolling+Supply": 0.7029,
+   "Cusum+Supply": 0.7038,
+   "pub:Gemini 3 Flash (LLM)": 0.6281,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.6994,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6992,
+   "pub:GPT-5 Mini (LLM)": 0.6491,
+   "pub:GPT-5 Mini (LLM→OR)": 0.6967,
+   "pub:GPT-5 Mini (OR→LLM)": 0.6758,
+   "pub:Grok 4.1 Fast (LLM)": 0.5728,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.6959,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.6892
+  },
+  "p09_temp_spike_dip": {
+   "OR": 0.651,
+   "Rolling": 0.6471,
+   "Cusum": 0.6655,
+   "SupplyAware": 0.651,
+   "Rolling+Supply": 0.6471,
+   "Cusum+Supply": 0.6655,
+   "pub:Gemini 3 Flash (LLM)": 0.595,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.668,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.6443,
+   "pub:GPT-5 Mini (LLM)": 0.6253,
+   "pub:GPT-5 Mini (LLM→OR)": 0.6393,
+   "pub:GPT-5 Mini (OR→LLM)": 0.6377,
+   "pub:Grok 4.1 Fast (LLM)": 0.536,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.6621,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.6473
+  },
+  "p10_autocorrelated": {
+   "OR": 0.7557,
+   "Rolling": 0.7361,
+   "Cusum": 0.7356,
+   "SupplyAware": 0.7557,
+   "Rolling+Supply": 0.7361,
+   "Cusum+Supply": 0.7356,
+   "pub:Gemini 3 Flash (LLM)": 0.6365,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.7174,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.7077,
+   "pub:GPT-5 Mini (LLM)": 0.6674,
+   "pub:GPT-5 Mini (LLM→OR)": 0.7428,
+   "pub:GPT-5 Mini (OR→LLM)": 0.7089,
+   "pub:Grok 4.1 Fast (LLM)": 0.6095,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.719,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.7315
+  }
+ },
+ "by_rho": {
+  "0.5": {
+   "OR": 0.2742,
+   "Rolling": 0.3069,
+   "Cusum": 0.3108,
+   "SupplyAware": 0.2575,
+   "Rolling+Supply": 0.2859,
+   "Cusum+Supply": 0.2909,
+   "pub:Gemini 3 Flash (LLM)": 0.2167,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.3011,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.2855,
+   "pub:GPT-5 Mini (LLM)": 0.2705,
+   "pub:GPT-5 Mini (LLM→OR)": 0.2914,
+   "pub:GPT-5 Mini (OR→LLM)": 0.281,
+   "pub:Grok 4.1 Fast (LLM)": 0.2241,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.277,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.2663
+  },
+  "0.8": {
+   "OR": 0.4542,
+   "Rolling": 0.4859,
+   "Cusum": 0.4824,
+   "SupplyAware": 0.5197,
+   "Rolling+Supply": 0.5568,
+   "Cusum+Supply": 0.5576,
+   "pub:Gemini 3 Flash (LLM)": 0.5115,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.5169,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.582,
+   "pub:GPT-5 Mini (LLM)": 0.4843,
+   "pub:GPT-5 Mini (LLM→OR)": 0.465,
+   "pub:GPT-5 Mini (OR→LLM)": 0.4811,
+   "pub:Grok 4.1 Fast (LLM)": 0.4491,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.4916,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.5425
+  },
+  "0.95": {
+   "OR": 0.6082,
+   "Rolling": 0.6219,
+   "Cusum": 0.623,
+   "SupplyAware": 0.7423,
+   "Rolling+Supply": 0.7573,
+   "Cusum+Supply": 0.7622,
+   "pub:Gemini 3 Flash (LLM)": 0.7593,
+   "pub:Gemini 3 Flash (LLM→OR)": 0.6879,
+   "pub:Gemini 3 Flash (OR→LLM)": 0.7521,
+   "pub:GPT-5 Mini (LLM)": 0.628,
+   "pub:GPT-5 Mini (LLM→OR)": 0.6193,
+   "pub:GPT-5 Mini (OR→LLM)": 0.6243,
+   "pub:Grok 4.1 Fast (LLM)": 0.7066,
+   "pub:Grok 4.1 Fast (LLM→OR)": 0.714,
+   "pub:Grok 4.1 Fast (OR→LLM)": 0.7372
+  }
+ },
+ "primary_vs": {
+  "OR": {
+   "all": {
+    "diff": 0.0909,
+    "ci95": [
+     0.0815,
+     0.1005
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": true,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.0448,
+     "ci95": [
+      0.0301,
+      0.0613
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.0327,
+     "ci95": [
+      0.0122,
+      0.0548
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": 0.2866,
+     "ci95": [
+      0.2729,
+      0.2992
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": 0.0853,
+     "ci95": [
+      0.0666,
+      0.1057
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": -0.0109,
+     "ci95": [
+      -0.0248,
+      0.0025
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": 0.0886,
+     "ci95": [
+      0.0579,
+      0.1194
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.1056,
+     "ci95": [
+      0.0913,
+      0.1182
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.1322,
+     "ci95": [
+      0.115,
+      0.1495
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.1434,
+     "ci95": [
+      0.1242,
+      0.16
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": 0.2022,
+     "ci95": [
+      0.1201,
+      0.2753
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.1574,
+     "ci95": [
+      0.1419,
+      0.1698
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.0868,
+     "ci95": [
+      0.0751,
+      0.0996
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.0992,
+     "ci95": [
+      0.0918,
+      0.1068
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": 0.0993,
+     "ci95": [
+      0.081,
+      0.1178
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.0977,
+     "ci95": [
+      0.0855,
+      0.1087
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.0896,
+     "ci95": [
+      0.0725,
+      0.1061
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": false,
+   "cells_same_sign": false,
+   "families_same_sign_as_overall": 10,
+   "sens_unclipped": {
+    "diff": 0.0632,
+    "ci95": [
+     0.0383,
+     0.086
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": 0.0982,
+    "ci95": [
+     0.0857,
+     0.1107
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 9555.7227,
+    "ci95": [
+     5662.0587,
+     15058.1526
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  },
+  "pub:Gemini 3 Flash (LLM)": {
+   "all": {
+    "diff": 0.0411,
+    "ci95": [
+     0.0348,
+     0.0473
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": true,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.0373,
+     "ci95": [
+      0.03,
+      0.0447
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.1345,
+     "ci95": [
+      0.1195,
+      0.1493
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": 0.0069,
+     "ci95": [
+      -0.0033,
+      0.0168
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": 0.0197,
+     "ci95": [
+      0.0087,
+      0.0313
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": 0.0508,
+     "ci95": [
+      0.0371,
+      0.0649
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": -0.0133,
+     "ci95": [
+      -0.0293,
+      0.0029
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.0987,
+     "ci95": [
+      0.0821,
+      0.1157
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.0684,
+     "ci95": [
+      0.0543,
+      0.0844
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.0585,
+     "ci95": [
+      0.0468,
+      0.0697
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": 0.0072,
+     "ci95": [
+      -0.0126,
+      0.0268
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.0353,
+     "ci95": [
+      0.0147,
+      0.0568
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.0781,
+     "ci95": [
+      0.061,
+      0.0966
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.0703,
+     "ci95": [
+      0.056,
+      0.0843
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": 0.059,
+     "ci95": [
+      0.0407,
+      0.08
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.0517,
+     "ci95": [
+      0.0358,
+      0.0688
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.0683,
+     "ci95": [
+      0.041,
+      0.0944
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": false,
+   "cells_same_sign": false,
+   "families_same_sign_as_overall": 10,
+   "sens_unclipped": {
+    "diff": 0.1794,
+    "ci95": [
+     0.1537,
+     0.2081
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": 0.0466,
+    "ci95": [
+     0.0389,
+     0.054
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 350.375,
+    "ci95": [
+     -916.9249,
+     1275.5064
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  },
+  "pub:Gemini 3 Flash (LLM→OR)": {
+   "all": {
+    "diff": 0.0347,
+    "ci95": [
+     0.0285,
+     0.0405
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": true,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.0023,
+     "ci95": [
+      -0.0002,
+      0.0047
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.0109,
+     "ci95": [
+      0.0009,
+      0.0209
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": 0.15,
+     "ci95": [
+      0.1356,
+      0.1644
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": -0.0155,
+     "ci95": [
+      -0.0213,
+      -0.01
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": -0.0125,
+     "ci95": [
+      -0.0195,
+      -0.0059
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": 0.0611,
+     "ci95": [
+      0.0384,
+      0.0841
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.0717,
+     "ci95": [
+      0.0535,
+      0.0898
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.0671,
+     "ci95": [
+      0.0532,
+      0.0843
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.0339,
+     "ci95": [
+      0.0171,
+      0.0512
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": 0.0419,
+     "ci95": [
+      0.0304,
+      0.0529
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.0266,
+     "ci95": [
+      0.0045,
+      0.0482
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.0729,
+     "ci95": [
+      0.0557,
+      0.0932
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.0741,
+     "ci95": [
+      0.0537,
+      0.0942
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": 0.0493,
+     "ci95": [
+      0.0301,
+      0.0716
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.0464,
+     "ci95": [
+      0.0322,
+      0.0582
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.0602,
+     "ci95": [
+      0.039,
+      0.0845
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": false,
+   "cells_same_sign": false,
+   "families_same_sign_as_overall": 10,
+   "sens_unclipped": {
+    "diff": 0.0165,
+    "ci95": [
+     -0.0013,
+     0.0333
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": 0.0397,
+    "ci95": [
+     0.0314,
+     0.0475
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 3969.6235,
+    "ci95": [
+     2611.3127,
+     5839.6269
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  },
+  "pub:Gemini 3 Flash (OR→LLM)": {
+   "all": {
+    "diff": -0.0025,
+    "ci95": [
+     -0.0072,
+     0.0021
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": false,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.0235,
+     "ci95": [
+      0.0182,
+      0.0291
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.0291,
+     "ci95": [
+      0.0188,
+      0.0403
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": -0.0173,
+     "ci95": [
+      -0.027,
+      -0.0072
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": 0.0123,
+     "ci95": [
+      0.0031,
+      0.0221
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": -0.0163,
+     "ci95": [
+      -0.0258,
+      -0.0076
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": -0.0545,
+     "ci95": [
+      -0.069,
+      -0.0397
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.0075,
+     "ci95": [
+      -0.0032,
+      0.0183
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.0093,
+     "ci95": [
+      0.0002,
+      0.0192
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.0199,
+     "ci95": [
+      0.0137,
+      0.026
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": 0.006,
+     "ci95": [
+      -0.0127,
+      0.0286
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.0328,
+     "ci95": [
+      0.0103,
+      0.0593
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.0126,
+     "ci95": [
+      0.0027,
+      0.0238
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.0192,
+     "ci95": [
+      0.0054,
+      0.033
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": -0.0055,
+     "ci95": [
+      -0.0184,
+      0.0123
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.0036,
+     "ci95": [
+      -0.0096,
+      0.0176
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.0124,
+     "ci95": [
+      -0.0041,
+      0.0285
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": false,
+   "cells_same_sign": false,
+   "families_same_sign_as_overall": 1,
+   "sens_unclipped": {
+    "diff": -0.0316,
+    "ci95": [
+     -0.0498,
+     -0.0152
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": -0.0145,
+    "ci95": [
+     -0.0208,
+     -0.0085
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 432.6629,
+    "ci95": [
+     -85.1192,
+     1237.2762
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  },
+  "pub:GPT-5 Mini (LLM)": {
+   "all": {
+    "diff": 0.0759,
+    "ci95": [
+     0.068,
+     0.0833
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": true,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.0256,
+     "ci95": [
+      0.0212,
+      0.0299
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.0785,
+     "ci95": [
+      0.0647,
+      0.092
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": 0.2059,
+     "ci95": [
+      0.1922,
+      0.2193
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": -0.0085,
+     "ci95": [
+      -0.0168,
+      -0.0005
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": 0.0029,
+     "ci95": [
+      -0.0061,
+      0.0118
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": 0.1343,
+     "ci95": [
+      0.1083,
+      0.1604
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.1503,
+     "ci95": [
+      0.1381,
+      0.1645
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.1373,
+     "ci95": [
+      0.129,
+      0.1461
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.071,
+     "ci95": [
+      0.0559,
+      0.0856
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": 0.0978,
+     "ci95": [
+      0.0809,
+      0.1154
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.0488,
+     "ci95": [
+      0.0174,
+      0.079
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.1148,
+     "ci95": [
+      0.0985,
+      0.1322
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.102,
+     "ci95": [
+      0.0838,
+      0.1174
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": 0.1033,
+     "ci95": [
+      0.0848,
+      0.1232
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.0868,
+     "ci95": [
+      0.0749,
+      0.0995
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.121,
+     "ci95": [
+      0.105,
+      0.1379
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": false,
+   "cells_same_sign": false,
+   "families_same_sign_as_overall": 10,
+   "sens_unclipped": {
+    "diff": 0.0767,
+    "ci95": [
+     0.0605,
+     0.0916
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": 0.0893,
+    "ci95": [
+     0.0794,
+     0.0986
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 6346.7614,
+    "ci95": [
+     4995.9898,
+     8277.1154
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  },
+  "pub:GPT-5 Mini (LLM→OR)": {
+   "all": {
+    "diff": 0.0778,
+    "ci95": [
+     0.0707,
+     0.0847
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": true,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.0175,
+     "ci95": [
+      0.0122,
+      0.0234
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.0383,
+     "ci95": [
+      0.0232,
+      0.0543
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": 0.2341,
+     "ci95": [
+      0.2198,
+      0.2476
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": 0.0242,
+     "ci95": [
+      0.0134,
+      0.0368
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": 0.0111,
+     "ci95": [
+      0.0026,
+      0.0198
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": 0.1304,
+     "ci95": [
+      0.098,
+      0.1626
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.096,
+     "ci95": [
+      0.0831,
+      0.1078
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.1085,
+     "ci95": [
+      0.0938,
+      0.1215
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.1085,
+     "ci95": [
+      0.0942,
+      0.1228
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": 0.1251,
+     "ci95": [
+      0.0827,
+      0.162
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.1091,
+     "ci95": [
+      0.0851,
+      0.1298
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.0792,
+     "ci95": [
+      0.0632,
+      0.0944
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.0832,
+     "ci95": [
+      0.0753,
+      0.091
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": 0.0806,
+     "ci95": [
+      0.0613,
+      0.1016
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.091,
+     "ci95": [
+      0.0763,
+      0.1015
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.0851,
+     "ci95": [
+      0.0695,
+      0.1008
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": true,
+   "cells_same_sign": true,
+   "families_same_sign_as_overall": 10,
+   "sens_unclipped": {
+    "diff": 0.0642,
+    "ci95": [
+     0.0454,
+     0.0819
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": 0.0849,
+    "ci95": [
+     0.0752,
+     0.0945
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 7848.4977,
+    "ci95": [
+     5216.2283,
+     11643.1131
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  },
+  "pub:GPT-5 Mini (OR→LLM)": {
+   "all": {
+    "diff": 0.0745,
+    "ci95": [
+     0.0668,
+     0.0819
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": true,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.0102,
+     "ci95": [
+      0.007,
+      0.0134
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.0748,
+     "ci95": [
+      0.0606,
+      0.0887
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": 0.2291,
+     "ci95": [
+      0.2142,
+      0.2433
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": -0.0084,
+     "ci95": [
+      -0.0151,
+      -0.0021
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": 0.0068,
+     "ci95": [
+      -0.0037,
+      0.0171
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": 0.1166,
+     "ci95": [
+      0.0897,
+      0.1442
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.1362,
+     "ci95": [
+      0.1138,
+      0.156
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.1376,
+     "ci95": [
+      0.1274,
+      0.149
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.0864,
+     "ci95": [
+      0.0767,
+      0.0977
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": 0.1064,
+     "ci95": [
+      0.0715,
+      0.1317
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.0818,
+     "ci95": [
+      0.0475,
+      0.1141
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.1062,
+     "ci95": [
+      0.0921,
+      0.1203
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.1144,
+     "ci95": [
+      0.0994,
+      0.129
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": 0.0985,
+     "ci95": [
+      0.0865,
+      0.1137
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.0742,
+     "ci95": [
+      0.062,
+      0.0877
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.1052,
+     "ci95": [
+      0.0885,
+      0.1201
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": false,
+   "cells_same_sign": false,
+   "families_same_sign_as_overall": 10,
+   "sens_unclipped": {
+    "diff": 0.0838,
+    "ci95": [
+     0.0646,
+     0.1024
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": 0.0862,
+    "ci95": [
+     0.076,
+     0.0959
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 7109.0174,
+    "ci95": [
+     5092.5262,
+     9956.8889
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  },
+  "pub:Grok 4.1 Fast (LLM)": {
+   "all": {
+    "diff": 0.0763,
+    "ci95": [
+     0.0686,
+     0.0838
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": true,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.024,
+     "ci95": [
+      0.0191,
+      0.0288
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.2519,
+     "ci95": [
+      0.2262,
+      0.2766
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": -0.0025,
+     "ci95": [
+      -0.013,
+      0.0082
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": 0.0493,
+     "ci95": [
+      0.0393,
+      0.0597
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": 0.1352,
+     "ci95": [
+      0.1101,
+      0.1603
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": -0.0087,
+     "ci95": [
+      -0.0255,
+      0.0083
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.1202,
+     "ci95": [
+      0.105,
+      0.1366
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.068,
+     "ci95": [
+      0.046,
+      0.0918
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.1102,
+     "ci95": [
+      0.0885,
+      0.1306
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": 0.0432,
+     "ci95": [
+      0.0071,
+      0.0782
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.0863,
+     "ci95": [
+      0.0555,
+      0.1178
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.1121,
+     "ci95": [
+      0.0905,
+      0.1336
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.1,
+     "ci95": [
+      0.0807,
+      0.1191
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": 0.0934,
+     "ci95": [
+      0.0668,
+      0.1187
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.092,
+     "ci95": [
+      0.0593,
+      0.1223
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.0859,
+     "ci95": [
+      0.0533,
+      0.1246
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": false,
+   "cells_same_sign": false,
+   "families_same_sign_as_overall": 10,
+   "sens_unclipped": {
+    "diff": 0.3657,
+    "ci95": [
+     0.312,
+     0.4276
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": 0.0835,
+    "ci95": [
+     0.074,
+     0.0923
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 4400.4015,
+    "ci95": [
+     3557.1703,
+     5293.1099
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  },
+  "pub:Grok 4.1 Fast (LLM→OR)": {
+   "all": {
+    "diff": 0.0422,
+    "ci95": [
+     0.0359,
+     0.0482
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": true,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.0043,
+     "ci95": [
+      0.0014,
+      0.007
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.013,
+     "ci95": [
+      0.0038,
+      0.0224
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": 0.157,
+     "ci95": [
+      0.1394,
+      0.1745
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": -0.0135,
+     "ci95": [
+      -0.019,
+      -0.0083
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": -0.0177,
+     "ci95": [
+      -0.0249,
+      -0.0109
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": 0.1005,
+     "ci95": [
+      0.0777,
+      0.1242
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.0773,
+     "ci95": [
+      0.0566,
+      0.095
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.0686,
+     "ci95": [
+      0.0476,
+      0.0896
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.0304,
+     "ci95": [
+      0.0151,
+      0.048
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": 0.0651,
+     "ci95": [
+      0.0564,
+      0.0748
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.0332,
+     "ci95": [
+      0.0119,
+      0.0548
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.0833,
+     "ci95": [
+      0.0671,
+      0.0985
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.0651,
+     "ci95": [
+      0.0492,
+      0.081
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": 0.0448,
+     "ci95": [
+      0.0209,
+      0.0721
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.0423,
+     "ci95": [
+      0.0234,
+      0.0599
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.0708,
+     "ci95": [
+      0.0437,
+      0.1014
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": false,
+   "cells_same_sign": false,
+   "families_same_sign_as_overall": 10,
+   "sens_unclipped": {
+    "diff": 0.1947,
+    "ci95": [
+     0.1529,
+     0.2415
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": 0.0581,
+    "ci95": [
+     0.0498,
+     0.0662
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 4156.9636,
+    "ci95": [
+     3019.8767,
+     5972.5043
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  },
+  "pub:Grok 4.1 Fast (OR→LLM)": {
+   "all": {
+    "diff": 0.0217,
+    "ci95": [
+     0.0167,
+     0.0269
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "matches(>-0.01)": true,
+   "exceeds(>0)": true,
+   "cells": {
+    "synthetic/lead_time_0": {
+     "diff": 0.0133,
+     "ci95": [
+      0.0095,
+      0.0175
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_4": {
+     "diff": 0.0212,
+     "ci95": [
+      0.0108,
+      0.0318
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "synthetic/lead_time_stochastic": {
+     "diff": 0.036,
+     "ci95": [
+      0.0248,
+      0.047
+     ],
+     "n": 240,
+     "clusters": 80
+    },
+    "real/lead_time_0": {
+     "diff": 0.0647,
+     "ci95": [
+      0.0507,
+      0.0801
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_4": {
+     "diff": -0.0011,
+     "ci95": [
+      -0.0077,
+      0.0059
+     ],
+     "n": 200,
+     "clusters": 200
+    },
+    "real/lead_time_stochastic": {
+     "diff": -0.0049,
+     "ci95": [
+      -0.0214,
+      0.0119
+     ],
+     "n": 200,
+     "clusters": 200
+    }
+   },
+   "families": {
+    "p01_stationary_iid": {
+     "diff": 0.0142,
+     "ci95": [
+      0.0001,
+      0.0267
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p02_mean_increase": {
+     "diff": 0.0171,
+     "ci95": [
+      0.0032,
+      0.034
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p03_mean_decrease": {
+     "diff": 0.0462,
+     "ci95": [
+      0.0307,
+      0.0612
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p04_increasing_trend": {
+     "diff": -0.0101,
+     "ci95": [
+      -0.0269,
+      0.0072
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p05_decreasing_trend": {
+     "diff": 0.0433,
+     "ci95": [
+      0.0198,
+      0.0673
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p06_variance_change": {
+     "diff": 0.0246,
+     "ci95": [
+      0.006,
+      0.0454
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p07_seasonal": {
+     "diff": 0.0254,
+     "ci95": [
+      0.0192,
+      0.0326
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p08_multi_changepoint": {
+     "diff": 0.0302,
+     "ci95": [
+      0.0186,
+      0.0439
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p09_temp_spike_dip": {
+     "diff": 0.0269,
+     "ci95": [
+      0.0197,
+      0.0375
+     ],
+     "n": 72,
+     "clusters": 8
+    },
+    "p10_autocorrelated": {
+     "diff": 0.017,
+     "ci95": [
+      0.0001,
+      0.0324
+     ],
+     "n": 72,
+     "clusters": 8
+    }
+   },
+   "robust": false,
+   "cells_same_sign": false,
+   "families_same_sign_as_overall": 9,
+   "sens_unclipped": {
+    "diff": 0.0174,
+    "ci95": [
+     0.0039,
+     0.0301
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "sens_clairvoyant": {
+    "diff": 0.0189,
+    "ci95": [
+     0.0122,
+     0.0256
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "raw_reward": {
+    "diff": 769.6364,
+    "ci95": [
+     502.4667,
+     1040.0202
+    ],
+    "n": 1320,
+    "clusters": 280
+   }
+  }
+ },
+ "every_baseline_vs_or": {
+  "Rolling": {
+   "all": {
+    "diff": 0.0259,
+    "ci95": [
+     0.0192,
+     0.033
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "lead_time_0": {
+    "diff": 0.0512,
+    "ci95": [
+     0.0409,
+     0.0622
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_4": {
+    "diff": 0.0137,
+    "ci95": [
+     0.0016,
+     0.0263
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_stochastic": {
+    "diff": 0.0129,
+    "ci95": [
+     0.0091,
+     0.0169
+    ],
+    "n": 440,
+    "clusters": 280
+   }
+  },
+  "Cusum": {
+   "all": {
+    "diff": 0.0265,
+    "ci95": [
+     0.0189,
+     0.0349
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "lead_time_0": {
+    "diff": 0.0632,
+    "ci95": [
+     0.0513,
+     0.0762
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_4": {
+    "diff": 0.0129,
+    "ci95": [
+     -0.0007,
+     0.0267
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_stochastic": {
+    "diff": 0.0035,
+    "ci95": [
+     -0.0013,
+     0.0083
+    ],
+    "n": 440,
+    "clusters": 280
+   }
+  },
+  "SupplyAware": {
+   "all": {
+    "diff": 0.0606,
+    "ci95": [
+     0.0531,
+     0.0675
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "lead_time_0": {
+    "diff": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_4": {
+    "diff": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_stochastic": {
+    "diff": 0.1818,
+    "ci95": [
+     0.1594,
+     0.2025
+    ],
+    "n": 440,
+    "clusters": 280
+   }
+  },
+  "Rolling+Supply": {
+   "all": {
+    "diff": 0.0872,
+    "ci95": [
+     0.0783,
+     0.0961
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "lead_time_0": {
+    "diff": 0.0512,
+    "ci95": [
+     0.0409,
+     0.0622
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_4": {
+    "diff": 0.0137,
+    "ci95": [
+     0.0016,
+     0.0263
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_stochastic": {
+    "diff": 0.1968,
+    "ci95": [
+     0.1756,
+     0.2164
+    ],
+    "n": 440,
+    "clusters": 280
+   }
+  },
+  "Cusum+Supply": {
+   "all": {
+    "diff": 0.0909,
+    "ci95": [
+     0.0815,
+     0.1005
+    ],
+    "n": 1320,
+    "clusters": 280
+   },
+   "lead_time_0": {
+    "diff": 0.0632,
+    "ci95": [
+     0.0513,
+     0.0762
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_4": {
+    "diff": 0.0129,
+    "ci95": [
+     -0.0007,
+     0.0267
+    ],
+    "n": 440,
+    "clusters": 280
+   },
+   "lead_time_stochastic": {
+    "diff": 0.1966,
+    "ci95": [
+     0.1756,
+     0.2157
+    ],
+    "n": 440,
+    "clusters": 280
+   }
+  }
+ },
+ "gap_closed": {
+  "pub:Gemini 3 Flash (LLM)": {
+   "all": {
+    "llm_minus_or": 0.0497,
+    "Rolling": 0.52,
+    "Cusum": 0.53,
+    "SupplyAware": 1.22,
+    "Rolling+Supply": 1.75,
+    "Cusum+Supply": 1.83
+   },
+   "lead_time_0": {
+    "llm_minus_or": 0.0339,
+    "Rolling": 1.51,
+    "Cusum": 1.86,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 1.51,
+    "Cusum+Supply": 1.86
+   },
+   "lead_time_4": {
+    "llm_minus_or": -0.0836,
+    "Rolling": -0.16,
+    "Cusum": -0.15,
+    "SupplyAware": -0.0,
+    "Rolling+Supply": -0.16,
+    "Cusum+Supply": -0.15
+   },
+   "lead_time_stochastic": {
+    "llm_minus_or": 0.1989,
+    "Rolling": 0.07,
+    "Cusum": 0.02,
+    "SupplyAware": 0.91,
+    "Rolling+Supply": 0.99,
+    "Cusum+Supply": 0.99
+   }
+  },
+  "pub:Gemini 3 Flash (LLM→OR)": {
+   "all": {
+    "llm_minus_or": 0.0562,
+    "Rolling": 0.46,
+    "Cusum": 0.47,
+    "SupplyAware": 1.08,
+    "Rolling+Supply": 1.55,
+    "Cusum+Supply": 1.62
+   },
+   "lead_time_0": {
+    "llm_minus_or": 0.069,
+    "Rolling": 0.74,
+    "Cusum": 0.92,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 0.74,
+    "Cusum+Supply": 0.92
+   },
+   "lead_time_4": {
+    "llm_minus_or": 0.0126,
+    "Rolling": 1.09,
+    "Cusum": 1.02,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 1.09,
+    "Cusum+Supply": 1.02
+   },
+   "lead_time_stochastic": {
+    "llm_minus_or": 0.087,
+    "Rolling": 0.15,
+    "Cusum": 0.04,
+    "SupplyAware": 2.09,
+    "Rolling+Supply": 2.26,
+    "Cusum+Supply": 2.26
+   }
+  },
+  "pub:Gemini 3 Flash (OR→LLM)": {
+   "all": {
+    "llm_minus_or": 0.0933,
+    "Rolling": 0.28,
+    "Cusum": 0.28,
+    "SupplyAware": 0.65,
+    "Rolling+Supply": 0.93,
+    "Cusum+Supply": 0.97
+   },
+   "lead_time_0": {
+    "llm_minus_or": 0.0448,
+    "Rolling": 1.14,
+    "Cusum": 1.41,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 1.14,
+    "Cusum+Supply": 1.41
+   },
+   "lead_time_4": {
+    "llm_minus_or": 0.0044,
+    "Rolling": null,
+    "Cusum": null,
+    "SupplyAware": null,
+    "Rolling+Supply": null,
+    "Cusum+Supply": null
+   },
+   "lead_time_stochastic": {
+    "llm_minus_or": 0.2308,
+    "Rolling": 0.06,
+    "Cusum": 0.02,
+    "SupplyAware": 0.79,
+    "Rolling+Supply": 0.85,
+    "Cusum+Supply": 0.85
+   }
+  },
+  "pub:GPT-5 Mini (LLM)": {
+   "all": {
+    "llm_minus_or": 0.015,
+    "Rolling": 1.73,
+    "Cusum": 1.77,
+    "SupplyAware": 4.03,
+    "Rolling+Supply": 5.8,
+    "Cusum+Supply": 6.05
+   },
+   "lead_time_0": {
+    "llm_minus_or": 0.0531,
+    "Rolling": 0.96,
+    "Cusum": 1.19,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 0.96,
+    "Cusum+Supply": 1.19
+   },
+   "lead_time_4": {
+    "llm_minus_or": -0.0313,
+    "Rolling": -0.44,
+    "Cusum": -0.41,
+    "SupplyAware": -0.0,
+    "Rolling+Supply": -0.44,
+    "Cusum+Supply": -0.41
+   },
+   "lead_time_stochastic": {
+    "llm_minus_or": 0.0232,
+    "Rolling": 0.56,
+    "Cusum": 0.15,
+    "SupplyAware": 7.83,
+    "Rolling+Supply": 8.47,
+    "Cusum+Supply": 8.46
+   }
+  },
+  "pub:GPT-5 Mini (LLM→OR)": {
+   "all": {
+    "llm_minus_or": 0.0131,
+    "Rolling": 1.98,
+    "Cusum": 2.03,
+    "SupplyAware": 4.63,
+    "Rolling+Supply": 6.67,
+    "Cusum+Supply": 6.95
+   },
+   "lead_time_0": {
+    "llm_minus_or": 0.0427,
+    "Rolling": 1.2,
+    "Cusum": 1.48,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 1.2,
+    "Cusum+Supply": 1.48
+   },
+   "lead_time_4": {
+    "llm_minus_or": -0.013,
+    "Rolling": -1.05,
+    "Cusum": -0.99,
+    "SupplyAware": -0.0,
+    "Rolling+Supply": -1.05,
+    "Cusum+Supply": -0.99
+   },
+   "lead_time_stochastic": {
+    "llm_minus_or": 0.0096,
+    "Rolling": null,
+    "Cusum": null,
+    "SupplyAware": null,
+    "Rolling+Supply": null,
+    "Cusum+Supply": null
+   }
+  },
+  "pub:GPT-5 Mini (OR→LLM)": {
+   "all": {
+    "llm_minus_or": 0.0164,
+    "Rolling": 1.59,
+    "Cusum": 1.62,
+    "SupplyAware": 3.7,
+    "Rolling+Supply": 5.33,
+    "Cusum+Supply": 5.56
+   },
+   "lead_time_0": {
+    "llm_minus_or": 0.0615,
+    "Rolling": 0.83,
+    "Cusum": 1.03,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 0.83,
+    "Cusum+Supply": 1.03
+   },
+   "lead_time_4": {
+    "llm_minus_or": -0.031,
+    "Rolling": -0.44,
+    "Cusum": -0.42,
+    "SupplyAware": -0.0,
+    "Rolling+Supply": -0.44,
+    "Cusum+Supply": -0.42
+   },
+   "lead_time_stochastic": {
+    "llm_minus_or": 0.0186,
+    "Rolling": 0.7,
+    "Cusum": 0.19,
+    "SupplyAware": 9.77,
+    "Rolling+Supply": 10.57,
+    "Cusum+Supply": 10.56
+   }
+  },
+  "pub:Grok 4.1 Fast (LLM)": {
+   "all": {
+    "llm_minus_or": 0.0145,
+    "Rolling": 1.78,
+    "Cusum": 1.82,
+    "SupplyAware": 4.17,
+    "Rolling+Supply": 6.0,
+    "Cusum+Supply": 6.25
+   },
+   "lead_time_0": {
+    "llm_minus_or": 0.0277,
+    "Rolling": 1.85,
+    "Cusum": 2.28,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 1.85,
+    "Cusum+Supply": 2.28
+   },
+   "lead_time_4": {
+    "llm_minus_or": -0.186,
+    "Rolling": -0.07,
+    "Cusum": -0.07,
+    "SupplyAware": -0.0,
+    "Rolling+Supply": -0.07,
+    "Cusum+Supply": -0.07
+   },
+   "lead_time_stochastic": {
+    "llm_minus_or": 0.2019,
+    "Rolling": 0.06,
+    "Cusum": 0.02,
+    "SupplyAware": 0.9,
+    "Rolling+Supply": 0.97,
+    "Cusum+Supply": 0.97
+   }
+  },
+  "pub:Grok 4.1 Fast (LLM→OR)": {
+   "all": {
+    "llm_minus_or": 0.0487,
+    "Rolling": 0.53,
+    "Cusum": 0.54,
+    "SupplyAware": 1.24,
+    "Rolling+Supply": 1.79,
+    "Cusum+Supply": 1.87
+   },
+   "lead_time_0": {
+    "llm_minus_or": 0.067,
+    "Rolling": 0.76,
+    "Cusum": 0.94,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 0.76,
+    "Cusum+Supply": 0.94
+   },
+   "lead_time_4": {
+    "llm_minus_or": 0.0138,
+    "Rolling": 0.99,
+    "Cusum": 0.93,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 0.99,
+    "Cusum+Supply": 0.93
+   },
+   "lead_time_stochastic": {
+    "llm_minus_or": 0.0653,
+    "Rolling": 0.2,
+    "Cusum": 0.05,
+    "SupplyAware": 2.78,
+    "Rolling+Supply": 3.01,
+    "Cusum+Supply": 3.01
+   }
+  },
+  "pub:Grok 4.1 Fast (OR→LLM)": {
+   "all": {
+    "llm_minus_or": 0.0692,
+    "Rolling": 0.37,
+    "Cusum": 0.38,
+    "SupplyAware": 0.88,
+    "Rolling+Supply": 1.26,
+    "Cusum+Supply": 1.31
+   },
+   "lead_time_0": {
+    "llm_minus_or": 0.0265,
+    "Rolling": 1.93,
+    "Cusum": 2.38,
+    "SupplyAware": 0.0,
+    "Rolling+Supply": 1.93,
+    "Cusum+Supply": 2.38
+   },
+   "lead_time_4": {
+    "llm_minus_or": 0.0018,
+    "Rolling": null,
+    "Cusum": null,
+    "SupplyAware": null,
+    "Rolling+Supply": null,
+    "Cusum+Supply": null
+   },
+   "lead_time_stochastic": {
+    "llm_minus_or": 0.1792,
+    "Rolling": 0.07,
+    "Cusum": 0.02,
+    "SupplyAware": 1.01,
+    "Rolling+Supply": 1.1,
+    "Cusum+Supply": 1.1
+   }
+  }
+ },
+ "sensitivity_overall_norm": {
+  "Rolling+Supply W=5": 0.537,
+  "Rolling+Supply W=20": 0.5136,
+  "Cusum+Supply h=3": 0.5376,
+  "Cusum+Supply h=5": 0.5337,
+  "Cusum+Supply uncapped": 0.4949,
+  "OR uncapped": 0.4225
+ }
+}

@@ -1,0 +1,669 @@
+{
+ "pinned_sha": "62b1f1162f19a41d428d47c6cd4ca431f098f6f3",
+ "vendor_head": "62b1f1162f19a41d428d47c6cd4ca431f098f6f3",
+ "vendor_dirty": false,
+ "data": {
+  "real/lead_time_0": {
+   "n": 200,
+   "T": {
+    "47": 200
+   },
+   "train_len": {
+    "5": 200
+   },
+   "lead": {
+    "0.0": 9400
+   },
+   "p_h_constant": true
+  },
+  "real/lead_time_4": {
+   "n": 200,
+   "T": {
+    "47": 200
+   },
+   "train_len": {
+    "5": 200
+   },
+   "lead": {
+    "4.0": 9400
+   },
+   "p_h_constant": true
+  },
+  "real/lead_time_stochastic": {
+   "n": 200,
+   "T": {
+    "47": 200
+   },
+   "train_len": {
+    "5": 200
+   },
+   "lead": {
+    "inf": 2800,
+    "2.0": 3000,
+    "1.0": 1800,
+    "3.0": 1800
+   },
+   "p_h_constant": true
+  },
+  "synthetic/lead_time_0": {
+   "n": 240,
+   "T": {
+    "50": 240
+   },
+   "train_len": {
+    "5": 240
+   },
+   "lead": {
+    "0.0": 12000
+   },
+   "p_h_constant": true
+  },
+  "synthetic/lead_time_4": {
+   "n": 240,
+   "T": {
+    "50": 240
+   },
+   "train_len": {
+    "5": 240
+   },
+   "lead": {
+    "4.0": 12000
+   },
+   "p_h_constant": true
+  },
+  "synthetic/lead_time_stochastic": {
+   "n": 240,
+   "T": {
+    "50": 240
+   },
+   "train_len": {
+    "5": 240
+   },
+   "lead": {
+    "3.0": 3120,
+    "inf": 3840,
+    "1.0": 2400,
+    "2.0": 2640
+   },
+   "p_h_constant": true
+  }
+ },
+ "clusters": {
+  "n": 280,
+  "sizes": {
+   "3": 200,
+   "9": 80
+  },
+  "same_demand_within_cluster": 280
+ },
+ "cost_ratios": {
+  "0.95": 447,
+  "0.5": 452,
+  "0.8": 421
+ },
+ "P0a_benchmark_copies": {
+  "gemini-3-flash_bench": {
+   "differing_files": 0,
+   "missing_files": 0
+  },
+  "gpt-5-mini_bench": {
+   "differing_files": 0,
+   "missing_files": 0
+  },
+  "grok-4.1-fast_bench": {
+   "differing_files": 0,
+   "missing_files": 0
+  }
+ },
+ "P0bc_published_arms": {
+  "Gemini 3 Flash (LLM)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.494453,
+   "scores_json_overall": 0.494453,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 1320,
+   "instances_with_negative_reward": 299
+  },
+  "Gemini 3 Flash (LLM→OR)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.5009,
+   "scores_json_overall": 0.5009,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 1320,
+   "instances_with_negative_reward": 172
+  },
+  "Gemini 3 Flash (OR→LLM)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.538049,
+   "scores_json_overall": 0.538049,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 1320,
+   "instances_with_negative_reward": 160
+  },
+  "GPT-5 Mini (LLM)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.459742,
+   "scores_json_overall": 0.459742,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 1320,
+   "instances_with_negative_reward": 199
+  },
+  "GPT-5 Mini (LLM→OR)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.45779,
+   "scores_json_overall": 0.45779,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 1320,
+   "instances_with_negative_reward": 132
+  },
+  "GPT-5 Mini (OR→LLM)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.461067,
+   "scores_json_overall": 0.461067,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 1320,
+   "instances_with_negative_reward": 178
+  },
+  "Grok 4.1 Fast (LLM)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.459253,
+   "scores_json_overall": 0.459253,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 1320,
+   "instances_with_negative_reward": 323
+  },
+  "Grok 4.1 Fast (LLM→OR)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.493412,
+   "scores_json_overall": 0.493412,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 1320,
+   "instances_with_negative_reward": 296
+  },
+  "Grok 4.1 Fast (OR→LLM)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.513874,
+   "scores_json_overall": 0.513874,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 1320,
+   "instances_with_negative_reward": 195
+  },
+  "OR (capped base stock)": {
+   "n": 1320,
+   "mean_norm_recomputed": 0.44471,
+   "scores_json_overall": 0.44471,
+   "max_abs_diff_vs_repo_evaluator": 0.0,
+   "max_abs_reward_diff_vs_logs": 0.0,
+   "n_log_comparisons": 3960,
+   "instances_with_negative_reward": 113
+  }
+ },
+ "P1b_or_replica": {
+  "instances": 1320,
+  "order_sequences_differing": 0,
+  "examples": []
+ },
+ "P1a_original_or_runs": {
+  "n": 60,
+  "failed_to_run": 0,
+  "max_abs_diff_original_vs_published": 0.0,
+  "max_abs_diff_original_vs_replica": 0.0,
+  "runs": [
+   {
+    "instance": "real_trajectory/lead_time_0/516859008",
+    "run_or_py": 70582.0,
+    "replica": 70582.0,
+    "published": 70582.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_0/516903005",
+    "run_or_py": 7819.0,
+    "replica": 7819.0,
+    "published": 7819.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_0/692226003",
+    "run_or_py": 64036.0,
+    "replica": 64036.0,
+    "published": 64036.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_0/608458001",
+    "run_or_py": 434.0,
+    "replica": 434.0,
+    "published": 434.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_0/572797002",
+    "run_or_py": 98452.0,
+    "replica": 98452.0,
+    "published": 98452.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_0/660726001",
+    "run_or_py": 56185.0,
+    "replica": 56185.0,
+    "published": 56185.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_0/695632001",
+    "run_or_py": 114541.0,
+    "replica": 114541.0,
+    "published": 114541.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_0/568601006",
+    "run_or_py": 34025.0,
+    "replica": 34025.0,
+    "published": 34025.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_0/682550001",
+    "run_or_py": 43649.0,
+    "replica": 43649.0,
+    "published": 43649.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_0/148033001",
+    "run_or_py": 46703.0,
+    "replica": 46703.0,
+    "published": 46703.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/660726001",
+    "run_or_py": 39055.0,
+    "replica": 39055.0,
+    "published": 39055.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/506098007",
+    "run_or_py": -886.0,
+    "replica": -886.0,
+    "published": -886.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/708021001",
+    "run_or_py": 37454.0,
+    "replica": 37454.0,
+    "published": 37454.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/111586001",
+    "run_or_py": -2723.0,
+    "replica": -2723.0,
+    "published": -2723.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/729928001",
+    "run_or_py": 61547.0,
+    "replica": 61547.0,
+    "published": 61547.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/671852003",
+    "run_or_py": 4862.0,
+    "replica": 4862.0,
+    "published": 4862.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/658030020",
+    "run_or_py": 44523.0,
+    "replica": 44523.0,
+    "published": 44523.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/688558002",
+    "run_or_py": 39644.0,
+    "replica": 39644.0,
+    "published": 39644.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/682550001",
+    "run_or_py": 36313.0,
+    "replica": 36313.0,
+    "published": 36313.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_4/578476001",
+    "run_or_py": 3495.0,
+    "replica": 3495.0,
+    "published": 3495.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/658030020",
+    "run_or_py": 2217.0,
+    "replica": 2217.0,
+    "published": 2217.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/554450019",
+    "run_or_py": 494.0,
+    "replica": 494.0,
+    "published": 494.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/679854001",
+    "run_or_py": 29641.0,
+    "replica": 29641.0,
+    "published": 29641.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/671852003",
+    "run_or_py": 591.0,
+    "replica": 591.0,
+    "published": 591.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/615141002",
+    "run_or_py": -754.0,
+    "replica": -754.0,
+    "published": -754.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/679853001",
+    "run_or_py": 1764.0,
+    "replica": 1764.0,
+    "published": 1764.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/574109012",
+    "run_or_py": 8603.0,
+    "replica": 8603.0,
+    "published": 8603.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/678942001",
+    "run_or_py": 809.0,
+    "replica": 809.0,
+    "published": 809.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/554477005",
+    "run_or_py": 23046.0,
+    "replica": 23046.0,
+    "published": 23046.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "real_trajectory/lead_time_stochastic/712216001",
+    "run_or_py": 627.0,
+    "replica": 627.0,
+    "published": 627.0,
+    "lost_orders_in_instance": 14
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p01_stationary_iid/v1_normal_100_25/r1_low",
+    "run_or_py": 4179.0,
+    "replica": 4179.0,
+    "published": 4179.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p01_stationary_iid/v2_normal_100_40/r1_low",
+    "run_or_py": 3177.0,
+    "replica": 3177.0,
+    "published": 3177.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p01_stationary_iid/v4_uniform_50_150/r1_high",
+    "run_or_py": 101189.0,
+    "replica": 101189.0,
+    "published": 101189.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p01_stationary_iid/v3_normal_100_15/r1_low",
+    "run_or_py": 4345.0,
+    "replica": 4345.0,
+    "published": 4345.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p01_stationary_iid/v3_normal_100_15/r1_high",
+    "run_or_py": 93198.0,
+    "replica": 93198.0,
+    "published": 93198.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p06_variance_change/v4_uniform_to_normal/r2_high",
+    "run_or_py": 88720.0,
+    "replica": 88720.0,
+    "published": 88720.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p08_multi_changepoint/v4_mild_fluctuations/r1_med",
+    "run_or_py": 17632.0,
+    "replica": 17632.0,
+    "published": 17632.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p03_mean_decrease/v2_100to70/r1_low",
+    "run_or_py": 3011.0,
+    "replica": 3011.0,
+    "published": 3011.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p10_autocorrelated/v2_phi_0_5/r1_med",
+    "run_or_py": 21191.0,
+    "replica": 21191.0,
+    "published": 21191.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_0/p06_variance_change/v4_uniform_to_normal/r2_med",
+    "run_or_py": 17647.0,
+    "replica": 17647.0,
+    "published": 17647.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p01_stationary_iid/v2_normal_100_40/r1_high",
+    "run_or_py": 78366.0,
+    "replica": 78366.0,
+    "published": 78366.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p01_stationary_iid/v1_normal_100_25/r2_med",
+    "run_or_py": 14454.0,
+    "replica": 14454.0,
+    "published": 14454.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p01_stationary_iid/v2_normal_100_40/r1_low",
+    "run_or_py": 2423.0,
+    "replica": 2423.0,
+    "published": 2423.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p01_stationary_iid/v4_uniform_50_150/r1_high",
+    "run_or_py": 89852.0,
+    "replica": 89852.0,
+    "published": 89852.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p01_stationary_iid/v1_normal_100_25/r1_high",
+    "run_or_py": 84881.0,
+    "replica": 84881.0,
+    "published": 84881.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p02_mean_increase/v1_100to200/r1_low",
+    "run_or_py": 4917.0,
+    "replica": 4917.0,
+    "published": 4917.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p04_increasing_trend/v2_linear_50_3t/r1_high",
+    "run_or_py": 84092.0,
+    "replica": 84092.0,
+    "published": 84092.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p06_variance_change/v1_normal_to_uniform/r2_med",
+    "run_or_py": 8580.0,
+    "replica": 8580.0,
+    "published": 8580.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p07_seasonal/v1_period10_amp30/r2_low",
+    "run_or_py": 299.0,
+    "replica": 299.0,
+    "published": 299.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_4/p09_temp_spike_dip/v3_surge_new_normal/r1_med",
+    "run_or_py": 15709.0,
+    "replica": 15709.0,
+    "published": 15709.0,
+    "lost_orders_in_instance": 0
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p01_stationary_iid/v1_normal_100_25/r2_med",
+    "run_or_py": 2168.0,
+    "replica": 2168.0,
+    "published": 2168.0,
+    "lost_orders_in_instance": 16
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p01_stationary_iid/v2_normal_100_40/r1_high",
+    "run_or_py": 8211.0,
+    "replica": 8211.0,
+    "published": 8211.0,
+    "lost_orders_in_instance": 16
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p01_stationary_iid/v4_uniform_50_150/r2_med",
+    "run_or_py": 2076.0,
+    "replica": 2076.0,
+    "published": 2076.0,
+    "lost_orders_in_instance": 16
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p01_stationary_iid/v1_normal_100_25/r2_low",
+    "run_or_py": 389.0,
+    "replica": 389.0,
+    "published": 389.0,
+    "lost_orders_in_instance": 16
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p01_stationary_iid/v2_normal_100_40/r1_low",
+    "run_or_py": 56.0,
+    "replica": 56.0,
+    "published": 56.0,
+    "lost_orders_in_instance": 16
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p09_temp_spike_dip/v4_dip_partial_recovery/r1_high",
+    "run_or_py": 10842.0,
+    "replica": 10842.0,
+    "published": 10842.0,
+    "lost_orders_in_instance": 16
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p07_seasonal/v3_period25_amp40/r2_low",
+    "run_or_py": 248.0,
+    "replica": 248.0,
+    "published": 248.0,
+    "lost_orders_in_instance": 16
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p07_seasonal/v4_multiplicative/r1_med",
+    "run_or_py": 1857.0,
+    "replica": 1857.0,
+    "published": 1857.0,
+    "lost_orders_in_instance": 16
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p04_increasing_trend/v3_exp_1_05/r1_high",
+    "run_or_py": 38310.0,
+    "replica": 38310.0,
+    "published": 38310.0,
+    "lost_orders_in_instance": 16
+   },
+   {
+    "instance": "synthetic_trajectory/lead_time_stochastic/p10_autocorrelated/v2_phi_0_5/r1_high",
+    "run_or_py": 15501.0,
+    "replica": 15501.0,
+    "published": 15501.0,
+    "lost_orders_in_instance": 16
+   }
+  ]
+ },
+ "clairvoyant_over_normaliser": {
+  "real/lead_time_0": {
+   "mean": 1.0,
+   "min": 1.0
+  },
+  "real/lead_time_4": {
+   "mean": 0.8945,
+   "min": 0.6349
+  },
+  "real/lead_time_stochastic": {
+   "mean": 0.7039,
+   "min": 0.3564
+  },
+  "synthetic/lead_time_0": {
+   "mean": 1.0,
+   "min": 1.0
+  },
+  "synthetic/lead_time_4": {
+   "mean": 0.9155,
+   "min": 0.7889
+  },
+  "synthetic/lead_time_stochastic": {
+   "mean": 0.6801,
+   "min": 0.3965
+  }
+ }
+}
